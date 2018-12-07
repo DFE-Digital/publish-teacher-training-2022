@@ -34,6 +34,10 @@ gem 'foreman'
 # Canonical meta tag
 gem 'canonical-rails'
 
+# DfE Sign-In
+gem 'omniauth', '~> 1.8'
+gem 'omniauth_openid_connect', '~> 0.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
