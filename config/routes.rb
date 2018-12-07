@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  # DfE Sign In
+  get "/login", to: redirect('/auth/dfe'), as: "login"
+  get "/logout", to: "sessions#destroy", as: "logout"
+  get "/auth/dfe/callback", to: "sessions#create"
+
+  root to: "pages#home"
+
   get "/pages/:page", to: "pages#show"
 
   get "/cookies", to: "pages#cookies", as: :cookies

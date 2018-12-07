@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
       format.all { render status: :not_found, body: nil }
     end
   end
+
+  helper_method :current_user
+
+  def current_user
+    @current_user ||= session[:auth_user] if session[:auth_user]
+  end
 end
