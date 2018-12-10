@@ -4,6 +4,8 @@ cache:
   directories:
     - node_modules
   yarn: true
+git:
+  depth: false
 addons:
   postgresql: "9.6"
 install:
@@ -13,15 +15,23 @@ install:
   - npm i -g yarn
   - yarn
 before_script:
-  - bundle exec rake db:create db:migrate RAILS_ENV=test
+  - bundle exec rake db:setup
 script:
   - bundle exec rails webpacker:compile
   - bundle exec rails spec
   - bundle exec govuk-lint-ruby app config db lib spec --format clang
+  - bundle exec govuk-lint-sass app/assets/stylesheets
+env:
+  global:
+    # AZURE_WA_PASSWORD
+    secure: HXIF7aTVICQr2vZBEwwzRs6DJWNmu3lAcn882codaMIA9C+GtY7VfYRNzF1UbGV3qtDpd1thtOcy5fF9l+/I68ulBtopmIdvy6zSbCO5cV/czFvDGz3Td+giJl+cMcZbFjE+uKoPfldKW5UqAVYBHmg6wV+RzsceNSTgpyEHdo3jjwk4iSob3J/qSHM3/C9nbF7CXzpidrGntbUi1uvmeq5Ghy9uU8Hgu7aZHhQpQA2PAO4A7gBE6+KOa1jV/CMqncxXMIIExpxDORmwkBDdg4o2EdmLJARArekgVo+FjP6iA4r4EbEEJb6DcRTNjn8RCl9R57IKVxOtlJz1Ie+E3vhZnN+cjCo12ougAxstK8/uj04+cvq5nWtnZzscyhdBvsr5zSijgYMUc1370ByBN2g9QH/V4AVICwIQW6IXDibEeKsev9EM3b8XzV7DJjhkeqs7E9fp+dyC3oWph6uuhXuHl8jLpmtfiOMCH0iQXmU/NNQIt4B3AiO1iRw4zZzNkcyllun2BKRuqwU8l6g1dXj6OjQQbah0KoKrOeCCYuzHChndaUiubHSN4ycw14RaRE1ri+AGTI5d90jHfxIABu6JK6BjAwDWJRVz9P5MdqXBJ8AQjsUZhzFhJjRtCPigB8DGMoIehD3titYjCLlnDHKY2mzAWs5hZ5QRc80jiYo=
 deploy:
-  provider: heroku
-  api_key:
-    secure: ADDYDfOGlYQOr7trnmq1xbShIuGvDCJ1jscMbm4VoXgQ9LUPb3powuFrsMBSoNU7PaC0Mgxzf2UaTJT5+JBwz4yjVs7YgQV602CmWP367PBw0nXZHK9JYwsIWpJntDK/UnBxhYa4ewQESZc4LI6NK9qwOcITrzUoL8JDNPeAFo2+WTAFjPo9VigAIju4EMOnFagHt0Ay6Vt40kAGEpyeWfVj60ARYX8HHTnNF2oFIVDD9ZDa9QbeL/J6JqTUR/+qk4ivtNjnWjq9OiPfSeMR6pYaH4BNEC4qTq6ZtmadvGgWO7VgwGiQ0sz+v6rOKlrszQipYESZTmiwjByWK9iOrxul1DP9rWgqoY8WM9aTc3cZqZkUXH4hyFCki2go6/Cb2c0/+du8eMmDjp+J2Xi3B1H6DW+g0KdDqWqu/qni3Ndm2GNeJRZNdLgGNM23izWiPu/AlT2Bk/vMuEtVw2qgpwt3P6YSn95jqq88aTuS4hOU/Aq3mUm+w+TNpmglxkWtXUstghiNCHNw/cm3us/nuuq0OZPFMLt1Hg6R7FWFygnw7q1dfdt9hnw+oPEriIsJcNK0Kz1ISSsvefZfKfdyX6khgSCFdqZ5P8pCFHdIUKDUykdAcl27Phc2o4iCvo1Hn2AYzbQzv/1ONRcSd9D6qqnXVkufBpZ6CG/Q/AoILpc=
-  app: rails-dfe-boilerplate
-  on:
-    repo: DFE-Digital/dfe-rails-boilerplate
+- provider: script
+  script: git push --force https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-manage-courses-frontend-app.scm.azurewebsites.net:443/bat-dev-manage-courses-frontend-app.git HEAD:refs/heads/master
+  on: master
+- provider: script
+  script: git push --force https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-manage-courses-frontend-app.scm.azurewebsites.net:443/bat-staging-manage-courses-frontend-app.git HEAD:refs/heads/master
+  on: staging
+- provider: script
+  script: git push --force https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-manage-courses-frontend-app.scm.azurewebsites.net:443/bat-prod-manage-courses-frontend-app.git HEAD:refs/heads/master
+  on: production
