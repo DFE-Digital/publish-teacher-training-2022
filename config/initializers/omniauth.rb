@@ -4,7 +4,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   dfe_sign_in_issuer_uri = URI(ENV["DFE_SIGN_IN_ISSUER"])
   dfe_sign_in_identifier = ENV["DFE_SIGN_IN_IDENTIFIER"]
   dfe_sign_in_secret     = ENV["DFE_SIGN_IN_SECRET"]
-  dfe_sign_in_host_url   = ENV["DFE_SIGN_IN_HOST_URL"]
+  base_url               = ENV["BASE_URL"]
 
   dfe_sign_in_issuer_url = "#{dfe_sign_in_issuer_uri}:#{dfe_sign_in_issuer_uri.port}" if dfe_sign_in_issuer_uri.port
 
@@ -21,7 +21,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
              host: dfe_sign_in_issuer_uri.host,
              identifier: dfe_sign_in_identifier,
              secret: dfe_sign_in_secret,
-             redirect_uri: "#{dfe_sign_in_host_url}/auth/dfe/callback",
+             redirect_uri: "#{base_url}/auth/dfe/callback",
              authorization_endpoint: "/auth",
              jwks_uri: "/certs",
              userinfo_endpoint: "/me"
