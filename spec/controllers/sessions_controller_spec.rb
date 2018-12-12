@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SessionsController, type: :controller do
   describe "GET signout" do
@@ -27,6 +27,16 @@ RSpec.describe SessionsController, type: :controller do
 
       expect(subject).to redirect_to("/")
       expect(@request.session).to be_empty
+    end
+  end
+
+  # Omniauth documentation says that any authentication failure with the provider
+  # will be caught and routed to /auth/failure: https://github.com/omniauth/omniauth/wiki
+  describe "GET failure" do
+    it "redirects to a 401 page" do
+      get :failure
+
+      expect(response.status).to redirect_to("/401")
     end
   end
 end

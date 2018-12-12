@@ -12,6 +12,10 @@ class SessionsController < ApplicationController
     redirect_to "#{ENV['DFE_SIGN_IN_ISSUER']}/session/end?id_token_hint=#{current_user['credentials']['id_token']}&post_logout_redirect_uri=#{ENV['BASE_URL']}/auth/dfe/signout"
   end
 
+  def failure
+    redirect_to "/401"
+  end
+
   def destroy
     session.destroy
     redirect_to root_path
