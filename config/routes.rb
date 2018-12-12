@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "/signout", to: "sessions#signout", as: "signout"
   get "/auth/dfe/callback", to: "sessions#create"
   get "/auth/dfe/signout", to: "sessions#destroy"
+  get "/auth/failure", to: "sessions#failure"
 
   root to: "pages#home"
 
