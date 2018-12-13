@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/DFE-Digital/manage-courses-frontend.svg?branch=master)](https://travis-ci.com/DFE-Digital/manage-courses-frontend)
+[![Build Status](https://travis-ci.org/DFE-Digital/manage-courses-frontend.svg?branch=master)](https://travis-ci.org/DFE-Digital/manage-courses-frontend)
 
 # Manage Courses Frontend
 
