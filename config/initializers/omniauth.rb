@@ -39,7 +39,7 @@ if ENV['DFE_SIGN_IN_ISSUER'].present?
     discovery: true,
     response_type: :code,
     client_signing_alg: :RS256,
-    scope: %i[openid profile email],
+    scope: %i[openid profile email offline_access],
     client_options: {
       port: dfe_sign_in_issuer_uri.port,
       scheme: dfe_sign_in_issuer_uri.scheme,
