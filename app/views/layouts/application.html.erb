@@ -46,7 +46,8 @@
             <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
               <li class="govuk-header__navigation-item">
                 <% if current_user.present? %>
-                  <%= link_to "Sign out (#{current_user['info']['first_name']} #{current_user['info']['last_name']})", signout_path, class: "govuk-header__link" %>
+                  <%= link_to "Sign out", signout_path, class: "govuk-header__link" %>
+                  <%= link_to "(#{current_user['info']['first_name']} #{current_user['info']['last_name']})", ENV["DFE_SIGN_IN_PROFILE"], class: "govuk-header__link" %>
                 <% else %>
                   <%= link_to "Sign in", signin_path, class: "govuk-header__link" %>
                 <% end %>
