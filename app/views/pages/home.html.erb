@@ -1,3 +1,5 @@
+<%= content_for :page_title, "Home" %>
+
 <% if @current_user.present? %>
   <h1 class="govuk-heading-l">Welcome, <%= @current_user['email'] -%></h1>
 <% end %>
