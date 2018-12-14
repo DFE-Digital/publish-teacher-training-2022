@@ -1,6 +1,6 @@
 class ErrorsController < ApplicationController
   skip_before_action :verify_authenticity_token,
-                     only: %i[not_found internal_server_error forbidden unauthorised]
+                    only: %i[not_found internal_server_error forbidden unauthorised]
 
   def not_found
     respond_to do |format|

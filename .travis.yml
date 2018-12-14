@@ -6,16 +6,12 @@ cache:
   yarn: true
 git:
   depth: false
-addons:
-  postgresql: '9.6'
 install:
 - bundle install
 - nvm install node
 - node -v
 - npm i -g yarn
 - yarn
-before_script:
-- bundle exec rake db:setup
 script:
 - bundle exec rails webpacker:compile
 - bundle exec rails spec
