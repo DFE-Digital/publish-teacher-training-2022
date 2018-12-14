@@ -10,13 +10,10 @@
 
 ## Setting up the app in development
 
-1. Run `bundle install` to install the gem dependencies
-2. Run `yarn` to install node dependencies
-3. Run `bundle exec foreman start -f Procfile.dev` to launch the app on http://localhost:5000.
-
-## Linting
-
-It's best to lint just your app directories and not those belonging to the framework, e.g.
+1. [Follow these instructions to configure HTTPS](config/localhost/https/README.md)
+3. Run `yarn` to install node dependencies
+2. Run `bundle install` to install the gem dependencies
+4. Run `bundle exec foreman start -f Procfile.dev` to launch the app on http://localhost:5000.
 
 ## Docker
 
@@ -25,6 +22,10 @@ Install Docker and Docker Compose.
 ```bash
 docker-compose up --build
 ```
+
+## Linting
+
+It's best to lint just your app directories and not those belonging to the framework, e.g.
 
 ```bash
 bundle exec govuk-lint-ruby app lib spec
