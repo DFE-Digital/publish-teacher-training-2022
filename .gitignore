@@ -11,9 +11,6 @@
 /log/*
 /tmp/*
 
-# Ignore uploaded files in development
-/storage/*
-
 /public/assets
 .byebug_history
 
