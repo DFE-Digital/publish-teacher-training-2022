@@ -18,6 +18,14 @@
 
 It's best to lint just your app directories and not those belonging to the framework, e.g.
 
+## Docker
+
+Install Docker and Docker Compose.
+
+```bash
+docker-compose up --build
+```
+
 ```bash
 bundle exec govuk-lint-ruby app lib spec
 ```
