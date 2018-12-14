@@ -33,7 +33,7 @@ end
 class OmniAuth::Strategies::Dfe < OmniAuth::Strategies::OpenIDConnect; end
 
 if ENV['DFE_SIGN_IN_ISSUER'].present?
-  dfe_sign_in_issuer_uri = URI.parse(URI.encode(ENV['DFE_SIGN_IN_ISSUER']))
+  dfe_sign_in_issuer_uri = URI.parse(ENV['DFE_SIGN_IN_ISSUER'])
   options = {
     name: :dfe,
     discovery: true,
