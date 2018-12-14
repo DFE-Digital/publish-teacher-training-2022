@@ -1,8 +1,5 @@
 {
   "name": "rails-dfe-boilerplate",
-  "scripts": {
-    "postdeploy": "bundle exec rake db:migrate db:seed"
-  },
   "env": {
     "LANG": {
       "required": true
@@ -25,9 +22,6 @@
       "quantity": 1
     }
   },
-  "addons": [
-    "heroku-postgresql"
-  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
