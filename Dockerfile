@@ -19,6 +19,6 @@ ADD Gemfile $APP_HOME/Gemfile
 ADD Gemfile.lock $APP_HOME/Gemfile.lock
 RUN bundle install
 
-ADD . $APP_HOME
+ADD . $APP_HOME/
 
-CMD bundle exec rails server
+CMD bundle exec rails server -b 0.0.0.0
