@@ -17,3 +17,5 @@ WORKDIR $APP_HOME
 
 ADD Gemfile* $APP_HOME/
 RUN bundle install
+
+CMD ["bundle", "exec", "rails", "server"]
