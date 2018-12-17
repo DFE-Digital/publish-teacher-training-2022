@@ -1,0 +1,2 @@
+class Provider < Base
+end

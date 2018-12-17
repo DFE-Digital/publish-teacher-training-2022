@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   get "/auth/dfe/signout", to: "sessions#destroy"
   get "/auth/failure", to: "sessions#failure"
 
-  root to: "pages#home"
+  root to: "providers#index"
+
+  resources :providers, path: 'organisations'
 
   get "/pages/:page", to: "pages#show"
 
