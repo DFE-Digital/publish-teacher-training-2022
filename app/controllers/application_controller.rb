@@ -14,4 +14,8 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= session[:auth_user] if session[:auth_user]
   end
+
+  def authenticate
+    redirect_to '/signin' unless current_user
+  end
 end

@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_action :authenticate
+
   def home; end
 
   def show
