@@ -13,7 +13,7 @@
 1. [Follow these instructions to configure HTTPS](config/localhost/https/README.md)
 3. Run `yarn` to install node dependencies
 2. Run `bundle install` to install the gem dependencies
-4. Run `bundle exec foreman start -f Procfile.dev` to launch the app on http://localhost:5000.
+4. Run `bundle exec foreman start -f Procfile.dev` to launch the app on http://localhost:3000.
 
 ## Docker
 
