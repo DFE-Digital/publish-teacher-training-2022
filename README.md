@@ -28,5 +28,5 @@ docker-compose up --build
 It's best to lint just your app directories and not those belonging to the framework, e.g.
 
 ```bash
-bundle exec govuk-lint-ruby app lib spec
+bundle exec govuk-lint-ruby app config db lib spec --format clang
 ```
