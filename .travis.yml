@@ -2,34 +2,29 @@ language: ruby
 cache:
   bundler: true
   directories:
-  - node_modules
+    - node_modules
   yarn: true
+services:
+  - docker
 git:
   depth: false
 install:
-- bundle install
-- nvm install node
-- node -v
-- npm i -g yarn
-- yarn
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
 script:
-- bundle exec rails webpacker:compile
-- bundle exec rails spec
-- bundle exec govuk-lint-ruby app config db lib spec --format clang
-- bundle exec govuk-lint-sass app/assets/stylesheets
+  - bundle exec rails webpacker:compile
+  - bundle exec rails spec
+  - bundle exec govuk-lint-ruby app config db lib spec --format clang
+  - bundle exec govuk-lint-sass app/assets/stylesheets
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ] || [ "$TRAVIS_BRANCH" == "staging" ] || [ "$TRAVIS_BRANCH" == "production" ]; then
+    docker build -t batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH -f Dockerfile .;
+    docker login batdevcontainerregistry.azurecr.io -u="batdevcontainerregistry" -p="$AZURE_CR_PASSWORD";
+    docker push batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH;
+    fi
 env:
   global:
-  - secure: puDeqECzb42+VMBoD73s7er0upc7sRr4aoItO5dPgJhBGCHGTtuMxkat2JRKJfW77I9eM+kFsCwOsmXkEWR+PJFDCMeQaNGJFrr4mHvrZ9/Zb3I44UCbUfwHMqYDgfkKzI3JO1CXoHicoqBdv402tXWHvf8W4wE6l54KH6DinCCnG0J5Fd7uNAMurNvan2OimHfyKKgiTIrq4bKDvtES9iTkinPsqeU6GH4jWGg5PGroqtBkn3Eikn0vQYWYvlBEUvNnIG+o3pVa35ecfOIu5lwNou7Ts06+KRoZGLlJueuWL6MKy1Hvf84eYw1LfjMtQat3VDZR5DONvHfKllNNjVq9YX3QxQeE7F/k0C6FaJCDsuUCF2HhwFvkM5EDmjCXUFXmnZJBjtda9+OY28iGMoy/P8RKKVUO/R3KZhtzfw5NwmjchLKgWMnFqB55UdIv8hdfQZeNmjJzFA1OUayi4KNaapZUYXSrkgYi7XZmM6cN+10Wq5FFAt90ldbf1qngPdnohWT5td5a0Qb5OYl4lPMZa4EnUztbmpcrcxaDynaE6HmZjqnfZULicyYdLt9QaeS+1Dtdbe92gm4L+5x2lsLc7FOZFUrsdJNaIfut/3xJMV/FqHbyh53XuLmJf8g5AGPxfDdoFF0T8EC+m8Yr1+4cnfjWl5cUla4woeHyTOc=
-deploy:
-- provider: script
-  script: git push --force https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-manage-courses-frontend-app.scm.azurewebsites.net:443/bat-dev-manage-courses-frontend-app.git
-    HEAD:refs/heads/master
-  on: master
-- provider: script
-  script: git push --force https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-manage-courses-frontend-app.scm.azurewebsites.net:443/bat-staging-manage-courses-frontend-app.git
-    HEAD:refs/heads/master
-  on: staging
-- provider: script
-  script: git push --force https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-manage-courses-frontend-app.scm.azurewebsites.net:443/bat-prod-manage-courses-frontend-app.git
-    HEAD:refs/heads/master
-  on: production
+    secure: armP+kpauAzFnm1eT5Yd8QhIMdTv36q9IkDXLtMbUuAi6e+8UlRNxzMU6GZhdHA/vPNPrIY2rFNLN50/aJRJot7/iQdncjHaAHcGSF+yh5H4kDHrEfHG+lxJlTUVsOxu2jhDbbaGD6klE5OgukLdfN39AkuM4FPHCmPmPaX/zUo2D74IGEr5VfeqVn18Ge58wc5I/clqyz9X9GvBwe5SMt7KsWdVfymDeGS3cNihidBsXZWlrQSMkOWhUaYMwjpVI0V5opHemjn8MgW4FCJ6deObIp1Kzgke0dnzd0Lyr2BIWpyKt1ZTOR5c4HbMTNSD1j7yTFjH7hstXXnE3MnDcaqVuwBOeMQLKjDgi2PbqPaahZ50E9gXOn0fRSIeEIxFEfIypWKHn7Jx4aKdKSqk5YZ5IO4vp8NI5lxLB4H+CI3AlW0gkaNCj6Sbjdx0xgxAOyP8K8tBHGcVvqa2Qz2M5YqdMpT2JYwMjEYhiaXJHSLJfxM47MnK9JbK1MLX8sA5IweJcnVjvc6Id5ExNzEHknuDwnBO6m0VXEXaSWiAetVoZ93X6rBoiAQAIlHY7yVtv4U/axhkss8Qe4lAKVkXDWVNKjAhJ/NTwLveyCtBVTL45Sa55HRtDulD4TysTY6E1YOLW3juhuMX83DLXjf40/wUl3uBuAlo6rpVbmJoUbY=
