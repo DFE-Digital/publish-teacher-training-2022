@@ -8,23 +8,17 @@ services:
   - docker
 git:
   depth: false
-env:
-  - APP_NAME=manage-courses-frontend
-  - CONTAINER_REGISTRY_NAME=batdevcontainerregistry.azurecr.io
-  - BUILD_NAME=$CONTAINER_REGISTRY_NAME/$APP_NAME
-  - COMMIT_BUILD_NAME=$BUILD_NAME:$(git rev-parse --short HEAD)
-  - MASTER_BUILD_NAME=$BUILD_NAME:master
 script:
-  - docker build -t $COMMIT_BUILD_NAME -f Dockerfile .;
-  - docker run $COMMIT_BUILD_NAME /bin/sh -c "bundle exec rails spec"
-  - docker run $COMMIT_BUILD_NAME /bin/sh -c "bundle exec govuk-lint-ruby app config db lib spec --format clang"
-  - docker run $COMMIT_BUILD_NAME /bin/sh -c "bundle exec govuk-lint-sass app/assets/stylesheets"
+  - docker build -t batdevcontainerregistry.azurecr.io/manage-courses-frontend:$(git rev-parse --short HEAD) -f Dockerfile .;
+  - docker run batdevcontainerregistry.azurecr.io/manage-courses-frontend:$(git rev-parse --short HEAD) /bin/sh -c "bundle exec rails spec"
+  - docker run batdevcontainerregistry.azurecr.io/manage-courses-frontend:$(git rev-parse --short HEAD) /bin/sh -c "bundle exec govuk-lint-ruby app config db lib spec --format clang"
+  - docker run batdevcontainerregistry.azurecr.io/manage-courses-frontend:$(git rev-parse --short HEAD) /bin/sh -c "bundle exec govuk-lint-sass app/assets/stylesheets"
 deploy:
   provider: script
   script:
-    - echo "$AZURE_CR_PASSWORD" | docker login $CONTAINER_REGISTRY_NAME -u="batdevcontainerregistry" --password-stdin;
-    - docker tag $COMMIT_BUILD_NAME $MASTER_BUILD_NAME
-    - docker push $BUILD_NAME;
+    - echo "$AZURE_CR_PASSWORD" | docker login batdevcontainerregistry.azurecr.io -u="batdevcontainerregistry" --password-stdin;
+    - docker tag batdevcontainerregistry.azurecr.io/manage-courses-frontend:$(git rev-parse --short HEAD) batdevcontainerregistry.azurecr.io/manage-courses-frontend:master
+    - docker push batdevcontainerregistry.azurecr.io/manage-courses-frontend;
   on:
     branch: master
 env:
