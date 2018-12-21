@@ -8,22 +8,25 @@ services:
   - docker
 git:
   depth: false
-install:
-  - bundle install
-  - nvm install node
-  - node -v
-  - npm i -g yarn
-  - yarn
+env:
+  - APP_NAME=manage-courses-frontend
+  - CONTAINER_REGISTRY_NAME=batdevcontainerregistry.azurecr.io
+  - BUILD_NAME=$CONTAINER_REGISTRY_NAME/$APP_NAME
+  - COMMIT_BUILD_NAME=$BUILD_NAME:$(git rev-parse --short HEAD)
+  - MASTER_BUILD_NAME=$BUILD_NAME:master
 script:
-  - bundle exec rails webpacker:compile
-  - bundle exec rails spec
-  - bundle exec govuk-lint-ruby app config db lib spec --format clang
-  - bundle exec govuk-lint-sass app/assets/stylesheets
-after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ] || [ "$TRAVIS_BRANCH" == "staging" ] || [ "$TRAVIS_BRANCH" == "production" ]; then
-    echo "$AZURE_CR_PASSWORD" | docker login batdevcontainerregistry.azurecr.io -u="batdevcontainerregistry" --password-stdin;
-    docker push batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH;
-    fi
+  - docker build -t $COMMIT_BUILD_NAME -f Dockerfile .;
+  - docker run $COMMIT_BUILD_NAME /bin/sh -c "bundle exec rails spec"
+  - docker run $COMMIT_BUILD_NAME /bin/sh -c "bundle exec govuk-lint-ruby app config db lib spec --format clang"
+  - docker run $COMMIT_BUILD_NAME /bin/sh -c "bundle exec govuk-lint-sass app/assets/stylesheets"
+deploy:
+  provider: script
+  script:
+    - echo "$AZURE_CR_PASSWORD" | docker login $CONTAINER_REGISTRY_NAME -u="batdevcontainerregistry" --password-stdin;
+    - docker tag $COMMIT_BUILD_NAME $MASTER_BUILD_NAME
+    - docker push $BUILD_NAME;
+  on:
+    branch: master
 env:
   global:
     secure: armP+kpauAzFnm1eT5Yd8QhIMdTv36q9IkDXLtMbUuAi6e+8UlRNxzMU6GZhdHA/vPNPrIY2rFNLN50/aJRJot7/iQdncjHaAHcGSF+yh5H4kDHrEfHG+lxJlTUVsOxu2jhDbbaGD6klE5OgukLdfN39AkuM4FPHCmPmPaX/zUo2D74IGEr5VfeqVn18Ge58wc5I/clqyz9X9GvBwe5SMt7KsWdVfymDeGS3cNihidBsXZWlrQSMkOWhUaYMwjpVI0V5opHemjn8MgW4FCJ6deObIp1Kzgke0dnzd0Lyr2BIWpyKt1ZTOR5c4HbMTNSD1j7yTFjH7hstXXnE3MnDcaqVuwBOeMQLKjDgi2PbqPaahZ50E9gXOn0fRSIeEIxFEfIypWKHn7Jx4aKdKSqk5YZ5IO4vp8NI5lxLB4H+CI3AlW0gkaNCj6Sbjdx0xgxAOyP8K8tBHGcVvqa2Qz2M5YqdMpT2JYwMjEYhiaXJHSLJfxM47MnK9JbK1MLX8sA5IweJcnVjvc6Id5ExNzEHknuDwnBO6m0VXEXaSWiAetVoZ93X6rBoiAQAIlHY7yVtv4U/axhkss8Qe4lAKVkXDWVNKjAhJ/NTwLveyCtBVTL45Sa55HRtDulD4TysTY6E1YOLW3juhuMX83DLXjf40/wUl3uBuAlo6rpVbmJoUbY=
