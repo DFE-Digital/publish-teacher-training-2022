@@ -15,16 +15,6 @@ ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-ADD Gemfile $APP_HOME/Gemfile
-ADD Gemfile.lock $APP_HOME/Gemfile.lock
-RUN bundle install
-
-ADD package.json $APP_HOME/package.json
-ADD yarn.lock $APP_HOME/yarn.lock
-RUN yarn
+ENV BUNDLE_PATH /dependency-cache/bundler
 
 ADD . $APP_HOME/
-
-RUN bundle exec rake assets:precompile
-
-CMD bundle exec rails server -b 0.0.0.0
