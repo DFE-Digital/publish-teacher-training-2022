@@ -15,6 +15,4 @@ ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-ENV BUNDLE_PATH /dependency-cache/bundler
-
 ADD . $APP_HOME/
