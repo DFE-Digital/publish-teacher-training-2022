@@ -11,9 +11,7 @@ script:
   - docker run batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec govuk-lint-sass app/assets/stylesheets"
 deploy:
   provider: script
-  script:
-    - echo "$AZURE_CR_PASSWORD" | docker login batdevcontainerregistry.azurecr.io -u="batdevcontainerregistry" --password-stdin
-    - docker push batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH
+  script: bash docker-push.sh
   on:
     branch: master
 env:
