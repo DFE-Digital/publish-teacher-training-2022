@@ -9,13 +9,7 @@ git:
   depth: false
 script:
   - docker build -t batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH -f Dockerfile .
-  - docker run --env BUNDLE_PATH=/bundler-cache -v /home/travis/bundler-cache:/bundler-cache -v /home/travis/node_modules:/app/node_modules batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle check || bundle install"
-  - docker run --env BUNDLE_PATH=/bundler-cache -v /home/travis/bundler-cache:/bundler-cache -v /home/travis/node_modules:/app/node_modules batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "yarn"
-  - docker run --env BUNDLE_PATH=/bundler-cache -v /home/travis/bundler-cache:/bundler-cache -v /home/travis/node_modules:/app/node_modules batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec rake assets:precompile"
-  - docker run --env BUNDLE_PATH=/bundler-cache -v /home/travis/bundler-cache:/bundler-cache -v /home/travis/node_modules:/app/node_modules batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec rails webpacker:compile"
-  - docker run --env BUNDLE_PATH=/bundler-cache -v /home/travis/bundler-cache:/bundler-cache -v /home/travis/node_modules:/app/node_modules batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec rails spec"
-  - docker run --env BUNDLE_PATH=/bundler-cache -v /home/travis/bundler-cache:/bundler-cache -v /home/travis/node_modules:/app/node_modules batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec govuk-lint-ruby app config db lib spec --format clang"
-  - docker run --env BUNDLE_PATH=/bundler-cache -v /home/travis/bundler-cache:/bundler-cache -v /home/travis/node_modules:/app/node_modules batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec govuk-lint-sass app/assets/stylesheets" -v /home/travis/dependency-cache:/dependency-cache
+  - bash docker-run.sh /home/travis/bundler-cache /home/travis/node_modules
 deploy:
   provider: script
   script: bash docker-push.sh
