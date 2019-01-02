@@ -19,6 +19,10 @@ ADD Gemfile $APP_HOME/Gemfile
 ADD Gemfile.lock $APP_HOME/Gemfile.lock
 RUN bundle install
 
+ADD package.json $APP_HOME/package.json
+ADD yarn.lock $APP_HOME/yarn.lock
+RUN yarn
+
 ADD . $APP_HOME/
 
 RUN bundle exec rake assets:precompile
