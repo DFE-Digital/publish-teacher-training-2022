@@ -4,7 +4,11 @@ services:
 git:
   depth: false
 script:
-  - docker build -t batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH -f Dockerfile .
+  - echo "$AZURE_CR_PASSWORD" | docker login batdevcontainerregistry.azurecr.io -u="batdevcontainerregistry" --password-stdin
+  # Pull the latest build so that we can re-use the layers as part of the cache when building.
+  # Based on http://atodorov.org/blog/2017/08/07/faster-travis-ci-tests-with-docker-cache/
+  - docker pull batdevcontainerregistry.azurecr.io/manage-courses-frontend:master
+  - docker build --cache-from batdevcontainerregistry.azurecr.io/manage-courses-frontend:master -t batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH -f Dockerfile .
   - docker run batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec rails webpacker:compile"
   - docker run batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec rails spec"
   - docker run batdevcontainerregistry.azurecr.io/manage-courses-frontend:$TRAVIS_BRANCH /bin/sh -c "bundle exec govuk-lint-ruby app config db lib spec --format clang"
