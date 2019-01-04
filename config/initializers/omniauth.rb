@@ -1,6 +1,19 @@
 module OmniAuth
   module Strategies
     class OpenIDConnect
+      def authorize_uri
+        client.redirect_uri = redirect_uri
+        opts = {
+          response_type: options.response_type,
+          scope: options.scope,
+          state: new_state,
+          nonce: (new_nonce if options.send_nonce),
+          hd: options.hd,
+          prompt: :consent
+        }
+        client.authorization_uri(opts.reject { |_, v| v.nil? })
+      end
+
       def callback_phase
         error = request.params['error_reason'] || request.params['error']
         if error
@@ -40,6 +53,7 @@ if ENV['DFE_SIGN_IN_ISSUER'].present?
     response_type: :code,
     client_signing_alg: :RS256,
     scope: %i[openid profile email offline_access],
+    prompt: %i[consent],
     client_options: {
       port: dfe_sign_in_issuer_uri.port,
       scheme: dfe_sign_in_issuer_uri.scheme,
@@ -49,6 +63,7 @@ if ENV['DFE_SIGN_IN_ISSUER'].present?
       redirect_uri: "#{ENV['BASE_URL']}/auth/dfe/callback",
       authorization_endpoint: '/auth',
       jwks_uri: '/certs',
+      token_endpoint: "/token",
       userinfo_endpoint: '/me'
     }
   }
