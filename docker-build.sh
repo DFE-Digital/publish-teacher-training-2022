@@ -1,18 +1,12 @@
 #!/bin/bash
 set -e
 
-if [ -z "$TRAVIS_BRANCH" ];
-then
-  echo "TRAVIS_BRANCH environment variable is required"
-  exit 1
-fi
-
 source config.sh
 
 DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST ./docker-login.sh
 
 DOCKER_MASTER_TAG="$DOCKER_PATH:master"
-DOCKER_BRANCH_TAG="$DOCKER_PATH:$TRAVIS_BRANCH"
+DOCKER_BRANCH_TAG="$DOCKER_PATH:latest"
 
 echo "Pulling $DOCKER_MASTER_TAG to populate layer cache..."
 # Pull the latest build so that we can re-use the layers as part of the cache when building.
