@@ -12,4 +12,5 @@ source config.sh
 DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST ./docker-login.sh
 
 echo "Running docker push to $DOCKER_PATH:$TRAVIS_BRANCH ..."
-docker push "$DOCKER_PATH:$TRAVIS_BRANCH"
+docker tag "$DOCKER_PATH:latest" "$DOCKER_PATH:$TRAVIS_BRANCH"
+docker push "$DOCKER_PATH"
