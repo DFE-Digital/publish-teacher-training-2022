@@ -32,6 +32,10 @@ gem 'canonical-rails'
 gem 'omniauth', '~> 1.8'
 gem 'omniauth_openid_connect', '~> 0.1'
 
+# App Insights for Azure
+gem 'pkg-config', '~> 1.1.7'
+gem 'application_insights'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
