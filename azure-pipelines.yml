@@ -9,8 +9,8 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'manage-courses-frontend:$(build.buildNumber)'
-  tag: '$(acrName).azurecr.io/$(imageName)'
+  imageName: 'manage-courses-frontend-poc:$(build.buildNumber)'
+  tag: 'govukdfe/$(imageName)'
 
 steps:
 - script: |
@@ -31,11 +31,11 @@ steps:
   displayName: 'Execute linters'
 
 - script: |
-    echo $password | docker login --username $(acrName) --password-stdin $(acrName).azurecr.io
+    echo $password | docker login --username $(dockerHubUsername) --password-stdin
     docker push "$(tag)"
   displayName: 'Push image'
   env:
-    password: $(acrPassword)
+    password: $(dockerHubPassword)
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
