@@ -51,18 +51,6 @@
                 "description": "The name of the app service plan."
             }
         },
-        "containerRegistryName": {
-            "type": "string",
-            "metadata": {
-                "description": "The name of the container registry."
-            }
-        },
-        "containerRegistryPassword": {
-            "type": "string",
-            "metadata": {
-                "descrription": "Password to enable pushes to the registry. TO BE MOVED TO REFERENCE."
-            }
-        },
         "dockerHubUsername": {
             "type": "string",
             "metadata": {
@@ -169,18 +157,6 @@
                             {
                                 "name": "SECRET_KEY_BASE",
                                 "value": "[parameters('secretKeyBase')]"
-                            },
-                            {
-                                "name": "DOCKER_REGISTRY_SERVER_USERNAME",
-                                "value": "[parameters('containerRegistryName')]"
-                            },
-                            {
-                                "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
-                                "value": "[parameters('containerRegistryPassword')]"
-                            },
-                            {
-                                "name": "DOCKER_REGISTRY_SERVER_URL",
-                                "value": "[concat('https://', variables('containerRegistryFqdn'))]"
                             },
                             {
                                 "name": "WEBPACKER_DEV_SERVER_HOST",
