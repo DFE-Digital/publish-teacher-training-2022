@@ -120,7 +120,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('templateBaseUrl'), 'app-service.json')]",
+                    "uri": "[concat(variables('templateBaseUrl'), 'app-service-linux.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
