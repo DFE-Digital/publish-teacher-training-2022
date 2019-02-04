@@ -1,0 +1,57 @@
+name: '0.1.0-$(Rev:r)'
+trigger:
+  batch: true
+  branches:
+    include:
+      - vsts_build_and_deploy
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+variables:
+  imageName: 'manage-courses-frontend:$(build.buildNumber)'
+  tag: '$(acrName).azurecr.io/$(imageName)'
+
+steps:
+- script: |
+    docker build -f Dockerfile -t $(tag) .
+  displayName: 'Build image'
+
+- script: |
+    docker run "$(tag)" /bin/sh -c "rails webpacker:compile"
+  displayName: 'Execute webpack'
+
+- script: |
+    docker run "$(tag)" /bin/sh -c "rails spec" | sed -e 1d >> rspec-results.xml
+  displayName: 'Execute tests'
+
+- script: | 
+    docker run "$(tag)" /bin/sh -c "govuk-lint-ruby app config db lib spec --format clang"
+    docker run "$(tag)" /bin/sh -c "govuk-lint-sass app/assets/stylesheets"
+  displayName: 'Execute linters'
+
+- script: |
+    echo $password | docker login --username $(acrName) --password-stdin $(acrName).azurecr.io
+    docker push "$(tag)"
+  displayName: 'Push image'
+  env:
+    password: $(acrPassword)
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    Contents: |
+     azure/**
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    OverWrite: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: '*.xml'
