@@ -9,7 +9,6 @@ pool:
 
 variables:
   imageName: 'manage-courses-frontend-poc'
-  tag: 'govukdfe/$(imageName)'
 
 steps:
 - script: |
