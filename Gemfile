@@ -33,7 +33,7 @@ gem 'omniauth', '~> 1.8'
 gem 'omniauth_openid_connect', '~> 0.1'
 
 # App Insights for Azure
-gem 'pkg-config', '~> 1.3.2'
+gem 'pkg-config', '~> 1.3.3'
 gem 'application_insights'
 
 group :development, :test do
