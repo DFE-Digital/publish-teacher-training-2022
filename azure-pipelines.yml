@@ -1,4 +1,3 @@
-name: '0.1.0-$(Rev:r)'
 trigger:
   batch: true
   branches:
@@ -9,10 +8,17 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'manage-courses-frontend-poc:$(build.buildNumber)'
+  imageName: 'manage-courses-frontend-poc'
   tag: 'govukdfe/$(imageName)'
 
 steps:
+- script: |
+    GIT_SHORT_SHA=$(echo $(Build.SourceVersion) | cut -c 1-7)
+    tag=$(dockerHubUsername)/$(imageName):$GIT_SHORT_SHA
+    echo "##vso[build.updatebuildnumber]$GIT_SHORT_SHA"
+    echo "##vso[task.setvariable variable=tag;]$tag"
+  displayName: 'Set version number'
+
 - script: |
     docker build -f Dockerfile -t $(tag) .
   displayName: 'Build image'
