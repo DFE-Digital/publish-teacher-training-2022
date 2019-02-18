@@ -14,6 +14,7 @@
 3. Run `yarn` to install node dependencies
 2. Run `bundle install` to install the gem dependencies
 4. Run `bundle exec foreman start -f Procfile.dev` to launch the app on http://localhost:3000.
+5. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets.
 
 ## Docker
 
