@@ -11,19 +11,4 @@ services:
       - ".:/app"
     env_file:
       - '.env'
-    depends_on:
-      - 'webpack'
     command: rails s -b 'ssl://web:3000?key=config/localhost/https/localhost.key&cert=config/localhost/https/localhost.crt'
-
-  webpack:
-    build: .
-    env_file:
-      - '.env'
-    volumes:
-      - ".:/app"
-    ports:
-      - "3035:3035"
-    command: ./bin/webpack-dev-server --inline true
-
-volumes:
-  webpack:

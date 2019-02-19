@@ -24,6 +24,8 @@ Install Docker and Docker Compose.
 docker-compose up --build
 ```
 
+*Warning*: Running docker seems to slow down local development significantly on macOS.
+
 ## Linting
 
 It's best to lint just your app directories and not those belonging to the framework, e.g.
