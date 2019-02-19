@@ -1,7 +1,7 @@
 # Note: You must restart bin/webpack-dev-server for changes to take effect
 
 default: &default
-  source_path: app/javascript
+  source_path: app/webpacker
   source_entry_path: packs
   public_output_path: packs
   cache_path: tmp/cache/webpacker
@@ -33,7 +33,8 @@ development:
 
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
-    https: false
+    # This is being overridden in config/webpack/development.js to be actual file contents.
+    https: true
     host: localhost
     port: 3035
     public: localhost:3035
@@ -53,9 +54,6 @@ development:
 test:
   <<: *default
   compile: true
-
-  # Compile test packs to a separate directory
-  public_output_path: packs-test
 
 production:
   <<: *default
