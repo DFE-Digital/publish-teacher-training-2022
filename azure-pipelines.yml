@@ -27,10 +27,10 @@ steps:
   displayName: 'Execute webpack'
 
 - script: |
-    docker run "$(tag)" /bin/sh -c "rails spec" | sed -e 1d >> rspec-results.xml
+    docker run "$(tag)" /bin/sh -c 'rails spec SPEC_OPTS="--format RspecJunitFormatter"' | sed -e 1d >> rspec-results.xml
   displayName: 'Execute tests'
 
-- script: | 
+- script: |
     docker run "$(tag)" /bin/sh -c "govuk-lint-ruby app config db lib spec --format clang"
     docker run "$(tag)" /bin/sh -c "govuk-lint-sass app/assets/stylesheets"
   displayName: 'Execute linters'
