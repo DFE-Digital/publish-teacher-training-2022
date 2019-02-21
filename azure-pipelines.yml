@@ -32,7 +32,7 @@ steps:
 
 - script: |
     docker run "$(tag)" /bin/sh -c "govuk-lint-ruby app config db lib spec --format clang"
-    docker run "$(tag)" /bin/sh -c "govuk-lint-sass app/assets/stylesheets"
+    docker run "$(tag)" /bin/sh -c "govuk-lint-sass app/webpacker/stylesheets"
   displayName: 'Execute linters'
 
 - script: |
