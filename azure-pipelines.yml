@@ -27,7 +27,7 @@ steps:
   displayName: 'Execute webpack'
 
 - script: |
-    docker run "$(tag)" /bin/sh -c 'rails spec SPEC_OPTS="--format RspecJunitFormatter --out ./rspec-results.xml"'
+    docker run "$(tag)" /bin/sh -c 'rails spec SPEC_OPTS="--format RspecJunitFormatter"' | sed -e 1d >> rspec-results.xml
   displayName: 'Execute tests'
 
 - script: |
