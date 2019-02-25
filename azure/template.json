@@ -2,10 +2,44 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "appServiceName": {
+        "resourceEnvironmentName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the app service."
+                "description": "The environment of the resource."
+            }
+        },
+        "serviceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The abbriviation of the service name to be used when naming a resource."
+            }
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the key vault."
+            }
+        },
+        "keyVaultResourceGroup": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The resource group for the key vault."
+            }
+        },
+        "customHostName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The custom hostname to add to the app service."
+            }
+        },
+        "certificateName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the certificate in key vault."
             }
         },
         "webpackerDevHost": {
@@ -43,12 +77,6 @@
             "type": "string",
             "metadata": {
                 "description": "Base url for the site."
-            }
-        },
-        "appServicePlanName": {
-            "type": "string",
-            "metadata": {
-                "description": "The name of the app service plan."
             }
         },
         "dockerHubUsername": {
@@ -89,39 +117,14 @@
             "metadata": {
                 "description": "Secret Key Base."
             }
-        },
-        "keyVaultName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The name of the key vault."
-            }
-        },
-        "keyVaultResourceGroup": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The resource group for the key vault."
-            }
-        },
-        "customHostName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The custom hostname to add to the app service."
-            }
-        },
-        "certificateName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The name of the certificate in key vault."
-            }
         }
     },
     "variables": {
+        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
+        "resourceNamePrefix": "[toLower(concat('bat-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
         "keyvaultCertificateName": "[if(greater(length(parameters('certificateName')),0), parameters('certificateName'), replace(parameters('customHostName'), '.', '-'))]",
-        "templateBaseUrl": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
+        "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
+        "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
         "appServiceRuntimeStack": "[concat('DOCKER|', parameters('dockerHubUsername'), '/', parameters('containerImageReference'))]"
     },
     "resources": [
@@ -132,12 +135,12 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('templateBaseUrl'), 'app-service-plan.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-plan.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "appServicePlanName": {
-                        "value": "[parameters('appServicePlanName')]"
+                        "value": "[variables('appServicePlanName')]"
                     }
                 }
             }
@@ -149,7 +152,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('templateBaseUrl'), 'app-service-certificate.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -172,18 +175,18 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('templateBaseUrl'), 'app-service-linux.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-linux.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "appServiceName": {
-                        "value": "[parameters('appServiceName')]"
+                        "value": "[variables('appServiceName')]"
                     },
                     "appServicePlanResourceGroup": {
                         "value": "[resourceGroup().name]"
                     },
                     "appServicePlanName": {
-                        "value": "[parameters('appServicePlanName')]"
+                        "value": "[variables('appServicePlanName')]"
                     },
                     "runtimeStack": {
                         "value": "[variables('appServiceRuntimeStack')]"
@@ -255,15 +258,15 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('templateBaseUrl'), 'application-insights.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'), 'application-insights.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "appInsightsName": {
-                        "value": "[parameters('appServiceName')]"
+                        "value": "[variables('appServiceName')]"
                     },
                     "attachedService": {
-                        "value": "[parameters('appServiceName')]"
+                        "value": "[variables('appServiceName')]"
                     }
                 }
             }
