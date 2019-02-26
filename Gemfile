@@ -32,6 +32,9 @@ gem 'omniauth_openid_connect', '~> 0.1'
 gem 'application_insights'
 gem 'pkg-config', '~> 1.3.4'
 
+# Parsing JSON from an API
+gem 'json_api_client'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
