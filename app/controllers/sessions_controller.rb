@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
 
     user_info = request.env["omniauth.auth"][:info]
 
-    Session.with_headers(Authorization: "Bearer #{user_info.email}" ) do
-      Session.create(first_name: user_info.first_name, last_name: user_info.last_name)
+    Session.with_headers(Authorization: "Bearer #{user_info[:email]}" ) do
+      Session.create(first_name: user_info[:first_name], last_name: user_info[:last_name])
     end
 
     redirect_to root_path
