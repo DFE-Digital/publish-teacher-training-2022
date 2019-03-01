@@ -129,6 +129,12 @@
             "metadata": {
                 "description": "Base url for the manage UI."
             }
+        },
+        "settingsAuthenticationSecret": {
+            "type": "string",
+            "metadata": {
+                "description": "Auth secret for manage back-end."
+            }
         }
     },
     "variables": {
@@ -256,6 +262,10 @@
                             {
                                 "name": "MANAGE_UI_BASE_URL",
                                 "value": "[parameters('manageUiBaseUrl')]"
+                            },
+                            {
+                                "name": "SETTINGS__AUTHENTICATION__SECRET",
+                                "value": "[parameters('settingsAuthenticationSecret')]"
                             }
                         ]
                     },
