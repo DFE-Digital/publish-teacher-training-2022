@@ -16,7 +16,7 @@ module FeatureHelpers
   end
 
   def stub_session_create
-    allow(Session).to receive(:create).and_return({something: 'testing'})
+    allow(Session).to receive(:create).and_return(something: 'testing')
   end
 end
 

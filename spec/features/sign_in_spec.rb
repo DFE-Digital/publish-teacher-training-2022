@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.feature 'Sign in', type: :feature do
   scenario 'using DfE Sign-in' do
-
     stub_omniauth
     stub_session_create
 

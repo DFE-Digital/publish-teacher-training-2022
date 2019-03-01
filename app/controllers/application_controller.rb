@@ -25,11 +25,11 @@ class ApplicationController < ActionController::Base
     current_user[:info]
   end
 
-  private
+private
 
   def set_connection
     Base.connection do |connection|
-      connection.use FaradayMiddleware::OAuth2, "#{current_user_info[:email]}", :token_type => 'bearer'
+      connection.use FaradayMiddleware::OAuth2, current_user_info[:email].to_s, token_type: 'bearer'
     end
   end
 end
