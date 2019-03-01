@@ -6,11 +6,9 @@ class SessionsController < ApplicationController
   def create
     session[:auth_user] = auth_hash
 
-    user_info = request.env["omniauth.auth"][:info]
+    set_connection
 
-    Session.with_headers(Authorization: "Bearer #{user_info[:email]}" ) do
-      Session.create(first_name: user_info[:first_name], last_name: user_info[:last_name])
-    end
+    session[:auth_user].user_id = Session.create(first_name: current_user_info[:first_name], last_name: current_user_info[:last_name]).id
 
     redirect_to root_path
   end

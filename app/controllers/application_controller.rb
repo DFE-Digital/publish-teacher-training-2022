@@ -16,6 +16,20 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    redirect_to '/signin' unless current_user
+    redirect_to '/signin' unless current_user do
+      :set_connection
+    end
+  end
+
+  def current_user_info
+    current_user[:info]
+  end
+
+  private
+
+  def set_connection
+    Base.connection do |connection|
+      connection.use FaradayMiddleware::OAuth2, "#{current_user_info[:email]}", :token_type => 'bearer'
+    end
   end
 end
