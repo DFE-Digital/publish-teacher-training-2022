@@ -117,6 +117,24 @@
             "metadata": {
                 "description": "Secret Key Base."
             }
+        },
+        "manageBackendBaseUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Base url for the manage back-end."
+            }
+        },
+        "manageUiBaseUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Base url for the manage UI."
+            }
+        },
+        "settingsAuthenticationSecret": {
+            "type": "string",
+            "metadata": {
+                "description": "Auth secret for manage back-end."
+            }
         }
     },
     "variables": {
@@ -236,6 +254,18 @@
                             {
                                 "name": "BASE_URL",
                                 "value": "[parameters('siteBaseUrl')]"
+                            },
+                            {
+                                "name": "MANAGE_BACKEND_BASE_URL",
+                                "value": "[parameters('manageBackendBaseUrl')]"
+                            },
+                            {
+                                "name": "MANAGE_UI_BASE_URL",
+                                "value": "[parameters('manageUiBaseUrl')]"
+                            },
+                            {
+                                "name": "SETTINGS__AUTHENTICATION__SECRET",
+                                "value": "[parameters('settingsAuthenticationSecret')]"
                             }
                         ]
                     },
