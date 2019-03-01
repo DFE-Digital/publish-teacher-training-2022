@@ -45,8 +45,8 @@ end
 
 class OmniAuth::Strategies::Dfe < OmniAuth::Strategies::OpenIDConnect; end
 
-if ENV['DFE_SIGN_IN_ISSUER'].present?
-  dfe_sign_in_issuer_uri = URI.parse(ENV['DFE_SIGN_IN_ISSUER'])
+if Settings.dfe_signin.issuer.present?
+  dfe_sign_in_issuer_uri = URI.parse(Settings.dfe_signin.issuer)
   options = {
     name: :dfe,
     discovery: true,
@@ -58,9 +58,9 @@ if ENV['DFE_SIGN_IN_ISSUER'].present?
       port: dfe_sign_in_issuer_uri.port,
       scheme: dfe_sign_in_issuer_uri.scheme,
       host: dfe_sign_in_issuer_uri.host,
-      identifier: ENV['DFE_SIGN_IN_IDENTIFIER'],
-      secret: ENV['DFE_SIGN_IN_SECRET'],
-      redirect_uri: "#{ENV['BASE_URL']}/auth/dfe/callback",
+      identifier: Settings.dfe_signin.identifier,
+      secret: Settings.dfe_signin.secret,
+      redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/callback",
       authorization_endpoint: '/auth',
       jwks_uri: '/certs',
       token_endpoint: "/token",

@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   end
 
   def signout
-    redirect_to "#{ENV['DFE_SIGN_IN_ISSUER']}/session/end?id_token_hint=#{current_user['credentials']['id_token']}&post_logout_redirect_uri=#{ENV['BASE_URL']}/auth/dfe/signout"
+    redirect_to "#{Settings.dfe_signin.issuer}/session/end?id_token_hint=#{current_user['credentials']['id_token']}&post_logout_redirect_uri=#{Settings.dfe_signin.base_url}/auth/dfe/signout"
   end
 
   def failure
