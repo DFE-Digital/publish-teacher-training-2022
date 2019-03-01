@@ -50,8 +50,6 @@ group :development, :test do
 
   # Testing framework
   gem 'rspec-rails', '~> 3.8'
-
-  gem 'dotenv-rails'
 end
 
 group :development do
