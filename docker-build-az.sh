@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# DEBUG: print env
+
+env
+
 # Set up script vars
 DOCKER_IMAGE_TAG=$tag
 DOCKER_RUN="docker run $DOCKER_IMAGE_TAG /bin/sh -c"
