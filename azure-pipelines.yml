@@ -36,6 +36,7 @@ steps:
     docker run "$(tag)" /bin/sh -c "govuk-lint-ruby app config db lib spec --format clang"
     docker run "$(tag)" /bin/sh -c "govuk-lint-sass app/webpacker/stylesheets"
   displayName: 'Execute linters'
+  failOnStderr: true
 
 - script: |
     echo $password | docker login --username $(dockerHubUsername) --password-stdin
