@@ -27,6 +27,7 @@ RSpec.describe SessionsController, type: :controller do
       allow(Session).to receive(:create)
         .with(first_name: user_info[:first_name], last_name: user_info[:last_name])
         .and_return(double(id: user_id))
+      allow(Base).to receive(:connection)
     end
 
     it "creates the session and redirects to root" do
@@ -39,6 +40,7 @@ RSpec.describe SessionsController, type: :controller do
       expect(subject).to redirect_to("/")
       expect(@request.session[:auth_user][:user_id]).to eq user_id
       expect(@request.session[:auth_user]["info"]).to eq user_info
+      expect(Base).to have_received(:connection)
     end
   end
 
