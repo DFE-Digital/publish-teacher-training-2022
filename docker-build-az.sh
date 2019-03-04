@@ -21,8 +21,8 @@ echo "Run tests"
 $DOCKER_RUN 'rails spec SPEC_OPTS="--format RspecJunitFormatter"' | sed -e 1d >> rspec-results.xml
 
 echo "Run linters"
-$DOCKER_RUN "govuk-lint-sass app/webpacker/stylesheets"s
 $DOCKER_RUN "govuk-lint-ruby app config db lib spec --format clang"
+$DOCKER_RUN "govuk-lint-sass app/webpacker/stylesheets"
 
 echo "Pushing image"
 echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
