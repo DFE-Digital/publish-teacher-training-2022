@@ -35,6 +35,9 @@ gem 'pkg-config', '~> 1.3.4'
 # Parsing JSON from an API
 gem 'json_api_client'
 
+# For encoding/decoding web token used for authentication
+gem 'jwt'
+
 # Settings for the app
 gem 'config'
 
