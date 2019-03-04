@@ -4,10 +4,10 @@ module FeatureHelpers
     OmniAuth.config.mock_auth[:dfe] = {
       provider: "dfe",
       uid: "123456789",
-      info: {
-        first_name: "John",
-        last_name: "Smith",
-        email: "email@example.com"
+      "info" => {
+        "first_name" => "John",
+        "last_name" => "Smith",
+        "email" => "email@example.com"
       },
       credentials: {
         token_id: "123"
@@ -16,7 +16,7 @@ module FeatureHelpers
   end
 
   def stub_session_create
-    allow(Session).to receive(:create).and_return(something: 'testing')
+    allow(Session).to receive(:create).and_return(double(id: 1))
   end
 end
 
