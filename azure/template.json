@@ -248,6 +248,10 @@
                                 "value": "[parameters('dfeSignInSecret')]"
                             },
                             {
+                                "name": "SETTINGS__DFE_SIGNIN__SECRET",
+                                "value": "[parameters('dfeSignInSecret')]"
+                            },
+                            {
                                 "name": "DFE_SIGN_IN_PROFILE",
                                 "value": "[parameters('dfeSignInProfile')]"
                             },

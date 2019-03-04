@@ -11,7 +11,7 @@ RSpec.describe SessionsController, type: :controller do
 
       get :signout
 
-      expect(subject).to redirect_to("https://example.com/session/end?id_token_hint=123&post_logout_redirect_uri=https://localhost:3000/auth/dfe/signout")
+      expect(subject).to redirect_to("https://signin-test-oidc-as.azurewebsites.net/session/end?id_token_hint=123&post_logout_redirect_uri=https://localhost:3000/auth/dfe/signout")
     end
   end
 

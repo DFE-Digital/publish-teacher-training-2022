@@ -1,0 +1,9 @@
+dfe_signin:
+  issuer: https://oidc.signin.education.gov.uk
+  secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
+  profile: https://profile.signin.education.gov.uk
+  base_url: https://www2.publish-teacher-training-courses.service.gov.uk
+manage_backend:
+  base_url: https://api2.publish-teacher-training-courses.service.gov.uk
+manage_ui:
+  base_url: https://www.publish-teacher-training-courses.service.gov.uk

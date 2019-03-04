@@ -35,6 +35,9 @@ gem 'pkg-config', '~> 1.3.4'
 # Parsing JSON from an API
 gem 'json_api_client'
 
+# Settings for the app
+gem 'config'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -47,8 +50,6 @@ group :development, :test do
 
   # Testing framework
   gem 'rspec-rails', '~> 3.8'
-
-  gem 'dotenv-rails'
 end
 
 group :development do

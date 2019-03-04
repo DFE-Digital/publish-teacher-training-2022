@@ -1,0 +1,8 @@
+dfe_signin:
+  issuer: https://signin-test-oidc-as.azurewebsites.net
+  profile: https://signin-test-pfl-as.azurewebsites.net
+  base_url: https://localhost:3000
+manage_backend:
+  base_url: http://localhost:3001
+manage_ui:
+  base_url: https://localhost:44364

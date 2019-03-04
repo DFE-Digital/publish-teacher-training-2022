@@ -1,3 +1,3 @@
 class Base < JsonApiClient::Resource
-  self.site = "#{ENV['MANAGE_BACKEND_BASE_URL']}/api/v2/"
+  self.site = "#{Settings.manage_backend.base_url}/api/v2/"
 end
