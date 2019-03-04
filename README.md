@@ -48,3 +48,11 @@ or
 
 bundle exec govuk-lint-sass app/webpacker/styles
 ```
+
+## Sentry
+
+To track exceptions through Sentry, configure the `SENTRY_DSN` environment variable:
+
+```
+SENTRY_DSN=https://aaa:bbb@sentry.io/123 rails s
+```
