@@ -49,34 +49,10 @@
                 "description": "Default webpacker dev host."
             }
         },
-        "dfeSignInIssuer": {
-            "type": "string",
-            "metadata": {
-                "description": "Issuer for dfe signin."
-            }
-        },
-        "dfeSignInIdentifier": {
-            "type": "string",
-            "metadata": {
-                "description": "Identifier for dfe signin."
-            }
-        },
         "dfeSignInSecret": {
             "type": "string",
             "metadata": {
                 "description": "Secret for dfe signin."
-            }
-        },
-        "dfeSignInProfile": {
-            "type": "string",
-            "metadata": {
-                "description": "Profile for dfe signin."
-            }
-        },
-        "siteBaseUrl": {
-            "type": "string",
-            "metadata": {
-                "description": "Base url for the site."
             }
         },
         "dockerHubUsername": {
@@ -116,18 +92,6 @@
             "type": "string",
             "metadata": {
                 "description": "Secret Key Base."
-            }
-        },
-        "manageBackendBaseUrl": {
-            "type": "string",
-            "metadata": {
-                "description": "Base url for the manage back-end."
-            }
-        },
-        "manageUiBaseUrl": {
-            "type": "string",
-            "metadata": {
-                "description": "Base url for the manage UI."
             }
         },
         "settingsAuthenticationSecret": {
@@ -236,36 +200,8 @@
                                 "value": "[parameters('webpackerDevHost')]"
                             },
                             {
-                                "name": "DFE_SIGN_IN_ISSUER",
-                                "value": "[parameters('dfeSignInIssuer')]"
-                            },
-                            {
-                                "name": "DFE_SIGN_IN_IDENTIFIER",
-                                "value": "[parameters('dfeSignInIdentifier')]"
-                            },
-                            {
-                                "name": "DFE_SIGN_IN_SECRET",
-                                "value": "[parameters('dfeSignInSecret')]"
-                            },
-                            {
                                 "name": "SETTINGS__DFE_SIGNIN__SECRET",
                                 "value": "[parameters('dfeSignInSecret')]"
-                            },
-                            {
-                                "name": "DFE_SIGN_IN_PROFILE",
-                                "value": "[parameters('dfeSignInProfile')]"
-                            },
-                            {
-                                "name": "BASE_URL",
-                                "value": "[parameters('siteBaseUrl')]"
-                            },
-                            {
-                                "name": "MANAGE_BACKEND_BASE_URL",
-                                "value": "[parameters('manageBackendBaseUrl')]"
-                            },
-                            {
-                                "name": "MANAGE_UI_BASE_URL",
-                                "value": "[parameters('manageUiBaseUrl')]"
                             },
                             {
                                 "name": "SETTINGS__AUTHENTICATION__SECRET",
