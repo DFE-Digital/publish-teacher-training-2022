@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
 private
 
-  def set_connection
+  def add_token_to_connection
     if Settings.authentication.algorithm == 'plain-text'
       # This method can be used in development mode to simplify querying
       # the API with curl. It should allow us to do:
