@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   def create
     session[:auth_user] = auth_hash
 
-    set_connection
+    add_token_to_connection
 
     user = Session.create(first_name: current_user_info[:first_name], last_name: current_user_info[:last_name])
     session[:auth_user][:user_id] = user.id

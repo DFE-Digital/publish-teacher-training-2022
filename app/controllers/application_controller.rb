@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if current_user
-      set_connection
+      add_token_to_connection
     else
       redirect_to '/signin'
     end
