@@ -1,0 +1,46 @@
+<%= content_for :page_title, @provider.institution_name %>
+
+<nav class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to "Organisations", providers_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+      <%= @provider.institution_name %>
+    </li>
+  </ol>
+</nav>
+
+<main role="main" class="govuk-main-wrapper" id="main-content">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl"><%= @provider.institution_name %></h1>
+      <h2 class="govuk-heading-m"><%= manage_ui_link_to "About your organisation", "/organisations/#{@provider.institution_code}/details" %></h2>
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+        <li>write about your organisation</li>
+        <li>set your contact details</li>
+        <li>publish this information on all course pages</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m"><%= manage_ui_link_to "Courses", "/organisations/#{@provider.institution_code}/courses" %></h2>
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+        <li>write about each course</li>
+        <li>preview and publish courses</li>
+        <li>copy content between courses</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m"><%= manage_ui_link_to "Request access for someone else", "/organisations/#{@provider.institution_code}/request-access" %></h2>
+      <p class="govuk-body govuk-!-margin-bottom-8">You can request a DfE Sign-in account for others who manage your courses.</p>
+    </div>
+  </div>
+</main>
