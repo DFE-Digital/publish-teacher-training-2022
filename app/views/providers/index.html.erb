@@ -1,7 +1,9 @@
 <%= content_for :page_title, "Organisations" %>
 
-<h1 class="govuk-heading-xl">Organisations</h1>
+<main role="main" class="govuk-main-wrapper" id="main-content">
+  <h1 class="govuk-heading-xl">Organisations</h1>
 
-<ul class="govuk-list">
-  <%= render partial: "providers/provider", collection: @providers %>
-</ul>
+  <ul class="govuk-list">
+    <%= render partial: "providers/provider", collection: @providers %>
+  </ul>
+</main>
