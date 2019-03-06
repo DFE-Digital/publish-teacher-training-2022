@@ -50,6 +50,31 @@ or
 bundle exec govuk-lint-sass app/webpacker/styles
 ```
 
+## Secrets vs Settings
+
+Refer to the [the config gem](https://github.com/railsconfig/config#accessing-the-settings-object) to understand the `file based settings` loading order.
+
+To override file based via `Machine based env variables settings`
+```bash
+cat config/settings.yml
+file
+  based
+    settings
+      env1: 'foo'
+```
+
+```bash
+export SETTINGS__FILE__BASED__SETTINGS__ENV1="bar"
+```
+
+```ruby
+puts Settings.file.based.setting.env1
+
+bar
+```
+
+Refer to the [settings file](config/settings.yml) for all the settings required to run this app
+
 ## Sentry
 
 To track exceptions through Sentry, configure the `SENTRY_DSN` environment variable:

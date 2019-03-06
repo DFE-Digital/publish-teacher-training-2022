@@ -1,7 +1,22 @@
 dfe_signin:
+  # Our service name
   identifier: bats2
+  # URL that the users are redirected to for signing in
+  issuer: https://signin-test-oidc-as.azurewebsites.net
+  # URL of the users profile
+  profile: https://signin-test-pfl-as.azurewebsites.net
+  # This value must be set otherwise sign in will fail
+  secret: foobar
+  # URL of this app for the callback after sigining in
+  base_url: https://localhost:3000
 authentication:
   algorithm: HS256
   # Set this in the env! The below ensures that we are un-authenticatable if we
   # forget to do this in production.
   secret: <%= SecureRandom.base64 %>
+manage_backend:
+  # URL of the API app (manage-courses-backend)
+  base_url: http://localhost:3001
+manage_ui:
+  # URL of the c# ui app (manage-courses-ui)
+  base_url: https://localhost:44364
