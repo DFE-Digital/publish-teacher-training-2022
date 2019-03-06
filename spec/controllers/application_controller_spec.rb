@@ -21,7 +21,7 @@ RSpec.describe ApplicationController, type: :controller do
         payload = { email: user_email.to_s }
 
         allow(JWT).to receive(:encode)
-        .with(payload.to_json, Settings.authentication.secret, Settings.authentication.algorithm)
+        .with(payload, Settings.authentication.secret, Settings.authentication.algorithm)
         .and_return("anything")
 
         controller.request.session = { auth_user: { "info" => {
