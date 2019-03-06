@@ -38,7 +38,7 @@ private
       token = current_user_info['email'].to_s
     else
       payload = { email: current_user_info['email'].to_s }
-      token = JWT.encode(payload.to_json,
+      token = JWT.encode(payload,
                           Settings.authentication.secret,
                           Settings.authentication.algorithm)
     end
