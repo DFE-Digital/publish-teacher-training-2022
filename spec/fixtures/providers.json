@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "id": "4",
+      "type": "providers",
+      "attributes": {
+        "institution_code": "A0",
+        "institution_name": "ACME SCITT 0"
+      },
+      "relationships": {
+        "courses": {
+          "meta": {
+            "count": 0
+          }
+        }
+      }
+    }
+  ],
+  "jsonapi": {
+    "version": "1.0"
+  }
+}
