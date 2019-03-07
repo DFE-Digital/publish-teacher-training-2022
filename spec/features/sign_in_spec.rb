@@ -5,6 +5,6 @@ RSpec.feature 'Sign in', type: :feature do
     stub_omniauth
     visit root_path
     # Redirect to DfE Signin and come back
-    expect(page).to have_content("Sign out (TEST Smith)")
+    expect(page).to have_content("Sign out (TEST Smith)" )
   end
 end
