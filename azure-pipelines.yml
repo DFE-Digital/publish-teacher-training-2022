@@ -10,7 +10,7 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  IMAGE_NAME: 'manage-courses-frontend-poc'
+  IMAGE_NAME: '$(dockerHubUserName)/manage-courses-frontend-poc'
 
 steps:
 - script: |
@@ -36,13 +36,9 @@ steps:
     containerCommand: rails webpacker:compile
     runInBackground: false
 
-- task: Docker@1
-  displayName: Run tests
-  inputs:
-    command: Run an image
-    imageName: $(IMAGE_NAME)
-    containerCommand: rails spec SPEC_OPTS="--format RspecJunitFormatter" | sed -e 1d >> rspec-results.xml ; test "${PIPESTATUS[0]}" -eq 0
-    runInBackground: false
+- bash: docker run --rm manage-courses-frontend-poc rails spec SPEC_OPTS=--format RspecJunitFormatter | sed -e 1d >> rspec-results.xml ; test ${PIPESTATUS[0]} -eq 0
+  displayName: 'Run tests'
+  failOnStderr: true
 
 - task: Docker@1
   displayName: Run ruby linter
