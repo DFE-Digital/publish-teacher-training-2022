@@ -10,39 +10,72 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'manage-courses-frontend-poc'
+  IMAGE_NAME: '$(dockerHubUserName)/manage-courses-frontend-poc'
 
 steps:
 - script: |
     GIT_SHORT_SHA=$(echo $(Build.SourceVersion) | cut -c 1-7)
-    tag=$(dockerHubUsername)/$(imageName):$GIT_SHORT_SHA
+    IMAGE_NAME_WITH_TAG=$(IMAGE_NAME):$GIT_SHORT_SHA
     echo "##vso[build.updatebuildnumber]$GIT_SHORT_SHA"
-    echo "##vso[task.setvariable variable=tag;]$tag"
+    echo "##vso[task.setvariable variable=IMAGE_NAME_WITH_TAG;]$IMAGE_NAME_WITH_TAG"
   displayName: 'Set version number'
 
-- script: |
-    docker build -f Dockerfile -t $(tag) .
-  displayName: 'Build image'
+- task: Docker@1
+  displayName: Build image
+  inputs:
+    command: Build an image
+    imageName: $(IMAGE_NAME)
+    dockerFile: Dockerfile
+    addDefaultLabels: false
 
-- script: |
-    docker run "$(tag)" /bin/sh -c "rails webpacker:compile"
-  displayName: 'Execute webpack'
+- task: Docker@1
+  displayName: Run webpack
+  inputs:
+    command: Run an image
+    imageName: $(IMAGE_NAME)
+    containerCommand: rails webpacker:compile
+    runInBackground: false
 
-- script: |
-    docker run "$(tag)" /bin/sh -c 'rails spec SPEC_OPTS="--format RspecJunitFormatter"' | sed -e 1d >> rspec-results.xml
-  displayName: 'Execute tests'
+# Run a custom bash task for tests so we can redirect test output to rspec-results.xml and capture the exit code from the docker run command
+- bash: docker run --rm $(IMAGE_NAME) rails spec SPEC_OPTS='--format RspecJunitFormatter' | sed -e 1d >> rspec-results.xml ; test ${PIPESTATUS[0]} -eq 0
+  displayName: 'Run tests'
+  failOnStderr: true
 
-- script: |
-    docker run "$(tag)" /bin/sh -c "govuk-lint-ruby app config db lib spec --format clang"
-    docker run "$(tag)" /bin/sh -c "govuk-lint-sass app/webpacker/stylesheets"
-  displayName: 'Execute linters'
+- task: Docker@1
+  displayName: Run ruby linter
+  inputs:
+    command: Run an image
+    imageName: $(IMAGE_NAME)
+    containerCommand: govuk-lint-ruby app config db lib spec --format clang
+    runInBackground: false
 
-- script: |
-    echo $password | docker login --username $(dockerHubUsername) --password-stdin
-    docker push "$(tag)"
-  displayName: 'Push image'
-  env:
-    password: $(dockerHubPassword)
+- task: Docker@1
+  displayName: Run sass linter
+  inputs:
+    command: Run an image
+    imageName: $(IMAGE_NAME)
+    containerCommand: govuk-lint-sass app/webpacker/stylesheets
+    runInBackground: false
+
+- task: Docker@1
+  displayName: Tag image with current build number $(Build.BuildNumber)
+  inputs:
+    command: Tag image
+    imageName: $(IMAGE_NAME)
+    arguments: $(IMAGE_NAME_WITH_TAG)
+
+- task: Docker@1
+  displayName: Docker Hub login
+  inputs:
+    command: "login"
+    containerregistrytype: Container Registry
+    dockerRegistryEndpoint: DfE Docker Hub
+
+- task: Docker@1
+  displayName: Push tagged image
+  inputs:
+    command: Push an image
+    imageName: $(IMAGE_NAME_WITH_TAG)
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
