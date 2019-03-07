@@ -4,7 +4,7 @@ RSpec.feature 'View providers', type: :feature do
   scenario 'Navigate to /organisations' do
     stub_omniauth
     stub_session_create
-    stub_backend_api
+    stub_api_v2_request('/providers', 'providers.json')
 
     visit('/organisations')
     expect(find('h1')).to have_content('Organisations')

@@ -24,34 +24,14 @@ module FeatureHelpers
     allow(Session).to receive(:create).and_return(double(id: 1))
   end
 
-  def stub_backend_api
-    example_api_response = '{
-      "data": [
-        {
-          "id": "4",
-          "type": "providers",
-          "attributes": {
-            "institution_code": "A0",
-            "institution_name": "ACME SCITT 0"
-          },
-          "relationships": {
-            "courses": {
-              "meta": {
-                "count": 0
-              }
-            }
-          }
-        }
-      ],
-      "jsonapi": {
-        "version": "1.0"
-      }
-    }'
+  def stub_api_v2_request(url_path, fixture_file)
+    url = "#{Settings.manage_backend.base_url}/api/v2#{url_path}"
+    fixture_path = "spec/fixtures/#{fixture_file}"
 
-    stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/providers")
+    stub_request(:get, url)
       .to_return(
         status: 200,
-        body: example_api_response,
+        body: File.read(fixture_path),
         headers: { 'Content-Type': 'application/vnd.api+json' }
       )
   end
