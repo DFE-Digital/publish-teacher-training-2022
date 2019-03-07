@@ -10,37 +10,67 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'manage-courses-frontend-poc'
+  IMAGE_NAME: 'manage-courses-frontend-poc'
 
 steps:
 - script: |
     GIT_SHORT_SHA=$(echo $(Build.SourceVersion) | cut -c 1-7)
-    tag=$(dockerHubUsername)/$(imageName):$GIT_SHORT_SHA
+    IMAGE_NAME_WITH_TAG=$(IMAGE_NAME):GIT_SHORT_SHA
     echo "##vso[build.updatebuildnumber]$GIT_SHORT_SHA"
-    echo "##vso[task.setvariable variable=tag;]$tag"
+    echo "##vso[task.setvariable variable=IMAGE_NAME_WITH_TAG;]$IMAGE_NAME_WITH_TAG"
   displayName: 'Set version number'
 
-- bash: |
-    bash docker-build-az.sh
-  displayName: 'Build image'
-  env:
-    password: $(dockerHubPassword)
-
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+- task: Docker@1
+  displayName: Build image
   inputs:
-    Contents: |
-     azure/**
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    OverWrite: true
+    command: Build an image
+    imageName: $(IMAGE_NAME)
+    dockerFile: Dockerfile
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
+- task: Docker@1
+  displayName: Run webpack
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
+    command: Run an image
+    imageName: $(IMAGE_NAME)
+    containerCommand: rails webpacker:compile
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
+- task: Docker@1
+  displayName: Run tests
   inputs:
-    testRunner: JUnit
-    testResultsFiles: '*.xml'
+    command: Run an image
+    imageName: $(IMAGE_NAME)
+    containerCommand: rails spec SPEC_OPTS='--format RspecJunitFormatter' | sed -e 1d >> rspec-results.xml ; test "${PIPESTATUS[0]}" -eq 0
+
+- task: Docker@1
+  displayName: Run ruby linter
+  inputs:
+    command: Run an image
+    imageName: $(IMAGE_NAME)
+    containerCommand: govuk-lint-ruby app config db lib spec --format clang
+
+- task: Docker@1
+  displayName: Run sass linter
+  inputs:
+    command: Run an image
+    imageName: $(IMAGE_NAME)
+    containerCommand: govuk-lint-sass app/webpacker/stylesheets
+
+- task: Docker@1
+  displayName: Tag image with current build number $(Build.BuildNumber)
+  inputs:
+    command: Tag image
+    imageName: $(IMAGE_NAME)
+    arguments: $(IMAGE_NAME_WITH_TAG)
+
+- task: Docker@1
+  displayName: Docker Hub login
+  inputs:
+    command: "login"
+    containerregistrytype: Container Registry
+    dockerRegistryEndpoint: DfE Docker Hub
+
+- task: Docker@1
+  displayName: Push tagged image
+  inputs:
+    command: Push an image
+    imageName: $(IMAGE_NAME_WITH_TAG)
