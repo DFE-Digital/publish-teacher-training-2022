@@ -16,31 +16,53 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe "GET create" do
-    user_info = {
-      "first_name" => "John",
-      "last_name" => "Smith",
-      "email" => "email@example.com"
+    let(:user_info) {
+      {
+        first_name: "John",
+        last_name: "Smith",
+        email: "email@example.com",
+      }
     }
+    let(:user_id) { 101 }
 
-    user_id = 101
-    before do
-      allow(Session).to receive(:create)
-        .with(first_name: user_info[:first_name], last_name: user_info[:last_name])
-        .and_return(double(id: user_id))
-      allow(Base).to receive(:connection)
+    context "if session creation succeeds" do
+      before do
+        allow(Session).to receive(:create)
+          .with(first_name: user_info[:first_name], last_name: user_info[:last_name])
+          .and_return(double(id: user_id))
+        allow(Base).to receive(:connection)
+      end
+
+      it "creates the session and redirects to root" do
+        @request.env["omniauth.auth"] = {
+          "info" => user_info
+        }
+
+        get :create
+
+        expect(subject).to redirect_to("/")
+        expect(@request.session[:auth_user][:user_id]).to eq user_id
+        expect(@request.session[:auth_user]["info"]).to eq user_info
+        expect(Base).to have_received(:connection)
+      end
     end
 
-    it "creates the session and redirects to root" do
-      @request.env["omniauth.auth"] = {
-        "info" => user_info
-      }
+    context "if session creation fails" do
+      before do
+        allow(Session).to receive(:create)
+          .and_raise(JsonApiClient::Errors::NotAuthorized, "not authorised")
+        allow(Base).to receive(:connection)
+      end
 
-      get :create
+      it "redirects to Manage UI root" do
+        @request.env["omniauth.auth"] = {
+          "info" => user_info
+        }
 
-      expect(subject).to redirect_to("/")
-      expect(@request.session[:auth_user][:user_id]).to eq user_id
-      expect(@request.session[:auth_user]["info"]).to eq user_info
-      expect(Base).to have_received(:connection)
+        get :create
+
+        expect(subject).to redirect_to(Settings.manage_ui.base_url)
+      end
     end
   end
 
