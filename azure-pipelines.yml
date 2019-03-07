@@ -36,7 +36,7 @@ steps:
     containerCommand: rails webpacker:compile
     runInBackground: false
 
-- bash: docker run --rm $(IMAGE_NAME) rails spec SPEC_OPTS=--format RspecJunitFormatter | sed -e 1d >> rspec-results.xml ; test ${PIPESTATUS[0]} -eq 0
+- bash: docker run --rm $(IMAGE_NAME) rails spec SPEC_OPTS='--format RspecJunitFormatter' | sed -e 1d >> rspec-results.xml ; test ${PIPESTATUS[0]} -eq 0
   displayName: 'Run tests'
   failOnStderr: true
 
