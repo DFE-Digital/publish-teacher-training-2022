@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   root to: "providers#index"
 
-  resources :providers, path: 'organisations'
+  resources :providers, path: 'organisations', param: :code
 
   get "/cookies", to: "pages#cookies", as: :cookies
   get "/terms-conditions", to: "pages#terms", as: :terms

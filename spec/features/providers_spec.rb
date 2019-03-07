@@ -10,4 +10,13 @@ RSpec.feature 'View providers', type: :feature do
     expect(find('h1')).to have_content('Organisations')
     expect(first('.govuk-list li')).to have_content('ACME SCITT 0')
   end
+
+  scenario 'Navigate to /organisations/AO' do
+    stub_omniauth
+    stub_session_create
+    stub_api_v2_request('/providers/A0', 'provider-A0.json')
+
+    visit('/organisations/A0')
+    expect(find('h1')).to have_content('ACME SCITT 0')
+  end
 end

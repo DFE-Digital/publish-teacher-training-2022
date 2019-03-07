@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "id": "4",
+      "id": "1",
       "type": "providers",
       "attributes": {
         "institution_code": "A0",
@@ -10,7 +10,37 @@
       "relationships": {
         "courses": {
           "meta": {
-            "count": 0
+            "count": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "2",
+      "type": "providers",
+      "attributes": {
+        "institution_code": "A1",
+        "institution_name": "ACME SCITT 1"
+      },
+      "relationships": {
+        "courses": {
+          "meta": {
+            "count": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "3",
+      "type": "providers",
+      "attributes": {
+        "institution_code": "A2",
+        "institution_name": "ACME SCITT 2"
+      },
+      "relationships": {
+        "courses": {
+          "meta": {
+            "count": 3
           }
         }
       }
