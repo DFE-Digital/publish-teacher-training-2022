@@ -16,7 +16,6 @@
 3. Run `bundle install` to install the gem dependencies
 4. Run `touch config/settings/development.local.yml` and set a value for `dfe_signin.secret`
 5. Run `bundle exec foreman start -f Procfile.dev` to launch the app on http://localhost:3000.
-6. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets.
 
 ## Docker
 
