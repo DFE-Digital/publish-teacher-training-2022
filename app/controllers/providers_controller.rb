@@ -6,6 +6,6 @@ class ProvidersController < ApplicationController
   end
 
   def show
-    @provider = Provider.where(institution_code: params[:id]).first
+    @provider = Provider.find(params[:code]).first.attributes
   end
 end
