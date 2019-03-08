@@ -26,6 +26,6 @@ module ManageCoursesFrontend
 
     config.session_store :cookie_store,
                           key: '_publish_teacher_training_courses_session',
-                          expire_after: 5.minutes
+                          expire_after: 6.hours
   end
 end
