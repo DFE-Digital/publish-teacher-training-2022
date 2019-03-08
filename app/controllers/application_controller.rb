@@ -43,7 +43,7 @@ private
                           Settings.authentication.algorithm)
     end
 
-    Base.connection do |connection|
+    Base.connection(true) do |connection|
       connection.use FaradayMiddleware::OAuth2, token, token_type: :bearer
     end
   end
