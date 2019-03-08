@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Sign in', type: :feature do
   scenario 'using DfE Sign-in' do
-    stub_omniauth
+    stub_omniauth(disable_completely: false)
     stub_session_create
     stub_backend_api
 
