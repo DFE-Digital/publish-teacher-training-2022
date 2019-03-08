@@ -43,7 +43,7 @@ RSpec.describe SessionsController, type: :controller do
         expect(subject).to redirect_to("/")
         expect(@request.session[:auth_user][:user_id]).to eq user_id
         expect(@request.session[:auth_user]["info"]).to eq user_info
-        expect(Base).to have_received(:connection)
+        expect(Base).to have_received(:connection).with(true)
       end
     end
 
