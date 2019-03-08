@@ -1,7 +1,9 @@
 class PagesController < ApplicationController
   before_action :authenticate
 
-  def show
-    render template: "pages/#{params[:page]}"
-  end
+  def cookies; end
+
+  def terms; end
+
+  def privacy; end
 end

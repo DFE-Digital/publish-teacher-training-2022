@@ -1,5 +1,5 @@
 module FeatureHelpers
-  def stub_omniauth
+  def stub_omniauth(disable_completely: true)
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:dfe] = {
       provider: "dfe",
@@ -13,6 +13,11 @@ module FeatureHelpers
         token_id: "123"
       }
     }
+
+    # Temp solution until we implement `return_url` for DfE sign-in
+    if disable_completely
+      allow_any_instance_of(ApplicationController).to receive(:authenticate)
+    end
   end
 
   def stub_session_create
