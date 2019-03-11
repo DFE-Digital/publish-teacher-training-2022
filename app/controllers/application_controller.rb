@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, except: :not_found
+  rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_not_authorised
 
   def not_found
     respond_to do |format|
@@ -7,6 +8,10 @@ class ApplicationController < ActionController::Base
       format.json { render json: { error: 'Resource not found' }, status: :not_found }
       format.all { render status: :not_found, body: nil }
     end
+  end
+
+  def render_not_authorised
+    redirect_to Settings.manage_ui.base_url
   end
 
   helper_method :current_user
@@ -18,6 +23,8 @@ class ApplicationController < ActionController::Base
   def authenticate
     if current_user
       add_token_to_connection
+
+      set_user_session if current_user[:user_id].blank?
     else
       redirect_to '/signin'
     end
@@ -28,6 +35,11 @@ class ApplicationController < ActionController::Base
   end
 
 private
+
+  def set_user_session
+    user = Session.create(first_name: current_user_info[:first_name], last_name: current_user_info[:last_name])
+    session[:auth_user][:user_id] = user.id
+  end
 
   def add_token_to_connection
     if Settings.authentication.algorithm == 'plain-text'
