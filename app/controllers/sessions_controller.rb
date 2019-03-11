@@ -7,15 +7,9 @@ class SessionsController < ApplicationController
     session[:auth_user] = auth_hash
 
     add_token_to_connection
+    set_user_session
 
-    begin
-      user = Session.create(first_name: current_user_info[:first_name], last_name: current_user_info[:last_name])
-      session[:auth_user][:user_id] = user.id
-
-      redirect_to root_path
-    rescue JsonApiClient::Errors::NotAuthorized
-      redirect_to Settings.manage_ui.base_url
-    end
+    redirect_to root_path
   end
 
   def signout
