@@ -14,9 +14,11 @@ RSpec.feature 'View providers', type: :feature do
   scenario 'Navigate to /organisations/AO' do
     stub_omniauth
     stub_session_create
+    stub_api_v2_request('/providers', build(:providers_response, data: [build(:provider, institution_code: "A0")]))
     stub_api_v2_request('/providers/A0', build(:providers_response, data: [build(:provider, institution_code: "A0")]))
 
     visit('/organisations/A0')
     expect(find('h1')).to have_content('ACME SCITT A0')
+    expect(page).not_to have_selector(".govuk-breadcrumbs")
   end
 end

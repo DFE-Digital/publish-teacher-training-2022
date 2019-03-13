@@ -4,9 +4,11 @@ class ProvidersController < ApplicationController
   def index
     @providers = Provider.all
     render_manage_ui if @providers.empty?
+    redirect_to provider_path(@providers.first.institution_code) if @providers.size == 1
   end
 
   def show
+    @has_multiple_providers = Provider.all.size > 1
     @provider = Provider.find(params[:code]).first.attributes
   end
 end
