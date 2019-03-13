@@ -10,7 +10,7 @@ RSpec.describe ProvidersController, type: :controller do
     describe 'GET #index' do
       context 'with providers' do
         before do
-          stub_api_v2_request('/providers', 'providers.json')
+          stub_api_v2_request('/providers', build(:providers_response))
         end
 
         it 'returns the index page' do
@@ -19,9 +19,9 @@ RSpec.describe ProvidersController, type: :controller do
         end
       end
 
-      fcontext 'without any providers' do
+      context 'without any providers' do
         before do
-          stub_api_v2_request('/providers', 'providers-empty.json')
+          stub_api_v2_request('/providers', build(:providers_response, data: []))
         end
 
         it 'redirects to manage-courses-ui' do

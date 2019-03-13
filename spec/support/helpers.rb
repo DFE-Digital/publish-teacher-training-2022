@@ -24,14 +24,13 @@ module Helpers
     allow(Session).to receive(:create).and_return(double(id: 1))
   end
 
-  def stub_api_v2_request(url_path, fixture_file)
+  def stub_api_v2_request(url_path, stub)
     url = "#{Settings.manage_backend.base_url}/api/v2#{url_path}"
-    fixture_path = "spec/fixtures/#{fixture_file}"
 
     stub_request(:get, url)
       .to_return(
         status: 200,
-        body: File.read(fixture_path),
+        body: stub.to_json,
         headers: { 'Content-Type': 'application/vnd.api+json' }
       )
   end
