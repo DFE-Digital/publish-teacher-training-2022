@@ -80,6 +80,8 @@ group :test do
   gem "rspec_junit_formatter"
 
   gem 'webmock'
+
+  gem 'factory_bot_rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
