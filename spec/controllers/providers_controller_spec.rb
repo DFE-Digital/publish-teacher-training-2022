@@ -19,7 +19,7 @@ RSpec.describe ProvidersController, type: :controller do
         end
       end
 
-      fcontext 'without any providers' do
+      context 'without any providers' do
         before do
           stub_api_v2_request('/providers', 'providers-empty.json')
         end
