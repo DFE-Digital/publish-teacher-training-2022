@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, except: :not_found
-  rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_not_authorised
+  rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_manage_ui
 
   def not_found
     respond_to do |format|
@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_not_authorised
+  def render_manage_ui
     redirect_to Settings.manage_ui.base_url
   end
 

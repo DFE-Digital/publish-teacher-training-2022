@@ -1,4 +1,4 @@
-module FeatureHelpers
+module Helpers
   def stub_omniauth(disable_completely: true)
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:dfe] = {
@@ -38,5 +38,6 @@ module FeatureHelpers
 end
 
 RSpec.configure do |config|
-  config.include FeatureHelpers, type: :feature
+  config.include Helpers, type: :feature
+  config.include Helpers, type: :controller
 end
