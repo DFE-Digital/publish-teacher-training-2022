@@ -8,7 +8,11 @@ Rails.application.routes.draw do
 
   root to: "providers#index"
 
-  resources :providers, path: 'organisations', param: :code
+  resources :providers, path: 'organisations', param: :code do
+    resources :courses, param: :code do
+      get '/vacancies', on: :member, to: 'courses#vacancies'
+    end
+  end
 
   get "/cookies", to: "pages#cookies", as: :cookies
   get "/terms-conditions", to: "pages#terms", as: :terms
