@@ -114,6 +114,38 @@ feature 'Edit course vacancies', type: :feature do
   end
   let(:course) { base_course }
 
+  it 'produces the same json' do
+    site = build :site, id: 3, code: '2', location_name: 'Main Site'
+    site_status1 = jsonapi :site_status,
+                           id: 1,
+                           site: site
+    site_status2 = jsonapi :site_status,
+                           id: 2,
+                           site: site,
+                           vac_status: 'full_time_vacancies'
+    site_status3 = jsonapi :site_status,
+                           id: 3,
+                           site: site,
+                           vac_status: 'part_time_vacancies'
+    site_status4 = jsonapi :site_status,
+                           id: 4,
+                           site: site,
+                           vac_status: 'no_vacancies'
+    built_course = jsonapi :course,
+                           has_vacancies?: true,
+                           course_code: 'C1D3',
+                           name: 'English',
+                           study_mode: 'full_time_or_part_time',
+                           site_statuses: [
+                             site_status1,
+                             site_status2,
+                             site_status3,
+                             site_status4,
+                           ]
+
+    expect(built_course.render).to eq base_course
+  end
+
   before do
     stub_omniauth
     stub_session_create
