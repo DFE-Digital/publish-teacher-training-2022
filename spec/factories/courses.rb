@@ -1,25 +1,33 @@
 FactoryBot.define do
   factory :course, class: Hash do
+    transient do
+      relationships { %i[site_statuses provider] }
+    end
+
+    sequence(:id)
     sequence(:course_code) { |n| "X10#{n}" }
     name { "English" }
     description { "PGCE with QTS" }
     findable? { true }
     open_for_applications? { false }
     has_vacancies? { false }
+    site_statuses { [] }
+    provider      { nil }
 
-    initialize_with do
-      {
-        "id" => 1,
-        "attributes" => attributes,
-        "type" => "courses",
-        "relationships" => {
-          "provider" => {
-            "meta" => {
-              "included" => false
-            }
-          },
-        }
-      }
+    initialize_with do |_evaluator|
+      data_attributes = attributes.except(:id, *relationships)
+      relationships_map = Hash[
+        relationships.map do |relationship|
+          [relationship, __send__(relationship)]
+        end
+      ]
+
+      JSONAPIMockSerializable.new(
+        id,
+        'courses',
+        attributes: data_attributes,
+        relationships: relationships_map
+      )
     end
   end
 

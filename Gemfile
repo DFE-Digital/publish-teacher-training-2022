@@ -86,7 +86,11 @@ group :test do
 
   gem 'factory_bot_rails'
 
+  # Show test coverage %
   gem 'simplecov', require: false
+
+  # Make diffs of Ruby objects much more readable
+  gem 'super_diff'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
