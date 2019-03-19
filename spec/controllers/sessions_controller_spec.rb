@@ -64,6 +64,24 @@ RSpec.describe SessionsController, type: :controller do
         expect(subject).to redirect_to(Settings.manage_ui.base_url)
       end
     end
+
+    context "if user has not accepted terms and conditions" do
+      before do
+        allow(Session).to receive(:create)
+          .and_raise(JsonApiClient::Errors::AccessDenied, "forbidden")
+        allow(Base).to receive(:connection)
+      end
+
+      it "redirects to Manage UI root" do
+        @request.env["omniauth.auth"] = {
+          "info" => user_info
+        }
+
+        get :create
+
+        expect(subject).to redirect_to(Settings.manage_ui.base_url)
+      end
+    end
   end
 
   describe "GET destroy" do

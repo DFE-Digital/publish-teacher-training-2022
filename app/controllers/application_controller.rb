@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, except: :not_found
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_manage_ui
+  rescue_from JsonApiClient::Errors::AccessDenied, with: :render_manage_ui
 
   def not_found
     respond_to do |format|
