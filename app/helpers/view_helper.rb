@@ -3,6 +3,10 @@ module ViewHelper
     link_to body, "#{Settings.manage_ui.base_url}#{url}", html_options
   end
 
+  def manage_ui_link_to_back(url)
+    manage_ui_link_to('Back', url, class: "govuk-back-link")
+  end
+
   def are_vacancies_available_for_course_site_status?(course, site_status)
     case course.study_mode
     when 'full_time'

@@ -1,6 +1,6 @@
 <%= content_for :page_title, "Vacancies" %>
 
-<%= manage_ui_link_to "Back", "/organisation/#{params[:provider_code]}/courses/#{@course.course_code}", class: "govuk-back-link" %>
+<%= manage_ui_link_to_back("/organisation/#{params[:provider_code]}/courses/#{@course.course_code}") %>
 
 <main role="main" class="govuk-main-wrapper" id="main-content">
   <div class="govuk-grid-row">
