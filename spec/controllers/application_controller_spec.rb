@@ -45,7 +45,7 @@ RSpec.describe ApplicationController, type: :controller do
           allow(Provider).to receive(:all)
             .and_raise('Could not connect to backend')
 
-          controller.request.session = { auth_user: { "info" => user_info, :user_id => user_id } }
+          controller.request.session = { auth_user: { "info" => user_info, 'user_id' => user_id } }
           controller.authenticate
         end
 
@@ -62,7 +62,7 @@ RSpec.describe ApplicationController, type: :controller do
         end
 
         it "has set user_id" do
-          expect(controller.request.session[:auth_user][:user_id]).to eq user_id
+          expect(controller.request.session[:auth_user]['user_id']).to eq user_id
         end
 
         it "has set provider_count" do
@@ -101,7 +101,7 @@ RSpec.describe ApplicationController, type: :controller do
         end
 
         it "has set user_id" do
-          expect(controller.request.session[:auth_user][:user_id]).to eq 999
+          expect(controller.request.session[:auth_user]['user_id']).to eq 999
         end
 
         it "has set provider_count" do
