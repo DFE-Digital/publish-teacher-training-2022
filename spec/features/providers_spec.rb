@@ -19,6 +19,6 @@ RSpec.feature 'View providers', type: :feature do
 
     visit('/organisations/A0')
     expect(find('h1')).to have_content('ACME SCITT A0')
-    expect(page).not_to have_selector(".govuk-breadcrumbs")
+    expect(page).to have_selector(".govuk-breadcrumbs")
   end
 end
