@@ -5,7 +5,7 @@
 <main role="main" class="govuk-main-wrapper" id="main-content">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= form_with url: provider_courses_path(@course.course_code) do |f| %>
+      <%= form_for @course, url: vacancies_provider_course_path(@course.course_code), method: :put do |f| %>
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-7">
@@ -22,7 +22,7 @@
                 <span id="has_vacancies_false" class="govuk-hint govuk-radios__hint">
                   Close this course to new applications.
                   <br>
-                  You can reopen a course later
+                  You can reopen a course later.
                 </span>
               </div>
               <div class="govuk-radios__divider">or</div>
