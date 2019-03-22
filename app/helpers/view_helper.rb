@@ -7,6 +7,7 @@ module ViewHelper
     manage_ui_link_to('Back', url, class: "govuk-back-link")
   end
 
+  # Get this working
   def are_vacancies_available_for_course_site_status?(course, site_status)
     case course.study_mode
     when 'full_time'
@@ -18,11 +19,36 @@ module ViewHelper
     end
   end
 
-  def site_name_with_vac_status(site_status)
-    if site_status.vac_status.present?
-      site_status.site.location_name + ' (' + site_status.vac_status.humanize.gsub(' vacancies', '') + ')'
+  def vac_status_checkboxes(form, course, site_status)
+    if course.study_mode == 'full_time_or_part_time'
+      (content_tag :div, class: 'govuk-checkboxes__item' do
+          concat(
+            form.check_box('vac_status_part_time', checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') +
+            form.label(:vac_status, "#{site_status.site.location_name} (Part time)", class: 'govuk-label govuk-checkboxes__label')
+          )
+        end) +
+      (content_tag :div, class: 'govuk-checkboxes__item' do
+        concat(
+          form.check_box('vac_status_full_time', checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') +
+          form.label(:vac_status, "#{site_status.site.location_name} (Full time)", class: 'govuk-label govuk-checkboxes__label')
+        )
+      end)
+    elsif course.study_mode == 'full_time'
+      content_tag :div, class: 'govuk-checkboxes__item' do
+        concat(
+          form.check_box(:vac_status, checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') +
+          form.label(:vac_status, "#{site_status.site.location_name} (Full time)", class: 'govuk-label govuk-checkboxes__label')
+        )
+      end
+    elsif course.study_mode == 'part_time'
+      content_tag :div, class: 'govuk-checkboxes__item' do
+        concat(
+          form.check_box(:vac_status, checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') +
+          form.label(:vac_status, "#{site_status.site.location_name} (Part time)", class: 'govuk-label govuk-checkboxes__label')
+        )
+      end
     else
-      site_status.site.location_name
+      "foo"
     end
   end
 end

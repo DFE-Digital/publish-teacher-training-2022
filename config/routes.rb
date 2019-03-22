@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :providers, path: 'organisations', param: :code do
     resources :courses, param: :code do
       get '/vacancies', on: :member, to: 'courses/vacancies#edit'
+      put '/vacancies', on: :member, to: 'courses/vacancies#update'
     end
   end
 

@@ -37,13 +37,8 @@
                 <div class="govuk-form-group">
                   <fieldset class="govuk-fieldset" aria-describedby="has_vacancies_true_hint">
                     <div class="govuk-checkboxes">
-                      <% @site_statuses.each do |site_status| %>
-                        <div class="govuk-checkboxes__item">
-                          <%= f.check_box site_status.site.location_name,
-                                          class: 'govuk-checkboxes__input',
-                                          checked: are_vacancies_available_for_course_site_status?(@course, site_status) %>
-                          <%= f.label site_status.site.location_name, site_name_with_vac_status(site_status), class: "govuk-label govuk-checkboxes__label" %>
-                        </div>
+                      <%= f.fields_for :site_status, @course.site_statuses do |sf| %>
+                        <%= vac_status_checkboxes(sf, @course, sf.object) %>
                       <% end %>
                     </div>
                   </fieldset>
