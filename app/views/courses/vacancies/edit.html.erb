@@ -38,7 +38,7 @@
                   <fieldset class="govuk-fieldset" aria-describedby="has_vacancies_true_hint">
                     <div class="govuk-checkboxes">
                       <%= f.fields_for :site_status, @course.site_statuses do |sf| %>
-                        <%= vac_status_checkboxes(sf, @course, sf.object) %>
+                        <%= render partial: 'courses/vacancies/site_status_checkbox', locals: { f: sf, course: @course, site_status: sf.object } %>
                       <% end %>
                     </div>
                   </fieldset>

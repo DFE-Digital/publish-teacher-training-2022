@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :course, class: Hash do
     sequence(:course_code) { |n| "X10#{n}" }
     name { "English" }
-    association(:provider)
     has_vacancies? { true }
 
     initialize_with do
