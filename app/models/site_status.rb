@@ -6,4 +6,8 @@ class SiteStatus < Base
   def part_time_vacancies?
     vac_status == 'part_time_vacancies'
   end
+
+  def full_time_and_part_time_vacancies?
+    vac_status == 'both_full_time_and_part_time_vacancies'
+  end
 end
