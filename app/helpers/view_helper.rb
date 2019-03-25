@@ -36,19 +36,17 @@ module ViewHelper
     elsif course.study_mode == 'full_time'
       content_tag :div, class: 'govuk-checkboxes__item' do
         concat(
-          form.check_box(:vac_status, checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') +
+          form.check_box('vac_status_full_time', checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') +
           form.label(:vac_status, "#{site_status.site.location_name} (Full time)", class: 'govuk-label govuk-checkboxes__label')
         )
       end
     elsif course.study_mode == 'part_time'
       content_tag :div, class: 'govuk-checkboxes__item' do
         concat(
-          form.check_box(:vac_status, checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') +
+          form.check_box('vac_status_part_time', checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') +
           form.label(:vac_status, "#{site_status.site.location_name} (Part time)", class: 'govuk-label govuk-checkboxes__label')
         )
       end
-    else
-      "foo"
     end
   end
 end
