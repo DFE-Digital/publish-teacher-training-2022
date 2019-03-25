@@ -10,8 +10,17 @@ module Courses
 
       params[:course][:site_status_attributes].values.each do |vac_status|
         site_status = site_statuses.find{|site_status| site_status.id == vac_status[:id]}
-        vacancy_status = "no_vacancies" #TODO figure this out
-        site_status.vac_status = vacancy_status
+
+        site_status.vac_status = if vac_status[:vac_status_full_time] == "0" && vac_status[:vac_status_part_time] == "1"
+          "part_time_vacancies"
+        elsif vac_status[:vac_status_full_time] == "1" && vac_status[:vac_status_part_time] == "0"
+          "full_time_vacancies"
+        elsif vac_status[:vac_status_full_time] == "1" && vac_status[:vac_status_part_time] == "1"
+          "both_full_time_and_part_time_vacancies"
+        elsif vac_status[:vac_status_full_time] == "0" && vac_status[:vac_status_part_time] == "0"
+          "no_vacancies"
+        end
+
         site_status.save
       end
       redirect_to vacancies_provider_course_path(@course.course_code)
