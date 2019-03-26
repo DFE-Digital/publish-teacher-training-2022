@@ -5,7 +5,7 @@
 <main role="main" class="govuk-main-wrapper" id="main-content">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= form_for @course, url: vacancies_provider_course_path(@course.course_code), method: :put do |f| %>
+      <%= form_for @course, url: vacancies_provider_course_path(params[:provider_code], @course.course_code), method: :put do |f| %>
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-7">
