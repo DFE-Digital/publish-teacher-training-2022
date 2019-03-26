@@ -17,13 +17,13 @@ module Courses
                                    "full_time_vacancies"
                                  elsif vac_status[:vac_status_full_time] == "1" && vac_status[:vac_status_part_time] == "1"
                                    "both_full_time_and_part_time_vacancies"
-                                 elsif vac_status[:vac_status_full_time] == "0" && vac_status[:vac_status_part_time] == "0"
+                                 else
                                    "no_vacancies"
         end
 
         site_status.save
       end
-      redirect_to vacancies_provider_course_path(@course.course_code)
+      redirect_to vacancies_provider_course_path(params[:provider_code], @course.course_code)
     end
 
   private
