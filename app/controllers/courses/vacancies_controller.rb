@@ -9,7 +9,7 @@ module Courses
       site_statuses = course.map(&:site_statuses).flatten
 
       params[:course][:site_status_attributes].values.each do |vac_status|
-        site_status = site_statuses.find { |site_status| site_status.id == vac_status[:id] }
+        site_status = site_statuses.find { |site_status_by_id| site_status_by_id.id == vac_status[:id] }
 
         site_status.vac_status = if vac_status[:vac_status_full_time] == "0" && vac_status[:vac_status_part_time] == "1"
                                    "part_time_vacancies"
@@ -19,7 +19,7 @@ module Courses
                                    "both_full_time_and_part_time_vacancies"
                                  else
                                    "no_vacancies"
-        end
+                                 end
 
         site_status.save
       end
