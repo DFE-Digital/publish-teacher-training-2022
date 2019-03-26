@@ -1,20 +1,4 @@
-<% if course.study_mode == 'full_time_or_part_time' %>
-  <div class='govuk-checkboxes__item'>
-    <%= f.check_box('vac_status_part_time', checked: are_vacancies_available_for_course_site_status?(course, site_status, :part_time), class: 'govuk-checkboxes__input') %>
-    <%= f.label(:vac_status, "#{site_status.site.location_name} (Part time)", class: 'govuk-label govuk-checkboxes__label') %>
-  </div>
-  <div class='govuk-checkboxes__item'>
-    <%= f.check_box('vac_status_full_time', checked: are_vacancies_available_for_course_site_status?(course, site_status, :full_time), class: 'govuk-checkboxes__input') %>
-    <%= f.label(:vac_status, "#{site_status.site.location_name} (Full time)", class: 'govuk-label govuk-checkboxes__label') %>
-  </div>
-<% elsif course.study_mode == 'full_time' %>
-  <div class='govuk-checkboxes__item'>
-    <%= f.check_box('vac_status_full_time', checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') %>
-    <%= f.label(:vac_status, "#{site_status.site.location_name} (Full time)", class: 'govuk-label govuk-checkboxes__label') %>
-  </div>
-<% elsif course.study_mode == 'part_time' %>
-  <div class='govuk-checkboxes__item'>
-    <%= f.check_box('vac_status_part_time', checked: are_vacancies_available_for_course_site_status?(course, site_status), class: 'govuk-checkboxes__input') %>
-    <%= f.label(:vac_status, "#{site_status.site.location_name} (Part time)", class: 'govuk-label govuk-checkboxes__label') %>
-  </div>
-<% end %>
+<div class='govuk-checkboxes__item'>
+  <%= f.check_box(study_mode, checked: are_vacancies_available_for_course_site_status?(course, f.object, study_mode), class: 'govuk-checkboxes__input') %>
+  <%= f.label(study_mode, "#{f.object.site.location_name} (#{study_mode.to_s.humanize})", class: 'govuk-label govuk-checkboxes__label') %>
+</div>
