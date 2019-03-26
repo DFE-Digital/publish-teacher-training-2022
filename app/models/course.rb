@@ -10,4 +10,8 @@ class Course < Base
   def part_time?
     study_mode == 'part time'
   end
+
+  def full_time_or_part_time?
+    study_mode == 'full_time_or_part_time'
+  end
 end
