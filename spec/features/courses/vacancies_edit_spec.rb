@@ -2,118 +2,114 @@ require 'rails_helper'
 
 feature 'Edit course vacancies', type: :feature do
   let(:base_course) do
-    JSON.parse(
-      <<~STRING
-        {
-           "data":{
-              "id":"1",
-              "type":"courses",
-              "attributes":{
-                 "has_vacancies?":true,
-                 "course_code":"C1D3",
-                 "name":"English",
-                 "study_mode":"full_time_or_part_time"
+    HashWithIndifferentAccess.new(
+      data: {
+        id: '1',
+        type: 'courses',
+        attributes: {
+          has_vacancies?: true,
+          course_code: 'C1D3',
+          name: 'English',
+          study_mode: 'full_time_or_part_time'
+        },
+        relationships: {
+          provider: {
+            meta: {
+              included: false
+            }
+          },
+          site_statuses: {
+            data: [
+              {
+                type: 'site_statuses',
+                id: '1'
               },
-              "relationships":{
-                 "provider":{
-                    "meta":{
-                       "included":false
-                    }
-                 },
-                 "site_statuses":{
-                    "data":[
-                       {
-                          "type":"site_statuses",
-                          "id":"1"
-                       },
-                       {
-                          "type":"site_statuses",
-                          "id":"2"
-                       },
-                       {
-                          "type":"site_statuses",
-                          "id":"3"
-                       },
-                       {
-                          "type":"site_statuses",
-                          "id":"4"
-                       }
-                    ]
-                 }
+              {
+                type: 'site_statuses',
+                id: '2'
+              },
+              {
+                type: 'site_statuses',
+                id: '3'
+              },
+              {
+                type: 'site_statuses',
+                id: '4'
               }
-           },
-           "included":[
-              {
-                 "id":"1",
-                 "type":"site_statuses",
-                 "attributes":{
-                    "vac_status":"both_full_time_and_part_time_vacancies"
-                 },
-                 "relationships":{
-                    "site":{
-                       "data":{
-                          "type":"sites",
-                          "id":"3"
-                       }
-                    }
-                 }
-              },
-              {
-                 "id":"2",
-                 "type":"site_statuses",
-                 "attributes":{
-                    "vac_status":"full_time_vacancies"
-                 },
-                 "relationships":{
-                    "site":{
-                       "data":{
-                          "type":"sites",
-                          "id":"3"
-                       }
-                    }
-                 }
-              },
-              {
-                 "id":"3",
-                 "type":"site_statuses",
-                 "attributes":{
-                    "vac_status":"part_time_vacancies"
-                 },
-                 "relationships":{
-                    "site":{
-                       "data":{
-                          "type":"sites",
-                          "id":"3"
-                       }
-                    }
-                 }
-              },
-              {
-                 "id":"4",
-                 "type":"site_statuses",
-                 "attributes":{
-                    "vac_status":"no_vacancies"
-                 },
-                 "relationships":{
-                    "site":{
-                       "data":{
-                          "type":"sites",
-                          "id":"3"
-                       }
-                    }
-                 }
-              },
-              {
-                 "id":"3",
-                 "type":"sites",
-                 "attributes":{
-                    "code":"2",
-                    "location_name":"Main Site"
-                 }
-              }
-           ]
+            ]
+          }
         }
-      STRING
+      },
+      included: [
+        {
+          id: '1',
+          type: 'site_statuses',
+          attributes: {
+            vac_status: 'both_full_time_and_part_time_vacancies'
+          },
+          relationships: {
+            site: {
+              data: {
+                type: 'sites',
+                id: '3'
+              }
+            }
+          }
+        },
+        {
+          id: '2',
+          type: 'site_statuses',
+          attributes: {
+            vac_status: 'full_time_vacancies'
+          },
+          relationships: {
+            site: {
+              data: {
+                type: 'sites',
+                id: '3'
+              }
+            }
+          }
+        },
+        {
+          id: '3',
+          type: 'site_statuses',
+          attributes: {
+            vac_status: 'part_time_vacancies'
+          },
+          relationships: {
+            site: {
+              data: {
+                type: 'sites',
+                id: '3'
+              }
+            }
+          }
+        },
+        {
+          id: '4',
+          type: 'site_statuses',
+          attributes: {
+            vac_status: 'no_vacancies'
+          },
+          relationships: {
+            site: {
+              data: {
+                type: 'sites',
+                id: '3'
+              }
+            }
+          }
+        },
+        {
+          id: '3',
+          type: 'sites',
+          attributes: {
+            code: '2',
+            location_name: 'Main Site'
+          }
+        }
+      ]
     )
   end
   let(:course) { base_course }
@@ -164,13 +160,13 @@ feature 'Edit course vacancies', type: :feature do
 
     context 'with a course with full time sites' do
       let(:course) do
-        base_course['data']['attributes']['study_mode'] = 'full_time'
+        base_course[:data][:attributes][:study_mode] = 'full_time'
 
-        base_course['included'].delete_at 0
-        base_course['included'].delete_at 1
+        base_course[:included].delete_at 0
+        base_course[:included].delete_at 1
 
-        base_course['data']['relationships']['site_statuses']['data'].delete_at 0
-        base_course['data']['relationships']['site_statuses']['data'].delete_at 1
+        base_course[:data][:relationships][:site_statuses][:data].delete_at 0
+        base_course[:data][:relationships][:site_statuses][:data].delete_at 1
 
         base_course
       end
@@ -192,13 +188,13 @@ feature 'Edit course vacancies', type: :feature do
 
     context 'with a course with part time sites' do
       let(:course) do
-        base_course['data']['attributes']['study_mode'] = 'part_time'
+        base_course[:data][:attributes][:study_mode] = 'part_time'
 
-        base_course['included'].delete_at 0
-        base_course['included'].delete_at 0
+        base_course[:included].delete_at 0
+        base_course[:included].delete_at 0
 
-        base_course['data']['relationships']['site_statuses']['data'].delete_at 0
-        base_course['data']['relationships']['site_statuses']['data'].delete_at 0
+        base_course[:data][:relationships][:site_statuses][:data].delete_at 0
+        base_course[:data][:relationships][:site_statuses][:data].delete_at 0
 
         base_course
       end
@@ -221,7 +217,7 @@ feature 'Edit course vacancies', type: :feature do
 
   describe 'submitting forms' do
     let(:course_without_vacancy) do
-      course['included'].first['attributes']['vac_status'] = 'no_vacancies'
+      course[:included][0][:attributes][:vac_status] = 'no_vacancies'
       course
     end
 
