@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Edit course vacancies', type: :feature do
   let(:base_course) do
-    HashWithIndifferentAccess.new(
+    {
       data: {
         id: '1',
         type: 'courses',
@@ -110,7 +110,7 @@ feature 'Edit course vacancies', type: :feature do
           }
         }
       ]
-    )
+    }
   end
   let(:course) { base_course }
 
