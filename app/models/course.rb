@@ -4,11 +4,11 @@ class Course < Base
   has_many :sites, through: :site_statuses, source: :site
 
   def full_time?
-    study_mode == 'full time'
+    study_mode == 'full_time'
   end
 
   def part_time?
-    study_mode == 'part time'
+    study_mode == 'part_time'
   end
 
   def full_time_or_part_time?
