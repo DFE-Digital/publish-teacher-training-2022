@@ -56,6 +56,9 @@ group :development, :test do
 
   # Testing framework
   gem 'rspec-rails', '~> 3.8'
+
+  # A Ruby static code analyzer and formatter
+  gem 'rubocop', require: false
 end
 
 group :development do
