@@ -13,7 +13,7 @@ module Courses
       params.dig(:course, :site_status_attributes)
         &.values&.each do |vacancy_status|
         site_status            = find_site_status vacancy_status[:id]
-        site_status.vac_status = VacancyStatusDeterminationService.new.call(
+        site_status.vac_status = VacancyStatusDeterminationService.call(
           vacancy_status_full_time: vacancy_status[:vac_status_full_time],
           vacancy_status_part_time: vacancy_status[:vac_status_part_time],
           course:                   @course
