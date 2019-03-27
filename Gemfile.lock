@@ -363,6 +363,7 @@ DEPENDENCIES
   rails (~> 5.2.2)
   rspec-rails (~> 3.8)
   rspec_junit_formatter
+  rubocop
   selenium-webdriver
   sentry-raven
   spring
