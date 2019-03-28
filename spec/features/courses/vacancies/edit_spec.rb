@@ -247,6 +247,20 @@ feature 'Edit course vacancies', type: :feature do
         .not_to be_checked
     end
 
+    scenario 'removing all vacancies' do
+      visit '/organisations/AO/courses/C1D3/vacancies'
+
+      page.find('input#course_has_vacancies_false').click
+      stub_api_v2_request '/providers/AO/courses/C1D3', course_with_vacancy
+      click_on 'Publish changes'
+
+      expect(current_path).to eq vacancies_provider_course_path('AO', 'C1D3')
+      expect(page.find('.govuk-success-summary'))
+        .to have_content 'Course vacancies published'
+      expect(page.find('input#course_has_vacancies_false'))
+        .to be_truthy
+    end
+
     scenario 'adding a vacancy' do
       visit '/organisations/AO/courses/C1D3/vacancies'
 
