@@ -21,6 +21,7 @@ module Courses
           site_status.save
         end
 
+      flash[:success] = 'Course vacancies published'
       redirect_to vacancies_provider_course_path(params[:provider_code], @course.course_code)
     end
 

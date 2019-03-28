@@ -3,6 +3,7 @@
 <%= manage_ui_link_to_back("/organisation/#{params[:provider_code]}/courses/#{@course.course_code}") %>
 
 <main role="main" class="govuk-main-wrapper" id="main-content">
+  <%= render partial: "layouts/flash" if flash.any? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= form_for @course, url: vacancies_provider_course_path(params[:provider_code], @course.course_code), method: :put do |f| %>
