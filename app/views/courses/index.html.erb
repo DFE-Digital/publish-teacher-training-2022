@@ -46,7 +46,7 @@
     <tbody class="govuk-table__body">
       <% @courses.each do |course| %>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">
+          <td class="govuk-table__cell" data-qa="courses-table__course">
             <a href="#TODO" class="govuk-link govuk-heading-s govuk-!-margin-bottom-0" style="border: 3px solid red"><%= course.attributes[:name] %> (<%= course.attributes[:course_code] %>)</a>
             <span class="govuk-body-s"><%= course.attributes[:description] %></span>
           </td>
@@ -56,21 +56,21 @@
           <td class="govuk-table__cell">
             <span class="govuk-tag phase-tag--small phase-tag--published" style="border: 3px solid red">Published</span>
           </td>
-          <td class="govuk-table__cell nowrap">
+          <td class="govuk-table__cell" data-qa="courses-table__findable">
             <% if course.attributes[:findable?] %>
               <a class="govuk-link" href="#TODO" style="border: 3px solid red">Yes - view online</a>
             <% else %>
               No
             <% end %>
           </td>
-          <td class="govuk-table__cell">
+          <td class="govuk-table__cell" data-qa="courses-table__applications">
             <% if course.attributes[:applications_being_accepted_now?] %>
               Open
             <% else %>
               Closed
             <% end %>
           </td>
-          <td class="govuk-table__cell">
+          <td class="govuk-table__cell" data-qa="courses-table__vacancies">
             <% if course.attributes[:has_vacancies?] %>
               Yes
             <% else %>
