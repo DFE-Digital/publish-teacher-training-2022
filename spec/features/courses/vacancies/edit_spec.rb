@@ -236,6 +236,8 @@ feature 'Edit course vacancies', type: :feature do
       click_on 'Publish changes'
 
       expect(current_path).to eq vacancies_provider_course_path('AO', 'C1D3')
+      expect(page.find('.govuk-success-summary'))
+        .to have_content 'Course vacancies published'
       expect(page.find('input#course_site_status_attributes_0_full_time'))
         .not_to be_checked
     end

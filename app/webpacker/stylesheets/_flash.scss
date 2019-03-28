@@ -1,0 +1,22 @@
+.govuk-success-summary {
+  @include govuk-focusable;
+  @include govuk-text-colour;
+  @include govuk-responsive-padding(4);
+  @include govuk-responsive-margin(8, "bottom");
+
+  border: $govuk-border-width-mobile solid $success-green;
+
+  @include govuk-media-query($from: tablet) {
+    border: $govuk-border-width solid $success-green;
+  }
+
+  *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.govuk-success-summary__title {
+  @include govuk-font($size: 24, $weight: bold);
+  @include govuk-responsive-margin(4, "bottom");
+  margin-top: 0;
+}

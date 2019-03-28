@@ -1,0 +1,9 @@
+<div class="grid-row">
+  <div class="column-two-thirds">
+    <% flash.each do |key, value| %>
+      <div class="govuk-<%= key %>-summary" role="alert" aria-labelledby="<%= key %>-summary-heading" tabindex="-1" data-module="error-summary">
+        <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading"><%= value %></h3>
+      </div>
+    <% end %>
+  </div>
+</div>
