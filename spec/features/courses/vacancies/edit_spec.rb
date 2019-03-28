@@ -221,6 +221,11 @@ feature 'Edit course vacancies', type: :feature do
       course
     end
 
+    let(:course_with_vacancy) do
+      course[:included][0][:attributes][:vac_status] = 'full_time_vacancies'
+      course
+    end
+
     before do
       stub_request :patch, 'http://localhost:3001/api/v2/site_statuses/1'
       stub_request :patch, 'http://localhost:3001/api/v2/site_statuses/2'
@@ -240,6 +245,18 @@ feature 'Edit course vacancies', type: :feature do
         .to have_content 'Course vacancies published'
       expect(page.find('input#course_site_status_attributes_0_full_time'))
         .not_to be_checked
+    end
+
+    scenario 'adding a vacancy' do
+      visit '/organisations/AO/courses/C1D3/vacancies'
+
+      page.find('input#course_site_status_attributes_0_full_time').check
+      stub_api_v2_request '/providers/AO/courses/C1D3', course_with_vacancy
+      click_on 'Publish changes'
+
+      expect(current_path).to eq vacancies_provider_course_path('AO', 'C1D3')
+      expect(page.find('input#course_site_status_attributes_0_full_time'))
+        .to be_checked
     end
   end
 end
