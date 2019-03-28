@@ -32,5 +32,5 @@ echo "Running tests..."
 bundle-run "rails spec"
 
 echo "Running linters..."
-bundle-run "govuk-lint-ruby app config db lib spec --format clang"
+bundle-run "rubocop app config db lib spec --format clang"
 bundle-run "govuk-lint-sass app/webpacker/stylesheets"
