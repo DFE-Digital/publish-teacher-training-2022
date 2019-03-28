@@ -27,7 +27,7 @@
     <li>copy content between courses</li>
   </ul>
 
-  <h2 class="govuk-heading-m">
+  <h2 class="govuk-heading-m" style="border: 3px solid red">
     <span class="govuk-caption-m">Accredited body</span>
     Bradford College
   </h2>
@@ -36,7 +36,8 @@
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th class="govuk-table__header">Course</th>
-        <th class="govuk-table__header" style="width: 160px">Status</th>
+        <th class="govuk-table__header">UCAS Status</th>
+        <th class="govuk-table__header">Content</th>
         <th class="govuk-table__header">Is it on <abbr class="text-decoration-underline-dotted" title="Find postgraduate teacher training">Find</abbr>?</th>
         <th class="govuk-table__header">Applications</th>
         <th class="govuk-table__header">Vacancies</th>
@@ -46,15 +47,18 @@
       <% @courses.each do |course| %>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">
-            <a href="/course/E65/28ZC" class="govuk-link govuk-heading-s govuk-!-margin-bottom-0"><%= course.attributes[:name] %> (<%= course.attributes[:course_code] %>)</a>
+            <a href="#TODO" class="govuk-link govuk-heading-s govuk-!-margin-bottom-0" style="border: 3px solid red"><%= course.attributes[:name] %> (<%= course.attributes[:course_code] %>)</a>
             <span class="govuk-body-s"><%= course.attributes[:description] %></span>
           </td>
+          <td class="govuk-table__cell" style="border: 3px solid red">
+            Running
+          </td>
           <td class="govuk-table__cell">
-            <span class="govuk-tag phase-tag--small phase-tag--published">Published</span>
+            <span class="govuk-tag phase-tag--small phase-tag--published" style="border: 3px solid red">Published</span>
           </td>
           <td class="govuk-table__cell nowrap">
             <% if course.attributes[:findable?] %>
-              <a class="govuk-link" href="#TODO">Yes - view online</a>
+              <a class="govuk-link" href="#TODO" style="border: 3px solid red">Yes - view online</a>
             <% else %>
               No
             <% end %>
@@ -68,10 +72,11 @@
           </td>
           <td class="govuk-table__cell">
             <% if course.attributes[:has_vacancies?] %>
-              Yes (<a class="govuk-link" href="#">Edit</a>)
+              Yes
             <% else %>
               No
             <% end %>
+            (<%= link_to 'Edit', vacancies_provider_course_path(code: course.attributes[:course_code]), class: 'govuk-link' %>)
           </td>
         </tr>
       <% end %>
