@@ -127,6 +127,10 @@ feature 'Edit course vacancies', type: :feature do
       'Back',
       href: "#{Settings.manage_ui.base_url}/organisation/AO/courses/C1D3"
     )
+    expect(page).to have_link(
+      'Cancel changes',
+      href: "#{Settings.manage_ui.base_url}/organisation/AO/course/self/C1D3"
+    )
     expect(find('h1')).to have_content('Edit vacancies')
     expect(find('.govuk-caption-xl')).to have_content('English (C1D3)')
   end

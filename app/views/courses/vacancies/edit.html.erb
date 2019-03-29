@@ -54,7 +54,7 @@
           </fieldset>
           <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated overnight.</p>
           <%= f.submit "Publish changes", class: "govuk-button" %>
-          <p class="govuk-body"><%= link_to "Cancel changes", "/organisation/#{params[:provider_code]}/courses/#{@course.course_code}", class: "govuk-link" %></p>
+          <p class="govuk-body"><%= govuk_link_to "Cancel changes", manage_ui_course_page_url(provider_code: params[:provider_code], course_code: @course.course_code) %></p>
         </div>
       <% end %>
     </div>
