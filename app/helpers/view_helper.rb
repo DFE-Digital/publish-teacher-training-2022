@@ -12,6 +12,6 @@ module ViewHelper
   end
 
   def manage_ui_course_page_url(provider_code:, course_code:)
-    manage_ui_url("/organisation/#{provider_code}/courses/#{course_code}")
+    manage_ui_url("/organisation/#{provider_code}/course/self/#{course_code}")
   end
 end

@@ -125,7 +125,7 @@ feature 'Edit course vacancies', type: :feature do
 
     expect(page).to have_link(
       'Back',
-      href: "#{Settings.manage_ui.base_url}/organisation/AO/courses/C1D3"
+      href: "#{Settings.manage_ui.base_url}/organisation/AO/course/self/C1D3"
     )
     expect(page).to have_link(
       'Cancel changes',
