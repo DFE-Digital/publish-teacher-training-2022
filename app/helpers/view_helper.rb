@@ -10,4 +10,8 @@ module ViewHelper
   def manage_ui_url(relative_path)
     Settings.manage_ui.base_url + relative_path
   end
+
+  def manage_ui_course_page_url(provider_code:, course_code:)
+    manage_ui_url("/organisation/#{provider_code}/courses/#{course_code}")
+  end
 end

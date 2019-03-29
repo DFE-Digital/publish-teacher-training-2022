@@ -18,4 +18,10 @@ RSpec.feature 'View helpers', type: :helper do
       expect(helper.manage_ui_url('/organisations/A0')).to eq("https://localhost:44364/organisations/A0")
     end
   end
+
+  describe "#manage_ui_url" do
+    it "returns full Manage Courses UI URL to the passed path" do
+      expect(helper.manage_ui_course_page_url(provider_code: 'A1', course_code: 'X130')).to eq("https://localhost:44364/organisation/A1/courses/X130")
+    end
+  end
 end
