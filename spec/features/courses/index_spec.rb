@@ -15,6 +15,9 @@ feature 'Index courses', type: :feature do
     expect(page).to have_selector('tbody tr', count: 3)
 
     expect(first('[data-qa="courses-table__course"]')).to have_content('English (X101)')
+    expect(first('[data-qa="courses-table__course"]')).to have_content('PGCE with QTS')
+    expect(page).to have_selector("a[href=\"https://localhost:44364/organisation/A0/course/self/X101\"]")
+
     expect(first('[data-qa="courses-table__findable"]')).to have_content('Yes - view online')
     expect(first('[data-qa="courses-table__applications"]')).to have_content('Closed')
     expect(first('[data-qa="courses-table__vacancies"]')).to have_content('No (Edit)')
