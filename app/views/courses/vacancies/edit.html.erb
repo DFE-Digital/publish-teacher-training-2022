@@ -1,6 +1,6 @@
 <%= content_for :page_title, "Vacancies" %>
 
-<%= manage_ui_link_to_back("/organisation/#{params[:provider_code]}/courses/#{@course.course_code}") %>
+<%= govuk_back_link_to(manage_ui_url("/organisation/#{params[:provider_code]}/courses/#{@course.course_code}")) %>
 
 <main role="main" class="govuk-main-wrapper" id="main-content">
   <%= render partial: "layouts/flash" if flash.any? %>
