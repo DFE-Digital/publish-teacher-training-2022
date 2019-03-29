@@ -1,6 +1,6 @@
 <%= content_for :page_title, "Vacancies" %>
 
-<%= manage_ui_link_to_back("/organisation/#{params[:provider_code]}/courses/#{@course.course_code}") %>
+<%= manage_ui_link_to_back("/organisation/#{params[:provider_code]}/courses/self/#{@course.course_code}") %>
 
 <main role="main" class="govuk-main-wrapper" id="main-content">
   <%= render partial: "layouts/flash" if flash.any? %>
@@ -54,9 +54,9 @@
           </fieldset>
           <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated overnight.</p>
           <%= f.submit "Publish changes", class: "govuk-button" %>
-          <p class="govuk-body"><%= link_to "Cancel changes", "/organisation/#{params[:provider_code]}/courses/#{@course.course_code}", class: "govuk-link" %></p>
+          <p class="govuk-body"><p class="govuk-body"><%= manage_ui_link_to("Cancel changes", "/organisation/#{params[:provider_code]}/courses/self/#{@course.course_code}", class: "govuk-link")%></p></p>
         </div>
-      <% end %>
+        <% end %>
     </div>
   </div>
 </main>
