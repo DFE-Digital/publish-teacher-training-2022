@@ -12,6 +12,15 @@ Rails.application.routes.draw do
     resources :courses, param: :code do
       get '/vacancies', on: :member, to: 'courses/vacancies#edit'
       put '/vacancies', on: :member, to: 'courses/vacancies#update'
+
+
+      # redirect back to manage course ui
+      get '/preview', to: redirect("#{Settings.manage_ui.base_url}/organisation/%{provider_code}/course/self/%{course_code}/preview", status: 302)
+      get '/about', to: redirect("#{Settings.manage_ui.base_url}/organisation/%{provider_code}/course/self/%{course_code}/about", status: 302)
+      get '/requirements', to: redirect("#{Settings.manage_ui.base_url}/organisation/%{provider_code}/course/self/%{course_code}/requirements", status: 302)
+      get '/salary', to: redirect("#{Settings.manage_ui.base_url}/organisation/%{provider_code}/course/self/%{course_code}/salary", status: 302)
+      get '/fees-and-length', to: redirect("#{Settings.manage_ui.base_url}/organisation/%{provider_code}/course/self/%{course_code}/fees-and-length", status: 302)
+      get '/', to: redirect("#{Settings.manage_ui.base_url}/organisation/%{provider_code}/course/self/%{course_code}", status: 302)
     end
   end
 
