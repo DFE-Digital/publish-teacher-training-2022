@@ -77,7 +77,7 @@
       <div class="govuk-phase-banner">
         <p class="govuk-phase-banner__content">
           <strong class="govuk-tag govuk-phase-banner__content__tag ">BETA</strong>
-          <span class="govuk-phase-banner__text">This is a new service – your <%= mail_to "mailto:becomingateacher@digital.education.gov.uk?subject=Publish%20teacher%20training%20courses%20feedback", "feedback", class: "govuk-link" %> will help us to improve it.</span>
+          <span class="govuk-phase-banner__text">This is a new service – your <%= mail_to "becomingateacher@digital.education.gov.uk", "feedback", subject: "Publish teacher training courses feedback", class: "govuk-link" %> will help us to improve it.</span>
         </p>
       </div>
       <%= yield %>
@@ -90,7 +90,7 @@
             <h2 class="govuk-visually-hidden">Support links</h2>
             <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
               <li class="govuk-footer__inline-list-item">
-                <%= mail_to "mailto:becomingateacher@digital.education.gov.uk?subject=Publish%20teacher%20training%20courses%20feedback", "Give feedback", class: "govuk-footer__link" %>
+                <%= mail_to "becomingateacher@digital.education.gov.uk", "Give feedback", subject: "Publish teacher training courses feedback", class: "govuk-footer__link" %>
               </li>
               <li class="govuk-footer__inline-list-item">
                 <%= link_to "Cookies", cookies_path, class: "govuk-footer__link" %>
