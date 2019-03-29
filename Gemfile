@@ -80,7 +80,7 @@ group :test do
   gem 'chromedriver-helper'
 
   # Add Junit formatter for rspec
-  gem "rspec_junit_formatter"
+  gem 'rspec_junit_formatter'
 
   gem 'webmock'
 

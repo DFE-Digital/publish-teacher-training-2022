@@ -14,6 +14,11 @@ FactoryBot.define do
     site_statuses { [] }
     provider      { nil }
 
+    trait :with_vacancy do
+      has_vacancies? { true }
+      study_mode     { 'full_time_or_part_time' }
+    end
+
     initialize_with do |_evaluator|
       data_attributes = attributes.except(:id, *relationships)
       relationships_map = Hash[
