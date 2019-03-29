@@ -2,6 +2,10 @@ FactoryBot.define do
   factory :course, class: Hash do
     sequence(:course_code) { |n| "X10#{n}" }
     name { "English" }
+    description { "PGCE with QTS" }
+    findable? { true }
+    open_for_applications? { false }
+    has_vacancies? { false }
 
     initialize_with do
       {

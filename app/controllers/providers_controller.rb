@@ -8,8 +8,6 @@ class ProvidersController < ApplicationController
   end
 
   def show
-    provider_count = session.try(:[], :auth_user).try(:[], :provider_count)
-    @has_multiple_providers = provider_count.nil? || provider_count > 1
     @provider = Provider.find(params[:code]).first.attributes
   end
 end

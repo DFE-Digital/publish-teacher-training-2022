@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_manage_ui
   rescue_from JsonApiClient::Errors::AccessDenied, with: :render_manage_ui
 
+  before_action :set_has_multiple_providers
+
   def not_found
     respond_to do |format|
       format.html { render 'errors/not_found', status: :not_found }
@@ -33,6 +35,15 @@ class ApplicationController < ActionController::Base
 
   def current_user_info
     current_user['info']
+  end
+
+  def set_has_multiple_providers
+    @has_multiple_providers = has_multiple_providers?
+  end
+
+  def has_multiple_providers?
+    provider_count = session.to_hash.dig("auth_user", "provider_count")
+    provider_count.nil? || provider_count > 1
   end
 
 private
