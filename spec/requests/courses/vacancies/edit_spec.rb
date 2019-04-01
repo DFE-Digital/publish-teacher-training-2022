@@ -9,20 +9,20 @@ describe 'Edit vacancies' do
         site_statuses: [site_status]
       ).render
     end
-    let(:course_attributes) { course[:data][:attributes] }
+    let(:course_code) { course[:data][:attributes][:course_code] }
     let(:site) { jsonapi(:site) }
     let(:site_status) do
       jsonapi(:site_status, :full_time_and_part_time, site: site)
     end
     let(:edit_vacancies_path) do
-      "/organisations/AO/courses/#{course_attributes[:course_code]}/vacancies"
+      "/organisations/AO/courses/#{course_code}/vacancies"
     end
 
     before do
       stub_omniauth
       stub_session_create
       stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}",
+        "/providers/AO/courses/#{course_code}",
         course
       )
       get(edit_vacancies_path)
