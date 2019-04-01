@@ -1,4 +1,4 @@
 <div class='govuk-checkboxes__item'>
-  <%= f.check_box(study_mode, checked: are_vacancies_available_for_course_site_status?(course, f.object, study_mode), class: 'govuk-checkboxes__input') %>
+  <%= f.check_box(study_mode, checked: vacancy_available_for_course_site_status?(course, f.object, study_mode), class: 'govuk-checkboxes__input') %>
   <%= f.label(study_mode, "#{f.object.site.location_name} (#{study_mode.to_s.humanize})", class: 'govuk-label govuk-checkboxes__label') %>
 </div>
