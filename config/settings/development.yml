@@ -6,6 +6,8 @@ manage_backend:
   base_url: http://localhost:3001
 manage_ui:
   base_url: https://localhost:44364
+search_ui:
+  base_url: https://localhost:5000
 authentication:
   algorithm: plain-text
   secret: nil

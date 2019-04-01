@@ -20,3 +20,6 @@ manage_backend:
 manage_ui:
   # URL of the c# ui app (manage-courses-ui)
   base_url: https://localhost:44364
+search_ui:
+  # URL of the C# search ui app (search-and-compare-ui)
+  base_url: https://localhost:5000

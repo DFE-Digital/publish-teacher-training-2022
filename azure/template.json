@@ -105,6 +105,24 @@
             "metadata": {
                 "description": "Connection string for Sentry monitoring."
             }
+        },
+        "settingsManageBackendBaseUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Base URL for manage-courses-backend."
+            }
+        },
+        "settingsManageUiBaseUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Base URL for manage-courses-ui."
+            }
+        },
+        "settingsSearchUiBaseUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Base URL for search-and-compare-ui."
+            }
         }
     },
     "variables": {
@@ -216,6 +234,18 @@
                             {
                                 "name": "SENTRY_DSN",
                                 "value": "[parameters('sentryDSN')]"
+                            },
+                            {
+                                "name": "SETTINGS__MANAGE_BACKEND__BASE_URL",
+                                "value": "[parameters('settingsManageBackendBaseUrl')]"
+                            },
+                            {
+                                "name": "SETTINGS__MANAGE_UI__BASE_URL",
+                                "value": "[parameters('settingsManageUiBaseUrl')]"
+                            },
+                            {
+                                "name": "SETTINGS__SEARCH_UI__BASE_URL",
+                                "value": "[parameters('settingsSearchUiBaseUrl')]"
                             }
                         ]
                     },
