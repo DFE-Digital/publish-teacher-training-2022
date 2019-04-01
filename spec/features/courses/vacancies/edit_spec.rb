@@ -51,6 +51,17 @@ feature 'Edit course vacancies', type: :feature do
   end
 
   context 'removing vacancies' do
+    let(:course_without_vacancies) do
+      jsonapi(
+        :course,
+        :with_full_time_or_part_time_vacancy,
+        course_code:   course_attributes[:course_code],
+        site_statuses: [
+          jsonapi(:site_status, :no_vacancies, id: site_status.id, site: site)
+        ]
+      ).render
+    end
+
     before do
       stub_request(
         :patch,
@@ -76,6 +87,30 @@ feature 'Edit course vacancies', type: :feature do
       )
       expect(page).to have_field(
         "#{site.attributes[:location_name]} (Full time)",
+        checked: false
+      )
+    end
+
+    scenario 'removing all vacancies' do
+      choose 'There are no vacancies'
+
+      stub_api_v2_request(
+        "/providers/AO/courses/#{course_attributes[:course_code]}",
+        course_without_vacancies
+      )
+
+      click_on 'Publish changes'
+
+      expect(page.find('.govuk-success-summary')).to have_content(
+        'Course vacancies published'
+      )
+      expect(page).to have_field('There are no vacancies'), chosen: true
+      expect(page).to have_field(
+        "#{site.attributes[:location_name]} (Full time)",
+        checked: false
+      )
+      expect(page).to have_field(
+        "#{site.attributes[:location_name]} (Part time)",
         checked: false
       )
     end

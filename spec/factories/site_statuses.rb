@@ -10,6 +10,10 @@ FactoryBot.define do
       vac_status { 'part_time_vacancies' }
     end
 
+    trait :no_vacancies do
+      vac_status { 'no_vacancies' }
+    end
+
     initialize_with do
       data_attributes = attributes.except(:id, :site)
       JSONAPIMockSerializable.new(
