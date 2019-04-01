@@ -2,7 +2,11 @@ require 'rails_helper'
 
 feature 'Edit course vacancies', type: :feature do
   let(:course) do
-    jsonapi(:course, :with_vacancy, site_statuses: [site_status]).render
+    jsonapi(
+      :course,
+      :with_full_time_or_part_time_vacancy,
+      site_statuses: [site_status]
+    ).render
   end
   let(:course_attributes) { course[:data][:attributes] }
   let(:site) { jsonapi(:site) }
@@ -27,10 +31,12 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'where the course is both full time or part time' do
     let(:course_without_full_time_vacancy) do
-      jsonapi(:course,
-              :with_vacancy,
-              course_code:   course_attributes[:course_code],
-              site_statuses: [part_time_site_status]).render
+      jsonapi(
+        :course,
+        :with_full_time_or_part_time_vacancy,
+        course_code:   course_attributes[:course_code],
+        site_statuses: [part_time_site_status]
+      ).render
     end
     let(:part_time_site_status) do
       jsonapi(:site_status, :part_time, id: site_status.id, site: site)

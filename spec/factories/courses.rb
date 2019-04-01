@@ -16,7 +16,21 @@ FactoryBot.define do
 
     trait :with_vacancy do
       has_vacancies? { true }
-      study_mode     { 'full_time_or_part_time' }
+    end
+
+    trait :with_full_time_or_part_time_vacancy do
+      with_vacancy
+      study_mode { 'full_time_or_part_time' }
+    end
+
+    trait :with_full_time_vacancy do
+      with_vacancy
+      study_mode { 'full_time' }
+    end
+
+    trait :with_part_time_vacancy do
+      with_vacancy
+      study_mode { 'part_time' }
     end
 
     initialize_with do |_evaluator|

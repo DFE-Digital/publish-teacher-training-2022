@@ -1,41 +1,94 @@
-# require 'rails_helper'
+require 'rails_helper'
 
-# describe Courses::VacanciesController, type: :controller do
-#   let(:full_and_part_time_site) { build(:site, id: 3, code: '-', location_name: 'Full & part time site') }
-#   let(:full_time_site)          { build(:site, id: 3, code: 'A', location_name: 'Full time site') }
-#   let(:part_time_site)          { build(:site, id: 3, code: 'B', location_name: 'Part time site') }
-#   let(:no_vacancies_site)       { build(:site, id: 3, code: 'C', location_name: 'No vacancies site') }
+describe 'Edit vacancies' do
+  describe 'viewing the edit vacancies page' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :with_full_time_or_part_time_vacancy,
+        site_statuses: [site_status]
+      ).render
+    end
+    let(:course_attributes) { course[:data][:attributes] }
+    let(:site) { jsonapi(:site) }
+    let(:site_status) do
+      jsonapi(:site_status, :full_time_and_part_time, site: site)
+    end
+    let(:edit_vacancies_path) do
+      "/organisations/AO/courses/#{course_attributes[:course_code]}/vacancies"
+    end
 
-#   let(:full_and_part_time_site_status) { build(:site_status, id: 1, site: full_and_part_time_site) }
-#   let(:full_time_site_status)          { build(:site_status, id: 2, site: full_time_site, vac_status: 'full_time_vacancies') }
-#   let(:part_time_site_status)          { build(:site_status, id: 3, site: part_time_site, vac_status: 'part_time_vacancies') }
-#   let(:no_vacancies_site_status)       { build(:site_status, id: 4, site: no_vacancies_site, vac_status: 'no_vacancies') }
+    before do
+      stub_omniauth
+      stub_session_create
+      stub_api_v2_request(
+        "/providers/AO/courses/#{course_attributes[:course_code]}",
+        course
+      )
+      get(edit_vacancies_path)
+    end
 
-#   # let(:course) do
-#   #   build(:course, has_vacancies?: true,
-#   #                  course_code: 'C1D3',
-#   #                  name: 'English',
-#   #                  study_mode: 'full_time_or_part_time',
-#   #                  site_statuses: [
-#   #                    full_and_part_time_site_status,
-#   #                    full_time_site_status,
-#   #                    part_time_site_status,
-#   #                    no_vacancies_site_status,
-#   #                  ])
-#   # end
+    it 'has the correct heading' do
+      expect(response.body).to include('Edit vacancies')
+    end
 
-#   context 'with authenticated user' do
-#     before do
-#       stub_omniauth
-#       stub_session_create
-#     end
+    describe 'rendering vacancies checkboxes' do
+      context 'with a full time and part time course' do
+        let(:course) do
+          jsonapi(
+            :course,
+            :with_full_time_or_part_time_vacancy,
+            site_statuses: [site_status]
+          ).render
+        end
 
-#     describe 'GET #edit' do
-#       # binding.pry;
-#       subject { get :edit, params: { id: course['attributes'][:course_code] } }
+        it 'shows full time and part time checkboxes' do
+          expect(response.body).to include(
+            "#{site.attributes[:location_name]} (Full time)"
+          )
+          expect(response.body).to include(
+            "#{site.attributes[:location_name]} (Part time)"
+          )
+        end
+      end
 
-#       it { is_expected.to be_successful }
-#       it { is_expected.to render_template :edit }
-#     end
-#   end
-# end
+      context 'with a full time course' do
+        let(:course) do
+          jsonapi(
+            :course,
+            :with_full_time_vacancy,
+            site_statuses: [site_status]
+          ).render
+        end
+
+        it 'shows a full time checkbox' do
+          expect(response.body).to include(
+            "#{site.attributes[:location_name]} (Full time)"
+          )
+          expect(response.body).not_to include(
+            "#{site.attributes[:location_name]} (Part time)"
+          )
+        end
+      end
+
+      context 'with a part time course' do
+        let(:course) do
+          jsonapi(
+            :course,
+            :with_part_time_vacancy,
+            site_statuses: [site_status]
+          ).render
+        end
+
+        it 'shows a part time checkbox' do
+          expect(response.body).not_to include(
+            "#{site.attributes[:location_name]} (Full time)"
+          )
+          expect(response.body).to include(
+            "#{site.attributes[:location_name]} (Part time)"
+          )
+        end
+      end
+    end
+  end
+end
