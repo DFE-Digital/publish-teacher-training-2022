@@ -1,0 +1,20 @@
+<h2 class="govuk-heading-m" style="border: 3px solid red">
+  <span class="govuk-caption-m">Accredited body</span>
+  Bradford College
+</h2>
+
+<table class="govuk-table ucas-info-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header">Course</th>
+      <th class="govuk-table__header">UCAS Status</th>
+      <th class="govuk-table__header">Content</th>
+      <th class="govuk-table__header">Is it on <abbr class="text-decoration-underline-dotted" title="Find postgraduate teacher training">Find</abbr>?</th>
+      <th class="govuk-table__header">Applications</th>
+      <th class="govuk-table__header">Vacancies</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <%= render partial: 'course_table_row', collection: courses, as: :course %>
+  </tbody>
+</table>
