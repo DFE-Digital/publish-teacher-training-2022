@@ -50,6 +50,31 @@ feature 'Edit course vacancies', type: :feature do
     )
   end
 
+  context 'site_statuses#running' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :with_full_time_or_part_time_vacancy,
+        site_statuses: [running_site_status, non_running_site_status]
+      ).render
+    end
+
+    let(:site_running) { jsonapi(:site, location_name: 'Big Uni') }
+    let(:site_not_running) { jsonapi(:site, location_name: 'Small Uni') }
+
+    let(:running_site_status) do
+      jsonapi(:site_status, :full_time_and_part_time, site: site_running, status: 'running')
+    end
+    let(:non_running_site_status) do
+      jsonapi(:site_status, :full_time_and_part_time, site: site_not_running, status: 'suspended')
+    end
+
+    scenario 'only render site_statuses that are running' do
+      expect(page).to have_field("Big Uni (Full time)")
+      expect(page).to_not have_field("Small Uni (Full time)")
+    end
+  end
+
   context 'removing vacancies' do
     let(:course_without_vacancies) do
       jsonapi(

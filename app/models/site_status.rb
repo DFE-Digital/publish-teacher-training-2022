@@ -10,4 +10,8 @@ class SiteStatus < Base
   def full_time_and_part_time_vacancies?
     vac_status == 'both_full_time_and_part_time_vacancies'
   end
+
+  def running?
+    status == 'running'
+  end
 end
