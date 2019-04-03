@@ -4,8 +4,8 @@ feature 'Index courses', type: :feature do
   before do
     stub_omniauth
     stub_session_create
-    stub_api_v2_request('/providers', build(:providers_response))
-    stub_api_v2_request('/providers/AO/courses', build(:courses_response))
+    stub_api_v2_request('/providers', jsonapi(:providers_response))
+    stub_api_v2_request('/providers/AO/courses', jsonapi(:courses_response))
   end
 
   scenario 'it shows a list of courses' do

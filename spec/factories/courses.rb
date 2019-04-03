@@ -53,9 +53,9 @@ FactoryBot.define do
   factory :courses_response, class: Hash do
     data {
       [
-        build(:course),
-        build(:course),
-        build(:course)
+        jsonapi(:course),
+        jsonapi(:course),
+        jsonapi(:course)
       ]
     }
 
