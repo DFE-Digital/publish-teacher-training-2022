@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :site_status, class: Hash do
     sequence(:id)
+    status { 'running' }
 
     trait :full_time_and_part_time do
       vac_status { 'both_full_time_and_part_time_vacancies' }
