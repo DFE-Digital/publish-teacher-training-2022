@@ -5,7 +5,8 @@ feature 'Edit course vacancies', type: :feature do
     jsonapi(
       :course,
       :with_full_time_or_part_time_vacancy,
-      site_statuses: [site_status]
+      site_statuses: [site_status],
+      provider: jsonapi(:provider)
     ).render
   end
   let(:course_without_full_time_vacancy) do
@@ -34,6 +35,12 @@ feature 'Edit course vacancies', type: :feature do
       "/providers/AO/courses/#{course_attributes[:course_code]}",
       course
     )
+
+    stub_request(
+      :post,
+      "http://localhost:3001/api/v2/providers/AO/courses/" \
+        "#{course_attributes[:course_code]}/sync_with_search_and_compare"
+    ).to_return(status: 201, body: "")
 
     visit edit_vacancies_path
   end
