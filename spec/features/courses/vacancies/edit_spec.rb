@@ -54,7 +54,7 @@ feature 'Edit course vacancies', type: :feature do
     let(:course_without_vacancies) do
       jsonapi(
         :course,
-        :with_full_time_or_part_time_vacancy,
+        :full_time_or_part_time,
         course_code:   course_attributes[:course_code],
         site_statuses: [
           jsonapi(:site_status, :no_vacancies, id: site_status.id, site: site)
@@ -104,7 +104,7 @@ feature 'Edit course vacancies', type: :feature do
       expect(page.find('.govuk-success-summary')).to have_content(
         'Course vacancies published'
       )
-      expect(page).to have_field('There are no vacancies'), chosen: true
+      expect(page).to have_field('There are no vacancies', checked: true)
       expect(page).to have_field(
         "#{site.attributes[:location_name]} (Full time)",
         checked: false
