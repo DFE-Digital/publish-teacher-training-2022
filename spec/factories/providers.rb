@@ -1,13 +1,14 @@
 FactoryBot.define do
   factory :provider, class: Hash do
     transient do
-      relationships { %i[courses] }
+      relationships { %i[courses sites] }
     end
 
     sequence(:id)
     sequence(:institution_code) { |n| "A#{n}" }
     institution_name { "ACME SCITT #{institution_code}" }
     courses { [] }
+    sites { [] }
 
     initialize_with do |_evaluator|
       data_attributes = attributes.except(:id, *relationships)

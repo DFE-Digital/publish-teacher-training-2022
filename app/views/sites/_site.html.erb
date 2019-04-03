@@ -1,0 +1,8 @@
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">
+    <%= site.attributes[:location_name] %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= site.attributes[:code] %> <%= site.attributes[:code] == '-' ? '(dash)' : '' %>
+  </td>
+</tr>
