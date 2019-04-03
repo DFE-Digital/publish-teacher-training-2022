@@ -1,1 +1,7 @@
-<span class="govuk-tag phase-tag--small phase-tag--published" style="border: 3px solid red">Published</span>
+<div class="govuk-tag phase-tag--small <%= course_content_tag_css_class(course) %>">
+  <%= course_content_tag_content(course) %>
+</div>
+
+<% if course_has_unpublished_changes(course) %>
+  <div class="govuk-body govuk-body-s govuk-!-margin-0">* Unpublished changes</div>
+<% end %>

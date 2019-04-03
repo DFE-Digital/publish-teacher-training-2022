@@ -14,6 +14,7 @@ FactoryBot.define do
     site_statuses { [] }
     provider      { nil }
     study_mode    { 'full_time' }
+    content_status { "published" }
 
     trait :with_vacancy do
       has_vacancies? { true }

@@ -9,8 +9,8 @@
   <td class="govuk-table__cell" style="border: 3px solid red">
     Running
   </td>
-  <td class="govuk-table__cell">
-    <%= render partial: 'content_status_tag' %>
+  <td class="govuk-table__cell" data-qa="courses-table__content-status">
+    <%= render partial: 'content_status_tag', locals: { course: course } %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__findable">
     <% if course.attributes[:findable?] %>
