@@ -80,13 +80,17 @@ group :test do
   gem 'chromedriver-helper'
 
   # Add Junit formatter for rspec
-  gem "rspec_junit_formatter"
+  gem 'rspec_junit_formatter'
 
   gem 'webmock'
 
   gem 'factory_bot_rails'
 
+  # Show test coverage %
   gem 'simplecov', require: false
+
+  # Make diffs of Ruby objects much more readable
+  gem 'super_diff'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
