@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       get '/vacancies', on: :member, to: 'courses/vacancies#edit'
       put '/vacancies', on: :member, to: 'courses/vacancies#update'
     end
+
+    resources :sites, path: 'locations', on: :member, only: :index
   end
 
   get "/cookies", to: "pages#cookies", as: :cookies
