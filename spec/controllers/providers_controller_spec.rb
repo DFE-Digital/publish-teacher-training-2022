@@ -10,7 +10,7 @@ RSpec.describe ProvidersController, type: :controller do
     describe 'GET #index' do
       context 'with 2 or more providers' do
         before do
-          stub_api_v2_request('/providers', build(:providers_response))
+          stub_api_v2_request('/providers', jsonapi(:providers_response))
         end
 
         it 'returns the index page' do
@@ -20,21 +20,21 @@ RSpec.describe ProvidersController, type: :controller do
       end
 
       context 'with 1 provider' do
-        let(:the_provider) { build(:provider) }
+        let(:the_provider) { jsonapi(:provider) }
 
         before do
-          stub_api_v2_request('/providers', build(:providers_response, data: [the_provider]))
+          stub_api_v2_request('/providers', jsonapi(:providers_response, data: [the_provider]))
         end
 
         it 'returns the show page' do
           get :index
-          expect(response).to redirect_to(action: :show, code: the_provider["attributes"][:institution_code])
+          expect(response).to redirect_to(action: :show, code: the_provider.attributes[:institution_code])
         end
       end
 
       context 'with 0 providers' do
         before do
-          stub_api_v2_request('/providers', build(:providers_response, data: []))
+          stub_api_v2_request('/providers', jsonapi(:providers_response, data: []))
         end
 
         it 'redirects to manage-courses-ui' do
