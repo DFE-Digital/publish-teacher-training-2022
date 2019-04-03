@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :provider, class: Hash do
     transient do
       relationships { %i[courses sites] }
+      include_counts { [] }
     end
 
     sequence(:id)
@@ -22,7 +23,8 @@ FactoryBot.define do
         id,
         'providers',
         attributes: data_attributes,
-        relationships: relationships_map
+        relationships: relationships_map,
+        include_counts: include_counts
       )
     end
   end
@@ -30,10 +32,10 @@ FactoryBot.define do
   factory :providers_response, class: Hash do
     data {
       [
-        jsonapi(:provider, institution_code: "A0"),
-        jsonapi(:provider, institution_code: "A1"),
-        jsonapi(:provider, institution_code: "A2")
-      ]
+        jsonapi(:provider, institution_code: "A0", include_counts: %i[courses]).render,
+        jsonapi(:provider, institution_code: "A1", include_counts: %i[courses]).render,
+        jsonapi(:provider, institution_code: "A2", include_counts: %i[courses]).render
+      ].map { |d| d[:data] }
     }
 
     initialize_with { attributes }
