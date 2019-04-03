@@ -38,7 +38,7 @@ module Courses
     end
 
     def build_site_statuses
-      @site_statuses = @course.site_statuses.select { |site_status| site_status.status == 'running' }
+      @site_statuses = @course.site_statuses.select(&:running?)
     end
 
     def find_site_status(id)
