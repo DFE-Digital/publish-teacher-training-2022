@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'View providers', type: :feature do
-  skip 'Navigate to /organisations' do
+  scenario 'Navigate to /organisations' do
     stub_omniauth
     stub_session_create
     stub_api_v2_request('/providers', jsonapi(:providers_response))
