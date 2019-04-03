@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :course, class: Hash do
     transient do
-      relationships { %i[site_statuses provider] }
+      relationships { %i[site_statuses provider accrediting_provider] }
+      include_nulls { [] }
     end
 
     sequence(:id)
@@ -16,6 +17,7 @@ FactoryBot.define do
     study_mode    { 'full_time' }
     content_status { "published" }
     ucas_status { 'running' }
+    accrediting_provider { nil }
 
     trait :with_vacancy do
       has_vacancies? { true }
@@ -64,20 +66,9 @@ FactoryBot.define do
         id,
         'courses',
         attributes: data_attributes,
-        relationships: relationships_map
+        relationships: relationships_map,
+        include_nulls: include_nulls
       )
     end
-  end
-
-  factory :courses_response, class: Hash do
-    data {
-      [
-        jsonapi(:course),
-        jsonapi(:course),
-        jsonapi(:course)
-      ]
-    }
-
-    initialize_with { attributes }
   end
 end
