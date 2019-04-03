@@ -15,6 +15,7 @@ FactoryBot.define do
     provider      { nil }
     study_mode    { 'full_time' }
     content_status { "published" }
+    ucas_status { 'running' }
 
     trait :with_vacancy do
       has_vacancies? { true }
