@@ -20,18 +20,10 @@
     <% end %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__applications">
-    <% if course.attributes[:applications_being_accepted_now?] %>
-      Open
-    <% else %>
-      Closed
-    <% end %>
+    <%= course.applications_being_accepted_now? ? "Open" : "Closed" %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__vacancies">
-    <% if course.attributes[:has_vacancies?] %>
-      Yes
-    <% else %>
-      No
-    <% end %>
+    <%= course.has_vacancies? ? "Yes" : "No" %>
     (<%= link_to 'Edit', vacancies_provider_course_path(code: course.attributes[:course_code]), class: 'govuk-link' %>)
   </td>
 </tr>
