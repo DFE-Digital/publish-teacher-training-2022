@@ -3,8 +3,7 @@ module Courses
     before_action(
       :authenticate,
       :build_course,
-      :build_site_statuses,
-      :build_first_course
+      :build_site_statuses
     )
 
     def edit; end
@@ -33,15 +32,11 @@ module Courses
   private
 
     def build_course
-      @course = Course.where(provider_code: params[:provider_code]).find(params[:code])
+      @course = Course.where(provider_code: params[:provider_code]).find(params[:code]).first
     end
 
     def build_site_statuses
-      @site_statuses = @course.map(&:site_statuses).flatten
-    end
-
-    def build_first_course
-      @course = @course.first
+      @site_statuses = @course.site_statuses
     end
 
     def find_site_status(id)
