@@ -3,6 +3,6 @@ class Provider < Base
   has_many :sites
 
   def course_count
-    courses.count
+    relationships.courses[:meta][:count]
   end
 end
