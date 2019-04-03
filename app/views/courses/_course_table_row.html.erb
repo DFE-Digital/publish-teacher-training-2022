@@ -1,0 +1,29 @@
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell" data-qa="courses-table__course">
+    <%= govuk_link_to "#{ course.attributes[:name] } (#{ course.attributes[:course_code] })",
+      manage_ui_course_page_url(provider_code: @provider[:institution_code], course_code: course.attributes[:course_code]),
+      class: "govuk-link govuk-heading-s govuk-!-margin-bottom-0"
+    %>
+    <span class="govuk-body-s"><%= course.attributes[:description] %></span>
+  </td>
+  <td class="govuk-table__cell" style="border: 3px solid red">
+    Running
+  </td>
+  <td class="govuk-table__cell">
+    <%= render partial: 'content_status_tag' %>
+  </td>
+  <td class="govuk-table__cell" data-qa="courses-table__findable">
+    <% if course.attributes[:findable?] %>
+      <a class="govuk-link" href="#TODO" style="border: 3px solid red">Yes - view online</a>
+    <% else %>
+      No
+    <% end %>
+  </td>
+  <td class="govuk-table__cell" data-qa="courses-table__applications">
+    <%= course.applications_being_accepted_now? ? "Open" : "Closed" %>
+  </td>
+  <td class="govuk-table__cell" data-qa="courses-table__vacancies">
+    <%= course.has_vacancies? ? "Yes" : "No" %>
+    (<%= link_to 'Edit', vacancies_provider_course_path(code: course.attributes[:course_code]), class: 'govuk-link' %>)
+  </td>
+</tr>
