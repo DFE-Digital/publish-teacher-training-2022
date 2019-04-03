@@ -2,16 +2,18 @@ class JSONAPIMockSerializable
   attr_reader :attributes,
               :id,
               :include_counts,
+              :include_nulls,
               :missing_relationships,
               :present_relationships,
               :relationships,
               :type
 
-  def initialize(id, type, attributes:, relationships: {}, include_counts: [])
+  def initialize(id, type, attributes:, relationships: {}, include_counts: [], include_nulls: [])
     @attributes = attributes
     @id = id
     @relationships = relationships
     @include_counts = include_counts
+    @include_nulls = include_nulls
     @missing_relationships = relationships.select { |_r, v| v.nil? }
     @present_relationships = relationships.reject { |_r, v| v.nil? }
     @type = type
@@ -35,7 +37,11 @@ class JSONAPIMockSerializable
   def to_jsonapi_data
     relationships_jsonapi = relationships.map do |name, data|
       [
-        name, if data.nil?
+        name, if name.in?(include_nulls)
+                {
+                  data: nil
+                }
+              elsif data.nil?
                 {
                   meta: { included: false }
                 }
