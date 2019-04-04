@@ -3,6 +3,6 @@ class SitesController < ApplicationController
 
   def index
     @provider = Provider.includes(:sites).find(params[:provider_code]).first
-    @sites = @provider.sites
+    @sites = @provider.sites.sort_by(&:location_name)
   end
 end
