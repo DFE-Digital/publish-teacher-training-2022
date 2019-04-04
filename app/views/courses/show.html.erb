@@ -1,0 +1,10 @@
+<%= content_for :page_title, "#{@course.name} (#{@course.course_code}) - Courses" %>
+
+<%= link_to 'Back', provider_courses_path, class: "govuk-back-link" %>
+
+<main class="govuk-main-wrapper " id="main-content" role="main">
+  <h1 class="govuk-heading-xl">
+    <span class="govuk-caption-xl"><%= @course.description %></span>
+    <%= @course.name %> (<%= @course.course_code %>)
+  </h1>
+</main>
