@@ -48,6 +48,10 @@ FactoryBot.define do
       study_mode { 'part_time' }
     end
 
+    after :initialize do |course|
+      course.provider_code = provider.provider_code if course.provider
+    end
+
     initialize_with do |_evaluator|
       data_attributes = attributes.except(:id, *relationships)
       relationships_map = Hash[
