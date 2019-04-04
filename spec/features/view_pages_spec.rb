@@ -24,4 +24,12 @@ RSpec.feature 'View pages', type: :feature do
     visit "/privacy-policy"
     expect(find('h1')).to have_content('Privacy policy')
   end
+
+  scenario "Navigate to /guidance" do
+    stub_omniauth
+    stub_session_create
+
+    visit "/guidance"
+    expect(find('h1')).to have_content('Guidance for Publish teacher training courses')
+  end
 end

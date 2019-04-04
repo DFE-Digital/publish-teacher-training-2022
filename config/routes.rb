@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/cookies", to: "pages#cookies", as: :cookies
   get "/terms-conditions", to: "pages#terms", as: :terms
   get "/privacy-policy", to: "pages#privacy", as: :privacy
+  get "/guidance", to: "pages#guidance", as: :guidance
 
   match '/404', to: 'errors#not_found', via: :all
   match '/403', to: 'errors#forbidden', via: :all
