@@ -20,4 +20,12 @@ module CourseHelper
       "published_with_unpublished_changes" => "phase-tag--published"
     }[course.attributes[:content_status]]
   end
+
+  def course_ucas_status(course)
+    {
+      "running" => "Running",
+      "new" => "New – not yet running",
+      "not_running" => "Not running"
+    }[course.attributes[:ucas_status]]
+  end
 end

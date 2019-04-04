@@ -6,8 +6,8 @@
     %>
     <span class="govuk-body-s"><%= course.attributes[:description] %></span>
   </td>
-  <td class="govuk-table__cell" style="border: 3px solid red">
-    Running
+  <td class="govuk-table__cell" data-qa="courses-table__ucas-status">
+    <%= course_ucas_status(course) %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__content-status">
     <%= render partial: 'content_status_tag', locals: { course: course } %>

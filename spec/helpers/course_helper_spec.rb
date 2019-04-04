@@ -28,4 +28,12 @@ RSpec.feature 'View helpers', type: :helper do
       expect(helper.course_content_tag_css_class(build(:course, content_status: 'published_with_unpublished_changes'))).to eq('phase-tag--published')
     end
   end
+
+  describe "#course_ucas_status" do
+    it "returns correct content" do
+      expect(helper.course_ucas_status(build(:course, ucas_status: 'running'))).to eq('Running')
+      expect(helper.course_ucas_status(build(:course, ucas_status: 'new'))).to eq('New – not yet running')
+      expect(helper.course_ucas_status(build(:course, ucas_status: 'not_running'))).to eq('Not running')
+    end
+  end
 end
