@@ -1,8 +1,8 @@
 class Provider < Base
-  has_many :courses, param: :provider_code
+  has_many :courses, param: :course_code
   has_many :sites
 
-  self.primary_key = :provider_code
+  self.primary_key = :institution_code
 
   def course_count
     relationships.courses[:meta][:count]

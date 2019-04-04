@@ -25,7 +25,7 @@ module Courses
           site_status.save
         end
 
-      @course.sync_with_search_and_compare(provider_code: params[:provider_code])
+      @course.sync_with_search_and_compare(institution_code: params[:provider_code])
 
       flash[:success] = 'Course vacancies published'
       redirect_to vacancies_provider_course_path(params[:provider_code], @course.course_code)
@@ -34,7 +34,7 @@ module Courses
   private
 
     def build_course
-      @course = Course.where(provider_code: params[:provider_code]).find(params[:code]).first
+      @course = Course.where(institution_code: params[:provider_code]).find(params[:code]).first
     end
 
     def build_site_statuses

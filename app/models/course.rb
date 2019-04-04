@@ -1,5 +1,5 @@
 class Course < Base
-  belongs_to :provider, param: :provider_code
+  belongs_to :provider, param: :institution_code
   has_many :site_statuses
   has_many :sites, through: :site_statuses, source: :site
 
