@@ -8,8 +8,13 @@ FactoryBot.define do
     sequence(:id)
     sequence(:institution_code) { |n| "A#{n}" }
     institution_name { "ACME SCITT #{institution_code}" }
+    opted_in { false }
     courses { [] }
     sites { [] }
+
+    trait :opted_in do
+      opted_in { true }
+    end
 
     initialize_with do |_evaluator|
       data_attributes = attributes.except(:id, *relationships)

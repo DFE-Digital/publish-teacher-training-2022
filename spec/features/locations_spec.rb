@@ -26,5 +26,16 @@ feature 'Index locations', type: :feature do
     expect(find('h1')).to have_content('Locations')
     expect(page).to have_selector('tbody tr', count: 3)
     expect(first('.govuk-table__cell')).to have_content('Main site 1')
+    expect(page).to_not have_link('Add a location')
+  end
+
+  context 'when the provider is opted_in' do
+    let(:provider) do
+      jsonapi(:provider, :opted_in, sites: sites).render
+    end
+
+    scenario 'should show Add Location CTA' do
+      expect(page).to have_link('Add a location')
+    end
   end
 end
