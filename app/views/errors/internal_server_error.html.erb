@@ -5,7 +5,7 @@
     <h1 class="govuk-heading-xl">Sorry, something went wrong</h1>
     <p class="govuk-body">Sorry, we're experiencing technical difficulties.</p>
     <p class="govuk-body">
-      <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">Contact the Becoming a Teacher team</a> if you continue to see this error.
+      <%= mail_to "becomingateacher@digital.education.gov.uk", "Contact the Becoming a Teacher team", class: "govuk-link" %> if you continue to see this error.
     </p>
   </div>
 </div>

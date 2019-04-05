@@ -5,7 +5,7 @@
     <h1 class="govuk-heading-xl">You are not permitted to see this page</h1>
     <p class="govuk-body">This page is restricted to certain users only.</p>
     <p class="govuk-body">
-      <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Publish%20teacher%20training%20courses%20access%20request">Contact us by email to request access to your organisation</a>
+      <%= mail_to "becomingateacher@digital.education.gov.uk", "Contact us by email to request access to your organisation", subject: "Publish teacher training courses access request", class: "govuk-link" %>
     </p>
   </div>
 </div>
