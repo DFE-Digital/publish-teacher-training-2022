@@ -19,7 +19,7 @@
 
     <h2 class="govuk-heading-m">Contact support to delete this course</h2>
 
-    <p class="govuk-body">Contact the <%= mail_to 'becomingateacher@digital.education.gov.uk', 'Becoming a teacher team', subject: "Delete #{@course.name} (#{@course.course_code})", class: "govuk-link" %> by email to delete this course.</p>
+    <p class="govuk-body">Contact the <%= bat_contact_mail_to 'Becoming a teacher team', subject: "Delete #{@course.name} (#{@course.course_code})" %> by email to delete this course.</p>
 
     <p class="govuk-body">In your email include:</p>
     <ul class="govuk-list govuk-list--bullet">
