@@ -17,7 +17,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl"><%= @provider[:institution_name] %></h1>
-      <h2 class="govuk-heading-m"><%= govuk_link_to "About your organisation", manage_ui_url("/organisation/#{@provider[:institution_code]}/details") %></h2>
+      <h2 class="govuk-heading-m"><%= govuk_link_to "About your organisation", manage_ui_url("/organisation/#{@provider[:provider_code]}/details") %></h2>
       <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
         <li>write about your organisation</li>
@@ -29,14 +29,14 @@
 
   <div class="govuk-grid-row ">
     <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m"><%= link_to "Locations", provider_sites_path(@provider[:institution_code]), class: "govuk-link" %></h2>
+      <h2 class="govuk-heading-m"><%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-link" %></h2>
       <p class="govuk-body govuk-!-margin-bottom-8">Use this section to add locations</p>
     </div>
   </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m"><%= govuk_link_to "Courses", manage_ui_url("/organisation/#{@provider[:institution_code]}/courses") %></h2>
+      <h2 class="govuk-heading-m"><%= govuk_link_to "Courses", manage_ui_url("/organisation/#{@provider[:provider_code]}/courses") %></h2>
       <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
         <li>write about each course</li>
@@ -48,7 +48,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m"><%= govuk_link_to "Request access for someone else", manage_ui_url("/organisation/#{@provider[:institution_code]}/request-access") %></h2>
+      <h2 class="govuk-heading-m"><%= govuk_link_to "Request access for someone else", manage_ui_url("/organisation/#{@provider[:provider_code]}/request-access") %></h2>
       <p class="govuk-body govuk-!-margin-bottom-8">You can request a DfE Sign-in account for others who manage your courses.</p>
     </div>
   </div>

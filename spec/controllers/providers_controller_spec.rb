@@ -28,7 +28,7 @@ RSpec.describe ProvidersController, type: :controller do
 
         it 'returns the show page' do
           get :index
-          expect(response).to redirect_to(action: :show, code: the_provider.attributes[:institution_code])
+          expect(response).to redirect_to(action: :show, code: the_provider.attributes[:provider_code])
         end
       end
 

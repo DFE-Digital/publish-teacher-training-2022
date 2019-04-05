@@ -18,8 +18,8 @@ feature 'Index locations', type: :feature do
   before do
     stub_omniauth
     stub_session_create
-    stub_api_v2_request("/providers/#{provider_attributes[:institution_code]}?include=sites", provider)
-    visit provider_sites_path(provider_attributes[:institution_code])
+    stub_api_v2_request("/providers/#{provider_attributes[:provider_code]}?include=sites", provider)
+    visit provider_sites_path(provider_attributes[:provider_code])
   end
 
   scenario 'it shows a list of location' do
