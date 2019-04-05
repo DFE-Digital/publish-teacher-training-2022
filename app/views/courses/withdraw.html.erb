@@ -1,0 +1,31 @@
+<%= content_for :page_title, "Withdraw" %>
+
+<main class="govuk-main-wrapper " id="main-content" role="main">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-xl"><%= @course.name %> (<%= @course.course_code %>)</span>
+        Are you sure you want to withdraw this course?
+      </h1>
+
+      <p class="govuk-body">Withdrawing this course will:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>immediately remove it from Find</li>
+        <li>close applications for it (this happens when UCAS Apply updates overnight)</li>
+      </ul>
+
+      <p class="govuk-body">Once you’ve withdrawn a course, you can’t publish it again this cycle.</p>
+
+      <h2 class="govuk-heading-m">Contact support to withdraw this course</h2>
+
+      <p class="govuk-body">Contact the <%= mail_to 'becomingateacher@digital.education.gov.uk', 'Becoming a teacher team', class: "govuk-link" %> by email to withdraw this course.</p>
+
+      <p class="govuk-body">In your email include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>course code</li>
+        <li>course title</li>
+        <li>a reason why this course needs to  be withdrawn</li>
+      </ul>
+    </div>
+  </div>
+</main>

@@ -25,14 +25,14 @@ feature 'Index courses', type: :feature do
 
     expect(first('[data-qa="courses-table__course"]')).to have_content(course_1.attributes[:name])
     expect(first('[data-qa="courses-table__course"]')).to have_content(course_2.attributes[:name])
-    expect(page).to have_selector("a[href=\"https://localhost:44364/organisation/#{provider.attributes[:provider_code]}/course/self/X101\"]")
+    expect(page).to have_selector("a[href=\"https://localhost:44364/organisation/#{provider.attributes[:provider_code]}/course/self/#{course_1.attributes[:course_code]}\"]")
 
     expect(first('[data-qa="courses-table__ucas-status"]')).to have_content('Running')
 
     expect(first('[data-qa="courses-table__content-status"]')).to have_content('Published')
 
     expect(first('[data-qa="courses-table__findable"]')).to have_content('Yes - view online')
-    expect(page).to have_selector("a[href=\"https://localhost:5000/course/#{provider.attributes[:provider_code]}/X101\"]")
+    expect(page).to have_selector("a[href=\"https://localhost:5000/course/#{provider.attributes[:provider_code]}/#{course_1.attributes[:course_code]}\"]")
 
     expect(first('[data-qa="courses-table__applications"]')).to have_content('Closed')
     expect(first('[data-qa="courses-table__vacancies"]')).to have_content('No (Edit)')
