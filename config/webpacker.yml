@@ -94,3 +94,6 @@ staging:
 
 qa:
   <<: *production
+
+ucas:
+  <<: *production

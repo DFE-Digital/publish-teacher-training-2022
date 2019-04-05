@@ -4,8 +4,8 @@ dfe_signin:
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
   base_url: https://bat-dev-manage-courses-frontend-app.azurewebsites.net
 manage_backend:
-  base_url: https://bat-dev-manage-courses-backend-app.azurewebsites.net
+  base_url: https://bat-ucas-mcbe-as.azurewebsites.net
 manage_ui:
-  base_url: https://bat-dev-manage-courses-ui-app.azurewebsites.net
+  base_url: https://bat-ucas-mcui-as.azurewebsites.net
 search_ui:
-  base_url: https://bat-dev-search-and-compare-ui-app.azurewebsites.net
+  base_url: https://bat-ucas-sacui-as.azurewebsites.net
