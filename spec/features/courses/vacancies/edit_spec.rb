@@ -39,7 +39,7 @@ feature 'Edit course vacancies', type: :feature do
     stub_omniauth
     stub_session_create
     stub_api_v2_request(
-      "/providers/AO/courses/#{course_attributes[:course_code]}",
+      "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
       course
     )
 
@@ -109,7 +109,7 @@ feature 'Edit course vacancies', type: :feature do
       )
 
       stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}",
+        "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
         course_without_full_time_vacancy
       )
 
@@ -129,7 +129,7 @@ feature 'Edit course vacancies', type: :feature do
       choose 'There are no vacancies'
 
       stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}",
+        "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
         course_without_vacancies
       )
 
@@ -154,7 +154,7 @@ feature 'Edit course vacancies', type: :feature do
   context 'adding vacancies' do
     before do
       stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}",
+        "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
         course_without_full_time_vacancy
       )
       stub_request(
@@ -170,7 +170,7 @@ feature 'Edit course vacancies', type: :feature do
       )
 
       stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}",
+        "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
         course
       )
 
