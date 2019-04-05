@@ -1,261 +1,262 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "resourceEnvironmentName": {
-            "type": "string",
-            "metadata": {
-                "description": "The environment of the resource."
-            }
-        },
-        "serviceName": {
-            "type": "string",
-            "metadata": {
-                "description": "The abbriviation of the service name to be used when naming a resource."
-            }
-        },
-        "keyVaultName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The name of the key vault."
-            }
-        },
-        "keyVaultResourceGroup": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The resource group for the key vault."
-            }
-        },
-        "customHostName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The custom hostname to add to the app service."
-            }
-        },
-        "certificateName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The name of the certificate in key vault."
-            }
-        },
-        "webpackerDevHost": {
-            "type": "string",
-            "defaultValue": "webpacker",
-            "metadata": {
-                "description": "Default webpacker dev host."
-            }
-        },
-        "dfeSignInSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "Secret for dfe signin."
-            }
-        },
-        "dockerHubUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "the username associated with the dockerhub account"
-            }
-        },
-        "containerImageReference": {
-            "type": "string",
-            "metadata": {
-                "description": "The container image to pull from the server. Should be in image:tag format."
-            }
-        },
-        "assetsPreCompile": {
-            "type": "string",
-            "defaultValue": "true",
-            "metadata": {
-                "description": "Precompile assets."
-            }
-        },
-        "railsEnv": {
-            "type": "string",
-            "defaultValue": "production",
-            "metadata": {
-                "description": "Environment for the rails app."
-            }
-        },
-        "railsServeStaticFiles": {
-            "type": "string",
-            "defaultValue": "true",
-            "metadata": {
-                "description": "Serve static files."
-            }
-        },
-        "secretKeyBase": {
-            "type": "string",
-            "metadata": {
-                "description": "Secret Key Base."
-            }
-        },
-        "settingsAuthenticationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "Auth secret for manage back-end."
-            }
-        },
-        "sentryDSN": {
-            "type": "string",
-            "metadata": {
-                "description": "Connection string for Sentry monitoring."
-            }
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceEnvironmentName": {
+      "type": "string",
+      "metadata": {
+        "description": "The environment of the resource."
+      }
     },
-    "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
-        "resourceNamePrefix": "[toLower(concat('bat-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
-        "keyvaultCertificateName": "[if(greater(length(parameters('certificateName')),0), parameters('certificateName'), replace(parameters('customHostName'), '.', '-'))]",
-        "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
-        "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
-        "appServiceRuntimeStack": "[concat('DOCKER|', parameters('dockerHubUsername'), '/', parameters('containerImageReference'))]"
+    "serviceName": {
+      "type": "string",
+      "metadata": {
+        "description": "The abbriviation of the service name to be used when naming a resource."
+      }
     },
-    "resources": [
-        {
-            "name": "app-service-plan",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-plan.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "appServicePlanName": {
-                        "value": "[variables('appServicePlanName')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "app-service-certificate",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "keyVaultCertificateName": {
-                        "value": "[variables('keyVaultCertificateName')]"
-                    },
-                    "keyVaultName": {
-                        "value": "[parameters('keyVaultName')]"
-                    },
-                    "keyVaultResourceGroup": {
-                        "value": "[parameters('keyVaultResourceGroup')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "app-service",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-linux.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "appServiceName": {
-                        "value": "[variables('appServiceName')]"
-                    },
-                    "appServicePlanResourceGroup": {
-                        "value": "[resourceGroup().name]"
-                    },
-                    "appServicePlanName": {
-                        "value": "[variables('appServicePlanName')]"
-                    },
-                    "runtimeStack": {
-                        "value": "[variables('appServiceRuntimeStack')]"
-                    },
-                    "appServiceAppSettings": {
-                        "value": [
-                            {
-                                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                "value": "[reference('app-insights').outputs.instrumentationKey.value]"
-                            },
-                            {
-                                "name": "ASSETS_PRECOMPILE",
-                                "value": "[parameters('assetsPreCompile')]"
-                            },
-                            {
-                                "name": "RAILS_ENV",
-                                "value": "[parameters('railsEnv')]"
-                            },
-                            {
-                                "name": "RAILS_SERVE_STATIC_FILES",
-                                "value": "[parameters('railsServeStaticFiles')]"
-                            },
-                            {
-                                "name": "SECRET_KEY_BASE",
-                                "value": "[parameters('secretKeyBase')]"
-                            },
-                            {
-                                "name": "WEBPACKER_DEV_SERVER_HOST",
-                                "value": "[parameters('webpackerDevHost')]"
-                            },
-                            {
-                                "name": "SETTINGS__DFE_SIGNIN__SECRET",
-                                "value": "[parameters('dfeSignInSecret')]"
-                            },
-                            {
-                                "name": "SETTINGS__AUTHENTICATION__SECRET",
-                                "value": "[parameters('settingsAuthenticationSecret')]"
-                            },
-                            {
-                                "name": "SENTRY_DSN",
-                                "value": "[parameters('sentryDSN')]"
-                            }
-                        ]
-                    },
-                    "customHostName": {
-                        "value": "[parameters('customHostName')]"
-                    },
-                    "certificateThumbprint": {
-                        "value": "[if(greater(length(parameters('customHostname')), 0), reference('app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
-                    }
-                }
-            },
-            "dependsOn": [
-                "app-service-plan"
-            ]
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "app-insights",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'application-insights.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "appInsightsName": {
-                        "value": "[variables('appServiceName')]"
-                    },
-                    "attachedService": {
-                        "value": "[variables('appServiceName')]"
-                    }
-                }
-            }
-        }
-    ],
-    "outputs": {
-        "AppServiceName": {
-            "type": "string",
-            "value": "[variables('appServiceName')]"
-        }
+    "keyVaultName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The name of the key vault."
+      }
+    },
+    "keyVaultResourceGroup": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The resource group for the key vault."
+      }
+    },
+    "customHostName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The custom hostname to add to the app service."
+      }
+    },
+    "certificateName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The name of the certificate in key vault."
+      }
+    },
+    "webpackerDevHost": {
+      "type": "string",
+      "defaultValue": "webpacker",
+      "metadata": {
+        "description": "Default webpacker dev host."
+      }
+    },
+    "dfeSignInSecret": {
+      "type": "string",
+      "metadata": {
+        "description": "Secret for dfe signin."
+      }
+    },
+    "dockerHubUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "the username associated with the dockerhub account"
+      }
+    },
+    "containerImageReference": {
+      "type": "string",
+      "metadata": {
+        "description": "The container image to pull from the server. Should be in image:tag format."
+      }
+    },
+    "assetsPreCompile": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Precompile assets."
+      }
+    },
+    "railsEnv": {
+      "type": "string",
+      "defaultValue": "production",
+      "metadata": {
+        "description": "Environment for the rails app."
+      }
+    },
+    "railsServeStaticFiles": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Serve static files."
+      }
+    },
+    "secretKeyBase": {
+      "type": "string",
+      "metadata": {
+        "description": "Secret Key Base."
+      }
+    },
+    "settingsAuthenticationSecret": {
+      "type": "string",
+      "metadata": {
+        "description": "Auth secret for manage back-end."
+      }
+    },
+    "sentryDSN": {
+      "type": "string",
+      "metadata": {
+        "description": "Connection string for Sentry monitoring."
+      }
     }
+  },
+  "variables": {
+    "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
+    "resourceNamePrefix": "[toLower(concat('bat-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
+    "keyvaultCertificateName": "[if(greater(length(parameters('certificateName')),0), parameters('certificateName'), replace(parameters('customHostName'), '.', '-'))]",
+    "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
+    "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
+    "appServiceRuntimeStack": "[concat('DOCKER|', parameters('dockerHubUsername'), '/', parameters('containerImageReference'))]"
+  },
+  "resources": [
+    {
+      "name": "app-service-plan",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-plan.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServicePlanName": {
+            "value": "[variables('appServicePlanName')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "app-service-certificate",
+      "type": "Microsoft.Resources/deployments",
+      "condition": "[greater(length(parameters('certificateName')), 0)]",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "keyVaultCertificateName": {
+            "value": "[variables('keyVaultCertificateName')]"
+          },
+          "keyVaultName": {
+            "value": "[parameters('keyVaultName')]"
+          },
+          "keyVaultResourceGroup": {
+            "value": "[parameters('keyVaultResourceGroup')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "app-service",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-linux.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServiceName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "appServicePlanResourceGroup": {
+            "value": "[resourceGroup().name]"
+          },
+          "appServicePlanName": {
+            "value": "[variables('appServicePlanName')]"
+          },
+          "runtimeStack": {
+            "value": "[variables('appServiceRuntimeStack')]"
+          },
+          "appServiceAppSettings": {
+            "value": [
+              {
+                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                "value": "[reference('app-insights').outputs.instrumentationKey.value]"
+              },
+              {
+                "name": "ASSETS_PRECOMPILE",
+                "value": "[parameters('assetsPreCompile')]"
+              },
+              {
+                "name": "RAILS_ENV",
+                "value": "[parameters('railsEnv')]"
+              },
+              {
+                "name": "RAILS_SERVE_STATIC_FILES",
+                "value": "[parameters('railsServeStaticFiles')]"
+              },
+              {
+                "name": "SECRET_KEY_BASE",
+                "value": "[parameters('secretKeyBase')]"
+              },
+              {
+                "name": "WEBPACKER_DEV_SERVER_HOST",
+                "value": "[parameters('webpackerDevHost')]"
+              },
+              {
+                "name": "SETTINGS__DFE_SIGNIN__SECRET",
+                "value": "[parameters('dfeSignInSecret')]"
+              },
+              {
+                "name": "SETTINGS__AUTHENTICATION__SECRET",
+                "value": "[parameters('settingsAuthenticationSecret')]"
+              },
+              {
+                "name": "SENTRY_DSN",
+                "value": "[parameters('sentryDSN')]"
+              }
+            ]
+          },
+          "customHostName": {
+            "value": "[parameters('customHostName')]"
+          },
+          "certificateThumbprint": {
+            "value": "[if(greater(length(parameters('customHostname')), 0), reference('app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "app-service-plan"
+      ]
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "app-insights",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'application-insights.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appInsightsName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "attachedService": {
+            "value": "[variables('appServiceName')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "AppServiceName": {
+      "type": "string",
+      "value": "[variables('appServiceName')]"
+    }
+  }
 }
