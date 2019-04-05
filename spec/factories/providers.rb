@@ -6,8 +6,8 @@ FactoryBot.define do
     end
 
     sequence(:id)
-    sequence(:institution_code) { |n| "A#{n}" }
-    institution_name { "ACME SCITT #{institution_code}" }
+    sequence(:provider_code) { |n| "A#{n}" }
+    institution_name { "ACME SCITT #{provider_code}" }
     opted_in { false }
     courses { [] }
     sites { [] }
@@ -37,9 +37,9 @@ FactoryBot.define do
   factory :providers_response, class: Hash do
     data {
       [
-        jsonapi(:provider, institution_code: "A0", include_counts: %i[courses]).render,
-        jsonapi(:provider, institution_code: "A1", include_counts: %i[courses]).render,
-        jsonapi(:provider, institution_code: "A2", include_counts: %i[courses]).render
+        jsonapi(:provider, provider_code: "A0", include_counts: %i[courses]).render,
+        jsonapi(:provider, provider_code: "A1", include_counts: %i[courses]).render,
+        jsonapi(:provider, provider_code: "A2", include_counts: %i[courses]).render
       ].map { |d| d[:data] }
     }
 

@@ -4,7 +4,7 @@ class ProvidersController < ApplicationController
   def index
     @providers = Provider.all
     render_manage_ui if @providers.empty?
-    redirect_to provider_path(@providers.first.institution_code) if @providers.size == 1
+    redirect_to provider_path(@providers.first.provider_code) if @providers.size == 1
   end
 
   def show
