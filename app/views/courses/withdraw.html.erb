@@ -17,7 +17,7 @@
 
     <h2 class="govuk-heading-m">Contact support to withdraw this course</h2>
 
-    <p class="govuk-body">Contact the <%= bat_contact_mail_to 'Becoming a teacher team', subject: "Withdraw #{@course.name} (#{@course.course_code})" %> by email to withdraw this course.</p>
+    <p class="govuk-body">Contact the <%= bat_contact_mail_to 'Becoming a teacher team', subject: "Withdraw #{@course.name} (#{@provider_code}/#{@course.course_code})" %> by email to withdraw this course.</p>
 
     <p class="govuk-body">In your email include:</p>
     <ul class="govuk-list govuk-list--bullet">
