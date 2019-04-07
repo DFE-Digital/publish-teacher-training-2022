@@ -8,4 +8,6 @@ class PagesController < ApplicationController
   def privacy; end
 
   def guidance; end
+
+  def transition; end
 end
