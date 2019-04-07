@@ -1,49 +1,48 @@
 <%= content_for :page_title, "Locations" %>
 
-<nav class="govuk-breadcrumbs">
-  <ol class="govuk-breadcrumbs__list">
-    <li class="govuk-breadcrumbs__list-item">
-      <%= link_to @provider.attributes[:institution_name], provider_path(code: @provider.attributes[:provider_code]), class: "govuk-breadcrumbs__link" %>
-    </li>
-  </ol>
-</nav>
+<% content_for :before_content do %>
+  <nav class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <%= link_to @provider.attributes[:institution_name], provider_path(code: @provider.attributes[:provider_code]), class: "govuk-breadcrumbs__link" %>
+      </li>
+    </ol>
+  </nav>
+<% end %>
 
-<main class="govuk-main-wrapper " id="main-content" role="main">
+<h1 class="govuk-heading-xl">Locations</h1>
 
-  <h1 class="govuk-heading-xl">Locations</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">In this section, you can add new locations.</p>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body">In this section, you can add new locations.</p>
-
-      <div class="govuk-inset-text">
-        <p>By ‘location’ we mean the places that a candidate selects when making an application. They do this by choosing from a list on both the course page in Find and the UCAS application form.</p>
-      </div>
-
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-warning-text__assistive">Warning</span>
-          You are limited to 37 locations by UCAS Apply.<br>
-          <span class="govuk-!-font-weight-regular">Each location has a single character code</span>.
-        </strong>
-      </div>
-
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="col">Name</th>
-            <th class="govuk-table__header" scope="col">UCAS code</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <%= render @sites %>
-        </tbody>
-      </table>
-      <% if @provider.opted_in? %>
-        <%= link_to "Add a location", "https://forms.gle/Bvkuf6JMY8kPVHPNA", rel: "noopener noreferrer", class: "govuk-button govuk-!-margin-bottom-2", target: :blank %>
-        <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your location details.</p>
-      <% end %>
+    <div class="govuk-inset-text">
+      <p>By ‘location’ we mean the places that a candidate selects when making an application. They do this by choosing from a list on both the course page in Find and the UCAS application form.</p>
     </div>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        You are limited to 37 locations by UCAS Apply.<br>
+        <span class="govuk-!-font-weight-regular">Each location has a single character code</span>.
+      </strong>
+    </div>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Name</th>
+          <th class="govuk-table__header" scope="col">UCAS code</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%= render @sites %>
+      </tbody>
+    </table>
+    <% if @provider.opted_in? %>
+      <%= link_to "Add a location", "https://forms.gle/Bvkuf6JMY8kPVHPNA", rel: "noopener noreferrer", class: "govuk-button govuk-!-margin-bottom-2", target: :blank %>
+      <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your location details.</p>
+    <% end %>
   </div>
-</main>
+</div>
