@@ -1,6 +1,6 @@
 <li>
   <h2 class="govuk-heading-m">
-    <%= link_to provider.institution_name, provider_path(provider.provider_code), class: "govuk-link" %>
+    <%= link_to provider.provider_name, provider_path(provider.provider_code), class: "govuk-link" %>
     <span class="govuk-body govuk-!-font-weight-regular govuk-!-display-block"><%= pluralize(provider.course_count, 'course') %></span>
   </h2>
 </li>

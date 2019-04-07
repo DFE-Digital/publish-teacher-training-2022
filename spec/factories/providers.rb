@@ -7,7 +7,7 @@ FactoryBot.define do
 
     sequence(:id)
     sequence(:provider_code) { |n| "A#{n}" }
-    institution_name { "ACME SCITT #{provider_code}" }
+    provider_name { "ACME SCITT #{provider_code}" }
     opted_in { false }
     courses { [] }
     sites { [] }

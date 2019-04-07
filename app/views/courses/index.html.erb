@@ -9,7 +9,7 @@
         </li>
       <% end %>
       <li class="govuk-breadcrumbs__list-item">
-        <%= link_to @provider[:institution_name], provider_path(code: @provider[:provider_code]), class: "govuk-breadcrumbs__link" %>
+        <%= link_to @provider[:provider_name], provider_path(code: @provider[:provider_code]), class: "govuk-breadcrumbs__link" %>
       </li>
       <li class="govuk-breadcrumbs__list-item" aria-current="page">
         Courses
