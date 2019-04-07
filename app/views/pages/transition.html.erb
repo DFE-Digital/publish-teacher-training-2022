@@ -1,0 +1,25 @@
+<%= content_for :page_title, "New features" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Important new features</h1>
+    <p class="govuk-body">You now have access to new features, allowing you to:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>create new courses</li>
+      <li>add and edit your locations</li>
+      <li>update the vacancy status of courses</li>
+      <li>edit course details (eg titles, outcomes, and fee or salary status)</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Stop using UCAS to manage your courses</h2>
+
+    <p class="govuk-body">You can no longer use UCAS to add or edit courses. All course management must now be done in this service.</p>
+
+    <p class="govuk-body">You’ll still need to use UCAS to view and manage course applications. This is because candidates will continue to apply for courses through UCAS.</p>
+
+    <hr class="govuk-section-break govuk-section-break--m">
+
+    <%= link_to "Continue", providers_path, class: "govuk-button" %>
+  </div>
+</div>
