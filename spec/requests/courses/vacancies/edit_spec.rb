@@ -61,8 +61,11 @@ describe 'Edit vacancies' do
           ).render
         end
 
-        it 'shows a full time checkbox' do
+        it 'shows a checkbox without a study mode' do
           expect(response.body).to include(
+            site.attributes[:location_name]
+          )
+          expect(response.body).to_not include(
             "#{site.attributes[:location_name]} (Full time)"
           )
           expect(response.body).not_to include(
@@ -80,11 +83,14 @@ describe 'Edit vacancies' do
           ).render
         end
 
-        it 'shows a part time checkbox' do
+        it 'shows a checkbox without a study mode' do
+          expect(response.body).to include(
+            site.attributes[:location_name]
+          )
           expect(response.body).not_to include(
             "#{site.attributes[:location_name]} (Full time)"
           )
-          expect(response.body).to include(
+          expect(response.body).to_not include(
             "#{site.attributes[:location_name]} (Part time)"
           )
         end
