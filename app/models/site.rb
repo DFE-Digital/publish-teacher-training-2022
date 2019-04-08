@@ -3,7 +3,6 @@ class Site < Base
   belongs_to :provider, param: :provider_code
 
   REGIONS = [
-    ['No Region', :no_region],
     ['London', :london],
     ['South East', :south_east],
     ['South West', :south_west],
@@ -15,5 +14,6 @@ class Site < Base
     ['Yorkshire and the Humber', :yorkshire_and_the_humber],
     ['North East', :north_east],
     ['Scotland', :scotland],
+    ['No Region', :no_region],
   ].freeze
 end
