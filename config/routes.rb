@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       get '/delete', on: :member, to: 'courses#delete'
     end
 
-    resources :sites, path: 'locations', on: :member, only: :index
+    resources :sites, path: 'locations', on: :member
   end
 
   get "/cookies", to: "pages#cookies", as: :cookies
