@@ -2,7 +2,14 @@ require 'rails_helper'
 
 feature 'Index courses', type: :feature do
   let(:course_1) { jsonapi :course, name: 'English', include_nulls: [:accrediting_provider] }
-  let(:course_2) { jsonapi :course, name: 'Mathematics', include_nulls: [:accrediting_provider] }
+  let(:course_2) {
+    jsonapi :course,
+      name: 'Mathematics',
+      findable?: true,
+      open_for_applications?: true,
+      has_vacancies?: true,
+      include_nulls: [:accrediting_provider]
+  }
   let(:course_3) { jsonapi :course, name: 'Physics', include_nulls: [:accrediting_provider] }
   let(:courses)  { [course_1, course_2, course_3] }
   let(:provider) do
@@ -44,6 +51,11 @@ feature 'Index courses', type: :feature do
 
       within second_row do
         expect(find('[data-qa="courses-table__course"]')).to have_content(course_2.attributes[:name])
+        expect(find('[data-qa="courses-table__findable"]')).to have_content('Yes - view online')
+        expect(second_row).to have_selector("a[href=\"https://localhost:5000/course/A123/#{course_2.attributes[:course_code]}\"]")
+
+        expect(find('[data-qa="courses-table__applications"]')).to have_content('Open')
+        expect(find('[data-qa="courses-table__vacancies"]')).to have_content('Yes (Edit)')
       end
 
       within third_row do
