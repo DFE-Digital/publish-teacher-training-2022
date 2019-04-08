@@ -22,4 +22,9 @@ module ViewHelper
   def search_ui_course_page_url(provider_code:, course_code:)
     search_ui_url("/course/#{provider_code}/#{course_code}")
   end
+
+  def bat_contact_mail_to(name = nil, subject: nil, link_class: "govuk-link")
+    contact_email_address = Settings.service_support.contact_email_address
+    mail_to contact_email_address, name || contact_email_address, subject: subject, class: link_class
+  end
 end

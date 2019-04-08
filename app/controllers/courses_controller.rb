@@ -27,6 +27,7 @@ class CoursesController < ApplicationController
 private
 
   def build_course
-    @course = Course.where(provider_code: params[:provider_code]).find(params[:code]).first
+    @provider_code = params[:provider_code]
+    @course = Course.where(provider_code: @provider_code).find(params[:code]).first
   end
 end
