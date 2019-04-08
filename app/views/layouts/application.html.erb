@@ -51,9 +51,8 @@
 
       <%= yield(:before_content) %>
 
-      <%= render partial: "layouts/flash" if flash.any? %>
-
       <main class="govuk-main-wrapper" id="main-content" role="main">
+        <%= render partial: "layouts/flash" if flash.any? %>
         <%= yield %>
       </main>
     </div>
