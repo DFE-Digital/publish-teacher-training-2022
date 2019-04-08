@@ -6,7 +6,7 @@ class SitesController < ApplicationController
   end
 
   def edit
-    @site = Site.where(provider_code: params[:provider_code]).find(params[:id]).first
+    @site = @provider.sites.find(params[:id]).first
   end
 
 private
