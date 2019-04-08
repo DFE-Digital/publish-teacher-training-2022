@@ -28,11 +28,17 @@
       <h2 class="govuk-heading-m govuk-!-margin-top-8">Address</h2>
 
       <div class="govuk-form-group">
-        <%= f.label :address1, "Building and street", class: "govuk-label" %>
+        <%= f.label :address1, class: "govuk-label" do %>
+          Building and street
+          <span class="govuk-visually-hidden">line 1 of 2</span>
+        <% end %>
         <%= f.text_field :address1, class: "govuk-input govuk-!-width-full" %>
       </div>
 
       <div class="govuk-form-group">
+        <%= f.label :address1, class: "govuk-label" do %>
+          <span class="govuk-visually-hidden">line 2 of 2</span>
+        <% end %>
         <%= f.text_field :address2, class: "govuk-input govuk-!-width-full" %>
       </div>
 
