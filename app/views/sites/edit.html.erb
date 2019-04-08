@@ -1,0 +1,61 @@
+<%= content_for :page_title, @site.location_name %>
+
+<% content_for :before_content do %>
+  <nav class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <%= link_to @provider.attributes[:provider_name], provider_path(code: @provider.attributes[:provider_code]), class: "govuk-breadcrumbs__link" %>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-breadcrumbs__link" %>
+      </li>
+    </ol>
+  </nav>
+<% end %>
+
+<h1 class="govuk-heading-xl"><%= @site.location_name %></h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @site, url: provider_site_path(params[:provider_code], @site.id), method: :put do |f| %>
+      <div class="govuk-form-group">
+        <%= f.label :location_name, class: "govuk-label" do %>
+          <h2 class="govuk-heading-m">Name</h2>
+        <% end %>
+        <%= f.text_field :location_name, class: "govuk-input govuk-!-width-full" %>
+      </div>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-8">Address</h2>
+
+      <div class="govuk-form-group">
+        <%= f.label :address1, "Building and street", class: "govuk-label" %>
+        <%= f.text_field :address1, class: "govuk-input govuk-!-width-full" %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.label :address2, "Town or city", class: "govuk-label" %>
+        <%= f.text_field :address2, class: "govuk-input govuk-!-width-full" %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.label :address3, "County", class: "govuk-label" %>
+        <%= f.text_field :address3, class: "govuk-input govuk-!-width-full" %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.label :postcode, class: "govuk-label" %>
+        <%= f.text_field :postcode, class: "govuk-input form-control-small" %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.label :region_code, "Region of UK", class: "govuk-label" %>
+        <%= f.select :region_code, Site::REGIONS, {}, class: "govuk-select" %>
+      </div>
+
+      <%= f.submit "Publish changes", class: "govuk-button" %>
+    <% end %>
+    <p class="govuk-body">
+      <%= link_to "Cancel changes", provider_sites_path(@provider[:provider_code]), class: "govuk-link" %>
+    </p>
+  </div>
+</div>
