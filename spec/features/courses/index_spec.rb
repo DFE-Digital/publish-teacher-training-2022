@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Index courses', type: :feature do
-  let(:course_1) { jsonapi :course, include_nulls: [:accrediting_provider] }
-  let(:course_2) { jsonapi :course, include_nulls: [:accrediting_provider] }
-  let(:course_3) { jsonapi :course, include_nulls: [:accrediting_provider] }
+  let(:course_1) { jsonapi :course, name: 'English', include_nulls: [:accrediting_provider] }
+  let(:course_2) { jsonapi :course, name: 'Mathematics', include_nulls: [:accrediting_provider] }
+  let(:course_3) { jsonapi :course, name: 'Physics', include_nulls: [:accrediting_provider] }
   let(:courses)  { [course_1, course_2, course_3] }
   let(:provider) do
     jsonapi(:provider, courses: courses)
@@ -26,20 +26,29 @@ feature 'Index courses', type: :feature do
       expect(find('h1')).to have_content('Courses')
       expect(page).to have_selector('tbody tr', count: provider.relationships[:courses].size)
 
-      expect(first('[data-qa="courses-table__course"]')).to have_content(course_1.attributes[:name])
-      expect(first('[data-qa="courses-table__course"]')).to have_content(course_2.attributes[:name])
-      expect(first('[data-qa="courses-table__course"]')).to have_content(course_3.attributes[:name])
-      expect(page).to have_selector("a[href=\"https://localhost:44364/organisation/#{provider.attributes[:provider_code]}/course/self/#{course_1.attributes[:course_code]}\"]")
+      first_row, second_row, third_row = find_all('tbody .govuk-table__row').to_a
+      within first_row do
+        expect(find('[data-qa="courses-table__course"]')).to have_content(course_1.attributes[:name])
+        expect(first_row).to have_selector("a[href=\"https://localhost:44364/organisation/#{provider.attributes[:provider_code]}/course/self/#{course_1.attributes[:course_code]}\"]")
 
-      expect(first('[data-qa="courses-table__ucas-status"]')).to have_content('Running')
+        expect(find('[data-qa="courses-table__ucas-status"]')).to have_content('Running')
 
-      expect(first('[data-qa="courses-table__content-status"]')).to have_content('Published')
+        expect(find('[data-qa="courses-table__content-status"]')).to have_content('Published')
 
-      expect(first('[data-qa="courses-table__findable"]')).to have_content('Yes - view online')
-      expect(page).to have_selector("a[href=\"https://localhost:5000/course/#{provider.attributes[:provider_code]}/#{course_1.attributes[:course_code]}\"]")
+        expect(find('[data-qa="courses-table__findable"]')).to have_content('Yes - view online')
+        expect(first_row).to have_selector("a[href=\"https://localhost:5000/course/#{provider.attributes[:provider_code]}/#{course_1.attributes[:course_code]}\"]")
 
-      expect(first('[data-qa="courses-table__applications"]')).to have_content('Closed')
-      expect(first('[data-qa="courses-table__vacancies"]')).to have_content('No (Edit)')
+        expect(find('[data-qa="courses-table__applications"]')).to have_content('Closed')
+        expect(find('[data-qa="courses-table__vacancies"]')).to have_content('No (Edit)')
+      end
+
+      within second_row do
+        expect(find('[data-qa="courses-table__course"]')).to have_content(course_2.attributes[:name])
+      end
+
+      within third_row do
+        expect(find('[data-qa="courses-table__course"]')).to have_content(course_3.attributes[:name])
+      end
     end
   end
 
