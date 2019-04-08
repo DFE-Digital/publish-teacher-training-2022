@@ -23,3 +23,5 @@ manage_ui:
 search_ui:
   # URL of the C# search ui app (search-and-compare-ui)
   base_url: https://localhost:5000
+service_support:
+  contact_email_address: becomingateacher@digital.education.gov.uk

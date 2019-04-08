@@ -1,6 +1,4 @@
 module ViewHelper
-  BECOMING_A_TEACHER_MAILBOX_EMAIL = 'becomingateacher@digital.education.gov.uk'.freeze
-
   def govuk_link_to(body, url, html_options = { class: 'govuk-link' })
     link_to body, url, html_options
   end
@@ -25,7 +23,8 @@ module ViewHelper
     search_ui_url("/course/#{provider_code}/#{course_code}")
   end
 
-  def bat_contact_mail_to(name = BECOMING_A_TEACHER_MAILBOX_EMAIL, subject: nil, link_class: "govuk-link")
-    mail_to BECOMING_A_TEACHER_MAILBOX_EMAIL, name, subject: subject, class: link_class
+  def bat_contact_mail_to(name = nil, subject: nil, link_class: "govuk-link")
+    contact_email_address = Settings.service_support.contact_email_address
+    mail_to contact_email_address, name || contact_email_address, subject: subject, class: link_class
   end
 end
