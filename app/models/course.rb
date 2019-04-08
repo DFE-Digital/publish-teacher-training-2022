@@ -18,8 +18,4 @@ class Course < Base
   def full_time_or_part_time?
     study_mode == 'full_time_or_part_time'
   end
-
-  def has_vacancies?
-    attributes[:has_vacancies?]
-  end
 end
