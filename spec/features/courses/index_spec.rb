@@ -85,6 +85,7 @@ feature 'Index courses', type: :feature do
 
       expect(find('h1')).to have_content('Courses')
       expect(page).to have_selector('table', count: 3)
+      expect(page).to_not have_link('Add a new course')
 
       expect(page.all('h2')[0]).to have_content('Accredited body Aacme Scitt')
       expect(page.all('h2')[1]).to have_content('Accredited body Zacme Scitt')

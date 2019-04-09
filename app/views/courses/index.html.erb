@@ -14,11 +14,16 @@
 
 <p class="govuk-body">Use this section to:</p>
 
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
   <li>write about each course</li>
   <li>preview and publish courses</li>
   <li>copy content between courses</li>
 </ul>
+
+<% if @provider.courses.count > 10 && @provider.opted_in? %>
+  <%= link_to "Add a new course", "https://goo.gl/forms/kdNksCuwcz7TVtNF2", class: "govuk-button govuk-!-margin-bottom-2", rel: "noopener noreferrer", target: :blank %>
+  <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your course details.</p>
+<% end %>
 
 <%= render partial: 'course_table', locals: { courses: @self_accredited_courses } if @self_accredited_courses %>
 
@@ -29,4 +34,9 @@
   </h2>
 
   <%= render partial: 'course_table', locals: { courses: courses } %>
+<% end %>
+
+<% if @provider.opted_in? %>
+  <%= link_to "Add a new course", "https://goo.gl/forms/kdNksCuwcz7TVtNF2", class: "govuk-button govuk-!-margin-bottom-2", rel: "noopener noreferrer", target: :blank %>
+  <p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>
 <% end %>
