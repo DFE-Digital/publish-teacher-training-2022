@@ -13,7 +13,7 @@ feature 'Index courses', type: :feature do
   let(:course_3) { jsonapi :course, name: 'Physics', include_nulls: [:accrediting_provider] }
   let(:courses)  { [course_1, course_2, course_3] }
   let(:provider) do
-    jsonapi(:provider, courses: courses, provider_code: 'A123')
+    jsonapi(:provider, :opted_in, courses: courses, accredited_body?: true, provider_code: 'A123')
   end
   let(:provider_response) { provider.render }
 
@@ -25,11 +25,10 @@ feature 'Index courses', type: :feature do
         "/providers/A123?include=courses.accrediting_provider",
         provider_response
       )
+      visit "/organisations/A123/courses"
     end
 
     scenario 'it shows a list of courses' do
-      visit "/organisations/A123/courses"
-
       expect(find('h1')).to have_content('Courses')
       expect(page).to have_selector('tbody tr', count: provider.relationships[:courses].size)
 
@@ -62,9 +61,17 @@ feature 'Index courses', type: :feature do
         expect(find('[data-qa="courses-table__course"]')).to have_content(course_3.attributes[:name])
       end
     end
+
+    scenario "it shows 'add a new course' link" do
+      expect(page).to have_link('Add a new course', href: 'https://forms.gle/ktbyArGW5EyiMppf9')
+    end
   end
 
   describe "with accrediting providers" do
+    let(:provider) do
+      jsonapi(:provider, :opted_in, courses: courses, accredited_body?: false, provider_code: 'A123')
+    end
+    let(:provider_response) { provider.render }
     let(:provider_1) { jsonapi :provider, id: "1", provider_name: "Zacme Scitt" }
     let(:provider_2) { jsonapi :provider, id: "2", provider_name: "Aacme Scitt" }
 
@@ -78,17 +85,43 @@ feature 'Index courses', type: :feature do
         "/providers/A123?include=courses.accrediting_provider",
         provider_response
       )
+      visit "/organisations/A123/courses"
     end
 
     scenario "it shows a list of courses" do
-      visit "/organisations/A123/courses"
-
       expect(find('h1')).to have_content('Courses')
       expect(page).to have_selector('table', count: 3)
-      expect(page).to_not have_link('Add a new course')
+      expect(page).to have_link('Add a new course', href: 'https://forms.gle/WEokN2S4qPcPAZcr5')
 
       expect(page.all('h2')[0]).to have_content('Accredited body Aacme Scitt')
       expect(page.all('h2')[1]).to have_content('Accredited body Zacme Scitt')
+    end
+
+    scenario "it shows 'add a new course' link" do
+      expect(page).to have_link('Add a new course', href: 'https://forms.gle/WEokN2S4qPcPAZcr5')
+    end
+  end
+
+  describe "with a not opted in provider" do
+    let(:provider) do
+      jsonapi(:provider, opted_in: false, courses: courses, provider_code: 'A321')
+    end
+    let(:provider_response) { provider.render }
+
+    before do
+      stub_omniauth
+      stub_session_create
+      stub_api_v2_request(
+        "/providers/A321?include=courses.accrediting_provider",
+        provider_response
+      )
+      visit "/organisations/A321/courses"
+    end
+
+    scenario "it does not show the 'add a new course' link" do
+      visit "/organisations/A321/courses"
+
+      expect(page).to_not have_link('Add a new course')
     end
   end
 end
