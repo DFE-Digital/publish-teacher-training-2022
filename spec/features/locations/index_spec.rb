@@ -22,11 +22,12 @@ feature 'View locations', type: :feature do
     stub_api_v2_request("/providers/#{provider_attributes[:provider_code]}?include=sites", provider)
   end
 
-  scenario 'it shows a list of location' do
+  scenario 'it shows a list of locations' do
     visit provider_sites_path(provider_attributes[:provider_code])
 
     expect(find('h1')).to have_content('Locations')
     expect(page).to have_selector('tbody tr', count: 3)
+    expect(first('.govuk-table__cell')).to_not have_link('Main site 1')
     expect(first('.govuk-table__cell')).to have_content('Main site 1')
     expect(page).to_not have_link('Add a location')
   end
@@ -46,6 +47,8 @@ feature 'View locations', type: :feature do
 
     scenario 'should show Add Location CTA' do
       visit provider_sites_path(provider_attributes[:provider_code])
+
+      expect(first('.govuk-table__cell')).to have_link('Main site 1')
       expect(page).to have_link('Add a location')
     end
   end

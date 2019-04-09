@@ -1,6 +1,6 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell">
-    <%= site.attributes[:location_name] %>
+    <%= link_to_if @provider.opted_in?, site.attributes[:location_name], provider_sites_path(site.attributes[:id]), class: "govuk-link govuk-!-font-weight-bold" %>
   </td>
   <td class="govuk-table__cell">
     <%= site.attributes[:code] %> <%= site.attributes[:code] == '-' ? '(dash)' : '' %>
