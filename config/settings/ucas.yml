@@ -3,6 +3,7 @@ dfe_signin:
   profile: https://signin-test-pfl-as.azurewebsites.net
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
   base_url: https://bat-ucas-mcfe-as.azurewebsites.net
+  identifier: batsucas
 manage_backend:
   base_url: https://bat-ucas-mcbe-as.azurewebsites.net
 manage_ui:
