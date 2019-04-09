@@ -22,7 +22,7 @@
     <% end %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__applications">
-    <%= course.applications_being_accepted_now? ? "Open" : "Closed" %>
+    <%= course.open_for_applications? ? "Open" : "Closed" %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__vacancies">
     <%= course.has_vacancies? ? "Yes" : "No" %>
