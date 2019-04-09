@@ -28,4 +28,16 @@ module CourseHelper
       "not_running" => "Not running"
     }[course.attributes[:ucas_status]]
   end
+
+  def new_course_google_form(provider)
+    if provider.accredited_body?
+      "https://forms.gle/ktbyArGW5EyiMppf9"
+    else
+      "https://forms.gle/WEokN2S4qPcPAZcr5"
+    end
+  end
+
+  def add_course_link(provider)
+    link_to "Add a new course", new_course_google_form(provider), class: "govuk-button govuk-!-margin-bottom-2", rel: "noopener noreferrer", target: :blank
+  end
 end

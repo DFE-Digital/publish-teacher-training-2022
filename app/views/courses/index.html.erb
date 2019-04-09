@@ -21,7 +21,7 @@
 </ul>
 
 <% if @provider.courses.count > 10 && @provider.opted_in? %>
-  <%= link_to "Add a new course", "https://goo.gl/forms/kdNksCuwcz7TVtNF2", class: "govuk-button govuk-!-margin-bottom-2", rel: "noopener noreferrer", target: :blank %>
+  <%= add_course_link(@provider) %>
   <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your course details.</p>
 <% end %>
 
@@ -37,6 +37,6 @@
 <% end %>
 
 <% if @provider.opted_in? %>
-  <%= link_to "Add a new course", "https://goo.gl/forms/kdNksCuwcz7TVtNF2", class: "govuk-button govuk-!-margin-bottom-2", rel: "noopener noreferrer", target: :blank %>
+  <%= add_course_link(@provider) %>
   <p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>
 <% end %>
