@@ -31,9 +31,9 @@ module CourseHelper
 
   def new_course_google_form(provider)
     if provider.accredited_body?
-      "https://forms.gle/ktbyArGW5EyiMppf9"
+      Settings.google_forms.new_course_for_accredited_bodies_url
     else
-      "https://forms.gle/WEokN2S4qPcPAZcr5"
+      Settings.google_forms.new_course_for_unaccredited_bodies_url
     end
   end
 

@@ -41,7 +41,7 @@
       </tbody>
     </table>
     <% if @provider.opted_in? %>
-      <%= link_to "Add a location", "https://forms.gle/Bvkuf6JMY8kPVHPNA", rel: "noopener noreferrer", class: "govuk-button govuk-!-margin-bottom-2", target: :blank %>
+      <%= link_to "Add a location", Settings.google_forms.add_location_url, rel: "noopener noreferrer", class: "govuk-button govuk-!-margin-bottom-2", target: :blank %>
       <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your location details.</p>
     <% end %>
   </div>

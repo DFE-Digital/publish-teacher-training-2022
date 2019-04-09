@@ -63,7 +63,7 @@ feature 'Index courses', type: :feature do
     end
 
     scenario "it shows 'add a new course' link" do
-      expect(page).to have_link('Add a new course', href: 'https://forms.gle/ktbyArGW5EyiMppf9')
+      expect(page).to have_link('Add a new course', href: Settings.google_forms.new_course_for_accredited_bodies_url)
     end
   end
 
@@ -91,14 +91,14 @@ feature 'Index courses', type: :feature do
     scenario "it shows a list of courses" do
       expect(find('h1')).to have_content('Courses')
       expect(page).to have_selector('table', count: 3)
-      expect(page).to have_link('Add a new course', href: 'https://forms.gle/WEokN2S4qPcPAZcr5')
+      expect(page).to have_link('Add a new course', href: Settings.google_forms.new_course_for_unaccredited_bodies_url)
 
       expect(page.all('h2')[0]).to have_content('Accredited body Aacme Scitt')
       expect(page.all('h2')[1]).to have_content('Accredited body Zacme Scitt')
     end
 
     scenario "it shows 'add a new course' link" do
-      expect(page).to have_link('Add a new course', href: 'https://forms.gle/WEokN2S4qPcPAZcr5')
+      expect(page).to have_link('Add a new course', href: Settings.google_forms.new_course_for_unaccredited_bodies_url)
     end
   end
 
