@@ -47,11 +47,8 @@ feature 'Edit course vacancies', type: :feature do
   end
 
   scenario 'viewing the edit vacancies page' do
-    expect(page).to have_link(
-      'Back',
-      href: "#{Settings.manage_ui.base_url}/organisation/AO/course/self/" \
-        "#{course_attributes[:course_code]}"
-    )
+    expect(page).to have_link('Back', href: provider_courses_path('AO'))
+    expect(page).to have_link('Cancel changes', href: provider_courses_path('AO'))
     expect(find('h1')).to have_content('Edit vacancies')
     expect(find('.govuk-caption-xl')).to have_content(
       "#{course_attributes[:name]} (#{course_attributes[:course_code]})"

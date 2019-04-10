@@ -1,7 +1,7 @@
 <%= content_for :page_title, "Vacancies" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(manage_ui_course_page_url(provider_code: params[:provider_code], course_code: @course.course_code)) %>
+  <%= govuk_back_link_to(provider_courses_path(params[:provider_code])) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -54,7 +54,7 @@
         </fieldset>
         <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated overnight.</p>
         <%= f.submit "Publish changes", class: "govuk-button" %>
-        <p class="govuk-body"><%= govuk_link_to "Cancel changes", manage_ui_course_page_url(provider_code: params[:provider_code], course_code: @course.course_code) %></p>
+        <p class="govuk-body"><%= govuk_link_to "Cancel changes", provider_courses_path(params[:provider_code]) %></p>
       </div>
     <% end %>
   </div>
