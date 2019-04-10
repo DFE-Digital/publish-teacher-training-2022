@@ -24,12 +24,12 @@ module Helpers
     allow(Session).to receive(:create).and_return(double(id: 1))
   end
 
-  def stub_api_v2_request(url_path, stub)
+  def stub_api_v2_request(url_path, stub, method = :get, status = 200)
     url = "#{Settings.manage_backend.base_url}/api/v2#{url_path}"
 
-    stub_request(:get, url)
+    stub_request(method, url)
       .to_return(
-        status: 200,
+        status: status,
         body: stub.to_json,
         headers: { 'Content-Type': 'application/vnd.api+json' }
       )
