@@ -47,5 +47,16 @@ feature 'Edit locations', type: :feature do
       expect(find('h1')).to have_content('Main site 1')
       expect(find('.govuk-error-summary')).to have_content('Name is missing')
     end
+
+    scenario 'displays the old location name when the change fails' do
+      visit edit_provider_site_path(provider_attributes[:provider_code], site.id)
+
+      expect(find('h1')).to have_content('Main site 1')
+
+      fill_in("Name", with: "Main site 2")
+      click_on('Publish changes')
+
+      expect(find('h1')).to have_content('Main site 1')
+    end
   end
 end
