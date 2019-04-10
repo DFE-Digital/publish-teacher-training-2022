@@ -1,5 +1,5 @@
 <tr class="govuk-table__row">
-  <td class="govuk-table__cell" data-qa="courses-table__course">
+  <td class="govuk-table__cell course-table__course-name" data-qa="courses-table__course">
     <%= govuk_link_to "#{ course.attributes[:name] } (#{ course.attributes[:course_code] })",
       manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: course.attributes[:course_code]),
       class: "govuk-link govuk-heading-s govuk-!-margin-bottom-0"
@@ -10,7 +10,9 @@
     <%= course_ucas_status(course) %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__content-status">
-    <%= render partial: 'content_status_tag', locals: { course: course } %>
+    <% if course.is_running? %>
+      <%= render partial: 'content_status_tag', locals: { course: course } %>
+    <% end %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__findable">
     <% if course.attributes[:findable?] %>
@@ -22,10 +24,16 @@
     <% end %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__applications">
-    <%= course.open_for_applications? ? "Open" : "Closed" %>
+    <% if course.is_running? %>
+      <%= course.open_for_applications? ? "Open" : "Closed" %>
+    <% end %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__vacancies">
-    <%= course.has_vacancies? ? "Yes" : "No" %>
-    (<%= link_to 'Edit', vacancies_provider_course_path(code: course.attributes[:course_code]), class: 'govuk-link' %>)
+    <% if course.is_running? %>
+      <%= course.has_vacancies? ? "Yes" : "No" %>
+      <% if @provider.opted_in? %>
+        (<%= link_to 'Edit', vacancies_provider_course_path(code: course.attributes[:course_code]), class: 'govuk-link' %>)
+      <% end %>
+    <% end %>
   </td>
 </tr>
