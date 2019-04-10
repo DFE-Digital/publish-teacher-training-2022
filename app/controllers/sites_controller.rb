@@ -54,6 +54,7 @@ private
   def map_errors(message)
     {
       "Location name can't be blank"             => "Name is missing",
+      "Location name has already been taken"     => "Name is in use by another location",
       "Address1 can't be blank"                  => "Building and street is missing",
       "Address3 can't be blank"                  => "Town or city is missing",
       "Postcode can't be blank"                  => "Postcode is missing",
