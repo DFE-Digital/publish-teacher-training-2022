@@ -1,17 +1,14 @@
 class SitesController < ApplicationController
   before_action :authenticate, :build_provider, :initialise_errors
+  before_action :build_site, only: %i[edit update]
 
   def index
     @sites = @provider.sites.sort_by(&:location_name)
   end
 
-  def edit
-    @site = @provider.sites.find { |site| site.id == params[:id] }
-  end
+  def edit; end
 
   def update
-    @site = @provider.sites.find { |site| site.id == params[:id] }
-
     # We don't have a provider_code in the backend, only provider_id, and this
     # is required in order to run #update.
     @site.provider_code = @provider.provider_code
@@ -29,6 +26,10 @@ class SitesController < ApplicationController
   end
 
 private
+
+  def build_site
+    @site = @provider.sites.find { |site| site.id == params[:id] }
+  end
 
   def build_provider
     @provider = Provider.includes(:sites).find(params[:provider_code]).first
