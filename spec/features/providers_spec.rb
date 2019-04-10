@@ -20,5 +20,7 @@ RSpec.feature 'View providers', type: :feature do
     visit('/organisations/A0')
     expect(find('h1')).to have_content('ACME SCITT A0')
     expect(page).to have_selector(".govuk-breadcrumbs")
+    expect(page).to have_link('Locations', href: '/organisations/A0/locations')
+    expect(page).to have_link('Courses', href: '/organisations/A0/courses')
   end
 end
