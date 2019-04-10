@@ -80,4 +80,8 @@ class JSONAPIMockSerializable
       type: type
     }
   end
+
+  def to_resource
+    type.classify.constantize.new(to_jsonapi_data)
+  end
 end
