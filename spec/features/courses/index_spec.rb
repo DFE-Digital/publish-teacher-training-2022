@@ -10,7 +10,7 @@ feature 'Index courses', type: :feature do
       has_vacancies?: true,
       include_nulls: [:accrediting_provider]
   }
-  let(:course_3) { jsonapi :course, name: 'Physics', include_nulls: [:accrediting_provider] }
+  let(:course_3) { jsonapi :course, findable?: false, name: 'Physics', include_nulls: [:accrediting_provider] }
   let(:courses)  { [course_1, course_2, course_3] }
   let(:provider) do
     jsonapi(:provider, :opted_in, courses: courses, accredited_body?: true, provider_code: 'A123')
@@ -59,6 +59,9 @@ feature 'Index courses', type: :feature do
 
       within third_row do
         expect(find('[data-qa="courses-table__course"]')).to have_content(course_3.attributes[:name])
+        expect(find('[data-qa="courses-table__findable"]')).to have_content('No')
+        expect(find('[data-qa="courses-table__applications"]')).to have_content('')
+        expect(find('[data-qa="courses-table__vacancies"]')).to have_content('')
       end
     end
 

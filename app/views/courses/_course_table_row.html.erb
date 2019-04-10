@@ -20,7 +20,11 @@
         search_ui_course_page_url(provider_code: @provider[:provider_code], course_code: course.attributes[:course_code])
       %>
     <% else %>
-      No
+      <% if course.ucas_status == 'new' %>
+        No – <% @provider.opted_in? ? 'still in draft' : 'must be published on UCAS' %>
+      <% else %>
+        No
+      <% end %>
     <% end %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__applications">
