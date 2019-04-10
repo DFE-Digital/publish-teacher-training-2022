@@ -29,6 +29,7 @@ private
 
   def build_site
     @site = @provider.sites.find { |site| site.id == params[:id] }
+    @site_name_before_update = @site.location_name.dup
   end
 
   def build_provider

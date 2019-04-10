@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors.any? ? "Error: " : ""}#{ @site.location_name }" %>
+<%= content_for :page_title, "#{@errors.any? ? "Error: " : ""}#{ @site_name_before_update }" %>
 
 <% content_for :before_content do %>
   <nav class="govuk-breadcrumbs">
@@ -13,7 +13,7 @@
   </nav>
 <% end %>
 
-<h1 class="govuk-heading-xl"><%= @site.location_name %></h1>
+<h1 class="govuk-heading-xl"><%= @site_name_before_update %></h1>
 
 <% if @errors.any? then %>
   <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
