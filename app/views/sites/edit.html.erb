@@ -1,4 +1,4 @@
-<%= content_for :page_title, @site.location_name %>
+<%= content_for :page_title, "#{@errors.any? ? "Error: " : ""}#{ @site.location_name }" %>
 
 <% content_for :before_content do %>
   <nav class="govuk-breadcrumbs">
