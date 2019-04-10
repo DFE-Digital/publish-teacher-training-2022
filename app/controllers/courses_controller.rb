@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
       .courses
       .group_by { |course| course.accrediting_provider&.provider_name || @provider[:provider_name] }
       .sort_by { |accrediting_provider, _| accrediting_provider }
-      .map { |pair| [pair[0], pair[1].sort_by(&:name)] }
+      .map { |pair| [pair[0], pair[1].sort_by { |course| [course.name, course.course_code] }] }
       .to_h
 
     @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider[:provider_name])
