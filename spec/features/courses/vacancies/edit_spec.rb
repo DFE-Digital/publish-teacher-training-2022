@@ -39,6 +39,10 @@ feature 'Edit course vacancies', type: :feature do
     stub_omniauth
     stub_session_create
     stub_api_v2_request(
+      "/providers/AO?include=courses.accrediting_provider",
+      jsonapi(:provider).render
+    )
+    stub_api_v2_request(
       "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
       course
     )
@@ -115,10 +119,7 @@ feature 'Edit course vacancies', type: :feature do
       expect(page.find('.govuk-success-summary')).to have_content(
         'Course vacancies published'
       )
-      expect(page).to have_field(
-        "#{site.attributes[:location_name]} (Full time)",
-        checked: false
-      )
+      expect(find('h1')).to have_content('Courses')
       expect(sync_courses_request_stub).to have_been_requested
     end
 
@@ -135,15 +136,7 @@ feature 'Edit course vacancies', type: :feature do
       expect(page.find('.govuk-success-summary')).to have_content(
         'Course vacancies published'
       )
-      expect(page).to have_field('There are no vacancies', checked: true)
-      expect(page).to have_field(
-        "#{site.attributes[:location_name]} (Full time)",
-        checked: false
-      )
-      expect(page).to have_field(
-        "#{site.attributes[:location_name]} (Part time)",
-        checked: false
-      )
+      expect(find('h1')).to have_content('Courses')
       expect(sync_courses_request_stub).to have_been_requested
     end
   end
@@ -176,14 +169,7 @@ feature 'Edit course vacancies', type: :feature do
       expect(page.find('.govuk-success-summary')).to have_content(
         'Course vacancies published'
       )
-      expect(page).to have_field(
-        "#{site.attributes[:location_name]} (Full time)",
-        checked: true
-      )
-      expect(page).to have_field(
-        "#{site.attributes[:location_name]} (Part time)",
-        checked: true
-      )
+      expect(find('h1')).to have_content('Courses')
       expect(sync_courses_request_stub).to have_been_requested
     end
   end
