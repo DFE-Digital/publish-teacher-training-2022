@@ -11,3 +11,9 @@ $button-colour: #00823b;
 .text-decoration-underline-dotted {
   text-decoration: underline dotted;
 }
+
+.course-table {
+  &__course-name {
+    width: 33%;
+  }
+}

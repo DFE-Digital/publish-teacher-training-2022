@@ -18,4 +18,8 @@ class Course < Base
   def full_time_or_part_time?
     study_mode == 'full_time_or_part_time'
   end
+
+  def is_running?
+    ucas_status == 'running'
+  end
 end
