@@ -1,7 +1,7 @@
 <div class="govuk-tag phase-tag--small <%= course_content_tag_css_class(course) %>">
-  <%= course_content_tag_content(course) %>
+  <%= course_content_tag_content(course).html_safe %>
 </div>
 
 <% if course_has_unpublished_changes(course) %>
-  <div class="govuk-body govuk-body-s govuk-!-margin-0">* Unpublished changes</div>
+  <div class="govuk-body govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1">*&nbsp;Unpublished&nbsp;changes</div>
 <% end %>

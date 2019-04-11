@@ -8,7 +8,7 @@ module CourseHelper
       "published" => "Published",
       "empty" => "Empty",
       "draft" => "Draft",
-      "published_with_unpublished_changes" => "Published *"
+      "published_with_unpublished_changes" => "Published&nbsp;*"
     }[course.attributes[:content_status]]
   end
 
