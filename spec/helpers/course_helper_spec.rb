@@ -16,7 +16,7 @@ RSpec.feature 'View helpers', type: :helper do
       expect(helper.course_content_tag_content(build(:course, content_status: 'published'))).to eq('Published')
       expect(helper.course_content_tag_content(build(:course, content_status: 'empty'))).to eq('Empty')
       expect(helper.course_content_tag_content(build(:course, content_status: 'draft'))).to eq('Draft')
-      expect(helper.course_content_tag_content(build(:course, content_status: 'published_with_unpublished_changes'))).to eq('Published *')
+      expect(helper.course_content_tag_content(build(:course, content_status: 'published_with_unpublished_changes'))).to eq('Published&nbsp;*')
     end
   end
 
