@@ -19,7 +19,7 @@
       %>
     <% else %>
       <% if course.ucas_status == 'new' %>
-        No – <% @provider.opted_in? ? 'still in draft' : 'must be published on UCAS' %>
+        No – <%= @provider.opted_in? ? 'still in draft' : 'must be published on UCAS' %>
       <% else %>
         No
       <% end %>
