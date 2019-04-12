@@ -23,3 +23,7 @@ $button-colour: #00823b;
   background-color: govuk-colour("grey-4");
   padding: govuk-spacing(4);
 }
+
+.courses-locations-list li:last-child {
+  margin-bottom: 0;
+}

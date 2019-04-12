@@ -13,7 +13,7 @@ feature 'Withdraw course', type: :feature do
     stub_omniauth
     stub_session_create
     stub_api_v2_request(
-      "/providers/AO/courses/#{course_attributes[:course_code]}",
+      "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site,provider.sites",
       course
     )
   end

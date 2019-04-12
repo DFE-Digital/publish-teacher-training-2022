@@ -1,9 +1,13 @@
 class CoursesController < ApplicationController
   before_action :authenticate
   before_action :build_course, only: %i[show delete withdraw]
-  before_action :build_provider, only: %i[index show]
 
   def index
+    @provider = Provider
+      .includes(courses: [:accrediting_provider])
+      .find(params[:provider_code])
+      .first
+
     # rubocop:disable Style/MultilineBlockChain
     @courses_by_accrediting_provider = @provider
       .courses
@@ -25,7 +29,9 @@ class CoursesController < ApplicationController
     @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider[:provider_name])
   end
 
-  def show; end
+  def show
+    @provider = @course.provider
+  end
 
   def withdraw; end
 
@@ -33,15 +39,13 @@ class CoursesController < ApplicationController
 
 private
 
-  def build_provider
-    @provider = Provider
-      .includes(courses: [:accrediting_provider])
-      .find(params[:provider_code])
-      .first
-  end
-
   def build_course
     @provider_code = params[:provider_code]
-    @course = Course.where(provider_code: @provider_code).find(params[:code]).first
+    @course = Course
+      .includes(site_statuses: [:site])
+      .includes(provider: [:sites])
+      .where(provider_code: @provider_code)
+      .find(params[:code])
+      .first
   end
 end
