@@ -28,4 +28,16 @@ module CourseHelper
       "not_running" => "Not running"
     }[course.attributes[:ucas_status]]
   end
+
+  def course_outcome(course)
+    course.qualifications.sort.map(&:upcase).join(' with ')
+  end
+
+  def course_study_mode(course)
+    course.study_mode.humanize
+  end
+
+  def course_start_date(course)
+    course.start_date.to_date.strftime("%B %Y")
+  end
 end

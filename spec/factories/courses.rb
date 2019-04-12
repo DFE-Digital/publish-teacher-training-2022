@@ -18,6 +18,8 @@ FactoryBot.define do
     content_status { "published" }
     ucas_status { 'running' }
     accrediting_provider { nil }
+    qualifications { %w[qts pcge] }
+    start_date     { Time.new(2019) }
 
     trait :with_vacancy do
       has_vacancies? { true }
