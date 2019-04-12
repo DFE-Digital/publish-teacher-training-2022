@@ -40,7 +40,7 @@
           Outcome
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__qualifications">
-          <%= course_qualifications(@course) %>
+          <%= course_outcome(@course) %>
         </dd>
       </div>
 
@@ -66,8 +66,22 @@
         <dt class="govuk-summary-list__key">
           Locations
         </dt>
-        <dd class="govuk-summary-list__value" style="border: 3px solid red">
-          Main Site
+        <dd class="govuk-summary-list__value" data-qa="course__locations">
+          <% if @course.site_statuses.size == 1 then %>
+            <%= @course.site_statuses.first.site.location_name %>
+          <% else %>
+            <ul class="govuk-list courses-locations-list">
+              <% @course.site_statuses.map(&:site).map(&:location_name).each do |location_name| %>
+                <li><%= location_name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+          <% if @provider.sites.size == 1 then %>
+            <p class="govuk-body govuk-hint">You can’t change this because you only have 1&nbsp;location</p>
+            <p class="govuk-body">
+              <%= link_to "Manage all your locations", provider_sites_path(@provider[:provider_code]), class: "govuk-link" %>
+            </p>
+          <% end %>
         </dd>
       </div>
 
