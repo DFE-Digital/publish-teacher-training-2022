@@ -22,3 +22,99 @@
   <span class="govuk-caption-xl"><%= @course.description %></span>
   <%= @course.name %> (<%= @course.course_code %>)
 </h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Level
+        </dt>
+        <dd class="govuk-summary-list__value" style="border: 3px solid red">
+          Secondary
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Outcome
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__qualifications">
+          <%= course_qualifications(@course) %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Apprenticeship
+        </dt>
+        <dd class="govuk-summary-list__value" style="border: 3px solid red">
+          No
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Full or part time
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__study_mode">
+          <%= course_study_mode(@course) %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Locations
+        </dt>
+        <dd class="govuk-summary-list__value" style="border: 3px solid red">
+          Main Site
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Applications open
+        </dt>
+        <dd class="govuk-summary-list__value" style="border: 3px solid red">
+          10 October 2018
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Course starts
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__start_date">
+          <%= course_start_date(@course) %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Title
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__name">
+          <%= @course.name %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Description
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__description">
+          <%= @course.description %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Course code
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__course_code">
+          <%= @course.course_code %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
