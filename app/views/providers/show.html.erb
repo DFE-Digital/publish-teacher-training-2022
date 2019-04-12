@@ -15,9 +15,10 @@
   <% end %>
 <% end %>
 
+<h1 class="govuk-heading-xl"><%= @provider[:provider_name] %></h1>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= @provider[:provider_name] %></h1>
     <h2 class="govuk-heading-m"><%= govuk_link_to "About your organisation", manage_ui_url("/organisation/#{@provider[:provider_code]}/details") %></h2>
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
@@ -25,22 +26,14 @@
       <li>set your contact details</li>
       <li>publish this information on all course pages</li>
     </ul>
-  </div>
-</div>
 
-<div class="govuk-grid-row ">
-  <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m"><%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-link" %></h2>
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
       <li>edit location names and addresses</li>
       <li>add locations</li>
     </ul>
-  </div>
-</div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m"><%= link_to "Courses", provider_courses_path(@provider[:provider_code]), class: "govuk-link" %></h2>
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
@@ -48,12 +41,14 @@
       <li>preview and publish courses</li>
       <li>copy content between courses</li>
     </ul>
-  </div>
-</div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m"><%= govuk_link_to "Request access for someone else", manage_ui_url("/organisation/#{@provider[:provider_code]}/request-access") %></h2>
     <p class="govuk-body govuk-!-margin-bottom-8">You can request a DfE Sign-in account for others who manage your courses.</p>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="related">
+      <h2 class="govuk-heading-m">Support and guidance</h2>
+      <p class="govuk-body govuk-!-margin-bottom-0">If you have a question, or you’ve had a problem using Publish, you can <%= bat_contact_mail_to "email the Becoming a Teacher team", subject: "Support and guidance" %>.</p>
+    </div>
   </div>
 </div>
