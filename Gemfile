@@ -69,6 +69,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # For better errors
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
@@ -91,6 +95,9 @@ group :test do
 
   # Make diffs of Ruby objects much more readable
   gem 'super_diff'
+
+  # Page object for Capybara
+  gem 'site_prism'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
