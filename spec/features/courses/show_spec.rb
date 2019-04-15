@@ -23,34 +23,36 @@ feature 'Show course', type: :feature do
     )
   end
 
+  let(:course_page) { PageObjects::Page::Organisations::Course.new }
+
   scenario 'viewing the show courses page' do
     visit "/organisations/A0/courses/#{course.attributes[:course_code]}"
 
-    expect(find('.govuk-caption-xl')).to have_content(
+    expect(course_page.caption).to have_content(
       course.attributes[:description]
     )
-    expect(find('.govuk-heading-xl')).to have_content(
+    expect(course_page.title).to have_content(
       "#{course.attributes[:name]} (#{course.attributes[:course_code]})"
     )
-    expect(find('[data-qa=course__qualifications]')).to have_content(
+    expect(course_page.qualifications).to have_content(
       'PGCE with QTS'
     )
-    expect(find('[data-qa=course__study_mode]')).to have_content(
+    expect(course_page.study_mode).to have_content(
       'Full time'
     )
-    expect(find('[data-qa=course__start_date]')).to have_content(
+    expect(course_page.start_date).to have_content(
       'January 2019'
     )
-    expect(find('[data-qa=course__name]')).to have_content(
+    expect(course_page.name).to have_content(
       course.attributes[:name]
     )
-    expect(find('[data-qa=course__description]')).to have_content(
+    expect(course_page.description).to have_content(
       course.attributes[:description]
     )
-    expect(find('[data-qa=course__course_code]')).to have_content(
+    expect(course_page.course_code).to have_content(
       course.attributes[:course_code]
     )
-    expect(find('[data-qa=course__locations]')).to have_content(
+    expect(course_page.locations).to have_content(
       site.attributes[:location_name]
     )
   end
