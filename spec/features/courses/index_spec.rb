@@ -18,6 +18,8 @@ feature 'Index courses', type: :feature do
   let(:provider_response) { provider.render }
 
   describe "without accrediting providers" do
+    let(:organisations_courses_page) { PageObjects::Page::Organisations::Courses.new }
+
     before do
       stub_omniauth
       stub_session_create
@@ -32,38 +34,35 @@ feature 'Index courses', type: :feature do
       expect(find('h1')).to have_content('Courses')
       expect(page).to have_selector('tbody tr', count: provider.relationships[:courses].size)
 
-      first_row, second_row, third_row = find_all('tbody .govuk-table__row').to_a
-      within first_row do
-        expect(find('[data-qa="courses-table__course"]')).to have_content(course_1.attributes[:name])
-        expect(first_row).to have_selector("a[href=\"https://localhost:44364/organisation/A123/course/self/#{course_1.attributes[:course_code]}\"]")
+      first_row = organisations_courses_page.rows.first
+      expect(first_row.name).to           have_content course_1.attributes[:name]
+      expect(first_row.ucas_status).to    have_content 'Running'
+      expect(first_row.content_status).to have_content 'Published'
+      expect(first_row.is_it_on_find).to  have_content 'Yes - view online'
+      expect(first_row.applications).to   have_content 'Closed'
+      expect(first_row.vacancies).to      have_content 'No (Edit)'
+      expect(first_row.find_link['href']).to eq(
+        "https://localhost:5000/course/A123/#{course_1.attributes[:course_code]}"
+      )
+      expect(first_row.link['href']).to eq(
+        "https://localhost:44364/organisation/A123/course/self/#{course_1.attributes[:course_code]}"
+      )
 
-        expect(find('[data-qa="courses-table__ucas-status"]')).to have_content('Running')
+      second_row = organisations_courses_page.rows.second
+      expect(second_row.name).to          have_content course_2.attributes[:name]
+      expect(second_row.is_it_on_find).to have_content('Yes - view online')
+      expect(second_row.applications).to  have_content 'Open'
+      expect(second_row.vacancies).to     have_content 'Yes (Edit)'
+      expect(second_row.find_link['href']).to eql(
+        "https://localhost:5000/course/A123/#{course_2.attributes[:course_code]}"
+      )
 
-        expect(find('[data-qa="courses-table__content-status"]')).to have_content('Published')
-
-        expect(find('[data-qa="courses-table__findable"]')).to have_content('Yes - view online')
-        expect(first_row).to have_selector("a[href=\"https://localhost:5000/course/A123/#{course_1.attributes[:course_code]}\"]")
-
-        expect(find('[data-qa="courses-table__applications"]')).to have_content('Closed')
-        expect(find('[data-qa="courses-table__vacancies"]')).to have_content('No (Edit)')
-      end
-
-      within second_row do
-        expect(find('[data-qa="courses-table__course"]')).to have_content(course_2.attributes[:name])
-        expect(find('[data-qa="courses-table__findable"]')).to have_content('Yes - view online')
-        expect(second_row).to have_selector("a[href=\"https://localhost:5000/course/A123/#{course_2.attributes[:course_code]}\"]")
-
-        expect(find('[data-qa="courses-table__applications"]')).to have_content('Open')
-        expect(find('[data-qa="courses-table__vacancies"]')).to have_content('Yes (Edit)')
-      end
-
-      within third_row do
-        expect(find('[data-qa="courses-table__course"]')).to have_content(course_3.attributes[:name])
-        expect(find('[data-qa="courses-table__content-status"]')).to have_content('Empty')
-        expect(find('[data-qa="courses-table__findable"]')).to have_content('No')
-        expect(find('[data-qa="courses-table__applications"]')).to have_content('')
-        expect(find('[data-qa="courses-table__vacancies"]')).to have_content('')
-      end
+      third_row = organisations_courses_page.rows.third
+      expect(third_row.name).to           have_content course_3.attributes[:name]
+      expect(third_row.content_status).to have_content 'Empty'
+      expect(third_row.is_it_on_find).to  have_content 'No'
+      expect(third_row.applications).to   have_content ''
+      expect(third_row.vacancies).to      have_content ''
     end
 
     scenario "it shows 'add a new course' link" do
