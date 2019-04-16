@@ -20,6 +20,7 @@ FactoryBot.define do
     accrediting_provider { nil }
     qualifications { %w[qts pcge] }
     start_date     { Time.new(2019) }
+    funding        { 'fee' }
 
     trait :with_vacancy do
       has_vacancies? { true }

@@ -36,4 +36,19 @@ RSpec.feature 'View helpers', type: :helper do
       expect(helper.course_ucas_status(build(:course, ucas_status: 'not_running'))).to eq('Not running')
     end
   end
+
+  describe "#course_apprenticeship" do
+    it "returns correct content" do
+      expect(helper.course_apprenticeship(build(:course, funding: 'apprenticeship'))).to eq('Yes')
+      expect(helper.course_apprenticeship(build(:course, funding: 'fee'))).to eq('No')
+    end
+  end
+
+  describe "#course_funding" do
+    it "returns correct content" do
+      expect(helper.course_funding(build(:course, funding: 'salary'))).to eq('Salaried')
+      expect(helper.course_funding(build(:course, funding: 'apprenticeship'))).to eq('Teaching apprenticeship (with salary)')
+      expect(helper.course_funding(build(:course, funding: 'fee'))).to eq('Fee paying (no salary)')
+    end
+  end
 end
