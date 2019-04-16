@@ -11,11 +11,11 @@
 
 ## Setting up the app in development
 
-1. [Follow these instructions to configure HTTPS](config/localhost/https/README.md)
-2. Run `yarn` to install node dependencies
-3. Run `bundle install` to install the gem dependencies
-4. Run `touch config/settings/development.local.yml` and set a value for `dfe_signin.secret`
-5. Run `bundle exec foreman start -f Procfile.dev` to launch the app on http://localhost:3000.
+1. Run `yarn` to install node dependencies
+2. Run `bundle install` to install the gem dependencies
+3. Run `touch config/settings/development.local.yml` and set a value for `dfe_signin.secret`
+4. Run `rails dev:ssl:generate` to generate the SSL certs required for DfE Sign-in
+5. Run `bundle exec foreman start -f Procfile.dev` to launch the app on https://localhost:3000.
 
 ## Docker
 
