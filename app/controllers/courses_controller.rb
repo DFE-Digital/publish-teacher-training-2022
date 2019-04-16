@@ -44,6 +44,7 @@ private
     @course = Course
       .includes(site_statuses: [:site])
       .includes(provider: [:sites])
+      .includes(:accrediting_provider)
       .where(provider_code: @provider_code)
       .find(params[:code])
       .first

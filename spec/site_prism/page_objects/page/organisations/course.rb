@@ -13,6 +13,9 @@ module PageObjects
         element :description, '[data-qa=course__description]'
         element :course_code, '[data-qa=course__course_code]'
         element :locations, '[data-qa=course__locations]'
+        element :apprenticeship, '[data-qa=course__apprenticeship]'
+        element :funding, '[data-qa=course__funding]'
+        element :accredited_body, '[data-qa=course__accredited_body]'
       end
     end
   end

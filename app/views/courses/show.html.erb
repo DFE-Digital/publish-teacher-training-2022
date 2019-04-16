@@ -44,14 +44,25 @@
         </dd>
       </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Apprenticeship
-        </dt>
-        <dd class="govuk-summary-list__value" style="border: 3px solid red">
-          No
-        </dd>
-      </div>
+      <% if @provider.accredited_body? then %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Apprenticeship
+          </dt>
+          <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
+            <%= course_apprenticeship(@course) %>
+          </dd>
+        </div>
+      <% else %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Fee or salary
+          </dt>
+          <dd class="govuk-summary-list__value" data-qa="course__funding">
+            <%= course_funding(@course) %>
+          </dd>
+        </div>
+      <% end %>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -84,6 +95,17 @@
           <% end %>
         </dd>
       </div>
+
+      <% unless @provider.accredited_body? then %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Accredited body
+          </dt>
+          <dd class="govuk-summary-list__value" data-qa="course__accredited_body">
+            <%= @course.accrediting_provider&.provider_name %>
+          </dd>
+        </div>
+      <% end %>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">

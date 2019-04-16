@@ -40,4 +40,19 @@ module CourseHelper
   def course_start_date(course)
     course.start_date.to_date.strftime("%B %Y")
   end
+
+  def course_apprenticeship(course)
+    course.attributes[:funding] == 'apprenticeship' ? 'Yes' : 'No'
+  end
+
+  def course_funding(course)
+    case course.attributes[:funding]
+    when 'salary'
+      'Salaried'
+    when 'apprenticeship'
+      'Teaching apprenticeship (with salary)'
+    when 'fee'
+      'Fee paying (no salary)'
+    end
+  end
 end
