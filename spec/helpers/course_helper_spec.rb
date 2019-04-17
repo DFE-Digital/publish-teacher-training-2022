@@ -51,4 +51,10 @@ RSpec.feature 'View helpers', type: :helper do
       expect(helper.course_funding(build(:course, funding: 'fee'))).to eq('Fee paying (no salary)')
     end
   end
+
+  describe "#course_applications_open" do
+    it "returns correct content" do
+      expect(helper.course_applications_open(build(:course, applications_open_from: '2019-01-01T00:00:00Z'))).to eq('1 January 2019')
+    end
+  end
 end

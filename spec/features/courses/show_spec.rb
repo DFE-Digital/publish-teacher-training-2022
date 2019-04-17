@@ -64,5 +64,8 @@ feature 'Show course', type: :feature do
     expect(course_page.accredited_body).to have_content(
       provider.attributes[:provider_name]
     )
+    expect(course_page.applications_open).to have_content(
+      '1 January 2019'
+    )
   end
 end
