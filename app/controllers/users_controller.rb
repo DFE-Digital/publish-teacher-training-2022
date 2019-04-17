@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :build_user
+  before_action :authenticate, :build_user
 
   def accept_terms; end
 
