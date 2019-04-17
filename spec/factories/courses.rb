@@ -21,6 +21,7 @@ FactoryBot.define do
     qualifications { %w[qts pcge] }
     start_date     { Time.new(2019) }
     funding        { 'fee' }
+    applications_open_from { DateTime.new(2019).utc.iso8601 }
 
     trait :with_vacancy do
       has_vacancies? { true }

@@ -55,4 +55,8 @@ module CourseHelper
       'Fee paying (no salary)'
     end
   end
+
+  def course_applications_open(course)
+    course.attributes[:applications_open_from]&.to_date&.strftime("%-d %B %Y")
+  end
 end
