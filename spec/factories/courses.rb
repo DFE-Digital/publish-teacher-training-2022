@@ -23,6 +23,7 @@ FactoryBot.define do
     funding        { 'fee' }
     applications_open_from { DateTime.new(2019).utc.iso8601 }
     is_send? { false }
+    level { "secondary" }
 
     trait :with_vacancy do
       has_vacancies? { true }
