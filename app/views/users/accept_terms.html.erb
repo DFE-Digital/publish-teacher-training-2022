@@ -12,7 +12,7 @@
     </ul>
     <p class="govuk-body">Read our full <%= link_to 'terms and conditions', terms_path %>.</p>
     <hr class="govuk-footer__section-break">
-    <%= form_with model: @user, path: accept_terms_user_path(@user) do |f| %>
+    <%= form_with model: @user, path: accept_terms_user_path(@user), method: :put do |f| %>
       <div class="govuk-form-group">
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
