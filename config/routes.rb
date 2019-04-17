@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     resources :sites, path: 'locations', on: :member, only: %i[index edit update]
   end
 
+  resources :users, only: :update do
+    get '/accept-terms', on: :member, to: 'users#accept_terms'
+  end
+
   get "/cookies", to: "pages#cookies", as: :cookies
   get "/terms-conditions", to: "pages#terms", as: :terms
   get "/privacy-policy", to: "pages#privacy", as: :privacy
