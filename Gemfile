@@ -98,6 +98,9 @@ group :test do
 
   # Page object for Capybara
   gem 'site_prism'
+
+  # Get us some fake!
+  gem 'faker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

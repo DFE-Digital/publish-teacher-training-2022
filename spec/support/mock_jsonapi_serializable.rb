@@ -84,4 +84,16 @@ class JSONAPIMockSerializable
   def to_resource
     type.classify.constantize.new(to_jsonapi_data)
   end
+
+  def respond_to_missing?(method, include_all)
+    if attributes.key? method
+      true
+    else
+      super
+    end
+  end
+
+  def method_missing(method)
+    attributes.fetch(method) { super }
+  end
 end
