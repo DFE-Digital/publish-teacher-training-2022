@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get "/privacy-policy", to: "pages#privacy", as: :privacy
   get "/guidance", to: "pages#guidance", as: :guidance
   get "/transition_info", to: "pages#transition_info", as: :transition_info
+  patch '/accept_transition_info', to: 'user#accept_transition_info'
 
   match '/404', to: 'errors#not_found', via: :all
   match '/403', to: 'errors#forbidden', via: :all

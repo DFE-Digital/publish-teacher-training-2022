@@ -49,10 +49,13 @@ class ApplicationController < ActionController::Base
 private
 
   def set_user_session
-    user = Session.create(first_name: current_user_info[:first_name], last_name: current_user_info[:last_name])
+    user = Session.create(first_name: current_user_info[:first_name],
+                          last_name: current_user_info[:last_name])
     session[:auth_user]['user_id'] = user.id
 
     add_provider_count_cookie
+
+    user
   end
 
   def add_provider_count_cookie
