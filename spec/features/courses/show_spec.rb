@@ -67,5 +67,8 @@ feature 'Show course', type: :feature do
     expect(course_page.applications_open).to have_content(
       '1 January 2019'
     )
+    expect(course_page.is_send).to have_content(
+      'No'
+    )
   end
 end

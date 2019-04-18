@@ -59,4 +59,8 @@ module CourseHelper
   def course_applications_open(course)
     course.attributes[:applications_open_from]&.to_date&.strftime("%-d %B %Y")
   end
+
+  def course_send(course)
+    course.attributes[:is_send?] == true ? 'Yes' : 'No'
+  end
 end

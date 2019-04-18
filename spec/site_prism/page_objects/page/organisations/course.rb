@@ -17,6 +17,7 @@ module PageObjects
         element :funding, '[data-qa=course__funding]'
         element :accredited_body, '[data-qa=course__accredited_body]'
         element :applications_open, '[data-qa=course__applications_open]'
+        element :is_send, '[data-qa=course__is_send]'
       end
     end
   end

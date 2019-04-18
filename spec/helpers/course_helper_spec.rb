@@ -57,4 +57,11 @@ RSpec.feature 'View helpers', type: :helper do
       expect(helper.course_applications_open(build(:course, applications_open_from: '2019-01-01T00:00:00Z'))).to eq('1 January 2019')
     end
   end
+
+  describe "#course_send" do
+    it "returns correct content" do
+      expect(helper.course_send(build(:course, is_send?: true))).to eq('Yes')
+      expect(helper.course_send(build(:course, is_send?: false))).to eq('No')
+    end
+  end
 end
