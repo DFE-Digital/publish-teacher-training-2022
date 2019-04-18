@@ -18,6 +18,7 @@ module PageObjects
         element :accredited_body, '[data-qa=course__accredited_body]'
         element :applications_open, '[data-qa=course__applications_open]'
         element :is_send, '[data-qa=course__is_send]'
+        element :level, '[data-qa=course__level]'
       end
     end
   end

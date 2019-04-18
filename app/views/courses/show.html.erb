@@ -56,8 +56,8 @@
             <dt class="govuk-summary-list__key">
               Level
             </dt>
-            <dd class="govuk-summary-list__value" style="border: 3px solid red">
-              Secondary
+            <dd class="govuk-summary-list__value" data-qa="course__level">
+              <%= @course.attributes[:level]&.humanize %>
             </dd>
           </div>
 

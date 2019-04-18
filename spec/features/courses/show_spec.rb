@@ -70,5 +70,8 @@ feature 'Show course', type: :feature do
     expect(course_page.is_send).to have_content(
       'No'
     )
+    expect(course_page.level).to have_content(
+      'Secondary'
+    )
   end
 end
