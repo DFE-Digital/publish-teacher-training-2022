@@ -21,4 +21,18 @@ private
   def build_user
     @user = User.find(params[:id]).first
   end
+
+  def user_params
+    params.require(:user).permit(:accept_terms)
+  end
+
+  def initialise_errors
+    @errors = {}
+  end
+
+  def map_errors(message)
+    {
+      "Location name can't be blank" => "Name is missing"
+    }[message] || message
+  end
 end
