@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   before_action :authenticate
-  before_action :build_course, only: %i[show delete withdraw]
+  before_action :build_course, only: %i[show description delete withdraw]
 
   def index
     @provider = Provider
@@ -30,6 +30,10 @@ class CoursesController < ApplicationController
   end
 
   def show
+    @provider = @course.provider
+  end
+
+  def description
     @provider = @course.provider
   end
 

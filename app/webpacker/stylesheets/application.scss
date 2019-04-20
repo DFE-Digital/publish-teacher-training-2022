@@ -33,3 +33,10 @@ $button-colour: #00823b;
   background-color: govuk-colour("grey-4");
   padding: govuk-spacing(4);
 }
+
+.govuk-summary-list__value--truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 295px;
+}

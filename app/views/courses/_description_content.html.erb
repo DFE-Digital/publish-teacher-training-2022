@@ -1,0 +1,112 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h3 class="govuk-heading-m govuk-!-font-size-27">
+      <%= link_to 'About this course', manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: @course.attributes[:course_code]) + '/about', class: 'govuk-link' %>
+    </h3>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          About this course
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="course__about">
+          <%= @course.attributes[:about_course] %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Interview process (optional)
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="course__interview_process">
+          <%= @course.attributes[:interview_process] %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          How school placements work
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="course__placements_info">
+          <%= @course.attributes[:how_school_placements_work] %>
+        </dd>
+      </div>
+    </dl>
+
+    <h3 class="govuk-heading-m">
+      <%= link_to 'Course length and fees', manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: @course.attributes[:course_code]) + '/fees-and-length', class: 'govuk-link' %>
+    </h3>
+    <dl class="govuk-summary-list govuk-summary-list--short">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key ">
+          Course length
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate ">
+          <%= @course.attributes[:course_length] %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key ">
+          Fee for UK and EU students
+        </dt>
+        <dd class="govuk-summary-list__value ">
+          <%= number_to_currency(@course.attributes[:fee_uk_eu]) %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key ">
+          Fee for international students (optional)
+        </dt>
+        <dd class="govuk-summary-list__value ">
+          <%= @course.attributes[:fee_international] %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key ">
+          Fee details (optional)
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate ">
+          <%= @course.attributes[:fee_details] %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key ">
+          Financial support you offer (optional)
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate ">
+          <%= @course.attributes[:financial_support] %>
+        </dd>
+      </div>
+    </dl>
+
+    <h3 class="govuk-heading-m govuk-!-font-size-27">
+      <%= link_to 'Requirements and eligibility', manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: @course.attributes[:course_code]) + '/requirements', class: 'govuk-link' %>
+    </h3>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key " id="section-Qualifications">
+          Qualifications needed
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate">
+          <%= @course.attributes[:required_qualifications] %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key " id="section-PersonalQualities">
+          Personal qualities (optional)
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate">
+          <%= @course.attributes[:personal_qualities] %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key " id="section-OtherRequirements">
+          Other requirements (optional)
+        </dt>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate">
+          <%= @course.attributes[:other_requirements] %>
+        </dd>
+      </div>
+    </dl>
+
+  </div>
+</div>

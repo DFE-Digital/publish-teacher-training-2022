@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :courses, param: :code do
       get '/vacancies', on: :member, to: 'courses/vacancies#edit'
       put '/vacancies', on: :member, to: 'courses/vacancies#update'
+      get '/description', on: :member, to: 'courses#description'
       get '/withdraw', on: :member, to: 'courses#withdraw'
       get '/delete', on: :member, to: 'courses#delete'
     end
