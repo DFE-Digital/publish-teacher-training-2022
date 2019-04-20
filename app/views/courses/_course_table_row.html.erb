@@ -10,7 +10,7 @@
     <%= course_ucas_status(course) %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__content-status">
-    <%= render partial: 'content_status_tag', locals: { course: course } %>
+    <%= render partial: 'content_status_tag', locals: { course: course } unless course.not_running? %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__findable">
     <% if course.attributes[:findable?] %>

@@ -11,7 +11,8 @@ feature 'Index courses', type: :feature do
       include_nulls: [:accrediting_provider]
   }
   let(:course_3) { jsonapi :course, findable?: false, name: 'Physics', content_status: "empty", include_nulls: [:accrediting_provider] }
-  let(:courses)  { [course_1, course_2, course_3] }
+  let(:course_4) { jsonapi :course, findable?: false, name: 'Science', content_status: "published", include_nulls: [:accrediting_provider] }
+  let(:courses)  { [course_1, course_2, course_3, course_4] }
   let(:provider) do
     jsonapi(:provider, :opted_in, courses: courses, accredited_body?: true, provider_code: 'A123')
   end
@@ -63,6 +64,13 @@ feature 'Index courses', type: :feature do
       expect(third_row.is_it_on_find).to  have_content 'No'
       expect(third_row.applications).to   have_content ''
       expect(third_row.vacancies).to      have_content ''
+
+      fourth_row = organisations_courses_page.rows.fourth
+      expect(fourth_row.name).to           have_content course_4.attributes[:name]
+      expect(fourth_row.content_status).to have_content ''
+      expect(fourth_row.is_it_on_find).to  have_content 'No'
+      expect(fourth_row.applications).to   have_content ''
+      expect(fourth_row.vacancies).to      have_content ''
     end
 
     scenario "it shows 'add a new course' link" do
