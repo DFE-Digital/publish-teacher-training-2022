@@ -70,8 +70,8 @@ module CourseHelper
       '1 year'
     when 'TwoYears'
       'Up to 2 years'
-    when 'Other'
-      'Other'
+    else
+      course.attributes[:course_length]
     end
   end
 end
