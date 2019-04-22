@@ -3,7 +3,7 @@
     <h3 class="govuk-heading-m govuk-!-font-size-27">
       <%= link_to 'About this course', manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: @course.attributes[:course_code]) + '/about', class: 'govuk-link' %>
     </h3>
-    <dl class="govuk-summary-list">
+    <dl class="govuk-summary-list govuk-summary-list--short">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           About this course
@@ -93,10 +93,10 @@
       <% end %>
     </dl>
 
-    <h3 class="govuk-heading-m govuk-!-font-size-27">
+    <h3 class="govuk-heading-m">
       <%= link_to 'Requirements and eligibility', manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: @course.attributes[:course_code]) + '/requirements', class: 'govuk-link' %>
     </h3>
-    <dl class="govuk-summary-list">
+    <dl class="govuk-summary-list govuk-summary-list--short">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key " id="section-Qualifications">
           Qualifications needed

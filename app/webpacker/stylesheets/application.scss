@@ -34,6 +34,16 @@ $button-colour: #00823b;
   padding: govuk-spacing(4);
 }
 
+.govuk-summary-list--short {
+  margin-bottom: govuk-spacing(8);
+  margin-top: govuk-spacing(6);
+
+  .govuk-summary-list__key,
+  .govuk-summary-list__value {
+    width: 50%;
+  }
+}
+
 .govuk-summary-list__value--truncate {
   white-space: nowrap;
   overflow: hidden;
