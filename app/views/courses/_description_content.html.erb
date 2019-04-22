@@ -57,7 +57,7 @@
           Fee for international students (optional)
         </dt>
         <dd class="govuk-summary-list__value <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_international].nil? %>" data-qa="course__international_fees">
-          <%= @course.attributes[:fee_international] || 'Empty' %>
+          <%= number_to_currency(@course.attributes[:fee_international]) || 'Empty' %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
