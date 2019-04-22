@@ -33,7 +33,11 @@
     </dl>
 
     <h3 class="govuk-heading-m">
-      <%= link_to 'Course length and fees', manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: @course.attributes[:course_code]) + '/fees-and-length', class: 'govuk-link' %>
+      <% if @course.attributes[:funding] == 'fee' %>
+        <%= link_to 'Course length and fees', manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: @course.attributes[:course_code]) + '/fees-and-length', class: 'govuk-link' %>
+      <% else %>
+        <%= link_to 'Course length and salary', manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: @course.attributes[:course_code]) + '/salary', class: 'govuk-link' %>
+      <% end %>
     </h3>
     <dl class="govuk-summary-list govuk-summary-list--short">
       <div class="govuk-summary-list__row">
@@ -44,38 +48,49 @@
           <%= course_length(@course) || 'Empty' %>
         </dd>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key ">
-          Fee for UK and EU students
-        </dt>
-        <dd class="govuk-summary-list__value <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_uk_eu].nil? %>" data-qa="course__uk_fees">
-          <%= number_to_currency(@course.attributes[:fee_uk_eu]) || 'Empty' %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key ">
-          Fee for international students (optional)
-        </dt>
-        <dd class="govuk-summary-list__value <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_international].nil? %>" data-qa="course__international_fees">
-          <%= number_to_currency(@course.attributes[:fee_international]) || 'Empty' %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key ">
-          Fee details (optional)
-        </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_details].nil? %>" data-qa="course__fee_details">
-          <%= @course.attributes[:fee_details] || 'Empty' %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key ">
-          Financial support you offer (optional)
-        </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:financial_support].nil? %>" data-qa="course__financial_support">
-          <%= @course.attributes[:financial_support] || 'Empty' %>
-        </dd>
-      </div>
+      <% if @course.attributes[:funding] == 'fee' %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key ">
+            Fee for UK and EU students
+          </dt>
+          <dd class="govuk-summary-list__value <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_uk_eu].nil? %>" data-qa="course__uk_fees">
+            <%= number_to_currency(@course.attributes[:fee_uk_eu]) || 'Empty' %>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key ">
+            Fee for international students (optional)
+          </dt>
+          <dd class="govuk-summary-list__value <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_international].nil? %>" data-qa="course__international_fees">
+            <%= number_to_currency(@course.attributes[:fee_international]) || 'Empty' %>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key ">
+            Fee details (optional)
+          </dt>
+          <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_details].nil? %>" data-qa="course__fee_details">
+            <%= @course.attributes[:fee_details] || 'Empty' %>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key ">
+            Financial support you offer (optional)
+          </dt>
+          <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:financial_support].nil? %>" data-qa="course__financial_support">
+            <%= @course.attributes[:financial_support] || 'Empty' %>
+          </dd>
+        </div>
+      <% else %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key ">
+            Salary
+          </dt>
+          <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:financial_support].nil? %>" data-qa="course__financial_support">
+            <%= @course.attributes[:salary] || 'Empty' %>
+          </dd>
+        </div>
+      <% end %>
     </dl>
 
     <h3 class="govuk-heading-m govuk-!-font-size-27">
