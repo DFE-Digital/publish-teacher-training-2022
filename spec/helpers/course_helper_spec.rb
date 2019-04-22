@@ -64,4 +64,12 @@ RSpec.feature 'View helpers', type: :helper do
       expect(helper.course_send(build(:course, is_send?: false))).to eq('No')
     end
   end
+
+  describe "#course_length" do
+    it "returns correct content" do
+      expect(helper.course_length(build(:course, course_length: 'OneYear'))).to eq('1 year')
+      expect(helper.course_length(build(:course, course_length: 'TwoYears'))).to eq('Up to 2 years')
+      expect(helper.course_length(build(:course, course_length: 'Other'))).to eq('Other')
+    end
+  end
 end

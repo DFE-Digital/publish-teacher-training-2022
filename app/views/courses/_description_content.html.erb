@@ -41,7 +41,7 @@
           Course length
         </dt>
         <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:course_length].nil? %>" data-qa="course__length">
-          <%= @course.attributes[:course_length] || 'Empty' %>
+          <%= course_length(@course) || 'Empty' %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

@@ -63,4 +63,15 @@ module CourseHelper
   def course_send(course)
     course.attributes[:is_send?] == true ? 'Yes' : 'No'
   end
+
+  def course_length(course)
+    case course.attributes[:course_length]
+    when 'OneYear'
+      '1 year'
+    when 'TwoYears'
+      'Up to 2 years'
+    when 'Other'
+      'Other'
+    end
+  end
 end
