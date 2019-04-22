@@ -39,7 +39,7 @@
 
     <li class="govuk-tabs__list-item">
       <%=
-        link_to "#basic_details",
+        link_to provider_course_path(@provider[:provider_code], @course[:course_code]),
         class: "govuk-tabs__tab" do
       %>
         Basic details<br>
