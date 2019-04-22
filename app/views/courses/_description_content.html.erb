@@ -8,8 +8,8 @@
         <dt class="govuk-summary-list__key">
           About this course
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="course__about">
-          <%= @course.attributes[:about_course] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:about_course].nil? %>" data-qa="course__about">
+          <%= @course.attributes[:about_course] || 'Empty' %>
         </dd>
       </div>
 
@@ -17,8 +17,8 @@
         <dt class="govuk-summary-list__key">
           Interview process (optional)
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="course__interview_process">
-          <%= @course.attributes[:interview_process] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:interview_process].nil? %>" data-qa="course__interview_process">
+          <%= @course.attributes[:interview_process] || 'Empty' %>
         </dd>
       </div>
 
@@ -26,8 +26,8 @@
         <dt class="govuk-summary-list__key">
           How school placements work
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="course__placements_info">
-          <%= @course.attributes[:how_school_placements_work] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:how_school_placements_work].nil? %>" data-qa="course__placements_info">
+          <%= @course.attributes[:how_school_placements_work] || 'Empty' %>
         </dd>
       </div>
     </dl>
@@ -40,40 +40,40 @@
         <dt class="govuk-summary-list__key ">
           Course length
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate ">
-          <%= @course.attributes[:course_length] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:course_length].nil? %>" data-qa="course__length">
+          <%= @course.attributes[:course_length] || 'Empty' %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key ">
           Fee for UK and EU students
         </dt>
-        <dd class="govuk-summary-list__value ">
-          <%= number_to_currency(@course.attributes[:fee_uk_eu]) %>
+        <dd class="govuk-summary-list__value <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_uk_eu].nil? %>" data-qa="course__uk_fees">
+          <%= number_to_currency(@course.attributes[:fee_uk_eu]) || 'Empty' %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key ">
           Fee for international students (optional)
         </dt>
-        <dd class="govuk-summary-list__value ">
-          <%= @course.attributes[:fee_international] %>
+        <dd class="govuk-summary-list__value <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_international].nil? %>" data-qa="course__international_fees">
+          <%= @course.attributes[:fee_international] || 'Empty' %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key ">
           Fee details (optional)
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate ">
-          <%= @course.attributes[:fee_details] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:fee_details].nil? %>" data-qa="course__fee_details">
+          <%= @course.attributes[:fee_details] || 'Empty' %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key ">
           Financial support you offer (optional)
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate ">
-          <%= @course.attributes[:financial_support] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:financial_support].nil? %>" data-qa="course__financial_support">
+          <%= @course.attributes[:financial_support] || 'Empty' %>
         </dd>
       </div>
     </dl>
@@ -86,24 +86,24 @@
         <dt class="govuk-summary-list__key " id="section-Qualifications">
           Qualifications needed
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate">
-          <%= @course.attributes[:required_qualifications] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:required_qualifications].nil? %>" data-qa="course__required_qualifications">
+          <%= @course.attributes[:required_qualifications] || 'Empty' %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key " id="section-PersonalQualities">
           Personal qualities (optional)
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate">
-          <%= @course.attributes[:personal_qualities] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:personal_qualities].nil? %>" data-qa="course__personal_qualities">
+          <%= @course.attributes[:personal_qualities] || 'Empty' %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key " id="section-OtherRequirements">
           Other requirements (optional)
         </dt>
-        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate">
-          <%= @course.attributes[:other_requirements] %>
+        <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:other_requirements].nil? %>" data-qa="course__other_requirements">
+          <%= @course.attributes[:other_requirements] || 'Empty' %>
         </dd>
       </div>
     </dl>

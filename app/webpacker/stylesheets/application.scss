@@ -40,3 +40,7 @@ $button-colour: #00823b;
   text-overflow: ellipsis;
   max-width: 295px;
 }
+
+.course-parts__fields__value--empty {
+  color: govuk-colour("grey-1");
+}
