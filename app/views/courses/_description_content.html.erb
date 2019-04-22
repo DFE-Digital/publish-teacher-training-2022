@@ -86,8 +86,8 @@
           <dt class="govuk-summary-list__key ">
             Salary
           </dt>
-          <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:financial_support].nil? %>" data-qa="course__financial_support">
-            <%= @course.attributes[:salary] || 'Empty' %>
+          <dd class="govuk-summary-list__value govuk-summary-list__value--truncate <%= 'course-parts__fields__value--empty' if @course.attributes[:salary_details].nil? %>" data-qa="course__salary">
+            <%= @course.attributes[:salary_details] || 'Empty' %>
           </dd>
         </div>
       <% end %>
