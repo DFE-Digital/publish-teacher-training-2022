@@ -24,6 +24,7 @@ FactoryBot.define do
     applications_open_from { DateTime.new(2019).utc.iso8601 }
     is_send? { false }
     level { "secondary" }
+    subjects { ["English", "English with Primary"] }
 
     trait :with_vacancy do
       has_vacancies? { true }

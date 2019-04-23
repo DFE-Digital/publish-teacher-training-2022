@@ -72,6 +72,15 @@
 
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
+              Subject
+            </dt>
+            <dd class="govuk-summary-list__value" data-qa="course__subjects">
+              <%= @course.subjects.join(', ') %>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
               Outcome
             </dt>
             <dd class="govuk-summary-list__value" data-qa="course__qualifications">
