@@ -14,8 +14,13 @@
 1. Run `yarn` to install node dependencies
 2. Run `bundle install` to install the gem dependencies
 3. Run `touch config/settings/development.local.yml` and set a value for `dfe_signin.secret`
-4. Run `rails dev:ssl:generate` to generate the SSL certs required for DfE Sign-in
-5. Run `bundle exec foreman start -f Procfile.dev` to launch the app on https://localhost:3000.
+4. Run `bundle exec foreman start -f Procfile.dev` to launch the app on https://localhost:3000.
+
+You will also need to add the automatically generated SSL certificate to your OS keychain. On macOS:
+
+```bash
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain config/localhost/https/localhost.crt
+```
 
 ## Docker
 
