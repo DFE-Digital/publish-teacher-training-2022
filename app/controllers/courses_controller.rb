@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate
   before_action :build_course, only: %i[show description delete withdraw]
+  before_action :build_provider, only: %i[show description]
 
   def index
     @provider = Provider
@@ -29,13 +30,9 @@ class CoursesController < ApplicationController
     @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider[:provider_name])
   end
 
-  def show
-    @provider = @course.provider
-  end
+  def show; end
 
-  def description
-    @provider = @course.provider
-  end
+  def description; end
 
   def withdraw; end
 
@@ -52,5 +49,9 @@ private
       .where(provider_code: @provider_code)
       .find(params[:code])
       .first
+  end
+
+  def build_provider
+    @provider = @course.provider
   end
 end
