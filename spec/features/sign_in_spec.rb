@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Sign in', type: :feature do
   let(:transition_info_page) { PageObjects::Page::TransitionInfo.new }
+  let(:organisations_page)   { PageObjects::Page::OrganisationsPage.new }
   let(:root_page)            { PageObjects::Page::RootPage.new }
 
   scenario 'using DfE Sign-in' do
@@ -26,9 +27,16 @@ feature 'Sign in', type: :feature do
     stub_session_create(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
     stub_api_v2_request '/sessions', user, :post
+    request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user, :patch
 
     visit '/signin'
 
     expect(transition_info_page).to be_displayed
+
+    expect(transition_info_page.title).to have_content('Important new features')
+    transition_info_page.continue.click
+
+    expect(organisations_page).to be_displayed
+    expect(request).to have_been_made
   end
 end
