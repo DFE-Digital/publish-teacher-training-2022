@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get "/terms-conditions", to: "pages#terms", as: :terms
   get "/privacy-policy", to: "pages#privacy", as: :privacy
   get "/guidance", to: "pages#guidance", as: :guidance
-  get "/transition_info", to: "pages#transition_info", as: :transition_info
+  get "/transition-info", to: "pages#transition_info", as: :transition_info
   patch '/accept_transition_info', to: 'user#accept_transition_info'
 
   match '/404', to: 'errors#not_found', via: :all
