@@ -30,11 +30,11 @@ RSpec.feature 'View pages', type: :feature do
     expect(find('h1')).to have_content('Guidance for Publish teacher training courses')
   end
 
-  scenario "Navigate to /transition_info" do
+  scenario "Navigate to /transition-info" do
     stub_omniauth
     stub_session_create
 
-    visit "/transition_info"
+    visit "/transition-info"
     expect(find('h1')).to have_content('Important new features')
     expect(page).to have_link('Continue')
   end
