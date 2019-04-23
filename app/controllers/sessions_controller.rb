@@ -7,9 +7,13 @@ class SessionsController < ApplicationController
     session[:auth_user] = auth_hash
 
     add_token_to_connection
-    set_user_session
+    user = set_user_session
 
-    redirect_to root_path
+    if user.state == 'new'
+      redirect_to transition_info_path
+    else
+      redirect_to root_path
+    end
   end
 
   def signout

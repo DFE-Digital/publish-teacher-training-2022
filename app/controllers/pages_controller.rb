@@ -9,5 +9,5 @@ class PagesController < ApplicationController
 
   def guidance; end
 
-  def transition; end
+  def transition_info; end
 end
