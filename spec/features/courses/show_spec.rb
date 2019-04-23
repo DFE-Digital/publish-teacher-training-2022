@@ -36,6 +36,9 @@ feature 'Show course', type: :feature do
     expect(course_page.title).to have_content(
       "#{course.attributes[:name]} (#{course.attributes[:course_code]})"
     )
+    expect(course_page.subjects).to have_content(
+      course.attributes[:subjects].join(', ').to_s
+    )
     expect(course_page.qualifications).to have_content(
       'PGCE with QTS'
     )
