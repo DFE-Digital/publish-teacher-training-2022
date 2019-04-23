@@ -26,4 +26,8 @@ class Course < Base
   def not_running?
     ucas_status == 'not_running'
   end
+
+  def new_and_not_running?
+    ucas_status == 'new'
+  end
 end
