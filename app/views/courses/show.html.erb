@@ -75,7 +75,9 @@
               <%= 'Subject'.pluralize(@course.subjects.count) %>
             </dt>
             <dd class="govuk-summary-list__value" data-qa="course__subjects">
-              <%= @course.subjects.join(', ') %>
+              <% @course.subjects.sort.each do |subject| %>
+                <%= subject %><br>
+              <% end %>
             </dd>
           </div>
 
