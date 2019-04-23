@@ -20,7 +20,7 @@ feature 'Show course', type: :feature do
     stub_omniauth
     stub_session_create
     stub_api_v2_request(
-      "/providers/A0/courses/#{course.attributes[:course_code]}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
       course_response
     )
   end
@@ -28,16 +28,16 @@ feature 'Show course', type: :feature do
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
 
   scenario 'viewing the show courses page' do
-    visit "/organisations/A0/courses/#{course.attributes[:course_code]}"
+    visit "/organisations/A0/courses/#{course.course_code}"
 
     expect(course_page.caption).to have_content(
-      course.attributes[:description]
+      course.description
     )
     expect(course_page.title).to have_content(
-      "#{course.attributes[:name]} (#{course.attributes[:course_code]})"
+      "#{course.name} (#{course.course_code})"
     )
     expect(course_page.subjects).to have_content(
-      course.attributes[:subjects].sort.join(' ').to_s
+      course.subjects.sort.join(' ').to_s
     )
     expect(course_page.qualifications).to have_content(
       'PGCE with QTS'
@@ -49,23 +49,23 @@ feature 'Show course', type: :feature do
       'January 2019'
     )
     expect(course_page.name).to have_content(
-      course.attributes[:name]
+      course.name
     )
     expect(course_page.description).to have_content(
-      course.attributes[:description]
+      course.description
     )
     expect(course_page.course_code).to have_content(
-      course.attributes[:course_code]
+      course.course_code
     )
     expect(course_page.locations).to have_content(
-      site.attributes[:location_name]
+      site.location_name
     )
     expect { course_page.apprenticeship }.to raise_error(Capybara::ElementNotFound)
     expect(course_page.funding).to have_content(
       'Fee paying (no salary)'
     )
     expect(course_page.accredited_body).to have_content(
-      provider.attributes[:provider_name]
+      provider.provider_name
     )
     expect(course_page.applications_open).to have_content(
       '1 January 2019'
