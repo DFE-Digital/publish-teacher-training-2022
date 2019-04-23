@@ -199,13 +199,11 @@
           </div>
         </dl>
       </div>
-      <% if @course.is_running? %>
+      <% if @course.is_running? || @course.new_and_not_running? %>
         <div class="govuk-grid-column-one-third">
           <div class="status-box">
-            <h2 class="govuk-heading-m">Changing the details of this course</h2>
-            <p>You can only change some details of this course – this is because it’s been published, and candidates may have started applying for it.</p>
-            <p>If you need to make significant changes to this course, you should consider <%= link_to "withdrawing it", withdraw_provider_course_path(@provider[:provider_code], @course.attributes[:course_code]), class: "govuk-link" %> and creating a new course instead.</p>
-            <p>To make any other changes, <%= bat_contact_mail_to "Contact the Becoming a Teacher team", subject: "Edit #{@course.name} (#{@provider_code}/#{@course.course_code})" %>.</p>
+            <h2 class="govuk-heading-m">Changing your basic details</h2>
+            <p>To make any changes to your basic details, or to <%= @course.is_running? ? "withdraw" : "delete" %> this course, <%= bat_contact_mail_to "contact the Becoming a Teacher team", subject: "Edit #{@course.name} (#{@provider_code}/#{@course.course_code})" %>.</p>
           </div>
         </div>
       <% end %>
