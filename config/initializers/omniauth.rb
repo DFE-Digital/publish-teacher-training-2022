@@ -89,6 +89,10 @@ if Settings.dfe_signin.issuer.present?
       else
         @app.call(env)
       end
+    rescue ActionController::InvalidAuthenticityToken
+      response = Rack::Response.new
+      response.redirect('/signin')
+      response.finish
     end
   end
 
