@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   rescue_from JsonApiClient::Errors::AccessDenied, with: :render_manage_ui
 
   before_action :set_has_multiple_providers
+  after_action :nuke_token
 
   def not_found
     respond_to do |format|
@@ -82,6 +83,12 @@ private
 
     Base.connection(true) do |connection|
       connection.use FaradayMiddleware::OAuth2, token, token_type: :bearer
+    end
+  end
+
+  def nuke_token
+    Base.connection(true) do |connection|
+      connection.use FaradayMiddleware::OAuth2, nil, token_type: :bearer
     end
   end
 end
