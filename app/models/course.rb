@@ -30,4 +30,8 @@ class Course < Base
   def new_and_not_running?
     ucas_status == 'new'
   end
+
+  def has_fees?
+    funding == 'fee'
+  end
 end

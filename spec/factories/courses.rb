@@ -25,6 +25,18 @@ FactoryBot.define do
     is_send? { false }
     level { "secondary" }
     subjects { ["English", "English with Primary"] }
+    about_course { nil }
+    interview_process { nil }
+    how_school_placements_work { nil }
+    course_length { nil }
+    fee_uk_eu { nil }
+    fee_details { nil }
+    fee_international { nil }
+    financial_support { nil }
+    salary_details { nil }
+    required_qualifications { nil }
+    personal_qualities { nil }
+    other_requirements { nil }
 
     trait :with_vacancy do
       has_vacancies? { true }
