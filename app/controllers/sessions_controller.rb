@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     add_token_to_connection
     user = set_user_session
 
-    if user.state == 'new'
+    if user.opted_in? && user.state == 'new'
       redirect_to transition_info_path
     else
       redirect_to root_path
