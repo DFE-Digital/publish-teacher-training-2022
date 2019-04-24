@@ -1,7 +1,6 @@
 module Courses
   class VacanciesController < ApplicationController
     before_action(
-      :authenticate,
       :build_course,
       :build_site_statuses
     )
