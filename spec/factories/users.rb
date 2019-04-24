@@ -11,9 +11,14 @@ FactoryBot.define do
     last_name  { Faker::Name.last_name }
     email      { Faker::Internet.safe_email("#{first_name} #{last_name}") }
     state      { 'transitioned' }
+    opted_in?  { false }
 
     trait :new do
       state { 'new' }
+    end
+
+    trait :opted_in do
+      opted_in? { true }
     end
   end
 end

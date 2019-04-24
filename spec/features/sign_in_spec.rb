@@ -20,8 +20,8 @@ feature 'Sign in', type: :feature do
     expect(root_page).to be_displayed
   end
 
-  scenario 'new user accepts the transition info page' do
-    user = jsonapi :user, :new
+  scenario 'new opted-in user accepts the transition info page' do
+    user = jsonapi :user, :new, :opted_in
 
     stub_omniauth(user: user)
     stub_session_create(user: user)
@@ -38,5 +38,19 @@ feature 'Sign in', type: :feature do
 
     expect(organisations_page).to be_displayed
     expect(request).to have_been_made
+  end
+
+  scenario 'new non-opted-in user accepts the transition info page' do
+    user = jsonapi :user, :new
+
+    stub_omniauth(user: user)
+    stub_session_create(user: user)
+    stub_api_v2_request('/providers', jsonapi(:providers_response))
+    stub_api_v2_request '/sessions', user, :post
+
+    visit '/signin'
+
+    expect(transition_info_page).not_to be_displayed
+    expect(root_page).to be_displayed
   end
 end
