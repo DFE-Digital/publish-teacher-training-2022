@@ -54,3 +54,7 @@ $button-colour: #00823b;
 .course-parts__fields__value--empty {
   color: govuk-colour("grey-1");
 }
+
+.govuk-link--destructive {
+  color: $govuk-error-colour;
+}

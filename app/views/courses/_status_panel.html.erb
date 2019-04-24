@@ -1,0 +1,45 @@
+<div class="status-box">
+  <h3 class="govuk-heading-m">Status</h3>
+  <div class="govuk-!-margin-bottom-6">
+    <%= render partial: 'content_status_tag', locals: { course: @course } %>
+  </div>
+  <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Is it on Find?</h3>
+  <% if @course.findable? %>
+    <p class="govuk-body">
+      <%= govuk_link_to "Yes - view online", search_ui_course_page_url(provider_code: @provider.provider_code, course_code: @course.course_code) %>
+    </p>
+  <% else %>
+    <p class="govuk-body">
+      <% if @course.new_and_not_running? %>
+        No – <%= @provider.opted_in? ? 'still in draft' : 'must be published on UCAS' %>
+      <% else %>
+        No
+      <% end %>
+    </p>
+  <% end %>
+
+  <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Applications</h3>
+  <p class="govuk-body"><%= @course.open_for_applications? ? "Open" : "Closed" %></p>
+
+  <h3 class="govuk-heading-s govuk-!-margin-0">Vacancies</h3>
+  <p class="govuk-body">
+    <%= @course.has_vacancies? ? "Yes" : "No" %>
+    <% if @provider.opted_in? %>
+      (<%= link_to 'Edit', vacancies_provider_course_path(code: @course.course_code), class: 'govuk-link' %>)
+    <% end %>
+  </p>
+
+  <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
+  <p class="govuk-body">Last published:<br><%= formatted_date(@course.changed_at) %></p>
+  <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
+
+  <% if @course.is_running? %>
+    <h3 class="govuk-heading-m">Withdraw</h3>
+    <p class="govuk-body">Remove this course from Find and close applications.</p>
+    <%= link_to 'Withdraw this course', withdraw_provider_course_path(@provider.provider_code, @course.course_code), class: "govuk-link--destructive" %>
+  <% else %>
+    <h3 class="govuk-heading-m">Delete</h3>
+    <p class="govuk-body">Remove this course from Find and close applications.</p>
+    <%= link_to 'Delete this course', delete_provider_course_path(@provider.provider_code, @course.course_code), class: "govuk-link--destructive" %>
+  <% end %>
+</div>
