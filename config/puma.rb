@@ -9,7 +9,8 @@ threads threads_count, threads_count
 
 # Specifies the `environment` that Puma will run in.
 #
-environment ENV.fetch("RAILS_ENV") { "development" }
+env = ENV.fetch("RAILS_ENV", 'development')
+environment env
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
@@ -29,17 +30,31 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
-# SSL in development (as DFE Signin redirects to https://localhost:3000 but
-# just listen on port 3000 elsewhere
-listen_port = ENV.fetch("PORT") { 3000 }
+listen_port = ENV.fetch("PORT", 3000)
 
-if Rails.env.development?
-
-  cert = Rails.root.join('config', 'localhost', 'https', 'localhost.crt')
-  key = Rails.root.join('config', 'localhost', 'https', 'localhost.key')
+if env == "development"
+  cert = "#{Dir.pwd}/#{File.join('config', 'localhost', 'https', 'localhost.crt')}"
+  key = "#{Dir.pwd}/#{File.join('config', 'localhost', 'https', 'localhost.key')}"
 
   unless File.exist?(cert) && File.exist?(key)
-    fail "No SSL certificate found, run `rails dev:ssl:generate` to proceed"
+    def generate_root_cert(root_key)
+      root_ca = OpenSSL::X509::Certificate.new
+      root_ca.version = 2 # cf. RFC 5280 - to make it a "v3" certificate
+      root_ca.serial = 0x0
+      root_ca.subject = OpenSSL::X509::Name.parse "/C=GB/L=London/O=DfE/CN=localhost"
+      root_ca.issuer = root_ca.subject # root CA's are "self-signed"
+      root_ca.public_key = root_key.public_key
+      root_ca.not_before = Time.now
+      root_ca.not_after = root_ca.not_before + 2 * 365 * 24 * 60 * 60 # 2 years validity
+      root_ca.sign(root_key, OpenSSL::Digest::SHA256.new)
+      root_ca
+    end
+
+    root_key = OpenSSL::PKey::RSA.new(2048)
+    File.write(key, root_key, mode: 'wb')
+
+    root_cert = generate_root_cert(root_key)
+    File.write(cert, root_cert, mode: 'wb')
   end
 
   ssl_bind '127.0.0.1', listen_port, cert: cert, key: key, verify_mode: 'none'

@@ -1,2 +1,2 @@
-server: bin/rails server
+server: PORT=3000 puma
 assets: bin/webpack-dev-server
