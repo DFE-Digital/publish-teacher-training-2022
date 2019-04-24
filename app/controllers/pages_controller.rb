@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate, except: :guidance
+  skip_before_action :authenticate, only: :guidance
 
   def cookies; end
 

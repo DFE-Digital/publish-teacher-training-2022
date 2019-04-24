@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_manage_ui
   rescue_from JsonApiClient::Errors::AccessDenied, with: :render_manage_ui
 
-  before_action :set_has_multiple_providers
+  before_action :set_has_multiple_providers,
+                :authenticate
   after_action :nuke_token
 
   def not_found

@@ -1,5 +1,5 @@
 class SitesController < ApplicationController
-  before_action :authenticate, :build_provider, :initialise_errors
+  before_action :build_provider, :initialise_errors
   before_action :build_site, only: %i[edit update]
 
   def index

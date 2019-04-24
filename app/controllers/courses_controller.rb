@@ -1,5 +1,4 @@
 class CoursesController < ApplicationController
-  before_action :authenticate
   before_action :build_course, only: %i[show description delete withdraw]
   before_action :build_provider, only: %i[show description]
 
