@@ -26,6 +26,6 @@ search_ui:
 google_forms:
   new_course_for_accredited_bodies_url: https://docs.google.com/forms/d/e/1FAIpQLSd4k5wSjrVyFu-FW4ZaSsrbK0AwTpjmzfyTdfa_qdXLZ313HQ/viewform
   new_course_for_unaccredited_bodies_url: https://docs.google.com/forms/d/e/1FAIpQLSeatJO2ZuqM-fnRJxEo6IIF0hZIU63JGnx0sDXO6Ulax7U_bA/viewform
-  add_location_url: https://forms.gle/Bvkuf6JMY8kPVHPNA
+  add_location_url: https://docs.google.com/forms/d/e/1FAIpQLSeW14NPB081ZwayBStlZsmCoKycFuhwtktozbu8MF7CWpm5Og/viewform
 service_support:
   contact_email_address: becomingateacher@digital.education.gov.uk
