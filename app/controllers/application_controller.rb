@@ -39,6 +39,10 @@ class ApplicationController < ActionController::Base
     current_user['info']
   end
 
+  def current_user_dfe_signin_id
+    current_user['uid']
+  end
+
   def set_has_multiple_providers
     @has_multiple_providers = has_multiple_providers?
   end
@@ -69,18 +73,13 @@ private
   end
 
   def add_token_to_connection
-    if Settings.authentication.algorithm == 'plain-text'
-      # This method can be used in development mode to simplify querying
-      # the API with curl. It should allow us to do:
-      #
-      #    curl -H 'Authorization: Bearer user@education.gov.uk' http://localhost:3001/api/v2/providers
-      token = current_user_info['email'].to_s
-    else
-      payload = { email: current_user_info['email'].to_s }
-      token = JWT.encode(payload,
-                          Settings.authentication.secret,
-                          Settings.authentication.algorithm)
-    end
+    payload = {
+      email:           current_user_info['email'].to_s,
+      sign_in_user_id: current_user_dfe_signin_id
+    }
+    token = JWT.encode(payload,
+                        Settings.authentication.secret,
+                        Settings.authentication.algorithm)
 
     Base.connection(true) do |connection|
       connection.use FaradayMiddleware::OAuth2, token, token_type: :bearer

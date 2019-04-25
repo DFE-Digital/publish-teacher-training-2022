@@ -14,6 +14,7 @@ RSpec.describe ApplicationController, type: :controller do
 
     context 'user is authenticated' do
       let(:user_email) { "email@example.com" }
+      let(:sign_in_user_id) { SecureRandom.uuid }
 
       let(:user_info) do
         {
@@ -23,8 +24,12 @@ RSpec.describe ApplicationController, type: :controller do
         }
       end
 
-      let(:payload) { { email: user_email.to_s } }
-
+      let(:payload) do
+        {
+          email:           user_email.to_s,
+          sign_in_user_id: sign_in_user_id
+        }
+      end
       let(:user_id) { nil }
 
       before do
@@ -34,7 +39,7 @@ RSpec.describe ApplicationController, type: :controller do
           .with(payload, Settings.authentication.secret, Settings.authentication.algorithm)
           .and_return("anything")
 
-        controller.request.session = { auth_user: { "info" => user_info } }
+        controller.request.session = { auth_user: { "info" => user_info, 'uid' => sign_in_user_id } }
       end
 
       context 'user_id is not blank' do
@@ -45,7 +50,7 @@ RSpec.describe ApplicationController, type: :controller do
           allow(Provider).to receive(:all)
             .and_raise('Could not connect to backend')
 
-          controller.request.session = { auth_user: { "info" => user_info, 'user_id' => user_id } }
+          controller.request.session = { auth_user: { "info" => user_info, 'user_id' => user_id, 'uid' => sign_in_user_id } }
           controller.authenticate
         end
 

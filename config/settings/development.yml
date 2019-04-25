@@ -9,5 +9,4 @@ manage_ui:
 search_ui:
   base_url: https://localhost:5000
 authentication:
-  algorithm: plain-text
-  secret: nil
+  secret: secret
