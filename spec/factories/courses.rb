@@ -37,6 +37,7 @@ FactoryBot.define do
     required_qualifications { nil }
     personal_qualities { nil }
     other_requirements { nil }
+    last_published_at { DateTime.new(2019).utc.iso8601 }
 
     trait :with_vacancy do
       has_vacancies? { true }
