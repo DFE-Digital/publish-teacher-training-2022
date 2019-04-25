@@ -39,6 +39,10 @@ class ApplicationController < ActionController::Base
     current_user['info']
   end
 
+  def current_user_dfe_signin_id
+    current_user['uid']
+  end
+
   def set_has_multiple_providers
     @has_multiple_providers = has_multiple_providers?
   end
