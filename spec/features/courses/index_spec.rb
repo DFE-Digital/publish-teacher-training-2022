@@ -22,13 +22,17 @@ feature 'Index courses', type: :feature do
     let(:organisations_courses_page) { PageObjects::Page::Organisations::Courses.new }
 
     before do
-      stub_omniauth
-      stub_session_create
+      user = jsonapi :user, :opted_in
+      stub_omniauth(disable_completely: false, user: user)
+      stub_session_create(user: User.new(JSON.parse(user.to_json)))
+      stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
+      stub_api_v2_request("/providers/A123", provider_response)
       stub_api_v2_request(
         "/providers/A123?include=courses.accrediting_provider",
         provider_response
       )
-      visit "/organisations/A123/courses"
+      visit "/"
+      click_on "Courses"
     end
 
     scenario 'it shows a list of courses' do
@@ -74,7 +78,7 @@ feature 'Index courses', type: :feature do
     end
 
     scenario "it shows 'add a new course' link" do
-      expect(page).to have_link('Add a new course', href: Settings.google_forms.new_course_for_accredited_bodies_url)
+      expect(page).to have_link('Add a new course', href: /#{Settings.google_forms.new_course_for_accredited_bodies.url.gsub('?', '\?')}/)
     end
   end
 
@@ -90,26 +94,30 @@ feature 'Index courses', type: :feature do
     let(:course_3) { jsonapi :course, accrediting_provider: provider_2 }
 
     before do
-      stub_omniauth
-      stub_session_create
+      user = jsonapi :user, :opted_in
+      stub_omniauth(disable_completely: false, user: user)
+      stub_session_create(user: User.new(JSON.parse(user.to_json)))
+      stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
+      stub_api_v2_request("/providers/A123", provider_response)
       stub_api_v2_request(
         "/providers/A123?include=courses.accrediting_provider",
         provider_response
       )
-      visit "/organisations/A123/courses"
+      visit "/"
+      click_on "Courses"
     end
 
     scenario "it shows a list of courses" do
       expect(find('h1')).to have_content('Courses')
       expect(page).to have_selector('table', count: 3)
-      expect(page).to have_link('Add a new course', href: Settings.google_forms.new_course_for_unaccredited_bodies_url)
+      expect(page).to have_link('Add a new course', href: /#{Settings.google_forms.new_course_for_unaccredited_bodies.url.gsub('?', '\?')}/)
 
       expect(page.all('h2')[0]).to have_content('Accredited body Aacme Scitt')
       expect(page.all('h2')[1]).to have_content('Accredited body Zacme Scitt')
     end
 
     scenario "it shows 'add a new course' link" do
-      expect(page).to have_link('Add a new course', href: Settings.google_forms.new_course_for_unaccredited_bodies_url)
+      expect(page).to have_link('Add a new course', href: /#{Settings.google_forms.new_course_for_unaccredited_bodies.url.gsub('?', '\?')}/)
     end
   end
 
