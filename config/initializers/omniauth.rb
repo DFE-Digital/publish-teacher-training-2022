@@ -16,7 +16,9 @@ module OmniAuth
 
       def callback_phase
         error = request.params['error_reason'] || request.params['error']
-        if error
+        if error == 'sessionexpired'
+          return redirect('/signin')
+        elsif error
           raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
         elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
           # Monkey patch: Ensure a basic 401 rack response with no body or header isn't served
