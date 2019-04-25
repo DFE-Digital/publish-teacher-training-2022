@@ -30,7 +30,7 @@
   </p>
 
   <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
-  <p class="govuk-body">Last published:<br><%= formatted_date(@course.changed_at) %></p>
+  <p class="govuk-body">Last published:<br><%= formatted_date(@course.last_published_at) %></p>
   <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
 
   <% if @course.is_running? %>
