@@ -18,6 +18,9 @@ module PageObjects
         element :required_qualifications, '[data-qa=course__required_qualifications]'
         element :personal_qualities, '[data-qa=course__personal_qualities]'
         element :other_requirements, '[data-qa=course__other_requirements]'
+        element :has_vacancies, '[data-qa=course__has_vacancies]'
+        element :is_findable, '[data-qa=course__is_findable]'
+        element :open_for_applications, '[data-qa=course__open_for_applications]'
       end
     end
   end

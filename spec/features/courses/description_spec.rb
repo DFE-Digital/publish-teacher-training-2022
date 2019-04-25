@@ -4,6 +4,8 @@ feature 'Course description', type: :feature do
   let(:provider) { jsonapi(:provider, accredited_body?: false) }
   let(:course_jsonapi) {
     jsonapi(:course,
+            has_vacancies?: true,
+            open_for_applications?: true,
             funding: 'fee',
             site_statuses: [site_status],
             provider: provider,
@@ -22,14 +24,13 @@ feature 'Course description', type: :feature do
       "/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
       course_response
     )
+    visit "/organisations/A0/courses/#{course.course_code}/description"
   end
 
   let(:course_page) { PageObjects::Page::Organisations::CourseDescription.new }
 
   describe 'with a fee paying course' do
     scenario 'it shows the course description page' do
-      visit "/organisations/A0/courses/#{course.course_code}/description"
-
       expect(course_page.caption).to have_content(
         course.description
       )
@@ -81,8 +82,6 @@ feature 'Course description', type: :feature do
     let(:course_response) { course_jsonapi.render }
 
     scenario 'it shows the course description page' do
-      visit "/organisations/A0/courses/#{course.course_code}/description"
-
       expect(course_page.caption).to have_content(
         course.description
       )
@@ -113,6 +112,20 @@ feature 'Course description', type: :feature do
       expect(course_page.other_requirements).to have_content(
         course.other_requirements
       )
+    end
+  end
+
+  describe 'shows status panel' do
+    scenario 'displays if the course has vacancies' do
+      expect(course_page.has_vacancies).to have_content('Yes')
+    end
+
+    scenario 'displays if the course is open for applications' do
+      expect(course_page.open_for_applications).to have_content('Open')
+    end
+
+    scenario 'displays if the course is on find' do
+      expect(course_page.is_findable).to have_content('Yes')
     end
   end
 end
