@@ -6,7 +6,7 @@ describe CourseDecorator do
   }
   let(:course) { course_jsonapi.decorate }
 
-  it "returns last_published_at formatted" do
-    expect(course.last_published_at).to eq('5 March 2019')
+  it "returns formatted last_published_at" do
+    expect(course.formatted_last_published_at).to eq('5 March 2019')
   end
 end

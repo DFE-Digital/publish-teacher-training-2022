@@ -31,7 +31,7 @@
 
   <% if @course.last_published_at.present? %>
     <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
-    <p class="govuk-body">Last published:<br><%= @course.last_published_at %></p>
+    <p class="govuk-body">Last published:<br><%= @course.formatted_last_published_at %></p>
   <% end %>
 
   <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
