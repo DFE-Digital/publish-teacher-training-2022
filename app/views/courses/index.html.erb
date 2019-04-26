@@ -26,7 +26,7 @@
 </ul>
 
 <% if @provider.courses.count > 10 && @provider.opted_in? %>
-  <%= add_course_link(@provider) %>
+  <%= add_course_link(current_user['info']['email'], @provider) %>
   <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your course details.</p>
 <% end %>
 
@@ -42,6 +42,6 @@
 <% end %>
 
 <% if @provider.opted_in? %>
-  <%= add_course_link(@provider) %>
+  <%= add_course_link(current_user['info']['email'], @provider) %>
   <p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>
 <% end %>

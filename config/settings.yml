@@ -24,8 +24,17 @@ search_ui:
   # URL of the C# search ui app (search-and-compare-ui)
   base_url: https://localhost:5000
 google_forms:
-  new_course_for_accredited_bodies_url: https://forms.gle/ktbyArGW5EyiMppf9
-  new_course_for_unaccredited_bodies_url: https://forms.gle/WEokN2S4qPcPAZcr5
-  add_location_url: https://forms.gle/Bvkuf6JMY8kPVHPNA
+  new_course_for_accredited_bodies:
+    url: https://docs.google.com/forms/d/e/1FAIpQLSd4k5wSjrVyFu-FW4ZaSsrbK0AwTpjmzfyTdfa_qdXLZ313HQ/viewform?usp=pp_url
+    email_entry: entry.957076544
+    provider_code_entry: entry.1735563938
+  new_course_for_unaccredited_bodies:
+    url: https://docs.google.com/forms/d/e/1FAIpQLSeatJO2ZuqM-fnRJxEo6IIF0hZIU63JGnx0sDXO6Ulax7U_bA/viewform?usp=pp_url
+    email_entry: entry.1033530353
+    provider_code_entry: entry.158771972
+  add_location:
+    url: https://docs.google.com/forms/d/e/1FAIpQLSeW14NPB081ZwayBStlZsmCoKycFuhwtktozbu8MF7CWpm5Og/viewform?usp=pp_url
+    email_entry: entry.1913622198
+    provider_code_entry: entry.1075663095
 service_support:
   contact_email_address: becomingateacher@digital.education.gov.uk
