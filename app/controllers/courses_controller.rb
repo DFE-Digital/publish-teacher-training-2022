@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  decorates_assigned :course
   before_action :build_course, only: %i[show description delete withdraw]
   before_action :build_provider, only: %i[show description]
 
@@ -31,7 +32,9 @@ class CoursesController < ApplicationController
 
   def show; end
 
-  def description; end
+  def description
+    @course = @course.decorate
+  end
 
   def withdraw; end
 
