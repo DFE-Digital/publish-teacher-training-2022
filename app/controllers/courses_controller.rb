@@ -32,7 +32,9 @@ class CoursesController < ApplicationController
 
   def show; end
 
-  def description; end
+  def description
+    @course = @course.decorate
+  end
 
   def withdraw; end
 

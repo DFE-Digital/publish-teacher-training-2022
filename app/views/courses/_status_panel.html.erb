@@ -29,8 +29,11 @@
     <% end %>
   </p>
 
-  <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
-  <p class="govuk-body">Last published:<br><%= formatted_date(@course.last_published_at) %></p>
+  <% if @course.last_published_at.present? %>
+    <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
+    <p class="govuk-body">Last published:<br><%= @course.last_published_at %></p>
+  <% end %>
+
   <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
 
   <% if @course.is_running? %>
