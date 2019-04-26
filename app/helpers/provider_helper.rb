@@ -16,7 +16,7 @@ module ProviderHelper
   end
 
   def add_location_link(email, provider)
-    link_to "Add a location", add_location_url(email, provider), rel: "noopener noreferrer", class: "govuk-button govuk-!-margin-bottom-2", target: :blank
+    link_to "Add a location", add_location_url(email, provider), class: "govuk-button govuk-!-margin-bottom-2", rel: "noopener noreferrer", target: "_blank"
   end
 
   def google_form_url_for(settings, email, provider)
