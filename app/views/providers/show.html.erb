@@ -27,7 +27,7 @@
       <li>publish this information on all course pages</li>
     </ul>
 
-    <h2 class="govuk-heading-m"><%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-link" %></h2>
+    <h2 class="govuk-heading-m"><%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-link", data: { qa: 'provider__locations' } %></h2>
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
       <li>edit location names and addresses</li>
