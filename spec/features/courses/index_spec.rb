@@ -17,6 +17,8 @@ feature 'Index courses', type: :feature do
     jsonapi(:provider, :opted_in, courses: courses, accredited_body?: true, provider_code: 'A123')
   end
   let(:provider_response) { provider.render }
+  let(:root_page) { PageObjects::Page::RootPage.new }
+  let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
   let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
 
   describe "without accrediting providers" do
@@ -30,13 +32,14 @@ feature 'Index courses', type: :feature do
         "/providers/A123?include=courses.accrediting_provider",
         provider_response
       )
-      visit "/"
-      click_on "Courses"
+      root_page.load
+      expect(organisation_page).to be_displayed(provider_code: 'A123')
+      organisation_page.courses.click
     end
 
     scenario 'it shows a list of courses' do
-      expect(find('h1')).to have_content('Courses')
-      expect(page).to have_selector('tbody tr', count: provider.relationships[:courses].size)
+      expect(courses_page.title).to have_content('Courses')
+      expect(courses_page.rows.size).to eq(4)
 
       first_row = courses_page.rows.first
       expect(first_row.name).to           have_content course_1.attributes[:name]
@@ -132,13 +135,12 @@ feature 'Index courses', type: :feature do
         "/providers/A321?include=courses.accrediting_provider",
         provider_response
       )
-      visit "/organisations/A321/courses"
+      courses_page.load(provider_code: 'A321')
     end
 
     scenario "it does not show the 'add a new course' link" do
-      visit "/organisations/A321/courses"
-
-      expect(page).to_not have_link('Add a new course')
+      expect(courses_page).to_not have_link_to_add_a_course_for_unaccredited_bodies
+      expect(courses_page).to_not have_link_to_add_a_course_for_accredited_bodies
     end
   end
 end
