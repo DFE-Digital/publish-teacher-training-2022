@@ -37,3 +37,7 @@ en:
         delimiter: ','
         separator: '.'
         precision: 0
+  date:
+    formats:
+      default: "%-d %B %Y"
+      short: "%B %Y"

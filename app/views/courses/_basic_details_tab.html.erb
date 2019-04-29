@@ -15,7 +15,7 @@
           <abbr class="text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr>
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__is_send">
-          <%= @course.is_send %>
+          <%= @course.is_send? %>
         </dd>
       </div>
 
@@ -105,7 +105,7 @@
           Applications open
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__application_status">
-          <%= @course.applications %>
+          <%= @course.open_or_closed_for_applications %>
         </dd>
       </div>
 
@@ -114,7 +114,7 @@
           Course starts
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__start_date">
-          <%= @course.formatted_start_date %>
+          <%= l(@course.start_date&.to_date, format: :short) %>
         </dd>
       </div>
 

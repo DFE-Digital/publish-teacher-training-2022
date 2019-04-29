@@ -5,10 +5,6 @@ class CourseDecorator < ApplicationDecorator
     "#{object.name} (#{object.course_code})"
   end
 
-  def formatted_last_published_at
-    object.last_published_at&.to_date&.strftime('%-d %B %Y')
-  end
-
   def vacancies(provider = object.provider)
     content = object.has_vacancies? ? 'Yes' : 'No'
     content += " (" + edit_vacancy_link + ")" if provider.opted_in?
@@ -23,23 +19,15 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
-  def applications
+  def open_or_closed_for_applications
     object.open_for_applications? ? 'Open' : 'Closed'
-  end
-
-  def formatted_start_date
-    object.start_date.to_date.strftime('%B %Y')
-  end
-
-  def formatted_applications_open
-    object.applications_open_from&.to_date&.strftime('%-d %B %Y')
   end
 
   def outcome
     object.qualifications.sort.map(&:upcase).join(' with ')
   end
 
-  def is_send
+  def is_send?
     object.is_send? ? 'Yes' : 'No'
   end
 

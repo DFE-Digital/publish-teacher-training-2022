@@ -23,18 +23,6 @@ describe CourseDecorator do
 
   let(:course) { course_jsonapi.decorate }
 
-  it "returns formatted last_published_at" do
-    expect(course.formatted_last_published_at).to eq('5 March 2019')
-  end
-
-  it "returns formatted start_date" do
-    expect(course.formatted_start_date).to eq('January 2019')
-  end
-
-  it "returns formatted applications_open_from date" do
-    expect(course.formatted_applications_open).to eq('1 January 2019')
-  end
-
   it "returns the course name and code in brackets" do
     expect(course.name_and_code).to eq('Mathematics (A1)')
   end
@@ -44,7 +32,7 @@ describe CourseDecorator do
   end
 
   it "returns if applications are open or closed" do
-    expect(course.applications).to eq('Open')
+    expect(course.open_or_closed_for_applications).to eq('Open')
   end
 
   it "returns if course is an apprenticeship" do
@@ -52,7 +40,7 @@ describe CourseDecorator do
   end
 
   it "returns if course is SEND?" do
-    expect(course.is_send).to eq('No')
+    expect(course.is_send?).to eq('No')
   end
 
   it "returns course length" do
