@@ -1,37 +1,37 @@
 <h3 class="govuk-heading-m govuk-!-font-size-27">
-  <%= link_to 'About this course', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: @course.course_code) + '/about', class: 'govuk-link' %>
+  <%= link_to 'About this course', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code) + '/about', class: 'govuk-link' %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
-  <%= course_summary_item('About this course', @course.about_course, 'about') %>
-  <%= course_summary_item('Interview process (optional)', @course.interview_process, 'interview_process') %>
-  <%= course_summary_item('How school placements work', @course.how_school_placements_work, 'placements_info') %>
+  <%= course_summary_item('About this course', course.about_course, 'about') %>
+  <%= course_summary_item('Interview process (optional)', course.interview_process, 'interview_process') %>
+  <%= course_summary_item('How school placements work', course.how_school_placements_work, 'placements_info') %>
 </dl>
 
 <h3 class="govuk-heading-m">
-  <% if @course.has_fees? %>
-    <%= link_to 'Course length and fees', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: @course.course_code) + '/fees-and-length', class: 'govuk-link' %>
+  <% if course.has_fees? %>
+    <%= link_to 'Course length and fees', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code) + '/fees-and-length', class: 'govuk-link' %>
   <% else %>
-    <%= link_to 'Course length and salary', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: @course.course_code) + '/salary', class: 'govuk-link' %>
+    <%= link_to 'Course length and salary', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code) + '/salary', class: 'govuk-link' %>
   <% end %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
-  <%= course_summary_item('Course length',course_length(@course), 'length') %>
+  <%= course_summary_item('Course length', course.length, 'length') %>
 
-  <% if @course.has_fees? %>
-    <%= course_summary_item('Fee for UK and EU students', number_to_currency(@course.fee_uk_eu), 'uk_fees') %>
-    <%= course_summary_item('Fee for international students (optional)', number_to_currency(@course.fee_international), 'international_fees') %>
-    <%= course_summary_item('Fee details (optional)', @course.fee_details, 'fee_details') %>
-    <%= course_summary_item('Financial support you offer (optional)', @course.financial_support, 'financial_support') %>
+  <% if course.has_fees? %>
+    <%= course_summary_item('Fee for UK and EU students', number_to_currency(course.fee_uk_eu), 'uk_fees') %>
+    <%= course_summary_item('Fee for international students (optional)', number_to_currency(course.fee_international), 'international_fees') %>
+    <%= course_summary_item('Fee details (optional)', course.fee_details, 'fee_details') %>
+    <%= course_summary_item('Financial support you offer (optional)', course.financial_support, 'financial_support') %>
   <% else %>
-    <%= course_summary_item('Salary', @course.salary_details, 'salary') %>
+    <%= course_summary_item('Salary', course.salary_details, 'salary') %>
   <% end %>
 </dl>
 
 <h3 class="govuk-heading-m">
-  <%= link_to 'Requirements and eligibility', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: @course.course_code) + '/requirements', class: 'govuk-link' %>
+  <%= link_to 'Requirements and eligibility', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code) + '/requirements', class: 'govuk-link' %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
-  <%= course_summary_item('Qualifications needed', @course.required_qualifications, 'required_qualifications') %>
-  <%= course_summary_item('Personal qualities (optional)', @course.personal_qualities, 'personal_qualities') %>
-  <%= course_summary_item('Other requirements (optional)', @course.other_requirements, 'other_requirements') %>
+  <%= course_summary_item('Qualifications needed', course.required_qualifications, 'required_qualifications') %>
+  <%= course_summary_item('Personal qualities (optional)', course.personal_qualities, 'personal_qualities') %>
+  <%= course_summary_item('Other requirements (optional)', course.other_requirements, 'other_requirements') %>
 </dl>

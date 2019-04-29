@@ -9,7 +9,8 @@ feature 'Show course', type: :feature do
       start_date: Time.new(2019),
       site_statuses: [site_status],
       provider: provider,
-      accrediting_provider: provider
+      accrediting_provider: provider,
+      open_for_applications?: true
   }
   let(:site) { jsonapi(:site) }
   let(:site_status) do
@@ -37,7 +38,7 @@ feature 'Show course', type: :feature do
       "#{course.name} (#{course.course_code})"
     )
     expect(course_page.subjects).to have_content(
-      course.subjects.sort.join(' ').to_s
+      course.subjects.sort.join('').to_s
     )
     expect(course_page.qualifications).to have_content(
       'PGCE with QTS'
@@ -67,8 +68,8 @@ feature 'Show course', type: :feature do
     expect(course_page.accredited_body).to have_content(
       provider.provider_name
     )
-    expect(course_page.applications_open).to have_content(
-      '1 January 2019'
+    expect(course_page.application_status).to have_content(
+      'Open'
     )
     expect(course_page.is_send).to have_content(
       'No'

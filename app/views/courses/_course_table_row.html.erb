@@ -1,41 +1,28 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell course-table__course-name" data-qa="courses-table__course">
-    <%= govuk_link_to "#{ course.attributes[:name] } (#{ course.attributes[:course_code] })",
-      manage_ui_course_page_url(provider_code: @provider[:provider_code], course_code: course.attributes[:course_code]),
+    <%= govuk_link_to "#{course.name_and_code}",
+      manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code),
       class: "govuk-link govuk-heading-s govuk-!-margin-bottom-0"
     %>
-    <span class="govuk-body-s"><%= course.attributes[:description] %></span>
+    <span class="govuk-body-s"><%= course.description %></span>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__ucas-status">
-    <%= course_ucas_status(course) %>
+    <%= course.ucas_status %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__content-status">
-    <%= render partial: 'content_status_tag', locals: { course: course } unless course.not_running? %>
+    <%= course.content_status_badge %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__findable">
-    <% if course.attributes[:findable?] %>
-      <%= govuk_link_to "Yes - view online",
-        search_ui_course_page_url(provider_code: @provider[:provider_code], course_code: course.attributes[:course_code])
-      %>
-    <% else %>
-      <% if course.ucas_status == 'new' %>
-        No – <%= @provider.opted_in? ? 'still in draft' : 'must be published on UCAS' %>
-      <% else %>
-        No
-      <% end %>
-    <% end %>
+    <%= course.on_find(@provider.provider_code) %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__applications">
     <% if course.is_running? %>
-      <%= course.open_for_applications? ? "Open" : "Closed" %>
+      <%= course.open_or_closed_for_applications %>
     <% end %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__vacancies">
     <% if course.is_running? %>
-      <%= course.has_vacancies? ? "Yes" : "No" %>
-      <% if @provider.opted_in? %>
-        (<%= link_to 'Edit', vacancies_provider_course_path(code: course.attributes[:course_code]), class: 'govuk-link' %>)
-      <% end %>
+      <%= course.vacancies(@provider) %>
     <% end %>
   </td>
 </tr>

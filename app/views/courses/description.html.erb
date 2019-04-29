@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@course.name} (#{@course.course_code}) - Courses" %>
+<%= content_for :page_title, "#{course.name_and_code} - Courses" %>
 
 <% content_for :before_content do %>
   <nav class="govuk-breadcrumbs">
@@ -19,8 +19,8 @@
 <% end %>
 
 <h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl"><%= @course.description %></span>
-  <%= @course.name %> (<%= @course.course_code %>)
+  <span class="govuk-caption-xl"><%= course.description %></span>
+  <%= course.name_and_code %>
 </h1>
 
 <div class="course-tabs govuk-tabs">
@@ -39,7 +39,7 @@
 
     <li class="govuk-tabs__list-item">
       <%=
-        link_to provider_course_path(@provider.provider_code, @course.course_code),
+        link_to provider_course_path(@provider.provider_code, course.course_code),
         class: "govuk-tabs__tab" do
       %>
         Basic details<br>

@@ -6,7 +6,7 @@
           Level
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__level">
-          <%= @course.level&.humanize %>
+          <%= course.level&.humanize %>
         </dd>
       </div>
 
@@ -15,18 +15,16 @@
           <abbr class="text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr>
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__is_send">
-          <%= course_send(@course) %>
+          <%= course.is_send? %>
         </dd>
       </div>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= 'Subject'.pluralize(@course.subjects.count) %>
+          <%= 'Subject'.pluralize(course.subjects.count) %>
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__subjects">
-          <% @course.subjects.sort.each do |subject| %>
-            <%= subject %><br>
-          <% end %>
+          <%= course.sorted_subjects %>
         </dd>
       </div>
 
@@ -35,7 +33,7 @@
           Outcome
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__qualifications">
-          <%= course_outcome(@course) %>
+          <%= course.outcome %>
         </dd>
       </div>
 
@@ -45,7 +43,7 @@
             Apprenticeship
           </dt>
           <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
-            <%= course_apprenticeship(@course) %>
+            <%= course.apprenticeship? %>
           </dd>
         </div>
       <% else %>
@@ -54,7 +52,7 @@
             Fee or salary
           </dt>
           <dd class="govuk-summary-list__value" data-qa="course__funding">
-            <%= course_funding(@course) %>
+            <%= course.funding %>
           </dd>
         </div>
       <% end %>
@@ -64,7 +62,7 @@
           Full or part time
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__study_mode">
-          <%= course_study_mode(@course) %>
+          <%= course.study_mode.humanize %>
         </dd>
       </div>
 
@@ -73,11 +71,11 @@
           Locations
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__locations">
-          <% if @course.site_statuses.size == 1 then %>
-            <%= @course.site_statuses.first.site.location_name %>
+          <% if course.site_statuses.size == 1 then %>
+            <%= course.site_statuses.first.site.location_name %>
           <% else %>
             <ul class="govuk-list courses-locations-list">
-              <% @course.site_statuses.map(&:site).map(&:location_name).each do |location_name| %>
+              <% course.site_statuses.map(&:site).map(&:location_name).each do |location_name| %>
                 <li><%= location_name %></li>
               <% end %>
             </ul>
@@ -97,7 +95,7 @@
             Accredited body
           </dt>
           <dd class="govuk-summary-list__value" data-qa="course__accredited_body">
-            <%= @course.accrediting_provider&.provider_name %>
+            <%= course.accrediting_provider&.provider_name %>
           </dd>
         </div>
       <% end %>
@@ -106,8 +104,8 @@
         <dt class="govuk-summary-list__key">
           Applications open
         </dt>
-        <dd class="govuk-summary-list__value" data-qa="course__applications_open">
-          <%= course_applications_open(@course) %>
+        <dd class="govuk-summary-list__value" data-qa="course__application_status">
+          <%= course.open_or_closed_for_applications %>
         </dd>
       </div>
 
@@ -116,7 +114,7 @@
           Course starts
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__start_date">
-          <%= course_start_date(@course) %>
+          <%= l(course.start_date&.to_date, format: :short) %>
         </dd>
       </div>
 
@@ -125,7 +123,7 @@
           Title
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__name">
-          <%= @course.name %>
+          <%= course.name %>
         </dd>
       </div>
 
@@ -134,7 +132,7 @@
           Description
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__description">
-          <%= @course.description %>
+          <%= course.description %>
         </dd>
       </div>
 
@@ -143,17 +141,17 @@
           Course code
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__course_code">
-          <%= @course.course_code %>
+          <%= course.course_code %>
         </dd>
       </div>
     </dl>
   </div>
-  <% if @course.is_running? || @course.new_and_not_running? %>
+  <% if course.is_running? || course.new_and_not_running? %>
     <div class="govuk-grid-column-one-third">
       <div class="status-box">
         <h2 class="govuk-heading-m">Changing your basic details</h2>
         <% if @provider.opted_in? %>
-          <p>To make any changes to your basic details, or to <%= @course.is_running? ? "withdraw" : "delete" %> this course, <%= bat_contact_mail_to "contact the Becoming a Teacher team", subject: "Edit #{@course.name} (#{@provider_code}/#{@course.course_code})" %>.</p>
+          <p>To make any changes to your basic details, or to <%= course.is_running? ? "withdraw" : "delete" %> this course, <%= bat_contact_mail_to "contact the Becoming a Teacher team", subject: "Edit #{course.name} (#{@provider_code}/#{course.course_code})" %>.</p>
         <% else %>
           <p class="govuk-body">You can only change this information using <%= link_to "UCAS web-link", "https://update.ucas.co.uk/netupdate2/Welcome.htm" %>. Changes will usually appear here within one working&nbsp;day.</p>
         <% end %>
