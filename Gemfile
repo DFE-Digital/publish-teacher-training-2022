@@ -26,7 +26,7 @@ gem 'canonical-rails'
 
 # DfE Sign-In
 gem 'omniauth', '~> 1.8'
-gem 'omniauth_openid_connect', '~> 0.1'
+gem 'omniauth_openid_connect', '~> 0.3'
 
 # App Insights for Azure
 gem 'application_insights'
