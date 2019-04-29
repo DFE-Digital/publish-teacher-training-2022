@@ -15,7 +15,7 @@
   <% end %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
-  <%= course_summary_item('Course length',course_length(@course), 'length') %>
+  <%= course_summary_item('Course length', @course.length, 'length') %>
 
   <% if @course.has_fees? %>
     <%= course_summary_item('Fee for UK and EU students', number_to_currency(@course.fee_uk_eu), 'uk_fees') %>

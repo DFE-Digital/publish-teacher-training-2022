@@ -1,32 +1,19 @@
 <div class="status-box">
   <h3 class="govuk-heading-m">Status</h3>
   <div class="govuk-!-margin-bottom-6">
-    <%= render partial: 'content_status_tag', locals: { course: @course } %>
+    <%= @course.content_status_badge %>
   </div>
   <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Is it on Find?</h3>
-  <% if @course.findable? %>
-    <p class="govuk-body" data-qa="course__is_findable">
-      <%= govuk_link_to "Yes - view online", search_ui_course_page_url(provider_code: @provider.provider_code, course_code: @course.course_code) %>
-    </p>
-  <% else %>
-    <p class="govuk-body" data-qa="course__is_findable">
-      <% if @course.new_and_not_running? %>
-        No – <%= @provider.opted_in? ? 'still in draft' : 'must be published on UCAS' %>
-      <% else %>
-        No
-      <% end %>
-    </p>
-  <% end %>
+  <p class="govuk-body" data-qa="course__is_findable">
+    <%= @course.on_find %>
+  </p>
 
   <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Applications</h3>
-  <p class="govuk-body" data-qa="course__open_for_applications"><%= @course.open_for_applications? ? "Open" : "Closed" %></p>
+  <p class="govuk-body" data-qa="course__open_for_applications"><%= @course.applications %></p>
 
   <h3 class="govuk-heading-s govuk-!-margin-0">Vacancies</h3>
   <p class="govuk-body" data-qa="course__has_vacancies">
-    <%= @course.has_vacancies? ? "Yes" : "No" %>
-    <% if @provider.opted_in? %>
-      (<%= link_to 'Edit', vacancies_provider_course_path(code: @course.course_code), class: 'govuk-link' %>)
-    <% end %>
+    <%= @course.vacancies %>
   </p>
 
   <% if @course.last_published_at.present? %>

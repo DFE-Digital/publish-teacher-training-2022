@@ -1,5 +1,4 @@
 class CoursesController < ApplicationController
-  decorates_assigned :course
   before_action :build_course, only: %i[show description delete withdraw]
   before_action :build_provider, only: %i[show description]
 
@@ -17,24 +16,25 @@ class CoursesController < ApplicationController
         # .accrediting_provider relationship lookup. To be investigated, for now,
         # if this throws, it's self-accredited.
         begin
-          course.accrediting_provider&.provider_name || @provider[:provider_name]
+          course.accrediting_provider&.provider_name || @provider.provider_name
         rescue StandardError
-          @provider[:provider_name]
+          @provider.provider_name
         end
       }
       .sort_by { |accrediting_provider, _| accrediting_provider }
-      .map { |pair| [pair[0], pair[1].sort_by { |course| [course.name, course.course_code] }] }
+      .map { |provider_name, courses|
+      [provider_name, courses.sort_by { |course| [course.name, course.course_code] }
+                             .map(&:decorate)]
+    }
       .to_h
     # rubocop:enable Style/MultilineBlockChain
 
-    @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider[:provider_name])
+    @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider.provider_name)
   end
 
   def show; end
 
-  def description
-    @course = @course.decorate
-  end
+  def description; end
 
   def withdraw; end
 
@@ -51,6 +51,7 @@ private
       .where(provider_code: @provider_code)
       .find(params[:code])
       .first
+      &.decorate
   end
 
   def build_provider
