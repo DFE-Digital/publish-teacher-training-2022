@@ -17,10 +17,11 @@ feature 'Index courses', type: :feature do
     jsonapi(:provider, :opted_in, courses: courses, accredited_body?: true, provider_code: 'A123')
   end
   let(:provider_response) { provider.render }
+  let(:root_page) { PageObjects::Page::RootPage.new }
+  let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
+  let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
 
   describe "without accrediting providers" do
-    let(:organisations_courses_page) { PageObjects::Page::Organisations::Courses.new }
-
     before do
       user = jsonapi :user, :opted_in
       stub_omniauth(disable_completely: false, user: user)
@@ -31,15 +32,17 @@ feature 'Index courses', type: :feature do
         "/providers/A123?include=courses.accrediting_provider",
         provider_response
       )
-      visit "/"
-      click_on "Courses"
+      root_page.load
+      expect(organisation_page).to be_displayed(provider_code: 'A123')
+      organisation_page.courses.click
     end
 
     scenario 'it shows a list of courses' do
-      expect(find('h1')).to have_content('Courses')
-      expect(page).to have_selector('tbody tr', count: provider.relationships[:courses].size)
+      expect(courses_page.title).to have_content('Courses')
+      courses_table = courses_page.courses_tables.first
+      expect(courses_table.rows.size).to eq(4)
 
-      first_row = organisations_courses_page.rows.first
+      first_row = courses_table.rows.first
       expect(first_row.name).to           have_content course_1.attributes[:name]
       expect(first_row.ucas_status).to    have_content 'Running'
       expect(first_row.content_status).to have_content 'Published'
@@ -53,7 +56,7 @@ feature 'Index courses', type: :feature do
         "https://localhost:44364/organisation/A123/course/self/#{course_1.attributes[:course_code]}"
       )
 
-      second_row = organisations_courses_page.rows.second
+      second_row = courses_table.rows.second
       expect(second_row.name).to          have_content course_2.attributes[:name]
       expect(second_row.is_it_on_find).to have_content('Yes - view online')
       expect(second_row.applications).to  have_content 'Open'
@@ -62,14 +65,14 @@ feature 'Index courses', type: :feature do
         "https://localhost:5000/course/A123/#{course_2.attributes[:course_code]}"
       )
 
-      third_row = organisations_courses_page.rows.third
+      third_row = courses_table.rows.third
       expect(third_row.name).to           have_content course_3.attributes[:name]
       expect(third_row.content_status).to have_content 'Empty'
       expect(third_row.is_it_on_find).to  have_content 'No'
       expect(third_row.applications).to   have_content ''
       expect(third_row.vacancies).to      have_content ''
 
-      fourth_row = organisations_courses_page.rows.fourth
+      fourth_row = courses_table.rows.fourth
       expect(fourth_row.name).to           have_content course_4.attributes[:name]
       expect(fourth_row.content_status).to have_content ''
       expect(fourth_row.is_it_on_find).to  have_content 'No'
@@ -78,7 +81,7 @@ feature 'Index courses', type: :feature do
     end
 
     scenario "it shows 'add a new course' link" do
-      expect(page).to have_link('Add a new course', href: /#{Settings.google_forms.new_course_for_accredited_bodies.url.gsub('?', '\?')}/)
+      expect(courses_page).to have_link_to_add_a_course_for_accredited_bodies
     end
   end
 
@@ -103,21 +106,22 @@ feature 'Index courses', type: :feature do
         "/providers/A123?include=courses.accrediting_provider",
         provider_response
       )
-      visit "/"
-      click_on "Courses"
+      root_page.load
+      expect(organisation_page).to be_displayed(provider_code: 'A123')
+      organisation_page.courses.click
     end
 
     scenario "it shows a list of courses" do
-      expect(find('h1')).to have_content('Courses')
-      expect(page).to have_selector('table', count: 3)
-      expect(page).to have_link('Add a new course', href: /#{Settings.google_forms.new_course_for_unaccredited_bodies.url.gsub('?', '\?')}/)
+      expect(courses_page.title).to have_content('Courses')
+      expect(courses_page.courses_tables.size).to eq(3)
 
-      expect(page.all('h2')[0]).to have_content('Accredited body Aacme Scitt')
-      expect(page.all('h2')[1]).to have_content('Accredited body Zacme Scitt')
+      expect(courses_page.courses_tables.first).to_not have_subheading
+      expect(courses_page.courses_tables.second.subheading).to have_content('Accredited body Aacme Scitt')
+      expect(courses_page.courses_tables.third.subheading).to have_content('Accredited body Zacme Scitt')
     end
 
     scenario "it shows 'add a new course' link" do
-      expect(page).to have_link('Add a new course', href: /#{Settings.google_forms.new_course_for_unaccredited_bodies.url.gsub('?', '\?')}/)
+      expect(courses_page).to have_link_to_add_a_course_for_unaccredited_bodies
     end
   end
 
@@ -134,13 +138,12 @@ feature 'Index courses', type: :feature do
         "/providers/A321?include=courses.accrediting_provider",
         provider_response
       )
-      visit "/organisations/A321/courses"
+      courses_page.load(provider_code: 'A321')
     end
 
     scenario "it does not show the 'add a new course' link" do
-      visit "/organisations/A321/courses"
-
-      expect(page).to_not have_link('Add a new course')
+      expect(courses_page).to_not have_link_to_add_a_course_for_unaccredited_bodies
+      expect(courses_page).to_not have_link_to_add_a_course_for_accredited_bodies
     end
   end
 end

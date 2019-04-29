@@ -1,5 +1,5 @@
 <tr class="govuk-table__row">
-  <td class="govuk-table__cell">
+  <td class="govuk-table__cell" data-qa="provider__location-name">
     <%= link_to_if @provider.opted_in?, site.attributes[:location_name], edit_provider_site_path(@provider.provider_code, site.attributes[:id]), class: "govuk-link govuk-!-font-weight-bold" %>
   </td>
   <td class="govuk-table__cell">

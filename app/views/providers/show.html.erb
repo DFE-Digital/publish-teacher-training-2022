@@ -27,14 +27,14 @@
       <li>publish this information on all course pages</li>
     </ul>
 
-    <h2 class="govuk-heading-m"><%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-link" %></h2>
+    <h2 class="govuk-heading-m"><%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-link", data: { qa: 'provider__locations' } %></h2>
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
       <li>edit location names and addresses</li>
       <li>add locations</li>
     </ul>
 
-    <h2 class="govuk-heading-m"><%= link_to "Courses", provider_courses_path(@provider[:provider_code]), class: "govuk-link" %></h2>
+    <h2 class="govuk-heading-m"><%= link_to "Courses", provider_courses_path(@provider[:provider_code]), class: "govuk-link", data: { qa: 'provider__courses' } %></h2>
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
       <li>write about each course</li>
