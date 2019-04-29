@@ -1,9 +1,9 @@
-<%= content_for :page_title, "Are you sure you want to delete #{@course.name_and_code})?" %>
+<%= content_for :page_title, "Are you sure you want to delete #{course.name_and_code})?" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl"><%= @course.name_and_code %></span>
+      <span class="govuk-caption-xl"><%= course.name_and_code %></span>
       Are you sure you want to delete this course?
     </h1>
 
@@ -19,7 +19,7 @@
 
     <h2 class="govuk-heading-m">Contact support to delete this course</h2>
 
-    <p class="govuk-body">Contact the <%= bat_contact_mail_to 'Becoming a teacher team', subject: "Delete #{@course.name} (#{@provider_code}/#{@course.course_code})" %> by email to delete this course.</p>
+    <p class="govuk-body">Contact the <%= bat_contact_mail_to 'Becoming a teacher team', subject: "Delete #{course.name} (#{@provider_code}/#{course.course_code})" %> by email to delete this course.</p>
 
     <p class="govuk-body">In your email include:</p>
     <ul class="govuk-list govuk-list--bullet">

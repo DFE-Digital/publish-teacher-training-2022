@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  decorates_assigned :course
   before_action :build_course, only: %i[show description delete withdraw]
   before_action :build_provider, only: %i[show description]
 
@@ -51,7 +52,6 @@ private
       .where(provider_code: @provider_code)
       .find(params[:code])
       .first
-      &.decorate
   end
 
   def build_provider
