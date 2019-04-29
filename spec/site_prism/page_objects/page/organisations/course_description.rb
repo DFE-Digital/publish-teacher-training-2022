@@ -21,6 +21,7 @@ module PageObjects
         element :has_vacancies, '[data-qa=course__has_vacancies]'
         element :is_findable, '[data-qa=course__is_findable]'
         element :open_for_applications, '[data-qa=course__open_for_applications]'
+        element :last_published_at, '[data-qa=course__last_published_date]'
       end
     end
   end

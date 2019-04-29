@@ -38,4 +38,8 @@ class Course < Base
   def has_unpublished_changes?
     content_status == "published_with_unpublished_changes"
   end
+
+  def is_published?
+    content_status == 'published'
+  end
 end
