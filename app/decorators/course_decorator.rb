@@ -11,11 +11,11 @@ class CourseDecorator < ApplicationDecorator
     content.html_safe
   end
 
-  def on_find(provider_code = object.provider.provider_code)
+  def on_find(provider = object.provider)
     if object.findable?
-      h.govuk_link_to("Yes - view online", h.search_ui_course_page_url(provider_code: provider_code, course_code: object.course_code))
+      h.govuk_link_to("Yes - view online", h.search_ui_course_page_url(provider_code: provider.provider_code, course_code: object.course_code))
     else
-      not_on_find
+      not_on_find(provider)
     end
   end
 
@@ -112,9 +112,9 @@ private
     h.content_tag(:div, '*&nbsp;Unpublished&nbsp;changes', class: 'govuk-body govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1')
   end
 
-  def not_on_find
+  def not_on_find(provider)
     if object.new_and_not_running?
-      'No – ' + (object.provider.opted_in? ? 'still in draft' : 'must be published on UCAS').to_s
+      'No – ' + (provider.opted_in? ? 'still in draft' : 'must be published on UCAS').to_s
     else
       'No'
     end
