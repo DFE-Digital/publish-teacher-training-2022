@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
-  before_action :build_course, only: %i[show description delete withdraw]
-  before_action :build_provider, only: %i[show description]
+  before_action :build_course, only: %i[show description delete withdraw publish]
+  before_action :build_provider, only: %i[show description publish]
 
   def index
     @provider = Provider
@@ -40,6 +40,12 @@ class CoursesController < ApplicationController
   def withdraw; end
 
   def delete; end
+
+  def publish
+    @course.publish(provider_code: @provider.provider_code)
+    flash[:success] = 'Your changes have been published'
+    redirect_to description_provider_course_path(@provider.provider_code, @course.course_code)
+  end
 
 private
 

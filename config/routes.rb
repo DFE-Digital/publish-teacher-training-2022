@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get '/description', on: :member, to: 'courses#description'
       get '/withdraw', on: :member, to: 'courses#withdraw'
       get '/delete', on: :member, to: 'courses#delete'
+      post '/publish', on: :member, to: 'courses#publish'
     end
 
     resources :sites, path: 'locations', on: :member, only: %i[index edit update]

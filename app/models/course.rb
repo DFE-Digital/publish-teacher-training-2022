@@ -4,6 +4,7 @@ class Course < Base
   has_many :sites, through: :site_statuses, source: :site
 
   custom_endpoint :sync_with_search_and_compare, on: :member, request_method: :post
+  custom_endpoint :publish, on: :member, request_method: :post
 
   self.primary_key = :course_code
 
