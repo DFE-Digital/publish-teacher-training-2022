@@ -9,7 +9,8 @@ feature 'Course description', type: :feature do
             funding: 'fee',
             site_statuses: [site_status],
             provider: provider,
-            accrediting_provider: provider)
+            accrediting_provider: provider,
+            last_published_at: '2019-03-05T14:42:34Z')
   }
   let(:site) { jsonapi(:site) }
   let(:site_status) do
@@ -67,6 +68,9 @@ feature 'Course description', type: :feature do
       expect(course_page.other_requirements).to have_content(
         course.other_requirements
       )
+      expect(course_page.last_published_at).to have_content(
+        'Last published: 5 March 2019'
+      )
     end
   end
 
@@ -116,16 +120,42 @@ feature 'Course description', type: :feature do
   end
 
   describe 'shows status panel' do
-    scenario 'displays if the course has vacancies' do
-      expect(course_page.has_vacancies).to have_content('Yes')
+    context 'published course' do
+      scenario 'displays if the course is on find' do
+        expect(course_page.is_findable).to have_content('Yes')
+      end
+
+      scenario 'displays if the course has vacancies' do
+        expect(course_page.has_vacancies).to have_content('Yes')
+      end
+
+      scenario 'displays if the course is open for applications' do
+        expect(course_page.open_for_applications).to have_content('Open')
+      end
     end
 
-    scenario 'displays if the course is open for applications' do
-      expect(course_page.open_for_applications).to have_content('Open')
-    end
+    context 'unpublished course' do
+      let(:course_jsonapi) {
+        jsonapi(:course,
+                findable?: false,
+                site_statuses: [site_status],
+                provider: provider,
+                accrediting_provider: provider)
+      }
+      let(:course)          { course_jsonapi.to_resource }
+      let(:course_response) { course_jsonapi.render }
 
-    scenario 'displays if the course is on find' do
-      expect(course_page.is_findable).to have_content('Yes')
+      scenario 'displays if the course is on find' do
+        expect(course_page.is_findable).to have_content('No')
+      end
+
+      scenario 'does not display if the course has vacancies' do
+        expect(course_page.has_vacancies).to_not have_content('Yes')
+      end
+
+      scenario 'does not display if the course is open for applications' do
+        expect(course_page.open_for_applications).to_not have_content('Open')
+      end
     end
   end
 end
