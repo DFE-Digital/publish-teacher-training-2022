@@ -10,7 +10,9 @@
     <%= course.ucas_status %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__content-status">
-    <%= course.content_status_badge %>
+    <% unless course.not_running? %>
+      <%= course.content_status_badge %>
+    <% end %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__findable">
     <%= course.on_find(@provider) %>
