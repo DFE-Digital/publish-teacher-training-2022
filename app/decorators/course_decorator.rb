@@ -51,8 +51,6 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def content_status_badge
-    return if object.not_running?
-
     badge = h.content_tag(:div, content_tag_content.html_safe, class: "govuk-tag phase-tag--small #{content_tag_css_class}")
     badge += content_tag_unpublished if object.has_unpublished_changes?
     badge.html_safe

@@ -120,24 +120,18 @@ feature 'Course description', type: :feature do
   end
 
   describe 'shows status panel' do
-    context 'published course' do
-      scenario 'displays if the course is on find' do
-        expect(course_page.is_findable).to have_content('Yes')
-      end
-
-      scenario 'displays if the course has vacancies' do
-        expect(course_page.has_vacancies).to have_content('Yes')
-      end
-
-      scenario 'displays if the course is open for applications' do
-        expect(course_page.open_for_applications).to have_content('Open')
-      end
+    scenario 'displays status panel' do
+      expect(course_page.is_findable).to have_content('Yes')
+      expect(course_page.has_vacancies).to have_content('Yes')
+      expect(course_page.open_for_applications).to have_content('Open')
+      expect(course_page.content_status).to have_content('Published')
     end
 
     context 'unpublished course' do
       let(:course_jsonapi) {
         jsonapi(:course,
                 findable?: false,
+                content_status: 'draft',
                 site_statuses: [site_status],
                 provider: provider,
                 accrediting_provider: provider)
@@ -145,16 +139,9 @@ feature 'Course description', type: :feature do
       let(:course)          { course_jsonapi.to_resource }
       let(:course_response) { course_jsonapi.render }
 
-      scenario 'displays if the course is on find' do
+      scenario 'displays status panel' do
         expect(course_page.is_findable).to have_content('No')
-      end
-
-      scenario 'does not display if the course has vacancies' do
-        expect(course_page.has_vacancies).to_not have_content('Yes')
-      end
-
-      scenario 'does not display if the course is open for applications' do
-        expect(course_page.open_for_applications).to_not have_content('Open')
+        expect(course_page.content_status).to have_content('Draft')
       end
     end
   end
