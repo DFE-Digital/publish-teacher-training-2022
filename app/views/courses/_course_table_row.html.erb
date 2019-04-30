@@ -13,7 +13,7 @@
     <%= course.content_status_badge %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__findable">
-    <%= course.on_find(@provider.provider_code) %>
+    <%= course.on_find(@provider) %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__applications">
     <% if course.is_running? %>
