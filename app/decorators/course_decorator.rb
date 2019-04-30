@@ -53,8 +53,8 @@ class CourseDecorator < ApplicationDecorator
   def content_status_badge
     return if object.not_running?
 
-    badge = h.content_tag(:div, content_tag_content, class: "govuk-tag phase-tag--small #{content_tag_css_class}")
-    badge += h.content_tag_unpublished if object.has_unpublished_changes?
+    badge = h.content_tag(:div, content_tag_content.html_safe, class: "govuk-tag phase-tag--small #{content_tag_css_class}")
+    badge += content_tag_unpublished if object.has_unpublished_changes?
     badge.html_safe
   end
 
@@ -109,7 +109,7 @@ private
   end
 
   def content_tag_unpublished
-    h.content_tag(:div, '*&nbsp;Unpublished&nbsp;changes', class: 'govuk-body govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1')
+    h.content_tag(:div, '*&nbsp;Unpublished&nbsp;changes'.html_safe, class: 'govuk-body govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1')
   end
 
   def not_on_find(provider)
