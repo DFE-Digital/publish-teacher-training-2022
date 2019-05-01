@@ -150,11 +150,7 @@
     <div class="govuk-grid-column-one-third">
       <div class="status-box">
         <h2 class="govuk-heading-m">Changing your basic details</h2>
-        <% if @provider.opted_in? %>
-          <p>To make any changes to your basic details, or to <%= course.is_running? ? "withdraw" : "delete" %> this course, <%= bat_contact_mail_to "contact the Becoming a Teacher team", subject: "Edit #{course.name} (#{@provider_code}/#{course.course_code})" %>.</p>
-        <% else %>
-          <p class="govuk-body">You can only change this information using <%= link_to "UCAS web-link", "https://update.ucas.co.uk/netupdate2/Welcome.htm" %>. Changes will usually appear here within one working&nbsp;day.</p>
-        <% end %>
+        <p>To make any changes to your basic details, or to <%= course.is_running? ? "withdraw" : "delete" %> this course, <%= bat_contact_mail_to "contact the Becoming a Teacher team", subject: "Edit #{course.name} (#{@provider_code}/#{course.course_code})" %>.</p>
       </div>
     </div>
   <% end %>

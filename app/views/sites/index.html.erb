@@ -49,9 +49,7 @@
         <%= render @sites %>
       </tbody>
     </table>
-    <% if @provider.opted_in? %>
-      <%= add_location_link(current_user['info']['email'], @provider) %>
-      <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your location details.</p>
-    <% end %>
+    <%= add_location_link(current_user['info']['email'], @provider) %>
+    <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your location details.</p>
   </div>
 </div>

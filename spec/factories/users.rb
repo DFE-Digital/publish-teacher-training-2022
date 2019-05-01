@@ -6,14 +6,9 @@ FactoryBot.define do
     email      { Faker::Internet.safe_email("#{first_name} #{last_name}") }
     state      { 'transitioned' }
     accept_terms_date_utc { Time.current }
-    opted_in?  { false }
 
     trait :new do
       state { 'new' }
-    end
-
-    trait :opted_in do
-      opted_in? { true }
     end
 
     initialize_with do |_evaluator|

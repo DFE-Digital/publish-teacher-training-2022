@@ -25,7 +25,7 @@
   <li>copy content between courses</li>
 </ul>
 
-<% if @provider.courses.count > 10 && @provider.opted_in? %>
+<% if @provider.courses.count > 10 %>
   <%= add_course_link(current_user['info']['email'], @provider) %>
   <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your course details.</p>
 <% end %>
@@ -47,7 +47,5 @@
   </section>
 <% end %>
 
-<% if @provider.opted_in? %>
-  <%= add_course_link(current_user['info']['email'], @provider) %>
-  <p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>
-<% end %>
+<%= add_course_link(current_user['info']['email'], @provider) %>
+<p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>
