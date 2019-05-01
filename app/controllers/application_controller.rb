@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_has_multiple_providers,
                 :authenticate
-  after_action :nuke_token
 
   def not_found
     respond_to do |format|
@@ -82,14 +81,6 @@ private
                         Settings.authentication.secret,
                         Settings.authentication.algorithm)
 
-    Base.connection(true) do |connection|
-      connection.use FaradayMiddleware::OAuth2, token, token_type: :bearer
-    end
-  end
-
-  def nuke_token
-    Base.connection(true) do |connection|
-      connection.use FaradayMiddleware::OAuth2, nil, token_type: :bearer
-    end
+    Thread.current[:manage_courses_backend_token] = token
   end
 end
