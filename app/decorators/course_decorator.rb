@@ -50,10 +50,10 @@ class CourseDecorator < ApplicationDecorator
     object.subjects.sort.join("<br>").html_safe
   end
 
-  def content_status_badge
-    badge = h.content_tag(:div, content_tag_content.html_safe, class: "govuk-tag phase-tag--small #{content_tag_css_class}")
-    badge += content_tag_unpublished if object.has_unpublished_changes?
-    badge.html_safe
+  def status_tag
+    tag = h.content_tag(:div, status_tag_content.html_safe, class: "govuk-tag phase-tag--small #{status_tag_css_class}")
+    tag += unpublished_status_hint if object.has_unpublished_changes?
+    tag.html_safe
   end
 
   def length
@@ -80,7 +80,7 @@ class CourseDecorator < ApplicationDecorator
 
 private
 
-  def content_tag_content
+  def status_tag_content
     case object.content_status
     when 'published'
       'Published'
@@ -93,7 +93,7 @@ private
     end
   end
 
-  def content_tag_css_class
+  def status_tag_css_class
     case course.content_status
     when 'published'
       'phase-tag--published'
@@ -106,7 +106,7 @@ private
     end
   end
 
-  def content_tag_unpublished
+  def unpublished_status_hint
     h.content_tag(:div, '*&nbsp;Unpublished&nbsp;changes'.html_safe, class: 'govuk-body govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1')
   end
 

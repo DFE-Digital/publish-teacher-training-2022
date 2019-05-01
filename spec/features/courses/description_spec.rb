@@ -124,7 +124,7 @@ feature 'Course description', type: :feature do
       expect(course_page.is_findable).to have_content('Yes')
       expect(course_page.has_vacancies).to have_content('Yes')
       expect(course_page.open_for_applications).to have_content('Open')
-      expect(course_page.content_status).to have_content('Published')
+      expect(course_page.status_tag).to have_content('Published')
     end
 
     context 'unpublished course' do
@@ -141,7 +141,7 @@ feature 'Course description', type: :feature do
 
       scenario 'displays status panel' do
         expect(course_page.is_findable).to have_content('No')
-        expect(course_page.content_status).to have_content('Draft')
+        expect(course_page.status_tag).to have_content('Draft')
       end
     end
   end
