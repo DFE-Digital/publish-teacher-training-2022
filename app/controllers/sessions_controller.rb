@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     add_token_to_connection
     user = set_user_session
 
-    if user.opted_in? && user.state == 'new'
+    if user.state == 'new'
       redirect_to transition_info_path
     else
       redirect_to session[:redirect_back_to] || root_path

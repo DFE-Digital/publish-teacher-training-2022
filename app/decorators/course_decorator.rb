@@ -5,9 +5,9 @@ class CourseDecorator < ApplicationDecorator
     "#{object.name} (#{object.course_code})"
   end
 
-  def vacancies(provider = object.provider)
+  def vacancies
     content = object.has_vacancies? ? 'Yes' : 'No'
-    content += " (" + edit_vacancy_link + ")" if provider.opted_in?
+    content += " (" + edit_vacancy_link + ")"
     content.html_safe
   end
 
@@ -15,7 +15,7 @@ class CourseDecorator < ApplicationDecorator
     if object.findable?
       h.govuk_link_to("Yes - view online", h.search_ui_course_page_url(provider_code: provider.provider_code, course_code: object.course_code))
     else
-      not_on_find(provider)
+      not_on_find
     end
   end
 
@@ -110,9 +110,9 @@ private
     h.content_tag(:div, '*&nbsp;Unpublished&nbsp;changes'.html_safe, class: 'govuk-body govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1')
   end
 
-  def not_on_find(provider)
+  def not_on_find
     if object.new_and_not_running?
-      'No – ' + (provider.opted_in? ? 'still in draft' : 'must be published on UCAS').to_s
+      'No – still in draft'
     else
       'No'
     end
