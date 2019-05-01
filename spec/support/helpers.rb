@@ -27,7 +27,7 @@ module Helpers
     end
   end
 
-  def stub_session_create(user: double(id: 1))
+  def stub_session_create(user: double(id: 1, 'opted_in?': false))
     allow(Session).to receive(:create).and_return(user)
   end
 
