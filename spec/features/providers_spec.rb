@@ -14,8 +14,8 @@ RSpec.feature 'View providers', type: :feature do
   scenario 'Navigate to /organisations/AO' do
     stub_omniauth
     stub_session_create
-    stub_api_v2_request('/providers', jsonapi(:providers_response, data: [jsonapi(:provider, provider_code: "A0")]))
-    stub_api_v2_request('/providers/A0', jsonapi(:providers_response, data: [jsonapi(:provider, provider_code: "A0")]))
+    stub_api_v2_request('/providers', jsonapi(:providers_response))
+    stub_api_v2_request('/providers/A0', jsonapi(:provider, provider_code: 'A0'))
 
     visit('/organisations/A0')
     expect(find('h1')).to have_content('ACME SCITT A0')
