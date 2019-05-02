@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     if user.opted_in? && user.state == 'new'
       redirect_to transition_info_path
     else
-      redirect_to root_path
+      redirect_to session[:redirect_back_to] || root_path
     end
   end
 

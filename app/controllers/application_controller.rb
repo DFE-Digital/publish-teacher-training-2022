@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
 
       set_user_session if current_user['user_id'].blank?
     else
+      session[:redirect_back_to] = request.path
       redirect_to '/signin'
     end
   end
