@@ -58,10 +58,6 @@ RSpec.describe ApplicationController, type: :controller do
           expect(JWT).to have_received(:encode)
         end
 
-        it "has set connection" do
-          expect(Base).to have_received(:connection)
-        end
-
         it "has not called session create" do
           expect(Session).to_not have_received(:create)
         end
@@ -95,10 +91,6 @@ RSpec.describe ApplicationController, type: :controller do
 
         it "has performed jwt encoding" do
           expect(JWT).to have_received(:encode)
-        end
-
-        it "has set connection" do
-          expect(Base).to have_received(:connection)
         end
 
         it "has called session create" do
