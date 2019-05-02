@@ -1,10 +1,7 @@
 module Helpers
   def stub_omniauth(disable_completely: true, user: nil)
-    user ||= double first_name: 'John',
-                    last_name: 'Smith',
-                    email: 'email@example.com',
-                    id: 1,
-                    state: 'new'
+    user_resource = jsonapi(:user)
+    user ||= user_resource.to_resource
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:dfe] = {
       provider: "dfe",
