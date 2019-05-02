@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def has_multiple_providers?
-    provider_count = session.to_hash.dig("auth_user", "provider_count")
+    provider_count = session.to_hash.dig('auth_user', 'provider_count')
     provider_count.nil? || provider_count > 1
   end
 
