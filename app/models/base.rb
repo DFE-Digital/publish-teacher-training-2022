@@ -4,7 +4,7 @@ class Base < JsonApiClient::Resource
   # the user was first authenticated.
   class MCBConnection < JsonApiClient::Connection
     def run(request_method, path, params: nil, headers: {}, body: nil)
-      authorization = "Bearer #{Thread.current[:manage_courses_backend_token]}"
+      authorization = "Bearer #{Thread.current.fetch(:manage_courses_backend_token)}"
       super(
         request_method,
         path,
