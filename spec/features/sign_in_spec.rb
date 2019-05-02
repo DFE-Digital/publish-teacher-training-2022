@@ -26,7 +26,6 @@ feature 'Sign in', type: :feature do
     stub_omniauth(user: user)
     stub_session_create(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
-    stub_api_v2_request '/sessions', user, :post
     request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user, :patch
 
     visit '/signin'
@@ -46,7 +45,6 @@ feature 'Sign in', type: :feature do
     stub_omniauth(user: user)
     stub_session_create(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
-    stub_api_v2_request '/sessions', user, :post
 
     visit '/signin'
 
