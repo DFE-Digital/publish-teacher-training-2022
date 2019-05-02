@@ -71,6 +71,7 @@ feature 'Course description', type: :feature do
       expect(course_page.last_published_at).to have_content(
         'Last published: 5 March 2019'
       )
+      expect(course_page).to_not have_preview_link
     end
   end
 
@@ -116,6 +117,7 @@ feature 'Course description', type: :feature do
       expect(course_page.other_requirements).to have_content(
         course.other_requirements
       )
+      expect(course_page).to_not have_preview_link
     end
   end
 
@@ -142,6 +144,7 @@ feature 'Course description', type: :feature do
       scenario 'displays status panel' do
         expect(course_page.is_findable).to have_content('No')
         expect(course_page.status_tag).to have_content('Draft')
+        expect(course_page).to have_preview_link
       end
     end
   end
