@@ -20,11 +20,6 @@ module Helpers
 
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:dfe]
     stub_api_v2_request('/sessions', user_resource.render, :post)
-
-    # Temp solution until we implement `return_url` for DfE sign-in
-    if disable_completely
-      allow_any_instance_of(ApplicationController).to receive(:authenticate)
-    end
   end
 
   def stub_session_create(user: double(id: 1, 'opted_in?': false))
