@@ -25,6 +25,7 @@ describe 'Edit vacancies' do
         "/providers/AO/courses/#{course_code}?include=site_statuses.site",
         course
       )
+      get(auth_dfe_callback_path)
       get(edit_vacancies_path)
     end
 
