@@ -23,6 +23,7 @@ module PageObjects
         element :open_for_applications, '[data-qa=course__open_for_applications]'
         element :last_published_at, '[data-qa=course__last_published_date]'
         element :status_tag, '[data-qa=course__content-status]'
+        element :preview_link, '[data-qa=course__preview-link]'
       end
     end
   end
