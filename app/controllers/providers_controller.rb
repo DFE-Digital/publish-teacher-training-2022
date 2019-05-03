@@ -1,4 +1,6 @@
 class ProvidersController < ApplicationController
+  rescue_from JsonApiClient::Errors::NotFound, with: :not_found
+
   def index
     @providers = Provider.all
     render_manage_ui if @providers.empty?
