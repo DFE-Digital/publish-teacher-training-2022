@@ -8,8 +8,7 @@ feature 'Sign in', type: :feature do
   scenario 'using DfE Sign-in' do
     user = jsonapi :user
 
-    stub_omniauth disable_completely: false,
-                  user: user
+    stub_omniauth(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
 
     visit root_path

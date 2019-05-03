@@ -1,5 +1,5 @@
 module Helpers
-  def stub_omniauth(disable_completely: true, user: nil)
+  def stub_omniauth(user: nil)
     user_resource = user || jsonapi(:user)
     user = user_resource.to_resource
     OmniAuth.config.test_mode = true
