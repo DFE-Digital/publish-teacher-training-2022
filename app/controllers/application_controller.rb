@@ -78,8 +78,8 @@ private
       sign_in_user_id: current_user_dfe_signin_id
     }
     token = JWT.encode(payload,
-                        Settings.authentication.secret,
-                        Settings.authentication.algorithm)
+                       Settings.authentication.secret,
+                       Settings.authentication.algorithm)
 
     Thread.current[:manage_courses_backend_token] = token
   end

@@ -4,11 +4,11 @@ feature 'Index courses', type: :feature do
   let(:course_1) { jsonapi :course, name: 'English', include_nulls: [:accrediting_provider] }
   let(:course_2) {
     jsonapi :course,
-      name: 'Mathematics',
-      findable?: true,
-      open_for_applications?: true,
-      has_vacancies?: true,
-      include_nulls: [:accrediting_provider]
+            name: 'Mathematics',
+            findable?: true,
+            open_for_applications?: true,
+            has_vacancies?: true,
+            include_nulls: [:accrediting_provider]
   }
   let(:course_3) { jsonapi :course, findable?: false, name: 'Physics', content_status: "empty", include_nulls: [:accrediting_provider] }
   let(:course_4) { jsonapi :course, findable?: false, name: 'Science', content_status: "published", include_nulls: [:accrediting_provider] }
