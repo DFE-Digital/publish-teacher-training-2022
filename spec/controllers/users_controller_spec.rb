@@ -4,11 +4,16 @@ describe UsersController, type: :controller do
   let(:user) { jsonapi :user }
 
   before do
-    stub_omniauth
+    stub_omniauth(user: user)
     stub_session_create
-    allow_any_instance_of(ApplicationController)
-      .to receive(:current_user)
-      .and_return('user_id' => user.id)
+
+    # TODO: This is ugly, but will be removed when controller specs are axed.
+    old_controller = @controller
+    @controller = SessionsController.new
+    request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:dfe]
+    get :create
+    @controller = old_controller
+
     allow(Raven).to receive(:capture_exception)
   end
 

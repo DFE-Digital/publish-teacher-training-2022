@@ -5,6 +5,13 @@ RSpec.describe ProvidersController, type: :controller do
     before do
       stub_omniauth
       stub_session_create
+
+      # TODO: This is ugly, but will be removed when controller specs are axed.
+      old_controller = @controller
+      @controller = SessionsController.new
+      request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:dfe]
+      get :create
+      @controller = old_controller
     end
 
     describe 'GET #index' do
