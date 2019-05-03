@@ -10,7 +10,6 @@ feature 'Sign in', type: :feature do
 
     stub_omniauth disable_completely: false,
                   user: user
-    stub_session_create user: user.to_resource
     stub_api_v2_request('/providers', jsonapi(:providers_response))
 
     visit root_path
@@ -24,7 +23,6 @@ feature 'Sign in', type: :feature do
     user = jsonapi :user, :new, :opted_in
 
     stub_omniauth(user: user)
-    stub_session_create(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
     request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user, :patch
 
@@ -43,7 +41,6 @@ feature 'Sign in', type: :feature do
     user = jsonapi :user, :new
 
     stub_omniauth(user: user)
-    stub_session_create(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
 
     visit '/signin'

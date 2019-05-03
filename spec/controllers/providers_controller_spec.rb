@@ -4,7 +4,6 @@ RSpec.describe ProvidersController, type: :controller do
   context "with authenticated user" do
     before do
       stub_omniauth
-      stub_session_create
 
       # TODO: This is ugly, but will be removed when controller specs are axed.
       old_controller = @controller

@@ -25,9 +25,6 @@ module Helpers
     stub_api_v2_request('/sessions', user_resource.render, :post)
   end
 
-  def stub_session_create(user: double(id: 1, 'opted_in?': false))
-  end
-
   def stub_api_v2_request(url_path, stub, method = :get, status = 200, token: nil)
     url = "#{Settings.manage_backend.base_url}/api/v2#{url_path}"
 

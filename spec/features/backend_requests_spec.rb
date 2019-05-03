@@ -43,7 +43,6 @@ describe 'requests made to mc-be' do
       #                user token for its call to the backend api.
 
       stub_omniauth disable_completely: false
-      stub_session_create
 
       # Stub extra dependencies, these calls are not under test here.
       stub_api_v2_request(

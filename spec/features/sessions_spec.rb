@@ -7,7 +7,6 @@ describe 'sessions' do
 
   it 'redirects users back to where they were going on sign-in' do
     stub_omniauth disable_completely: false
-    stub_session_create
     stub_api_v2_request('/providers', jsonapi(:providers_response))
     stub_api_v2_request("/providers/#{provider.provider_code}", provider.render)
 
@@ -18,7 +17,6 @@ describe 'sessions' do
 
   it 'redirects users to root when they go straight to the signin page' do
     stub_omniauth disable_completely: false
-    stub_session_create
     stub_api_v2_request('/providers', jsonapi(:providers_response))
 
     visit '/signin'

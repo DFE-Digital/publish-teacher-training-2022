@@ -25,7 +25,6 @@ feature 'Index courses', type: :feature do
     before do
       user = jsonapi :user, :opted_in
       stub_omniauth(disable_completely: false, user: user)
-      stub_session_create(user: User.new(JSON.parse(user.to_json)))
       stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
       stub_api_v2_request("/providers/A123", provider_response)
       stub_api_v2_request(
@@ -99,7 +98,6 @@ feature 'Index courses', type: :feature do
     before do
       user = jsonapi :user, :opted_in
       stub_omniauth(disable_completely: false, user: user)
-      stub_session_create(user: User.new(JSON.parse(user.to_json)))
       stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
       stub_api_v2_request("/providers/A123", provider_response)
       stub_api_v2_request(
@@ -133,7 +131,6 @@ feature 'Index courses', type: :feature do
 
     before do
       stub_omniauth
-      stub_session_create
       stub_api_v2_request(
         "/providers/A321?include=courses.accrediting_provider",
         provider_response
