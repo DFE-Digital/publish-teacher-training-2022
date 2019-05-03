@@ -20,10 +20,10 @@ module PageObjects
         end
 
         element :link_to_add_a_course_for_unaccredited_bodies, "a[href^=\"#{Settings.google_forms.new_course_for_unaccredited_bodies.url.gsub('?', '\?')}\"]",
-          text: "Add a new course"
+                text: "Add a new course"
 
         element :link_to_add_a_course_for_accredited_bodies, "a[href^=\"#{Settings.google_forms.new_course_for_accredited_bodies.url.gsub('?', '\?')}\"]",
-            text: "Add a new course"
+                text: "Add a new course"
       end
     end
   end

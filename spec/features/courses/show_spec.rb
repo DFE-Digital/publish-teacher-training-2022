@@ -4,13 +4,13 @@ feature 'Show course', type: :feature do
   let(:provider) { jsonapi(:provider, accredited_body?: false) }
   let(:course) {
     jsonapi :course,
-      qualifications: %w[qts pgce],
-      study_mode: 'full_time',
-      start_date: Time.new(2019),
-      site_statuses: [site_status],
-      provider: provider,
-      accrediting_provider: provider,
-      open_for_applications?: true
+            qualifications: %w[qts pgce],
+            study_mode: 'full_time',
+            start_date: Time.new(2019),
+            site_statuses: [site_status],
+            provider: provider,
+            accrediting_provider: provider,
+            open_for_applications?: true
   }
   let(:site) { jsonapi(:site) }
   let(:site_status) do

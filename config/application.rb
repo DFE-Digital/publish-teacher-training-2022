@@ -25,7 +25,7 @@ module ManageCoursesFrontend
     # the framework and any gems in your application.
 
     config.session_store :cookie_store,
-                          key: '_publish_teacher_training_courses_session',
-                          expire_after: 6.hours
+                         key: '_publish_teacher_training_courses_session',
+                         expire_after: 6.hours
   end
 end
