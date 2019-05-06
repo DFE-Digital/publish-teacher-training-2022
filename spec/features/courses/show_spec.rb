@@ -7,14 +7,18 @@ feature 'Show course', type: :feature do
             qualifications: %w[qts pgce],
             study_mode: 'full_time',
             start_date: Time.new(2019),
-            site_statuses: [site_status],
+            site_statuses: [site_status1, site_status2],
             provider: provider,
             accrediting_provider: provider,
             open_for_applications?: true
   }
-  let(:site) { jsonapi(:site) }
-  let(:site_status) do
-    jsonapi(:site_status, :full_time_and_part_time, site: site)
+  let(:site1) { jsonapi(:site, location_name: 'London') }
+  let(:site2) { jsonapi(:site, location_name: 'Manchester') }
+  let(:site_status1) do
+    jsonapi(:site_status, :full_time, site: site1, status: 'running')
+  end
+  let(:site_status2) do
+    jsonapi(:site_status, :part_time, site: site2, status: 'suspended')
   end
   let(:course_response) { course.render }
   before do
@@ -61,7 +65,10 @@ feature 'Show course', type: :feature do
       course.course_code
     )
     expect(course_page.locations).to have_content(
-      site.location_name
+      site1.location_name
+    )
+    expect(course_page.locations).to have_content(
+      "#{site2.location_name} (suspended)"
     )
     expect { course_page.apprenticeship }.to raise_error(Capybara::ElementNotFound)
     expect(course_page.funding).to have_content(
@@ -81,6 +88,27 @@ feature 'Show course', type: :feature do
     )
   end
 
+  context 'when the course is new and not running' do
+    let(:course) {
+      jsonapi :course,
+              site_statuses: [site_status1, site_status2],
+              provider: provider,
+              accrediting_provider: provider,
+              ucas_status: 'new'
+    }
+
+    scenario 'viewing the show courses page' do
+      visit "/organisations/A0/courses/#{course.course_code}"
+
+      expect(course_page.locations).to have_content(
+        site1.location_name
+      )
+      expect(course_page.locations).to have_content(
+        site2.location_name
+      )
+    end
+  end
+
   scenario 'viewing the show page for a course that does not exist' do
     stub_api_v2_request(
       "/providers/ZZ/courses/ZZZ?include=site_statuses.site,provider.sites,accrediting_provider",
@@ -93,7 +121,7 @@ feature 'Show course', type: :feature do
     visit "/organisations/ZZ/courses/ZZZ"
 
     expect(course_page)
-      .to be_displayed(provider_code: 'ZZ', course_code: 'ZZZ')
+    .to be_displayed(provider_code: 'ZZ', course_code: 'ZZZ')
     expect(course_page.title.text).to eq 'Page not found'
   end
 end
