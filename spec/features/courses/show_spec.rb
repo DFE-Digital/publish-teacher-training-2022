@@ -19,7 +19,6 @@ feature 'Show course', type: :feature do
   let(:course_response) { course.render }
   before do
     stub_omniauth
-    stub_session_create
     stub_api_v2_request(
       "/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
       course_response

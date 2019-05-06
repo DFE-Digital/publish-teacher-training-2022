@@ -22,8 +22,7 @@ feature 'View locations', type: :feature do
 
   before do
     user = jsonapi :user, :opted_in
-    stub_omniauth(disable_completely: false, user: user)
-    stub_session_create(user: User.new(JSON.parse(user.to_json)))
+    stub_omniauth(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider[:data]]))
     stub_api_v2_request("/providers/#{provider_code}", provider)
     stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)

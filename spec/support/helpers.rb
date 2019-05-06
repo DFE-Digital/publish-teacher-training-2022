@@ -1,34 +1,28 @@
 module Helpers
-  def stub_omniauth(disable_completely: true, user: nil)
-    user ||= double first_name: 'John',
-                    last_name: 'Smith',
-                    email: 'email@example.com',
-                    id: 1,
-                    state: 'new'
+  def stub_omniauth(user: nil)
+    user_resource = user || jsonapi(:user)
+    user = user_resource.to_resource
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:dfe] = {
-      provider: "dfe",
-      uid: "123456789",
-      "info" => {
-        "first_name" => user.first_name,
-        "last_name"  => user.last_name,
-        "email"      => user.email,
+      'provider' => 'dfe',
+      'uid'      => SecureRandom.uuid,
+      'info'     => {
+        'first_name' => user.first_name,
+        'last_name'  => user.last_name,
+        'email'      => user.email,
         'id'         => user.id,
         'state'      => user.state
       },
-      credentials: {
-        token_id: "123"
+      'credentials' => {
+        'token_id' => '123'
       }
     }
 
-    # Temp solution until we implement `return_url` for DfE sign-in
-    if disable_completely
-      allow_any_instance_of(ApplicationController).to receive(:authenticate)
-    end
-  end
-
-  def stub_session_create(user: double(id: 1, 'opted_in?': false))
-    allow(Session).to receive(:create).and_return(user)
+    # This is needed because we check the provider count on all pages
+    # TODO: Move this to be returned with the user.
+    stub_api_v2_request('/providers', jsonapi(:provider).render)
+    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:dfe]
+    stub_api_v2_request('/sessions', user_resource.render, :post)
   end
 
   def stub_api_v2_request(url_path, stub, method = :get, status = 200, token: nil)

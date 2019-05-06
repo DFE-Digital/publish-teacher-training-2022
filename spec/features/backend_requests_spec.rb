@@ -42,8 +42,7 @@ describe 'requests made to mc-be' do
       #   - Request 1: allow the call to complete - this will use the wrong
       #                user token for its call to the backend api.
 
-      stub_omniauth disable_completely: false
-      stub_session_create
+      stub_omniauth
 
       # Stub extra dependencies, these calls are not under test here.
       stub_api_v2_request(

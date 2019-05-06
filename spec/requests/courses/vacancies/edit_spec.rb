@@ -20,11 +20,11 @@ describe 'Edit vacancies' do
 
     before do
       stub_omniauth
-      stub_session_create
       stub_api_v2_request(
         "/providers/AO/courses/#{course_code}?include=site_statuses.site",
         course
       )
+      get(auth_dfe_callback_path)
       get(edit_vacancies_path)
     end
 

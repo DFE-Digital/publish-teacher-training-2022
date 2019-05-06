@@ -8,9 +8,7 @@ feature 'Sign in', type: :feature do
   scenario 'using DfE Sign-in' do
     user = jsonapi :user
 
-    stub_omniauth disable_completely: false,
-                  user: user
-    stub_session_create user: user.to_resource
+    stub_omniauth(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
 
     visit root_path
@@ -24,9 +22,7 @@ feature 'Sign in', type: :feature do
     user = jsonapi :user, :new, :opted_in
 
     stub_omniauth(user: user)
-    stub_session_create(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
-    stub_api_v2_request '/sessions', user, :post
     request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user, :patch
 
     visit '/signin'
@@ -44,9 +40,7 @@ feature 'Sign in', type: :feature do
     user = jsonapi :user, :new
 
     stub_omniauth(user: user)
-    stub_session_create(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
-    stub_api_v2_request '/sessions', user, :post
 
     visit '/signin'
 
