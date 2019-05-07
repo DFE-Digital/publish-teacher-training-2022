@@ -2,7 +2,7 @@ module PageObjects
   module Page
     module Organisations
       class Course < PageObjects::Base
-        set_url '/organisations/{provider_code}/course/{course_code}'
+        set_url '/organisations/{provider_code}/courses/{course_code}'
 
         element :title, '.govuk-heading-xl'
         element :caption, '.govuk-caption-xl'

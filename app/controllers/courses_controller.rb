@@ -58,6 +58,8 @@ private
       .where(provider_code: @provider_code)
       .find(params[:code])
       .first
+  rescue JsonApiClient::Errors::NotFound
+    render file: 'errors/not_found', status: :not_found
   end
 
   def build_provider

@@ -30,6 +30,9 @@ feature 'Show course', type: :feature do
   scenario 'viewing the show courses page' do
     visit "/organisations/A0/courses/#{course.course_code}"
 
+    expect(course_page)
+      .to be_displayed(provider_code: 'A0', course_code: course.course_code)
+
     expect(course_page.caption).to have_content(
       course.description
     )
@@ -76,5 +79,21 @@ feature 'Show course', type: :feature do
     expect(course_page.level).to have_content(
       'Secondary'
     )
+  end
+
+  scenario 'viewing the show page for a course that does not exist' do
+    stub_api_v2_request(
+      "/providers/ZZ/courses/ZZZ?include=site_statuses.site,provider.sites,accrediting_provider",
+      '',
+      :get,
+      404
+    )
+
+    course
+    visit "/organisations/ZZ/courses/ZZZ"
+
+    expect(course_page)
+      .to be_displayed(provider_code: 'ZZ', course_code: 'ZZZ')
+    expect(course_page.title.text).to eq 'Page not found'
   end
 end
