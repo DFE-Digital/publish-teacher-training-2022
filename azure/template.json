@@ -94,10 +94,10 @@
         "description": "Secret Key Base."
       }
     },
-    "settingsAuthenticationSecret": {
+    "settingsManageBackendSecret": {
       "type": "string",
       "metadata": {
-        "description": "Auth secret for manage back-end."
+        "description": "Auth secret for manage backend."
       }
     },
     "sentryDSN": {
@@ -211,8 +211,8 @@
                 "value": "[parameters('dfeSignInSecret')]"
               },
               {
-                "name": "SETTINGS__AUTHENTICATION__SECRET",
-                "value": "[parameters('settingsAuthenticationSecret')]"
+                "name": "SETTINGS__MANAGE_BACKEND__SECRET",
+                "value": "[parameters('settingsManageBackendSecret')]"
               },
               {
                 "name": "SENTRY_DSN",

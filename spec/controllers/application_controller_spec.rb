@@ -36,7 +36,7 @@ RSpec.describe ApplicationController, type: :controller do
         allow(Base).to receive(:connection)
 
         allow(JWT).to receive(:encode)
-          .with(payload, Settings.authentication.secret, Settings.authentication.algorithm)
+          .with(payload, Settings.manage_backend.secret, Settings.manage_backend.algorithm)
           .and_return("anything")
 
         controller.request.session = { auth_user: { "info" => user_info, 'uid' => sign_in_user_id } }
