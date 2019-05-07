@@ -9,12 +9,11 @@ dfe_signin:
   secret: foobar
   # URL of this app for the callback after sigining in
   base_url: https://localhost:3000
-authentication:
+manage_backend:
   algorithm: HS256
   # Set this in the env! The below ensures that we are un-authenticatable if we
   # forget to do this in production.
   secret: <%= SecureRandom.base64 %>
-manage_backend:
   # URL of the API app (manage-courses-backend)
   base_url: http://localhost:3001
 manage_ui:
