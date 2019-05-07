@@ -95,5 +95,8 @@ staging:
 qa:
   <<: *production
 
+new_qa:
+  <<: *production
+
 ucas:
   <<: *production
