@@ -46,8 +46,9 @@ describe UsersController, type: :controller do
       end
 
       it "redirects to providers index" do
-        expect { get :accept_transition_info }.to raise_error JsonApiClient::Errors::ServerError
+        get :accept_transition_info
         expect(Raven).to have_received(:capture_exception).with(instance_of(JsonApiClient::Errors::ServerError))
+        expect(response).to have_http_status(:internal_server_error)
       end
     end
   end
