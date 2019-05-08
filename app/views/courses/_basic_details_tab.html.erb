@@ -75,7 +75,7 @@
             <%= course.site_statuses.first.site.location_name %>
           <% else %>
             <ul class="govuk-list courses-locations-list">
-              <% @course.site_statuses.sort_by{ |ss| ss.site.location_name }.each do |site_status| %>
+              <% course.alphabetically_sorted_site_statuses.each do |site_status| %>
                 <li>
                   <%= site_status.site.location_name %>
                   <% unless site_status.status == 'running' %>

@@ -78,6 +78,10 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def alphabetically_sorted_site_statuses
+    object.site_statuses.sort_by { |ss| ss.site.location_name }
+  end
+
 private
 
   def status_tag_content
