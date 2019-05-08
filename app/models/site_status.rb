@@ -14,4 +14,8 @@ class SiteStatus < Base
   def running?
     status == 'running'
   end
+
+  def new_or_running?
+    status.in?(%w[running new_status])
+  end
 end

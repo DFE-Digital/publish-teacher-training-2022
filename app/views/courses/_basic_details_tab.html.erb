@@ -78,8 +78,8 @@
               <% course.alphabetically_sorted_site_statuses.each do |site_status| %>
                 <li>
                   <%= site_status.site.location_name %>
-                  <% unless site_status.status == 'running' %>
-                    <span class="govuk-hint govuk-!-display-inline">(<%= site_status.status %>)</span>
+                  <% unless site_status.new_or_running? %>
+                    <span class="govuk-hint govuk-!-display-inline">(not running)</span>
                   <% end %>
                 </li>
               <% end %>

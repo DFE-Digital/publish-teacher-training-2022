@@ -68,7 +68,7 @@ feature 'Show course', type: :feature do
       site1.location_name
     )
     expect(course_page.locations).to have_content(
-      "#{site2.location_name} (suspended)"
+      "#{site2.location_name} (not running)"
     )
     expect { course_page.apprenticeship }.to raise_error(Capybara::ElementNotFound)
     expect(course_page.funding).to have_content(
