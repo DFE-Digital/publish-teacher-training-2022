@@ -8,8 +8,11 @@ class SessionsController < ApplicationController
   def create
     session[:auth_user] = auth_hash
 
+    Raven.tags_context(sign_in_user_id: current_user.fetch('uid'))
     add_token_to_connection
     user = set_user_session
+    # current_user['user_id'] won't be set until set_user_session is run
+    Raven.user_context(id: current_user['user_id'])
 
     if user.state == 'new'
       redirect_to transition_info_path

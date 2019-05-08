@@ -34,10 +34,14 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if current_user
+      assign_sentry_contexts
       add_token_to_connection
       set_has_multiple_providers
 
-      set_user_session if current_user['user_id'].blank?
+      if current_user['user_id'].blank?
+        set_user_session
+        Raven.user_context(id: current_user['user_id'])
+      end
     else
       session[:redirect_back_to] = request.path
       redirect_to '/signin'
@@ -64,6 +68,7 @@ class ApplicationController < ActionController::Base
 private
 
   def set_user_session
+    # TODO: we should return a session object here with a 'user' attached to id.
     user = Session.create(first_name: current_user_info[:first_name],
                           last_name: current_user_info[:last_name])
     session[:auth_user]['user_id'] = user.id
@@ -91,5 +96,10 @@ private
                        Settings.manage_backend.algorithm)
 
     Thread.current[:manage_courses_backend_token] = token
+  end
+
+  def assign_sentry_contexts
+    Raven.user_context(id: current_user['user_id'])
+    Raven.tags_context(sign_in_user_id: current_user.fetch('uid'))
   end
 end

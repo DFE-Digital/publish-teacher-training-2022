@@ -26,6 +26,14 @@ RSpec.describe SessionsController, type: :controller do
     }
     let(:user) { jsonapi :user, **user_info }
     let(:user_id) { '101' }
+    let(:sign_in_user_id) { SecureRandom.uuid }
+
+    before do
+      @request.env["omniauth.auth"] = {
+        "info" => user.attributes,
+        'uid' => sign_in_user_id
+      }
+    end
 
     context "if session creation succeeds" do
       before do
@@ -36,15 +44,31 @@ RSpec.describe SessionsController, type: :controller do
       end
 
       it "creates the session and redirects to root" do
-        @request.env["omniauth.auth"] = {
-          "info" => user.attributes
-        }
-
         get :create
 
         expect(subject).to redirect_to("/")
         expect(@request.session[:auth_user]['user_id']).to eq user_id
         expect(@request.session[:auth_user]["info"]).to eq user.attributes
+      end
+
+      describe 'sentry contexts' do
+        before do
+          allow(Raven).to receive(:user_context)
+          allow(Raven).to receive(:tags_context)
+        end
+
+        it 'sets the user id' do
+          get :create
+
+          expect(Raven).to have_received(:user_context).with(id: user_id)
+        end
+
+        it 'sets the DFE sign-in id in the tags context' do
+          get :create
+
+          expect(Raven).to have_received(:tags_context)
+                             .with(sign_in_user_id: sign_in_user_id)
+        end
       end
     end
 
@@ -56,10 +80,6 @@ RSpec.describe SessionsController, type: :controller do
       end
 
       it "redirects to Manage UI root" do
-        @request.env["omniauth.auth"] = {
-          "info" => user.attributes
-        }
-
         get :create
 
         expect(subject).to redirect_to(Settings.manage_ui.base_url)
@@ -74,10 +94,6 @@ RSpec.describe SessionsController, type: :controller do
       end
 
       it "redirects to Manage UI root" do
-        @request.env["omniauth.auth"] = {
-          "info" => user.attributes
-        }
-
         get :create
 
         expect(subject).to redirect_to(Settings.manage_ui.base_url)
