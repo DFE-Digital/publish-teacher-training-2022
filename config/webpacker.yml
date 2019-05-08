@@ -97,6 +97,3 @@ qa:
 
 new_qa:
   <<: *production
-
-ucas:
-  <<: *production
