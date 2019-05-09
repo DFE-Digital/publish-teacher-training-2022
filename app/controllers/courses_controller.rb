@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
-  before_action :build_course, only: %i[show description delete withdraw publish]
-  before_action :build_provider, only: %i[show description publish]
+  before_action :build_course, only: %i[show description about delete withdraw publish]
+  before_action :build_provider, only: %i[show description about publish]
 
   def index
     @provider = Provider
@@ -36,6 +36,8 @@ class CoursesController < ApplicationController
   def show; end
 
   def description; end
+
+  def about; end
 
   def withdraw; end
 

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get '/vacancies', on: :member, to: 'courses/vacancies#edit'
       put '/vacancies', on: :member, to: 'courses/vacancies#update'
       get '/description', on: :member, to: 'courses#description'
+      get '/about', on: :member, to: 'courses#about'
       get '/withdraw', on: :member, to: 'courses#withdraw'
       get '/delete', on: :member, to: 'courses#delete'
       post '/publish', on: :member, to: 'courses#publish'
