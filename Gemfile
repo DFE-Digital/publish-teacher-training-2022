@@ -51,11 +51,22 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
+  # Factories to build models
+  gem 'factory_bot_rails'
+
+  # Get us some fake!
+  gem 'faker'
+
   # GOV.UK interpretation of rubocop for linting Ruby
   gem 'govuk-lint'
 
+  # Ability to render JSONAPI
+  gem 'jsonapi-renderer'
+  gem 'jsonapi-serializable'
+
   # Debugging
   gem 'pry-byebug'
+  gem 'pry-rails'
 
   # Testing framework
   gem 'rspec-rails', '~> 3.8'
@@ -97,8 +108,6 @@ group :test do
 
   gem 'webmock'
 
-  gem 'factory_bot_rails'
-
   # Show test coverage %
   gem 'simplecov', require: false
 
@@ -107,9 +116,6 @@ group :test do
 
   # Page object for Capybara
   gem 'site_prism'
-
-  # Get us some fake!
-  gem 'faker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
