@@ -1,33 +1,42 @@
 require 'rails_helper'
 
 feature 'About course', type: :feature do
-  let(:course) do
+  let(:course_jsonapi) do
     jsonapi(
       :course,
       provider: jsonapi(:provider, provider_code: 'A0')
-    ).render
+    )
   end
-  let(:course_attributes) { course[:data][:attributes] }
+  let(:course)          { course_jsonapi.to_resource }
+  let(:course_response) { course_jsonapi.render }
 
   before do
     stub_omniauth
     stub_api_v2_request(
-      "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site,provider.sites,accrediting_provider",
-      course
+      "/providers/AO/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      course_response
     )
   end
 
-  scenario 'viewing the about courses page' do
-    visit about_provider_course_path('AO', course_attributes[:course_code])
+  let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
 
-    expect(find('.govuk-caption-xl')).to have_content(
-      "#{course_attributes[:name]} (#{course_attributes[:course_code]})"
+  scenario 'viewing the about courses page' do
+    visit about_provider_course_path('AO', course.course_code)
+
+    expect(about_course_page.caption).to have_content(
+      "#{course.name} (#{course.course_code})"
     )
-    expect(find('.govuk-heading-xl')).to have_content(
+    expect(about_course_page.title).to have_content(
       "About this course"
     )
-    expect(page).to have_field("About this course")
-    expect(page).to have_field("Interview process (optional)")
-    expect(page).to have_field("How school placements work")
+    expect(about_course_page.about_textarea).to have_content(
+      course.about_course
+    )
+    expect(about_course_page.interview_process_textarea).to have_content(
+      course.interview_process
+    )
+    expect(about_course_page.how_school_placements_work_textarea).to have_content(
+      course.how_school_placements_work
+    )
   end
 end
