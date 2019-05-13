@@ -30,7 +30,7 @@ RSpec.describe SessionsController, type: :controller do
 
     before do
       @request.env["omniauth.auth"] = {
-        "info" => user.attributes,
+        "info" => user.attributes.stringify_keys,
         'uid' => sign_in_user_id
       }
     end
@@ -47,8 +47,11 @@ RSpec.describe SessionsController, type: :controller do
         get :create
 
         expect(subject).to redirect_to("/")
+        user_info = @request.session[:auth_user]['info']
         expect(@request.session[:auth_user]['user_id']).to eq user_id
-        expect(@request.session[:auth_user]["info"]).to eq user.attributes
+        expect(user_info['email']).to eq user.attributes[:email]
+        expect(user_info['first_name']).to eq user.attributes[:first_name]
+        expect(user_info['last_name']).to eq user.attributes[:last_name]
       end
 
       describe 'sentry contexts' do

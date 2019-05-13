@@ -6,7 +6,17 @@ class SessionsController < ApplicationController
   end
 
   def create
-    session[:auth_user] = auth_hash
+    session[:auth_user] = HashWithIndifferentAccess.new(
+      "uid" => auth_hash.dig("uid"),
+      "info" => HashWithIndifferentAccess.new(
+        email: auth_hash.dig("info", 'email'),
+        first_name: auth_hash.dig("info", 'first_name'),
+        last_name: auth_hash.dig("info", 'last_name')
+      ),
+      'credentials' => HashWithIndifferentAccess.new(
+        'id_token' => auth_hash.dig('credentials', :id_token)
+      )
+    )
 
     Raven.tags_context(sign_in_user_id: current_user.fetch('uid'))
     add_token_to_connection
