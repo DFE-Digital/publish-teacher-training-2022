@@ -41,6 +41,8 @@ class CoursesController < ApplicationController
 
   def requirements; end
 
+  def fees; end
+
   def withdraw; end
 
   def delete; end

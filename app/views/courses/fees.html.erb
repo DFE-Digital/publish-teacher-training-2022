@@ -1,0 +1,109 @@
+<%= content_for :page_title, "#{course.name_and_code} - Courses" %>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_course_path(course.provider.provider_code, course.course_code)) %>
+<% end %>
+
+<h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+  Course length and fees
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for course, url: publish_provider_course_path(course.provider.provider_code, course.course_code), method: :post do |f| %>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">Course length</h2>
+          </legend>
+            <div class="govuk-radios" data-module="radios">
+              <div class="govuk-radios__item">
+                <%= f.radio_button :course_length, 'OneYear', class: 'govuk-radios__input' %>
+                <%= f.label :course_length, '1 year', class: 'govuk-label govuk-radios__label', for: 'course_course_length_oneyear' %>
+              </div>
+              <div class="govuk-radios__item">
+                <%= f.radio_button :course_length, 'TwoYears', class: 'govuk-radios__input' %>
+                <%= f.label :course_length, 'Up to 2 years', class: 'govuk-label govuk-radios__label', for: 'course_course_length_twoyears' %>
+              </div>
+              <div class="govuk-radios__item">
+                <%= f.radio_button :course_length, 'Other', class: 'govuk-radios__input', data: {"aria-controls" => "other-container" } %>
+                <%= f.label :course_length, 'Other', class: 'govuk-label govuk-radios__label', for: 'course_course_length_other' %>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="other-container">
+                <div class="form-group">
+                  <%= f.label :course_length, 'Course Length', class: 'govuk-label govuk-label--s', for: 'course_course_length_other_length' %>
+                  <%= f.text_field :course_length, class: 'govuk-input' %>
+                </div>
+              </div>
+            </div>
+        </fieldset>
+      </div>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+
+      <h3 class="govuk-heading-l remove-top-margin">Course fees</h3>
+      <div class="govuk-form-group ">
+        <%= f.label :fee_uk_eu, 'Fee for UK and EU students', class: 'govuk-label govuk-label--s' %>
+        <div class="govuk-currency-input">
+          <div class="govuk-currency-input__inner">
+            <span class="govuk-currency-input__inner__unit">£</span>
+            <%= f.number_field :fee_uk_eu,
+                                class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
+                                value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true),
+                                min: "0",
+                                max: "100000" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="govuk-form-group ">
+        <%= f.label :fee_international, 'Fee for international students (optional)', class: 'govuk-label govuk-label--s' %>
+        <div class="govuk-currency-input">
+          <div class="govuk-currency-input__inner">
+            <span class="govuk-currency-input__inner__unit">£</span>
+            <%= f.number_field :fee_international,
+                                class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
+                                value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true),
+                                min: "0",
+                                max: "100000" %>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="govuk-heading-m">Fee details</h4>
+      <p class="govuk-body">If applicable, give further details about the fees for this course.</p>
+      <p class="govuk-body">This could include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>any top up fees</li>
+        <li>any other costs</li>
+      </ul>
+
+      <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
+        <div class="govuk-form-group">
+          <%= f.label :fee_details, 'Fee details (optional)', class: 'govuk-label govuk-label--s' %>
+          <%= f.text_area :fee_details, rows: 15, class: 'govuk-textarea js-character-count' %>
+        </div>
+      </div>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+
+      <h2 class="govuk-heading-l">Financial support you offer</h2>
+      <p class="govuk-body">If applicable, say more about the financial support you offer for this course. For example, any bursaries available.</p>
+      <p class="govuk-body">You don’t need to add details of any DfE bursaries and subject scholarships here. These will be published automatically to your course page</p>
+
+      <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
+        <div class="govuk-form-group">
+          <%= f.label :financial_support, 'Financial support you offer (optional)', class: 'govuk-label govuk-label--s' %>
+          <%= f.text_area :financial_support, rows: 15, class: 'govuk-textarea js-character-count' %>
+        </div>
+      </div>
+
+      <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes', provider_course_path(course.provider.provider_code, course.course_code), class: "govuk-link" %>
+      </p>
+    <% end %>
+  </div>
+</div>
