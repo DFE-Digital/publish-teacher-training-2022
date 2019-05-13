@@ -21,8 +21,7 @@
     <p class="govuk-body">Remove this course from Find and close applications.</p>
     <%= link_to 'Withdraw this course', withdraw_provider_course_path(@provider.provider_code, course.course_code), class: "govuk-link--destructive" %>
   <% else %>
-    <h3 class="govuk-heading-m">Delete</h3>
-    <p class="govuk-body">Remove this course from Find and close applications.</p>
+    <h3 class="govuk-heading-m govuk-visually-hidden">Delete</h3>
     <%= link_to 'Delete this course', delete_provider_course_path(@provider.provider_code, course.course_code), class: "govuk-link--destructive" %>
   <% end %>
 </div>
