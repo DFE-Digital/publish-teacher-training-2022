@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get '/description', on: :member, to: 'courses#description'
       get '/about', on: :member, to: 'courses#about'
       get '/requirements', on: :member, to: 'courses#requirements'
+      get '/fees', on: :member, to: 'courses#fees'
       get '/withdraw', on: :member, to: 'courses#withdraw'
       get '/delete', on: :member, to: 'courses#delete'
       post '/publish', on: :member, to: 'courses#publish'
