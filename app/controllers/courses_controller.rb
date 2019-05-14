@@ -43,6 +43,8 @@ class CoursesController < ApplicationController
 
   def fees; end
 
+  def salary; end
+
   def withdraw; end
 
   def delete; end
