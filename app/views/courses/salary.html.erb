@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{course.name_and_code} - Course length and salary" %>
+<%= content_for :page_title, "Course length and salary - #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_course_path(course.provider.provider_code, course.course_code)) %>
@@ -12,33 +12,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for course, url: publish_provider_course_path(course.provider.provider_code, course.course_code), method: :post do |f| %>
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-            <h2 class="govuk-fieldset__heading">Course length</h2>
-          </legend>
-            <div class="govuk-radios" data-module="radios">
-              <div class="govuk-radios__item">
-                <%= f.radio_button :course_length, 'OneYear', class: 'govuk-radios__input' %>
-                <%= f.label :course_length, '1 year', class: 'govuk-label govuk-radios__label', for: 'course_course_length_oneyear' %>
-              </div>
-              <div class="govuk-radios__item">
-                <%= f.radio_button :course_length, 'TwoYears', class: 'govuk-radios__input' %>
-                <%= f.label :course_length, 'Up to 2 years', class: 'govuk-label govuk-radios__label', for: 'course_course_length_twoyears' %>
-              </div>
-              <div class="govuk-radios__item">
-                <%= f.radio_button :course_length, 'Other', class: 'govuk-radios__input', data: {"aria-controls" => "other-container" } %>
-                <%= f.label :course_length, 'Other', class: 'govuk-label govuk-radios__label', for: 'course_course_length_other' %>
-              </div>
-              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="other-container">
-                <div class="form-group">
-                  <%= f.label :course_length, 'Course Length', class: 'govuk-label govuk-label--s', for: 'course_course_length_other_length' %>
-                  <%= f.text_field :course_length, class: 'govuk-input' %>
-                </div>
-              </div>
-            </div>
-        </fieldset>
-      </div>
+      <%= render partial: 'courses/course_length', locals: { f: f } %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
