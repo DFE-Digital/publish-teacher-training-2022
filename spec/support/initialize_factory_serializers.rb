@@ -1,5 +1,5 @@
 FactoryBot.factories.each do |factory|
-  next unless factory.name.in? []
+  next unless factory.name.in? %i[user]
 
   # Create a string that holds the name of the class, for example
   # "UserSerializer"

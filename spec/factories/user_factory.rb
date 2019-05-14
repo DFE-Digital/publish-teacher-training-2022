@@ -1,5 +1,7 @@
 FactoryBot.define do
-  factory :user, class: Hash do
+  factory :user do
+    skip_create
+
     sequence(:id)
     first_name { Faker::Name.first_name }
     last_name  { Faker::Name.last_name }
@@ -9,16 +11,6 @@ FactoryBot.define do
 
     trait :new do
       state { 'new' }
-    end
-
-    initialize_with do |_evaluator|
-      data_attributes = attributes.except(:id)
-
-      JSONAPIMockSerializable.new(
-        id,
-        'users',
-        attributes: data_attributes
-      )
     end
   end
 end

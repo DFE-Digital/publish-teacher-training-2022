@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe UsersController, type: :controller do
-  let(:user) { jsonapi :user }
+  let(:user) { build :user }
 
   before do
     stub_omniauth(user: user)

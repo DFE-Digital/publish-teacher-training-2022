@@ -23,7 +23,7 @@ feature 'Index courses', type: :feature do
 
   describe "without accrediting providers" do
     before do
-      user = jsonapi(:user)
+      user = build(:user)
       stub_omniauth(user: user)
       stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
       stub_api_v2_request("/providers/A123", provider_response)
@@ -96,7 +96,7 @@ feature 'Index courses', type: :feature do
     let(:course_3) { jsonapi :course, accrediting_provider: provider_2 }
 
     before do
-      user = jsonapi(:user)
+      user = build(:user)
       stub_omniauth(user: user)
       stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
       stub_api_v2_request("/providers/A123", provider_response)

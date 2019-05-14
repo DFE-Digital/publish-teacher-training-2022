@@ -6,7 +6,7 @@ feature 'Sign in', type: :feature do
   let(:root_page)            { PageObjects::Page::RootPage.new }
 
   scenario 'using DfE Sign-in' do
-    user = jsonapi :user
+    user = build :user
 
     stub_omniauth(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
@@ -19,11 +19,11 @@ feature 'Sign in', type: :feature do
   end
 
   scenario 'new user accepts the transition info page' do
-    user = jsonapi :user, :new
+    user = build :user, :new
 
     stub_omniauth(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response))
-    request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user, :patch
+    request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
     visit '/signin'
 

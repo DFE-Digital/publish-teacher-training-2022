@@ -1,7 +1,7 @@
 module Helpers
   def stub_omniauth(user: nil)
-    user_resource = user || jsonapi(:user)
-    user = user_resource.to_resource
+    user ||= build(:user)
+
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:dfe] = {
       'provider' => 'dfe',
@@ -22,7 +22,7 @@ module Helpers
     # TODO: Move this to be returned with the user.
     stub_api_v2_request('/providers', jsonapi(:provider).render)
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:dfe]
-    stub_api_v2_request('/sessions', user_resource.render, :post)
+    stub_api_v2_request('/sessions', user.to_jsonapi, :post)
   end
 
   def stub_api_v2_request(url_path, stub, method = :get, status = 200, token: nil)
