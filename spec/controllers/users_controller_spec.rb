@@ -39,17 +39,5 @@ describe UsersController, type: :controller do
         expect(response).to redirect_to(providers_path)
       end
     end
-
-    context "with server error" do
-      before do
-        stub_api_v2_request("/users/#{user.id}/accept_transition_screen", {}, :patch, 500)
-      end
-
-      it "redirects to providers index" do
-        get :accept_transition_info
-        expect(Raven).to have_received(:capture_exception).with(instance_of(JsonApiClient::Errors::ServerError))
-        expect(response).to have_http_status(:internal_server_error)
-      end
-    end
   end
 end
