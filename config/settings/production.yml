@@ -8,4 +8,4 @@ manage_backend:
 manage_ui:
   base_url: https://www.publish-teacher-training-courses.service.gov.uk
 search_ui:
-  base_url: https://www.find-postgraduate-teacher-training.service.gov.uk
+  base_url: https://find-postgraduate-teacher-training.education.gov.uk
