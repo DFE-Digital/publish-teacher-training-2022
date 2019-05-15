@@ -3,7 +3,8 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds govuk-footer__content-container">
         <p class="govuk-footer__content">
-          <%= bat_contact_mail_to "Contact the Becoming a Teacher team", subject: "Publish teacher training courses support", link_class: "govuk-footer__link" %> for support.
+          Contact the Becoming a Teacher team for support:
+          <%= bat_contact_mail_to bat_contact_email_address, subject: "Publish teacher training courses support", link_class: "govuk-footer__link" %>
         </p>
       </div>
     </div>

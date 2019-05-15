@@ -23,8 +23,17 @@ module ViewHelper
     search_ui_url("/course/#{provider_code}/#{course_code}")
   end
 
+  def bat_contact_email_address
+    Settings.service_support.contact_email_address
+  end
+
+  def bat_contact_email_address_with_wrap
+    # https://developer.mozilla.org/en-US/docs/Web/HTML/Element/wbr
+    # The <wbr> element will not be copied when copying and pasting the email address
+    bat_contact_email_address.gsub('@', '<wbr>@').html_safe
+  end
+
   def bat_contact_mail_to(name = nil, subject: nil, link_class: "govuk-link")
-    contact_email_address = Settings.service_support.contact_email_address
-    mail_to contact_email_address, name || contact_email_address, subject: subject, class: link_class
+    mail_to bat_contact_email_address, name || bat_contact_email_address, subject: subject, class: link_class
   end
 end
