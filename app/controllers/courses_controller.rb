@@ -35,7 +35,13 @@ class CoursesController < ApplicationController
 
   def show; end
 
-  def description; end
+  def description
+    @published = flash[:success]
+    flash.delete(:success)
+
+    @errors = flash[:error_summary]
+    flash.delete(:error_summary)
+  end
 
   def about; end
 
@@ -50,8 +56,18 @@ class CoursesController < ApplicationController
   def delete; end
 
   def publish
-    @course.publish(provider_code: @provider.provider_code)
-    flash[:success] = 'Your changes have been published'
+    errors = @course.publish(provider_code: @provider.provider_code).errors
+    if errors.present?
+      flash[:error_summary] = errors.map { |error|
+        [
+          error[:title].last(error[:title].length - 'Invalid latest_enrichment__'.length),
+          error[:detail]
+        ]
+      }.to_h
+    else
+      flash[:success] = 'Your changes have been published'
+    end
+
     redirect_to description_provider_course_path(@provider.provider_code, @course.course_code)
   end
 

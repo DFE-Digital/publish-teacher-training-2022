@@ -21,10 +21,10 @@ feature 'Course description', type: :feature do
   before do
     stub_omniauth
     stub_api_v2_request(
-      "/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
       course_response
     )
-    visit "/organisations/A0/courses/#{course.course_code}/description"
+    visit "/organisations/#{provider.provider_code}/courses/#{course.course_code}/description"
   end
 
   let(:course_page) { PageObjects::Page::Organisations::CourseDescription.new }
@@ -144,6 +144,50 @@ feature 'Course description', type: :feature do
         expect(course_page.is_findable).to have_content('No')
         expect(course_page.status_tag).to have_content('Draft')
         expect(course_page).to have_preview_link
+      end
+
+      describe 'publishing' do
+        before do
+          stub_api_v2_request(
+            "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+            course_response
+          )
+        end
+
+        context 'without errors' do
+          before do
+            stub_api_v2_request(
+              "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+              nil,
+              :post
+            )
+          end
+
+          scenario 'it shows the description page with success flash' do
+            course_page.publish.click
+
+            expect(course_page).to be_displayed
+            expect(course_page.success_summary).to have_content("Your course has been published\nThe link for this course is: https://localhost:5000/course/#{provider.provider_code}/#{course.course_code}")
+          end
+        end
+
+        context 'with errors' do
+          before do
+            stub_api_v2_request(
+              "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+              build(:error, :for_course_publish),
+              :post,
+              422
+            )
+          end
+
+          scenario 'it shows the description page with validation errors' do
+            course_page.publish.click
+
+            expect(course_page).to be_displayed
+            expect(course_page.error_summary).to have_content("About course can't be blank")
+          end
+        end
       end
     end
   end

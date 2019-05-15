@@ -13,5 +13,16 @@ FactoryBot.define do
     initialize_with do
       attributes
     end
+
+    trait :for_course_publish do
+      errors {
+        [
+          {
+            title: "Invalid latest_enrichment__about_course",
+            detail: "About course can't be blank"
+          }
+        ]
+      }
+    end
   end
 end

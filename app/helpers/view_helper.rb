@@ -1,5 +1,5 @@
 module ViewHelper
-  def govuk_link_to(body, url, html_options = { class: 'govuk-link' })
+  def govuk_link_to(body, url = body, html_options = { class: 'govuk-link' })
     link_to body, url, html_options
   end
 
@@ -35,5 +35,18 @@ module ViewHelper
 
   def bat_contact_mail_to(name = nil, subject: nil, link_class: "govuk-link")
     mail_to bat_contact_email_address, name || bat_contact_email_address, subject: subject, class: link_class
+  end
+
+  def manage_ui_enrichment_error_url(provider_code:, course:, field:)
+    base = manage_ui_course_page_url(provider_code: provider_code, course_code: course.course_code)
+
+    {
+      'about_course' => base + '/about#AboutCourse-wrapper',
+      'how_school_placements_work' => base + '/about#HowSchoolPlacementsWork-wrapper',
+      'fee_uk_eu' => base + '/fees-and-length#FeeUkEu-wrapper',
+      'course_length' => base + (course.has_fees? ? '/fees-and-length' : '/salary') + '#CourseLength-wrapper',
+      'salary_details' => base + '/salary#SalaryDetails-wrapper',
+      'qualifications' => base + '/requirements#Qualifications-wrapper'
+    }[field]
   end
 end
