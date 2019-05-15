@@ -18,16 +18,16 @@ class CoursesController < ApplicationController
 
   def about
     if params[:copy_from].present?
-      source = Course.includes(site_statuses: [:site])
-                     .includes(provider: [:sites])
-                     .includes(:accrediting_provider)
-                     .where(provider_code: @provider_code)
-                     .find(params[:copy_from])
-                     .first
+      @source_course = Course.includes(site_statuses: [:site])
+                             .includes(provider: [:sites])
+                             .includes(:accrediting_provider)
+                             .where(provider_code: @provider_code)
+                             .find(params[:copy_from])
+                             .first
 
-      course.about_course = source.about_course
-      course.interview_process = source.interview_process
-      course.how_school_placements_work = source.how_school_placements_work
+      course.about_course = @source_course.about_course
+      course.interview_process = @source_course.interview_process
+      course.how_school_placements_work = @source_course.how_school_placements_work
     end
   end
 
