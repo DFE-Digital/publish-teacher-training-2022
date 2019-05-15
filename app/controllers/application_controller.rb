@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, except: :not_found
-  rescue_from StandardError, with: :internal_server_error
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_manage_ui
   rescue_from JsonApiClient::Errors::AccessDenied, with: :render_manage_ui
 
@@ -11,14 +10,6 @@ class ApplicationController < ActionController::Base
       format.html { render 'errors/not_found', status: :not_found }
       format.json { render json: { error: 'Resource not found' }, status: :not_found }
       format.all { render status: :not_found, body: nil }
-    end
-  end
-
-  def internal_server_error(exception)
-    Raven.capture_exception(exception)
-    respond_to do |format|
-      format.html { render 'errors/internal_server_error', status: :internal_server_error }
-      format.json { render json: { error: 'Internal server error' }, status: :internal_server_error }
     end
   end
 

@@ -26,15 +26,4 @@ RSpec.feature 'View pages', type: :feature do
     visit "/guidance"
     expect(find('h1')).to have_content('Guidance for Publish teacher training courses')
   end
-
-  context "With errors" do
-    scenario "Navigate to /guidance" do
-      allow_any_instance_of(PagesController)
-        .to receive(:guidance)
-        .and_raise(StandardError)
-
-      visit "/guidance"
-      expect(find('h1')).to have_content('Sorry, something went wrong')
-    end
-  end
 end
