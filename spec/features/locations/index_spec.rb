@@ -21,7 +21,7 @@ feature 'View locations', type: :feature do
   let(:location_page) { PageObjects::Page::LocationPage.new }
 
   before do
-    user = jsonapi(:user)
+    user = build(:user)
     stub_omniauth(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider[:data]]))
     stub_api_v2_request("/providers/#{provider_code}", provider)

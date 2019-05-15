@@ -24,7 +24,7 @@ RSpec.describe SessionsController, type: :controller do
         email: "email@example.com",
       }
     }
-    let(:user) { jsonapi :user, **user_info }
+    let(:user) { build :user, **user_info }
     let(:user_id) { '101' }
     let(:sign_in_user_id) { SecureRandom.uuid }
 
@@ -39,7 +39,7 @@ RSpec.describe SessionsController, type: :controller do
       before do
         allow(Session).to receive(:create)
           .with(first_name: user.first_name, last_name: user.last_name)
-          .and_return(user.to_resource)
+          .and_return(user)
         allow(Base).to receive(:connection)
       end
 
