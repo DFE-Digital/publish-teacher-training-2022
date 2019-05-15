@@ -1,37 +1,10 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
+  before_action :build_courses, only: [:index, :about]
   before_action :build_course, except: :index
   before_action :build_provider, except: :index
 
-  def index
-    @provider = Provider
-      .includes(courses: [:accrediting_provider])
-      .find(params[:provider_code])
-      .first
-
-    # rubocop:disable Style/MultilineBlockChain
-    @courses_by_accrediting_provider = @provider
-      .courses
-      .group_by { |course|
-        # HOTFIX: A courses API response no included hash seems to cause issues with the
-        # .accrediting_provider relationship lookup. To be investigated, for now,
-        # if this throws, it's self-accredited.
-        begin
-          course.accrediting_provider&.provider_name || @provider.provider_name
-        rescue StandardError
-          @provider.provider_name
-        end
-      }
-      .sort_by { |accrediting_provider, _| accrediting_provider }
-      .map { |provider_name, courses|
-      [provider_name, courses.sort_by { |course| [course.name, course.course_code] }
-                             .map(&:decorate)]
-    }
-      .to_h
-    # rubocop:enable Style/MultilineBlockChain
-
-    @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider.provider_name)
-  end
+  def index; end
 
   def show; end
 
@@ -43,7 +16,20 @@ class CoursesController < ApplicationController
     flash.delete(:error_summary)
   end
 
-  def about; end
+  def about
+    if params[:copy_from].present?
+      source = Course.includes(site_statuses: [:site])
+                     .includes(provider: [:sites])
+                     .includes(:accrediting_provider)
+                     .where(provider_code: @provider_code)
+                     .find(params[:copy_from])
+                     .first
+
+      course.about_course = source.about_course
+      course.interview_process = source.interview_process
+      course.how_school_placements_work = source.how_school_placements_work
+    end
+  end
 
   def requirements; end
 
@@ -88,5 +74,35 @@ private
 
   def build_provider
     @provider = @course.provider
+  end
+
+  def build_courses
+    @provider = Provider
+      .includes(courses: [:accrediting_provider])
+      .find(params[:provider_code])
+      .first
+
+    # rubocop:disable Style/MultilineBlockChain
+    @courses_by_accrediting_provider = @provider
+      .courses
+      .group_by { |course|
+        # HOTFIX: A courses API response no included hash seems to cause issues with the
+        # .accrediting_provider relationship lookup. To be investigated, for now,
+        # if this throws, it's self-accredited.
+        begin
+          course.accrediting_provider&.provider_name || @provider.provider_name
+        rescue StandardError
+          @provider.provider_name
+        end
+      }
+      .sort_by { |accrediting_provider, _| accrediting_provider }
+      .map { |provider_name, courses|
+      [provider_name, courses.sort_by { |course| [course.name, course.course_code] }
+                             .map(&:decorate)]
+    }
+      .to_h
+    # rubocop:enable Style/MultilineBlockChain
+
+    @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider.provider_name)
   end
 end
