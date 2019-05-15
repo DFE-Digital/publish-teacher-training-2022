@@ -1,0 +1,16 @@
+.govuk-warning-summary {
+  @extend .govuk-error-summary;
+  border-color: govuk-colour("orange");
+
+  *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.govuk-warning-summary__title {
+  @extend .govuk-error-summary__title;
+}
+
+.govuk-warning-summary__body {
+  @extend .govuk-error-summary__body;
+}
