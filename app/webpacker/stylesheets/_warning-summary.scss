@@ -1,6 +1,14 @@
 .govuk-warning-summary {
-  @extend .govuk-error-summary;
-  border-color: govuk-colour("orange");
+  @include govuk-focusable;
+  @include govuk-text-colour;
+  @include govuk-responsive-padding(4);
+  @include govuk-responsive-margin(8, "bottom");
+
+  border: $govuk-border-width-mobile solid govuk-colour("orange");
+
+  @include govuk-media-query($from: tablet) {
+    border: $govuk-border-width solid govuk-colour("orange");
+  }
 
   *:last-child {
     margin-bottom: 0;
@@ -8,9 +16,7 @@
 }
 
 .govuk-warning-summary__title {
-  @extend .govuk-error-summary__title;
-}
-
-.govuk-warning-summary__body {
-  @extend .govuk-error-summary__body;
+  @include govuk-font($size: 24, $weight: bold);
+  @include govuk-responsive-margin(4, "bottom");
+  margin-top: 0;
 }
