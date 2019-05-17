@@ -3,11 +3,8 @@ require 'rails_helper'
 feature 'Course requirements', type: :feature do
   let(:course_1) { jsonapi :course, name: 'English', provider: provider, include_nulls: [:accrediting_provider] }
   let(:course_2) { jsonapi :course, name: 'Biology', include_nulls: [:accrediting_provider] }
-  let(:course_3) { jsonapi :course, name: 'Physics', include_nulls: [:accrediting_provider] }
-  let(:course_4) { jsonapi :course, name: 'Science', include_nulls: [:accrediting_provider] }
-  let(:courses)  { [course_2, course_3, course_4] }
   let(:provider) do
-    jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'AO')
+    jsonapi(:provider, courses: [course_2], accredited_body?: true, provider_code: 'AO')
   end
   let(:provider_response) { provider.render }
   let(:course)            { course_1.to_resource }

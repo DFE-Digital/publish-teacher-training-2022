@@ -40,7 +40,7 @@ describe 'Courses', type: :request do
 
     it 'renders the course requirements' do
       get(requirements_provider_course_path(provider_code: provider.provider_code,
-                                     code: course.course_code))
+                                            code: course.course_code))
 
       expect(response.body).to include(
         "#{course.name} (#{course.course_code})"
