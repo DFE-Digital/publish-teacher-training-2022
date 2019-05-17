@@ -49,6 +49,16 @@
         <%= render @sites %>
       </tbody>
     </table>
-    <%= link_to "Add a location", new_provider_site_path(@provider.provider_code), class: "govuk-button govuk-!-margin-bottom-2" %>
+    <% if @provider.can_add_more_sites? %>
+      <%= link_to "Add a location", new_provider_site_path(@provider.provider_code), class: "govuk-button govuk-!-margin-bottom-2" %>
+    <% else %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          You can’t add any more locations as you’ve reached the maximum number of locations available
+        </strong>
+      </div>
+    <% end %>
   </div>
 </div>

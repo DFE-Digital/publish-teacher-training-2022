@@ -11,6 +11,24 @@ feature 'Locations', type: :feature do
     )
   end
 
+  context 'with provider with few sites' do
+    scenario "locations page should have Add a location button" do
+      visit provider_sites_path(provider.provider_code)
+
+      expect(page).to have_content('Add a location')
+    end
+  end
+
+  context 'with provider with the maximum number of sites' do
+    let(:provider) { jsonapi(:provider, can_add_more_sites?: false) }
+
+    scenario "locations page should not have Add a location button" do
+      visit provider_sites_path(provider.provider_code)
+
+      expect(page).to have_content('you’ve reached the maximum number of locations available')
+    end
+  end
+
   context 'without validation errors' do
     before do
       stub_api_v2_request(
