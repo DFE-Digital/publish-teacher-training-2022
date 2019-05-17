@@ -3,6 +3,7 @@ class CoursesController < ApplicationController
   before_action :build_courses, only: %i[index about requirements]
   before_action :build_course, except: :index
   before_action :build_provider, except: :index
+  before_action :filter_courses, only: %i[about requirements]
 
   def index; end
 
@@ -17,9 +18,6 @@ class CoursesController < ApplicationController
   end
 
   def about
-    @courses_by_accrediting_provider = @courses_by_accrediting_provider.reject { |c| c == course.id }
-    @self_accredited_courses = @self_accredited_courses.reject { |c| c.id == course.id }
-
     if params[:copy_from].present?
       @source_course = Course.includes(site_statuses: [:site])
                              .includes(provider: [:sites])
@@ -35,9 +33,6 @@ class CoursesController < ApplicationController
   end
 
   def requirements
-    @courses_by_accrediting_provider = @courses_by_accrediting_provider.reject { |c| c == course.id }
-    @self_accredited_courses = @self_accredited_courses.reject { |c| c.id == course.id }
-
     if params[:copy_from].present?
       @source_course = Course.includes(site_statuses: [:site])
                              .includes(provider: [:sites])
@@ -123,5 +118,10 @@ private
     # rubocop:enable Style/MultilineBlockChain
 
     @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider.provider_name)
+  end
+
+  def filter_courses
+    @courses_by_accrediting_provider = @courses_by_accrediting_provider.reject { |c| c == course.id }
+    @self_accredited_courses = @self_accredited_courses.reject { |c| c.id == course.id }
   end
 end
