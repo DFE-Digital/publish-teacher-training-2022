@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
-  before_action :build_courses, only: %i[index about]
+  before_action :build_courses, only: %i[index about requirements]
   before_action :build_course, except: :index
   before_action :build_provider, except: :index
 
@@ -34,7 +34,23 @@ class CoursesController < ApplicationController
     end
   end
 
-  def requirements; end
+  def requirements
+    @courses_by_accrediting_provider = @courses_by_accrediting_provider.reject { |c| c == course.id }
+    @self_accredited_courses = @self_accredited_courses.reject { |c| c.id == course.id }
+
+    if params[:copy_from].present?
+      @source_course = Course.includes(site_statuses: [:site])
+                             .includes(provider: [:sites])
+                             .includes(:accrediting_provider)
+                             .where(provider_code: @provider_code)
+                             .find(params[:copy_from])
+                             .first
+
+      course.required_qualifications = @source_course.required_qualifications
+      course.personal_qualities = @source_course.personal_qualities
+      course.other_requirements = @source_course.other_requirements
+    end
+  end
 
   def fees; end
 
