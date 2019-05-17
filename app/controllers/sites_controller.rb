@@ -2,6 +2,27 @@ class SitesController < ApplicationController
   before_action :build_provider, :initialise_errors
   before_action :build_site, only: %i[edit update]
 
+  def new
+    @site = Site.new
+  end
+
+  def create
+    @site               = Site.new(site_params.to_h)
+    @site.provider_code = @provider.provider_code
+
+    if @site.save
+      redirect_to provider_sites_path, flash: { success: 'Your changes have been published' }
+    else
+      @errors = @site.errors.reduce({}) { |errors, (field, message)|
+        errors[field] ||= []
+        errors[field].push(map_errors(message))
+        errors
+      }
+
+      render :new
+    end
+  end
+
   def index
     @sites = @provider.sites.sort_by(&:location_name)
   end

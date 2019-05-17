@@ -66,5 +66,3 @@
   <% end %>
   <%= f.select :region_code, Site::REGIONS, {}, class: "govuk-select", aria: { describedby: @errors[:region_code] ? "region_code-error": '' } %>
 </div>
-
-<%= f.submit "Publish changes", class: "govuk-button", data: { qa: 'location__publish-changes' } %>

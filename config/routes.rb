@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       post '/publish', on: :member, to: 'courses#publish'
     end
 
-    resources :sites, path: 'locations', on: :member, only: %i[index edit update]
+    resources :sites, path: 'locations', on: :member, except: %i[destroy show]
   end
 
   get "/cookies", to: "pages#cookies", as: :cookies
