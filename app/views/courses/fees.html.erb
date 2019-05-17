@@ -4,6 +4,29 @@
   <%= govuk_back_link_to(provider_course_path(course.provider.provider_code, course.course_code)) %>
 <% end %>
 
+<% if params[:copy_from].present? %>
+  <div class="govuk-warning-summary" aria-labelledby="warning-summary-heading" tabindex="-1" data-module="error-summary" data-copy-course="warning" role="alert">
+    <h2 class="govuk-heading govuk-warning-summary__title" id="warning-summary-heading">
+      Your changes are not yet saved
+    </h2>
+    <div class="govuk-warning-summary__body">
+      <p class="govuk-body">
+        We’ve copied these fields from <%= @source_course.name %> (<%= @source_course.course_code %>):
+      </p>
+      <ul class="govuk-list">
+        <li><%= link_to 'Course length', '#course_length_wrapper', class: 'govuk-link' %></li>
+        <li><%= link_to 'Fee for UK and EU students', '#fee_uk_eu_wrapper', class: 'govuk-link' %></li>
+        <li><%= link_to 'Fee for international students', '#fee_international_wrapper', class: 'govuk-link' %></li>
+        <li><%= link_to 'Fee details', '#fee_details_wrapper', class: 'govuk-link' %></li>
+        <li><%= link_to 'Financial support', '#financial_support_wrapper', class: 'govuk-link' %></li>
+      </ul>
+      <p class="govuk-body">
+        Please check them and make your changes before saving.
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.name_and_code %></span>
   Course length and fees
@@ -17,7 +40,7 @@
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
       <h3 class="govuk-heading-l remove-top-margin">Course fees</h3>
-      <div class="govuk-form-group ">
+      <div id="fee_uk_eu_wrapper" class="govuk-form-group ">
         <%= f.label :fee_uk_eu, 'Fee for UK and EU students', class: 'govuk-label govuk-label--s' %>
         <div class="govuk-currency-input">
           <div class="govuk-currency-input__inner">
@@ -31,7 +54,7 @@
         </div>
       </div>
 
-      <div class="govuk-form-group ">
+      <div id="fee_international_wrapper" class="govuk-form-group">
         <%= f.label :fee_international, 'Fee for international students (optional)', class: 'govuk-label govuk-label--s' %>
         <div class="govuk-currency-input">
           <div class="govuk-currency-input__inner">
@@ -53,7 +76,7 @@
         <li>any other costs</li>
       </ul>
 
-      <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
+      <div id="fee_details_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
         <div class="govuk-form-group">
           <%= f.label :fee_details, 'Fee details (optional)', class: 'govuk-label govuk-label--s' %>
           <%= f.text_area :fee_details, rows: 15, class: 'govuk-textarea js-character-count' %>
@@ -66,7 +89,7 @@
       <p class="govuk-body">If applicable, say more about the financial support you offer for this course. For example, any bursaries available.</p>
       <p class="govuk-body">You don’t need to add details of any DfE bursaries and subject scholarships here. These will be published automatically to your course page</p>
 
-      <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
+      <div id="financial_support_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
         <div class="govuk-form-group">
           <%= f.label :financial_support, 'Financial support you offer (optional)', class: 'govuk-label govuk-label--s' %>
           <%= f.text_area :financial_support, rows: 15, class: 'govuk-textarea js-character-count' %>
@@ -79,5 +102,11 @@
         <%= link_to 'Cancel changes', provider_course_path(course.provider.provider_code, course.course_code), class: "govuk-link" %>
       </p>
     <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render partial: 'courses/related_sidebar',
+                        locals: {
+                          course: course,
+                          page_path: fees_provider_course_path(course.provider.provider_code, course.course_code) } %>
   </div>
 </div>
