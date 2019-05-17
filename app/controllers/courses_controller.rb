@@ -1,9 +1,9 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
-  before_action :build_courses, only: %i[index about requirements fees]
+  before_action :build_courses, only: %i[index about requirements fees salary]
   before_action :build_course, except: :index
   before_action :build_provider, except: :index
-  before_action :filter_courses, only: %i[about requirements fees]
+  before_action :filter_courses, only: %i[about requirements fees salary]
   before_action :build_copy_course, if: -> { params[:copy_from].present? }
 
   def index; end
@@ -44,7 +44,12 @@ class CoursesController < ApplicationController
     end
   end
 
-  def salary; end
+  def salary
+    if params[:copy_from].present?
+      course.course_length = @source_course.course_length
+      course.salary_details = @source_course.salary_details
+    end
+  end
 
   def withdraw; end
 
