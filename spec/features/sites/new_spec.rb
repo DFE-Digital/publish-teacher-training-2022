@@ -21,7 +21,9 @@ feature 'Locations', type: :feature do
     end
 
     scenario 'Adding a location' do
-      visit new_provider_site_path(provider.provider_code)
+      visit provider_sites_path(provider.provider_code)
+
+      click_on 'Add a location'
 
       fill_in 'Name', with: 'New site'
       fill_in 'Building and street', with: 'New building and street'

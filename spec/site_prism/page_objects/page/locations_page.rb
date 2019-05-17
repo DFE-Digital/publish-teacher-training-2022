@@ -9,7 +9,7 @@ module PageObjects
         element :link, 'a'
         element :cell, '[data-qa=provider__location-name]'
       end
-      element :add_a_location_link, "a[href^=\"#{Settings.google_forms.add_location.url.gsub('?', '\?')}\"]"
+      element :add_a_location_link, "a[href*=\"/locations/new\"]"
     end
   end
 end

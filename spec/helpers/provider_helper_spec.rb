@@ -11,12 +11,6 @@ feature 'View helpers', type: :helper do
     end
   end
 
-  describe "#add_location_link" do
-    it "builds a link" do
-      expect(helper.add_location_link(email, provider)).to eq("<a class=\"govuk-button govuk-!-margin-bottom-2\" rel=\"noopener noreferrer\" target=\"_blank\" href=\"#{CGI::escapeHTML(helper.add_location_url(email, provider))}\">Add a location</a>")
-    end
-  end
-
   describe "#add_course_url" do
     describe "for accredited bodies" do
       let(:provider) { jsonapi(:provider, accredited_body?: true).to_resource }
@@ -36,14 +30,6 @@ feature 'View helpers', type: :helper do
         expect(helper.add_course_url(email, provider)).to include(html_escaped_version_of_email)
         expect(helper.add_course_url(email, provider)).to include(provider.attributes[:provider_code])
       end
-    end
-  end
-
-  describe "#add_location_url" do
-    it "returns a pre-populated google form URL" do
-      expect(helper.add_location_url(email, provider)).to start_with(Settings.google_forms.add_location.url)
-      expect(helper.add_location_url(email, provider)).to include(html_escaped_version_of_email)
-      expect(helper.add_location_url(email, provider)).to include(provider.attributes[:provider_code])
     end
   end
 end
