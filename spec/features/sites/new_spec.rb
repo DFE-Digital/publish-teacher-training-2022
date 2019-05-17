@@ -32,7 +32,7 @@ feature 'Locations', type: :feature do
 
       click_on 'Save'
 
-      expect(page).to have_content('Your changes have been published')
+      expect(page).to have_content('Your location has been created')
     end
   end
 

@@ -11,7 +11,7 @@ class SitesController < ApplicationController
     @site.provider_code = @provider.provider_code
 
     if @site.save
-      redirect_to provider_sites_path, flash: { success: 'Your changes have been published' }
+      redirect_to provider_sites_path, flash: { success: 'Your location has been created' }
     else
       @errors = @site.errors.reduce({}) { |errors, (field, message)|
         errors[field] ||= []
