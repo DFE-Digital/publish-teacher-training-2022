@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors.any? ? "Error: " : ""}#{ @site_name_before_update }" %>
+<%= content_for :page_title, "#{@errors.any? ? "Error: " : ""}Add a location" %>
 
 <% content_for :before_content do %>
   <nav class="govuk-breadcrumbs">
@@ -18,15 +18,15 @@
   </nav>
 <% end %>
 
-<h1 class="govuk-heading-xl"><%= @site_name_before_update %></h1>
+<h1 class="govuk-heading-xl">Add a location</h1>
 
 <%= render 'errors' if @errors.any? %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @site, url: provider_site_path(params[:provider_code], @site.id), method: :put do |f| %>
+    <%= form_with model: @site, url: provider_sites_path(params[:provider_code]), method: :post do |f| %>
       <%= render 'form', f: f %>
-      <%= f.submit "Save and publish changes", class: "govuk-button", data: { qa: 'location__publish-changes' } %>
+      <%= f.submit "Save", class: "govuk-button", data: { qa: 'location__publish-changes' } %>
     <% end %>
     <p class="govuk-body">
       <%= link_to "Cancel changes", provider_sites_path(@provider[:provider_code]), class: "govuk-link" %>
