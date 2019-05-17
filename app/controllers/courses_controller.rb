@@ -4,6 +4,7 @@ class CoursesController < ApplicationController
   before_action :build_course, except: :index
   before_action :build_provider, except: :index
   before_action :filter_courses, only: %i[about requirements]
+  before_action :build_copy_course, if: -> { params[:copy_from].present? }
 
   def index; end
 
@@ -19,13 +20,6 @@ class CoursesController < ApplicationController
 
   def about
     if params[:copy_from].present?
-      @source_course = Course.includes(site_statuses: [:site])
-                             .includes(provider: [:sites])
-                             .includes(:accrediting_provider)
-                             .where(provider_code: @provider_code)
-                             .find(params[:copy_from])
-                             .first
-
       course.about_course = @source_course.about_course
       course.interview_process = @source_course.interview_process
       course.how_school_placements_work = @source_course.how_school_placements_work
@@ -34,13 +28,6 @@ class CoursesController < ApplicationController
 
   def requirements
     if params[:copy_from].present?
-      @source_course = Course.includes(site_statuses: [:site])
-                             .includes(provider: [:sites])
-                             .includes(:accrediting_provider)
-                             .where(provider_code: @provider_code)
-                             .find(params[:copy_from])
-                             .first
-
       course.required_qualifications = @source_course.required_qualifications
       course.personal_qualities = @source_course.personal_qualities
       course.other_requirements = @source_course.other_requirements
@@ -123,5 +110,14 @@ private
   def filter_courses
     @courses_by_accrediting_provider = @courses_by_accrediting_provider.reject { |c| c == course.id }
     @self_accredited_courses = @self_accredited_courses.reject { |c| c.id == course.id }
+  end
+
+  def build_copy_course
+    @source_course = Course.includes(site_statuses: [:site])
+                           .includes(provider: [:sites])
+                           .includes(:accrediting_provider)
+                           .where(provider_code: @provider_code)
+                           .find(params[:copy_from])
+                           .first
   end
 end
