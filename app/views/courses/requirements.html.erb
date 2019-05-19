@@ -4,26 +4,7 @@
   <%= govuk_back_link_to(provider_course_path(course.provider.provider_code, course.course_code)) %>
 <% end %>
 
-<% if params[:copy_from].present? %>
-  <div class="govuk-warning-summary" aria-labelledby="warning-summary-heading" tabindex="-1" data-module="error-summary" data-copy-course="warning" role="alert">
-    <h2 class="govuk-heading govuk-warning-summary__title" id="warning-summary-heading">
-      Your changes are not yet saved
-    </h2>
-    <div class="govuk-warning-summary__body">
-      <p class="govuk-body">
-        We’ve copied these fields from <%= @source_course.name %> (<%= @source_course.course_code %>):
-      </p>
-      <ul class="govuk-list">
-        <li><%= link_to 'Qualifications needed', '#required_qualifications_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Personal qualities', '#personal_qualities_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Other requirements', '#other_requirements_wrapper', class: 'govuk-link' %></li>
-      </ul>
-      <p class="govuk-body">
-        Please check them and make your changes before saving.
-      </p>
-    </div>
-  </div>
-<% end %>
+<%= render partial: 'courses/copy_content_warning', locals: { content: 'course_requirements' } if params[:copy_from].present? %>
 
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.name_and_code %></span>
