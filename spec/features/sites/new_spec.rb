@@ -11,6 +11,24 @@ feature 'Locations', type: :feature do
     )
   end
 
+  context 'with provider with few sites' do
+    scenario "locations page should have Add a location button" do
+      visit provider_sites_path(provider.provider_code)
+
+      expect(page).to have_content('Add a location')
+    end
+  end
+
+  context 'with provider with the maximum number of sites' do
+    let(:provider) { jsonapi(:provider, can_add_more_sites?: false) }
+
+    scenario "locations page should not have Add a location button" do
+      visit provider_sites_path(provider.provider_code)
+
+      expect(page).to have_content('you’ve reached the maximum number of locations available')
+    end
+  end
+
   context 'without validation errors' do
     before do
       stub_api_v2_request(
@@ -21,7 +39,9 @@ feature 'Locations', type: :feature do
     end
 
     scenario 'Adding a location' do
-      visit new_provider_site_path(provider.provider_code)
+      visit provider_sites_path(provider.provider_code)
+
+      click_on 'Add a location'
 
       fill_in 'Name', with: 'New site'
       fill_in 'Building and street', with: 'New building and street'
@@ -32,7 +52,7 @@ feature 'Locations', type: :feature do
 
       click_on 'Save'
 
-      expect(page).to have_content('Your changes have been published')
+      expect(page).to have_content('Your location has been created')
     end
   end
 

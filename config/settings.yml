@@ -31,9 +31,5 @@ google_forms:
     url: https://docs.google.com/forms/d/e/1FAIpQLSeatJO2ZuqM-fnRJxEo6IIF0hZIU63JGnx0sDXO6Ulax7U_bA/viewform?usp=pp_url
     email_entry: entry.1033530353
     provider_code_entry: entry.158771972
-  add_location:
-    url: https://docs.google.com/forms/d/e/1FAIpQLSeW14NPB081ZwayBStlZsmCoKycFuhwtktozbu8MF7CWpm5Og/viewform?usp=pp_url
-    email_entry: entry.1913622198
-    provider_code_entry: entry.1075663095
 service_support:
   contact_email_address: becomingateacher@digital.education.gov.uk
