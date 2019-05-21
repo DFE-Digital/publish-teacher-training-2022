@@ -181,7 +181,7 @@ GEM
       activesupport (>= 4.2)
       aes_key_wrap
       bindata
-    json_api_client (1.9.0)
+    json_api_client (1.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       addressable (~> 2.2)
@@ -209,7 +209,7 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.11.3)
     msgpack (1.2.10)
-    multipart-post (2.0.0)
+    multipart-post (2.1.1)
     nenv (0.3.0)
     nio4r (2.3.1)
     nokogiri (1.10.3)
