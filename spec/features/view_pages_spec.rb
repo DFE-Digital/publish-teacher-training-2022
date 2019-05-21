@@ -22,6 +22,13 @@ RSpec.feature 'View pages', type: :feature do
     expect(find('h1')).to have_content('Privacy policy')
   end
 
+  scenario "Navigate to /new-features" do
+    stub_omniauth
+
+    visit "/new-features"
+    expect(find('h1')).to have_content('New features coming to Publish')
+  end
+
   scenario "Navigate to /guidance" do
     visit "/guidance"
     expect(find('h1')).to have_content('Guidance for Publish teacher training courses')
