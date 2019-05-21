@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'View pages', type: :feature do
+  let(:new_features_page) { PageObjects::Page::NewFeaturesPage.new }
+
   scenario "Navigate to /cookies" do
     stub_omniauth
 
@@ -25,8 +27,8 @@ RSpec.feature 'View pages', type: :feature do
   scenario "Navigate to /new-features" do
     stub_omniauth
 
-    visit "/new-features"
-    expect(find('h1')).to have_content('New features coming to Publish')
+    new_features_page.load
+    expect(new_features_page.title).to have_content('New features coming to Publish')
   end
 
   scenario "Navigate to /guidance" do
