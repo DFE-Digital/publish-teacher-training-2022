@@ -55,6 +55,8 @@ class CoursesController < ApplicationController
 
   def delete; end
 
+  def preview; end
+
   def publish
     errors = @course.publish(provider_code: @provider.provider_code).errors
     if errors.present?

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get '/salary', on: :member, to: 'courses#salary'
       get '/withdraw', on: :member, to: 'courses#withdraw'
       get '/delete', on: :member, to: 'courses#delete'
+      get '/preview', on: :member, to: 'courses#preview'
       post '/publish', on: :member, to: 'courses#publish'
     end
 

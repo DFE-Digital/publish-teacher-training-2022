@@ -1,0 +1,94 @@
+<%= content_for :page_title, "#{course.name_and_code} - Courses" %>
+
+<% content_for :before_content do %>
+  <%= link_to "Back to course", provider_course_path, class: "govuk-back-link" %>
+
+  <p class="govuk-body preview-banner">
+    This is a preview of a course: <%= course.name_and_code %>.
+  </p>
+<% end %>
+
+<h1 class="govuk-heading-xl">
+  <span class="govuk-!-font-size-36"><%= course.provider.provider_name %></span><br>
+  <%= course.name_and_code %>
+</h1>
+
+<p class="govuk-body-l"><%= course.description %></p>
+
+<dl class="govuk-list--description">
+  <dt class="govuk-list--description__label">Qualification</dt>
+  <dd>
+    <%= render partial: 'courses/preview/qualification' %>
+  </dd>
+  <% if course.length.present? %>
+    <dt class="govuk-list--description__label">Course length</dt>
+    <dd><%= course.length %></dd>
+  <% end %>
+  <% if course.applications_open_from.present? %>
+    <dt class="govuk-list--description__label">Date you can apply from</dt>
+    <dd><%= l(course.applications_open_from&.to_date) %></dd>
+  <% end %>
+  <% if course.applications_open_from.present? %>
+    <dt class="govuk-list--description__label">Date course starts</dt>
+    <dd><%= l(course.start_date&.to_date, format: :short) %></dd>
+  <% end %>
+  <% if @provider.website.present? %>
+    <dt class="govuk-list--description__label">Website</dt>
+    <dd>
+      <%= link_to @provider.website, @provider.website, class: 'govuk-link' %>
+    </dd>
+  <% end %>
+  <% unless course.has_vacancies? %>
+    <dt class="govuk-list--description__label">Vacancies</dt>
+    <dd>No</dd>
+  <% end %>
+</dl>
+
+<div class="govuk-grid-row govuk-!-margin-top-8">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Contents</h2>
+    <ul class="govuk-list govuk-list--dash" data-ga-event-navigation="Course Contents">
+      <li><%= link_to 'About the course', '#section-about', class: 'govuk-link' %></li>
+      <li><%= link_to 'Interview process', '#section-interviews', class: 'govuk-link' %></li>
+      <li><%= link_to 'How school placements work', '#section-schools', class: 'govuk-link' %></li>
+      <% if course.has_fees? %>
+        <li><%= link_to 'Fees', '#section-fees', class: 'govuk-link' %></li>
+      <% else %>
+        <li><%= link_to 'Salary', '#section-salary', class: 'govuk-link' %></li>
+      <% end %>
+      <li><%= link_to 'Financial support', '#section-financial-support', class: 'govuk-link' %></li>
+      <li><%= link_to 'Requirements', '#section-entry', class: 'govuk-link' %></li>
+      <li><%= link_to 'About the training provider', '#section-about-provider', class: 'govuk-link' %></li>
+      <li><%= link_to 'Training with disabilities and other needs', '#section-train-with-disabilities', class: 'govuk-link' %></li>
+      <li><%= link_to 'Contact details', '#section-contact', class: 'govuk-link' %></li>
+      <li><%= link_to 'Apply', '#section-apply', class: 'govuk-link' %></li>
+      <li><%= link_to 'Support and advice', '#section-advice', class: 'govuk-link' %></li>
+    </ul>
+
+    <%= render partial: 'courses/preview/about_course' %>
+
+    <%= render partial: 'courses/preview/interview_process' %>
+
+    <%= render partial: 'courses/preview/about_schools' %>
+
+    <% if course.has_fees? %>
+      <%= render partial: 'courses/preview/fees' %>
+    <% else %>
+      <%= render partial: 'courses/preview/salary' %>
+    <% end %>
+
+    <%= render partial: 'courses/preview/financial_support/financial_support' %>
+
+    <%= render partial: 'courses/preview/entry_requirements_qualifications' %>
+
+    <%= render partial: 'courses/preview/about_the_provider' %>
+
+    <%= render partial: 'courses/preview/train_with_disabilities' %>
+
+    <%= render partial: 'courses/preview/contact_details' %>
+
+    <%= render partial: 'courses/preview/apply' %>
+
+    <%= render partial: 'courses/preview/advice' %>
+  </div>
+</div>

@@ -1,4 +1,6 @@
 $success-green: #00823b;
+$govuk-global-styles: true;
+
 @import "../../../node_modules/govuk-frontend/all";
 
 // Not in design system:
@@ -10,6 +12,17 @@ $button-colour: #00823b;
 @import "course-tabs";
 @import "currency-input";
 @import "warning-summary";
+@import "definition-list";
+
+// Ensure all unordered lists styled by default
+ul {
+  @extend %govuk-list;
+  @extend %govuk-list--bullet;
+
+  li p {
+    margin-bottom: 0;
+  }
+}
 
 .text-decoration-underline-dotted {
   text-decoration: underline dotted;
@@ -70,4 +83,27 @@ $button-colour: #00823b;
   border-left: govuk-spacing(1) solid $govuk-error-colour;
   padding-left: govuk-spacing(2);
   padding-top: govuk-spacing(1);
+}
+
+.preview-banner {
+  background: govuk-colour("grey-4");
+  margin-top: govuk-spacing(2);
+  padding: govuk-spacing(4);
+}
+
+.govuk-list--dash {
+  padding-left: govuk-spacing(3);
+  //list-style-image: url("media/images/dash.png");
+  margin-bottom: govuk-spacing(8);
+
+  li {
+    position: relative;
+
+    &:before {
+      content: '\00af';
+      left: -16px;
+      position: absolute;
+      top: 5px;
+    }
+  }
 }

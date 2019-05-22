@@ -1,0 +1,8 @@
+<div class="govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-l" id="section-train-with-disabilities">Training with disabilities and other needs</h2>
+  <% if @provider.train_with_disability.present? %>
+    <%= markdown(@provider.train_with_disability) %>
+  <% else %>
+    <p class="missing-section">Please add details for this section.</p>
+  <% end %>
+</div>

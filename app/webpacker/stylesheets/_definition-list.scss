@@ -1,0 +1,40 @@
+%govuk-list--description {
+  @include govuk-clearfix;
+  margin-top: 0;
+}
+
+%govuk-list--description > dt {
+  @include govuk-font($size: 19, $weight: normal);
+  vertical-align: top;
+
+  @include mq ($from: desktop) {
+    clear: left;
+    float: left;
+    width: 33.33%;
+  }
+}
+
+%govuk-list--description > dd {
+  @include govuk-font($size: 19, $weight: normal);
+  margin: 0 0 govuk-spacing(2) 0;
+  vertical-align: top;
+
+  @include mq ($from: desktop) {
+    float: left;
+    margin: 0;
+    width: 66.66%;
+  }
+
+  .govuk-details {
+    margin-bottom: 0;
+  }
+}
+
+.govuk-list--description {
+  @extend %govuk-list--description;
+
+  &__label:after {
+    content: ":";
+    display: inline-block;
+  }
+}

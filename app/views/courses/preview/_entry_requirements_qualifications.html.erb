@@ -1,0 +1,20 @@
+<div class="govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-l" id="section-entry">Requirements</h2>
+  <h3 class="govuk-heading-m">Qualifications</h3>
+
+  <% if course.required_qualifications.present? %>
+    <%= markdown(course.required_qualifications) %>
+  <% else %>
+    <p class="missing-section">Please add details for this section.</p>
+  <% end %>
+
+  <% if course.personal_qualities.present? %>
+    <h3 class="govuk-heading-m">Personal qualities</h3>
+    <%= markdown(course.personal_qualities) %>
+  <% end %>
+
+  <% if course.other_requirements.present? %>
+    <h3 class="govuk-heading-m">Other requirements</h3>
+    <%= markdown(course.other_requirements) %>
+  <% end %>
+</div>
