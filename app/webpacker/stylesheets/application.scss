@@ -22,7 +22,6 @@ $button-colour: #00823b;
 }
 
 .related {
-  border-top: 5px solid govuk-colour("blue");
   background-color: govuk-colour("grey-4");
   padding: govuk-spacing(4);
 
@@ -33,11 +32,6 @@ $button-colour: #00823b;
 
 .courses-locations-list li:last-child {
   margin-bottom: 0;
-}
-
-.status-box {
-  background-color: govuk-colour("grey-4");
-  padding: govuk-spacing(4);
 }
 
 .govuk-summary-list--short {
