@@ -47,6 +47,9 @@ gem 'sentry-raven'
 # Decorate logic to keep it of the views and helper methods
 gem 'draper'
 
+# Render nice markdown
+gem 'rdiscount'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
