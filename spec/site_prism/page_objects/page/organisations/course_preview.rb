@@ -13,6 +13,7 @@ module PageObjects
         element :start_date, '[data-qa=course__start_date]'
         element :provider_website, '[data-qa=course__provider_website]'
         element :vacancies, '[data-qa=course__vacancies]'
+        element :about_course, '#section-about'
       end
     end
   end
