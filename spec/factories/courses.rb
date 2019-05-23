@@ -8,7 +8,7 @@ FactoryBot.define do
     sequence(:id)
     sequence(:course_code) { |n| "X10#{n}" }
     name { "English" }
-    description { "PGCE with QTS" }
+    description { "PGCE with QTS full time" }
     findable? { true }
     open_for_applications? { false }
     has_vacancies? { false }
@@ -18,7 +18,7 @@ FactoryBot.define do
     content_status { "published" }
     ucas_status { 'running' }
     accrediting_provider { nil }
-    qualifications { %w[qts pcge] }
+    qualifications { %w[qts pgce] }
     start_date     { Time.new(2019) }
     funding        { 'fee' }
     applications_open_from { DateTime.new(2019).utc.iso8601 }
