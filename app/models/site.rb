@@ -10,7 +10,7 @@ class Site < Base
     ['West Midlands', :west_midlands],
     ['East Midlands', :east_midlands],
     ['Eastern', :eastern],
-    ['Noth West', :north_west],
+    ['North West', :north_west],
     ['Yorkshire and the Humber', :yorkshire_and_the_humber],
     ['North East', :north_east],
     ['Scotland', :scotland],
