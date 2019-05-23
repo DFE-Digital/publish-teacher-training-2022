@@ -1,0 +1,17 @@
+<%= content_for :page_title, "#{course.name_and_code} - Courses" %>
+
+<% content_for :before_content do %>
+  <%= link_to "Back to course", provider_course_path, class: "govuk-back-link" %>
+
+  <p class="govuk-body preview-banner">
+    This is a preview of a course:
+    <%= course.name_and_code %>.
+  </p>
+<% end %>
+
+<h1 class="govuk-heading-xl">
+  <span class="govuk-!-font-size-36" data-qa="course__provider_name"><%= course.provider.provider_name %></span><br>
+  <%= course.name_and_code %>
+</h1>
+
+<p class="govuk-body-l" data-qa='course__description'><%= course.description %></p>
