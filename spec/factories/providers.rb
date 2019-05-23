@@ -10,6 +10,7 @@ FactoryBot.define do
     provider_name { "ACME SCITT #{provider_code}" }
     accredited_body? { false }
     can_add_more_sites? { true }
+    website { nil }
     courses { [] }
     sites { [] }
 

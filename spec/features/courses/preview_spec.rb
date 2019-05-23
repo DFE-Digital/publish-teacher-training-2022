@@ -1,10 +1,18 @@
 require 'rails_helper'
 
 feature 'Preview course', type: :feature do
-  let(:course_jsonapi) { jsonapi(:course, name: 'English', provider: provider) }
-  let(:provider)       { jsonapi(:provider, provider_code: 'AO') }
-  let(:course)          { course_jsonapi.to_resource }
-  let(:course_response) { course_jsonapi.render }
+  let(:course_jsonapi) do
+    jsonapi(:course,
+            name: 'English',
+            provider: provider,
+            course_length: 'OneYear',
+            applications_open_from: '2019-01-01T00:00:00Z',
+            start_date: '2019-09-01T00:00:00Z')
+  end
+  let(:provider)         { jsonapi(:provider, provider_code: 'AO', website: 'https://scitt.org') }
+  let(:course)           { course_jsonapi.to_resource }
+  let(:course_response)  { course_jsonapi.render }
+  let(:decorated_course) { course.decorate }
 
   before do
     stub_omniauth
@@ -29,6 +37,30 @@ feature 'Preview course', type: :feature do
 
     expect(preview_course_page.description).to have_content(
       course.description
+    )
+
+    expect(preview_course_page.qualifications).to have_content(
+      'PGCE with QTS'
+    )
+
+    expect(preview_course_page.length).to have_content(
+      decorated_course.length
+    )
+
+    expect(preview_course_page.applications_open_from).to have_content(
+      '1 January 2019'
+    )
+
+    expect(preview_course_page.start_date).to have_content(
+      'September 2019'
+    )
+
+    expect(preview_course_page.provider_website).to have_content(
+      provider.website
+    )
+
+    expect(preview_course_page.vacancies).to have_content(
+      'No'
     )
   end
 end
