@@ -16,7 +16,7 @@
 
 <p class="govuk-body-l" data-qa='course__description'><%= course.description %></p>
 
-<dl class="govuk-list--description">
+<dl class="govuk-list--description govuk-!-margin-bottom-8">
   <dt class="govuk-list--description__label">Qualification</dt>
   <dd data-qa="course__qualifications">
     <%= render partial: 'courses/preview/qualification' %>
@@ -44,3 +44,14 @@
     <dd data-qa="course__vacancies">No</dd>
   <% end %>
 </dl>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Contents</h2>
+    <ul class="govuk-list govuk-list--dash course-contents govuk-!-margin-bottom-8">
+      <li><%= link_to 'About the course', '#section-about', class: 'govuk-link' %></li>
+    </ul>
+
+    <%= render partial: 'courses/preview/about_course' %>
+  </div>
+</div>

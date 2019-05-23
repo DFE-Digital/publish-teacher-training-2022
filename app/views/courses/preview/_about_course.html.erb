@@ -1,0 +1,8 @@
+<div class="govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-l" id="section-about">About the course</h2>
+  <% if course.about_course.present? %>
+    <%= course.about_course %>
+  <% else %>
+    <p class="missing-section">Please add details for this section.</p>
+  <% end %>
+</div>

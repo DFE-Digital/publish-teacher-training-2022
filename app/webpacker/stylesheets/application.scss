@@ -72,3 +72,20 @@ $button-colour: #00823b;
   margin-top: govuk-spacing(2);
   padding: govuk-spacing(4);
 }
+
+.govuk-list--dash {
+  padding-left: govuk-spacing(3);
+  margin-bottom: govuk-spacing(8);
+
+  li {
+    position: relative;
+
+    &:before {
+      color: $govuk-border-colour;
+      content: '\00af';
+      left: -16px;
+      position: absolute;
+      top: 5px;
+    }
+  }
+}
