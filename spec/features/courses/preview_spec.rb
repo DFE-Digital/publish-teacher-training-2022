@@ -66,5 +66,9 @@ feature 'Preview course', type: :feature do
     expect(preview_course_page.about_course).to have_content(
       course.about_course
     )
+
+    expect(preview_course_page.interview_process).to have_content(
+      course.interview_process
+    )
   end
 end

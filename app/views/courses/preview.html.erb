@@ -50,8 +50,11 @@
     <h2 class="govuk-heading-m">Contents</h2>
     <ul class="govuk-list govuk-list--dash course-contents govuk-!-margin-bottom-8">
       <li><%= link_to 'About the course', '#section-about', class: 'govuk-link' %></li>
+      <li><%= link_to 'How school placements work', '#section-schools', class: 'govuk-link' %></li>
     </ul>
 
     <%= render partial: 'courses/preview/about_course' %>
+
+    <%= render partial: 'courses/preview/interview_process' %>
   </div>
 </div>
