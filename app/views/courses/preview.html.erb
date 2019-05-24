@@ -58,5 +58,11 @@
     <%= render partial: 'courses/preview/interview_process' %>
 
     <%= render partial: 'courses/preview/about_schools' %>
+
+    <% if course.has_fees? %>
+      <%= render partial: 'courses/preview/fees' %>
+    <% else %>
+      <%= render partial: 'courses/preview/salary' %>
+    <% end %>
   </div>
 </div>

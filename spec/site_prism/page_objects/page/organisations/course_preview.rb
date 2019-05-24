@@ -16,6 +16,10 @@ module PageObjects
         element :about_course, '#section-about'
         element :interview_process, '#section-interviews'
         element :school_placements, '#section-schools'
+        element :uk_fees, '[data-qa=course__uk_fees]'
+        element :eu_fees, '[data-qa=course__eu_fees]'
+        element :international_fees, '[data-qa=course__international_fees]'
+        element :salary_details, '#section-salary'
       end
     end
   end

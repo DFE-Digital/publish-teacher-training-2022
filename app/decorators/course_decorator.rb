@@ -82,6 +82,18 @@ class CourseDecorator < ApplicationDecorator
     object.site_statuses.sort_by { |ss| ss.site.location_name }
   end
 
+  def uk_fees
+    h.number_to_currency(object.fee_uk_eu)
+  end
+
+  def eu_fees
+    h.number_to_currency(object.fee_uk_eu)
+  end
+
+  def international_fees
+    h.number_to_currency(object.fee_international)
+  end
+
 private
 
   def status_tag_content

@@ -14,7 +14,9 @@ describe CourseDecorator do
             accrediting_provider: provider,
             course_length: 'OneYear',
             open_for_applications?: true,
-            last_published_at: '2019-03-05T14:42:34Z').to_resource
+            last_published_at: '2019-03-05T14:42:34Z',
+            fee_uk_eu: '9250',
+            fee_international: '9250').to_resource
   }
   let(:site) { jsonapi(:site) }
   let(:site_status) do
@@ -45,5 +47,17 @@ describe CourseDecorator do
 
   it "returns course length" do
     expect(course.length).to eq('1 year')
+  end
+
+  it 'returns course uk fees' do
+    expect(course.uk_fees).to eq('£9,250')
+  end
+
+  it 'returns course eu fees' do
+    expect(course.eu_fees).to eq('£9,250')
+  end
+
+  it 'returns course international fees' do
+    expect(course.international_fees).to eq('£9,250')
   end
 end

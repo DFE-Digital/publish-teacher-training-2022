@@ -7,7 +7,9 @@ feature 'Preview course', type: :feature do
             provider: provider,
             course_length: 'OneYear',
             applications_open_from: '2019-01-01T00:00:00Z',
-            start_date: '2019-09-01T00:00:00Z')
+            start_date: '2019-09-01T00:00:00Z',
+            fee_uk_eu: '9250.0',
+            fee_international: '9250.0')
   end
   let(:provider)         { jsonapi(:provider, provider_code: 'AO', website: 'https://scitt.org') }
   let(:course)           { course_jsonapi.to_resource }
@@ -74,5 +76,19 @@ feature 'Preview course', type: :feature do
     expect(preview_course_page.school_placements).to have_content(
       course.how_school_placements_work
     )
+
+    expect(preview_course_page.uk_fees).to have_content(
+      decorated_course.uk_fees
+    )
+
+    expect(preview_course_page.eu_fees).to have_content(
+      decorated_course.eu_fees
+    )
+
+    expect(preview_course_page.international_fees).to have_content(
+      decorated_course.international_fees
+    )
+
+    expect(preview_course_page).to_not have_salary_details
   end
 end
