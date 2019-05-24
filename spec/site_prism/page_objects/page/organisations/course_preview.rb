@@ -15,6 +15,7 @@ module PageObjects
         element :vacancies, '[data-qa=course__vacancies]'
         element :about_course, '#section-about'
         element :interview_process, '#section-interviews'
+        element :school_placements, '#section-schools'
       end
     end
   end
