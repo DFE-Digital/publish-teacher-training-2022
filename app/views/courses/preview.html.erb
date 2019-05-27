@@ -50,7 +50,14 @@
     <h2 class="govuk-heading-m">Contents</h2>
     <ul class="govuk-list govuk-list--dash course-contents govuk-!-margin-bottom-8">
       <li><%= link_to 'About the course', '#section-about', class: 'govuk-link' %></li>
+      <li><%= link_to 'Interview process', '#section-interviews', class: 'govuk-link' %></li>
       <li><%= link_to 'How school placements work', '#section-schools', class: 'govuk-link' %></li>
+      <% if course.has_fees? %>
+        <li><%= link_to 'Fees', '#section-fees', class: 'govuk-link' %></li>
+      <% else %>
+        <li><%= link_to 'Salary', '#section-salary', class: 'govuk-link' %></li>
+      <% end %>
+      <li><%= link_to 'Financial support', '#section-financial-support', class: 'govuk-link' %></li>
     </ul>
 
     <%= render partial: 'courses/preview/about_course' %>
@@ -64,5 +71,7 @@
     <% else %>
       <%= render partial: 'courses/preview/salary' %>
     <% end %>
+
+    <%= render partial: 'courses/preview/financial_support/financial_support' %>
   </div>
 </div>
