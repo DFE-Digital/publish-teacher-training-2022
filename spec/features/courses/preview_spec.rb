@@ -99,5 +99,17 @@ feature 'Preview course', type: :feature do
     expect(preview_course_page.bursary_amount).to have_content(
       decorated_course.bursary_amount
     )
+
+    expect(preview_course_page.required_qualifications).to have_content(
+      course.required_qualifications
+    )
+
+    expect(preview_course_page.personal_qualities).to have_content(
+      course.personal_qualities
+    )
+
+    expect(preview_course_page.other_requirements).to have_content(
+      course.other_requirements
+    )
   end
 end
