@@ -13,6 +13,8 @@ FactoryBot.define do
     website { nil }
     courses { [] }
     sites { [] }
+    train_with_us { nil }
+    train_with_disability { nil }
 
     initialize_with do |_evaluator|
       data_attributes = attributes.except(:id, *relationships)

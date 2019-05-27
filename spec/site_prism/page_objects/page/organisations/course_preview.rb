@@ -25,6 +25,8 @@ module PageObjects
         element :required_qualifications, '[data-qa=course__required_qualifications]'
         element :personal_qualities, '[data-qa=course__personal_qualities]'
         element :other_requirements, '[data-qa=course__other_requirements]'
+        element :train_with_us, '#section-about-provider'
+        element :train_with_disability, '#section-train-with-disabilities'
       end
     end
   end
