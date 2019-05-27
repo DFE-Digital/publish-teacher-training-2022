@@ -111,5 +111,13 @@ feature 'Preview course', type: :feature do
     expect(preview_course_page.other_requirements).to have_content(
       course.other_requirements
     )
+
+    expect(preview_course_page.train_with_us).to have_content(
+      provider.train_with_us
+    )
+
+    expect(preview_course_page.train_with_disability).to have_content(
+      provider.train_with_disability
+    )
   end
 end

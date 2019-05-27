@@ -1,0 +1,8 @@
+<div class="govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-l" id="section-about-provider">About the training provider</h2>
+  <% if @provider.train_with_us.present? %>
+    <%= markdown(@provider.train_with_us) %>
+  <% else %>
+    <p class="missing-section">Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.</p>
+  <% end %>
+</div>
