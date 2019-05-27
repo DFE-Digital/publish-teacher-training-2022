@@ -3,8 +3,8 @@
 </p>
 
 <ul class="govuk-list govuk-list--bullet">
-  <li data-qa="course__scholarship_amount">a scholarship of <%= course.scholarship_amount %></li>
-  <li data-qa="course__bursary_amount">a bursary of <%= course.bursary_amount %></li>
+  <li data-qa="course__scholarship_amount">a scholarship of <%= number_to_currency(course.scholarship_amount) %></li>
+  <li data-qa="course__bursary_amount">a bursary of <%= number_to_currency(course.bursary_amount) %></li>
 </ul>
 
 <% if course.has_early_career_payments? %>
