@@ -14,16 +14,16 @@
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">UK students</td>
-            <td class="govuk-table__cell" data-qa="course__uk_fees"><%= course.uk_fees %></td>
+            <td class="govuk-table__cell" data-qa="course__uk_fees"><%= number_to_currency(course.fee_uk_eu) %></td>
           </tr>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">EU students</td>
-            <td class="govuk-table__cell" data-qa="course__eu_fees"><%=course.eu_fees %></td>
+            <td class="govuk-table__cell" data-qa="course__eu_fees"><%= number_to_currency(course.fee_uk_eu) %></td>
           </tr>
           <% if course.fee_international.present? %>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">International students</td>
-              <td class="govuk-table__cell" data-qa="course__international_fees"><%= course.international_fees %></td>
+              <td class="govuk-table__cell" data-qa="course__international_fees"><%= number_to_currency(course.fee_international) %></td>
             </tr>
           <% end %>
         </tbody>
