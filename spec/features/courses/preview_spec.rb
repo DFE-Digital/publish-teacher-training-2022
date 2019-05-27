@@ -9,7 +9,8 @@ feature 'Preview course', type: :feature do
             applications_open_from: '2019-01-01T00:00:00Z',
             start_date: '2019-09-01T00:00:00Z',
             fee_uk_eu: '9250.0',
-            fee_international: '9250.0')
+            fee_international: '9250.0',
+            has_scholarship_and_bursary?: true)
   end
   let(:provider)         { jsonapi(:provider, provider_code: 'AO', website: 'https://scitt.org') }
   let(:course)           { course_jsonapi.to_resource }
@@ -90,5 +91,13 @@ feature 'Preview course', type: :feature do
     )
 
     expect(preview_course_page).to_not have_salary_details
+
+    expect(preview_course_page.scholarship_amount).to have_content(
+      decorated_course.scholarship_amount
+    )
+
+    expect(preview_course_page.bursary_amount).to have_content(
+      decorated_course.bursary_amount
+    )
   end
 end

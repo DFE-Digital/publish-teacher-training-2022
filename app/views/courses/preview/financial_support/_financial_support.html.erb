@@ -1,0 +1,27 @@
+<div class="govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-l" id="section-financial-support">Financial support</h2>
+
+  <% if course.funding == 'salaried' %>
+    <%= render partial: 'courses/preview/financial_support/salaried' %>
+  <% else %>
+
+    <% if course.has_scholarship_and_bursary? %>
+      <%= render partial: 'courses/preview/financial_support/scholarship_and_bursary' %>
+    <% elsif course.has_bursary? %>
+      <%= render partial: 'courses/preview/financial_support/bursary' %>
+    <% else %>
+      <p class="govuk-body">
+        You may be eligible for a <a href="https://www.gov.uk/teacher-training-funding" class="govuk-link">loan while you study</a>.
+      </p>
+    <% end %>
+
+    <p class="govuk-body">
+      <a href="https://getintoteaching.education.gov.uk/explore-my-options/overseas-graduates" class="govuk-link">Financial support if you’re from outside the UK</a>.
+    </p>
+  <% end %>
+
+  <% if course.financial_support.present? %>
+    <h3 class="govuk-heading-m">Financial support from the training provider</h3>
+    <%= markdown(course.financial_support) %>
+  <% end %>
+</div>

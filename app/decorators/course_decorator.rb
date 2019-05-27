@@ -94,6 +94,14 @@ class CourseDecorator < ApplicationDecorator
     h.number_to_currency(object.fee_international)
   end
 
+  def scholarship_amount
+    h.number_to_currency(object.scholarship_amount)
+  end
+
+  def bursary_amount
+    h.number_to_currency(object.bursary_amount)
+  end
+
 private
 
   def status_tag_content

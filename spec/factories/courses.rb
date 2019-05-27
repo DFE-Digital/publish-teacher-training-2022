@@ -38,6 +38,11 @@ FactoryBot.define do
     personal_qualities { nil }
     other_requirements { nil }
     last_published_at { DateTime.new(2019).utc.iso8601 }
+    has_scholarship_and_bursary? { nil }
+    has_bursary? { nil }
+    has_early_career_payments? { nil }
+    scholarship_amount { 20000 }
+    bursary_amount { 22000 }
 
     trait :with_vacancy do
       has_vacancies? { true }
