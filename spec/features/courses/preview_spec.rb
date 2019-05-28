@@ -145,5 +145,7 @@ feature 'Preview course', type: :feature do
     expect(preview_course_page.contact_address).to have_content(
       '1 Long Rd E1 ABC'
     )
+
+    expect(preview_course_page).to have_course_advice
   end
 end
