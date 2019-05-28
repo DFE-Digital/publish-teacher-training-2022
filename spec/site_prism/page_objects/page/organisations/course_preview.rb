@@ -27,6 +27,10 @@ module PageObjects
         element :other_requirements, '[data-qa=course__other_requirements]'
         element :train_with_us, '#section-about-provider'
         element :train_with_disability, '#section-train-with-disabilities'
+        element :contact_email, '[data-qa=provider__email]'
+        element :contact_telephone, '[data-qa=provider__telephone]'
+        element :contact_website, '[data-qa=provider__website]'
+        element :contact_address, '[data-qa=provider__address]'
       end
     end
   end

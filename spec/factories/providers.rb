@@ -10,11 +10,18 @@ FactoryBot.define do
     provider_name { "ACME SCITT #{provider_code}" }
     accredited_body? { false }
     can_add_more_sites? { true }
-    website { nil }
     courses { [] }
     sites { [] }
     train_with_us { nil }
     train_with_disability { nil }
+    website { nil }
+    email { 'info@acme-scitt.org' }
+    telephone { '020 8123 4567' }
+    address1 { nil }
+    address2 { nil }
+    address3 { nil }
+    address4 { nil }
+    postcode { nil }
 
     initialize_with do |_evaluator|
       data_attributes = attributes.except(:id, *relationships)
