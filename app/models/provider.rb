@@ -7,4 +7,8 @@ class Provider < Base
   def course_count
     relationships.courses[:meta][:count]
   end
+
+  def full_address
+    [address1, address2, address3, address4, postcode].select(&:present?).join("<br> ").html_safe
+  end
 end

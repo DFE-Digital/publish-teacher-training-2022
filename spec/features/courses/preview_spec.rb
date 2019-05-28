@@ -16,7 +16,13 @@ feature 'Preview course', type: :feature do
             personal_qualities: 'We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.',
             other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.')
   end
-  let(:provider)         { jsonapi(:provider, provider_code: 'AO', website: 'https://scitt.org') }
+  let(:provider) {
+    jsonapi(:provider,
+            provider_code: 'AO',
+              website: 'https://scitt.org',
+              address1: '1 Long Rd',
+              postcode: 'E1 ABC')
+  }
   let(:course)           { course_jsonapi.to_resource }
   let(:course_response)  { course_jsonapi.render }
   let(:decorated_course) { course.decorate }
@@ -122,6 +128,22 @@ feature 'Preview course', type: :feature do
 
     expect(preview_course_page.train_with_disability).to have_content(
       provider.train_with_disability
+    )
+
+    expect(preview_course_page.contact_email).to have_content(
+      provider.email
+    )
+
+    expect(preview_course_page.contact_telephone).to have_content(
+      provider.telephone
+    )
+
+    expect(preview_course_page.contact_website).to have_content(
+      provider.website
+    )
+
+    expect(preview_course_page.contact_address).to have_content(
+      '1 Long Rd E1 ABC'
     )
   end
 end
