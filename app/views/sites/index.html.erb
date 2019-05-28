@@ -19,15 +19,15 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">A location is a place that a candidate selects when making an application. They do this by choosing from a list on both the course page in Find and the UCAS application form.</p>
+
     <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+    <ul class="govuk-list govuk-list--bullet">
       <li>edit location names and addresses</li>
       <li>add locations</li>
     </ul>
 
-    <div class="govuk-inset-text">
-      <p>By ‘location’ we mean the places that a candidate selects when making an application. They do this by choosing from a list on both the course page in Find and the UCAS application form.</p>
-    </div>
+    <p class="govuk-body">To assign locations to courses contact the Becoming a Teacher team: <%= bat_contact_mail_to bat_contact_email_address, subject: "Assign locations to courses (#{@provider.attributes[:provider_code]})" %></p>
 
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
