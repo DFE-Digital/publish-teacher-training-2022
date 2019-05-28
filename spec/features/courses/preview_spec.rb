@@ -13,7 +13,8 @@ feature 'Preview course', type: :feature do
             has_scholarship_and_bursary?: true,
             scholarship_amount: '20000',
             bursary_amount: '22000',
-            personal_qualities: 'We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.')
+            personal_qualities: 'We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.',
+            other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.')
   end
   let(:provider)         { jsonapi(:provider, provider_code: 'AO', website: 'https://scitt.org') }
   let(:course)           { course_jsonapi.to_resource }

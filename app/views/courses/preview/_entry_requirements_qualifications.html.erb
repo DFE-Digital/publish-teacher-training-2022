@@ -16,12 +16,10 @@
     </div>
   <% end %>
 
-  <h3 class="govuk-heading-m">Other requirements</h3>
-  <div data-qa="course__other_requirements">
-    <% if course.other_requirements.present? %>
+  <% if course.other_requirements.present? %>
+    <h3 class="govuk-heading-m">Other requirements</h3>
+    <div data-qa="course__other_requirements">
       <%= markdown(course.other_requirements) %>
-    <% else %>
-      <p class="missing-section">Please add details for this section.</p>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>
