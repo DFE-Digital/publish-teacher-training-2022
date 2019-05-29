@@ -26,7 +26,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @site, url: provider_sites_path(params[:provider_code]), method: :post do |f| %>
       <p class="govuk-body">Once a location is added (and assigned to a course), candidates can choose it as their preferred place of training when completing the UCAS application form.</p>
-      <p class="govuk-body">When you’ve added this location contact the Becoming a Teacher team to assign it to a course: <%= bat_contact_mail_to bat_contact_email_address, subject: "Assign a new location to a course (#{@provider.attributes[:provider_code]})" %></p>
+      <p class="govuk-body">When you’ve added this location contact the Becoming a Teacher team to assign it to a course: <%= bat_contact_mail_to bat_contact_email_address, subject: "Assign a new location to a course (#{@provider.provider_code})" %></p>
       <hr class="govuk-section-break govuk-section-break--l">
       <%= render 'form', f: f %>
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'location__publish-changes' } %>
