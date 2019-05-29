@@ -27,6 +27,7 @@ module PageObjects
         element :personal_qualities, '[data-qa=course__personal_qualities]'
         element :other_requirements, '[data-qa=course__other_requirements]'
         element :train_with_us, '#section-about-provider'
+        element :about_accrediting_body, '[data-qa=course__about_accrediting_body]'
         element :train_with_disability, '#section-train-with-disabilities'
         element :contact_email, '[data-qa=provider__email]'
         element :contact_telephone, '[data-qa=provider__telephone]'
