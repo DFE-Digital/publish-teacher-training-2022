@@ -1,0 +1,41 @@
+<%= content_for :page_title, "Locations - #{course.name_and_code}" %>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_course_path(course.provider.provider_code, course.course_code)) %>
+<% end %>
+
+<h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+  Locations
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for course, url: publish_provider_course_path(course.provider.provider_code, course.course_code), method: :post do |f| %>
+      <div class="govuk-form-group">
+        <div class="govuk-checkboxes">
+          <%= f.fields_for :site_statuses, @provider.sites do |sf| %>
+            <% site = sf.object %>
+            <div class="govuk-checkboxes__item">
+              <%= sf.check_box site.id, checked: course.has_site?(site), class: 'govuk-checkboxes__input' %>
+              <%= sf.label site.id, class: 'govuk-label govuk-checkboxes__label'  do %>
+                <strong><%= site.location_name %></strong>
+              <% end %>
+              <span class="govuk-hint govuk-checkboxes__hint">
+                <%= site.full_address %>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <%= f.submit course.is_published? ? "Save and publish changes" : "Save",
+        class: "govuk-button", data: { qa: 'course__save' }
+      %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes', provider_course_path(course.provider.provider_code, course.course_code), class: "govuk-link" %>
+      </p>
+    <% end %>
+  </div>
+</div>

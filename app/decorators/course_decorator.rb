@@ -82,6 +82,10 @@ class CourseDecorator < ApplicationDecorator
     object.site_statuses.sort_by { |ss| ss.site.location_name }
   end
 
+  def has_site?(site)
+    object.site_statuses.map(&:site).include?(site)
+  end
+
 private
 
   def status_tag_content

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get '/withdraw', on: :member, to: 'courses#withdraw'
       get '/delete', on: :member, to: 'courses#delete'
       get '/preview', on: :member, to: 'courses#preview'
+      get '/locations', on: :member, to: 'courses/sites#edit'
       post '/publish', on: :member, to: 'courses#publish'
     end
 
