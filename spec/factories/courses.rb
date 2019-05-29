@@ -43,6 +43,7 @@ FactoryBot.define do
     has_early_career_payments? { nil }
     scholarship_amount { 20000 }
     bursary_amount { 22000 }
+    about_accrediting_body { nil }
 
     trait :with_vacancy do
       has_vacancies? { true }

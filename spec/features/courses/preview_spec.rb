@@ -16,6 +16,7 @@ feature 'Preview course', type: :feature do
             bursary_amount: '22000',
             personal_qualities: 'We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.',
             other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.',
+            about_accrediting_body: 'Something great about the accredited body',
             has_vacancies?: true,
             site_statuses: [site_status])
   end
@@ -134,6 +135,10 @@ feature 'Preview course', type: :feature do
 
     expect(preview_course_page.train_with_us).to have_content(
       provider.train_with_us
+    )
+
+    expect(preview_course_page.about_accrediting_body).to have_content(
+      course.about_accrediting_body
     )
 
     expect(preview_course_page.train_with_disability).to have_content(
