@@ -32,6 +32,7 @@ module PageObjects
         element :contact_website, '[data-qa=provider__website]'
         element :contact_address, '[data-qa=provider__address]'
         element :course_advice, '#section-advice'
+        element :course_apply, '#section-apply'
       end
     end
   end

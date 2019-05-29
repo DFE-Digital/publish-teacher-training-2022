@@ -1,0 +1,60 @@
+<div class="govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-l" id="section-apply">Apply</h2>
+  <% if course.has_vacancies? %>
+    <p class="govuk-body">
+      <%= link_to 'Apply on the UCAS website', 'https://2019.teachertraining.apply.ucas.com/apply/student/login.do', class: 'govuk-link' %>. You’ll need to register with UCAS before you can apply.
+    </p>
+    <p class="govuk-body">
+      Visit Get into Teaching for <%= link_to 'guidance on applying for teacher training', 'https://getintoteaching.education.gov.uk/how-to-apply/apply', class: 'govuk-link' %>.
+    </p>
+
+    <p class="govuk-body">
+      When you apply you’ll need these codes for the Choices section of your application form:
+    </p>
+    <div class="govuk-inset-text">
+      <ul class="govuk-list">
+        <li class="govuk-!-margin-bottom-2">
+          Training provider code:
+          <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold"><%= course.provider.provider_code %></span>
+        </li>
+        <li>
+          Training programme code:
+          <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold"><%= course.course_code %></span>
+        </li>
+      </ul>
+    </div>
+  <% else %>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        You can’t apply for this course because it currently has no vacancies. To find courses with vacancies, change your search settings to ‘Only courses with vacancies’.
+      </strong>
+    </div>
+  <% end %>
+
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col">Location</th>
+        <th class="govuk-table__header" scope="col">Vacancies</th>
+        <th class="govuk-table__header" scope="col">Code</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% course.site_statuses.each do |site_status| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <strong><%= site_status.site.location_name %></strong>
+            <br>
+            <%= site_status.site.full_address %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= site_status.has_vacancies? ? 'Yes' : 'No' %>
+          </td>
+          <td class="govuk-table__cell"><%= site_status.site.code %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

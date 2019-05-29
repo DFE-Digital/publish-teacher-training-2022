@@ -14,7 +14,13 @@ feature 'Preview course', type: :feature do
             scholarship_amount: '20000',
             bursary_amount: '22000',
             personal_qualities: 'We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.',
-            other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.')
+            other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.',
+            has_vacancies?: true,
+            site_statuses: [site_status])
+  end
+  let(:site) { jsonapi(:site, location_name: 'Big Scitt') }
+  let(:site_status) do
+    jsonapi(:site_status, :full_time_and_part_time, site: site)
   end
   let(:provider) {
     jsonapi(:provider,
@@ -72,9 +78,7 @@ feature 'Preview course', type: :feature do
       provider.website
     )
 
-    expect(preview_course_page.vacancies).to have_content(
-      'No'
-    )
+    expect(preview_course_page).to_not have_vacancies
 
     expect(preview_course_page.about_course).to have_content(
       course.about_course
@@ -144,6 +148,10 @@ feature 'Preview course', type: :feature do
 
     expect(preview_course_page.contact_address).to have_content(
       '1 Long Rd E1 ABC'
+    )
+
+    expect(preview_course_page).to have_content(
+      'Big Scitt'
     )
 
     expect(preview_course_page).to have_course_advice
