@@ -16,4 +16,8 @@ class Site < Base
     ['Scotland', :scotland],
     ['No Region', :no_region],
   ].freeze
+
+  def full_address
+    [address1, address2, address3, address4, postcode].select(&:present?).join(", ").html_safe
+  end
 end
