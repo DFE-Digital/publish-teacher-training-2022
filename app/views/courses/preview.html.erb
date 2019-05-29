@@ -17,6 +17,10 @@
 <p class="govuk-body-l" data-qa='course__description'><%= course.description %></p>
 
 <dl class="govuk-list--description govuk-!-margin-bottom-8">
+  <% if course.accrediting_provider.present? %>
+    <dt class="govuk-list--description__label">Accredited body</dt>
+    <dd data-qa="course__accredited_body"><%= course.accrediting_provider.provider_name %></dd>
+  <% end %>
   <dt class="govuk-list--description__label">Qualification</dt>
   <dd data-qa="course__qualifications">
     <%= render partial: 'courses/preview/qualification' %>

@@ -5,6 +5,7 @@ feature 'Preview course', type: :feature do
     jsonapi(:course,
             name: 'English',
             provider: provider,
+            accrediting_provider: accrediting_provider,
             course_length: 'OneYear',
             applications_open_from: '2019-01-01T00:00:00Z',
             start_date: '2019-09-01T00:00:00Z',
@@ -25,13 +26,14 @@ feature 'Preview course', type: :feature do
   let(:provider) {
     jsonapi(:provider,
             provider_code: 'AO',
-              website: 'https://scitt.org',
-              address1: '1 Long Rd',
-              postcode: 'E1 ABC')
+            website: 'https://scitt.org',
+            address1: '1 Long Rd',
+            postcode: 'E1 ABC')
   }
-  let(:course)           { course_jsonapi.to_resource }
-  let(:course_response)  { course_jsonapi.render }
-  let(:decorated_course) { course.decorate }
+  let(:accrediting_provider) { jsonapi(:provider) }
+  let(:course)               { course_jsonapi.to_resource }
+  let(:course_response)      { course_jsonapi.render }
+  let(:decorated_course)     { course.decorate }
 
   before do
     stub_omniauth
@@ -52,6 +54,10 @@ feature 'Preview course', type: :feature do
 
     expect(preview_course_page.sub_title).to have_content(
       provider.provider_name
+    )
+
+    expect(preview_course_page.accredited_body).to have_content(
+      accrediting_provider.provider_name
     )
 
     expect(preview_course_page.description).to have_content(
