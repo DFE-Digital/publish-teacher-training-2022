@@ -17,6 +17,7 @@ feature 'Preview course', type: :feature do
             personal_qualities: 'We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.',
             other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.',
             about_accrediting_body: 'Something great about the accredited body',
+            interview_process: 'Some helpful guidance about the interview process',
             has_vacancies?: true,
             site_statuses: [site_status])
   end
