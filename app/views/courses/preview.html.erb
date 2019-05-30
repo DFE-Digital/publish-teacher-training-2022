@@ -35,7 +35,7 @@
     <dt class="govuk-list--description__label">Date you can apply from</dt>
     <dd data-qa="course__applications_open"><%= l(course.applications_open_from&.to_date) %></dd>
   <% end %>
-  <% if course.applications_open_from.present? %>
+  <% if course.start_date.present? %>
     <dt class="govuk-list--description__label">Date course starts</dt>
     <dd data-qa="course__start_date"><%= l(course.start_date&.to_date, format: :short) %></dd>
   <% end %>
@@ -44,10 +44,6 @@
     <dd data-qa="course__provider_website">
       <%= link_to @provider.website, @provider.website, class: 'govuk-link' %>
     </dd>
-  <% end %>
-  <% unless course.has_vacancies? %>
-    <dt class="govuk-list--description__label">Vacancies</dt>
-    <dd data-qa="course__vacancies">No</dd>
   <% end %>
 </dl>
 
