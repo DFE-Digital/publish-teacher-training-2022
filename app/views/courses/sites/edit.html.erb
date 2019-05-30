@@ -28,14 +28,16 @@
           <% end %>
         </div>
       </div>
-
-      <%= f.submit course.is_published? ? "Save and publish changes" : "Save",
-        class: "govuk-button", data: { qa: 'course__save' }
-      %>
-
-      <p class="govuk-body">
-        <%= link_to 'Cancel changes', provider_course_path(course.provider.provider_code, course.course_code), class: "govuk-link" %>
-      </p>
     <% end %>
+
+    <%= link_to provider_course_path(course.provider.provider_code, course.course_code) do %>
+      <button class="govuk-button" data-qa="course__save">
+        <%= course.is_published? ? "Save and publish changes" : "Save" %>
+      </button>
+    <% end %>
+
+    <p class="govuk-body">
+      <%= link_to 'Cancel changes', provider_course_path(course.provider.provider_code, course.course_code), class: "govuk-link" %>
+    </p>
   </div>
 </div>
