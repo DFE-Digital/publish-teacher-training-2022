@@ -91,11 +91,11 @@ $button-colour: #00823b;
     position: relative;
 
     &:before {
-      color: $govuk-border-colour;
-      content: '\00af';
+      color: govuk-colour("grey-1");
+      content: '\2013';
       left: -16px;
       position: absolute;
-      top: 5px;
+      top: 0;
     }
   }
 }
