@@ -37,24 +37,9 @@ module Govuk
       %(<p class="govuk-body">#{text}</p>)
     end
 
-    def header(text, heading_level)
-      tag  = "h#{heading_level}"
-      size = case heading_level
-             when 1
-               'xl'
-             when 2
-               'l'
-             when 3
-               'm'
-             else
-               's'
-             end
-
-      <<~HTML
-        <#{tag} class="govuk-heading-#{size}">
-          #{text}
-        </#{tag}>
-      HTML
+    # Force all headers to <h3> to maintain semantic markup
+    def header(text, _heading_level)
+      %(<h3 class="govuk-heading-m">#{text}</h3>)
     end
 
     def self.render(content)
