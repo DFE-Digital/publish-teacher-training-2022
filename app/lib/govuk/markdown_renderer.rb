@@ -33,6 +33,10 @@ module Govuk
       HTML
     end
 
+    def autolink(link, link_type)
+      %(<a href="#{link}" class="govuk-link">#{link}</a>)
+    end
+
     def paragraph(text)
       %(<p class="govuk-body">#{text}</p>)
     end
