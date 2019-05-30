@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get '/delete', on: :member, to: 'courses#delete'
       get '/preview', on: :member, to: 'courses#preview'
       get '/locations', on: :member, to: 'courses/sites#edit'
+      put '/locations', on: :member, to: 'courses/sites#update'
       post '/publish', on: :member, to: 'courses#publish'
     end
 
