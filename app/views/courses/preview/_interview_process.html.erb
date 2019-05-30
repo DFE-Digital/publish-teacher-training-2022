@@ -1,8 +1,6 @@
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-interviews">Interview process</h2>
-  <% if course.interview_process.present? %>
+  <div data-qa="course__interview_process">
     <%= markdown(course.interview_process) %>
-  <% else %>
-    <p class="missing-section">Please add details for this section.</p>
-  <% end %>
+  </div>
 </div>

@@ -52,7 +52,9 @@
     <h2 class="govuk-heading-m">Contents</h2>
     <ul class="govuk-list govuk-list--dash course-contents govuk-!-margin-bottom-8">
       <li><%= link_to 'About the course', '#section-about', class: 'govuk-link' %></li>
-      <li><%= link_to 'Interview process', '#section-interviews', class: 'govuk-link' %></li>
+      <% if course.interview_process.present? %>
+        <li><%= link_to 'Interview process', '#section-interviews', class: 'govuk-link' %></li>
+      <% end %>
       <li><%= link_to 'How school placements work', '#section-schools', class: 'govuk-link' %></li>
       <% if course.has_fees? %>
         <li><%= link_to 'Fees', '#section-fees', class: 'govuk-link' %></li>
@@ -70,7 +72,9 @@
 
     <%= render partial: 'courses/preview/about_course' %>
 
-    <%= render partial: 'courses/preview/interview_process' %>
+    <% if course.interview_process.present? %>
+      <%= render partial: 'courses/preview/interview_process' %>
+    <% end %>
 
     <%= render partial: 'courses/preview/about_schools' %>
 

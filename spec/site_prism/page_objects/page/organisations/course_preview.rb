@@ -16,7 +16,7 @@ module PageObjects
         element :provider_website, '[data-qa=course__provider_website]'
         element :vacancies, '[data-qa=course__vacancies]'
         element :about_course, '#section-about'
-        element :interview_process, '#section-interviews'
+        element :interview_process, '[data-qa=course__interview_process]'
         element :school_placements, '#section-schools'
         element :uk_fees, '[data-qa=course__uk_fees]'
         element :eu_fees, '[data-qa=course__eu_fees]'
