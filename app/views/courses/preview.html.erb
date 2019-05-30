@@ -21,6 +21,8 @@
     <dt class="govuk-list--description__label">Accredited body</dt>
     <dd data-qa="course__accredited_body"><%= course.accrediting_provider.provider_name %></dd>
   <% end %>
+  <dt class="govuk-list--description__label">Financial support</dt>
+  <dd data-qa="course__funding_option"><%= course.funding_option %></dd>
   <dt class="govuk-list--description__label">Qualification</dt>
   <dd data-qa="course__qualifications">
     <%= render partial: 'courses/preview/qualification' %>

@@ -9,6 +9,7 @@ module PageObjects
         element :description, '[data-qa=course__description]'
         element :accredited_body, '[data-qa=course__accredited_body]'
         element :qualifications, '[data-qa=course__qualifications]'
+        element :funding_option, '[data-qa=course__funding_option]'
         element :length, '[data-qa=course__length]'
         element :applications_open_from, '[data-qa=course__applications_open]'
         element :start_date, '[data-qa=course__start_date]'
