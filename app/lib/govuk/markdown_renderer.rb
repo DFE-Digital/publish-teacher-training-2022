@@ -29,7 +29,7 @@ module Govuk
       %(<a href="#{link}" class="govuk-link">#{content}</a>)
     end
 
-    def autolink(link, link_type)
+    def autolink(link, _link_type)
       %(<a href="#{link}" class="govuk-link">#{link}</a>)
     end
 
