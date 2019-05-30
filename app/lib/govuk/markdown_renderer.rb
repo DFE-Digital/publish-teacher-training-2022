@@ -26,11 +26,7 @@ module Govuk
     end
 
     def link(link, title, content)
-      <<~HTML
-        <a href="#{link}" title="#{title}" class="govuk-link">
-          #{content}
-        </a>
-      HTML
+      %(<a href="#{link}" class="govuk-link">#{content}</a>)
     end
 
     def autolink(link, link_type)
