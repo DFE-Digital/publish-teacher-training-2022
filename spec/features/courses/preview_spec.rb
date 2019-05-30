@@ -69,6 +69,10 @@ feature 'Preview course', type: :feature do
       'PGCE with QTS'
     )
 
+    expect(preview_course_page.funding_option).to have_content(
+      decorated_course.funding_option
+    )
+
     expect(preview_course_page.length).to have_content(
       decorated_course.length
     )

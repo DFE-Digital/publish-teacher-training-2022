@@ -86,6 +86,18 @@ class CourseDecorator < ApplicationDecorator
     object.site_statuses.map(&:site).include?(site)
   end
 
+  def funding_option
+    if object.funding == 'salary'
+      "Salary"
+    elsif object.has_scholarship_and_bursary?
+      "Scholarship, bursary or student finance if you’re eligible"
+    elsif object.has_bursary?
+      "Bursary or student finance if you’re eligible";
+    else
+      "Student finance if you’re eligible"
+    end
+  end
+
 private
 
   def status_tag_content
