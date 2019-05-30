@@ -62,7 +62,7 @@ describe Govuk::MarkdownRenderer do
     it 'renders correct HTML' do
       expected_html = <<~HTML
         <p class="govuk-body">
-          <a href="https://href" title="" class="govuk-link">link</a>
+          <a href="https://href" class="govuk-link">link</a>
         </p>
       HTML
 
@@ -91,7 +91,7 @@ describe Govuk::MarkdownRenderer do
 
     it 'renders correct HTML' do
       expected_html = <<~HTML
-        <h1 class="govuk-heading-xl">heading level 1</h1>
+        <h3 class="govuk-heading-m">heading level 1</h3>
       HTML
 
       expect_equal_ignoring_ws(html, expected_html)
@@ -107,7 +107,7 @@ describe Govuk::MarkdownRenderer do
 
     it 'renders correct HTML' do
       expected_html = <<~HTML
-        <h2 class="govuk-heading-l">heading level 2</h2>
+        <h3 class="govuk-heading-m">heading level 2</h3>
       HTML
 
       expect_equal_ignoring_ws(html, expected_html)
@@ -139,7 +139,7 @@ describe Govuk::MarkdownRenderer do
 
     it 'renders correct HTML' do
       expected_html = <<~HTML
-        <h4 class="govuk-heading-s">heading level 4</h4>
+        <h3 class="govuk-heading-m">heading level 4</h3>
       HTML
 
       expect_equal_ignoring_ws(html, expected_html)
@@ -155,7 +155,7 @@ describe Govuk::MarkdownRenderer do
 
     it 'renders correct HTML' do
       expected_html = <<~HTML
-        <h5 class="govuk-heading-s">heading level 5</h5>
+        <h3 class="govuk-heading-m">heading level 5</h3>
       HTML
 
       expect_equal_ignoring_ws(html, expected_html)
@@ -171,7 +171,7 @@ describe Govuk::MarkdownRenderer do
 
     it 'renders correct HTML' do
       expected_html = <<~HTML
-        <h6 class="govuk-heading-s">heading level 6</h6>
+        <h3 class="govuk-heading-m">heading level 6</h3>
       HTML
 
       expect_equal_ignoring_ws(html, expected_html)
