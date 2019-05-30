@@ -25,7 +25,7 @@ module Govuk
       end
     end
 
-    def link(link, title, content)
+    def link(link, _title, content)
       %(<a href="#{link}" class="govuk-link">#{content}</a>)
     end
 
