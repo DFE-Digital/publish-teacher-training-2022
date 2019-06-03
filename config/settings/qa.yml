@@ -2,10 +2,10 @@ dfe_signin:
   issuer: https://signin-test-oidc-as.azurewebsites.net
   profile: https://signin-test-pfl-as.azurewebsites.net
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
-  base_url: https://bat-dev-manage-courses-frontend-app.azurewebsites.net
+  base_url: https://bat-qa-mcfe-as.azurewebsites.net
 manage_backend:
-  base_url: https://bat-dev-manage-courses-backend-app.azurewebsites.net
+  base_url: https://bat-qa-mcbe-as.azurewebsites.net
 manage_ui:
-  base_url: https://bat-dev-manage-courses-ui-app.azurewebsites.net
+  base_url: https://bat-qa-mcui-as.azurewebsites.net
 search_ui:
-  base_url: https://bat-dev-search-and-compare-ui-app.azurewebsites.net
+  base_url: https://bat-qa-sacui-as.azurewebsites.net
