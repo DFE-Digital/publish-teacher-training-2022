@@ -41,7 +41,7 @@
         <dd class="govuk-summary-list__actions"></dd>
       </div>
 
-      <% if @provider.accredited_body? then %>
+      <% if @provider.accredited_body? %>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Apprenticeship
@@ -78,7 +78,7 @@
           Locations
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__locations">
-          <% if course.sites.size == 1 then %>
+          <% if course.sites.size == 1 %>
             <%= course.sites.first.location_name %>
           <% else %>
             <ul class="govuk-list courses-locations-list">
@@ -89,7 +89,7 @@
               <% end %>
             </ul>
           <% end %>
-          <% if @provider.sites.size == 1 then %>
+          <% if @provider.sites.size == 1 %>
             <p class="govuk-body govuk-hint">You can’t change this because you only have 1&nbsp;location</p>
             <p class="govuk-body">
               <%= link_to "Manage all your locations", provider_sites_path(@provider.provider_code), class: "govuk-link", data: { qa: "course__manage_provider_locations_link" } %>
@@ -97,7 +97,7 @@
           <% end %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <% if @provider.sites.size > 1 then %>
+          <% if @provider.sites.size > 1 %>
             <%= link_to locations_provider_course_path(course.course_code), class: "govuk-link", data: { qa: "course__edit_locations_link" } do %>
               Change<span class="govuk-visually-hidden"> locations</span>
             <% end %>
@@ -105,7 +105,7 @@
         </dd>
       </div>
 
-      <% unless @provider.accredited_body? then %>
+      <% unless @provider.accredited_body? %>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Accredited body
