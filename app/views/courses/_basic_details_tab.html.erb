@@ -8,6 +8,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__level">
           <%= course.level&.humanize %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -17,6 +18,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__is_send">
           <%= course.is_send? %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -26,6 +28,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__subjects">
           <%= course.sorted_subjects %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -35,6 +38,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__qualifications">
           <%= course.outcome %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <% if @provider.accredited_body? then %>
@@ -45,6 +49,7 @@
           <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
             <%= course.apprenticeship? %>
           </dd>
+          <dd class="govuk-summary-list__actions"></dd>
         </div>
       <% else %>
         <div class="govuk-summary-list__row">
@@ -54,6 +59,7 @@
           <dd class="govuk-summary-list__value" data-qa="course__funding">
             <%= course.funding %>
           </dd>
+          <dd class="govuk-summary-list__actions"></dd>
         </div>
       <% end %>
 
@@ -64,6 +70,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__study_mode">
           <%= course.study_mode.humanize %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -89,6 +96,8 @@
             </p>
           <% end %>
         </dd>
+        <dd class="govuk-summary-list__actions">
+        </dd>
       </div>
 
       <% unless @provider.accredited_body? then %>
@@ -99,6 +108,7 @@
           <dd class="govuk-summary-list__value" data-qa="course__accredited_body">
             <%= course.accrediting_provider&.provider_name %>
           </dd>
+          <dd class="govuk-summary-list__actions"></dd>
         </div>
       <% end %>
 
@@ -109,6 +119,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__application_status">
           <%= course.open_or_closed_for_applications %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -154,6 +165,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__start_date">
           <%= l(course.start_date&.to_date, format: :short) %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -163,6 +175,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__name">
           <%= course.name %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -172,6 +185,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__description">
           <%= course.description %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -181,6 +195,7 @@
         <dd class="govuk-summary-list__value" data-qa="course__course_code">
           <%= course.course_code %>
         </dd>
+        <dd class="govuk-summary-list__actions"></dd>
       </div>
     </dl>
   </div>
