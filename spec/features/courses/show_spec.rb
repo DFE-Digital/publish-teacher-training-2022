@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Show course', type: :feature do
-  let(:provider) { jsonapi(:provider, accredited_body?: false) }
+  let(:provider) { jsonapi(:provider, accredited_body?: false, sites: [site1, site2]) }
   let(:course) {
     jsonapi :course,
             qualifications: %w[qts pgce],
@@ -70,6 +70,10 @@ feature 'Show course', type: :feature do
     expect(course_page.locations).to have_content(
       site2.location_name
     )
+    expect(course_page.edit_locations_link).to have_content(
+      "Change location"
+    )
+    expect(course_page).not_to have_manage_provider_locations_link
     expect { course_page.apprenticeship }.to raise_error(Capybara::ElementNotFound)
     expect(course_page.funding).to have_content(
       'Fee paying (no salary)'
@@ -87,6 +91,26 @@ feature 'Show course', type: :feature do
       'Secondary'
     )
     expect(course_page).to have_entry_requirements
+  end
+
+  context 'when the provider only has one location' do
+    let(:provider) { jsonapi(:provider, accredited_body?: false, sites: [site1]) }
+    let(:course) {
+      jsonapi :course,
+              site_statuses: [site_status1],
+              provider: provider,
+              accrediting_provider: provider,
+              ucas_status: 'new'
+    }
+
+    scenario 'viewing the show courses page' do
+      visit "/organisations/A0/courses/#{course.course_code}"
+
+      expect(course_page).not_to have_edit_locations_link
+      expect(course_page.manage_provider_locations_link).to have_content(
+        "Manage all your locations"
+      )
+    end
   end
 
   context 'when the course is new and not running' do
