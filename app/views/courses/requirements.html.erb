@@ -7,9 +7,9 @@
 <%= render partial: 'courses/copy_content_warning',
                     locals: {
                       copied_fields: [
-                        ['Qualifications needed', '#required_qualifications_wrapper'],
-                        ['Personal qualities', '#personal_qualities_wrapper'],
-                        ['Other requirements', '#other_requirements_wrapper']
+                        ['Qualifications needed', 'required_qualifications'],
+                        ['Personal qualities', 'personal_qualities'],
+                        ['Other requirements', 'other_requirements']
                       ]} if params[:copy_from].present? %>
 
 <h1 class="govuk-heading-xl">
