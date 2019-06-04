@@ -46,4 +46,20 @@ feature 'About course', type: :feature do
       course.how_school_placements_work
     )
   end
+
+  context 'when a provider has no self accredited courses (for example a School Direct provider)' do
+    let(:course_1) { jsonapi :course, provider: provider, name: 'Computing', accrediting_provider: accredited_body }
+    let(:course_2) { jsonapi :course, name: 'Drama', accrediting_provider: accredited_body }
+    let(:courses)  { [course_2] }
+    let(:accredited_body) { jsonapi(:provider, accredited_body?: true, provider_code: 'A1') }
+    let(:provider) { jsonapi(:provider, courses: courses, accredited_body?: false, provider_code: 'AO') }
+
+    scenario 'viewing the about courses page' do
+      visit about_provider_course_path('AO', course.course_code)
+
+      expect(about_course_page.caption).to have_content(
+        "#{course.name} (#{course.course_code})"
+      )
+    end
+  end
 end
