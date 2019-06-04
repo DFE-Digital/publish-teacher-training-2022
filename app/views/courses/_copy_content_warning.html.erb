@@ -7,24 +7,8 @@
       We’ve copied these fields from <%= @source_course.name %> (<%= @source_course.course_code %>):
     </p>
     <ul class="govuk-list">
-      <% case content %>
-      <% when 'course_about' %>
-        <li><%= link_to 'About the course', '#about_course_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Interview process', '#interview_process_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'How school placements work', '#how_school_placements_work_wrapper', class: 'govuk-link' %></li>
-      <% when 'course_requirements' %>
-        <li><%= link_to 'Qualifications needed', '#required_qualifications_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Personal qualities', '#personal_qualities_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Other requirements', '#other_requirements_wrapper', class: 'govuk-link' %></li>
-      <% when 'course_fees' %>
-        <li><%= link_to 'Course length', '#course_length_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Fee for UK and EU students', '#fee_uk_eu_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Fee for international students', '#fee_international_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Fee details', '#fee_details_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Financial support', '#financial_support_wrapper', class: 'govuk-link' %></li>
-      <% when 'course_salary' %>
-        <li><%= link_to 'Course length', '#course_length_wrapper', class: 'govuk-link' %></li>
-        <li><%= link_to 'Salary details', '#salary_details_wrapper', class: 'govuk-link' %></li>
+      <% copied_fields.each do |field| %>
+        <li><%= link_to field[0], field[1], class: 'govuk-link' %></li>
       <% end %>
     </ul>
     <p class="govuk-body">

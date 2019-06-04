@@ -4,7 +4,13 @@
   <%= govuk_back_link_to(provider_course_path(course.provider.provider_code, course.course_code)) %>
 <% end %>
 
-<%= render partial: 'courses/copy_content_warning', locals: { content: 'course_requirements' } if params[:copy_from].present? %>
+<%= render partial: 'courses/copy_content_warning',
+                    locals: {
+                      copied_fields: [
+                        ['Qualifications needed', '#required_qualifications_wrapper'],
+                        ['Personal qualities', '#personal_qualities_wrapper'],
+                        ['Other requirements', '#other_requirements_wrapper']
+                      ]} if params[:copy_from].present? %>
 
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.name_and_code %></span>
