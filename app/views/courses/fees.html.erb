@@ -7,11 +7,11 @@
 <%= render partial: 'courses/copy_content_warning',
                     locals: {
                       copied_fields: [
-                        ['Course length', '#course_length_wrapper'],
-                        ['Fee for UK and EU students', '#fee_uk_eu_wrapper'],
-                        ['Fee for international students', '#fee_international_wrapper'],
-                        ['Fee details', '#fee_details_wrapper'],
-                        ['Financial support', '#financial_support_wrapper']
+                        ['Course length', 'course_length'],
+                        ['Fee for UK and EU students', 'fee_uk_eu'],
+                        ['Fee for international students', 'fee_international'],
+                        ['Fee details', 'fee_details'],
+                        ['Financial support', 'financial_support']
                       ]} if params[:copy_from].present? %>
 
 <h1 class="govuk-heading-xl">
