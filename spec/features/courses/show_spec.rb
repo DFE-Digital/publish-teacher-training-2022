@@ -86,6 +86,9 @@ feature 'Show course', type: :feature do
     expect(course_page.level).to have_content(
       'Secondary'
     )
+    expect(course_page).to have_entry_requirements_maths
+    expect(course_page).to have_entry_requirements_english
+    expect(course_page).to have_entry_requirements_science
   end
 
   context 'when the course is new and not running' do

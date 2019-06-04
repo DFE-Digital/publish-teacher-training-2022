@@ -1,0 +1,23 @@
+<% case gcse_subject_code %>
+<% when 'must_have_qualification_at_application_time' %>
+  <p class="govuk-body">Code: 1</p>
+  <p class="govuk-body">UCAS will block applications from candidates who:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>haven’t gained the minimum qualifications yet</li>
+    <li>need to take an equivalency test</li>
+  </ul>
+<% when 'expect_to_achieve_before_training_begins' %>
+  <p class="govuk-body">Code: 2</p>
+  <p class="govuk-body">Receive applications from candidates who haven’t gained minimum qualifications yet.</p>
+  <p class="govuk-body">UCAS will block applications from candidates who take an equivalency test.</p>
+<% when 'equivalence_test' %>
+  <p class="govuk-body">Code: 3</p>
+  <p class="govuk-body">Receive applications from candidates who:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>haven’t gained the minimum qualifications yet</li>
+    <li>need to take an equivalency test</li>
+  </ul>
+<% else %>
+  <p class="govuk-body">Code: 9</p>
+  <p class="govuk-body">You do not require an applicant to hold GCSE grades A-C, 4 or above</p>
+<% end %>

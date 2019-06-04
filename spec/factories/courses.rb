@@ -44,6 +44,9 @@ FactoryBot.define do
     scholarship_amount { 20000 }
     bursary_amount { 22000 }
     about_accrediting_body { nil }
+    maths { 'expect_to_achieve_before_training_begins' }
+    english { 'must_have_qualification_at_application_time' }
+    science { 'not_required' }
 
     trait :with_vacancy do
       has_vacancies? { true }
