@@ -7,7 +7,7 @@ feature 'Show course', type: :feature do
             qualifications: %w[qts pgce],
             study_mode: 'full_time',
             start_date: Time.new(2019),
-            site_statuses: [site_status1, site_status2],
+            sites: [site1, site2],
             provider: provider,
             accrediting_provider: provider,
             open_for_applications?: true
@@ -24,7 +24,7 @@ feature 'Show course', type: :feature do
   before do
     stub_omniauth
     stub_api_v2_request(
-      "/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/providers/A0/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
       course_response
     )
   end
@@ -68,7 +68,7 @@ feature 'Show course', type: :feature do
       site1.location_name
     )
     expect(course_page.locations).to have_content(
-      "#{site2.location_name} (not running)"
+      site2.location_name
     )
     expect { course_page.apprenticeship }.to raise_error(Capybara::ElementNotFound)
     expect(course_page.funding).to have_content(
@@ -91,7 +91,7 @@ feature 'Show course', type: :feature do
   context 'when the course is new and not running' do
     let(:course) {
       jsonapi :course,
-              site_statuses: [site_status1, site_status2],
+              sites: [site1, site2],
               provider: provider,
               accrediting_provider: provider,
               ucas_status: 'new'
@@ -111,7 +111,7 @@ feature 'Show course', type: :feature do
 
   scenario 'viewing the show page for a course that does not exist' do
     stub_api_v2_request(
-      "/providers/ZZ/courses/ZZZ?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/providers/ZZ/courses/ZZZ?include=sites,provider.sites,accrediting_provider",
       '',
       :get,
       404

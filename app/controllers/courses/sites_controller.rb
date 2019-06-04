@@ -34,7 +34,7 @@ module Courses
     def build_course
       @provider_code = params[:provider_code]
       @course = Course
-        .includes(site_statuses: [:site])
+        .includes(:sites)
         .includes(provider: [:sites])
         .where(provider_code: @provider_code)
         .find(params[:code])

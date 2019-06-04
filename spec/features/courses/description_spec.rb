@@ -7,7 +7,7 @@ feature 'Course description', type: :feature do
             has_vacancies?: true,
             open_for_applications?: true,
             funding: 'fee',
-            site_statuses: [site_status],
+            sites: [site],
             provider: provider,
             accrediting_provider: provider,
             last_published_at: '2019-03-05T14:42:34Z')
@@ -21,7 +21,7 @@ feature 'Course description', type: :feature do
   before do
     stub_omniauth
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
       course_response
     )
     visit "/organisations/#{provider.provider_code}/courses/#{course.course_code}/description"
@@ -78,7 +78,7 @@ feature 'Course description', type: :feature do
     let(:course_jsonapi) {
       jsonapi(:course,
               funding: 'salary',
-              site_statuses: [site_status],
+              sites: [site],
               provider: provider,
               accrediting_provider: provider)
     }
@@ -133,7 +133,7 @@ feature 'Course description', type: :feature do
         jsonapi(:course,
                 findable?: false,
                 content_status: 'draft',
-                site_statuses: [site_status],
+                sites: [site],
                 provider: provider,
                 accrediting_provider: provider)
       }
@@ -149,7 +149,7 @@ feature 'Course description', type: :feature do
       describe 'publishing' do
         before do
           stub_api_v2_request(
-            "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+            "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
             course_response
           )
         end

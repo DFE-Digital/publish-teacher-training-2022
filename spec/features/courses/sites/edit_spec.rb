@@ -4,7 +4,7 @@ feature 'Edit course sites', type: :feature do
   let(:course) do
     jsonapi(
       :course,
-      site_statuses: [jsonapi(:site_status, site: site1)],
+      sites: [site1],
       provider: provider,
       accrediting_provider: provider
     )
@@ -32,7 +32,7 @@ feature 'Edit course sites', type: :feature do
   before do
     stub_omniauth
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=site_statuses.site,provider.sites",
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites",
       course.render
     )
     visit edit_locations_path
@@ -57,7 +57,7 @@ feature 'Edit course sites', type: :feature do
         {}, :patch, 200
       )
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
         course.render
       )
     end

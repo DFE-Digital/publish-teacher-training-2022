@@ -71,16 +71,13 @@
           Locations
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__locations">
-          <% if course.site_statuses.size == 1 then %>
-            <%= course.site_statuses.first.site.location_name %>
+          <% if course.sites.size == 1 then %>
+            <%= course.sites.first.location_name %>
           <% else %>
             <ul class="govuk-list courses-locations-list">
-              <% course.alphabetically_sorted_site_statuses.each do |site_status| %>
+              <% course.alphabetically_sorted_sites.each do |site| %>
                 <li>
-                  <%= site_status.site.location_name %>
-                  <% unless site_status.new_or_running? %>
-                    <span class="govuk-hint govuk-!-display-inline">(not running)</span>
-                  <% end %>
+                  <%= site.location_name %>
                 </li>
               <% end %>
             </ul>

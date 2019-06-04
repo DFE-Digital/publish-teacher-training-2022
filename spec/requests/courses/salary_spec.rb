@@ -24,11 +24,11 @@ describe 'Courses', type: :request do
       stub_omniauth
       get(auth_dfe_callback_path)
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
         course_response
       )
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+        "/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=sites,provider.sites,accrediting_provider",
         course_2_json_api.render
       )
       stub_api_v2_request(

@@ -78,12 +78,12 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
-  def alphabetically_sorted_site_statuses
-    object.site_statuses.sort_by { |ss| ss.site.location_name }
+  def alphabetically_sorted_sites
+    object.sites.sort_by(&:location_name)
   end
 
   def has_site?(site)
-    object.site_statuses.map(&:site).include?(site)
+    object.sites.include?(site)
   end
 
   def funding_option
