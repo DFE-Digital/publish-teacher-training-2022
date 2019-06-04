@@ -116,6 +116,33 @@
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
+          UCAS applications: Maths GCSE
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__entry_requirements_maths">
+          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject_code: course.maths } %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          UCAS applications: English GCSE
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__entry_requirements_english">
+          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject_code: course.english } %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          UCAS applications: Science GCSE
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__entry_requirements_science">
+          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject_code: course.science } %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
           Course starts
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__start_date">
