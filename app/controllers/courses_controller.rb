@@ -124,7 +124,7 @@ private
 
   def filter_courses
     @courses_by_accrediting_provider = @courses_by_accrediting_provider.reject { |c| c == course.id }
-    @self_accredited_courses = @self_accredited_courses.reject { |c| c.id == course.id }
+    @self_accredited_courses = @self_accredited_courses&.reject { |c| c.id == course.id }
   end
 
   def build_copy_course
