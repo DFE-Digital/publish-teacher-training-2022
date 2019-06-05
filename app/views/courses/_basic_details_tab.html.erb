@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <dl class="govuk-summary-list">
+    <dl class="govuk-summary-list govuk-!-margin-bottom-0">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Level
@@ -129,42 +129,6 @@
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          UCAS Apply: GCSE requirements for applicants
-        </dt>
-        <dd class="govuk-summary-list__value" data-qa="course__entry_requirements">
-          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'Maths', gcse_subject_code: course.maths } %>
-          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'English', gcse_subject_code: course.english } %>
-          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'Science', gcse_subject_code: course.science } %>
-
-          <details class="govuk-details">
-            <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">More about these <span class="govuk-visually-hidden">UCAS GCSE </span>codes</span>
-            </summary>
-            <div class="govuk-details__text">
-              <p class="govuk-body">
-                By law, all applicants need a GCSE grade of C (or level 4), or an equivalent, in English and Mathematics – and Science for Primary courses.
-              </p>
-
-              <p class="govuk-body">
-                Candidates may still be taking a GCSE when they apply. Alternatively, they can take an equivalency test to demonstrate they have the required skills to start a course.
-              </p>
-
-              <p class="govuk-body">
-                The code determines how flexible you are towards those candidates:
-              </p>
-              <ul class="govuk-list govuk-list--bullet">
-                <li>1: Must have (least flexible)</li>
-                <li>2: Taking</li>
-                <li>3: Equivalence test (recommended)</li>
-                <li>No code (for when there is no legal requirement)</li>
-              </ul>
-            </div>
-          </details>
-        </dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
           Course starts
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__start_date">
@@ -201,6 +165,44 @@
           <%= course.course_code %>
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
+      </div>
+    </dl>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          UCAS Apply: GCSE requirements for applicants
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__entry_requirements">
+          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'Maths', gcse_subject_code: course.maths } %>
+          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'English', gcse_subject_code: course.english } %>
+          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'Science', gcse_subject_code: course.science } %>
+
+          <details class="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">More about these <span class="govuk-visually-hidden">UCAS GCSE </span>codes</span>
+            </summary>
+            <div class="govuk-details__text">
+              <p class="govuk-body">
+                By law, all applicants need a GCSE grade of C (or level 4), or an equivalent, in English and Mathematics – and Science for Primary courses.
+              </p>
+
+              <p class="govuk-body">
+                Candidates may still be taking a GCSE when they apply. Alternatively, they can take an equivalency test to demonstrate they have the required skills to start a course.
+              </p>
+
+              <p class="govuk-body">
+                The code determines how flexible you are towards those candidates:
+              </p>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>1: Must have (least flexible)</li>
+                <li>2: Taking</li>
+                <li>3: Equivalence test (recommended)</li>
+                <li>No code (for when there is no legal requirement)</li>
+              </ul>
+            </div>
+          </details>
+        </dd>
       </div>
     </dl>
   </div>
