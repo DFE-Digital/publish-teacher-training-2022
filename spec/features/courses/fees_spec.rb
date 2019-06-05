@@ -21,7 +21,7 @@ feature 'Course fees', type: :feature do
   before do
     stub_omniauth
     stub_api_v2_request(
-      "/providers/AO/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/providers/AO/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
       course_response
     )
     stub_api_v2_request(

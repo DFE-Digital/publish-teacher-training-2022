@@ -78,7 +78,7 @@ private
   def build_course
     @provider_code = params[:provider_code]
     @course = Course
-      .includes(site_statuses: [:site])
+      .includes(:sites)
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
       .where(provider_code: @provider_code)
@@ -128,7 +128,7 @@ private
   end
 
   def build_copy_course
-    @source_course = Course.includes(site_statuses: [:site])
+    @source_course = Course.includes(:sites)
                            .includes(provider: [:sites])
                            .includes(:accrediting_provider)
                            .where(provider_code: @provider_code)
