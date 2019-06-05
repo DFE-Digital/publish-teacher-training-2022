@@ -1,23 +1,22 @@
 <% case gcse_subject_code %>
 <% when 'must_have_qualification_at_application_time' %>
-  <p class="govuk-body">Code: 1</p>
-  <p class="govuk-body">UCAS will block applications from candidates who:</p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li>haven’t gained the minimum qualifications yet</li>
-    <li>need to take an equivalency test</li>
-  </ul>
+  <h3 class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-bottom-0">
+    <%= gcse_subject %> GCSE (Code 1 – ‘Must have’)
+  </h3>
+  <p class="govuk-body govuk-hint">UCAS will block applications from candidates who haven’t gained their <%= gcse_subject %> GCSE yet or who need to take an equivalency test.</p>
 <% when 'expect_to_achieve_before_training_begins' %>
-  <p class="govuk-body">Code: 2</p>
-  <p class="govuk-body">Receive applications from candidates who haven’t gained minimum qualifications yet.</p>
-  <p class="govuk-body">UCAS will block applications from candidates who take an equivalency test.</p>
+  <h3 class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-bottom-0">
+    <%= gcse_subject %> GCSE (Code 2 – ‘Taking’)
+  </h3>
+  <p class="govuk-body govuk-hint">You will consider candidates with a pending <%= gcse_subject %> GCSE. But UCAS will block applications from someone who needs to take an equivalency test.</p>
 <% when 'equivalence_test' %>
-  <p class="govuk-body">Code: 3</p>
-  <p class="govuk-body">Receive applications from candidates who:</p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li>haven’t gained the minimum qualifications yet</li>
-    <li>need to take an equivalency test</li>
-  </ul>
+  <h3 class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-bottom-0">
+    <%= gcse_subject %> GCSE (Code 3 – ‘Equivalence test’)
+  </h3>
+  <p class="govuk-body govuk-hint">You will consider candidates who need to take an equivalency test as well as those with a pending <%= gcse_subject %> GCSE.</p>
 <% else %>
-  <p class="govuk-body">Code: 9</p>
-  <p class="govuk-body">You do not require an applicant to hold GCSE grades A-C, 4 or above</p>
+  <h3 class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-bottom-0">
+    <%= gcse_subject %> GCSE (No code)
+  </h3>
+  <p class="govuk-body govuk-hint">You have no <%= gcse_subject %> GCSE requirement.</p>
 <% end %>

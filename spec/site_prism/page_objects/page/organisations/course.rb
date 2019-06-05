@@ -20,9 +20,7 @@ module PageObjects
         element :is_send, '[data-qa=course__is_send]'
         element :subjects, '[data-qa=course__subjects]'
         element :level, '[data-qa=course__level]'
-        element :entry_requirements_maths, '[data-qa=course__entry_requirements_maths]'
-        element :entry_requirements_english, '[data-qa=course__entry_requirements_english]'
-        element :entry_requirements_science, '[data-qa=course__entry_requirements_science]'
+        element :entry_requirements, '[data-qa=course__entry_requirements]'
       end
     end
   end
