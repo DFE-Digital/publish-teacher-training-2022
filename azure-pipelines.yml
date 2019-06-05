@@ -40,10 +40,8 @@ steps:
     containerCommand: rails webpacker:compile
     runInBackground: false
 
-# Run a custom bash task for tests so we can redirect test output to rspec-results.xml and capture the exit code from the docker run command
-- bash: docker run --rm $(IMAGE_NAME) rails spec SPEC_OPTS='--format RspecJunitFormatter' | sed -e 1d >> rspec-results.xml ; test ${PIPESTATUS[0]} -eq 0
+- bash: docker run --rm $(IMAGE_NAME) rails spec SPEC_OPTS='--format RspecJunitFormatter'
   displayName: 'Run tests'
-  failOnStderr: true
 
 - task: Docker@1
   displayName: Run ruby linter
