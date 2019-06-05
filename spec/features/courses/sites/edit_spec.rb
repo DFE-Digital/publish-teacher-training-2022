@@ -55,7 +55,21 @@ feature 'Edit course sites', type: :feature do
       stub_api_v2_request(
         "/providers/#{provider.provider_code}/courses/#{course.course_code}",
         {}, :patch, 200
-      )
+      ).with(body: {
+        data: {
+          course_code: course.course_code,
+          type: "courses",
+          relationships: {
+            sites: {
+              data: [
+                { type: "sites", id: site1.id.to_s },
+                { type: "sites", id: site2.id.to_s }
+              ]
+            },
+          },
+          attributes: {}
+        }
+      }.to_json)
       stub_api_v2_request(
         "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
         course.render
@@ -80,10 +94,23 @@ feature 'Edit course sites', type: :feature do
       stub_api_v2_request(
         "/providers/#{provider.provider_code}/courses/#{course.course_code}",
         build(:error), :patch, 422
-      )
+      ).with(body: {
+        data: {
+          course_code: course.course_code,
+          type: "courses",
+          relationships: {
+            sites: {
+              data: []
+            },
+          },
+          attributes: {}
+        }
+      }.to_json)
     end
 
     scenario 'displays validation errors' do
+      uncheck(site1.location_name, allow_label_click: true)
+
       locations_page.save.click
 
       expect(locations_page).to be_displayed(provider_code: provider.provider_code, course_code: course.course_code)

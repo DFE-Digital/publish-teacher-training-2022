@@ -13,7 +13,7 @@ module Courses
       selected_site_ids = params.dig(:course, :site_statuses_attributes)
         .values
         .select { |f| f["selected"] == "1" }
-        .map { |f| f["id"].to_i }
+        .map { |f| f["id"] }
 
       @course.sites = @provider.sites.select { |site| selected_site_ids.include?(site.id) }
 
