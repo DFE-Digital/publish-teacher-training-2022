@@ -1,4 +1,4 @@
-<% if copied_fields.any? { |_, attr| @source_course.__send__(attr).present? } %>
+<% if copied_fields.any? %>
   <div class="govuk-warning-summary" aria-labelledby="warning-summary-heading" tabindex="-1" data-module="error-summary" data-copy-course="warning" role="alert">
     <h2 class="govuk-heading govuk-warning-summary__title" id="warning-summary-heading">
       Your changes are not yet saved
@@ -8,8 +8,8 @@
         We’ve copied these fields from <%= @source_course.name %> (<%= @source_course.course_code %>):
       </p>
       <ul class="govuk-list">
-        <% copied_fields.select{ |_, attr| @source_course.__send__(attr).present? }.each do |field| %>
-          <li><%= link_to field[0], "##{field[1]}_wrapper", class: 'govuk-link' %></li>
+        <% copied_fields.each do |name, field| %>
+          <li><%= link_to name, "##{field}_wrapper", class: 'govuk-link' %></li>
         <% end %>
       </ul>
       <p class="govuk-body">

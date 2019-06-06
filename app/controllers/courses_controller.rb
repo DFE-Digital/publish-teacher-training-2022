@@ -20,34 +20,42 @@ class CoursesController < ApplicationController
 
   def about
     if params[:copy_from].present?
-      course.about_course = @source_course.about_course
-      course.interview_process = @source_course.interview_process
-      course.how_school_placements_work = @source_course.how_school_placements_work
+      @copied_fields = [
+        ['About the course', 'about_course'],
+        ['Interview process', 'interview_process'],
+        ['How school placements work', 'how_school_placements_work']
+      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
   def requirements
     if params[:copy_from].present?
-      course.required_qualifications = @source_course.required_qualifications
-      course.personal_qualities = @source_course.personal_qualities
-      course.other_requirements = @source_course.other_requirements
+      @copied_fields = [
+        ['Qualifications needed', 'required_qualifications'],
+        ['Personal qualities', 'personal_qualities'],
+        ['Other requirements', 'other_requirements']
+      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
   def fees
     if params[:copy_from].present?
-      course.course_length = @source_course.course_length
-      course.fee_uk_eu = @source_course.fee_uk_eu
-      course.fee_international = @source_course.fee_international
-      course.fee_details = @source_course.fee_details
-      course.financial_support = @source_course.financial_support
+      @copied_fields = [
+        ['Course length', 'course_length'],
+        ['Fee for UK and EU students', 'fee_uk_eu'],
+        ['Fee for international students', 'fee_international'],
+        ['Fee details', 'fee_details'],
+        ['Financial support', 'financial_support']
+      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
   def salary
     if params[:copy_from].present?
-      course.course_length = @source_course.course_length
-      course.salary_details = @source_course.salary_details
+      @copied_fields = [
+        ['Course length', 'course_length'],
+        ['Salary details', 'salary_details']
+      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
@@ -134,5 +142,10 @@ private
                            .where(provider_code: @provider_code)
                            .find(params[:copy_from])
                            .first
+  end
+
+  def copy_field_if_present_in_source_course(field)
+    source_value = @source_course[field]
+    course[field] = source_value if source_value.present?
   end
 end
