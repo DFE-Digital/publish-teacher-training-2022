@@ -4,6 +4,24 @@
   <%= govuk_back_link_to(provider_course_path(@provider.provider_code, course.course_code)) %>
 <% end %>
 
+<% if @errors.present? %>
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+      <%= @errors.first %>
+    </h2>
+    <div class="govuk-error-summary__body">
+      <p class="govuk-body">
+        Removing all locations would prevent people from applying to this course.
+        If you want to close applications, you can
+        <%= link_to "edit the vacancies for this course",
+          vacancies_provider_course_path(code: course.course_code),
+          class: "govuk-link"
+        %>.
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.name_and_code %></span>
   Locations

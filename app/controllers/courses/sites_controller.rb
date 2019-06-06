@@ -22,8 +22,7 @@ module Courses
 
         redirect_to provider_course_path(params[:provider_code], params[:code]), flash: { success: 'Course locations saved' }
       else
-        # TODO: Change this to be @course.errors when the API is updated.
-        flash[:error] = "You must choose at least one location"
+        @errors = @course.errors.full_messages
 
         render :edit
       end
