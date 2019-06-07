@@ -5,11 +5,7 @@
 <% end %>
 
 <%= render partial: 'courses/copy_content_warning',
-                    locals: {
-                      copied_fields: [
-                        ['Course length', 'course_length'],
-                        ['Salary details', 'salary_details']
-                      ]} if params[:copy_from].present? %>
+                    locals: { copied_fields: @copied_fields } if params[:copy_from].present? %>
 
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.name_and_code %></span>
