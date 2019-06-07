@@ -68,7 +68,7 @@ describe 'Courses', type: :request do
       )
     end
 
-    context 'with copy_form parameter' do
+    context 'with copy_from parameter' do
       it 'renders the course length and fees with data from chosen course' do
         get(fees_provider_course_path(provider_code: provider.provider_code,
                                       code: course.course_code,
