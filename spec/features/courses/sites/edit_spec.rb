@@ -17,6 +17,7 @@ feature 'Edit course sites', type: :feature do
       sites: [site1, site2]
     )
   end
+  let(:course_page) { PageObjects::Page::Organisations::Course.new }
   let(:locations_page) { PageObjects::Page::Organisations::CourseLocations.new }
 
   let!(:sync_courses_request_stub) do
@@ -29,10 +30,18 @@ feature 'Edit course sites', type: :feature do
   before do
     stub_omniauth
     stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+      course.render
+    )
+    stub_api_v2_request(
       "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites",
       course.render
     )
-    locations_page.load(provider_code: provider.provider_code, course_code: course.course_code)
+
+    course_page.load(provider_code: provider.provider_code, course_code: course.course_code)
+    course_page.edit_locations_link.click
+    expect(locations_page)
+      .to be_displayed(provider_code: provider.provider_code, course_code: course.course_code)
   end
 
   scenario 'viewing the edit locations page' do
