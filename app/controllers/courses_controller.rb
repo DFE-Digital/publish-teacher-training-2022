@@ -10,6 +10,20 @@ class CoursesController < ApplicationController
 
   def show; end
 
+  def update
+    @course.provider_code = @provider.provider_code
+
+    if @course.save
+      flash[:success] = 'Your changes have been saved'
+      redirect_to(
+        description_provider_course_path(
+          @provider.provider_code,
+          @course.course_code
+        )
+      )
+    end
+  end
+
   def description
     @published = flash[:success]
     flash.delete(:success)
@@ -75,7 +89,7 @@ class CoursesController < ApplicationController
         ]
       }.to_h
     else
-      flash[:success] = 'Your changes have been published'
+      flash[:success] = "Your course has been published. The link for this course is: #{Settings.search_ui.base_url}/course/#{@provider.provider_code}/#{@course.course_code}"
     end
 
     redirect_to description_provider_course_path(@provider.provider_code, @course.course_code)

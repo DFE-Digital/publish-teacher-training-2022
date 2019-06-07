@@ -80,6 +80,14 @@ FactoryBot.define do
       study_mode { 'part_time' }
     end
 
+    trait :with_fees do
+      course_length { 'TwoYears' }
+      fee_uk_eu { 7000 }
+      fee_international { 14000 }
+      fee_details { Faker::Lorem.sentence(100) }
+      financial_support { Faker::Lorem.sentence(100) }
+    end
+
     after :initialize do |course|
       course.provider_code = provider.provider_code if course.provider
     end
