@@ -97,3 +97,6 @@ qa:
 
 new_qa:
   <<: *production
+
+new_staging:
+  <<: *production
