@@ -113,6 +113,7 @@ feature 'Edit course sites', type: :feature do
 
       locations_page.save.click
 
+      expect(page.title).to have_content('Error:')
       expect(locations_page).to be_displayed(provider_code: provider.provider_code, course_code: course.course_code)
       expect(locations_page.error_summary).to have_content('Removing all locations would prevent people from applying to this course')
     end
