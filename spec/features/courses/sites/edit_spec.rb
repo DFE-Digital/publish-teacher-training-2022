@@ -17,9 +17,6 @@ feature 'Edit course sites', type: :feature do
       sites: [site1, site2]
     )
   end
-  let(:edit_locations_path) do
-    "/organisations/#{provider.provider_code}/courses/#{course.course_code}/locations"
-  end
   let(:locations_page) { PageObjects::Page::Organisations::CourseLocations.new }
 
   let!(:sync_courses_request_stub) do
@@ -35,7 +32,7 @@ feature 'Edit course sites', type: :feature do
       "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites",
       course.render
     )
-    visit edit_locations_path
+    locations_page.load(provider_code: provider.provider_code, course_code: course.course_code)
   end
 
   scenario 'viewing the edit locations page' do
