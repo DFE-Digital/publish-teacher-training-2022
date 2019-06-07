@@ -184,6 +184,7 @@ feature 'Course description', type: :feature do
           scenario 'it shows the description page with validation errors' do
             course_page.publish.click
 
+            expect(page.title).to have_content('Error:')
             expect(course_page).to be_displayed
             expect(course_page.error_summary).to have_content("About course can't be blank")
           end
