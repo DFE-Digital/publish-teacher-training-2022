@@ -18,8 +18,6 @@ module Courses
       @course.sites = @provider.sites.select { |site| selected_site_ids.include?(site.id) }
 
       if @course.save
-        @course.sync_with_search_and_compare(provider_code: params[:provider_code])
-
         success_message = @course.is_running? ? 'Course locations saved and published' : 'Course locations saved'
         redirect_to provider_course_path(params[:provider_code], params[:code]), flash: { success: success_message }
       else
