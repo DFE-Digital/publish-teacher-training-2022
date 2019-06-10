@@ -23,6 +23,11 @@ feature 'About course', type: :feature do
       "/providers/AO?include=courses.accrediting_provider",
       provider_response
     )
+    stub_api_v2_request(
+      "/providers/AO/courses/#{course.course_code}",
+      course_response,
+      :patch
+    )
   end
 
   let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
@@ -45,6 +50,16 @@ feature 'About course', type: :feature do
     expect(about_course_page.how_school_placements_work_textarea).to have_content(
       course.how_school_placements_work
     )
+
+    fill_in 'About this course', with: 'Something interesting about this course'
+    fill_in 'How school placements work', with: 'Something about how school placements work'
+
+    click_on 'Save'
+
+    expect(about_course_page.flash).to have_content(
+      'Your changes have been saved'
+    )
+    expect(current_path).to eq description_provider_course_path('AO', course.course_code)
   end
 
   context 'when a provider has no self accredited courses (for example a School Direct provider)' do

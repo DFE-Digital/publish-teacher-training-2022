@@ -14,7 +14,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for course, url: publish_provider_course_path(course.provider.provider_code, course.course_code), method: :post do |f| %>
+    <%= form_with model: course, url: provider_course_path(course.provider.provider_code, course.course_code) do |f| %>
       <p class="govuk-body">Give applicants a short description of the course.</p>
 
       <p class="govuk-body">You could include:</p>
