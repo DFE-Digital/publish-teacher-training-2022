@@ -120,74 +120,113 @@ feature 'Course description', type: :feature do
     end
   end
 
-  describe 'shows status panel' do
-    scenario 'displays status panel' do
+  context 'when the course is running' do
+    let(:course_jsonapi) {
+      jsonapi(:course,
+              findable?: true,
+              content_status: 'published',
+              ucas_status: 'running',
+              has_vacancies?: true,
+              open_for_applications?: true,
+              sites: [site],
+              provider: provider,
+              accrediting_provider: provider)
+    }
+    let(:course)          { course_jsonapi.to_resource }
+    let(:course_response) { course_jsonapi.render }
+
+    scenario 'it displays a status panel' do
+      expect(course_page).to have_status_panel
       expect(course_page.is_findable).to have_content('Yes')
       expect(course_page.has_vacancies).to have_content('Yes')
       expect(course_page.open_for_applications).to have_content('Open')
       expect(course_page.status_tag).to have_content('Published')
     end
+  end
 
-    context 'unpublished course' do
-      let(:course_jsonapi) {
-        jsonapi(:course,
-                findable?: false,
-                content_status: 'draft',
-                sites: [site],
-                provider: provider,
-                accrediting_provider: provider)
-      }
-      let(:course)          { course_jsonapi.to_resource }
-      let(:course_response) { course_jsonapi.render }
+  context 'when the course is not running' do
+    let(:course_jsonapi) {
+      jsonapi(:course,
+              findable?: true,
+              content_status: 'empty',
+              ucas_status: 'not_running',
+              sites: [site],
+              provider: provider,
+              accrediting_provider: provider)
+    }
+    let(:course)          { course_jsonapi.to_resource }
+    let(:course_response) { course_jsonapi.render }
 
-      scenario 'displays status panel' do
-        expect(course_page.is_findable).to have_content('No')
-        expect(course_page.status_tag).to have_content('Draft')
-        expect(course_page).to have_preview_link
+    scenario 'it hides the status panel' do
+      expect(course_page).not_to have_status_panel
+    end
+
+    scenario 'it shows a warning about the course status' do
+      expect(course_page).to have_content('This course is not running.')
+    end
+  end
+
+  context 'when the course is new' do
+    let(:course_jsonapi) {
+      jsonapi(:course,
+              findable?: false,
+              content_status: 'draft',
+              ucas_status: 'new',
+              sites: [site],
+              provider: provider,
+              accrediting_provider: provider)
+    }
+    let(:course)          { course_jsonapi.to_resource }
+    let(:course_response) { course_jsonapi.render }
+
+    scenario 'it displays a status panel' do
+      expect(course_page).to have_status_panel
+      expect(course_page.is_findable).to have_content('No')
+      expect(course_page.status_tag).to have_content('Draft')
+      expect(course_page).to have_preview_link
+    end
+
+    describe 'publishing' do
+      before do
+        stub_api_v2_request(
+          "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+          course_response
+        )
       end
 
-      describe 'publishing' do
+      context 'without errors' do
         before do
           stub_api_v2_request(
-            "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
-            course_response
+            "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+            nil,
+            :post
           )
         end
 
-        context 'without errors' do
-          before do
-            stub_api_v2_request(
-              "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
-              nil,
-              :post
-            )
-          end
+        scenario 'it shows the description page with success flash' do
+          course_page.publish.click
 
-          scenario 'it shows the description page with success flash' do
-            course_page.publish.click
+          expect(course_page).to be_displayed
+          expect(course_page.success_summary).to have_content("Your course has been published. The link for this course is: https://localhost:5000/course/#{provider.provider_code}/#{course.course_code}")
+        end
+      end
 
-            expect(course_page).to be_displayed
-            expect(course_page.success_summary).to have_content("Your course has been published. The link for this course is: https://localhost:5000/course/#{provider.provider_code}/#{course.course_code}")
-          end
+      context 'with errors' do
+        before do
+          stub_api_v2_request(
+            "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+            build(:error, :for_course_publish),
+            :post,
+            422
+          )
         end
 
-        context 'with errors' do
-          before do
-            stub_api_v2_request(
-              "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
-              build(:error, :for_course_publish),
-              :post,
-              422
-            )
-          end
+        scenario 'it shows the description page with validation errors' do
+          course_page.publish.click
 
-          scenario 'it shows the description page with validation errors' do
-            course_page.publish.click
-
-            expect(page.title).to have_content('Error:')
-            expect(course_page).to be_displayed
-            expect(course_page.error_summary).to have_content("About course can't be blank")
-          end
+          expect(page.title).to have_content('Error:')
+          expect(course_page).to be_displayed
+          expect(course_page.error_summary).to have_content("About course can't be blank")
         end
       end
     end

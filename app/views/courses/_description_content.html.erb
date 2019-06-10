@@ -1,3 +1,17 @@
+<% if course.not_running? %>
+  <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-3">
+    <div class="govuk-warning-text app-warning-text--inline">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        This course is not running.
+      </strong>
+    </div>
+    <p class="govuk-body">
+      It won’t appear online. To publish it you’ll need to contact the Becoming a Teacher team:<br /><%= bat_contact_mail_to bat_contact_email_address_with_wrap, subject: "Course not running" %>
+    </p>
+  </div>
+<% end %>
+
 <h3 class="govuk-heading-m govuk-!-font-size-27">
   <%= link_to 'About this course', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code) + '/about', class: 'govuk-link' %>
 </h3>
