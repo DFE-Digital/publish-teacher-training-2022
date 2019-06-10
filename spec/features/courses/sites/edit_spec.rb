@@ -20,13 +20,6 @@ feature 'Edit course sites', type: :feature do
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
   let(:locations_page) { PageObjects::Page::Organisations::CourseLocations.new }
 
-  let!(:sync_courses_request_stub) do
-    stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}/sync_with_search_and_compare",
-      {}, :post, 201
-    )
-  end
-
   before do
     stub_omniauth
     stub_api_v2_request(
@@ -91,7 +84,6 @@ feature 'Edit course sites', type: :feature do
         'Course locations saved'
       )
       expect(locations_page.title).to have_content(course.course_code)
-      expect(sync_courses_request_stub).to have_been_requested
     end
   end
 
