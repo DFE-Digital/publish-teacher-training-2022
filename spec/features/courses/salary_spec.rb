@@ -31,6 +31,11 @@ feature 'Course salary', type: :feature do
       "/providers/AO?include=courses.accrediting_provider",
       provider_response
     )
+    stub_api_v2_request(
+      "/providers/AO/courses/#{course.course_code}",
+      course_response,
+      :patch
+    )
   end
 
   let(:course_salary_page) { PageObjects::Page::Organisations::CourseSalary.new }
@@ -49,5 +54,15 @@ feature 'Course salary', type: :feature do
     expect(course_salary_page.course_salary_details).to have_content(
       course.salary_details
     )
+
+    choose '2 years'
+    fill_in 'Salary', with: 'Test salary details'
+    click_on 'Save'
+
+    expect(course_salary_page.flash).to have_content(
+      'Your changes have been saved'
+    )
+
+    expect(current_path).to eq description_provider_course_path('AO', course.course_code)
   end
 end
