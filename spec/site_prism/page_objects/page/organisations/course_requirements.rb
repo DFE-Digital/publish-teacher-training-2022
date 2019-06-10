@@ -9,6 +9,7 @@ module PageObjects
         element :required_qualifications, '#course_required_qualifications'
         element :personal_qualities, '#course_personal_qualities'
         element :other_requirements, '#course_other_requirements'
+        element :flash, '.govuk-success-summary'
       end
     end
   end

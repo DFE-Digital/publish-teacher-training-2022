@@ -20,27 +20,44 @@ feature 'Course requirements', type: :feature do
       "/providers/AO?include=courses.accrediting_provider",
       provider_response
     )
+    stub_api_v2_request(
+      "/providers/AO/courses/#{course.course_code}",
+      course_response,
+      :patch
+    )
   end
 
-  let(:about_course_page) { PageObjects::Page::Organisations::CourseRequirements.new }
+  let(:course_requirements_page) { PageObjects::Page::Organisations::CourseRequirements.new }
 
   scenario 'viewing the courses requirements page' do
     visit requirements_provider_course_path('AO', course.course_code)
 
-    expect(about_course_page.caption).to have_content(
+    expect(course_requirements_page.caption).to have_content(
       "#{course.name} (#{course.course_code})"
     )
-    expect(about_course_page.title).to have_content(
+    expect(course_requirements_page.title).to have_content(
       "Requirements and eligibility"
     )
-    expect(about_course_page.required_qualifications).to have_content(
+    expect(course_requirements_page.required_qualifications).to have_content(
       course.required_qualifications
     )
-    expect(about_course_page.personal_qualities).to have_content(
+    expect(course_requirements_page.personal_qualities).to have_content(
       course.personal_qualities
     )
-    expect(about_course_page.other_requirements).to have_content(
+    expect(course_requirements_page.other_requirements).to have_content(
       course.other_requirements
     )
+
+    fill_in 'Qualifications needed', with: 'Something about the qualifications required for this course'
+    fill_in 'Personal qualities (optional)', with: 'Something about the personal qualities required for this course'
+    fill_in 'Other requirements (optional)', with: 'Something about the other requirements required for this course'
+
+    click_on 'Save'
+
+    expect(course_requirements_page.flash).to have_content(
+      'Your changes have been saved'
+    )
+
+    expect(current_path).to eq description_provider_course_path('AO', course.course_code)
   end
 end

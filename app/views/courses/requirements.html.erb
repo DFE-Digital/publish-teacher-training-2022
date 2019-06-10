@@ -14,7 +14,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for course, url: publish_provider_course_path(course.provider.provider_code, course.course_code), method: :post do |f| %>
+    <%= form_with model: course, url: provider_course_path(course.provider.provider_code, course.course_code) do |f| %>
       <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
 
       <p class="govuk-body">State the minimum academic qualifications needed for this course.</p>
