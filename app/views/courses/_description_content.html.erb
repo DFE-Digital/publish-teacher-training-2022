@@ -23,7 +23,7 @@
 
 <h3 class="govuk-heading-m govuk-!-font-size-27">
   <% if course.has_fees? %>
-    <%= link_to 'Course length and fees', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code) + '/fees-and-length', class: 'govuk-link' %>
+    <%= link_to 'Course length and fees', fees_provider_course_path(@provider.provider_code, course.course_code), class: 'govuk-link' %>
   <% else %>
     <%= link_to 'Course length and salary', manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code) + '/salary', class: 'govuk-link' %>
   <% end %>
