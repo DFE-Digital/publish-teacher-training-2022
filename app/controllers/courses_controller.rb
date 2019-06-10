@@ -11,8 +11,6 @@ class CoursesController < ApplicationController
   def show; end
 
   def update
-    @course.provider_code = @provider.provider_code
-
     if @course.save
       flash[:success] = 'Your changes have been saved'
       redirect_to(
