@@ -4,10 +4,9 @@ feature 'Course fees', type: :feature do
   let(:course_1) do
     jsonapi(
       :course,
-      name: 'English',
+      :with_fees,
       provider: provider,
-      include_nulls: [:accrediting_provider],
-      course_length: 'OneYear'
+      include_nulls: [:accrediting_provider]
     )
   end
   let(:course_2) { jsonapi :course, name: 'Biology', include_nulls: [:accrediting_provider] }
@@ -28,6 +27,11 @@ feature 'Course fees', type: :feature do
       "/providers/AO?include=courses.accrediting_provider",
       provider_response
     )
+    stub_api_v2_request(
+      "/providers/AO/courses/#{course.course_code}",
+      course_response,
+      :patch
+    )
   end
 
   let(:course_fees_page) { PageObjects::Page::Organisations::CourseFees.new }
@@ -41,12 +45,12 @@ feature 'Course fees', type: :feature do
     expect(course_fees_page.title).to have_content(
       "Course length and fees"
     )
-    expect(course_fees_page.course_length_one_year).to be_checked
-    expect(course_fees_page.course_length_two_years).to_not be_checked
-    expect(course_fees_page.course_fees_uk).to have_content(
+    expect(course_fees_page.course_length_one_year).not_to be_checked
+    expect(course_fees_page.course_length_two_years).to be_checked
+    expect(course_fees_page.course_fees_uk_eu.value).to have_content(
       course.fee_uk_eu
     )
-    expect(course_fees_page.course_fees_international).to have_content(
+    expect(course_fees_page.course_fees_international.value).to have_content(
       course.fee_international
     )
     expect(course_fees_page.fee_details).to have_content(
@@ -55,5 +59,21 @@ feature 'Course fees', type: :feature do
     expect(course_fees_page.financial_support).to have_content(
       course.financial_support
     )
+
+    choose '1 year'
+    fill_in 'Fee for UK and EU students', with: '8000'
+    fill_in 'Fee for international students (optional)', with: '16000'
+    fill_in 'Fee details (optional)', with: 'Test fee details'
+    fill_in(
+      'Financial support you offer (optional)',
+      with: 'Test financial support'
+    )
+
+    click_on 'Save'
+
+    expect(course_fees_page.flash).to have_content(
+      'Your changes have been saved'
+    )
+    expect(current_path).to eq description_provider_course_path('AO', course.course_code)
   end
 end

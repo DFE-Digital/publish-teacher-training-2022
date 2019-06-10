@@ -25,7 +25,7 @@ describe 'Courses' do
       end
 
       it 'redirects to the course description page' do
-        expect(flash[:success]).to eq('Your changes have been published')
+        expect(flash[:success]).to include('Your course has been published')
         expect(response).to redirect_to(description_provider_course_path(provider_code: provider.provider_code, code: course.course_code))
       end
     end
