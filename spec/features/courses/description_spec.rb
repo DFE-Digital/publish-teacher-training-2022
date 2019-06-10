@@ -9,7 +9,6 @@ feature 'Course description', type: :feature do
             funding: 'fee',
             sites: [site],
             provider: provider,
-            accrediting_provider: provider,
             last_published_at: '2019-03-05T14:42:34Z')
   }
   let(:site) { jsonapi(:site) }
@@ -128,9 +127,7 @@ feature 'Course description', type: :feature do
               ucas_status: 'running',
               has_vacancies?: true,
               open_for_applications?: true,
-              sites: [site],
-              provider: provider,
-              accrediting_provider: provider)
+              provider: provider)
     }
     let(:course)          { course_jsonapi.to_resource }
     let(:course_response) { course_jsonapi.render }
@@ -147,12 +144,8 @@ feature 'Course description', type: :feature do
   context 'when the course is not running' do
     let(:course_jsonapi) {
       jsonapi(:course,
-              findable?: true,
-              content_status: 'empty',
               ucas_status: 'not_running',
-              sites: [site],
-              provider: provider,
-              accrediting_provider: provider)
+              provider: provider)
     }
     let(:course)          { course_jsonapi.to_resource }
     let(:course_response) { course_jsonapi.render }
@@ -172,9 +165,7 @@ feature 'Course description', type: :feature do
               findable?: false,
               content_status: 'draft',
               ucas_status: 'new',
-              sites: [site],
-              provider: provider,
-              accrediting_provider: provider)
+              provider: provider)
     }
     let(:course)          { course_jsonapi.to_resource }
     let(:course_response) { course_jsonapi.render }
