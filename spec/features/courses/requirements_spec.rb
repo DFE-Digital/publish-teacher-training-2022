@@ -60,6 +60,83 @@ feature 'Course requirements', type: :feature do
     expect(current_path).to eq description_provider_course_path('AO', course.course_code)
   end
 
+  context 'when copying course requirements from another course' do
+    let(:course_2) {
+      jsonapi(
+        :course,
+        name: 'Biology',
+        provider: provider,
+        required_qualifications: 'Course 2 required qualifications',
+        personal_qualities: 'Course 2 personal qualities',
+        other_requirements: 'Course 2 other requirements'
+      )
+    }
+
+    let(:course_3) {
+      jsonapi(
+        :course,
+        name: 'Biology',
+        provider: provider,
+        required_qualifications: 'Required qualifications'
+      )
+    }
+
+    let(:provider_for_copy_from_list) do
+      jsonapi(:provider, courses: [course, course_2, course_3], provider_code: 'AO')
+    end
+
+    before do
+      stub_course_request(provider, course_2)
+      stub_course_request(provider, course_3)
+      stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider_for_copy_from_list.render)
+    end
+
+    scenario 'all fields get copied if all were present' do
+      copy_fees(from: course_2, to: course)
+
+      [
+        'Your changes are not yet saved',
+        'Qualifications needed',
+        'Personal qualities',
+        'Other requirements'
+      ].each do |name|
+        expect(course_requirements_page.warning_message).to have_content(name)
+      end
+
+      expect(course_requirements_page.required_qualifications.value).to eq(course_2.required_qualifications)
+      expect(course_requirements_page.personal_qualities.value).to eq(course_2.personal_qualities)
+      expect(course_requirements_page.other_requirements.value).to eq(course_2.other_requirements)
+    end
+
+    scenario 'only fields with values are copied if the source was incomplete' do
+      copy_fees(from: course_3, to: course_2)
+
+      [
+        'Your changes are not yet saved',
+        'Qualifications needed'
+      ].each do |name|
+        expect(course_requirements_page.warning_message).to have_content(name)
+      end
+
+      [
+        'Personal qualities',
+        'Other requirements'
+      ].each do |name|
+        expect(course_requirements_page.warning_message).not_to have_content(name)
+      end
+
+      expect(course_requirements_page.required_qualifications.value).to eq(course_3.required_qualifications)
+      expect(course_requirements_page.personal_qualities.value).to eq(course_2.personal_qualities)
+      expect(course_requirements_page.other_requirements.value).to eq(course_2.other_requirements)
+    end
+  end
+
+  def copy_fees(from:, to:)
+    visit requirements_provider_course_path(provider.provider_code, to.course_code)
+    select("#{from.name} (#{from.course_code})", from: 'Copy from')
+    click_on('Copy content')
+  end
+
   def stub_course_request(provider, course)
     stub_api_v2_request(
       "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",

@@ -10,6 +10,7 @@ module PageObjects
         element :personal_qualities, '#course_personal_qualities'
         element :other_requirements, '#course_other_requirements'
         element :flash, '.govuk-success-summary'
+        element :warning_message, '[data-copy-course=warning]'
       end
     end
   end
