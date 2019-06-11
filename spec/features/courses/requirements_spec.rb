@@ -30,7 +30,11 @@ feature 'Course requirements', type: :feature do
   let(:course_requirements_page) { PageObjects::Page::Organisations::CourseRequirements.new }
 
   scenario 'viewing the courses requirements page' do
-    visit requirements_provider_course_path('AO', course.course_code)
+    visit description_provider_course_path(provider.provider_code, course.course_code)
+
+    click_on 'Requirements and eligibility'
+
+    expect(current_path).to eq requirements_provider_course_path('AO', course.course_code)
 
     expect(course_requirements_page.caption).to have_content(
       "#{course.name} (#{course.course_code})"

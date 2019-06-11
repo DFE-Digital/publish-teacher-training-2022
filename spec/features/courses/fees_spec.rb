@@ -37,7 +37,11 @@ feature 'Course fees', type: :feature do
   let(:course_fees_page) { PageObjects::Page::Organisations::CourseFees.new }
 
   scenario 'viewing the courses fees page' do
-    visit fees_provider_course_path('AO', course.course_code)
+    visit description_provider_course_path(provider.provider_code, course.course_code)
+
+    click_on 'Course length and fees'
+
+    expect(current_path).to eq fees_provider_course_path('AO', course.course_code)
 
     expect(course_fees_page.caption).to have_content(
       "#{course.name} (#{course.course_code})"
