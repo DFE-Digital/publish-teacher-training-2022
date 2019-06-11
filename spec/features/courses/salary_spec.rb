@@ -1,42 +1,26 @@
 require 'rails_helper'
 
 feature 'Course salary', type: :feature do
-  let(:course_1) do
+  let(:provider) do
+    jsonapi(:provider, provider_code: 'AO')
+  end
+
+  let(:course) do
     jsonapi(
       :course,
       name: 'English',
       provider: provider,
-      include_nulls: [:accrediting_provider],
       course_length: 'OneYear',
+      salary_details: 'Salary details',
       funding: 'salary'
     )
   end
-  let(:course_2) { jsonapi :course, name: 'Biology', include_nulls: [:accrediting_provider] }
-  let(:course_3) { jsonapi :course, name: 'Physics', include_nulls: [:accrediting_provider] }
-  let(:course_4) { jsonapi :course, name: 'Science', include_nulls: [:accrediting_provider] }
-  let(:courses)  { [course_2, course_3, course_4] }
-  let(:provider) do
-    jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'AO')
-  end
-  let(:provider_response) { provider.render }
-  let(:course)            { course_1.to_resource }
-  let(:course_response)   { course_1.render }
 
   before do
     stub_omniauth
-    stub_api_v2_request(
-      "/providers/AO/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
-      course_response
-    )
-    stub_api_v2_request(
-      "/providers/AO?include=courses.accrediting_provider",
-      provider_response
-    )
-    stub_api_v2_request(
-      "/providers/AO/courses/#{course.course_code}",
-      course_response,
-      :patch
-    )
+    stub_course_request(provider, course)
+    stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider.render)
+    stub_api_v2_request("/providers/AO/courses/#{course.course_code}", course.render, :patch)
   end
 
   let(:course_salary_page) { PageObjects::Page::Organisations::CourseSalary.new }
@@ -56,7 +40,7 @@ feature 'Course salary', type: :feature do
     )
     expect(course_salary_page.course_length_one_year).to be_checked
     expect(course_salary_page.course_length_two_years).to_not be_checked
-    expect(course_salary_page.course_salary_details).to have_content(
+    expect(course_salary_page.course_salary_details.value).to eq(
       course.salary_details
     )
 
@@ -69,5 +53,12 @@ feature 'Course salary', type: :feature do
     )
 
     expect(current_path).to eq description_provider_course_path('AO', course.course_code)
+  end
+
+  def stub_course_request(provider, course)
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+      course.render
+    )
   end
 end

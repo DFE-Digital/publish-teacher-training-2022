@@ -12,7 +12,7 @@ feature 'Course fees', type: :feature do
 
   before do
     stub_omniauth
-    stub_course_response(provider, course_1)
+    stub_course_request(provider, course_1)
     stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider.render)
     stub_api_v2_request("/providers/AO/courses/#{course_1.course_code}", course_1.render, :patch)
   end
@@ -93,8 +93,8 @@ feature 'Course fees', type: :feature do
     end
 
     before do
-      stub_course_response(provider, course_2)
-      stub_course_response(provider, course_3)
+      stub_course_request(provider, course_2)
+      stub_course_request(provider, course_3)
       stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider_for_copy_from_list.render)
     end
 
@@ -154,7 +154,7 @@ feature 'Course fees', type: :feature do
     click_on('Copy content')
   end
 
-  def stub_course_response(provider, course)
+  def stub_course_request(provider, course)
     stub_api_v2_request(
       "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
       course.render
