@@ -33,7 +33,11 @@ feature 'About course', type: :feature do
   let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
 
   scenario 'viewing the about courses page' do
-    visit about_provider_course_path('AO', course.course_code)
+    visit description_provider_course_path(provider.provider_code, course.course_code)
+
+    click_on 'About this course'
+
+    expect(current_path).to eq about_provider_course_path('AO', course.course_code)
 
     expect(about_course_page.caption).to have_content(
       "#{course.name} (#{course.course_code})"

@@ -7,7 +7,8 @@ feature 'Course salary', type: :feature do
       name: 'English',
       provider: provider,
       include_nulls: [:accrediting_provider],
-      course_length: 'OneYear'
+      course_length: 'OneYear',
+      funding: 'salary'
     )
   end
   let(:course_2) { jsonapi :course, name: 'Biology', include_nulls: [:accrediting_provider] }
@@ -41,7 +42,11 @@ feature 'Course salary', type: :feature do
   let(:course_salary_page) { PageObjects::Page::Organisations::CourseSalary.new }
 
   scenario 'viewing the courses salary page' do
-    visit salary_provider_course_path('AO', course.course_code)
+    visit description_provider_course_path(provider.provider_code, course.course_code)
+
+    click_on 'Course length and salary'
+
+    expect(current_path).to eq salary_provider_course_path('AO', course.course_code)
 
     expect(course_salary_page.caption).to have_content(
       "#{course.name} (#{course.course_code})"
