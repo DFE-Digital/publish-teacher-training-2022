@@ -73,6 +73,83 @@ feature 'About course', type: :feature do
     end
   end
 
+  context 'when copying course requirements from another course' do
+    let(:course_2) {
+      jsonapi(
+        :course,
+        name: 'Biology',
+        provider: provider,
+        about_course: 'Course 2 - About course',
+        interview_process: 'Course 2 - Interview process',
+        how_school_placements_work: 'Course 2 - How school placements work'
+      )
+    }
+
+    let(:course_3) {
+      jsonapi(
+        :course,
+        name: 'Biology',
+        provider: provider,
+        about_course: 'Course 3 - About course'
+      )
+    }
+
+    let(:provider_for_copy_from_list) do
+      jsonapi(:provider, courses: [course, course_2, course_3], provider_code: 'AO')
+    end
+
+    before do
+      stub_course_request(provider, course_2)
+      stub_course_request(provider, course_3)
+      stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider_for_copy_from_list.render)
+    end
+
+    scenario 'all fields get copied if all were present' do
+      copy_fees(from: course_2, to: course)
+
+      [
+        'Your changes are not yet saved',
+        'About the course',
+        'Interview process',
+        'How school placements work'
+      ].each do |name|
+        expect(about_course_page.warning_message).to have_content(name)
+      end
+
+      expect(about_course_page.about_textarea.value).to eq(course_2.about_course)
+      expect(about_course_page.interview_process_textarea.value).to eq(course_2.interview_process)
+      expect(about_course_page.how_school_placements_work_textarea.value).to eq(course_2.how_school_placements_work)
+    end
+
+    scenario 'only fields with values are copied if the source was incomplete' do
+      copy_fees(from: course_3, to: course_2)
+
+      [
+        'Your changes are not yet saved',
+        'About the course'
+      ].each do |name|
+        expect(about_course_page.warning_message).to have_content(name)
+      end
+
+      [
+        'Interview process',
+        'How school placements work'
+      ].each do |name|
+        expect(about_course_page.warning_message).not_to have_content(name)
+      end
+
+      expect(about_course_page.about_textarea.value).to eq(course_3.about_course)
+      expect(about_course_page.interview_process_textarea.value).to eq(course_2.interview_process)
+      expect(about_course_page.how_school_placements_work_textarea.value).to eq(course_2.how_school_placements_work)
+    end
+  end
+
+  def copy_fees(from:, to:)
+    visit about_provider_course_path(provider.provider_code, to.course_code)
+    select("#{from.name} (#{from.course_code})", from: 'Copy from')
+    click_on('Copy content')
+  end
+
   def stub_course_request(provider, course)
     stub_api_v2_request(
       "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
