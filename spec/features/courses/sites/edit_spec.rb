@@ -11,10 +11,11 @@ feature 'Edit course sites', type: :feature do
   end
   let(:site1) { jsonapi(:site, location_name: 'Site one') }
   let(:site2) { jsonapi(:site, location_name: 'Site two') }
+  let(:site3) { jsonapi(:site, location_name: 'Another site') }
   let(:provider) do
     jsonapi(
       :provider,
-      sites: [site1, site2]
+      sites: [site1, site2, site3]
     )
   end
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
@@ -45,8 +46,10 @@ feature 'Edit course sites', type: :feature do
       "#{course.name} (#{course.course_code})"
     )
 
-    expect(page).to have_checked_field("course[site_statuses_attributes][0][selected]")
-    expect(page).to_not have_checked_field("course[site_statuses_attributes][1][selected]")
+    expect(page.all('.govuk-checkboxes__item strong').collect(&:text)).to eq(['Another site', 'Site one', 'Site two'])
+    expect(page).to have_checked_field(site1.location_name)
+    expect(page).to_not have_checked_field(site2.location_name)
+    expect(page).to_not have_checked_field(site3.location_name)
   end
 
   context 'adding locations' do

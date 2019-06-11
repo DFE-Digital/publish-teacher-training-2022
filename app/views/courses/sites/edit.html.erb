@@ -32,7 +32,7 @@
     <%= form_for course, url: locations_provider_course_path(@provider.provider_code, course.course_code), method: :put do |f| %>
       <div class="govuk-form-group">
         <div class="govuk-checkboxes">
-          <%= f.fields_for :site_statuses, @provider.sites do |sf| %>
+          <%= f.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sf| %>
             <% site = sf.object %>
             <div class="govuk-checkboxes__item">
               <%= sf.check_box 'selected', checked: course.has_site?(site), class: 'govuk-checkboxes__input' %>
