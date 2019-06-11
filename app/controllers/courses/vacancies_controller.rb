@@ -24,6 +24,8 @@ module Courses
           site_status.save
         end
 
+      @course.sync_with_search_and_compare(provider_code: params[:provider_code])
+
       flash[:success] = 'Course vacancies published'
       redirect_to provider_courses_path(params[:provider_code])
     end

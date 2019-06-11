@@ -27,6 +27,13 @@ feature 'Edit course vacancies', type: :feature do
   let(:edit_vacancies_path) do
     "/organisations/AO/courses/#{course_attributes[:course_code]}/vacancies"
   end
+  let!(:sync_courses_request_stub) do
+    stub_request(
+      :post,
+      "http://localhost:3001/api/v2/providers/AO/courses/" \
+        "#{course_attributes[:course_code]}/sync_with_search_and_compare"
+    ).to_return(status: 201, body: "")
+  end
 
   before do
     stub_omniauth
@@ -112,6 +119,7 @@ feature 'Edit course vacancies', type: :feature do
         'Course vacancies published'
       )
       expect(find('h1')).to have_content('Courses')
+      expect(sync_courses_request_stub).to have_been_requested
     end
 
     scenario 'removing all vacancies' do
@@ -128,6 +136,7 @@ feature 'Edit course vacancies', type: :feature do
         'Course vacancies published'
       )
       expect(find('h1')).to have_content('Courses')
+      expect(sync_courses_request_stub).to have_been_requested
     end
   end
 
@@ -160,6 +169,7 @@ feature 'Edit course vacancies', type: :feature do
         'Course vacancies published'
       )
       expect(find('h1')).to have_content('Courses')
+      expect(sync_courses_request_stub).to have_been_requested
     end
   end
 end
