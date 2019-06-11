@@ -27,6 +27,7 @@ module PageObjects
         element :publish, '[data-qa=course__publish]'
         element :success_summary, '.govuk-success-summary'
         element :error_summary, '.govuk-error-summary'
+        element :status_panel, '[data-qa=course__status_panel]'
       end
     end
   end
