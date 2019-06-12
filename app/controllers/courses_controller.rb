@@ -11,11 +11,11 @@ class CoursesController < ApplicationController
   def show; end
 
   def update
-    if @course.save
+    if @course.update(course_params)
       flash[:success] = 'Your changes have been saved'
       redirect_to(
         description_provider_course_path(
-          @provider.provider_code,
+          @course.provider_code,
           @course.course_code
         )
       )
@@ -94,6 +94,23 @@ class CoursesController < ApplicationController
   end
 
 private
+
+  def course_params
+    params.require(:course).permit(
+      :about_course,
+      :course_length,
+      :fee_details,
+      :fee_international,
+      :fee_uk_eu,
+      :financial_support,
+      :how_school_placements_work,
+      :interview_process,
+      :other_requirements,
+      :personal_qualities,
+      :salary_details,
+      :required_qualifications
+    )
+  end
 
   def build_course
     @provider_code = params[:provider_code]
