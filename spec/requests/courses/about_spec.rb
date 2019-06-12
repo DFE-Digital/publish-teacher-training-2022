@@ -74,4 +74,67 @@ describe 'Courses', type: :request do
       end
     end
   end
+
+  describe 'UPDATE about' do
+    let(:course_json_api)   { jsonapi :course, provider: provider }
+    let(:provider)          { jsonapi(:provider, provider_code: 'AO') }
+    let(:course)            { course_json_api.to_resource }
+    let(:course_response)   { course_json_api.render }
+
+    let(:course_params) do
+      {
+        about_course: "Something about this course",
+        how_school_placements_work: "Something about how school placements work",
+        interview_process: "Something about the interview process",
+      }
+    end
+
+    let(:request_params) do
+      {
+        "_jsonapi" => {
+          data: {
+            course_code: course.course_code,
+            type: "courses",
+            attributes: course_params
+          }
+        },
+        "course" => course_params
+      }
+    end
+
+    before do
+      stub_omniauth
+      get(auth_dfe_callback_path)
+      stub_api_v2_request(
+        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+        course_response
+      )
+      stub_api_v2_request(
+        "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
+        provider.render
+      )
+    end
+
+    context "without errors" do
+      before do
+        stub_api_v2_request(
+          "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+          {}, :patch, 200
+        ).with(body: {
+          data: {
+            course_code: course.course_code,
+            type: "courses",
+            attributes: course_params
+          }
+        }.to_json)
+
+        patch provider_course_path(provider.provider_code, course.course_code), params: request_params
+      end
+
+      it 'redirects to the course description page' do
+        expect(flash[:success]).to include('Your changes have been saved')
+        expect(response).to redirect_to(description_provider_course_path(provider.provider_code, course.course_code))
+      end
+    end
+  end
 end
