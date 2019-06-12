@@ -79,7 +79,7 @@
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes', provider_course_path(course.provider.provider_code, course.course_code), class: "govuk-link" %>
+        <%= link_to 'Cancel changes', description_provider_course_path(course.provider.provider_code, course.course_code), class: "govuk-link" %>
       </p>
     <% end %>
   </div>
