@@ -11,6 +11,7 @@ class CoursesController < ApplicationController
   def show; end
 
   def update
+    @course.set_all_attributes_dirty
     if @course.update(course_params)
       flash[:success] = 'Your changes have been saved'
       redirect_to(
