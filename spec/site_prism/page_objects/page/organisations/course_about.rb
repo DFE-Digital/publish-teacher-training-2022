@@ -13,7 +13,7 @@ module PageObjects
         element :flash, '.govuk-success-summary'
         element :warning_message, '[data-copy-course=warning]'
 
-        section :copy_content, CopyContentSection
+        section :copy_content, PageObjects::Section::CopyContentSection
       end
     end
   end
