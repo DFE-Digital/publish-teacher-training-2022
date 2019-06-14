@@ -48,8 +48,8 @@ feature 'Course fees', type: :feature do
     )
 
     choose '1 year'
-    fill_in 'Fee for UK and EU students', with: '8000'
-    fill_in 'Fee for international students (optional)', with: '16000'
+    fill_in 'Fee for UK and EU students', with: 8000
+    fill_in 'Fee for international students (optional)', with: 16000
     fill_in 'Fee details (optional)', with: 'Test fee details'
     fill_in(
       'Financial support you offer (optional)',
@@ -71,8 +71,8 @@ feature 'Course fees', type: :feature do
         name: 'Biology',
         provider: provider,
         course_length: 'TwoYears',
-        fee_uk_eu: '9500',
-        fee_international: '1200',
+        fee_uk_eu: 9500,
+        fee_international: 1200,
         fee_details: 'Some information about the fees',
         financial_support: 'Some information about the finance support'
       )
@@ -105,8 +105,6 @@ feature 'Course fees', type: :feature do
       [
         'Your changes are not yet saved',
         'Course length',
-        'Fee for UK and EU students',
-        'Fee for international students',
         'Fee details',
         'Financial support'
       ].each do |name|
@@ -115,8 +113,8 @@ feature 'Course fees', type: :feature do
 
       expect(course_fees_page.course_length_one_year).to_not be_checked
       expect(course_fees_page.course_length_two_years).to be_checked
-      expect(course_fees_page.course_fees_uk_eu.value).to eq(course_2.fee_uk_eu)
-      expect(course_fees_page.course_fees_international.value).to eq(course_2.fee_international)
+      expect(course_fees_page.course_fees_uk_eu.value).to eq(course_2.fee_uk_eu.to_s)
+      expect(course_fees_page.course_fees_international.value).to eq(course_2.fee_international.to_s)
       expect(course_fees_page.fee_details.value).to eq(course_2.fee_details)
       expect(course_fees_page.financial_support.value).to eq(course_2.financial_support)
     end
@@ -135,16 +133,14 @@ feature 'Course fees', type: :feature do
 
       [
         'Course length',
-        'Fee for UK and EU students',
-        'Fee for international students'
       ].each do |name|
         expect(course_fees_page.warning_message).not_to have_content(name)
       end
 
       expect(course_fees_page.course_length_one_year).to_not be_checked
       expect(course_fees_page.course_length_two_years).to be_checked
-      expect(course_fees_page.course_fees_uk_eu.value).to eq(course_2.fee_uk_eu)
-      expect(course_fees_page.course_fees_international.value).to eq(course_2.fee_international)
+      expect(course_fees_page.course_fees_uk_eu.value).to eq(course_2.fee_uk_eu.to_s)
+      expect(course_fees_page.course_fees_international.value).to eq(course_2.fee_international.to_s)
       expect(course_fees_page.fee_details.value).to eq(course_3.fee_details)
       expect(course_fees_page.financial_support.value).to eq(course_3.financial_support)
     end

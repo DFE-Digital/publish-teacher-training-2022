@@ -14,8 +14,8 @@ describe 'Courses', type: :request do
               include_nulls: [:accrediting_provider],
               course_length: 'TwoYears',
               provider: provider,
-              fee_uk_eu: '9500',
-              fee_international: '1200',
+              fee_uk_eu: 9500,
+              fee_international: 1200,
               fee_details: 'Some information about the fees',
               financial_support: 'Some information about the finance support'
     end
@@ -81,10 +81,10 @@ describe 'Courses', type: :request do
           course_2.course_length
         )
         expect(response.body).to include(
-          course_2.fee_uk_eu
+          course_2.fee_uk_eu.to_s
         )
         expect(response.body).to include(
-          course_2.fee_international
+          course_2.fee_international.to_s
         )
         expect(response.body).to include(
           course_2.fee_details
@@ -105,8 +105,8 @@ describe 'Courses', type: :request do
 
         original_course_details = [
                                     course_2.course_length,
-                                    course_2.fee_uk_eu,
-                                    course_2.fee_international
+                                    course_2.fee_uk_eu.to_s,
+                                    course_2.fee_international.to_s
                                   ]
 
         copied_course_details = [

@@ -9,6 +9,7 @@ feature 'Course description', type: :feature do
             funding: 'fee',
             sites: [site],
             provider: provider,
+            fee_uk_eu: 9250,
             last_published_at: '2019-03-05T14:42:34Z')
   }
   let(:site) { jsonapi(:site) }
@@ -49,7 +50,7 @@ feature 'Course description', type: :feature do
         course.course_length
       )
       expect(course_page.uk_fees).to have_content(
-        course.fee_uk_eu
+        '£9,250'
       )
       expect(course_page.international_fees).to have_content(
         course.fee_international

@@ -27,9 +27,7 @@
             <span class="govuk-currency-input__inner__unit">£</span>
             <%= f.number_field :fee_uk_eu,
                                 class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
-                                value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true),
-                                min: "0",
-                                max: "100000" %>
+                                value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true) %>
           </div>
         </div>
       </div>
@@ -41,9 +39,7 @@
             <span class="govuk-currency-input__inner__unit">£</span>
             <%= f.number_field :fee_international,
                                 class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
-                                value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true),
-                                min: "0",
-                                max: "100000" %>
+                                value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true) %>
           </div>
         </div>
       </div>
