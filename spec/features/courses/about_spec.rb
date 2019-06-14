@@ -105,7 +105,8 @@ feature 'About course', type: :feature do
     end
 
     scenario 'all fields get copied if all were present' do
-      copy_fees(from: course_2, to: course)
+      about_course_page.load_with_course(course)
+      about_course_page.copy_content.copy(course_2)
 
       [
         'Your changes are not yet saved',
@@ -122,7 +123,8 @@ feature 'About course', type: :feature do
     end
 
     scenario 'only fields with values are copied if the source was incomplete' do
-      copy_fees(from: course_3, to: course_2)
+      about_course_page.load_with_course(course_2)
+      about_course_page.copy_content.copy(course_3)
 
       [
         'Your changes are not yet saved',
@@ -142,12 +144,6 @@ feature 'About course', type: :feature do
       expect(about_course_page.interview_process_textarea.value).to eq(course_2.interview_process)
       expect(about_course_page.how_school_placements_work_textarea.value).to eq(course_2.how_school_placements_work)
     end
-  end
-
-  def copy_fees(from:, to:)
-    visit about_provider_course_path(provider.provider_code, to.course_code)
-    select("#{from.name} (#{from.course_code})", from: 'Copy from')
-    click_on('Copy content')
   end
 
   def stub_course_request(provider, course)

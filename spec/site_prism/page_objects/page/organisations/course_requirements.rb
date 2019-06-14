@@ -1,7 +1,7 @@
 module PageObjects
   module Page
     module Organisations
-      class CourseRequirements < PageObjects::Base
+      class CourseRequirements < CourseBase
         set_url '/organisations/{provider_code}/courses/{course_code}/requirements'
 
         element :title, '.govuk-heading-xl'
@@ -11,6 +11,8 @@ module PageObjects
         element :other_requirements, '#course_other_requirements'
         element :flash, '.govuk-success-summary'
         element :warning_message, '[data-copy-course=warning]'
+
+        section :copy_content, PageObjects::Section::CopyContentSection
       end
     end
   end

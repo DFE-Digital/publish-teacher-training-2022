@@ -1,7 +1,7 @@
 module PageObjects
   module Page
     module Organisations
-      class CourseFees < PageObjects::Base
+      class CourseFees < CourseBase
         set_url '/organisations/{provider_code}/courses/{course_code}/fees'
 
         element :title, '.govuk-heading-xl'
@@ -14,6 +14,8 @@ module PageObjects
         element :financial_support, '#course_financial_support'
         element :flash, '.govuk-success-summary'
         element :warning_message, '[data-copy-course=warning]'
+
+        section :copy_content, PageObjects::Section::CopyContentSection
       end
     end
   end
