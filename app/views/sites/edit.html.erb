@@ -25,7 +25,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @site, url: provider_site_path(params[:provider_code], @site.id), method: :put do |f| %>
-      <p class="govuk-body">To assign this location to a course contact the Becoming a Teacher team: <%= bat_contact_mail_to bat_contact_email_address, subject: "Assign a location (#{@site.code}) to a course (#{@provider.provider_code})" %></p>
+      <p class="govuk-body">You can assign locations to a course from the ‘Basic details’ tab on the course page.</p>
       <hr class="govuk-section-break govuk-section-break--l">
       <%= render 'form', f: f %>
       <%= f.submit "Save and publish changes", class: "govuk-button", data: { qa: 'location__publish-changes' } %>
