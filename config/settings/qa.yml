@@ -9,3 +9,6 @@ manage_ui:
   base_url: https://bat-qa-mcui-as.azurewebsites.net
 search_ui:
   base_url: https://bat-qa-sacui-as.azurewebsites.net
+environment:
+  label: 'QA'
+  class_name: 'qa'

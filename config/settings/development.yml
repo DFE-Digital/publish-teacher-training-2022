@@ -9,3 +9,6 @@ manage_ui:
   base_url: https://localhost:44364
 search_ui:
   base_url: https://localhost:5000
+environment:
+  label: 'Development'
+  class_name: 'development'

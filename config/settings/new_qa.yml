@@ -9,3 +9,6 @@ manage_ui:
   base_url: https://www.dev.publish-teacher-training-courses.service.gov.uk
 search_ui:
   base_url: https://www.dev.find-postgraduate-teacher-training.service.gov.uk
+environment:
+  label: 'QA'
+  class_name: 'qa'

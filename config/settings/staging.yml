@@ -9,3 +9,6 @@ manage_ui:
   base_url: https://bat-staging-manage-courses-ui-app.azurewebsites.net
 search_ui:
   base_url: https://bat-staging-search-and-compare-ui-app.azurewebsites.net
+environment:
+  label: 'Staging'
+  class_name: 'staging'

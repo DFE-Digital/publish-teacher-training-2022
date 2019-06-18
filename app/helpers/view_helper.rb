@@ -49,4 +49,16 @@ module ViewHelper
       'qualifications' => base + '/requirements#Qualifications-wrapper'
     }[field]
   end
+
+  def header_environment_class
+    "app-header__container--#{Settings.environment.class_name || 'beta'}"
+  end
+
+  def beta_tag_environment_class
+    "app-tag--#{Settings.environment.class_name || 'beta'}"
+  end
+
+  def beta_banner_environment_label
+    Settings.environment.label || 'Beta'
+  end
 end

@@ -3,6 +3,14 @@ require 'rails_helper'
 RSpec.feature 'View pages', type: :feature do
   let(:new_features_page) { PageObjects::Page::NewFeaturesPage.new }
 
+  scenario "Environment label and class are read from settings" do
+    stub_omniauth
+
+    visit "/cookies"
+    expect(find(".app-tag--#{Settings.environment.class_name}")).to have_content(Settings.environment.label)
+    expect(page).to have_selector(".app-header__container--#{Settings.environment.class_name}")
+  end
+
   scenario "Navigate to /cookies" do
     stub_omniauth
 
