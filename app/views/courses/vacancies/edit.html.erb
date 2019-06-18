@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Vacancies" %>
+<%= content_for :page_title, "Edit vacancies for #{@course.name} (#{@course.course_code})" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_courses_path(params[:provider_code])) %>
