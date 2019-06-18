@@ -14,6 +14,9 @@
       <li class="govuk-breadcrumbs__list-item">
         <%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-breadcrumbs__link" %>
       </li>
+      <li class="govuk-breadcrumbs__list-item" aria-current="page">
+        <%= @site_name_before_update %>
+      </li>
     </ol>
   </nav>
 <% end %>
