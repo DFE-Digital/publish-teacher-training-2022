@@ -3,7 +3,7 @@
 <p class="govuk-body">See how your unpublished changes look.</p>
 <p class="govuk-body">Preview your course to check for mistakes before publishing.</p>
 <p class="govuk-body">
-  <%= link_to 'Preview course', preview_provider_course_path(course.provider.provider_code, course.course_code), class: 'govuk-link', "data-qa": "course__preview-link" %>
+  <%= link_to 'Preview course', preview_provider_course_path(@provider.provider_code, course.course_code), class: 'govuk-link', "data-qa": "course__preview-link" %>
 </p>
 
 <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
@@ -11,6 +11,6 @@
 <h4 class="govuk-heading-m">Publish</h4>
 <p class="govuk-body">Publish your changes.</p>
 <p class="govuk-body">You can make changes to this course after publishing it.</p>
-<%= form_for course, url: publish_provider_course_path(course.provider.provider_code, course.course_code), method: :post do |f| %>
+<%= form_for course, url: publish_provider_course_path(@provider.provider_code, course.course_code), method: :post do |f| %>
   <%= f.submit "Publish", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'course__publish' } %>
 <% end %>
