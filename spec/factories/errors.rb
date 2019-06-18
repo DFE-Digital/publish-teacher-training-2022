@@ -18,7 +18,7 @@ FactoryBot.define do
       errors {
         [
           {
-            title: "Invalid latest_enrichment__about_course",
+            title: "Invalid about_course",
             detail: "About course can't be blank"
           }
         ]
