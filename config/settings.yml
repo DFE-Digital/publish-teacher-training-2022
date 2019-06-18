@@ -33,3 +33,6 @@ google_forms:
     provider_code_entry: entry.158771972
 service_support:
   contact_email_address: becomingateacher@digital.education.gov.uk
+environment:
+  label: 'Beta'
+  selector_name: 'beta'
