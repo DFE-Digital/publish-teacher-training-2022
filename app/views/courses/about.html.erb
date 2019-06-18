@@ -7,6 +7,8 @@
 <%= render partial: 'courses/copy_content_warning',
                     locals: { copied_fields: @copied_fields } if params[:copy_from].present? %>
 
+<%= render 'shared/errors' %>
+
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.name_and_code %></span>
   About this course
@@ -14,7 +16,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course, url: provider_course_path(@provider.provider_code, course.course_code) do |f| %>
+    <%= form_with model: course, url: about_provider_course_path(@provider.provider_code, course.course_code) do |f| %>
+      <%= f.hidden_field :page, value: :about %>
       <p class="govuk-body">Give applicants a short description of the course.</p>
 
       <p class="govuk-body">You could include:</p>

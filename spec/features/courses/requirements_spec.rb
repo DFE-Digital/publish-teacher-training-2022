@@ -20,12 +20,15 @@ feature 'Course requirements', type: :feature do
     stub_omniauth
     stub_course_request(provider, course)
     stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider.render)
-    stub_api_v2_request("/providers/AO/courses/#{course.course_code}", course.render, :patch)
   end
 
   let(:course_requirements_page) { PageObjects::Page::Organisations::CourseRequirements.new }
 
   scenario 'viewing the courses requirements page' do
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      course.render, :patch, 200
+    )
     visit description_provider_course_path(provider.provider_code, course.course_code)
     click_on 'Requirements and eligibility'
 
@@ -58,6 +61,23 @@ feature 'Course requirements', type: :feature do
     )
 
     expect(current_path).to eq description_provider_course_path('AO', course.course_code)
+  end
+
+  scenario 'submitting with validation errors' do
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      build(:error, :for_course_publish), :patch, 422
+    )
+
+    visit requirements_provider_course_path(provider.provider_code, course.course_code)
+
+    fill_in 'Qualifications needed', with: 'foo ' * 401
+    click_on 'Save'
+
+    expect(course_requirements_page.error_flash).to have_content(
+      'You’ll need to correct some information.'
+    )
+    expect(current_path).to eq requirements_provider_course_path(provider.provider_code, course.course_code)
   end
 
   context 'when copying course requirements from another course' do

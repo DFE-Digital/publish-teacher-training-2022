@@ -11,6 +11,7 @@ module PageObjects
         element :how_school_placements_work_textarea, '#course_how_school_placements_work'
         element :warning_message, '[data-copy-course=warning]'
         element :flash, '.govuk-success-summary'
+        element :error_flash, '.govuk-error-summary'
         element :warning_message, '[data-copy-course=warning]'
 
         section :copy_content, PageObjects::Section::CopyContentSection

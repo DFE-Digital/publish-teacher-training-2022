@@ -15,6 +15,7 @@ module PageObjects
         element :fee_details, '#course_fee_details'
         element :financial_support, '#course_financial_support'
         element :flash, '.govuk-success-summary'
+        element :error_flash, '.govuk-error-summary'
         element :warning_message, '[data-copy-course=warning]'
 
         section :copy_content, PageObjects::Section::CopyContentSection

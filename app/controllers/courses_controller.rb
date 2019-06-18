@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
+  before_action :initialise_errors
   before_action :build_courses, only: %i[index about requirements fees salary]
   before_action :build_course, except: :index
   before_action :build_provider, except: :index
@@ -25,6 +26,10 @@ class CoursesController < ApplicationController
           @course.course_code
         )
       )
+    else
+      @errors = @course.errors.messages
+
+      render course_params["page"].to_sym
     end
   end
 
@@ -103,6 +108,7 @@ private
 
   def course_params
     params.require(:course).permit(
+      :page,
       :about_course,
       :course_length,
       :course_length_other_length,
@@ -183,5 +189,9 @@ private
   def copy_field_if_present_in_source_course(field)
     source_value = @source_course[field]
     course[field] = source_value if source_value.present?
+  end
+
+  def initialise_errors
+    @errors = {}
   end
 end

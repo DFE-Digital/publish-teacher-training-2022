@@ -10,6 +10,7 @@ module PageObjects
         element :course_length_two_years, '#course_course_length_twoyears'
         element :course_salary_details, '#course_salary_details'
         element :flash, '.govuk-success-summary'
+        element :error_flash, '.govuk-error-summary'
         element :warning_message, '[data-copy-course=warning]'
 
         section :copy_content, PageObjects::Section::CopyContentSection

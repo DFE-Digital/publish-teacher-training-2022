@@ -14,12 +14,15 @@ feature 'Course fees', type: :feature do
     stub_omniauth
     stub_course_request(provider, course_1)
     stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider.render)
-    stub_api_v2_request("/providers/AO/courses/#{course_1.course_code}", course_1.render, :patch)
   end
 
   let(:course_fees_page) { PageObjects::Page::Organisations::CourseFees.new }
 
   scenario 'viewing the courses fees page' do
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course_1.course_code}",
+      course_1.render, :patch, 200
+    )
     visit description_provider_course_path(provider.provider_code, course_1.course_code)
 
     click_on 'Course length and fees'
@@ -62,6 +65,23 @@ feature 'Course fees', type: :feature do
       'Your changes have been saved'
     )
     expect(current_path).to eq description_provider_course_path('AO', course_1.course_code)
+  end
+
+  scenario 'submitting with validation errors' do
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course_1.course_code}",
+      build(:error, :for_course_publish), :patch, 422
+    )
+
+    visit fees_provider_course_path(provider.provider_code, course_1.course_code)
+
+    fill_in 'Fee for UK and EU students', with: 100_000_000
+    click_on 'Save'
+
+    expect(course_fees_page.error_flash).to have_content(
+      'You’ll need to correct some information.'
+    )
+    expect(current_path).to eq fees_provider_course_path(provider.provider_code, course_1.course_code)
   end
 
   context 'with course_length_other selected' do
