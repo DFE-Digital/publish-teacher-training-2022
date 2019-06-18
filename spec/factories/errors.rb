@@ -6,6 +6,16 @@ FactoryBot.define do
           title: "Invalid location_name",
           detail: "Location name can't be blank",
           source: { pointer: "/data/attributes/location_name" }
+        },
+        {
+          title: "Invalid postcode",
+          detail: "Postcode is missing",
+          source: { pointer: "/data/attributes/postcode" }
+        },
+        {
+          title: "Invalid postcode",
+          detail: "Postcode is invalid",
+          source: { pointer: "/data/attributes/postcode" }
         }
       ]
     }
