@@ -51,14 +51,14 @@ module ViewHelper
   end
 
   def header_environment_class
-    "app-header__container--#{Settings.environment.selector_name || 'beta'}"
+    "app-header__container--#{Settings.environment.selector_name}"
   end
 
   def beta_tag_environment_class
-    "app-tag--#{Settings.environment.selector_name || 'beta'}"
+    "app-tag--#{Settings.environment.selector_name}"
   end
 
   def beta_banner_environment_label
-    Settings.environment.label || 'Beta'
+    Settings.environment.label
   end
 end
