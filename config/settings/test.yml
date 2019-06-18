@@ -10,4 +10,4 @@ search_ui:
   base_url: https://localhost:5000
 environment:
   label: 'Test'
-  class_name: 'test'
+  selector_name: 'test'

@@ -11,4 +11,4 @@ search_ui:
   base_url: https://localhost:5000
 environment:
   label: 'Development'
-  class_name: 'development'
+  selector_name: 'development'

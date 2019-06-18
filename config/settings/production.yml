@@ -11,4 +11,4 @@ search_ui:
   base_url: https://find-postgraduate-teacher-training.education.gov.uk
 environment:
   label: 'Beta'
-  class_name: 'beta'
+  selector_name: 'beta'

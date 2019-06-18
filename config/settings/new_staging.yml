@@ -11,4 +11,4 @@ search_ui:
   base_url: https://bat-stg-sacui-as.azurewebsites.net
 environment:
   label: 'Staging'
-  class_name: 'staging'
+  selector_name: 'staging'

@@ -7,8 +7,8 @@ RSpec.feature 'View pages', type: :feature do
     stub_omniauth
 
     visit "/cookies"
-    expect(find(".app-tag--#{Settings.environment.class_name}")).to have_content(Settings.environment.label)
-    expect(page).to have_selector(".app-header__container--#{Settings.environment.class_name}")
+    expect(find(".app-tag--#{Settings.environment.selector_name}")).to have_content(Settings.environment.label)
+    expect(page).to have_selector(".app-header__container--#{Settings.environment.selector_name}")
   end
 
   scenario "Navigate to /cookies" do
