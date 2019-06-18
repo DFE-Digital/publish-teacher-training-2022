@@ -1,7 +1,7 @@
 <%= content_for :page_title, "Requirements and eligibility – #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_course_path(course.provider.provider_code, course.course_code)) %>
+  <%= govuk_back_link_to(provider_course_path(@provider.provider_code, course.course_code)) %>
 <% end %>
 
 <%= render partial: 'courses/copy_content_warning',
@@ -14,7 +14,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course, url: provider_course_path(course.provider.provider_code, course.course_code) do |f| %>
+    <%= form_with model: course, url: provider_course_path(@provider.provider_code, course.course_code) do |f| %>
       <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
 
       <p class="govuk-body">State the minimum academic qualifications needed for this course.</p>
@@ -55,7 +55,7 @@
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes', description_provider_course_path(course.provider.provider_code, course.course_code), class: "govuk-link" %>
+        <%= link_to 'Cancel changes', description_provider_course_path(@provider.provider_code, course.course_code), class: "govuk-link" %>
       </p>
     <% end %>
   </div>
@@ -64,6 +64,6 @@
     <%= render partial: 'courses/related_sidebar',
                         locals: {
                           course: course,
-                          page_path: requirements_provider_course_path(course.provider.provider_code, course.course_code) } %>
+                          page_path: requirements_provider_course_path(@provider.provider_code, course.course_code) } %>
   </div>
 </div>
