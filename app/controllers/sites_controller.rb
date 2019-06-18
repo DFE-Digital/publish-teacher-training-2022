@@ -13,11 +13,7 @@ class SitesController < ApplicationController
     if @site.save
       redirect_to provider_sites_path, flash: { success: 'Your location has been created' }
     else
-      @errors = @site.errors.reduce({}) { |errors, (field, message)|
-        errors[field] ||= []
-        errors[field].push(map_errors(message))
-        errors
-      }
+      @errors = @site.errors.messages
 
       render :new
     end
@@ -37,11 +33,8 @@ class SitesController < ApplicationController
     if @site.update(site_params)
       redirect_to provider_sites_path, flash: { success: 'Your changes have been published' }
     else
-      @errors = @site.errors.reduce({}) { |errors, (field, message)|
-        errors[field] ||= []
-        errors[field].push(map_errors(message))
-        errors
-      }
+      @errors = @site.errors.messages
+
       render :edit
     end
   end
@@ -71,16 +64,5 @@ private
 
   def initialise_errors
     @errors = {}
-  end
-
-  def map_errors(message)
-    {
-      "Location name can't be blank"             => "Name is missing",
-      "Location name has already been taken"     => "Name is in use by another location",
-      "Address1 can't be blank"                  => "Building and street is missing",
-      "Address3 can't be blank"                  => "Town or city is missing",
-      "Postcode can't be blank"                  => "Postcode is missing",
-      "Postcode not recognised as a UK postcode" => "Postcode is not valid (for example, BN1 1AA)"
-    }[message] || message
   end
 end
