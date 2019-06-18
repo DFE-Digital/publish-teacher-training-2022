@@ -82,7 +82,7 @@ class CoursesController < ApplicationController
     if errors.present?
       flash[:error_summary] = errors.map { |error|
         [
-          error[:title].last(error[:title].length - 'Invalid latest_enrichment__'.length),
+          error[:title].last(error[:title].length - 'Invalid '.length),
           error[:detail]
         ]
       }.to_h
