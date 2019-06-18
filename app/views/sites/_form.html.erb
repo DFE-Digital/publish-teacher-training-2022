@@ -2,13 +2,7 @@
   <%= f.label :location_name, class: "govuk-label" do %>
     <h2 class="govuk-heading-m<%= " govuk-!-margin-bottom-0" if @errors[:location_name]&.any? %>">Name</h2>
   <% end %>
-  <% if @errors[:location_name]&.any? %>
-    <span id="location_name-error" class="govuk-error-message">
-      <% @errors[:location_name].each do |error| %>
-        <div><span class="govuk-visually-hidden">Error:</span> <%= error %></div>
-      <% end %>
-    </span>
-  <% end %>
+  <%= render "error_messages", field: :location_name %>
   <%= f.text_field :location_name, class: "govuk-input govuk-!-width-full", aria: { describedby: @errors[:location_name] ? "location_name-error" : '' }, data: { qa: 'location__name' } %>
 </div>
 
@@ -19,13 +13,7 @@
     Building and street
     <span class="govuk-visually-hidden">line 1 of 2</span>
   <% end %>
-  <% if @errors[:address1]&.any? %>
-    <span id="address1-error" class="govuk-error-message">
-      <% @errors[:address1].each do |error| %>
-        <div><span class="govuk-visually-hidden">Error:</span> <%= error %></div>
-      <% end %>
-    </span>
-  <% end %>
+  <%= render "error_messages", field: :address1 %>
   <%= f.text_field :address1, class: "govuk-input govuk-!-width-full", aria: { describedby: @errors[:address1] ? "address1-error" : '' } %>
 </div>
 
@@ -38,13 +26,7 @@
 
 <div class="govuk-form-group<%= " govuk-form-group--error" if @errors[:address3]&.any? %>">
   <%= f.label :address3, "Town or city", class: "govuk-label" %>
-  <% if @errors[:address3]&.any? %>
-    <span id="address3-error" class="govuk-error-message">
-      <% @errors[:address3].each do |error| %>
-        <div><span class="govuk-visually-hidden">Error:</span> <%= error %></div>
-      <% end %>
-    </span>
-  <% end %>
+  <%= render "error_messages", field: :address3 %>
   <%= f.text_field :address3, class: "govuk-input govuk-!-width-full", aria: { describedby: @errors[:address3] ? "address3-error" : '' } %>
 </div>
 
@@ -55,24 +37,12 @@
 
 <div class="govuk-form-group<%= " govuk-form-group--error" if @errors[:postcode]&.any? %>">
   <%= f.label :postcode, class: "govuk-label" %>
-  <% if @errors[:postcode]&.any? %>
-    <span id="postcode-error" class="govuk-error-message">
-      <% @errors[:postcode].each do |error| %>
-        <div><span class="govuk-visually-hidden">Error:</span> <%= error %></div>
-      <% end %>
-    </span>
-  <% end %>
+  <%= render "error_messages", field: :postcode %>
   <%= f.text_field :postcode, class: "govuk-input form-control-small", aria: { describedby: @errors[:postcode] ? "postcode-error" : '' } %>
 </div>
 
 <div class="govuk-form-group<%= " govuk-form-group--error" if @errors[:region_code]&.any? %>">
   <%= f.label :region_code, "Region of UK", class: "govuk-label" %>
-  <% if @errors[:region_code]&.any? %>
-    <span id="region_code-error" class="govuk-error-message">
-      <% @errors[:region_code].each do |error| %>
-        <div><span class="govuk-visually-hidden">Error:</span> <%= error %></div>
-      <% end %>
-    </span>
-  <% end %>
+  <%= render "error_messages", field: :region_code %>
   <%= f.select :region_code, Site::REGIONS, {}, class: "govuk-select", aria: { describedby: @errors[:region_code] ? "region_code-error": '' } %>
 </div>
