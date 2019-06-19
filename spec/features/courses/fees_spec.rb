@@ -64,6 +64,28 @@ feature 'Course fees', type: :feature do
     expect(current_path).to eq description_provider_course_path('AO', course_1.course_code)
   end
 
+  context 'with course_length_other selected' do
+    let(:course_1) do
+      jsonapi(
+        :course,
+        :with_fees,
+        course_length: '6 months',
+        provider: provider
+      )
+    end
+
+    scenario 'passes the value into course_length' do
+      visit description_provider_course_path(provider.provider_code, course_1.course_code)
+
+      click_on 'Course length and fees'
+
+      expect(current_path).to eq fees_provider_course_path('AO', course_1.course_code)
+
+      expect(course_fees_page.course_length_other).to be_checked
+      expect(course_fees_page.course_length_other_length.value).to eq('6 months')
+    end
+  end
+
   context 'when copying course fees from another course' do
     let(:course_2) {
       jsonapi(
