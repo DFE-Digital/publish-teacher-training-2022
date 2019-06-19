@@ -83,6 +83,7 @@ describe 'Courses', type: :request do
 
     let(:course_params) do
       {
+        page: "about",
         about_course: "Something about this course",
         how_school_placements_work: "Something about how school placements work",
         interview_process: "Something about the interview process",
@@ -128,12 +129,27 @@ describe 'Courses', type: :request do
           }
         }.to_json)
 
-        patch provider_course_path(provider.provider_code, course.course_code), params: request_params
+        patch about_provider_course_path(provider.provider_code, course.course_code), params: request_params
       end
 
       it 'redirects to the course description page' do
         expect(flash[:success]).to include('Your changes have been saved')
         expect(response).to redirect_to(description_provider_course_path(provider.provider_code, course.course_code))
+      end
+    end
+
+    context "with errors" do
+      before do
+        stub_api_v2_request(
+          "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+          build(:error, :for_course_publish), :patch, 422
+        )
+
+        patch about_provider_course_path(provider.provider_code, course.course_code), params: request_params
+      end
+
+      it 'redirects to the course about page' do
+        expect(response).to render_template :about
       end
     end
   end

@@ -14,10 +14,16 @@ Rails.application.routes.draw do
       get '/vacancies', on: :member, to: 'courses/vacancies#edit'
       put '/vacancies', on: :member, to: 'courses/vacancies#update'
       get '/description', on: :member, to: 'courses#description'
+
       get '/about', on: :member, to: 'courses#about'
+      patch '/about', on: :member, to: 'courses#update'
       get '/requirements', on: :member, to: 'courses#requirements'
+      patch '/requirements', on: :member, to: 'courses#update'
       get '/fees', on: :member, to: 'courses#fees'
+      patch '/fees', on: :member, to: 'courses#update'
       get '/salary', on: :member, to: 'courses#salary'
+      patch '/salary', on: :member, to: 'courses#update'
+
       get '/withdraw', on: :member, to: 'courses#withdraw'
       get '/delete', on: :member, to: 'courses#delete'
       get '/preview', on: :member, to: 'courses#preview'

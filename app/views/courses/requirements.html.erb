@@ -7,6 +7,8 @@
 <%= render partial: 'courses/copy_content_warning',
                     locals: { copied_fields: @copied_fields } if params[:copy_from].present? %>
 
+<%= render 'shared/errors' %>
+
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.name_and_code %></span>
   Requirements and eligibility
@@ -14,7 +16,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course, url: provider_course_path(@provider.provider_code, course.course_code) do |f| %>
+    <%= form_with model: course, url: requirements_provider_course_path(@provider.provider_code, course.course_code) do |f| %>
+      <%= f.hidden_field :page, value: :requirements %>
       <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
 
       <p class="govuk-body">State the minimum academic qualifications needed for this course.</p>

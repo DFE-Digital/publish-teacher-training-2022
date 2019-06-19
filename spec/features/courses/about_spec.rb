@@ -26,6 +26,11 @@ feature 'About course', type: :feature do
   let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
 
   scenario 'viewing the about courses page' do
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      course.render, :patch, 200
+    )
+
     visit description_provider_course_path(provider.provider_code, course.course_code)
     click_on 'About this course'
 
@@ -55,6 +60,23 @@ feature 'About course', type: :feature do
       'Your changes have been saved'
     )
     expect(current_path).to eq description_provider_course_path('AO', course.course_code)
+  end
+
+  scenario 'submitting with validation errors' do
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      build(:error, :for_course_publish), :patch, 422
+    )
+
+    visit about_provider_course_path(provider.provider_code, course.course_code)
+
+    fill_in 'About this course', with: 'foo ' * 401
+    click_on 'Save'
+
+    expect(about_course_page.error_flash).to have_content(
+      'You’ll need to correct some information.'
+    )
+    expect(current_path).to eq about_provider_course_path(provider.provider_code, course.course_code)
   end
 
   context 'when a provider has no self accredited courses (for example a School Direct provider)' do

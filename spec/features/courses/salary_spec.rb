@@ -20,12 +20,15 @@ feature 'Course salary', type: :feature do
     stub_omniauth
     stub_course_request(provider, course)
     stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider.render)
-    stub_api_v2_request("/providers/AO/courses/#{course.course_code}", course.render, :patch)
   end
 
   let(:course_salary_page) { PageObjects::Page::Organisations::CourseSalary.new }
 
   scenario 'viewing the courses salary page' do
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      course.render, :patch, 200
+    )
     visit description_provider_course_path(provider.provider_code, course.course_code)
 
     click_on 'Course length and salary'
@@ -53,6 +56,23 @@ feature 'Course salary', type: :feature do
     )
 
     expect(current_path).to eq description_provider_course_path('AO', course.course_code)
+  end
+
+  scenario 'submitting with validation errors' do
+    stub_api_v2_request(
+      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      build(:error, :for_course_publish), :patch, 422
+    )
+
+    visit salary_provider_course_path(provider.provider_code, course.course_code)
+
+    fill_in 'Salary', with: 'foo ' * 401
+    click_on 'Save'
+
+    expect(course_salary_page.error_flash).to have_content(
+      'You’ll need to correct some information.'
+    )
+    expect(current_path).to eq salary_provider_course_path(provider.provider_code, course.course_code)
   end
 
   context 'when copying course salary from another course' do
