@@ -11,6 +11,12 @@ class CoursesController < ApplicationController
   def show; end
 
   def update
+    # Course length should be saved as `course_length` so if "other" is selected then pass that text value into `course_length`
+    if params[:course][:course_length_other_length].present? && params[:course][:course_length] == 'Other'
+      params[:course][:course_length] = params[:course][:course_length_other_length]
+    end
+    params[:course].delete(:course_length_other_length)
+
     if @course.update(course_params)
       flash[:success] = 'Your changes have been saved'
       redirect_to(
@@ -99,6 +105,7 @@ private
     params.require(:course).permit(
       :about_course,
       :course_length,
+      :course_length_other_length,
       :fee_details,
       :fee_international,
       :fee_uk_eu,
