@@ -4,8 +4,6 @@ module PageObjects
       class Course < CourseBase
         set_url '/organisations/{provider_code}/courses/{course_code}'
 
-        element :title, '.govuk-heading-xl'
-        element :caption, '.govuk-caption-xl'
         element :qualifications, '[data-qa=course__qualifications]'
         element :study_mode, '[data-qa=course__study_mode]'
         element :start_date, '[data-qa=course__start_date]'
