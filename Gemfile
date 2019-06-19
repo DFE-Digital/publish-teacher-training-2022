@@ -119,6 +119,9 @@ group :test do
 
   # Page object for Capybara
   gem 'site_prism'
+
+  # Allows assert_template in request specs
+  gem 'rails-controller-testing'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
