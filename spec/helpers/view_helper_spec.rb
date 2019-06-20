@@ -31,4 +31,18 @@ RSpec.feature 'View helpers', type: :helper do
       expect(helper.manage_ui_enrichment_error_url(provider_code: 'A1', course: course, field: 'about_course')).to eq("https://localhost:44364/organisation/A1/course/self/#{course.course_code}/about#AboutCourse-wrapper")
     end
   end
+
+  describe "#classnames #cns" do
+    it "returns joined classname strings" do
+      expect(helper.cns('foo', 'bar')).to eq 'foo bar'
+      expect(helper.cns('foo', bar: true)).to eq 'foo bar'
+      expect(helper.cns('foo-bar': true)).to eq 'foo-bar'
+      expect(helper.cns('foo-bar': false)).to eq ''
+      expect(helper.cns({ foo: true }, bar: true)).to eq 'foo bar'
+      expect(helper.cns(foo: true, bar: true)).to eq 'foo bar'
+      expect(helper.cns('foo', { bar: true, duck: false }, 'baz', quux: true)).to eq 'foo bar baz quux'
+      # Warning: different to reference implementation. Ignores integers.
+      expect(helper.cns(nil, false, 'bar', Object, 0, 1, { baz: nil }, '')).to eq 'bar'
+    end
+  end
 end

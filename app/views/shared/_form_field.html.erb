@@ -1,0 +1,16 @@
+<%
+  label ||= field.to_s.humanize
+  options = {
+    class: "govuk-input",
+    aria: { describedby: @errors[field] ? "#{field.to_s}-error" : '' },
+    data: { qa: field.to_s }
+  }
+%>
+
+<div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors[field]&.any?) %>">
+  <%= form.label field, label, class: "govuk-label" %>
+
+  <%= render "shared/error_messages", field: field %>
+
+  <%= yield([field, options]) %>
+</div>
