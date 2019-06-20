@@ -1,7 +1,7 @@
 <%= content_for :page_title, "Course length and fees - #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_course_path(@provider.provider_code, course.course_code)) %>
+  <%= govuk_back_link_to(description_provider_course_path(@provider.provider_code, course.course_code)) %>
 <% end %>
 
 <%= render partial: 'courses/copy_content_warning',
