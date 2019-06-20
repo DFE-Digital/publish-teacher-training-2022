@@ -203,6 +203,9 @@
           "runtimeStack": {
             "value": "[variables('appServiceRuntimeStack')]"
           },
+          "httpLoggingEnabled": {
+            "value": "[parameters('httpLoggingEnabled')]"
+          },
           "appServiceAppSettings": {
             "value": [
               {
@@ -240,10 +243,6 @@
               {
                 "name": "SENTRY_DSN",
                 "value": "[parameters('sentryDSN')]"
-              },
-              {
-                "name": "httpLoggingEnabled",
-                "value": "[parameters('httpLoggingEnabled')]"
               }
             ]
           },
