@@ -1,21 +1,9 @@
 <%
   label ||= field.to_s.humanize
-  type ||= :text_field
-  qa ||= ''
-  select_options ||= []
-  small ||= false
-  input_options = {
-    class: cns(
-      "govuk-input": type != :select,
-      "govuk-select": type == :select,
-      "govuk-input--width-10": small
-    ),
-    aria: {
-      describedby: @errors[field] ? "#{field.to_s}-error" : ''
-    },
-    data: {
-      qa: qa
-    }
+  options = {
+    class: "govuk-input",
+    aria: { describedby: @errors[field] ? "#{field.to_s}-error" : '' },
+    data: { qa: field.to_s }
   }
 %>
 
@@ -24,9 +12,5 @@
 
   <%= render "shared/error_messages", field: field %>
 
-  <% if type == :select %>
-    <%= form.send type, field, select_options, {}, input_options %>
-  <% else %>
-    <%= form.send type, field, input_options %>
-  <% end %>
+  <%= yield([field, options]) %>
 </div>
