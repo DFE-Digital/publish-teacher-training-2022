@@ -118,6 +118,10 @@
     "appServicePlanInstances": {
       "type": "int",
       "defaultValue": 1
+    },
+    "httpLoggingEnabled": {
+      "type": "bool",
+      "defaultValue": false
     }
   },
   "variables": {
@@ -236,6 +240,10 @@
               {
                 "name": "SENTRY_DSN",
                 "value": "[parameters('sentryDSN')]"
+              },
+              {
+                "name": "httpLoggingEnabled",
+                "value": "[parameters('httpLoggingEnabled')]"
               }
             ]
           },
