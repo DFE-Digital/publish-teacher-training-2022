@@ -1,48 +1,36 @@
-<div class="govuk-form-group<%= " govuk-form-group--error" if @errors[:location_name]&.any? %>">
-  <%= f.label :location_name, class: "govuk-label" do %>
-    <h2 class="govuk-heading-m<%= " govuk-!-margin-bottom-0" if @errors[:location_name]&.any? %>">Name</h2>
-  <% end %>
-  <%= render "shared/error_messages", field: :location_name %>
-  <%= f.text_field :location_name, class: "govuk-input govuk-!-width-full", aria: { describedby: @errors[:location_name] ? "location_name-error" : '' }, data: { qa: 'location__name' } %>
-</div>
+<%= render "shared/form_field",
+  form: f, field: :location_name, qa: 'location__name', label: capture { %>
+    <h2 class="<%= cns("govuk-heading-m", "govuk-!-margin-bottom-0": @errors[:location_name]&.any?) %>">Name</h2>
+  <% }
+%>
 
 <h2 class="govuk-heading-m govuk-!-margin-top-8">Address</h2>
 
-<div class="govuk-form-group<%= " govuk-form-group--error" if @errors[:address1]&.any? %>">
-  <%= f.label :address1, class: "govuk-label" do %>
+<%= render "shared/form_field",
+  form: f, field: :address1, label: capture { %>
     Building and street
     <span class="govuk-visually-hidden">line 1 of 2</span>
-  <% end %>
-  <%= render "shared/error_messages", field: :address1 %>
-  <%= f.text_field :address1, class: "govuk-input govuk-!-width-full", aria: { describedby: @errors[:address1] ? "address1-error" : '' } %>
-</div>
+  <% }
+%>
 
-<div class="govuk-form-group">
-  <%= f.label :address2, class: "govuk-label" do %>
+<%= render "shared/form_field",
+  form: f, field: :address2, label: capture { %>
     <span class="govuk-visually-hidden">line 2 of 2</span>
-  <% end %>
-  <%= f.text_field :address2, class: "govuk-input govuk-!-width-full" %>
-</div>
+  <% }
+%>
 
-<div class="govuk-form-group<%= " govuk-form-group--error" if @errors[:address3]&.any? %>">
-  <%= f.label :address3, "Town or city", class: "govuk-label" %>
-  <%= render "shared/error_messages", field: :address3 %>
-  <%= f.text_field :address3, class: "govuk-input govuk-!-width-full", aria: { describedby: @errors[:address3] ? "address3-error" : '' } %>
-</div>
+<%= render "shared/form_field",
+  form: f, field: :address3, label: "Town or city"
+%>
 
-<div class="govuk-form-group">
-  <%= f.label :address4, "County", class: "govuk-label" %>
-  <%= f.text_field :address4, class: "govuk-input govuk-!-width-full" %>
-</div>
+<%= render "shared/form_field",
+  form: f, field: :address4, label: "County"
+%>
 
-<div class="govuk-form-group<%= " govuk-form-group--error" if @errors[:postcode]&.any? %>">
-  <%= f.label :postcode, class: "govuk-label" %>
-  <%= render "shared/error_messages", field: :postcode %>
-  <%= f.text_field :postcode, class: "govuk-input form-control-small", aria: { describedby: @errors[:postcode] ? "postcode-error" : '' } %>
-</div>
+<%= render "shared/form_field",
+  form: f, field: :postcode, small: true
+%>
 
-<div class="govuk-form-group<%= " govuk-form-group--error" if @errors[:region_code]&.any? %>">
-  <%= f.label :region_code, "Region of UK", class: "govuk-label" %>
-  <%= render "shared/error_messages", field: :region_code %>
-  <%= f.select :region_code, Site::REGIONS, {}, class: "govuk-select", aria: { describedby: @errors[:region_code] ? "region_code-error": '' } %>
-</div>
+<%= render "shared/form_field",
+  form: f, field: :region_code, label: "Region of UK", type: :select, select_options: Site::REGIONS
+%>
