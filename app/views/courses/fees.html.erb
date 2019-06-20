@@ -24,27 +24,35 @@
 
       <h3 class="govuk-heading-l remove-top-margin">Course fees</h3>
       <div id="fee_uk_eu_wrapper" class="govuk-form-group ">
-        <%= f.label :fee_uk_eu, 'Fee for UK and EU students', class: 'govuk-label govuk-label--s' %>
-        <div class="govuk-currency-input">
-          <div class="govuk-currency-input__inner">
-            <span class="govuk-currency-input__inner__unit">£</span>
-            <%= f.number_field :fee_uk_eu,
-                                class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
-                                value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true) %>
+        <%= render "shared/form_field",
+          form: f, field: :fee_uk_eu, label: 'Fee for UK and EU students',
+          label_bold: true do |field, options| %>
+          <div class="govuk-currency-input">
+            <div class="govuk-currency-input__inner">
+              <span class="govuk-currency-input__inner__unit">£</span>
+              <%= f.number_field field, options.merge(
+                class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
+                value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true)
+              ) %>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
 
       <div id="fee_international_wrapper" class="govuk-form-group">
-        <%= f.label :fee_international, 'Fee for international students (optional)', class: 'govuk-label govuk-label--s' %>
-        <div class="govuk-currency-input">
-          <div class="govuk-currency-input__inner">
-            <span class="govuk-currency-input__inner__unit">£</span>
-            <%= f.number_field :fee_international,
-                                class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
-                                value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true) %>
+        <%= render "shared/form_field",
+          form: f, field: :fee_international, label: 'Fee for international students (optional)',
+          label_bold: true do |field, options| %>
+          <div class="govuk-currency-input">
+            <div class="govuk-currency-input__inner">
+              <span class="govuk-currency-input__inner__unit">£</span>
+              <%= f.number_field field, options.merge(
+                class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
+                value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true)
+              ) %>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
 
       <h4 class="govuk-heading-m">Fee details</h4>
@@ -56,10 +64,10 @@
       </ul>
 
       <div id="fee_details_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
-        <div class="govuk-form-group">
-          <%= f.label :fee_details, 'Fee details (optional)', class: 'govuk-label govuk-label--s' %>
-          <%= f.text_area :fee_details, rows: 15, class: 'govuk-textarea js-character-count' %>
-        </div>
+        <%= render "shared/form_field",
+          form: f, field: :fee_details, label: 'Fee details (optional)', label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+        <% end %>
       </div>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
@@ -69,10 +77,10 @@
       <p class="govuk-body">You don’t need to add details of any DfE bursaries and subject scholarships here. These will be published automatically to your course page</p>
 
       <div id="financial_support_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
-        <div class="govuk-form-group">
-          <%= f.label :financial_support, 'Financial support you offer (optional)', class: 'govuk-label govuk-label--s' %>
-          <%= f.text_area :financial_support, rows: 15, class: 'govuk-textarea js-character-count' %>
-        </div>
+        <%= render "shared/form_field",
+          form: f, field: :financial_support, label: 'Financial support you offer (optional)', label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+        <% end %>
       </div>
 
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>

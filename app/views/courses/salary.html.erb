@@ -32,10 +32,10 @@
       </ul>
 
       <div id="salary_details_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
-        <div class="govuk-form-group">
-          <%= f.label :salary_details, 'Salary', class: 'govuk-label govuk-label--s' %>
-          <%= f.text_area :salary_details, rows: 15, class: 'govuk-textarea js-character-count' %>
-        </div>
+        <%= render "shared/form_field",
+          form: f, field: :salary_details, label: 'Salary', label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+        <% end %>
       </div>
 
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
