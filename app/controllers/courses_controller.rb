@@ -98,7 +98,7 @@ class CoursesController < ApplicationController
         ]
       }.to_h
     else
-      flash[:success] = "Your course has been published. The link for this course is: #{Settings.search_ui.base_url}/course/#{@provider.provider_code}/#{@course.course_code}"
+      flash[:success] = "Your course has been published."
     end
 
     redirect_to description_provider_course_path(@provider.provider_code, @course.course_code)
