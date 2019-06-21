@@ -9,12 +9,7 @@ module Courses
 
     def update
       unless params[:change_vacancies_confirmation]
-        error_message = if @course.has_vacancies?
-                          "Please confirm there are no vacancies to close applications"
-                        else
-                          "Please confirm there are vacancies to reopen applications"
-                        end
-        @errors = { change_vacancies_confirmation: [error_message] }
+        set_missing_confirmation_error
         return render(:edit)
       end
 
@@ -25,6 +20,16 @@ module Courses
     end
 
   private
+
+    def set_missing_confirmation_error
+      error_message = if @course.has_vacancies?
+                        "Please confirm there are no vacancies to close applications"
+                      else
+                        "Please confirm there are vacancies to reopen applications"
+                      end
+
+      @errors = { change_vacancies_confirmation: [error_message] }
+    end
 
     def update_vacancies_for_a_single_site
       case params[:change_vacancies_confirmation]
