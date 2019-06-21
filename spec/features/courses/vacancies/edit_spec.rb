@@ -86,6 +86,31 @@ feature 'Edit course vacancies', type: :feature do
     end
   end
 
+  context 'A full time or part time course with one site' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :with_full_time_or_part_time_vacancy,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Uni full and part time 1', :full_time_and_part_time, 'running'),
+        ]
+      )
+    end
+
+    scenario 'presents a radio button choice and shows both study modes for the site' do
+      expect(course_vacancies_page).to have_vacancies_radio_choice
+      expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
+
+      [
+        ["Uni full and part time 1 (Full time)", true],
+        ["Uni full and part time 1 (Part time)", true]
+      ].each do |name, checked|
+        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+      end
+    end
+  end
+
   context 'A full time or part time course with multiple running sites' do
     let(:course) do
       jsonapi(
