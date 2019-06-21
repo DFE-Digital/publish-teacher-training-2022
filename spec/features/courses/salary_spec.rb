@@ -43,6 +43,7 @@ feature 'Course salary', type: :feature do
     )
     expect(course_salary_page.course_length_one_year).to be_checked
     expect(course_salary_page.course_length_two_years).to_not be_checked
+    expect(course_salary_page.course_length_other_length.value).to eq('')
     expect(course_salary_page.course_salary_details.value).to eq(
       course.salary_details
     )

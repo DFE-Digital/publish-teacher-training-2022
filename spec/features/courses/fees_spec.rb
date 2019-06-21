@@ -37,6 +37,8 @@ feature 'Course fees', type: :feature do
     )
     expect(course_fees_page.course_length_one_year).not_to be_checked
     expect(course_fees_page.course_length_two_years).to be_checked
+    expect(course_fees_page.course_length_other_length.value).to eq('')
+
     expect(course_fees_page.course_fees_uk_eu.value).to have_content(
       course_1.fee_uk_eu
     )
