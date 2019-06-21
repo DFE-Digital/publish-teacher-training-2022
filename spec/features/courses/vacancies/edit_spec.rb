@@ -21,6 +21,79 @@ feature 'Edit course vacancies', type: :feature do
     course_vacancies_page.load_with_course(course)
   end
 
+  context 'A full time course with one running site' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :with_full_time_vacancy,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Uni 1', :full_time, 'running'),
+          jsonapi_site_status('Not running Uni', :full_time, 'suspended')
+        ]
+      )
+    end
+
+    scenario 'presents a checkbox to turn off all vacancies' do
+      expect(course_vacancies_page).to have_content('I confirm there are no vacancies')
+      expect(course_vacancies_page).to have_content('Close this course')
+      expect(course_vacancies_page).to have_confirm_no_vacancies_checkbox
+      expect(course_vacancies_page.confirm_no_vacancies_checkbox).not_to be_checked
+    end
+
+    scenario 'shows an error if the form is submitted without confirming' do
+      click_on 'Close applications'
+      expect(course_vacancies_page).to be_displayed
+
+      expect(course_vacancies_page.error_flash)
+        .to have_content('We couldn’t edit the vacancies for this course')
+
+      expect(course_vacancies_page.error_flash)
+        .to have_content('Please confirm there are no vacancies to close applications')
+    end
+
+    scenario 'turns off all vacancies' do
+      course_vacancies_page.confirm_no_vacancies_checkbox.check
+      publish_changes('Close applications')
+    end
+  end
+
+  context 'A full time course with one running site but no vacancies' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :full_time,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Uni 1', :no_vacancies, 'running')
+        ]
+      )
+    end
+
+    scenario 'presents a checkbox to turn on all vacancies' do
+      expect(course_vacancies_page).to have_content('I confirm there are vacancies')
+      expect(course_vacancies_page).to have_content('Reopen this course')
+      expect(course_vacancies_page).to have_confirm_has_vacancies_checkbox
+      expect(course_vacancies_page.confirm_has_vacancies_checkbox).not_to be_checked
+    end
+
+    scenario 'shows an error if the form is submitted without confirming' do
+      click_on 'Reopen applications'
+      expect(course_vacancies_page).to be_displayed
+
+      expect(course_vacancies_page.error_flash)
+        .to have_content('We couldn’t edit the vacancies for this course')
+
+      expect(course_vacancies_page.error_flash)
+        .to have_content('Please confirm there are vacancies to reopen applications')
+    end
+
+    scenario 'turns on all vacancies' do
+      course_vacancies_page.confirm_has_vacancies_checkbox.check
+      publish_changes('Reopen applications')
+    end
+  end
+
   context 'A full time course with multiple running sites' do
     let(:course) do
       jsonapi(
@@ -189,8 +262,8 @@ feature 'Edit course vacancies', type: :feature do
     end
   end
 
-  def publish_changes
-    click_on 'Publish changes'
+  def publish_changes(button_text = 'Publish changes')
+    click_on button_text
     expect(courses_page).to be_displayed
     expect(courses_page.flash).to have_content('Course vacancies published')
     expect(sync_courses_request_stub).to have_been_requested

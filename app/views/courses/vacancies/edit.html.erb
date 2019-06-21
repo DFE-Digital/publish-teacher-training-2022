@@ -4,24 +4,35 @@
   <%= govuk_back_link_to(provider_courses_path(params[:provider_code])) %>
 <% end %>
 
+<%= render 'shared/errors', error_summary_title: 'We couldn’t edit the vacancies for this course' %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @course, url: vacancies_provider_course_path(params[:provider_code], @course.course_code), method: :put do |form| %>
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-7">
-            <h1 class="govuk-fieldset__heading">
-              <span class="govuk-caption-xl"><%= @course.name %>
-                (<%= @course.course_code %>)</span>
-              Edit vacancies
-            </h1>
-          </legend>
-          <%= render partial: 'courses/vacancies/multiple_sites', locals: { f: form } %>
-        </fieldset>
-        <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated within 2 hours.</p>
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-7">
+          <h1 class="govuk-fieldset__heading">
+            <span class="govuk-caption-xl"><%= @course.name %>
+              (<%= @course.course_code %>)</span>
+            Edit vacancies
+          </h1>
+        </legend>
+        <% if @course.has_multiple_running_sites_or_study_modes? %>
+          <%= render partial: "courses/vacancies/multiple_sites", locals: { f: form } %>
+        <% else %>
+          <%= render partial: 'courses/vacancies/single_site', locals: { f: form } %>
+        <% end %>
+      </fieldset>
+      <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated within 2 hours.</p>
+
+      <% if @course.has_multiple_running_sites_or_study_modes? %>
         <%= form.submit "Publish changes", class: "govuk-button" %>
-        <p class="govuk-body"><%= govuk_link_to "Cancel changes", provider_courses_path(params[:provider_code]) %></p>
-      </div>
+      <% elsif @course.has_vacancies? %>
+        <%= form.submit "Close applications", class: "govuk-button govuk-button--warning" %>
+      <% else %>
+        <%= form.submit "Reopen applications", class: "govuk-button" %>
+      <% end %>
+      <p class="govuk-body"><%= govuk_link_to "Cancel changes", provider_courses_path(params[:provider_code]) %></p>
     <% end %>
   </div>
 </div>
