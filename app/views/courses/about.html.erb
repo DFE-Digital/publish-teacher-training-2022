@@ -33,10 +33,10 @@
       <p class="govuk-body">If you offer different courses in the same subject, be clear about how this course differs from the others (eg amount of time spent in school, course structure). This will help the applicant decide which course best suits them.</p>
 
       <div id="about_course_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="400">
-        <div class="govuk-form-group">
-          <%= f.label :about_course, 'About this course', class: 'govuk-label govuk-label--s' %>
-          <%= f.text_area :about_course, rows: 15, class: 'govuk-textarea js-character-count' %>
-        </div>
+        <%= render "shared/form_field",
+          form: f, field: :about_course, label: 'About this course', label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+        <% end %>
       </div>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
@@ -53,10 +53,10 @@
       </ul>
 
       <div id="interview_process_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
-        <div class="govuk-form-group">
-          <%= f.label :interview_process, 'Interview process (optional)', class: 'govuk-label govuk-label--s' %>
-          <%= f.text_area :interview_process, rows: 10, class: 'govuk-textarea js-character-count' %>
-        </div>
+        <%= render "shared/form_field",
+          form: f, field: :interview_process, label: 'Interview process (optional)', label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea js-character-count') %>
+        <% end %>
       </div>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
@@ -76,10 +76,10 @@
       </ul>
 
       <div id="how_school_placements_work_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="350">
-        <div class="govuk-form-group">
-          <%= f.label :how_school_placements_work, 'How school placements work', class: 'govuk-label govuk-label--s' %>
-          <%= f.text_area :how_school_placements_work, rows: 10, class: 'govuk-textarea js-character-count' %>
-        </div>
+        <%= render "shared/form_field",
+          form: f, field: :how_school_placements_work, label: 'How school placements work', label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea js-character-count') %>
+        <% end %>
       </div>
 
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>

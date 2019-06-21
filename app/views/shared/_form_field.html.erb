@@ -1,5 +1,6 @@
 <%
   label ||= field.to_s.humanize
+  label_bold ||= false
   options = {
     class: "govuk-input",
     aria: { describedby: @errors[field] ? "#{field.to_s}-error" : '' },
@@ -8,7 +9,7 @@
 %>
 
 <div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors[field]&.any?) %>">
-  <%= form.label field, label, class: "govuk-label" %>
+  <%= form.label field, label, class: cns("govuk-label", "govuk-label--s": label_bold) %>
 
   <%= render "shared/error_messages", field: field %>
 
