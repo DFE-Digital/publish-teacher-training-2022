@@ -118,10 +118,6 @@
     "appServicePlanInstances": {
       "type": "int",
       "defaultValue": 1
-    },
-    "httpLoggingEnabled": {
-      "type": "bool",
-      "defaultValue": false
     }
   },
   "variables": {
@@ -203,9 +199,6 @@
           "runtimeStack": {
             "value": "[variables('appServiceRuntimeStack')]"
           },
-          "httpLoggingEnabled": {
-            "value": "[parameters('httpLoggingEnabled')]"
-          },
           "appServiceAppSettings": {
             "value": [
               {
@@ -256,6 +249,29 @@
       },
       "dependsOn": [
         "app-service-plan"
+      ]
+    },
+    {
+      "name": "app-service-logs",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-logs.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServiceName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "httpLoggingEnabled": {
+            "value": true
+          }
+        }
+      },
+      "dependsOn": [
+        "app-service"
       ]
     },
     {
