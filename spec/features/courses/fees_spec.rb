@@ -114,7 +114,7 @@ feature 'Course fees', type: :feature do
         :course,
         name: 'Biology',
         provider: provider,
-        course_length: 'TwoYears',
+        course_length: 'Something custom',
         fee_uk_eu: 9500,
         fee_international: 1200,
         fee_details: 'Some information about the fees',
@@ -156,7 +156,9 @@ feature 'Course fees', type: :feature do
       end
 
       expect(course_fees_page.course_length_one_year).to_not be_checked
-      expect(course_fees_page.course_length_two_years).to be_checked
+      expect(course_fees_page.course_length_two_years).to_not be_checked
+      expect(course_fees_page.course_length_other).to be_checked
+      expect(course_fees_page.course_length_other_length.value).to eq('Something custom')
       expect(course_fees_page.course_fees_uk_eu.value).to eq(course_2.fee_uk_eu.to_s)
       expect(course_fees_page.course_fees_international.value).to eq(course_2.fee_international.to_s)
       expect(course_fees_page.fee_details.value).to eq(course_2.fee_details)
@@ -182,7 +184,9 @@ feature 'Course fees', type: :feature do
       end
 
       expect(course_fees_page.course_length_one_year).to_not be_checked
-      expect(course_fees_page.course_length_two_years).to be_checked
+      expect(course_fees_page.course_length_two_years).to_not be_checked
+      expect(course_fees_page.course_length_other).to be_checked
+      expect(course_fees_page.course_length_other_length.value).to eq('Something custom')
       expect(course_fees_page.course_fees_uk_eu.value).to eq(course_2.fee_uk_eu.to_s)
       expect(course_fees_page.course_fees_international.value).to eq(course_2.fee_international.to_s)
       expect(course_fees_page.fee_details.value).to eq(course_3.fee_details)
