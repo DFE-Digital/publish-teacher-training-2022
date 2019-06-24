@@ -67,6 +67,10 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def other_course_length?
+    %w[OneYear TwoYears].exclude?(course.course_length)
+  end
+
   def ucas_status
     case object.ucas_status
     when 'running'
