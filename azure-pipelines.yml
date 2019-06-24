@@ -44,7 +44,6 @@ steps:
     docker run --rm $(IMAGE_NAME) rails spec SPEC_OPTS='--format RspecJunitFormatter' | tee rspec-results.xml
     sed -i '$d;1,5d' rspec-results.xml
   displayName: 'Run tests'
-  enabled: 'false'
 
 - task: Docker@1
   displayName: Run ruby linter
