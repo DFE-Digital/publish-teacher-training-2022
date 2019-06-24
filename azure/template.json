@@ -252,6 +252,29 @@
       ]
     },
     {
+      "name": "app-service-logs",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-logs.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServiceName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "httpLoggingEnabled": {
+            "value": true
+          }
+        }
+      },
+      "dependsOn": [
+        "app-service"
+      ]
+    },
+    {
       "apiVersion": "2017-05-10",
       "name": "app-insights",
       "type": "Microsoft.Resources/deployments",
