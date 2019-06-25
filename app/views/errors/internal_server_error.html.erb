@@ -1,11 +1,11 @@
-<%= content_for :page_title, "Sorry, something went wrong" %>
+<%= content_for :page_title, "Sorry, there is a problem with the service" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Sorry, something went wrong</h1>
-    <p class="govuk-body">Sorry, we're experiencing technical difficulties.</p>
+    <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+    <p class="govuk-body">Try again later.</p>
     <p class="govuk-body">
-      <%= bat_contact_mail_to "Contact the Becoming a Teacher team" %> if you continue to see this error.
+      If you continue to see this error contact the Becoming a Teacher team: <%= bat_contact_mail_to bat_contact_email_address, subject: "Problem with the service" %>
     </p>
   </div>
 </div>
