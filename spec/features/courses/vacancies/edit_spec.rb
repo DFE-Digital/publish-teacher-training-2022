@@ -1,175 +1,282 @@
 require 'rails_helper'
 
 feature 'Edit course vacancies', type: :feature do
-  let(:course) do
-    jsonapi(
-      :course,
-      :with_full_time_or_part_time_vacancy,
-      site_statuses: [site_status],
-      provider: jsonapi(:provider)
-    ).render
-  end
-  let(:course_without_full_time_vacancy) do
-    jsonapi(
-      :course,
-      :with_full_time_or_part_time_vacancy,
-      course_code:   course_attributes[:course_code],
-      site_statuses: [
-        jsonapi(:site_status, :part_time, id: site_status.id, site: site)
-      ]
-    ).render
-  end
-  let(:course_attributes) { course[:data][:attributes] }
-  let(:site) { jsonapi(:site) }
-  let(:site_status) do
-    jsonapi(:site_status, :full_time_and_part_time, site: site)
-  end
-  let(:edit_vacancies_path) do
-    "/organisations/AO/courses/#{course_attributes[:course_code]}/vacancies"
-  end
+  let(:course_vacancies_page) { PageObjects::Page::Organisations::CourseVacancies.new }
+  let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
+  let(:course_code) { 'X104' }
+
   let!(:sync_courses_request_stub) do
     stub_request(
       :post,
       "http://localhost:3001/api/v2/providers/AO/courses/" \
-        "#{course_attributes[:course_code]}/sync_with_search_and_compare"
+        "#{course_code}/sync_with_search_and_compare"
     ).to_return(status: 201, body: "")
   end
 
   before do
     stub_omniauth
-    stub_api_v2_request(
-      "/providers/AO?include=courses.accrediting_provider",
-      jsonapi(:provider).render
-    )
-    stub_api_v2_request(
-      "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
-      course
-    )
-
-    visit edit_vacancies_path
+    stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", jsonapi(:provider).render)
+    stub_request(:patch, %r{\Ahttp://localhost:3001/api/v2/site_statuses/\d+})
+    stub_course_request(course)
+    course_vacancies_page.load_with_course(course)
   end
 
-  scenario 'viewing the edit vacancies page' do
-    expect(page).to have_link('Back', href: provider_courses_path('AO'))
-    expect(page).to have_link('Cancel changes', href: provider_courses_path('AO'))
-    expect(find('h1')).to have_content('Edit vacancies')
-    expect(find('.govuk-caption-xl')).to have_content(
-      "#{course_attributes[:name]} (#{course_attributes[:course_code]})"
-    )
+  context 'A full time course with one running site' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :with_full_time_vacancy,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Uni 1', :full_time, 'running'),
+          jsonapi_site_status('Not running Uni', :full_time, 'suspended')
+        ]
+      )
+    end
+
+    scenario 'presents a checkbox to turn off all vacancies' do
+      expect(course_vacancies_page).to have_content('I confirm there are no vacancies')
+      expect(course_vacancies_page).to have_content('Close this course')
+      expect(course_vacancies_page).to have_confirm_no_vacancies_checkbox
+      expect(course_vacancies_page.confirm_no_vacancies_checkbox).not_to be_checked
+    end
+
+    scenario 'shows an error if the form is submitted without confirming' do
+      click_on 'Close applications'
+      expect(course_vacancies_page).to be_displayed
+
+      expect(course_vacancies_page.error_flash)
+        .to have_content('We couldn’t edit the vacancies for this course')
+
+      expect(course_vacancies_page.error_flash)
+        .to have_content('Please confirm there are no vacancies to close applications')
+    end
+
+    scenario 'turns off all vacancies' do
+      course_vacancies_page.confirm_no_vacancies_checkbox.check
+      publish_changes('Close applications')
+    end
   end
 
-  context 'site_statuses#running' do
+  context 'A full time course with one running site but no vacancies' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :full_time,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Uni 1', :no_vacancies, 'running')
+        ]
+      )
+    end
+
+    scenario 'presents a checkbox to turn on all vacancies' do
+      expect(course_vacancies_page).to have_content('I confirm there are vacancies')
+      expect(course_vacancies_page).to have_content('Reopen this course')
+      expect(course_vacancies_page).to have_confirm_has_vacancies_checkbox
+      expect(course_vacancies_page.confirm_has_vacancies_checkbox).not_to be_checked
+    end
+
+    scenario 'shows an error if the form is submitted without confirming' do
+      click_on 'Reopen applications'
+      expect(course_vacancies_page).to be_displayed
+
+      expect(course_vacancies_page.error_flash)
+        .to have_content('We couldn’t edit the vacancies for this course')
+
+      expect(course_vacancies_page.error_flash)
+        .to have_content('Please confirm there are vacancies to reopen applications')
+    end
+
+    scenario 'turns on all vacancies' do
+      course_vacancies_page.confirm_has_vacancies_checkbox.check
+      publish_changes('Reopen applications')
+    end
+  end
+
+  context 'A full time course with multiple running sites' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :with_full_time_vacancy,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Running Uni 1', :full_time, 'running'),
+          jsonapi_site_status('Running Uni 2', :full_time, 'running'),
+          jsonapi_site_status('Not running Uni', :full_time, 'suspended')
+        ]
+      )
+    end
+
+    scenario 'shows the edit vacancies page' do
+      expect(course_vacancies_page).to have_link('Back', href: provider_courses_path('AO'))
+      expect(course_vacancies_page).to have_link('Cancel changes', href: provider_courses_path('AO'))
+      expect(course_vacancies_page.title).to have_content('Edit vacancies')
+      expect(course_vacancies_page.caption).to have_content(
+        "#{course.name} (#{course.course_code})"
+      )
+    end
+
+    scenario 'only render site statuses that are running' do
+      expect(course_vacancies_page).to have_vacancies_radio_choice
+      expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
+
+      [
+        ["Running Uni 1", true],
+        ["Running Uni 2", true]
+      ].each do |name, checked|
+        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+      end
+
+      expect(course_vacancies_page.vacancies_running_sites_checkboxes).not_to have_field("Not running Uni")
+    end
+  end
+
+  context 'A full time course with multiple running sites but no vacancies' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :full_time,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Running Uni 1', :no_vacancies, 'running'),
+          jsonapi_site_status('Running Uni 2', :no_vacancies, 'running')
+        ]
+      )
+    end
+
+    scenario 'shows course as having no vacancies' do
+      expect(course_vacancies_page).to have_vacancies_radio_choice
+      expect(course_vacancies_page.vacancies_radio_no_vacancies).to be_checked
+      expect(course_vacancies_page.vacancies_radio_has_some_vacancies).not_to be_checked
+
+      [
+        ["Running Uni 1", false],
+        ["Running Uni 2", false]
+      ].each do |name, checked|
+        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+      end
+    end
+  end
+
+  context 'A full time or part time course with one site' do
     let(:course) do
       jsonapi(
         :course,
         :with_full_time_or_part_time_vacancy,
-        site_statuses: [running_site_status, non_running_site_status]
-      ).render
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Uni full and part time 1', :full_time_and_part_time, 'running'),
+        ]
+      )
     end
 
-    let(:site_running) { jsonapi(:site, location_name: 'Big Uni') }
-    let(:site_not_running) { jsonapi(:site, location_name: 'Small Uni') }
+    scenario 'presents a radio button choice and shows both study modes for the site' do
+      expect(course_vacancies_page).to have_vacancies_radio_choice
+      expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
 
-    let(:running_site_status) do
-      jsonapi(:site_status, :full_time_and_part_time, site: site_running, status: 'running')
-    end
-    let(:non_running_site_status) do
-      jsonapi(:site_status, :full_time_and_part_time, site: site_not_running, status: 'suspended')
-    end
-
-    scenario 'only render site_statuses that are running' do
-      expect(page).to have_field("Big Uni (Full time)")
-      expect(page).to_not have_field("Small Uni (Full time)")
+      [
+        ["Uni full and part time 1 (Full time)", true],
+        ["Uni full and part time 1 (Part time)", true]
+      ].each do |name, checked|
+        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+      end
     end
   end
 
-  context 'removing vacancies' do
-    let(:course_without_vacancies) do
+  context 'A full time or part time course with multiple running sites' do
+    let(:course) do
       jsonapi(
         :course,
-        :full_time_or_part_time,
-        course_code:   course_attributes[:course_code],
+        :with_full_time_or_part_time_vacancy,
+        course_code: course_code,
         site_statuses: [
-          jsonapi(:site_status, :no_vacancies, id: site_status.id, site: site)
+          jsonapi_site_status('Uni 1', :full_time, 'running'),
+          jsonapi_site_status('Uni 2', :part_time, 'running'),
+          jsonapi_site_status('Uni 3', :full_time_and_part_time, 'running'),
+          jsonapi_site_status('Not running Uni', :full_time, 'suspended')
         ]
-      ).render
+      )
     end
 
-    before do
-      stub_request(
-        :patch,
-        "http://localhost:3001/api/v2/site_statuses/#{site_status.id}"
+    scenario 'shows both study modes for each site' do
+      expect(course_vacancies_page).to have_vacancies_radio_choice
+      expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
+
+      [
+        ["Uni 1 (Full time)", true],
+        ["Uni 1 (Part time)", false],
+        ["Uni 2 (Full time)", false],
+        ["Uni 2 (Part time)", true],
+        ["Uni 3 (Full time)", true],
+        ["Uni 3 (Part time)", true]
+      ].each do |name, checked|
+        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+      end
+    end
+  end
+
+  context 'Removing vacancies for a course' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :with_full_time_or_part_time_vacancy,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Uni 1', :full_time, 'running')
+        ]
       )
     end
 
     scenario 'removing a full time vacancy' do
-      uncheck(
-        "#{site.attributes[:location_name]} (Full time)",
-        allow_label_click: true
-      )
-
-      stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
-        course_without_full_time_vacancy
-      )
-
-      click_on 'Publish changes'
-
-      expect(page.find('.govuk-success-summary')).to have_content(
-        'Course vacancies published'
-      )
-      expect(find('h1')).to have_content('Courses')
-      expect(sync_courses_request_stub).to have_been_requested
+      expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
+      uncheck("Uni 1 (Full time)")
+      publish_changes
     end
 
     scenario 'removing all vacancies' do
+      expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
+
       choose 'There are no vacancies'
+      expect(course_vacancies_page.vacancies_radio_no_vacancies).to be_checked
 
-      stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
-        course_without_vacancies
-      )
-
-      click_on 'Publish changes'
-
-      expect(page.find('.govuk-success-summary')).to have_content(
-        'Course vacancies published'
-      )
-      expect(find('h1')).to have_content('Courses')
-      expect(sync_courses_request_stub).to have_been_requested
+      publish_changes
     end
   end
 
-  context 'adding vacancies' do
-    before do
-      stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
-        course_without_full_time_vacancy
-      )
-      stub_request(
-        :patch,
-        "http://localhost:3001/api/v2/site_statuses/#{site_status.id}"
+  context 'Adding vacancies for a course' do
+    let(:course) do
+      jsonapi(
+        :course,
+        :with_full_time_or_part_time_vacancy,
+        course_code: course_code,
+        site_statuses: [
+          jsonapi_site_status('Uni 1', :full_time, 'running')
+        ]
       )
     end
 
     scenario 'adding a part time vacancy' do
-      check(
-        "#{site.attributes[:location_name]} (Full time)",
-        allow_label_click: true
-      )
-
-      stub_api_v2_request(
-        "/providers/AO/courses/#{course_attributes[:course_code]}?include=site_statuses.site",
-        course
-      )
-
-      click_on 'Publish changes'
-
-      expect(page.find('.govuk-success-summary')).to have_content(
-        'Course vacancies published'
-      )
-      expect(find('h1')).to have_content('Courses')
-      expect(sync_courses_request_stub).to have_been_requested
+      check("Uni 1 (Part time)")
+      publish_changes
     end
+  end
+
+  def publish_changes(button_text = 'Publish changes')
+    click_on button_text
+    expect(courses_page).to be_displayed
+    expect(courses_page.flash).to have_content('Course vacancies published')
+    expect(sync_courses_request_stub).to have_been_requested
+  end
+
+  def jsonapi_site_status(name, study_mode, status)
+    jsonapi(:site_status, study_mode, site: jsonapi(:site, location_name: name), status: status)
+  end
+
+  def stub_course_request(course)
+    stub_api_v2_request(
+      "/providers/AO/courses/#{course.course_code}?include=site_statuses.site",
+      course.render
+    )
   end
 end

@@ -1,0 +1,22 @@
+<div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:change_vacancies_confirmation]&.any?) %>">
+  <% if @errors && @errors[:change_vacancies_confirmation]&.any? %>
+    <span id="change_vacancies_confirmation-error" class="govuk-error-message">
+      <% @errors[:change_vacancies_confirmation].each do |error| %>
+        <div><span class="govuk-visually-hidden">Error:</span> <%= error %></div>
+      <% end %>
+    </span>
+  <% end %>
+  <div class="govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <% if @course.has_vacancies? %>
+        <%= check_box_tag('change_vacancies_confirmation', 'no_vacancies_confirmation', false, class: 'govuk-checkboxes__input') %>
+        <%= label_tag('change_vacancies_confirmation', "I confirm there are no vacancies", class: 'govuk-label govuk-label--s govuk-checkboxes__label') %>
+        <span class="govuk-hint govuk-checkboxes__hint">Close this course to new applications.<br />You can reopen a course later.</span>
+      <% else %>
+        <%= check_box_tag('change_vacancies_confirmation', 'has_vacancies_confirmation', false, class: 'govuk-checkboxes__input') %>
+        <%= label_tag('change_vacancies_confirmation', "I confirm there are vacancies", class: 'govuk-label govuk-label--s govuk-checkboxes__label') %>
+        <span class="govuk-hint govuk-checkboxes__hint">Reopen this course to new applications.</span>
+      <% end %>
+    </div>
+  </div>
+</div>

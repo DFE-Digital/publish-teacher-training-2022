@@ -46,4 +46,12 @@ class Course < Base
   def is_published?
     content_status == 'published'
   end
+
+  def running_site_statuses
+    site_statuses.select(&:running?)
+  end
+
+  def has_multiple_running_sites_or_study_modes?
+    running_site_statuses.length > 1 || full_time_or_part_time?
+  end
 end

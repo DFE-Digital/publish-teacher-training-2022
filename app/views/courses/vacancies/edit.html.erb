@@ -1,61 +1,38 @@
-<%= content_for :page_title, "Vacancies" %>
+<%= content_for :page_title, "Edit vacancies for #{@course.name} (#{@course.course_code})" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_courses_path(params[:provider_code])) %>
 <% end %>
 
+<%= render 'shared/errors', error_summary_title: 'We couldn’t edit the vacancies for this course' %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @course, url: vacancies_provider_course_path(params[:provider_code], @course.course_code), method: :put do |f| %>
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-7">
-            <h1 class="govuk-fieldset__heading">
-              <span class="govuk-caption-xl"><%= @course.name %>
-                (<%= @course.course_code %>)</span>
-              Edit vacancies
-            </h1>
-          </legend>
-          <div class="govuk-radios govuk-!-margin-bottom-7" data-module="radios">
-            <div class="govuk-radios__item">
-              <%= f.radio_button :has_vacancies, 'false', class: 'govuk-radios__input', checked: !@course.has_vacancies? %>
-              <%= f.label :has_vacancies_false, 'There are no vacancies', class: "govuk-label govuk-radios__label govuk-!-font-weight-bold" %>
-              <span id="has_vacancies_false" class="govuk-hint govuk-radios__hint">
-                Close this course to new applications.
-                <br>
-                You can reopen a course later.
-              </span>
-            </div>
-            <div class="govuk-radios__divider">or</div>
-            <div class="govuk-radios__item">
-              <%= f.radio_button :has_vacancies, 'true', class: 'govuk-radios__input', checked: @course.has_vacancies?, "aria-controls" => "has_vacancies_true_conditional" %>
-              <%= f.label :has_vacancies_true, 'There are some vacancies', class: "govuk-label govuk-radios__label govuk-!-font-weight-bold" %>
-              <span id="has_vacancies_true_hint" class="govuk-hint govuk-radios__hint">
-                Pick the locations with vacancies
-              </span>
-            </div>
-            <div class="govuk-radios__conditional <%= 'govuk-radios__conditional--hidden' if !@course.has_vacancies? %>" id="has_vacancies_true_conditional">
-              <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset" aria-describedby="has_vacancies_true_hint">
-                  <div class="govuk-checkboxes">
-                    <%= f.fields_for :site_status, @site_statuses.sort_by { |status| status.site.location_name } do |sf| %>
-                      <% if @course.study_mode == 'full_time_or_part_time' %>
-                        <%= render partial: 'courses/vacancies/site_status_checkbox', locals: { f: sf, course: @course, study_mode: :part_time, show_study_mode: true } %>
-                        <%= render partial: 'courses/vacancies/site_status_checkbox', locals: { f: sf, course: @course, study_mode: :full_time, show_study_mode: true } %>
-                      <% elsif @course.study_mode == 'full_time' || @course.study_mode == 'part_time' %>
-                        <%= render partial: 'courses/vacancies/site_status_checkbox', locals: { f: sf, course: @course, study_mode: @course.study_mode } %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                </fieldset>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated within 2 hours.</p>
-        <%= f.submit "Publish changes", class: "govuk-button" %>
-        <p class="govuk-body"><%= govuk_link_to "Cancel changes", provider_courses_path(params[:provider_code]) %></p>
-      </div>
+    <%= form_for @course, url: vacancies_provider_course_path(params[:provider_code], @course.course_code), method: :put do |form| %>
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-7">
+          <h1 class="govuk-fieldset__heading">
+            <span class="govuk-caption-xl"><%= @course.name %>
+              (<%= @course.course_code %>)</span>
+            Edit vacancies
+          </h1>
+        </legend>
+        <% if @course.has_multiple_running_sites_or_study_modes? %>
+          <%= render partial: "courses/vacancies/multiple_sites", locals: { f: form } %>
+        <% else %>
+          <%= render partial: 'courses/vacancies/single_site', locals: { f: form } %>
+        <% end %>
+      </fieldset>
+      <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated within 2 hours.</p>
+
+      <% if @course.has_multiple_running_sites_or_study_modes? %>
+        <%= form.submit "Publish changes", class: "govuk-button" %>
+      <% elsif @course.has_vacancies? %>
+        <%= form.submit "Close applications", class: "govuk-button govuk-button--warning" %>
+      <% else %>
+        <%= form.submit "Reopen applications", class: "govuk-button" %>
+      <% end %>
+      <p class="govuk-body"><%= govuk_link_to "Cancel changes", provider_courses_path(params[:provider_code]) %></p>
     <% end %>
   </div>
 </div>

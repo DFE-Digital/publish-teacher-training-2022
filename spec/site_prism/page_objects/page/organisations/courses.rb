@@ -4,6 +4,8 @@ module PageObjects
       class Courses < PageObjects::Base
         set_url '/organisations/{provider_code}/courses'
 
+        element :flash, '.govuk-success-summary'
+
         sections :courses_tables, '[data-qa="courses__table-section"]' do
           element :subheading, 'h2'
           sections :rows, 'tbody tr' do
