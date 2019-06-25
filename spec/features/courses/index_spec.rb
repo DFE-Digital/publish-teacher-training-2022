@@ -91,9 +91,11 @@ feature 'Index courses', type: :feature do
     let(:provider_response) { provider.render }
     let(:provider_1) { jsonapi :provider, id: "1", provider_name: "Zacme Scitt" }
     let(:provider_2) { jsonapi :provider, id: "2", provider_name: "Aacme Scitt" }
+    let(:provider_3) { jsonapi :provider, id: "3", provider_name: "e-Qualitas" }
 
     let(:course_2) { jsonapi :course, accrediting_provider: provider_1 }
     let(:course_3) { jsonapi :course, accrediting_provider: provider_2 }
+    let(:course_4) { jsonapi :course, accrediting_provider: provider_3 }
 
     before do
       user = build(:user)
@@ -111,11 +113,12 @@ feature 'Index courses', type: :feature do
 
     scenario "it shows a list of courses" do
       expect(courses_page.title).to have_content('Courses')
-      expect(courses_page.courses_tables.size).to eq(3)
+      expect(courses_page.courses_tables.size).to eq(4)
 
       expect(courses_page.courses_tables.first).to_not have_subheading
       expect(courses_page.courses_tables.second.subheading).to have_content('Accredited body Aacme Scitt')
-      expect(courses_page.courses_tables.third.subheading).to have_content('Accredited body Zacme Scitt')
+      expect(courses_page.courses_tables.third.subheading).to have_content('Accredited body e-Qualitas')
+      expect(courses_page.courses_tables.fourth.subheading).to have_content('Accredited body Zacme Scitt')
     end
 
     scenario "it shows 'add a new course' link" do
