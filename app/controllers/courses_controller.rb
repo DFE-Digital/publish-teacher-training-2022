@@ -44,6 +44,13 @@ class CoursesController < ApplicationController
   end
 
   def about
+    if params[:display_errors].present?
+      attributes = %i[about_course interview_process how_school_placements_work]
+
+      @course.publish
+      @errors = @course.errors.messages.select { |key| attributes.include? key }
+    end
+
     if params[:copy_from].present?
       @copied_fields = [
         ['About the course', 'about_course'],
@@ -54,6 +61,13 @@ class CoursesController < ApplicationController
   end
 
   def requirements
+    if params[:display_errors].present?
+      attributes = %i[required_qualifications personal_qualities other_requirements]
+
+      @course.publish
+      @errors = @course.errors.messages.select { |key| attributes.include? key }
+    end
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Qualifications needed', 'required_qualifications'],
@@ -64,6 +78,13 @@ class CoursesController < ApplicationController
   end
 
   def fees
+    if params[:display_errors].present?
+      attributes = %i[course_length fee_uk_eu fee_international fee_details financial_support]
+
+      @course.publish
+      @errors = @course.errors.messages.select { |key| attributes.include? key }
+    end
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Course length', 'course_length'],
@@ -76,6 +97,13 @@ class CoursesController < ApplicationController
   end
 
   def salary
+    if params[:display_errors].present?
+      attributes = %i[course_length salary_details]
+
+      @course.publish
+      @errors = @course.errors.messages.select { |key| attributes.include? key }
+    end
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Course length', 'course_length'],
