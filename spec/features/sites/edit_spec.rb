@@ -12,6 +12,20 @@ feature 'Edit locations', type: :feature do
   let(:locations_page) { PageObjects::Page::LocationsPage.new }
   let(:location_page) { PageObjects::Page::LocationPage.new }
 
+  describe "when visiting a site that doesn’t exist" do
+    before do
+      stub_omniauth
+      stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)
+    end
+
+    scenario 'it 404s' do
+      visit edit_provider_site_path(provider_code, 'not_a_site')
+      expect(location_page).not_to be_displayed
+      expect(page.status_code).to eq(404)
+      expect(page.body).to have_content('Page not found')
+    end
+  end
+
   describe "without errors" do
     before do
       stub_omniauth
