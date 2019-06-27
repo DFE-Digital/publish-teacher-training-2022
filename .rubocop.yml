@@ -12,3 +12,10 @@ AllCops:
     - 'bin/webpack-dev-server'
     - 'db/schema.rb'
     - 'node_modules/**/*'
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+Rails/OutputSafety:
+  Enabled: false
+Rails/HelperInstanceVariable:
+  Enabled: false

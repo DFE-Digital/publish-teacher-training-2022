@@ -29,7 +29,7 @@ Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
 # dependencies get sorted out better than if they're all required in at once by
 # walking the directory structure, so should be ok in the contexts of tests.
 ActiveSupport::Dependencies.autoload_paths +=
-  [File.join(Rails.root, 'spec', 'site_prism')]
+  [Rails.root.join('spec', 'site_prism')]
 
 RSpec.configure do |config|
   # RSpec Rails can automatically mix in different behaviours to your tests

@@ -6,7 +6,7 @@ feature 'Show course', type: :feature do
     jsonapi :course,
             qualifications: %w[qts pgce],
             study_mode: 'full_time',
-            start_date: Time.new(2019),
+            start_date: Time.zone.local(2019),
             sites: [site1, site2],
             provider: provider,
             accrediting_provider: provider,
