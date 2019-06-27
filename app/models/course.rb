@@ -4,12 +4,23 @@ class Course < Base
   has_many :sites, through: :site_statuses, source: :site
 
   custom_endpoint :sync_with_search_and_compare, on: :member, request_method: :post
-  custom_endpoint :publish, on: :member, request_method: :post
 
   property :fee_international, type: :string
   property :fee_uk_eu, type: :string
 
   self.primary_key = :course_code
+
+  def publish(provider_code:)
+    publish_url = "#{Course.site}providers/#{provider_code}/courses/#{course_code}/publish"
+    self.class.requestor.__send__(:request, :post, publish_url,
+                                  body: {
+                                    data: {
+                                      attributes: {},
+                                      type: "course"
+                                    }
+                                  },
+                                  params: request_params.to_params)
+  end
 
   def full_time?
     study_mode == 'full_time'
