@@ -44,7 +44,7 @@ if env == "development"
       root_ca.subject = OpenSSL::X509::Name.parse "/C=GB/L=London/O=DfE/CN=localhost"
       root_ca.issuer = root_ca.subject # root CA's are "self-signed"
       root_ca.public_key = root_key.public_key
-      root_ca.not_before = Time.now
+      root_ca.not_before = Time.zone.now
       root_ca.not_after = root_ca.not_before + 2 * 365 * 24 * 60 * 60 # 2 years validity
       root_ca.sign(root_key, OpenSSL::Digest::SHA256.new)
       root_ca

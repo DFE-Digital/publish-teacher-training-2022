@@ -23,7 +23,7 @@ FactoryBot.define do
     ucas_status { 'running' }
     accrediting_provider { nil }
     qualifications { %w[qts pgce] }
-    start_date     { Time.new(2019) }
+    start_date     { Time.zone.local(2019) }
     funding        { 'fee' }
     applications_open_from { DateTime.new(2019).utc.iso8601 }
     is_send? { false }

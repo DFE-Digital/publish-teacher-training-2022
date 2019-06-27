@@ -8,7 +8,7 @@ describe CourseDecorator do
             name: 'Mathematics',
             qualifications: %w[qts pgce],
             study_mode: 'full_time',
-            start_date: Time.new(2019),
+            start_date: Time.zone.local(2019),
             site_statuses: [site_status],
             provider: provider,
             accrediting_provider: provider,
