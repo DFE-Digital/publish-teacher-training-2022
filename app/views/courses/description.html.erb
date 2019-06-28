@@ -30,7 +30,7 @@
       <ul class="govuk-list govuk-error-summary__list">
         <% @errors.each do |field, error| %>
           <li>
-            <a href="<%= manage_ui_enrichment_error_url(
+            <a href="<%= enrichment_error_url(
               provider_code: @provider.provider_code,
               course: @course,
               field: field

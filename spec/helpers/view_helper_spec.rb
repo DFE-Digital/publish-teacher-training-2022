@@ -25,10 +25,10 @@ RSpec.feature 'View helpers', type: :helper do
     end
   end
 
-  describe "#manage_ui_enrichment_error_url" do
-    it "returns full Manage Courses UI enrichment error URL" do
+  describe "#enrichment_error_url" do
+    it "returns enrichment error URL" do
       course = Course.new(build(:course).attributes)
-      expect(helper.manage_ui_enrichment_error_url(provider_code: 'A1', course: course, field: 'about_course')).to eq("https://localhost:44364/organisation/A1/course/self/#{course.course_code}/about#AboutCourse-wrapper")
+      expect(helper.enrichment_error_url(provider_code: 'A1', course: course, field: 'about_course')).to eq("/organisations/A1/courses/#{course.course_code}/about#about_course_wrapper")
     end
   end
 
