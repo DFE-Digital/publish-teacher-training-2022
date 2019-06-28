@@ -19,12 +19,6 @@ RSpec.feature 'View helpers', type: :helper do
     end
   end
 
-  describe "#manage_ui_url" do
-    it "returns full Manage Courses UI URL to the passed path" do
-      expect(helper.manage_ui_course_page_url(provider_code: 'A1', course_code: 'X130')).to eq("https://localhost:44364/organisation/A1/course/self/X130")
-    end
-  end
-
   describe "#enrichment_error_url" do
     it "returns enrichment error URL" do
       course = Course.new(build(:course).attributes)
