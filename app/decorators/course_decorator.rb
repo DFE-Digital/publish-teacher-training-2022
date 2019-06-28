@@ -86,6 +86,10 @@ class CourseDecorator < ApplicationDecorator
     object.sites.sort_by(&:location_name)
   end
 
+  def preview_site_statuses
+    site_statuses.select(&:new_or_running?).sort_by { |status| status.site.location_name }
+  end
+
   def has_site?(site)
     object.sites.include?(site)
   end

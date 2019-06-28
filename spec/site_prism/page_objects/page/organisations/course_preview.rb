@@ -35,6 +35,7 @@ module PageObjects
         element :contact_address, '[data-qa=provider__address]'
         element :course_advice, '#section-advice'
         element :course_apply, '#section-apply'
+        element :choose_a_training_location_table, '[data-qa=course__choose_a_training_location]'
       end
     end
   end
