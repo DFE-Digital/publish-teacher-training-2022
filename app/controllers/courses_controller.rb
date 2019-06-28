@@ -2,7 +2,8 @@ class CoursesController < ApplicationController
   decorates_assigned :course
   before_action :initialise_errors
   before_action :build_courses, only: %i[index about requirements fees salary]
-  before_action :build_course, except: :index
+  before_action :build_course, except: %i[index preview]
+  before_action :build_course_for_preview, only: :preview
   before_action :build_provider, except: :index
   before_action :filter_courses, only: %i[about requirements fees salary]
   before_action :build_copy_course, if: -> { params[:copy_from].present? }
@@ -123,6 +124,19 @@ private
       :salary_details,
       :required_qualifications
     )
+  end
+
+  def build_course_for_preview
+    @provider_code = params[:provider_code]
+    @course = Course
+      .includes(site_statuses: [:site])
+      .includes(provider: [:sites])
+      .includes(:accrediting_provider)
+      .where(provider_code: @provider_code)
+      .find(params[:code])
+      .first
+  rescue JsonApiClient::Errors::NotFound
+    render file: 'errors/not_found', status: :not_found
   end
 
   def build_course
