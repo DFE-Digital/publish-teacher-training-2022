@@ -19,12 +19,15 @@ feature 'Preview course', type: :feature do
             about_accrediting_body: 'Something great about the accredited body',
             interview_process: 'Some helpful guidance about the interview process',
             has_vacancies?: true,
-            site_statuses: [site_status])
+            site_statuses: [
+              jsonapi_site_status('Running site with vacancies', :full_time, 'running'),
+              jsonapi_site_status('Suspended site with vacancies', :full_time, 'suspended'),
+              jsonapi_site_status('New site with vacancies', :full_time, 'new_status'),
+              jsonapi_site_status('New site with no vacancies', :no_vacancies, 'new_status'),
+              jsonapi_site_status('Running site with no vacancies', :no_vacancies, 'running')
+            ])
   end
-  let(:site) { jsonapi(:site, location_name: 'Big Scitt') }
-  let(:site_status) do
-    jsonapi(:site_status, :full_time_and_part_time, site: site)
-  end
+
   let(:provider) {
     jsonapi(:provider,
             provider_code: 'AO',
@@ -166,10 +169,28 @@ feature 'Preview course', type: :feature do
       '1 Long Rd E1 ABC'
     )
 
-    expect(preview_course_page).to have_content(
-      'Big Scitt'
-    )
+    expect(preview_course_page).to have_choose_a_training_location_table
+    expect(preview_course_page.choose_a_training_location_table).not_to have_content('Suspended site with vacancies')
+
+    [
+      ['New site with no vacancies', 'No'],
+      ['New site with vacancies', 'Yes'],
+      ['Running site with no vacancies', 'No'],
+      ['Running site with vacancies', 'Yes']
+    ].each_with_index do |site, index|
+      name, has_vacancies_string = site
+
+      expect(preview_course_page.choose_a_training_location_table)
+        .to have_selector("tbody tr:nth-child(#{index + 1}) strong", text: name)
+
+      expect(preview_course_page.choose_a_training_location_table)
+        .to have_selector("tbody tr:nth-child(#{index + 1}) td", text: has_vacancies_string)
+    end
 
     expect(preview_course_page).to have_course_advice
+  end
+
+  def jsonapi_site_status(name, study_mode, status)
+    jsonapi(:site_status, study_mode, site: jsonapi(:site, location_name: name), status: status)
   end
 end
