@@ -23,7 +23,7 @@ feature 'Course fees', type: :feature do
       "/providers/#{provider.provider_code}/courses/#{course_1.course_code}",
       course_1.render, :patch, 200
     )
-    visit description_provider_course_path(provider.provider_code, course_1.course_code)
+    visit provider_course_path(provider.provider_code, course_1.course_code)
 
     click_on 'Course length and fees'
 
@@ -66,7 +66,7 @@ feature 'Course fees', type: :feature do
     expect(course_fees_page.flash).to have_content(
       'Your changes have been saved'
     )
-    expect(current_path).to eq description_provider_course_path('AO', course_1.course_code)
+    expect(current_path).to eq provider_course_path('AO', course_1.course_code)
   end
 
   scenario 'submitting with validation errors' do
@@ -97,7 +97,7 @@ feature 'Course fees', type: :feature do
     end
 
     scenario 'passes the value into course_length' do
-      visit description_provider_course_path(provider.provider_code, course_1.course_code)
+      visit provider_course_path(provider.provider_code, course_1.course_code)
 
       click_on 'Course length and fees'
 

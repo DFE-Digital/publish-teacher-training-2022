@@ -10,7 +10,7 @@ class CoursesController < ApplicationController
 
   def index; end
 
-  def show; end
+  def details; end
 
   def update
     # Course length should be saved as `course_length` so if "other" is selected then pass that text value into `course_length`
@@ -22,7 +22,7 @@ class CoursesController < ApplicationController
     if @course.update(course_params)
       flash[:success] = 'Your changes have been saved'
       redirect_to(
-        description_provider_course_path(
+        provider_course_path(
           @course.provider_code,
           @course.course_code
         )
@@ -34,7 +34,7 @@ class CoursesController < ApplicationController
     end
   end
 
-  def description
+  def show
     @published = flash[:success]
     flash.delete(:success)
 
@@ -102,7 +102,7 @@ class CoursesController < ApplicationController
       flash[:success] = "Your course has been published."
     end
 
-    redirect_to description_provider_course_path(@provider.provider_code, @course.course_code)
+    redirect_to provider_course_path(@provider.provider_code, @course.course_code)
   end
 
 private

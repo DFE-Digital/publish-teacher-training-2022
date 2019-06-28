@@ -26,7 +26,7 @@ describe 'Courses' do
 
       it 'redirects to the course description page' do
         expect(flash[:success]).to include('Your course has been published')
-        expect(response).to redirect_to(description_provider_course_path(provider_code: provider.provider_code, code: course.course_code))
+        expect(response).to redirect_to(provider_course_path(provider_code: provider.provider_code, code: course.course_code))
       end
     end
 
@@ -43,7 +43,7 @@ describe 'Courses' do
 
       it 'redirects to the course description page' do
         expect(flash[:error_summary]).to eq("about_course" => "About course can't be blank")
-        expect(response).to redirect_to(description_provider_course_path(provider_code: provider.provider_code, code: course.course_code))
+        expect(response).to redirect_to(provider_course_path(provider_code: provider.provider_code, code: course.course_code))
       end
     end
   end
