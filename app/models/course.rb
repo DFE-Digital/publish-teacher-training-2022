@@ -6,8 +6,8 @@ class Course < Base
   custom_endpoint :sync_with_search_and_compare, on: :member, request_method: :post
   custom_endpoint :publish, on: :member, request_method: :post
 
-  property :fee_international, type: :integer
-  property :fee_uk_eu, type: :integer
+  property :fee_international, type: :string
+  property :fee_uk_eu, type: :string
 
   self.primary_key = :course_code
 
