@@ -1,7 +1,7 @@
 module PageObjects
   module Page
     class LocationsPage < PageObjects::Base
-      set_url '/organisations/{provider_code}/locations'
+      set_url '/organisations/{provider_code}/{recruitment_cycle_year}/locations'
 
       element :success_summary, '.govuk-success-summary'
       element :title, 'h1'

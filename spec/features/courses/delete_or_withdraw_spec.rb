@@ -20,7 +20,7 @@ feature 'Getting rid of a course', type: :feature do
       course
     )
 
-    course_page.load(provider_code: provider_attributes[:provider_code], course_code: course_attributes[:course_code])
+    course_page.load(provider_code: provider_attributes[:provider_code], recruitment_cycle_year: course_attributes[:recruitment_cycle_year], course_code: course_attributes[:course_code])
   end
 
   context "for a running course" do

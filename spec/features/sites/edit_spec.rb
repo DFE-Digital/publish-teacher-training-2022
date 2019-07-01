@@ -19,7 +19,7 @@ feature 'Edit locations', type: :feature do
     end
 
     scenario 'it 404s' do
-      visit edit_provider_site_path(provider_code, 'not_a_site')
+      visit edit_provider_recruitment_cycle_site_path(provider_code, '2019', 'not_a_site')
       expect(location_page).not_to be_displayed
       expect(page.status_code).to eq(404)
       expect(page.body).to have_content('Page not found')
@@ -34,9 +34,9 @@ feature 'Edit locations', type: :feature do
     end
 
     scenario 'it shows a location' do
-      visit edit_provider_site_path(provider_code, site.id)
+      visit edit_provider_recruitment_cycle_site_path(provider_code, site.recruitment_cycle_year, site.id)
 
-      expect(location_page).to be_displayed(provider_code: provider_code, site_id: site.id)
+      expect(location_page).to be_displayed(provider_code, site.id)
       expect(location_page.title).to have_content('Main site 1')
 
       location_page.publish_changes.click
@@ -54,7 +54,7 @@ feature 'Edit locations', type: :feature do
     end
 
     scenario 'displays validation errors' do
-      visit edit_provider_site_path(provider_code, site.id)
+      visit edit_provider_recruitment_cycle_site_path(provider_code, site.recruitment_cycle_year, site.id)
 
       expect(location_page).to be_displayed(provider_code: provider_code, site_id: site.id)
 
@@ -67,7 +67,7 @@ feature 'Edit locations', type: :feature do
     end
 
     scenario 'displays the old location name when the change fails' do
-      visit edit_provider_site_path(provider_code, site.id)
+      visit edit_provider_recruitment_cycle_site_path(provider_code, site.recruitment_cycle_year, site.id)
 
       expect(location_page.title).to have_content('Main site 1')
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Course fees', type: :feature do
-  let(:provider) { jsonapi(:provider, provider_code: 'AO') }
+  let(:provider) { jsonapi(:provider, provider_code: 'A0') }
   let(:course_1) do
     jsonapi(
       :course,
@@ -13,7 +13,7 @@ feature 'Course fees', type: :feature do
   before do
     stub_omniauth
     stub_course_request(provider, course_1)
-    stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider.render)
+    stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider.render)
   end
 
   let(:course_fees_page) { PageObjects::Page::Organisations::CourseFees.new }
@@ -23,11 +23,11 @@ feature 'Course fees', type: :feature do
       "/providers/#{provider.provider_code}/courses/#{course_1.course_code}",
       course_1.render, :patch, 200
     )
-    visit provider_course_path(provider.provider_code, course_1.course_code)
+    visit provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
 
     click_on 'Course length and fees'
 
-    expect(current_path).to eq fees_provider_course_path('AO', course_1.course_code)
+    expect(current_path).to eq fees_provider_recruitment_cycle_course_path('A0', course_1.recruitment_cycle_year, course_1.course_code)
 
     expect(course_fees_page.caption).to have_content(
       "#{course_1.name} (#{course_1.course_code})"
@@ -66,7 +66,7 @@ feature 'Course fees', type: :feature do
     expect(course_fees_page.flash).to have_content(
       'Your changes have been saved'
     )
-    expect(current_path).to eq provider_course_path('AO', course_1.course_code)
+    expect(current_path).to eq provider_recruitment_cycle_course_path('A0', course_1.recruitment_cycle_year, course_1.course_code)
   end
 
   scenario 'submitting with validation errors' do
@@ -75,7 +75,7 @@ feature 'Course fees', type: :feature do
       build(:error, :for_course_publish), :patch, 422
     )
 
-    visit fees_provider_course_path(provider.provider_code, course_1.course_code)
+    visit fees_provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
 
     fill_in 'Fee for UK and EU students', with: 100_000_000
     click_on 'Save'
@@ -83,7 +83,7 @@ feature 'Course fees', type: :feature do
     expect(course_fees_page.error_flash).to have_content(
       'You’ll need to correct some information.'
     )
-    expect(current_path).to eq fees_provider_course_path(provider.provider_code, course_1.course_code)
+    expect(current_path).to eq fees_provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
   end
 
   context 'with course_length_other selected' do
@@ -97,11 +97,11 @@ feature 'Course fees', type: :feature do
     end
 
     scenario 'passes the value into course_length' do
-      visit provider_course_path(provider.provider_code, course_1.course_code)
+      visit provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
 
       click_on 'Course length and fees'
 
-      expect(current_path).to eq fees_provider_course_path('AO', course_1.course_code)
+      expect(current_path).to eq fees_provider_recruitment_cycle_course_path('A0', course_1.recruitment_cycle_year, course_1.course_code)
 
       expect(course_fees_page.course_length_other).to be_checked
       expect(course_fees_page.course_length_other_length.value).to eq('6 months')
@@ -133,13 +133,13 @@ feature 'Course fees', type: :feature do
     }
 
     let(:provider_for_copy_from_list) do
-      jsonapi(:provider, courses: [course_1, course_2, course_3], provider_code: 'AO')
+      jsonapi(:provider, courses: [course_1, course_2, course_3], provider_code: 'A0')
     end
 
     before do
       stub_course_request(provider, course_2)
       stub_course_request(provider, course_3)
-      stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider_for_copy_from_list.render)
+      stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider_for_copy_from_list.render)
     end
 
     scenario 'all fields get copied if all were present' do

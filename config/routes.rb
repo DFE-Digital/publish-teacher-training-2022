@@ -10,29 +10,31 @@ Rails.application.routes.draw do
   root to: "providers#index"
 
   resources :providers, path: 'organisations', param: :code do
-    resources :courses, param: :code do
-      get '/vacancies', on: :member, to: 'courses/vacancies#edit'
-      put '/vacancies', on: :member, to: 'courses/vacancies#update'
-      get '/details', on: :member, to: 'courses#details'
+    resources :recruitment_cycles, param: :year, path: '', only: :show do
+      resources :courses, param: :code do
+        get '/vacancies', on: :member, to: 'courses/vacancies#edit'
+        put '/vacancies', on: :member, to: 'courses/vacancies#update'
+        get '/details', on: :member, to: 'courses#details'
 
-      get '/about', on: :member, to: 'courses#about'
-      patch '/about', on: :member, to: 'courses#update'
-      get '/requirements', on: :member, to: 'courses#requirements'
-      patch '/requirements', on: :member, to: 'courses#update'
-      get '/fees', on: :member, to: 'courses#fees'
-      patch '/fees', on: :member, to: 'courses#update'
-      get '/salary', on: :member, to: 'courses#salary'
-      patch '/salary', on: :member, to: 'courses#update'
+        get '/about', on: :member, to: 'courses#about'
+        patch '/about', on: :member, to: 'courses#update'
+        get '/requirements', on: :member, to: 'courses#requirements'
+        patch '/requirements', on: :member, to: 'courses#update'
+        get '/fees', on: :member, to: 'courses#fees'
+        patch '/fees', on: :member, to: 'courses#update'
+        get '/salary', on: :member, to: 'courses#salary'
+        patch '/salary', on: :member, to: 'courses#update'
 
-      get '/withdraw', on: :member, to: 'courses#withdraw'
-      get '/delete', on: :member, to: 'courses#delete'
-      get '/preview', on: :member, to: 'courses#preview'
-      get '/locations', on: :member, to: 'courses/sites#edit'
-      put '/locations', on: :member, to: 'courses/sites#update'
-      post '/publish', on: :member, to: 'courses#publish'
+        get '/withdraw', on: :member, to: 'courses#withdraw'
+        get '/delete', on: :member, to: 'courses#delete'
+        get '/preview', on: :member, to: 'courses#preview'
+        get '/locations', on: :member, to: 'courses/sites#edit'
+        put '/locations', on: :member, to: 'courses/sites#update'
+        post '/publish', on: :member, to: 'courses#publish'
+      end
+
+      resources :sites, path: 'locations', on: :member, except: %i[destroy show]
     end
-
-    resources :sites, path: 'locations', on: :member, except: %i[destroy show]
   end
 
   get "/cookies", to: "pages#cookies", as: :cookies

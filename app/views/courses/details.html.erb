@@ -12,7 +12,7 @@
         <%= link_to @provider.provider_name, provider_path(code: @provider.provider_code), class: "govuk-breadcrumbs__link" %>
       </li>
       <li class="govuk-breadcrumbs__list-item">
-        <%= link_to "Courses", provider_courses_path(@provider.provider_code), class: "govuk-breadcrumbs__link" %>
+        <%= link_to "Courses", provider_recruitment_cycle_courses_path(@provider.provider_code), class: "govuk-breadcrumbs__link" %>
       </li>
       <li class="govuk-breadcrumbs__list-item" aria-current="page">
         <%= course.name %> (<%= course.course_code %>)
@@ -32,7 +32,7 @@
   <ul class="govuk-tabs__list" role="tablist">
     <li class="govuk-tabs__list-item" role="presentation">
       <%=
-        link_to provider_course_path(@provider.provider_code, course.course_code),
+        link_to provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year , course.course_code),
         class: "govuk-tabs__tab", role: 'tab', tabindex: '0', aria: { selected: false } do
       %>
         Description<br>

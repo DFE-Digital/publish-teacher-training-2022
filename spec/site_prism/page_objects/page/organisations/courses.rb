@@ -2,7 +2,7 @@ module PageObjects
   module Page
     module Organisations
       class Courses < PageObjects::Base
-        set_url '/organisations/{provider_code}/courses'
+        set_url '/organisations/{provider_code}/{recruitment_cycle_year}/courses'
 
         element :flash, '.govuk-success-summary'
 

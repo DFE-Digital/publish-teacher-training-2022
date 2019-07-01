@@ -7,9 +7,9 @@ FactoryBot.define do
 
     sequence(:id)
     sequence(:course_code) { |n| "X10#{n}" }
-    # This hardcodes the provider code to AO. This should probably be fixed at
+    # This hardcodes the provider code to A0. This should probably be fixed at
     # some point. Right now it doesn't break anything.
-    sequence(:provider_code) { 'AO' }
+    sequence(:provider_code) { 'A0' }
     name { "English" }
     description { "PGCE with QTS full time" }
     findable? { true }
@@ -51,6 +51,7 @@ FactoryBot.define do
     maths { 'expect_to_achieve_before_training_begins' }
     english { 'must_have_qualification_at_application_time' }
     science { 'not_required' }
+    recruitment_cycle_year { '2019' }
 
     trait :with_vacancy do
       has_vacancies? { true }

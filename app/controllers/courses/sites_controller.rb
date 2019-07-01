@@ -19,7 +19,7 @@ module Courses
 
       if @course.save
         success_message = @course.is_running? ? 'Course locations saved and published' : 'Course locations saved'
-        redirect_to provider_course_path(params[:provider_code], params[:code]), flash: { success: success_message }
+        redirect_to provider_recruitment_cycle_course_path(params[:provider_code], params[:recruitment_cycle_year], params[:code]), flash: { success: success_message }
       else
         @errors = @course.errors.full_messages
 

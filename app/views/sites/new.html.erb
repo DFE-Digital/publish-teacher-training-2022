@@ -12,7 +12,7 @@
         <%= link_to @provider.attributes[:provider_name], provider_path(code: @provider.attributes[:provider_code]), class: "govuk-breadcrumbs__link" %>
       </li>
       <li class="govuk-breadcrumbs__list-item">
-        <%= link_to "Locations", provider_sites_path(@provider[:provider_code]), class: "govuk-breadcrumbs__link" %>
+        <%= link_to "Locations", provider_recruitment_cycle_sites_path(@provider[:provider_code]), class: "govuk-breadcrumbs__link" %>
       </li>
       <li class="govuk-breadcrumbs__list-item" aria-current="page">
         Add a location
@@ -27,7 +27,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @site, url: provider_sites_path(params[:provider_code]), method: :post do |f| %>
+    <%= form_with model: @site, url: provider_recruitment_cycle_sites_path(params[:provider_code]), method: :post do |f| %>
       <p class="govuk-body">Once a location is added (and assigned to a course), candidates can choose it as their preferred place of training when completing the UCAS application form.</p>
       <p class="govuk-body">When you’ve added this location you can assign it to a course from the ‘Basic details’ tab on the course page.</p>
       <hr class="govuk-section-break govuk-section-break--l">
@@ -35,7 +35,7 @@
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'location__publish-changes' } %>
     <% end %>
     <p class="govuk-body">
-      <%= link_to "Cancel changes", provider_sites_path(@provider[:provider_code]), class: "govuk-link" %>
+      <%= link_to "Cancel changes", provider_recruitment_cycle_sites_path(@provider[:provider_code]), class: "govuk-link" %>
     </p>
   </div>
 </div>

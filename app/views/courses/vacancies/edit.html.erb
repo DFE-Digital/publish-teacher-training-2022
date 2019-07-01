@@ -1,14 +1,14 @@
 <%= content_for :page_title, "Edit vacancies for #{@course.name} (#{@course.course_code})" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_courses_path(params[:provider_code])) %>
+  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(@course.provider_code, @course.recruitment_cycle_year)) %>
 <% end %>
 
 <%= render 'shared/errors', error_summary_title: 'We couldn’t edit the vacancies for this course' %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @course, url: vacancies_provider_course_path(params[:provider_code], @course.course_code), method: :put do |form| %>
+    <%= form_for @course, url: vacancies_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-7">
           <h1 class="govuk-fieldset__heading">
@@ -32,7 +32,7 @@
       <% else %>
         <%= form.submit "Reopen applications", class: "govuk-button" %>
       <% end %>
-      <p class="govuk-body"><%= govuk_link_to "Cancel changes", provider_courses_path(params[:provider_code]) %></p>
+      <p class="govuk-body"><%= govuk_link_to "Cancel changes", provider_recruitment_cycle_courses_path(params[:provider_code]) %></p>
     <% end %>
   </div>
 </div>

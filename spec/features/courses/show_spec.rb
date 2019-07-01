@@ -24,7 +24,7 @@ feature 'Course show', type: :feature do
       "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
       course_response
     )
-    visit provider_course_path(provider.provider_code, course.course_code)
+    visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
   end
 
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
@@ -74,15 +74,15 @@ feature 'Course show', type: :feature do
 
       expect(course_page).to have_link(
         'About this course',
-        href: "/organisations/#{provider.provider_code}/courses/#{course.course_code}/about"
+        href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/about"
       )
       expect(course_page).to have_link(
         'Course length and fees',
-        href: "/organisations/#{provider.provider_code}/courses/#{course.course_code}/fees"
+        href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/fees"
       )
       expect(course_page).to have_link(
         'Requirements and eligibility',
-        href: "/organisations/#{provider.provider_code}/courses/#{course.course_code}/requirements"
+        href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/requirements"
       )
     end
   end

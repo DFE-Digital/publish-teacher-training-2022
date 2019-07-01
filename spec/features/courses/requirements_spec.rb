@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Course requirements', type: :feature do
   let(:provider) do
-    jsonapi(:provider, provider_code: 'AO')
+    jsonapi(:provider, provider_code: 'A0')
   end
 
   let(:course) do
@@ -19,7 +19,7 @@ feature 'Course requirements', type: :feature do
   before do
     stub_omniauth
     stub_course_request(provider, course)
-    stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider.render)
+    stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider.render)
   end
 
   let(:course_requirements_page) { PageObjects::Page::Organisations::CourseRequirements.new }
@@ -29,10 +29,10 @@ feature 'Course requirements', type: :feature do
       "/providers/#{provider.provider_code}/courses/#{course.course_code}",
       course.render, :patch, 200
     )
-    visit provider_course_path(provider.provider_code, course.course_code)
+    visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
     click_on 'Requirements and eligibility'
 
-    expect(current_path).to eq requirements_provider_course_path('AO', course.course_code)
+    expect(current_path).to eq requirements_provider_recruitment_cycle_course_path('A0', course.recruitment_cycle_year, course.course_code)
 
     expect(course_requirements_page.caption).to have_content(
       "#{course.name} (#{course.course_code})"
@@ -60,7 +60,7 @@ feature 'Course requirements', type: :feature do
       'Your changes have been saved'
     )
 
-    expect(current_path).to eq provider_course_path('AO', course.course_code)
+    expect(current_path).to eq provider_recruitment_cycle_course_path('A0', course.recruitment_cycle_year, course.course_code)
   end
 
   scenario 'submitting with validation errors' do
@@ -69,7 +69,7 @@ feature 'Course requirements', type: :feature do
       build(:error, :for_course_publish), :patch, 422
     )
 
-    visit requirements_provider_course_path(provider.provider_code, course.course_code)
+    visit requirements_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
 
     fill_in 'Qualifications needed', with: 'foo ' * 401
     click_on 'Save'
@@ -77,7 +77,7 @@ feature 'Course requirements', type: :feature do
     expect(course_requirements_page.error_flash).to have_content(
       'You’ll need to correct some information.'
     )
-    expect(current_path).to eq requirements_provider_course_path(provider.provider_code, course.course_code)
+    expect(current_path).to eq requirements_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
   end
 
   context 'when copying course requirements from another course' do
@@ -102,13 +102,13 @@ feature 'Course requirements', type: :feature do
     }
 
     let(:provider_for_copy_from_list) do
-      jsonapi(:provider, courses: [course, course_2, course_3], provider_code: 'AO')
+      jsonapi(:provider, courses: [course, course_2, course_3], provider_code: 'A0')
     end
 
     before do
       stub_course_request(provider, course_2)
       stub_course_request(provider, course_3)
-      stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", provider_for_copy_from_list.render)
+      stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider_for_copy_from_list.render)
     end
 
     scenario 'all fields get copied if all were present' do

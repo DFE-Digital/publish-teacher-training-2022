@@ -32,7 +32,7 @@ feature 'Course details', type: :feature do
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
 
   scenario 'viewing the course details page' do
-    visit "/organisations/A0/courses/#{course.course_code}/details"
+    visit "/organisations/A0/#{course.recruitment_cycle_year}/courses/#{course.course_code}/details"
 
     expect(course_details_page)
       .to be_displayed(provider_code: 'A0', course_code: course.course_code)
@@ -104,7 +104,7 @@ feature 'Course details', type: :feature do
     }
 
     scenario 'viewing the course details page' do
-      visit "/organisations/A0/courses/#{course.course_code}/details"
+      visit "/organisations/A0/#{course.recruitment_cycle_year}/courses/#{course.course_code}/details"
 
       expect(course_details_page).not_to have_edit_locations_link
       expect(course_details_page.manage_provider_locations_link).to have_content(
@@ -123,7 +123,7 @@ feature 'Course details', type: :feature do
     }
 
     scenario 'viewing the course details page' do
-      visit "/organisations/A0/courses/#{course.course_code}/details"
+      visit "/organisations/A0/#{course.recruitment_cycle_year}/courses/#{course.course_code}/details"
 
       expect(course_details_page.locations).to have_content(
         site1.location_name
@@ -143,7 +143,7 @@ feature 'Course details', type: :feature do
     )
 
     course
-    visit "/organisations/ZZ/courses/ZZZ/details"
+    visit "/organisations/ZZ/2019/courses/ZZZ/details"
 
     expect(course_details_page)
     .to be_displayed(provider_code: 'ZZ', course_code: 'ZZZ')
