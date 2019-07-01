@@ -52,7 +52,7 @@ feature 'Index courses', type: :feature do
         "https://localhost:5000/course/A123/#{course_1.attributes[:course_code]}"
       )
       expect(first_row.link['href']).to eq(
-        "https://localhost:44364/organisation/A123/course/self/#{course_1.attributes[:course_code]}"
+        "/organisations/A123/courses/#{course_1.attributes[:course_code]}"
       )
 
       second_row = courses_table.rows.second

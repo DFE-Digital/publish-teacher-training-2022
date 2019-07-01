@@ -18,7 +18,7 @@ feature 'Edit course sites', type: :feature do
       sites: [site1, site2, site3]
     )
   end
-  let(:course_page) { PageObjects::Page::Organisations::Course.new }
+  let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
   let(:locations_page) { PageObjects::Page::Organisations::CourseLocations.new }
 
   before do
@@ -32,8 +32,8 @@ feature 'Edit course sites', type: :feature do
       course.render
     )
 
-    course_page.load(provider_code: provider.provider_code, course_code: course.course_code)
-    course_page.edit_locations_link.click
+    course_details_page.load(provider_code: provider.provider_code, course_code: course.course_code)
+    course_details_page.edit_locations_link.click
     expect(locations_page)
       .to be_displayed(provider_code: provider.provider_code, course_code: course.course_code)
   end

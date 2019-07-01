@@ -11,10 +11,6 @@ module ViewHelper
     URI.join(Settings.manage_ui.base_url, relative_path).to_s
   end
 
-  def manage_ui_course_page_url(provider_code:, course_code:)
-    manage_ui_url("/organisation/#{provider_code}/course/self/#{course_code}")
-  end
-
   def search_ui_url(relative_path)
     URI.join(Settings.search_ui.base_url, relative_path).to_s
   end
@@ -37,16 +33,16 @@ module ViewHelper
     mail_to bat_contact_email_address, name || bat_contact_email_address, subject: subject, class: link_class
   end
 
-  def manage_ui_enrichment_error_url(provider_code:, course:, field:)
-    base = manage_ui_course_page_url(provider_code: provider_code, course_code: course.course_code)
+  def enrichment_error_url(provider_code:, course:, field:)
+    base = "/organisations/#{provider_code}/courses/#{course.course_code}"
 
     {
-      'about_course' => base + '/about#AboutCourse-wrapper',
-      'how_school_placements_work' => base + '/about#HowSchoolPlacementsWork-wrapper',
-      'fee_uk_eu' => base + '/fees-and-length#FeeUkEu-wrapper',
-      'course_length' => base + (course.has_fees? ? '/fees-and-length' : '/salary') + '#CourseLength-wrapper',
-      'salary_details' => base + '/salary#SalaryDetails-wrapper',
-      'qualifications' => base + '/requirements#Qualifications-wrapper'
+      'about_course' => base + '/about#about_course_wrapper',
+      'how_school_placements_work' => base + '/about#how_school_placements_work_wrapper',
+      'fee_uk_eu' => base + '/fees#fee_uk_eu_wrapper',
+      'course_length' => base + (course.has_fees? ? '/fees' : '/salary') + '#course_length_wrapper',
+      'salary_details' => base + '/salary#salary_details_wrapper',
+      'qualifications' => base + '/requirements#required_qualifications_wrapper'
     }[field]
   end
 

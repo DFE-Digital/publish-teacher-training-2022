@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{course.name_and_code} - Courses" %>
+<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}#{course.name_and_code} - Courses" %>
 
 <% content_for :before_content do %>
   <nav class="govuk-breadcrumbs">
@@ -21,29 +21,64 @@
   </nav>
 <% end %>
 
+<% if @errors.present? %>
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+      You’ll need to correct some information.
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <% @errors.each do |field, error| %>
+          <li>
+            <a href="<%= enrichment_error_url(
+              provider_code: @provider.provider_code,
+              course: @course,
+              field: field
+            ) %>"><%= error %></a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<% if @published.present? %>
+  <div class="govuk-success-summary" aria-labelledby="success-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+    <h2 class="govuk-success-summary__title" id="success-summary-title">
+      <%= @published %>
+    </h2>
+    <div class="govuk-error-summary__body">
+      <p class="govuk-body">
+        The link for this course is:
+        <%= govuk_link_to search_ui_course_page_url(provider_code: @provider.provider_code, course_code: @course.course_code) %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.description %></span>
-  <%= course.name %> (<%= course.course_code %>)
+  <%= course.name_and_code %>
 </h1>
 
 <div class="course-tabs govuk-tabs">
   <h2 class="govuk-tabs__title">Contents</h2>
 
-  <ul class="govuk-tabs__list" role="tablist">
+  <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item" role="presentation">
       <%=
-        link_to manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code),
-        class: "govuk-tabs__tab", role: 'tab', tabindex: '0', aria: { selected: false } do
+        link_to "#description",
+        class: "govuk-tabs__tab govuk-tabs__tab--selected", id: "description", role: 'tab', tabindex: '-1', aria: { selected: true } do
       %>
         Description<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Content, fees and eligibility</span>
       <% end %>
     </li>
 
-    <li class="govuk-tabs__list-item" role="presentation">
+    <li class="govuk-tabs__list-item">
       <%=
-        link_to "#basic_details",
-        class: "govuk-tabs__tab govuk-tabs__tab--selected", id: "basic_details_tab", role: 'tab', tabindex: '-1', aria: { selected: true } do
+        link_to details_provider_course_path(@provider.provider_code, course.course_code),
+        class: "govuk-tabs__tab" do
       %>
         Basic details<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Locations, outcome, subject</span>
@@ -51,7 +86,16 @@
     </li>
   </ul>
 
-  <section class="govuk-tabs__panel" id="basic_details" role="tabpanel" aria-labelledby="basic_details_tab">
-    <%= render partial: 'courses/basic_details_tab' %>
+  <section class="govuk-tabs__panel" id="description">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= render partial: 'courses/description_content' %>
+      </div>
+      <% unless course.not_running? %>
+        <div class="govuk-grid-column-one-third" data-qa="course__status_panel">
+          <%= render partial: 'courses/status_panel' %>
+        </div>
+      <% end %>
+    </div>
   </section>
 </div>

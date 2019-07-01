@@ -2,7 +2,7 @@ module CourseHelper
   def course_manage_error_link(field, error)
     content_tag :a, error,
                 class: 'govuk-link govuk-!-display-block',
-                href: manage_ui_enrichment_error_url(
+                href: enrichment_error_url(
                   provider_code: @provider.provider_code,
                   course: @course,
                   field: field

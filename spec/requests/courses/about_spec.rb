@@ -134,7 +134,7 @@ describe 'Courses', type: :request do
 
       it 'redirects to the course description page' do
         expect(flash[:success]).to include('Your changes have been saved')
-        expect(response).to redirect_to(description_provider_course_path(provider.provider_code, course.course_code))
+        expect(response).to redirect_to(provider_course_path(provider.provider_code, course.course_code))
       end
     end
 

@@ -31,7 +31,7 @@ feature 'About course', type: :feature do
       course.render, :patch, 200
     )
 
-    visit description_provider_course_path(provider.provider_code, course.course_code)
+    visit provider_course_path(provider.provider_code, course.course_code)
     click_on 'About this course'
 
     expect(current_path).to eq about_provider_course_path(provider.provider_code, course.course_code)
@@ -59,7 +59,7 @@ feature 'About course', type: :feature do
     expect(about_course_page.flash).to have_content(
       'Your changes have been saved'
     )
-    expect(current_path).to eq description_provider_course_path('AO', course.course_code)
+    expect(current_path).to eq provider_course_path('AO', course.course_code)
   end
 
   scenario 'submitting with validation errors' do

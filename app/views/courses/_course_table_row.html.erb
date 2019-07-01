@@ -1,7 +1,7 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell course-table__course-name" data-qa="courses-table__course">
     <%= govuk_link_to "#{course.name_and_code}",
-      manage_ui_course_page_url(provider_code: @provider.provider_code, course_code: course.course_code),
+      provider_course_path(@provider.provider_code, course.course_code),
       class: "govuk-link govuk-heading-s govuk-!-margin-bottom-0"
     %>
     <span class="govuk-body-s"><%= course.description %></span>

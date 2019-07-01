@@ -1,7 +1,7 @@
 <%= content_for :page_title, "Preview: #{course.name_and_code} with #{@provider.provider_name}" %>
 
 <% content_for :before_content do %>
-  <%= link_to "Back to course", description_provider_course_path, class: "govuk-back-link" %>
+  <%= link_to "Back to course", provider_course_path, class: "govuk-back-link" %>
 
   <p class="govuk-body preview-banner">
     This is a preview of a course:
