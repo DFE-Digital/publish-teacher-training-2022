@@ -11,6 +11,7 @@ feature 'Preview course', type: :feature do
             start_date: '2019-09-01T00:00:00Z',
             fee_uk_eu: '9250.0',
             fee_international: '9250.0',
+            fee_details: 'Optional fee details',
             has_scholarship_and_bursary?: true,
             scholarship_amount: '20000',
             bursary_amount: '22000',
@@ -117,6 +118,10 @@ feature 'Preview course', type: :feature do
 
     expect(preview_course_page.international_fees).to have_content(
       '£9,250'
+    )
+
+    expect(preview_course_page.fee_details).to have_content(
+      decorated_course.fee_details
     )
 
     expect(preview_course_page).to_not have_salary_details

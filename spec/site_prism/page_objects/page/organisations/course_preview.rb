@@ -19,6 +19,7 @@ module PageObjects
         element :school_placements, '#section-schools'
         element :uk_fees, '[data-qa=course__uk_fees]'
         element :eu_fees, '[data-qa=course__eu_fees]'
+        element :fee_details, '[data-qa=course__fee_details]'
         element :international_fees, '[data-qa=course__international_fees]'
         element :salary_details, '#section-salary'
         element :scholarship_amount, '[data-qa=course__scholarship_amount]'
