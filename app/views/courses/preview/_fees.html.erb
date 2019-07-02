@@ -29,6 +29,12 @@
         </tbody>
       </table>
     </div>
+
+    <% if course.fee_details.present? %>
+      <div data-qa="course__fee_details">
+        <%= markdown(course.fee_details) %>
+      </div>
+    <% end %>
   <% else %>
     <p class="missing-section">Please add details for this section.</p>
   <% end %>
