@@ -18,19 +18,35 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: course, url: about_provider_course_path(@provider.provider_code, course.course_code) do |f| %>
       <%= f.hidden_field :page, value: :about %>
-      <p class="govuk-body">Give applicants a short description of the course.</p>
+      <p class="govuk-body">You should give a short, factual summary of the course. Tell applicants:</p>
 
-      <p class="govuk-body">You could include:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>an overview of what candidates are taught</li>
-        <li>how much time they’ll spend training in school</li>
-        <li>how they’ll be assessed</li>
-        <li>the workload (eg how many essays per term?)</li>
-        <li>any other locations they’ll need to go to (eg will they also have to attend classes at an accredited body?)</li>
-        <li>information about the prestige of the course (eg league-table rankings)</li>
+        <li>what they’ll learn</li>
+        <li>how the course is structured – eg its timetable</li>
+        <li>whether the course has any distinctive features</li>
       </ul>
 
-      <p class="govuk-body">If you offer different courses in the same subject, be clear about how this course differs from the others (eg amount of time spent in school, course structure). This will help the applicant decide which course best suits them.</p>
+      <p class="govuk-body">You could include key details such as:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>how much time is spent in school</li>
+        <li>how candidates are assessed</li>
+        <li>the workload (eg how many essays per term?)</li>
+        <li>how many locations candidates will have to go to</li>
+        <li>league-table rankings</li>
+      </ul>
+
+      <p class="govuk-body">Don’t repeat the same description for different courses.</p>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            Several courses in the same subject?
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-body">If you offer more than one course in the same subject - eg two salaried Primary courses - it’s important to say how they differ (eg differences in school placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.</p>
+        </div>
+      </details>
 
       <div id="about_course_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="400">
         <%= render "shared/form_field",
