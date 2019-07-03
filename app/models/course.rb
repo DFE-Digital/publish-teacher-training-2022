@@ -10,16 +10,24 @@ class Course < Base
 
   self.primary_key = :course_code
 
-  def publish(provider_code:)
-    publish_url = "#{Course.site}providers/#{provider_code}/courses/#{course_code}/publish"
-    self.class.requestor.__send__(:request, :post, publish_url,
-                                  body: {
-                                    data: {
-                                      attributes: {},
-                                      type: "course"
-                                    }
-                                  },
-                                  params: request_params.to_params)
+  def publish
+    publish_url = "#{Course.site}providers/#{provider.provider_code}/courses/#{course_code}/publish"
+    post_options = {
+      body: { data: { attributes: {}, type: "course" } },
+      params: request_params.to_params
+    }
+
+    self.last_result_set = self.class.requestor.__send__(
+      :request, :post, publish_url, post_options
+    )
+
+    if last_result_set.has_errors?
+      self.fill_errors # Inherited from JsonApiClient::Resource
+      false
+    else
+      self.errors.clear if self.errors
+      true
+    end
   end
 
   def full_time?

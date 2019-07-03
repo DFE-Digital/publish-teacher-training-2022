@@ -29,7 +29,8 @@ FactoryBot.define do
         [
           {
             title: "Invalid about_course",
-            detail: "About course can't be blank"
+            detail: "About course can't be blank",
+            source: { pointer: "/data/atributes/about_course" }
           }
         ]
       }

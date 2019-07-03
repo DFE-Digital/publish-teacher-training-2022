@@ -5,15 +5,17 @@ module CourseHelper
                 href: enrichment_error_url(
                   provider_code: @provider.provider_code,
                   course: @course,
-                  field: field
+                  field: field.to_s
                 )
   end
 
   def course_summary_label(key, field)
     if @errors&.key? field
-      error = @errors[field]
       content_tag :dt, class: 'govuk-summary-list__key course-parts__fields__label--error' do
-        content_tag(:span, key) + course_manage_error_link(field, error)
+        [
+          content_tag(:span, key),
+          *@errors[field].map { |error| course_manage_error_link(field, error) }
+        ].reduce(:+)
       end
     else
       content_tag :dt, key, class: 'govuk-summary-list__key'
