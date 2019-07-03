@@ -52,7 +52,7 @@
       <div id="about_course_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="400">
         <%= render "shared/form_field",
           form: f, field: :about_course, label: 'About this course', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 20, class: 'govuk-textarea js-character-count') %>
         <% end %>
       </div>
 
@@ -72,7 +72,7 @@
       <div id="interview_process_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
         <%= render "shared/form_field",
           form: f, field: :interview_process, label: 'Interview process (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
         <% end %>
       </div>
 
@@ -98,7 +98,7 @@
       <div id="how_school_placements_work_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="350">
         <%= render "shared/form_field",
           form: f, field: :how_school_placements_work, label: 'How school placements work', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
         <% end %>
       </div>
 
