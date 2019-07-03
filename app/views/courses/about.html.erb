@@ -18,8 +18,9 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: course, url: about_provider_course_path(@provider.provider_code, course.course_code) do |f| %>
       <%= f.hidden_field :page, value: :about %>
-      <p class="govuk-body">You should give a short, factual summary of the course. Tell applicants:</p>
+      <p class="govuk-body">You should give a short, factual summary of the course.</p>
 
+      <p class="govuk-body">Tell applicants:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>what they’ll learn</li>
         <li>how the course is structured – eg its timetable</li>
