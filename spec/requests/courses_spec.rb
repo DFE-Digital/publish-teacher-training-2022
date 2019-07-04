@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Courses' do
   describe 'POST publish' do
-    let(:provider) { jsonapi(:provider) }
+    let(:provider) { jsonapi(:provider, provider_code: 'A0') }
     let(:course) { jsonapi(:course, provider: provider) }
 
     before do

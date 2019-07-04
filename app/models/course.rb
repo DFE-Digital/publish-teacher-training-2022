@@ -11,23 +11,11 @@ class Course < Base
   self.primary_key = :course_code
 
   def publish
-    publish_url = "#{Course.site}providers/#{provider.provider_code}/courses/#{course_code}/publish"
-    post_options = {
-      body: { data: { attributes: {}, type: "course" } },
-      params: request_params.to_params
-    }
+    post_request('/publish')
+  end
 
-    self.last_result_set = self.class.requestor.__send__(
-      :request, :post, publish_url, post_options
-    )
-
-    if last_result_set.has_errors?
-      self.fill_errors # Inherited from JsonApiClient::Resource
-      false
-    else
-      self.errors.clear if self.errors
-      true
-    end
+  def publishable?
+    post_request('/publishable')
   end
 
   def full_time?
@@ -72,5 +60,28 @@ class Course < Base
 
   def has_multiple_running_sites_or_study_modes?
     running_site_statuses.length > 1 || full_time_or_part_time?
+  end
+
+private
+
+  def post_request(path)
+    base_url = "#{Course.site}#{Course.path}/%<course_code>s" % path_attributes
+
+    post_options = {
+      body: { data: { attributes: {}, type: "course" } },
+      params: request_params.to_params
+    }
+
+    self.last_result_set = self.class.requestor.__send__(
+      :request, :post, base_url + path, post_options
+    )
+
+    if last_result_set.has_errors?
+      self.fill_errors # Inherited from JsonApiClient::Resource
+      false
+    else
+      self.errors.clear if self.errors
+      true
+    end
   end
 end
