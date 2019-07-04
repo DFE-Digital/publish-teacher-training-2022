@@ -1,0 +1,25 @@
+<%= content_for :page_title, @provider.provider_name %>
+
+<% content_for :before_content do %>
+  <nav class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <% if @has_multiple_providers then %>
+        <li class="govuk-breadcrumbs__list-item">
+          <%= link_to "Organisations", providers_path, class: "govuk-breadcrumbs__link" %>
+        </li>
+      <% end %>
+      <li class="govuk-breadcrumbs__list-item" aria-current="page">
+        <%= link_to @provider.provider_name, provider_path(@provider.provider_code), class: "govuk-breadcrumbs__link" %>
+      </li>
+    </ol>
+  </nav>
+<% end %>
+
+<h1 class="govuk-heading-xl">Current cycle (2019 – 2020)</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: params[:year] } %>
+    <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: params[:year] } %>
+  </div>
+</div>

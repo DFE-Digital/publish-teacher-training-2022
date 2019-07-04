@@ -21,8 +21,9 @@ feature 'Index courses', type: :feature do
   let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
   let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
 
-  describe "without accrediting providers" do
+  context "without accrediting providers" do
     before do
+      allow(Settings).to receive(:rollover).and_return(false)
       user = build(:user)
       stub_omniauth(user: user)
       stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
@@ -84,7 +85,7 @@ feature 'Index courses', type: :feature do
     end
   end
 
-  describe "with accrediting providers" do
+  context "with accrediting providers" do
     let(:provider) do
       jsonapi(:provider, courses: courses, accredited_body?: false, provider_code: 'A123')
     end
@@ -98,6 +99,7 @@ feature 'Index courses', type: :feature do
     let(:course_4) { jsonapi :course, accrediting_provider: provider_3 }
 
     before do
+      allow(Settings).to receive(:rollover).and_return(false)
       user = build(:user)
       stub_omniauth(user: user)
       stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
@@ -123,6 +125,41 @@ feature 'Index courses', type: :feature do
 
     scenario "it shows 'add a new course' link" do
       expect(courses_page).to have_link_to_add_a_course_for_unaccredited_bodies
+    end
+  end
+
+  context "rollover" do
+    let(:provider) do
+      jsonapi(:provider, courses: courses, accredited_body?: false, provider_code: 'A123')
+    end
+    let(:provider_response) { provider.render }
+    let(:provider_1) { jsonapi :provider, id: "1", provider_name: "Zacme Scitt" }
+    let(:provider_2) { jsonapi :provider, id: "2", provider_name: "Aacme Scitt" }
+    let(:provider_3) { jsonapi :provider, id: "3", provider_name: "e-Qualitas" }
+
+    let(:course_2) { jsonapi :course, accrediting_provider: provider_1 }
+    let(:course_3) { jsonapi :course, accrediting_provider: provider_2 }
+    let(:course_4) { jsonapi :course, accrediting_provider: provider_3 }
+
+    before do
+      allow(Settings).to receive(:rollover).and_return(true)
+      user = build(:user)
+      stub_omniauth(user: user)
+      stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
+      stub_api_v2_request("/providers/A123", provider_response)
+      stub_api_v2_request(
+        "/providers/A123?include=courses.accrediting_provider",
+        provider_response
+      )
+      root_page.load
+      expect(organisation_page).to be_displayed(provider_code: 'A123')
+      organisation_page.current_cycle.click
+      organisation_page.courses.click
+    end
+
+    scenario "it shows a list of courses" do
+      expect(courses_page.title).to have_content('Courses')
+      expect(courses_page.courses_tables.size).to eq(4)
     end
   end
 end

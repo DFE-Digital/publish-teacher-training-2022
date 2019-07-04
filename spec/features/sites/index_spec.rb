@@ -21,6 +21,7 @@ feature 'View locations', type: :feature do
   let(:location_page) { PageObjects::Page::LocationPage.new }
 
   before do
+    allow(Settings).to receive(:rollover).and_return(false)
     user = build(:user)
     stub_omniauth(user: user)
     stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider[:data]]))
@@ -53,5 +54,19 @@ feature 'View locations', type: :feature do
 
   scenario 'prompts users to add new locations' do
     expect(locations_page).to have_add_a_location_link
+  end
+
+  context 'rollover' do
+    it 'it shows a list of locations' do
+      allow(Settings).to receive(:rollover).and_return(true)
+      root_page.load
+      expect(organisation_page).to be_displayed(provider_code: provider_code)
+      organisation_page.current_cycle.click
+      organisation_page.locations.click
+
+      expect(locations_page).to be_displayed(provider_code: provider_code)
+      expect(locations_page.title).to have_content('Locations')
+      expect(locations_page.locations.size).to eq(3)
+    end
   end
 end
