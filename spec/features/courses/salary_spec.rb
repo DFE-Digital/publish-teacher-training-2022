@@ -41,6 +41,7 @@ feature 'Course salary', type: :feature do
     expect(course_salary_page.title).to have_content(
       "Course length and salary"
     )
+    expect(course_salary_page).to have_enrichment_form
     expect(course_salary_page.course_length_one_year).to be_checked
     expect(course_salary_page.course_length_two_years).to_not be_checked
     expect(course_salary_page.course_length_other_length.value).to eq('')
