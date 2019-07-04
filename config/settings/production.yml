@@ -12,3 +12,4 @@ search_ui:
 environment:
   label: 'Beta'
   selector_name: 'beta'
+rollover: false

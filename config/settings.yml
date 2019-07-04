@@ -36,3 +36,4 @@ service_support:
 environment:
   label: 'Beta'
   selector_name: 'beta'
+rollover: true
