@@ -147,6 +147,6 @@ private
   end
 
   def edit_vacancy_link
-    h.link_to('Edit', h.vacancies_provider_course_path(code: object.course_code), class: 'govuk-link')
+    h.link_to('Edit', h.vacancies_provider_recruitment_cycle_course_path(provider_code: object.provider_code, recruitment_cycle_year: object.recruitment_cycle_year, code: object.course_code), class: 'govuk-link')
   end
 end

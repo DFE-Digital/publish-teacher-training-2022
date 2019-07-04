@@ -8,6 +8,7 @@ FactoryBot.define do
     address3 { nil }
     address4 { nil }
     postcode { nil }
+    recruitment_cycle_year { '2019' }
 
     initialize_with do
       data_attributes = attributes.except(:id)

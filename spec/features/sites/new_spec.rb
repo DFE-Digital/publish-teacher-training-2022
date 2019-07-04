@@ -13,7 +13,7 @@ feature 'Locations', type: :feature do
 
   context 'with provider with few sites' do
     scenario "locations page should have Add a location button" do
-      visit provider_sites_path(provider.provider_code)
+      visit provider_recruitment_cycle_sites_path(provider.provider_code, '2019')
 
       expect(page).to have_content('Add a location')
     end
@@ -23,7 +23,7 @@ feature 'Locations', type: :feature do
     let(:provider) { jsonapi(:provider, can_add_more_sites?: false) }
 
     scenario "locations page should not have Add a location button" do
-      visit provider_sites_path(provider.provider_code)
+      visit provider_recruitment_cycle_sites_path(provider.provider_code, '2019')
 
       expect(page).to have_content('you’ve reached the maximum number of locations available')
     end
@@ -39,7 +39,7 @@ feature 'Locations', type: :feature do
     end
 
     scenario 'Adding a location' do
-      visit provider_sites_path(provider.provider_code)
+      visit provider_recruitment_cycle_sites_path(provider.provider_code, '2019')
 
       click_on 'Add a location'
 
@@ -67,7 +67,7 @@ feature 'Locations', type: :feature do
     end
 
     scenario 'Adding a location with validation errors' do
-      visit new_provider_site_path(provider.provider_code)
+      visit new_provider_recruitment_cycle_site_path(provider.provider_code, '2019')
 
       click_on 'Save'
 

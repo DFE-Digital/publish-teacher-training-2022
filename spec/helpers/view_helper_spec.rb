@@ -22,7 +22,7 @@ RSpec.feature 'View helpers', type: :helper do
   describe "#enrichment_error_url" do
     it "returns enrichment error URL" do
       course = Course.new(build(:course).attributes)
-      expect(helper.enrichment_error_url(provider_code: 'A1', course: course, field: 'about_course')).to eq("/organisations/A1/courses/#{course.course_code}/about#about_course_wrapper")
+      expect(helper.enrichment_error_url(provider_code: 'A1', course: course, field: 'about_course')).to eq("/organisations/A1/#{course.recruitment_cycle_year}/courses/#{course.course_code}/about#about_course_wrapper")
     end
   end
 

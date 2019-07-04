@@ -8,14 +8,14 @@ feature 'Edit course vacancies', type: :feature do
   let!(:sync_courses_request_stub) do
     stub_request(
       :post,
-      "http://localhost:3001/api/v2/providers/AO/courses/" \
+      "http://localhost:3001/api/v2/providers/A0/courses/" \
         "#{course_code}/sync_with_search_and_compare"
     ).to_return(status: 201, body: "")
   end
 
   before do
     stub_omniauth
-    stub_api_v2_request("/providers/AO?include=courses.accrediting_provider", jsonapi(:provider).render)
+    stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", jsonapi(:provider).render)
     stub_request(:patch, %r{\Ahttp://localhost:3001/api/v2/site_statuses/\d+})
     stub_course_request(course)
     course_vacancies_page.load_with_course(course)
@@ -109,8 +109,8 @@ feature 'Edit course vacancies', type: :feature do
     end
 
     scenario 'shows the edit vacancies page' do
-      expect(course_vacancies_page).to have_link('Back', href: provider_courses_path('AO'))
-      expect(course_vacancies_page).to have_link('Cancel changes', href: provider_courses_path('AO'))
+      expect(course_vacancies_page).to have_link('Back', href: provider_recruitment_cycle_courses_path('A0', course.recruitment_cycle_year))
+      expect(course_vacancies_page).to have_link('Cancel changes', href: provider_recruitment_cycle_courses_path('A0', course.recruitment_cycle_year))
       expect(course_vacancies_page.title).to have_content('Edit vacancies')
       expect(course_vacancies_page.caption).to have_content(
         "#{course.name} (#{course.course_code})"
@@ -275,7 +275,7 @@ feature 'Edit course vacancies', type: :feature do
 
   def stub_course_request(course)
     stub_api_v2_request(
-      "/providers/AO/courses/#{course.course_code}?include=site_statuses.site",
+      "/providers/A0/courses/#{course.course_code}?include=site_statuses.site",
       course.render
     )
   end

@@ -31,7 +31,7 @@ feature 'Preview course', type: :feature do
 
   let(:provider) {
     jsonapi(:provider,
-            provider_code: 'AO',
+            provider_code: 'A0',
             website: 'https://scitt.org',
             address1: '1 Long Rd',
             postcode: 'E1 ABC')
@@ -44,7 +44,7 @@ feature 'Preview course', type: :feature do
   before do
     stub_omniauth
     stub_api_v2_request(
-      "/providers/AO/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
       course_response
     )
   end
@@ -52,7 +52,7 @@ feature 'Preview course', type: :feature do
   let(:preview_course_page) { PageObjects::Page::Organisations::CoursePreview.new }
 
   scenario 'viewing the show courses page' do
-    visit preview_provider_course_path('AO', course.course_code)
+    visit preview_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
 
     expect(preview_course_page.title).to have_content(
       "#{course.name} (#{course.course_code})"

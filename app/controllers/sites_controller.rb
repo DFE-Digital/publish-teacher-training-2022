@@ -11,7 +11,7 @@ class SitesController < ApplicationController
     @site.provider_code = @provider.provider_code
 
     if @site.save
-      redirect_to provider_sites_path, flash: { success: 'Your location has been created' }
+      redirect_to provider_recruitment_cycle_sites_path(@site.provider_code), flash: { success: 'Your location has been created' }
     else
       @errors = @site.errors.messages
 
@@ -31,7 +31,7 @@ class SitesController < ApplicationController
     @site.provider_code = @provider.provider_code
 
     if @site.update(site_params)
-      redirect_to provider_sites_path, flash: { success: 'Your changes have been published' }
+      redirect_to provider_recruitment_cycle_sites_path(@site.provider_code, @site.recruitment_cycle_year), flash: { success: 'Your changes have been published' }
     else
       @errors = @site.errors.messages
 

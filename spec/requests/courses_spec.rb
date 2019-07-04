@@ -21,12 +21,12 @@ describe 'Courses' do
           nil,
           :post
         )
-        post publish_provider_course_path(provider_code: provider.provider_code, code: course.course_code)
+        post publish_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
       end
 
       it 'redirects to the course description page' do
         expect(flash[:success]).to include('Your course has been published')
-        expect(response).to redirect_to(provider_course_path(provider_code: provider.provider_code, code: course.course_code))
+        expect(response).to redirect_to(provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
       end
     end
 
@@ -38,12 +38,12 @@ describe 'Courses' do
           :post,
           422
         )
-        post publish_provider_course_path(provider_code: provider.provider_code, code: course.course_code)
+        post publish_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
       end
 
       it 'redirects to the course description page' do
         expect(flash[:error_summary]).to eq(about_course: ["About course can't be blank"])
-        expect(response).to redirect_to(provider_course_path(provider_code: provider.provider_code, code: course.course_code))
+        expect(response).to redirect_to(provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
       end
     end
   end

@@ -2,7 +2,7 @@ module PageObjects
   module Page
     module Organisations
       class CourseVacancies < CourseBase
-        set_url '/organisations/{provider_code}/courses/{course_code}/vacancies'
+        set_url '/organisations/{provider_code}/{recruitment_cycle_year}/courses/{course_code}/vacancies'
 
         element :title, 'h1.govuk-fieldset__heading'
 

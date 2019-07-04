@@ -1,8 +1,8 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell" data-qa="provider__location-name">
-    <%= link_to site.attributes[:location_name], edit_provider_site_path(@provider.provider_code, site.attributes[:id]), class: "govuk-link govuk-!-font-weight-bold" %>
+    <%= link_to site.location_name, edit_provider_recruitment_cycle_site_path(@provider.provider_code, site.recruitment_cycle_year, site.id), class: "govuk-link govuk-!-font-weight-bold" %>
   </td>
   <td class="govuk-table__cell">
-    <%= site.attributes[:code] %> <%= site.attributes[:code] == '-' ? '(dash)' : '' %>
+    <%= site.code %> <%= site.code == '-' ? '(dash)' : '' %>
   </td>
 </tr>

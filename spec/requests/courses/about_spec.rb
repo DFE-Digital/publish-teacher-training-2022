@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Courses', type: :request do
   describe 'GET about' do
     let(:course_json_api)   { jsonapi :course, name: 'English', course_code: 'EN01', provider: provider, include_nulls: [:accrediting_provider] }
-    let(:provider)          { jsonapi(:provider, accredited_body?: true, provider_code: 'AO') }
+    let(:provider)          { jsonapi(:provider, accredited_body?: true, provider_code: 'A0') }
     let(:course)            { course_json_api.to_resource }
     let(:course_response)   { course_json_api.render }
 
@@ -18,7 +18,7 @@ describe 'Courses', type: :request do
     end
     let(:course_2)            { course_2_json_api.to_resource }
     let(:courses)             { [course_1_json_api, course_2_json_api] }
-    let(:provider2)           { jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'AO') }
+    let(:provider2)           { jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'A0') }
     let(:provider_2_response) { provider2.render }
 
     before do
@@ -39,8 +39,9 @@ describe 'Courses', type: :request do
     end
 
     it 'renders the course about' do
-      get(about_provider_course_path(provider_code: provider.provider_code,
-                                     code: course.course_code))
+      get(about_provider_recruitment_cycle_course_path(provider.provider_code,
+                                                       course.recruitment_cycle_year,
+                                                       course.course_code))
 
       expect(response.body).to include(
         "#{course.name} (#{course.course_code})"
@@ -55,9 +56,10 @@ describe 'Courses', type: :request do
 
     context 'with copy_from parameter' do
       it 'renders the course about with data from chosen' do
-        get(about_provider_course_path(provider_code: provider.provider_code,
-                                       code: course.course_code,
-                                       params: { copy_from: course_2.course_code }))
+        get(about_provider_recruitment_cycle_course_path(provider.provider_code,
+                                                         course.recruitment_cycle_year,
+                                                         course.course_code,
+                                                         params: { copy_from: course_2.course_code }))
 
         expect(response.body).to include(
           'Your changes are not yet saved'
@@ -77,7 +79,7 @@ describe 'Courses', type: :request do
 
   describe 'UPDATE about' do
     let(:course_json_api)   { jsonapi :course, provider: provider }
-    let(:provider)          { jsonapi(:provider, provider_code: 'AO') }
+    let(:provider)          { jsonapi(:provider, provider_code: 'A0') }
     let(:course)            { course_json_api.to_resource }
     let(:course_response)   { course_json_api.render }
 
@@ -129,12 +131,12 @@ describe 'Courses', type: :request do
           }
         }.to_json)
 
-        patch about_provider_course_path(provider.provider_code, course.course_code), params: request_params
+        patch about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code), params: request_params
       end
 
       it 'redirects to the course description page' do
         expect(flash[:success]).to include('Your changes have been saved')
-        expect(response).to redirect_to(provider_course_path(provider.provider_code, course.course_code))
+        expect(response).to redirect_to(provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
       end
     end
 
@@ -145,7 +147,7 @@ describe 'Courses', type: :request do
           build(:error, :for_course_publish), :patch, 422
         )
 
-        patch about_provider_course_path(provider.provider_code, course.course_code), params: request_params
+        patch about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code), params: request_params
       end
 
       it 'redirects to the course about page' do

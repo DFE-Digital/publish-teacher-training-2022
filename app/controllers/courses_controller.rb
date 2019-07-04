@@ -22,8 +22,9 @@ class CoursesController < ApplicationController
     if @course.update(course_params)
       flash[:success] = 'Your changes have been saved'
       redirect_to(
-        provider_course_path(
+        provider_recruitment_cycle_course_path(
           @course.provider_code,
+          @course.recruitment_cycle_year,
           @course.course_code
         )
       )
@@ -96,7 +97,7 @@ class CoursesController < ApplicationController
       flash[:error_summary] = @course.errors.messages
     end
 
-    redirect_to provider_course_path(@provider.provider_code, @course.course_code)
+    redirect_to provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
   end
 
 private

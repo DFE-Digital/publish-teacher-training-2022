@@ -2,7 +2,7 @@ module PageObjects
   module Page
     module Organisations
       class CourseDetails < CourseBase
-        set_url '/organisations/{provider_code}/courses/{course_code}/details'
+        set_url '/organisations/{provider_code}/{recruitment_cycle_year}/courses/{course_code}/details'
 
         element :qualifications, '[data-qa=course__qualifications]'
         element :study_mode, '[data-qa=course__study_mode]'

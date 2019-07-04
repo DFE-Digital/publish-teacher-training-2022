@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Courses', type: :request do
   describe 'GET salary' do
     let(:course_json_api)   { jsonapi :course, name: 'English', course_code: 'EN01', provider: provider, include_nulls: [:accrediting_provider] }
-    let(:provider)          { jsonapi(:provider, accredited_body?: true, provider_code: 'AO') }
+    let(:provider)          { jsonapi(:provider, accredited_body?: true, provider_code: 'A0') }
     let(:course)            { course_json_api.to_resource }
     let(:course_response)   { course_json_api.render }
 
@@ -17,7 +17,7 @@ describe 'Courses', type: :request do
     end
     let(:course_2)            { course_2_json_api.to_resource }
     let(:courses)             { [course_1_json_api, course_2_json_api] }
-    let(:provider2)           { jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'AO') }
+    let(:provider2)           { jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'A0') }
     let(:provider_2_response) { provider2.render }
 
     before do
@@ -38,8 +38,9 @@ describe 'Courses', type: :request do
     end
 
     it 'renders the course length and fees' do
-      get(salary_provider_course_path(provider_code: provider.provider_code,
-                                      code: course.course_code))
+      get(salary_provider_recruitment_cycle_course_path(provider.provider_code,
+                                                        course.recruitment_cycle_year,
+                                                        course.course_code))
 
       expect(response.body).to include(
         "#{course.name} (#{course.course_code})"
@@ -54,9 +55,10 @@ describe 'Courses', type: :request do
 
     context 'with copy_from parameter' do
       it 'renders the course length and fees with data from chosen' do
-        get(salary_provider_course_path(provider_code: provider.provider_code,
-                                        code: course.course_code,
-                                        params: { copy_from: course_2.course_code }))
+        get(salary_provider_recruitment_cycle_course_path(provider.provider_code,
+                                                          course.recruitment_cycle_year,
+                                                          course.course_code,
+                                                          params: { copy_from: course_2.course_code }))
 
         expect(response.body).to include(
           'Your changes are not yet saved'

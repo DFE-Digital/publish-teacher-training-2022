@@ -1,7 +1,7 @@
 <%= content_for :page_title, "Course length and fees - #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_course_path(@provider.provider_code, course.course_code)) %>
+  <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
 <%= render partial: 'courses/copy_content_warning',
@@ -16,7 +16,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course, url: fees_provider_course_path(@provider.provider_code, course.course_code) do |f| %>
+    <%= form_with model: course, url: fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) do |f| %>
       <%= f.hidden_field :page, value: :fees %>
       <%= render partial: 'courses/course_length', locals: { f: f } %>
 
@@ -86,7 +86,7 @@
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes', provider_course_path(@provider.provider_code, course.course_code), class: "govuk-link" %>
+        <%= link_to 'Cancel changes', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link" %>
       </p>
     <% end %>
   </div>
@@ -94,6 +94,6 @@
     <%= render partial: 'courses/related_sidebar',
                         locals: {
                           course: course,
-                          page_path: fees_provider_course_path(@provider.provider_code, course.course_code) } %>
+                          page_path: fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) } %>
   </div>
 </div>

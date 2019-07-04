@@ -34,7 +34,7 @@ module ViewHelper
   end
 
   def enrichment_error_url(provider_code:, course:, field:)
-    base = "/organisations/#{provider_code}/courses/#{course.course_code}"
+    base = "/organisations/#{provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}"
 
     {
       'about_course' => base + '/about#about_course_wrapper',

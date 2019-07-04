@@ -32,15 +32,15 @@ feature 'Edit course sites', type: :feature do
       course.render
     )
 
-    course_details_page.load(provider_code: provider.provider_code, course_code: course.course_code)
+    course_details_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
     course_details_page.edit_locations_link.click
     expect(locations_page)
       .to be_displayed(provider_code: provider.provider_code, course_code: course.course_code)
   end
 
   scenario 'viewing the edit locations page' do
-    expect(page).to have_link('Back', href: provider_course_path(provider.provider_code, course.course_code))
-    expect(page).to have_link('Cancel changes', href: provider_course_path(provider.provider_code, course.course_code))
+    expect(page).to have_link('Back', href: provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
+    expect(page).to have_link('Cancel changes', href: provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
     expect(locations_page.title).to have_content('Locations')
     expect(locations_page.caption).to have_content(
       "#{course.name} (#{course.course_code})"

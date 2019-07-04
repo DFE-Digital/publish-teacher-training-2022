@@ -1,7 +1,7 @@
 <%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Locations - #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_course_path(@provider.provider_code, course.course_code)) %>
+  <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
 <% if @errors.present? %>
@@ -14,7 +14,7 @@
         Removing all locations would prevent people from applying to this course.
         If you want to close applications, you can
         <%= link_to "edit the vacancies for this course",
-          vacancies_provider_course_path(code: course.course_code),
+          vacancies_provider_recruitment_cycle_course_path(code: course.course_code),
           class: "govuk-link"
         %>.
       </p>
@@ -29,7 +29,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for course, url: locations_provider_course_path(@provider.provider_code, course.course_code), method: :put do |f| %>
+    <%= form_for course, url: locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :put do |f| %>
       <div class="govuk-form-group">
         <div class="govuk-checkboxes">
           <%= f.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sf| %>
@@ -53,7 +53,7 @@
     <% end %>
 
     <p class="govuk-body">
-      <%= link_to 'Cancel changes', provider_course_path(@provider.provider_code, course.course_code), class: "govuk-link" %>
+      <%= link_to 'Cancel changes', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link" %>
     </p>
   </div>
 </div>
