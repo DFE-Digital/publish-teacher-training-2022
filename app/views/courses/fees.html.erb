@@ -86,7 +86,7 @@
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link" %>
+        <%= link_to 'Cancel changes', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link govuk-link--no-visited-state" %>
       </p>
     <% end %>
   </div>
