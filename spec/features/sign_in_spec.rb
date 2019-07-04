@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Sign in', type: :feature do
   let(:transition_info_page) { PageObjects::Page::TransitionInfo.new }
+  let(:rollover_page)        { PageObjects::Page::Rollover.new }
   let(:organisations_page)   { PageObjects::Page::OrganisationsPage.new }
   let(:root_page)            { PageObjects::Page::RootPage.new }
 
@@ -31,6 +32,24 @@ feature 'Sign in', type: :feature do
 
     expect(transition_info_page.title).to have_content('Important new features')
     transition_info_page.continue.click
+
+    expect(rollover_page).to be_displayed
+    expect(request).to have_been_made
+  end
+
+  scenario 'new user accepts the rollover page' do
+    user = build :user, :transitioned
+
+    stub_omniauth(user: user)
+    stub_api_v2_request('/providers', jsonapi(:providers_response))
+    request = stub_api_v2_request "/users/#{user.id}/accept_rollover_screen", user.to_jsonapi, :patch
+
+    visit '/signin'
+
+    expect(rollover_page).to be_displayed
+
+    expect(rollover_page.title).to have_content('Begin preparing for the next cycle')
+    rollover_page.continue.click
 
     expect(organisations_page).to be_displayed
     expect(request).to have_been_made

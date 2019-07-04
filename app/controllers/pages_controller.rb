@@ -12,4 +12,6 @@ class PagesController < ApplicationController
   def new_features; end
 
   def transition_info; end
+
+  def rollover; end
 end
