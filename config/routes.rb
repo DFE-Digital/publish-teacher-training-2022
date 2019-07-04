@@ -10,6 +10,22 @@ Rails.application.routes.draw do
   root to: "providers#index"
 
   resources :providers, path: 'organisations', param: :code do
+    # Redirect legacy URLS to default recruitment cycle i.e. 2019
+    get '/locations', to: redirect('/organisations/%{provider_code}/2019/locations')
+    get '/locations/:location_id/edit', to: redirect('/organisations/%{provider_code}/2019/locations/%{location_id}/edit')
+    get '/locations/new', to: redirect('/organisations/%{provider_code}/2019/locations/new')
+    get '/courses/:course_code', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}')
+    get '/courses/:course_code/locations', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/locations')
+    get '/courses/:course_code/vacancies', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/vacancies')
+    get '/courses/:course_code/about', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/about')
+    get '/courses/:course_code/details', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/details')
+    get '/courses/:course_code/fees', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/fees')
+    get '/courses/:course_code/salary', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/salary')
+    get '/courses/:course_code/requirements', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/requirements')
+    get '/courses/:course_code/withdraw', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/withdraw')
+    get '/courses/:course_code/delete', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/delete')
+    get '/courses/:course_code/preview', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/preview')
+
     resources :recruitment_cycles, param: :year, path: '', only: :show do
       resources :courses, param: :code do
         get '/vacancies', on: :member, to: 'courses/vacancies#edit'

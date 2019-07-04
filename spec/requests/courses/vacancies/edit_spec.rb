@@ -29,6 +29,13 @@ describe 'Edit vacancies' do
       get(edit_vacancies_path)
     end
 
+    context 'Default recruitment cycle' do
+      it 'should redirect to new sites#index route' do
+        get("/organisations/A0/courses/#{course.course_code}/vacancies")
+        expect(response).to redirect_to(vacancies_provider_recruitment_cycle_course_path('A0', '2019', course.course_code))
+      end
+    end
+
     it 'has the correct heading' do
       expect(response.body).to include('Edit vacancies')
     end
