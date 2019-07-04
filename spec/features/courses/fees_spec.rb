@@ -35,6 +35,7 @@ feature 'Course fees', type: :feature do
     expect(course_fees_page.title).to have_content(
       "Course length and fees"
     )
+    expect(course_fees_page).to have_enrichment_form
     expect(course_fees_page.course_length_one_year).not_to be_checked
     expect(course_fees_page.course_length_two_years).to be_checked
     expect(course_fees_page.course_length_other_length.value).to eq('')

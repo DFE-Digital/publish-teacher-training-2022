@@ -40,6 +40,7 @@ feature 'Course requirements', type: :feature do
     expect(course_requirements_page.title).to have_content(
       "Requirements and eligibility"
     )
+    expect(course_requirements_page).to have_enrichment_form
     expect(course_requirements_page.required_qualifications.value).to eq(
       course.required_qualifications
     )
