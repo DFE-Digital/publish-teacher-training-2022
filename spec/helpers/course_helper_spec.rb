@@ -10,11 +10,11 @@ RSpec.feature 'View helpers', type: :helper do
       before do
         @provider = Provider.new(build(:provider).attributes)
         @course = Course.new(build(:course).attributes)
-        @errors = { 'about_course' => 'Something about the course' }
+        @errors = { about_course: ['Something about the course'] }
       end
 
       it "returns correct content" do
-        expect(helper.course_summary_label('About course', "about_course")).to eq("<dt class=\"govuk-summary-list__key course-parts__fields__label--error\"><span>About course</span><a class=\"govuk-link govuk-!-display-block\" href=\"/organisations/#{@provider.provider_code}/courses/#{@course.course_code}/about#about_course_wrapper\">Something about the course</a></dt>")
+        expect(helper.course_summary_label('About course', :about_course)).to eq("<dt class=\"govuk-summary-list__key course-parts__fields__label--error\"><span>About course</span><a class=\"govuk-link govuk-!-display-block\" href=\"/organisations/#{@provider.provider_code}/courses/#{@course.course_code}/about#about_course_wrapper\">Something about the course</a></dt>")
       end
     end
   end

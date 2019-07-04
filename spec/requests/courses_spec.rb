@@ -42,7 +42,7 @@ describe 'Courses' do
       end
 
       it 'redirects to the course description page' do
-        expect(flash[:error_summary]).to eq("about_course" => "About course can't be blank")
+        expect(flash[:error_summary]).to eq(about_course: ["About course can't be blank"])
         expect(response).to redirect_to(provider_course_path(provider_code: provider.provider_code, code: course.course_code))
       end
     end

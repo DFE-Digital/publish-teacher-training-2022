@@ -28,14 +28,16 @@
     </h2>
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
-        <% @errors.each do |field, error| %>
-          <li>
-            <a href="<%= enrichment_error_url(
-              provider_code: @provider.provider_code,
-              course: @course,
-              field: field
-            ) %>"><%= error %></a>
-          </li>
+        <% @errors.each do |id, messages| %>
+          <% messages.each do |message| %>
+            <li>
+              <a href="<%= enrichment_error_url(
+                provider_code: @provider.provider_code,
+                course: @course,
+                field: id
+              ) %>"><%= message %></a>
+            </li>
+          <% end %>
         <% end %>
       </ul>
     </div>

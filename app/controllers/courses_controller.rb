@@ -90,16 +90,10 @@ class CoursesController < ApplicationController
   def preview; end
 
   def publish
-    errors = @course.publish(provider_code: @provider.provider_code).errors
-    if errors.present?
-      flash[:error_summary] = errors.map { |error|
-        [
-          error[:title].last(error[:title].length - 'Invalid '.length),
-          error[:detail]
-        ]
-      }.to_h
-    else
+    if @course.publish
       flash[:success] = "Your course has been published."
+    else
+      flash[:error_summary] = @course.errors.messages
     end
 
     redirect_to provider_course_path(@provider.provider_code, @course.course_code)
