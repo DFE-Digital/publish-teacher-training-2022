@@ -14,6 +14,7 @@ describe UsersController, type: :controller do
     @controller = old_controller
 
     allow(Raven).to receive(:capture_exception)
+    allow(Settings).to receive(:rollover).and_return(true)
   end
 
   describe 'GET #accept_transition_info' do
@@ -33,10 +34,39 @@ describe UsersController, type: :controller do
         stub_api_v2_request("/users/#{user.id}/accept_transition_screen", {}, :patch, 400)
       end
 
-      it "redirects to providers index" do
+      it "redirects to rollover screen" do
         get :accept_transition_info
         expect(Raven).to have_received(:capture_exception).with(instance_of(JsonApiClient::Errors::ClientError))
         expect(response).to redirect_to(rollover_path)
+      end
+    end
+  end
+
+  describe 'GET #accept_transition_info when rollover is disabled' do
+    before do
+      allow(Settings).to receive(:rollover).and_return(false)
+    end
+
+    context "with working request" do
+      before do
+        stub_api_v2_request("/users/#{user.id}/accept_transition_screen", {}, :patch, 200)
+      end
+
+      it "redirects to the providers screen" do
+        get :accept_transition_info
+        expect(response).to redirect_to(providers_path)
+      end
+    end
+
+    context "with client error" do
+      before do
+        stub_api_v2_request("/users/#{user.id}/accept_transition_screen", {}, :patch, 400)
+      end
+
+      it "redirects to providers index" do
+        get :accept_transition_info
+        expect(Raven).to have_received(:capture_exception).with(instance_of(JsonApiClient::Errors::ClientError))
+        expect(response).to redirect_to(providers_path)
       end
     end
   end

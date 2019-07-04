@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
 
     if user.state == 'new'
       redirect_to transition_info_path
-    elsif user.state == 'transitioned'
+    elsif Settings.rollover && user.state == 'transitioned'
       redirect_to rollover_path
     else
       redirect_to session[:redirect_back_to] || root_path
