@@ -34,7 +34,7 @@
       <%= f.submit "Save and publish changes", class: "govuk-button", data: { qa: 'location__publish-changes' } %>
     <% end %>
     <p class="govuk-body">
-      <%= link_to "Cancel changes", provider_recruitment_cycle_sites_path(@provider.provider_code), class: "govuk-link" %>
+      <%= link_to "Cancel changes", provider_recruitment_cycle_sites_path(@provider.provider_code), class: "govuk-link govuk-link--no-visited-state" %>
     </p>
   </div>
 </div>

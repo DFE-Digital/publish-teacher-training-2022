@@ -40,7 +40,7 @@ feature 'Edit course sites', type: :feature do
 
   scenario 'viewing the edit locations page' do
     expect(page).to have_link('Back', href: provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
-    expect(page).to have_link('Cancel changes', href: provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
+    expect(page).to have_link('Cancel changes', href: details_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
     expect(locations_page.title).to have_content('Locations')
     expect(locations_page.caption).to have_content(
       "#{course.name} (#{course.course_code})"

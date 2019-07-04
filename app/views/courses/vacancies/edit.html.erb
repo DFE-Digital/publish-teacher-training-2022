@@ -32,7 +32,7 @@
       <% else %>
         <%= form.submit "Reopen applications", class: "govuk-button" %>
       <% end %>
-      <p class="govuk-body"><%= govuk_link_to "Cancel changes", provider_recruitment_cycle_courses_path(params[:provider_code]) %></p>
+      <p class="govuk-body"><%= link_to "Cancel changes", provider_recruitment_cycle_courses_path(params[:provider_code]), class: "govuk-link govuk-link--no-visited-state" %></p>
     <% end %>
   </div>
 </div>
