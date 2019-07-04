@@ -37,6 +37,13 @@ describe 'Courses', type: :request do
       )
     end
 
+    context 'Default recruitment cycle' do
+      it 'should redirect to new courses#salary route' do
+        get("/organisations/#{provider.provider_code}/courses/#{course.course_code}/salary")
+        expect(response).to redirect_to(salary_provider_recruitment_cycle_course_path(provider.provider_code, '2019', course.course_code))
+      end
+    end
+
     it 'renders the course length and fees' do
       get(salary_provider_recruitment_cycle_course_path(provider.provider_code,
                                                         course.recruitment_cycle_year,
