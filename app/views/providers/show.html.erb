@@ -19,7 +19,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <% if Settings.rollover %>
+    <% if @provider.rolled_over? %>
       <h2 class="govuk-heading-m"><%= govuk_link_to "Current cycle (2019 – 2020)", provider_recruitment_cycle_path(@provider.provider_code, '2019'), data: { qa: 'provider__courses__current_cycle' } %></h2>
       <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
@@ -37,7 +37,7 @@
       <li>publish this information on all course pages</li>
     </ul>
 
-    <% unless Settings.rollover %>
+    <% unless @provider.rolled_over? %>
       <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: '2019' } %>
       <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: '2019' } %>
     <% end %>

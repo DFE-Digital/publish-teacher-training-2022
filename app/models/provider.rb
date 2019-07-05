@@ -11,4 +11,8 @@ class Provider < Base
   def full_address
     [address1, address2, address3, address4, postcode].select(&:present?).join("<br> ").html_safe
   end
+
+  def rolled_over?
+    Settings.rollover
+  end
 end
