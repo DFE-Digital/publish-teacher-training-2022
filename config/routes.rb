@@ -60,6 +60,8 @@ Rails.application.routes.draw do
   get "/new-features", to: "pages#new_features", as: :new_features
   get "/transition-info", to: "pages#transition_info", as: :transition_info
   patch '/accept-transition-info', to: 'users#accept_transition_info'
+  get "/rollover", to: "pages#rollover", as: :rollover
+  patch '/accept-rollover', to: 'users#accept_rollover'
 
   match '/404', to: 'errors#not_found', via: :all
   match '/403', to: 'errors#forbidden', via: :all
