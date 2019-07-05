@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 feature 'Index courses', type: :feature do
-  let(:course_1) { jsonapi :course, name: 'English', include_nulls: [:accrediting_provider] }
+  let(:course_1) {
+    jsonapi :course,
+            name: 'English',
+            include_nulls: [:accrediting_provider]
+  }
   let(:course_2) {
     jsonapi :course,
             name: 'Mathematics',
@@ -10,12 +14,35 @@ feature 'Index courses', type: :feature do
             has_vacancies?: true,
             include_nulls: [:accrediting_provider]
   }
-  let(:course_3) { jsonapi :course, findable?: false, name: 'Physics', content_status: "empty", include_nulls: [:accrediting_provider] }
-  let(:course_4) { jsonapi :course, findable?: false, name: 'Science', content_status: "published", include_nulls: [:accrediting_provider] }
-  let(:courses)  { [course_1, course_2, course_3, course_4] }
-  let(:provider) do
-    jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'A123')
-  end
+  let(:course_3) {
+    jsonapi :course,
+            findable?: false,
+            name: 'Physics',
+            content_status: "empty",
+            include_nulls: [:accrediting_provider]
+  }
+  let(:course_4) {
+    jsonapi :course,
+            findable?: false,
+            name: 'Science',
+            content_status: "published",
+            include_nulls: [:accrediting_provider]
+  }
+  let(:next_cycle_course) {
+    jsonapi :course,
+            findable?: false,
+            name: 'Geoplanetary Science',
+            content_status: "published",
+            include_nulls: [:accrediting_provider],
+            recruitment_cycle_year: '2020'
+  }
+  let(:courses)  { [course_1, course_2, course_3, course_4, next_cycle_course] }
+  let(:provider) {
+    jsonapi :provider,
+            courses: courses,
+            accredited_body?: true,
+            provider_code: 'A123'
+  }
   let(:provider_response) { provider.render }
   let(:root_page) { PageObjects::Page::RootPage.new }
   let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
@@ -37,9 +64,11 @@ feature 'Index courses', type: :feature do
       organisation_page.courses.click
     end
 
-    scenario 'it shows a list of courses' do
+    scenario 'it shows a list of courses from this cycle' do
       expect(courses_page.title).to have_content('Courses')
       courses_table = courses_page.courses_tables.first
+
+      expect(courses_table).not_to have_content('Geoplanetary Science')
       expect(courses_table.rows.size).to eq(4)
 
       first_row = courses_table.rows.first
@@ -113,8 +142,10 @@ feature 'Index courses', type: :feature do
       organisation_page.courses.click
     end
 
-    scenario "it shows a list of courses" do
+    scenario "it shows a list of courses from this cycle" do
       expect(courses_page.title).to have_content('Courses')
+
+      expect(courses_page).not_to have_content('Geoplanetary Science')
       expect(courses_page.courses_tables.size).to eq(4)
 
       expect(courses_page.courses_tables.first).to_not have_subheading
