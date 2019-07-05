@@ -106,6 +106,14 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def current_cycle?
+    course.recruitment_cycle_year.to_i == Settings.current_cycle
+  end
+
+  def next_cycle?
+    course.recruitment_cycle_year.to_i == Settings.current_cycle + 1
+  end
+
 private
 
   def status_tag_content
