@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get '/locations', to: redirect('/organisations/%{provider_code}/2019/locations')
     get '/locations/:location_id/edit', to: redirect('/organisations/%{provider_code}/2019/locations/%{location_id}/edit')
     get '/locations/new', to: redirect('/organisations/%{provider_code}/2019/locations/new')
+    get '/courses', to: redirect('/organisations/%{provider_code}/2019/courses')
     get '/courses/:course_code', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}')
     get '/courses/:course_code/locations', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/locations')
     get '/courses/:course_code/vacancies', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/vacancies')
@@ -26,7 +27,8 @@ Rails.application.routes.draw do
     get '/courses/:course_code/delete', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/delete')
     get '/courses/:course_code/preview', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/preview')
 
-    resources :recruitment_cycles, param: :year, path: '', only: :show do
+    # TODO: Extract year constraint to future proof for future cycles
+    resources :recruitment_cycles, param: :year, constraints: { year: /2019|2020/ }, path: '', only: :show do
       resources :courses, param: :code do
         get '/vacancies', on: :member, to: 'courses/vacancies#edit'
         put '/vacancies', on: :member, to: 'courses/vacancies#update'
