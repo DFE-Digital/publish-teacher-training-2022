@@ -18,8 +18,12 @@
   </nav>
 <% end %>
 
-<h1 class="govuk-heading-xl">Courses</h1>
-
+<h1 class="govuk-heading-xl">
+  <% if rollover? %>
+   <span class="govuk-caption-xl"><%= recruitment_cycle_title %></span>
+  <% end %>
+  Courses
+</h1>
 <p class="govuk-body">Use this section to:</p>
 
 <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
