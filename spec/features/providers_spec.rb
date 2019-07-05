@@ -19,6 +19,7 @@ RSpec.feature 'View providers', type: :feature do
 
 
   scenario 'Navigate to /organisations/A0' do
+    allow(Settings).to receive(:rollover).and_return(false)
     stub_omniauth
     stub_api_v2_request('/providers/A0', provider_response)
 
@@ -27,5 +28,17 @@ RSpec.feature 'View providers', type: :feature do
     expect(page).to_not have_selector(".govuk-breadcrumbs")
     expect(page).to have_link('Locations', href: '/organisations/A0/2019/locations')
     expect(page).to have_link('Courses', href: '/organisations/A0/2019/courses')
+  end
+
+  context 'Rollover' do
+    scenario 'Navigate to /organisations/A0' do
+      allow(Settings).to receive(:rollover).and_return(true)
+      stub_omniauth
+      stub_api_v2_request('/providers/A0', provider_response)
+
+      visit('/organisations/A0')
+      expect(find('h1')).to have_content(provider1.provider_name.to_s)
+      expect(page).to have_link("Current cycle \(2019 – 2020\)")
+    end
   end
 end
