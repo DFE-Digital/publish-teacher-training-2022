@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Courses" %>
+<%= content_for :page_title, rollover? ? "Courses – #{recruitment_cycle_title}" : "Courses" %>
 
 <% content_for :before_content do %>
   <nav class="govuk-breadcrumbs">
