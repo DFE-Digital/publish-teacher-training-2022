@@ -160,6 +160,7 @@ private
     # rubocop:disable Style/MultilineBlockChain
     @courses_by_accrediting_provider = @provider
       .courses
+      .select { |course| course.recruitment_cycle_year == params[:recruitment_cycle_year] }
       .group_by { |course|
         # HOTFIX: A courses API response no included hash seems to cause issues with the
         # .accrediting_provider relationship lookup. To be investigated, for now,

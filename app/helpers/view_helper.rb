@@ -77,5 +77,14 @@ module ViewHelper
     end
   end
 
+  def show_legacy_courses_table?
+    # For the 2019/2020 cycle we transitioned mid-cycle
+    # In this year the course and site statuses aren't directly tied to the enrichment status
+    # A course could appear on Find without any published content
+    #
+    # This is not true for following years
+    params[:recruitment_cycle_year] && params[:recruitment_cycle_year] == '2019'
+  end
+
   alias_method :cns, :classnames
 end

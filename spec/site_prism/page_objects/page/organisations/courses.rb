@@ -5,6 +5,7 @@ module PageObjects
         set_url '/organisations/{provider_code}/{recruitment_cycle_year}/courses'
 
         element :flash, '.govuk-success-summary'
+        element :caption, '.govuk-caption-xl'
 
         sections :courses_tables, '[data-qa="courses__table-section"]' do
           element :subheading, 'h2'
@@ -12,8 +13,8 @@ module PageObjects
             element :name, '[data-qa="courses-table__course"]'
             element :link, 'td.course-table__course-name a'
             element :ucas_status, '[data-qa="courses-table__ucas-status"]'
-            element :content_status, '[data-qa="courses-table__content-status"]'
-            element :is_it_on_find, '[data-qa="courses-table__findable"]'
+            element :status, '[data-qa="courses-table__status"]'
+            element :on_find, '[data-qa="courses-table__findable"]'
             element :find_link, '[data-qa="courses-table__findable"] a'
             element :applications, '[data-qa="courses-table__applications"]'
             element :vacancies, '[data-qa="courses-table__vacancies"]'

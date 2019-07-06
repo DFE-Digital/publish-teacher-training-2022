@@ -2,11 +2,19 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header">Course</th>
-      <th class="govuk-table__header">UCAS Status</th>
-      <th class="govuk-table__header">Content</th>
-      <th class="govuk-table__header">Is it on <abbr class="text-decoration-underline-dotted" title="Find postgraduate teacher training">Find</abbr>?</th>
+      <% if show_legacy_courses_table? %>
+        <th class="govuk-table__header">UCAS Status</th>
+        <th class="govuk-table__header">Content</th>
+      <% else %>
+        <th class="govuk-table__header">Status</th>
+      <% end %>
+      <th class="govuk-table__header">
+        <% if current_cycle? %>Is it<% else %>Will it be<% end %> on <abbr class="text-decoration-underline-dotted" title="Find postgraduate teacher training">Find</abbr>?
+      </th>
       <th class="govuk-table__header">Applications</th>
-      <th class="govuk-table__header">Vacancies</th>
+      <% if current_cycle? %>
+        <th class="govuk-table__header">Vacancies</th>
+      <% end %>
     </tr>
   </thead>
   <tbody class="govuk-table__body">

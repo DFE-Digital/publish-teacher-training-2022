@@ -46,4 +46,32 @@ describe CourseDecorator do
   it "returns course length" do
     expect(course.length).to eq('1 year')
   end
+
+  context 'recruitment cycles' do
+    before do
+      allow(Settings).to receive(:current_cycle).and_return(2019)
+    end
+
+    context 'for a course in the current cycle' do
+      let(:course_jsonapi) {
+        jsonapi(:course, recruitment_cycle_year: '2019').to_resource
+      }
+
+      it 'knows which cycle it’s in' do
+        expect(course.next_cycle?).to eq(false)
+        expect(course.current_cycle?).to eq(true)
+      end
+    end
+
+    context 'for a course in the next cycle' do
+      let(:course_jsonapi) {
+        jsonapi(:course, recruitment_cycle_year: '2020').to_resource
+      }
+
+      it 'knows which cycle it’s in' do
+        expect(course.next_cycle?).to eq(true)
+        expect(course.current_cycle?).to eq(false)
+      end
+    end
+  end
 end

@@ -37,3 +37,4 @@ environment:
   label: 'Beta'
   selector_name: 'beta'
 rollover: true
+current_cycle: 2019

@@ -6,10 +6,12 @@
     %>
     <span class="govuk-body-s"><%= course.description %></span>
   </td>
-  <td class="govuk-table__cell" data-qa="courses-table__ucas-status">
-    <%= course.ucas_status %>
-  </td>
-  <td class="govuk-table__cell" data-qa="courses-table__content-status">
+  <% if show_legacy_courses_table? %>
+    <td class="govuk-table__cell" data-qa="courses-table__ucas-status">
+      <%= course.ucas_status %>
+    </td>
+  <% end %>
+  <td class="govuk-table__cell" data-qa="courses-table__status">
     <% unless course.not_running? %>
       <%= course.status_tag %>
     <% end %>
@@ -22,9 +24,11 @@
       <%= course.open_or_closed_for_applications %>
     <% end %>
   </td>
-  <td class="govuk-table__cell" data-qa="courses-table__vacancies">
-    <% if course.is_running? %>
-      <%= course.vacancies %>
-    <% end %>
-  </td>
+  <% if current_cycle? %>
+    <td class="govuk-table__cell" data-qa="courses-table__vacancies">
+      <% if course.is_running? %>
+        <%= course.vacancies %>
+      <% end %>
+    </td>
+  <% end %>
 </tr>
