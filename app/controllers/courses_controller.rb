@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
   before_action :initialise_errors
+  before_action :build_recruitment_cycle
   before_action :build_courses, only: %i[index about requirements fees salary]
   before_action :build_course, except: %i[index preview]
   before_action :build_course_for_preview, only: :preview
@@ -218,5 +219,9 @@ private
 
     @course.publishable?
     @errors = @course.errors.messages.select { |key| attributes.include? key }
+  end
+
+  def build_recruitment_cycle
+    @recruitment_cycle = RecruitmentCycle.new(params[:recruitment_cycle_year])
   end
 end
