@@ -1,4 +1,4 @@
-<%= content_for :page_title, @provider.provider_name %>
+<%= content_for :page_title, @recruitment_cycle.title %>
 
 <% content_for :before_content do %>
   <nav class="govuk-breadcrumbs">
@@ -8,14 +8,19 @@
           <%= link_to "Organisations", providers_path, class: "govuk-breadcrumbs__link" %>
         </li>
       <% end %>
-      <li class="govuk-breadcrumbs__list-item" aria-current="page">
+      <li class="govuk-breadcrumbs__list-item">
         <%= link_to @provider.provider_name, provider_path(@provider.provider_code), class: "govuk-breadcrumbs__link" %>
+      </li>
+      <li class="govuk-breadcrumbs__list-item" aria-current="page">
+        <%= @recruitment_cycle.title %>
       </li>
     </ol>
   </nav>
 <% end %>
 
-<h1 class="govuk-heading-xl">Current cycle (2019 – 2020)</h1>
+<h1 class="govuk-heading-xl">
+  <%= @recruitment_cycle.title %>
+</h1>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

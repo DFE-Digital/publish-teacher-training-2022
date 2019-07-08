@@ -1,5 +1,6 @@
 class RecruitmentCyclesController < ApplicationController
   def show
+    @recruitment_cycle = RecruitmentCycle.new(params[:year])
     @provider = Provider.find(params[:provider_code]).first
 
     if !@provider.rolled_over?
