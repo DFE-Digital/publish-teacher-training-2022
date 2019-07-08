@@ -24,6 +24,17 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <% if @recruitment_cycle.next? %>
+      <p class="govuk-body-l">
+        Prepare your courses and locations for the next cycle. All your courses, locations and details have been copied from the current&nbsp;cycle.
+      </p>
+    <% else %>
+      <p class="govuk-body-l">
+        Manage courses, locations and vacancies in the current&nbsp;cycle.
+      </p>
+    <% end %>
+    <hr class="govuk-section-break govuk-section-break--m">
+
     <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: params[:year] } %>
     <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: params[:year] } %>
   </div>
