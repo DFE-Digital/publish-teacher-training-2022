@@ -81,7 +81,7 @@
           <% if course.sites.size == 1 %>
             <%= course.sites.first.location_name %>
           <% else %>
-            <ul class="govuk-list courses-locations-list">
+            <ul class="govuk-list app-courses-locations-list">
               <% course.alphabetically_sorted_sites.each do |site| %>
                 <li>
                   <%= site.location_name %>
