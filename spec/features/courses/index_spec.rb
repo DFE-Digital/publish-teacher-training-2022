@@ -56,6 +56,7 @@ feature 'Index courses', type: :feature do
   let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
 
   before do
+    allow(Settings).to receive(:rollover).and_return(false)
     allow(Settings).to receive(:current_cycle).and_return(2019)
     user = build(:user)
     stub_omniauth(user: user)
@@ -170,79 +171,74 @@ feature 'Index courses', type: :feature do
       allow(Settings).to receive(:rollover).and_return(true)
     end
 
-  end
-
-  describe 'courses in the next cycle' do
-    before do
-      courses_page.load(recruitment_cycle_year: '2020', provider_code: provider.provider_code)
+    describe "courses in the current cycle" do
+      scenario "shows a caption above the page title" do
+        courses_page.load(recruitment_cycle_year: '2019', provider_code: provider.provider_code)
+        expect(courses_page.caption).to have_content('Current cycle (2019 – 2020)')
+      end
     end
 
-    scenario "it indicates if a course will be on Find" do
-      expect(courses_page.courses_tables.first).to have_content('Will it be on Find?')
+    describe "courses in the next cycle" do
+      before do
+        courses_page.load(recruitment_cycle_year: '2020', provider_code: provider.provider_code)
+      end
+
+      scenario "it indicates if a course will be on Find" do
+        expect(courses_page.courses_tables.first).to have_content('Will it be on Find?')
+      end
+
+      scenario "it shows a list of courses from the next cycle" do
+        expect(courses_page).to be_displayed
+        expect(courses_page.caption).to have_content('Next cycle (2020 – 2021)')
+
+        courses_table = courses_page.courses_tables.first
+        expect(courses_table.rows.size).to eq(2)
+
+        first_row = courses_table.rows.first
+        expect(first_row.name).to           have_content next_cycle_course_1.attributes[:name]
+        expect(first_row.status).to         have_content 'Published'
+        expect(first_row.on_find).to        have_content 'Yes – from October'
+        expect(first_row.applications).to   have_content 'Closed'
+
+        second_row = courses_table.rows.second
+        expect(second_row.name).to                have_content next_cycle_course_2.attributes[:name]
+        expect(second_row.status).to              have_content 'Draft'
+        expect(second_row.on_find).to             have_content('No – still in draft')
+        expect(second_row.applications.text).to   be_empty
+      end
+
+      scenario "it hides vacancies, UCAS status and Find links" do
+        courses_table = courses_page.courses_tables.first
+
+        first_row = courses_table.rows.first
+        expect(first_row).not_to have_ucas_status
+        expect(first_row).not_to have_find_link
+        expect(first_row).not_to have_vacancies
+
+        second_row = courses_table.rows.second
+        expect(second_row).not_to have_ucas_status
+        expect(second_row).not_to have_find_link
+        expect(second_row).not_to have_vacancies
+      end
     end
 
-    scenario "it shows a list of courses from the next cycle" do
-      expect(courses_page).to be_displayed
-      expect(courses_page.caption).to have_content('Next cycle (2020 – 2021)')
+    describe "courses in the 2019 cycle when not the current cycle" do
+      before do
+        allow(Settings).to receive(:current_cycle).and_return(2020)
+        courses_page.load(recruitment_cycle_year: '2019', provider_code: provider.provider_code)
+      end
 
-      courses_table = courses_page.courses_tables.first
-      expect(courses_table.rows.size).to eq(2)
+      scenario "shows the UCAS status when it’s not the current cycle" do
+        expect(courses_page.caption).to have_content('2019 – 2020')
+        courses_table = courses_page.courses_tables.first
 
-      first_row = courses_table.rows.first
-      expect(first_row.name).to           have_content next_cycle_course_1.attributes[:name]
-      expect(first_row.status).to         have_content 'Published'
-      expect(first_row.on_find).to        have_content 'Yes – from October'
-      expect(first_row.applications).to   have_content 'Closed'
+        expect(courses_table).to have_content('UCAS Status')
+        expect(courses_table).to have_content('Content')
 
-      second_row = courses_table.rows.second
-      expect(second_row.name).to                have_content next_cycle_course_2.attributes[:name]
-      expect(second_row.status).to              have_content 'Draft'
-      expect(second_row.on_find).to             have_content('No – still in draft')
-      expect(second_row.applications.text).to   be_empty
-    end
-
-    scenario "it hides vacancies, UCAS status and Find links" do
-      courses_table = courses_page.courses_tables.first
-
-      first_row = courses_table.rows.first
-      expect(first_row).not_to have_ucas_status
-      expect(first_row).not_to have_find_link
-      expect(first_row).not_to have_vacancies
-
-      second_row = courses_table.rows.second
-      expect(second_row).not_to have_ucas_status
-      expect(second_row).not_to have_find_link
-      expect(second_row).not_to have_vacancies
-    end
-  end
-
-  describe 'courses in the 2019 cycle' do
-    before do
-      allow(Settings).to receive(:current_cycle).and_return(2020)
-      courses_page.load(recruitment_cycle_year: '2019', provider_code: provider.provider_code)
-    end
-
-    scenario "shows the UCAS status when it’s not the current cycle" do
-      expect(courses_page.caption).to have_content('2019 – 2020')
-      courses_table = courses_page.courses_tables.first
-
-      expect(courses_table).to have_content('UCAS Status')
-      expect(courses_table).to have_content('Content')
-
-      first_row = courses_table.rows.first
-      expect(first_row.ucas_status).to    have_content 'Running'
-      expect(first_row.status).to         have_content 'Published'
-    end
-  end
-
-  describe 'during rollover' do
-    before do
-      allow(Settings).to receive(:rollover).and_return(true)
-      courses_page.load(recruitment_cycle_year: '2019', provider_code: provider.provider_code)
-    end
-
-    scenario "shows a caption above the page title" do
-      expect(courses_page.caption).to have_content('Current cycle (2019 – 2020)')
+        first_row = courses_table.rows.first
+        expect(first_row.ucas_status).to    have_content 'Running'
+        expect(first_row.status).to         have_content 'Published'
+      end
     end
   end
 end
