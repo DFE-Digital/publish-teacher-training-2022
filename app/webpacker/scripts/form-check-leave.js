@@ -12,12 +12,9 @@ FormCheckLeave.prototype.data = function() {
 
 FormCheckLeave.prototype.init = function() {
   const $form = this.$module;
-  let $data = this.$data;
 
   if (!$form) return;
-
-  $data = this.data();
-
+  const $data = this.data();
   this.action($form, $data);
 };
 
@@ -26,7 +23,6 @@ FormCheckLeave.prototype.action = function($form, $data) {
   $form.addEventListener("submit", () => (window.onbeforeunload = null));
 
   window.onbeforeunload = function() {
-    event.preventDefault();
     event.preventDefault();
     event.returnValue =
       "You have unsaved changes, are you sure you want to leave?";
