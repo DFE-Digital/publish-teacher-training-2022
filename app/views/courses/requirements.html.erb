@@ -16,7 +16,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course, url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: 'enrichment-form' } do |f| %>
+    <%= form_with model: course, url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: 'enrichment-form', module: 'form' } do |f| %>
       <%= f.hidden_field :page, value: :requirements %>
       <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
 
