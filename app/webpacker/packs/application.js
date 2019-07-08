@@ -25,5 +25,5 @@ if ($copyWarningMessage) {
   };
 }
 
-const $form = document.querySelector('[data-module="form"]');
+const $form = document.querySelector('[data-module="form-check-leave"]');
 new FormCheckLeave($form).init();
