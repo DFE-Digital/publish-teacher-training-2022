@@ -5,6 +5,10 @@ class RecruitmentCycle < Base
     @next_cycle_year = Settings.current_cycle + 1
   end
 
+  def year
+    @cycle_year
+  end
+
   def current?
     @cycle_year == @current_cycle_year
   end
