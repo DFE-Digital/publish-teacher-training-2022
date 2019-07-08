@@ -1,13 +1,13 @@
-.cookie-banner {
+.app-cookie-banner {
   @include govuk-font(16);
   @include govuk-text-colour;
-  background-color: lighten(desaturate(govuk-colour("light-blue"), 8.46), 42.55);
+  background-color: lighten(
+    desaturate(govuk-colour("light-blue"), 8.46),
+    42.55
+  );
   box-sizing: border-box;
   display: none;
-  padding-top: govuk-spacing(3);
-  padding-right: govuk-spacing(3);
-  padding-bottom: govuk-spacing(3);
-  padding-left: govuk-spacing(3);
+  padding: govuk-spacing(3);
   width: 100%;
 
   &__message {
@@ -17,7 +17,7 @@
 }
 
 @include govuk-media-query($media-type: print) {
-  .cookie-banner {
+  .app-cookie-banner {
     display: none !important;
   }
 }
