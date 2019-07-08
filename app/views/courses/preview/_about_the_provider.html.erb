@@ -3,7 +3,7 @@
   <% if @provider.train_with_us.present? %>
     <%= markdown(@provider.train_with_us) %>
   <% else %>
-    <p class="missing-section">Please add details <%= link_to 'about your organisation', manage_ui_url("/organisation/#{@provider.provider_code}/about") %>.</p>
+    <p class="app-missing-section">Please add details <%= link_to 'about your organisation', manage_ui_url("/organisation/#{@provider.provider_code}/about") %>.</p>
   <% end %>
 
   <% if course.about_accrediting_body.present? %>

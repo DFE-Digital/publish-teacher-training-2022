@@ -55,7 +55,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def status_tag
-    tag = h.content_tag(:div, status_tag_content.html_safe, class: "govuk-tag phase-tag--small #{status_tag_css_class}")
+    tag = h.content_tag(:div, status_tag_content.html_safe, class: "govuk-tag app-phase-tag--small #{status_tag_css_class}")
     tag += unpublished_status_hint if object.has_unpublished_changes?
     tag.html_safe
   end
@@ -136,13 +136,13 @@ private
   def status_tag_css_class
     case course.content_status
     when 'published'
-      'phase-tag--published'
+      'app-phase-tag--published'
     when 'empty'
-      'phase-tag--no-content'
+      'app-phase-tag--no-content'
     when 'draft'
-      'phase-tag--draft'
+      'app-phase-tag--draft'
     when 'published_with_unpublished_changes'
-      'phase-tag--published'
+      'app-phase-tag--published'
     end
   end
 
