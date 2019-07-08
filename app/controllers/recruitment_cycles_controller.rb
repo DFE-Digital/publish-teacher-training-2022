@@ -4,7 +4,7 @@ class RecruitmentCyclesController < ApplicationController
     @provider = Provider.find(params[:provider_code]).first
 
     if !@provider.rolled_over?
-      redirect_to provider_recruitment_cycle_courses_path(@provider.provider_code, '2019')
+      redirect_to provider_path(@provider.provider_code)
     end
   end
 end

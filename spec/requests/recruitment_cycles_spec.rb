@@ -13,7 +13,10 @@ describe 'Recruitment cycles' do
       allow(Settings).to receive(:rollover).and_return(false)
 
       get("/organisations/#{provider.provider_code}/2019")
-      expect(response).to redirect_to(provider_recruitment_cycle_courses_path(provider.provider_code, '2019'))
+      expect(response).to redirect_to(provider_path(provider.provider_code))
+
+      get("/organisations/#{provider.provider_code}/2020")
+      expect(response).to redirect_to(provider_path(provider.provider_code))
     end
 
     context 'rollover' do
