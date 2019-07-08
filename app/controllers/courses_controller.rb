@@ -44,6 +44,8 @@ class CoursesController < ApplicationController
   end
 
   def about
+    show_deep_linked_errors(%i[about_course interview_process how_school_placements_work])
+
     if params[:copy_from].present?
       @copied_fields = [
         ['About the course', 'about_course'],
@@ -54,6 +56,8 @@ class CoursesController < ApplicationController
   end
 
   def requirements
+    show_deep_linked_errors(%i[required_qualifications personal_qualities other_requirements])
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Qualifications needed', 'required_qualifications'],
@@ -64,6 +68,8 @@ class CoursesController < ApplicationController
   end
 
   def fees
+    show_deep_linked_errors(%i[course_length fee_uk_eu fee_international fee_details financial_support])
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Course length', 'course_length'],
@@ -76,6 +82,8 @@ class CoursesController < ApplicationController
   end
 
   def salary
+    show_deep_linked_errors(%i[course_length salary_details])
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Course length', 'course_length'],
@@ -203,5 +211,12 @@ private
 
   def initialise_errors
     @errors = {}
+  end
+
+  def show_deep_linked_errors(attributes)
+    return if params[:display_errors].blank?
+
+    @course.publishable?
+    @errors = @course.errors.messages.select { |key| attributes.include? key }
   end
 end
