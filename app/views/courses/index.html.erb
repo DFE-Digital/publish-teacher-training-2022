@@ -1,4 +1,4 @@
-<%= content_for :page_title, rollover? ? "Courses – #{recruitment_cycle_title}" : "Courses" %>
+<%= content_for :page_title, @provider.rolled_over? ? "Courses – #{@recruitment_cycle.title}" : "Courses" %>
 
 <% content_for :before_content do %>
   <nav class="govuk-breadcrumbs">
@@ -11,6 +11,13 @@
       <li class="govuk-breadcrumbs__list-item">
         <%= link_to @provider[:provider_name], provider_path(code: @provider[:provider_code]), class: "govuk-breadcrumbs__link" %>
       </li>
+      <% if @provider.rolled_over? %>
+        <li class="govuk-breadcrumbs__list-item">
+          <%= link_to @recruitment_cycle.title,
+                      provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year),
+                      class: "govuk-breadcrumbs__link" %>
+        </li>
+      <% end %>
       <li class="govuk-breadcrumbs__list-item" aria-current="page">
         Courses
       </li>
@@ -19,8 +26,8 @@
 <% end %>
 
 <h1 class="govuk-heading-xl">
-  <% if rollover? %>
-   <span class="govuk-caption-xl"><%= recruitment_cycle_title %></span>
+  <% if @provider.rolled_over? %>
+   <span class="govuk-caption-xl"><%= @recruitment_cycle.title %></span>
   <% end %>
   Courses
 </h1>

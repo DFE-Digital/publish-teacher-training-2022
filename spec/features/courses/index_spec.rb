@@ -211,6 +211,7 @@ feature 'Index courses', type: :feature do
 
     scenario "it shows a list of courses from the next cycle" do
       expect(courses_page).to be_displayed
+      expect(courses_page.caption).to have_content('Next cycle (2020 – 2021)')
 
       courses_table = courses_page.courses_tables.first
       expect(courses_table.rows.size).to eq(2)
@@ -250,6 +251,7 @@ feature 'Index courses', type: :feature do
     end
 
     scenario "shows the UCAS status when it’s not the current cycle" do
+      expect(courses_page.caption).to have_content('2019 – 2020')
       courses_table = courses_page.courses_tables.first
 
       expect(courses_table).to have_content('UCAS Status')

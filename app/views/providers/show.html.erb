@@ -20,12 +20,28 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <% if @provider.rolled_over? %>
-      <h2 class="govuk-heading-m"><%= link_to "Current cycle (2019 – 2020)", provider_recruitment_cycle_path(@provider.provider_code, '2019'), data: { qa: 'provider__courses__current_cycle' }, class: "govuk-link" %></h2>
+      <h2 class="govuk-heading-m">
+        <%= link_to @current_recruitment_cycle.title,
+                          provider_recruitment_cycle_path(@provider.provider_code, @current_recruitment_cycle.year),
+                          data: { qa: 'provider__courses__current_cycle' },
+                          class: "govuk-link" %>
+      </h2>
       <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
-        <li>write about your organisation</li>
-        <li>set your contact details</li>
-        <li>publish this information on all course pages</li>
+        <li>manage courses in the current cycle</li>
+        <li>edit locations and vacancies in the current cycle</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">
+        <%= link_to @next_recruitment_cycle.title,
+                          provider_recruitment_cycle_path(@provider.provider_code, @next_recruitment_cycle.year),
+                          data: { qa: 'provider__courses__next_cycle' },
+                          class: "govuk-link" %>
+      </h2>
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+        <li>prepare courses for the next cycle</li>
+        <li>manage locations needed for the next cycle</li>
       </ul>
     <% end %>
 

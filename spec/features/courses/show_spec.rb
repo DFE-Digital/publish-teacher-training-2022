@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Course show', type: :feature do
-  let(:provider) { jsonapi(:provider, accredited_body?: false) }
+  let(:provider) { jsonapi(:provider, accredited_body?: false, provider_code: 'A0') }
   let(:course_jsonapi) {
     jsonapi(:course,
             has_vacancies?: true,
@@ -28,6 +28,7 @@ feature 'Course show', type: :feature do
   end
 
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
+  let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
 
   describe 'with a fee paying course' do
     scenario 'it shows the course show page' do
@@ -225,6 +226,16 @@ feature 'Course show', type: :feature do
             :post,
             422
           )
+          stub_api_v2_request(
+            "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
+            provider.render
+          )
+          stub_api_v2_request(
+            "/providers/#{provider.provider_code}/courses/#{course.course_code}/publishable",
+            build(:error, :for_course_publish),
+            :post,
+            422
+          )
         end
 
         scenario 'it shows the show page with validation errors' do
@@ -233,6 +244,14 @@ feature 'Course show', type: :feature do
           expect(page.title).to have_content('Error:')
           expect(course_page).to be_displayed
           expect(course_page.error_summary).to have_content("About course can't be blank")
+        end
+
+        scenario 'it deep links and persists errors' do
+          course_page.publish.click
+
+          click_link "About course can't be blank", match: :first
+
+          expect(about_course_page.error_flash).to have_content("About course can't be blank")
         end
       end
     end

@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
   before_action :initialise_errors
+  before_action :build_recruitment_cycle
   before_action :build_courses, only: %i[index about requirements fees salary]
   before_action :build_course, except: %i[index preview]
   before_action :build_course_for_preview, only: :preview
@@ -44,6 +45,8 @@ class CoursesController < ApplicationController
   end
 
   def about
+    show_deep_linked_errors(%i[about_course interview_process how_school_placements_work])
+
     if params[:copy_from].present?
       @copied_fields = [
         ['About the course', 'about_course'],
@@ -54,6 +57,8 @@ class CoursesController < ApplicationController
   end
 
   def requirements
+    show_deep_linked_errors(%i[required_qualifications personal_qualities other_requirements])
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Qualifications needed', 'required_qualifications'],
@@ -64,6 +69,8 @@ class CoursesController < ApplicationController
   end
 
   def fees
+    show_deep_linked_errors(%i[course_length fee_uk_eu fee_international fee_details financial_support])
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Course length', 'course_length'],
@@ -76,6 +83,8 @@ class CoursesController < ApplicationController
   end
 
   def salary
+    show_deep_linked_errors(%i[course_length salary_details])
+
     if params[:copy_from].present?
       @copied_fields = [
         ['Course length', 'course_length'],
@@ -203,5 +212,16 @@ private
 
   def initialise_errors
     @errors = {}
+  end
+
+  def show_deep_linked_errors(attributes)
+    return if params[:display_errors].blank?
+
+    @course.publishable?
+    @errors = @course.errors.messages.select { |key| attributes.include? key }
+  end
+
+  def build_recruitment_cycle
+    @recruitment_cycle = RecruitmentCycle.new(params[:recruitment_cycle_year])
   end
 end
