@@ -27,7 +27,7 @@ module CourseHelper
 
     if value.blank?
       value = 'Empty'
-      css_class += ' course-parts__fields__value--empty'
+      css_class += ' app-course-parts__fields__value--empty'
     end
 
     content_tag :dd, value, class: css_class, data: { qa: "course__#{field}" }

@@ -27,7 +27,7 @@ RSpec.feature 'View helpers', type: :helper do
 
     it "returns 'empty' when value is empty" do
       expect(helper.course_summary_value('', 'about'))
-        .to eq('<dd class="govuk-summary-list__value govuk-summary-list__value--truncate course-parts__fields__value--empty" data-qa="course__about">Empty</dd>')
+        .to eq('<dd class="govuk-summary-list__value govuk-summary-list__value--truncate app-course-parts__fields__value--empty" data-qa="course__about">Empty</dd>')
     end
   end
 
