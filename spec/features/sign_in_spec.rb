@@ -7,7 +7,6 @@ feature 'Sign in', type: :feature do
   let(:root_page)            { PageObjects::Page::RootPage.new }
 
   scenario 'using DfE Sign-in' do
-    allow(Settings).to receive(:rollover).and_return(true)
     user = build :user
 
     stub_omniauth(user: user)
@@ -20,58 +19,69 @@ feature 'Sign in', type: :feature do
     expect(root_page).to be_displayed
   end
 
-  scenario 'new user accepts the transition info page' do
-    user = build :user, :new
+  context 'not during rollover' do
+    before do
+      allow(Settings).to receive(:rollover).and_return(false)
+    end
 
-    stub_omniauth(user: user)
-    stub_api_v2_request('/providers', jsonapi(:providers_response))
-    request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
+    scenario 'new user accepts the transition info page with rollover disabled' do
+      user = build :user, :new
 
-    visit '/signin'
+      stub_omniauth(user: user)
+      stub_api_v2_request('/providers', jsonapi(:providers_response))
+      request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
-    expect(transition_info_page).to be_displayed
+      visit '/signin'
 
-    expect(transition_info_page.title).to have_content('Important new features')
-    transition_info_page.continue.click
+      expect(transition_info_page).to be_displayed
 
-    expect(rollover_page).to be_displayed
-    expect(request).to have_been_made
+      expect(transition_info_page.title).to have_content('Important new features')
+      transition_info_page.continue.click
+
+      expect(organisations_page).to be_displayed
+      expect(request).to have_been_made
+    end
   end
 
-  scenario 'new user accepts the transition info page with rollover disabled' do
-    allow(Settings).to receive(:rollover).and_return(false)
-    user = build :user, :new
+  context 'during rollover' do
+    before do
+      allow(Settings).to receive(:rollover).and_return(true)
+    end
 
-    stub_omniauth(user: user)
-    stub_api_v2_request('/providers', jsonapi(:providers_response))
-    request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
+    scenario 'new user accepts the transition info page' do
+      user = build :user, :new
 
-    visit '/signin'
+      stub_omniauth(user: user)
+      stub_api_v2_request('/providers', jsonapi(:providers_response))
+      request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
-    expect(transition_info_page).to be_displayed
+      visit '/signin'
 
-    expect(transition_info_page.title).to have_content('Important new features')
-    transition_info_page.continue.click
+      expect(transition_info_page).to be_displayed
 
-    expect(organisations_page).to be_displayed
-    expect(request).to have_been_made
-  end
+      expect(transition_info_page.title).to have_content('Important new features')
+      transition_info_page.continue.click
 
-  scenario 'new user accepts the rollover page' do
-    user = build :user, :transitioned
+      expect(rollover_page).to be_displayed
+      expect(request).to have_been_made
+    end
 
-    stub_omniauth(user: user)
-    stub_api_v2_request('/providers', jsonapi(:providers_response))
-    request = stub_api_v2_request "/users/#{user.id}/accept_rollover_screen", user.to_jsonapi, :patch
+    scenario 'new user accepts the rollover page' do
+      user = build :user, :transitioned
 
-    visit '/signin'
+      stub_omniauth(user: user)
+      stub_api_v2_request('/providers', jsonapi(:providers_response))
+      request = stub_api_v2_request "/users/#{user.id}/accept_rollover_screen", user.to_jsonapi, :patch
 
-    expect(rollover_page).to be_displayed
+      visit '/signin'
 
-    expect(rollover_page.title).to have_content('Begin preparing for the next cycle')
-    rollover_page.continue.click
+      expect(rollover_page).to be_displayed
 
-    expect(organisations_page).to be_displayed
-    expect(request).to have_been_made
+      expect(rollover_page.title).to have_content('Begin preparing for the next cycle')
+      rollover_page.continue.click
+
+      expect(organisations_page).to be_displayed
+      expect(request).to have_been_made
+    end
   end
 end
