@@ -8,6 +8,9 @@ initAll();
 var $cookieMessage = document.querySelector('[data-module="cookie-message"]');
 new CookieMessage($cookieMessage).init();
 
+const $form = document.querySelector('[data-module="form-check-leave"]');
+new FormCheckLeave($form).init();
+
 var $copyWarningMessage = document.querySelector(
   '[data-copy-course="warning"]'
 );
@@ -24,6 +27,3 @@ if ($copyWarningMessage) {
     return "You have unsaved changes, are you sure you want to leave?";
   };
 }
-
-const $form = document.querySelector('[data-module="form-check-leave"]');
-new FormCheckLeave($form).init();
