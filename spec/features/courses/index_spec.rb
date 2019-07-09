@@ -53,6 +53,7 @@ feature 'Index courses', type: :feature do
   let(:provider_response) { provider.render }
   let(:root_page) { PageObjects::Page::RootPage.new }
   let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
+  let(:recruitment_cycle_page) { PageObjects::Page::Organisations::RecruitmentCycle.new }
   let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
 
   before do
@@ -66,6 +67,12 @@ feature 'Index courses', type: :feature do
       "/providers/A123?include=courses.accrediting_provider",
       provider_response
     )
+  end
+
+  scenario "can navigate to a courses page" do
+    root_page.load
+    organisation_page.courses.click
+    expect(courses_page).to be_displayed
   end
 
   context "without accrediting providers" do
@@ -169,6 +176,24 @@ feature 'Index courses', type: :feature do
   context "during rollover" do
     before do
       allow(Settings).to receive(:rollover).and_return(true)
+    end
+
+    scenario "can navigate to a courses page via the current cycle" do
+      root_page.load
+      organisation_page.current_cycle.click
+      recruitment_cycle_page.courses_link.click
+
+      expect(courses_page).to be_displayed
+      expect(courses_page.caption).to have_content('Current cycle')
+    end
+
+    scenario "can navigate to a courses page via the next cycle" do
+      root_page.load
+      organisation_page.next_cycle.click
+      recruitment_cycle_page.courses_link.click
+
+      expect(courses_page).to be_displayed
+      expect(courses_page.caption).to have_content('Next cycle')
     end
 
     describe "courses in the current cycle" do
