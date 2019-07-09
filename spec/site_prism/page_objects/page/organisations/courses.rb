@@ -11,7 +11,7 @@ module PageObjects
           element :subheading, 'h2'
           sections :rows, 'tbody tr' do
             element :name, '[data-qa="courses-table__course"]'
-            element :link, 'td a'
+            element :link, '[data-qa="course-table__course-name"]'
             element :ucas_status, '[data-qa="courses-table__ucas-status"]'
             element :status, '[data-qa="courses-table__status"]'
             element :on_find, '[data-qa="courses-table__findable"]'
