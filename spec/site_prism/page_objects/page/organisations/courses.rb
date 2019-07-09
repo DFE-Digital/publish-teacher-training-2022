@@ -10,7 +10,7 @@ module PageObjects
         sections :courses_tables, '[data-qa="courses__table-section"]' do
           element :subheading, 'h2'
           sections :rows, 'tbody tr' do
-            element :name, '[data-qa="courses-table__course"]'
+            element :name, 'td.app-course-table__course-name a'
             element :link, '[data-qa="course-table__course-name"]'
             element :ucas_status, '[data-qa="courses-table__ucas-status"]'
             element :status, '[data-qa="courses-table__status"]'

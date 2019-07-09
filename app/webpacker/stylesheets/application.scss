@@ -17,6 +17,12 @@ $button-colour: #00823b;
   margin-bottom: 0;
 }
 
+.app-course-table {
+  &__course-name {
+    width: 33%;
+  }
+}
+
 .app-text-decoration-underline-dotted {
   text-decoration: underline dotted;
 }
