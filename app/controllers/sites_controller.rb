@@ -52,7 +52,16 @@ private
   end
 
   def build_provider
-    @provider = Provider.includes(:sites).find(params[:provider_code]).first
+    cycle_year = params.fetch(
+                   :recruitment_cycle_year,
+                   Settings.current_cycle
+                 )
+
+    @provider = Provider
+      .includes(:sites)
+      .where(year: cycle_year)
+      .find(params[:provider_code])
+      .first
   end
 
   def site_params

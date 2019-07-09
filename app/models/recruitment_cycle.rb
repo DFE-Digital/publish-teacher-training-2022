@@ -1,24 +1,24 @@
 class RecruitmentCycle < Base
-  def initialize(cycle_year)
-    @cycle_year = cycle_year.to_i
-    @current_cycle_year = Settings.current_cycle
-    @next_cycle_year = Settings.current_cycle + 1
-  end
+  has_many :providers
+  has_many :courses, through: :providers
+  has_many :sites, through: :providers
 
-  def year
-    @cycle_year
+  self.primary_key = :year
+
+  def self.current
+    RecruitmentCycle.includes(:providers).find(Settings.current_cycle).first
   end
 
   def current?
-    @cycle_year == @current_cycle_year
+    year.to_i == Settings.current_cycle
   end
 
   def next?
-    @cycle_year == @next_cycle_year
+    year.to_i == Settings.current_cycle + 1
   end
 
   def year_range
-    "#{@cycle_year} – #{@cycle_year + 1}"
+    "#{year} – #{year.to_i + 1}"
   end
 
   def title

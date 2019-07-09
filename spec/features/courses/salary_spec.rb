@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Course salary', type: :feature do
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
   let(:provider) do
     jsonapi(:provider, provider_code: 'A0')
   end
@@ -18,15 +19,16 @@ feature 'Course salary', type: :feature do
 
   before do
     stub_omniauth
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
     stub_course_request(provider, course)
-    stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider.render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0?include=courses.accrediting_provider", provider.render)
   end
 
   let(:course_salary_page) { PageObjects::Page::Organisations::CourseSalary.new }
 
   scenario 'viewing the courses salary page' do
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
       course.render, :patch, 200
     )
     visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)

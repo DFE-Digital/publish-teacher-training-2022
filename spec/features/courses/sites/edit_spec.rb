@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Edit course sites', type: :feature do
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
   let(:course) do
     jsonapi(
       :course,
@@ -23,12 +24,13 @@ feature 'Edit course sites', type: :feature do
 
   before do
     stub_omniauth
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
       course.render
     )
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites",
       course.render
     )
 

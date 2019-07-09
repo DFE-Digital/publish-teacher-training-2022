@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Course requirements', type: :feature do
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
   let(:provider) do
     jsonapi(:provider, provider_code: 'A0')
   end
@@ -18,15 +19,16 @@ feature 'Course requirements', type: :feature do
 
   before do
     stub_omniauth
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
     stub_course_request(provider, course)
-    stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider.render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0?include=courses.accrediting_provider", provider.render)
   end
 
   let(:course_requirements_page) { PageObjects::Page::Organisations::CourseRequirements.new }
 
   scenario 'viewing the courses requirements page' do
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
       course.render, :patch, 200
     )
     visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
@@ -66,7 +68,7 @@ feature 'Course requirements', type: :feature do
 
   scenario 'submitting with validation errors' do
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
       build(:error, :for_course_publish), :patch, 422
     )
 
@@ -109,7 +111,7 @@ feature 'Course requirements', type: :feature do
     before do
       stub_course_request(provider, course_2)
       stub_course_request(provider, course_3)
-      stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider_for_copy_from_list.render)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0?include=courses.accrediting_provider", provider_for_copy_from_list.render)
     end
 
     scenario 'all fields get copied if all were present' do
@@ -156,7 +158,7 @@ feature 'Course requirements', type: :feature do
 
   def stub_course_request(provider, course)
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
       course.render
     )
   end

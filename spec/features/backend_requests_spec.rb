@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'requests made to mc-be' do
   describe 'the authorization header' do
+    let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
     let(:provider1) { jsonapi :provider }
     let(:provider2) { jsonapi :provider }
 
@@ -44,14 +45,16 @@ describe 'requests made to mc-be' do
 
       stub_omniauth
 
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+
       # Stub extra dependencies, these calls are not under test here.
       stub_api_v2_request(
-        '/providers',
+        '/recruitment_cycles/#{current_recruitment_cycle.year}/providers',
         jsonapi(:providers_response, data: [provider1, provider2]),
         token: 'tokenUser1'
       )
       stub_api_v2_request(
-        '/providers',
+        '/recruitment_cycles/#{current_recruitment_cycle.year}/providers',
         jsonapi(:providers_response, data: [provider1, provider2]),
         token: 'tokenUser2'
       )
@@ -66,12 +69,12 @@ describe 'requests made to mc-be' do
       # stub). This is the assertion in this test, hence there is no further
       # explicit expect() in this test.
       stub_api_v2_request(
-        "/providers/#{provider1.provider_code}",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider1.provider_code}",
         provider1.render,
         token: 'tokenUser1'
       )
       stub_api_v2_request(
-        "/providers/#{provider2.provider_code}",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider2.provider_code}",
         provider2.render,
         token: 'tokenUser2'
       )

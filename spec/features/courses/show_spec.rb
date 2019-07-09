@@ -2,6 +2,8 @@ require 'rails_helper'
 
 feature 'Course show', type: :feature do
   let(:provider) { jsonapi(:provider, accredited_body?: false, provider_code: 'A0') }
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
+  let(:next_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2020') }
   let(:course_jsonapi) {
     jsonapi(:course,
             has_vacancies?: true,
@@ -9,6 +11,7 @@ feature 'Course show', type: :feature do
             funding: 'fee',
             sites: [site],
             provider: provider,
+            recruitment_cycle: current_recruitment_cycle,
             fee_uk_eu: 9250,
             last_published_at: '2019-03-05T14:42:34Z')
   }
@@ -20,11 +23,17 @@ feature 'Course show', type: :feature do
   let(:course_response) { course_jsonapi.render }
   before do
     stub_omniauth
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}",
+      current_recruitment_cycle.render
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
       course_response
     )
-    visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
+    binding.pry
+    visit provider_recruitment_cycle_course_path(provider.provider_code, current_recruitment_cycle.year, course.course_code)
   end
 
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
@@ -195,7 +204,7 @@ feature 'Course show', type: :feature do
     describe 'publishing' do
       before do
         stub_api_v2_request(
-          "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+          "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
           course_response
         )
       end
@@ -203,7 +212,7 @@ feature 'Course show', type: :feature do
       context 'without errors' do
         before do
           stub_api_v2_request(
-            "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
             nil,
             :post
           )
@@ -221,17 +230,17 @@ feature 'Course show', type: :feature do
       context 'with errors' do
         before do
           stub_api_v2_request(
-            "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
             build(:error, :for_course_publish),
             :post,
             422
           )
           stub_api_v2_request(
-            "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}?include=courses.accrediting_provider",
             provider.render
           )
           stub_api_v2_request(
-            "/providers/#{provider.provider_code}/courses/#{course.course_code}/publishable",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publishable",
             build(:error, :for_course_publish),
             :post,
             422

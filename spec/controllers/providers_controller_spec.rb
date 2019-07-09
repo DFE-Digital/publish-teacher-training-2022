@@ -15,8 +15,11 @@ RSpec.describe ProvidersController, type: :controller do
 
     describe 'GET #index' do
       context 'with 2 or more providers' do
+        let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
+
         before do
-          stub_api_v2_request('/providers', jsonapi(:providers_response))
+          stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+          stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response))
         end
 
         it 'returns the index page' do
@@ -27,9 +30,10 @@ RSpec.describe ProvidersController, type: :controller do
 
       context 'with 1 provider' do
         let(:the_provider) { jsonapi(:provider) }
+        let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
 
         before do
-          stub_api_v2_request('/providers', jsonapi(:providers_response, data: [the_provider]))
+          stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: [the_provider]))
         end
 
         it 'returns the show page' do
@@ -39,8 +43,10 @@ RSpec.describe ProvidersController, type: :controller do
       end
 
       context 'with 0 providers' do
+        let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
+
         before do
-          stub_api_v2_request('/providers', jsonapi(:providers_response, data: []))
+          stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: []))
         end
 
         it 'redirects to manage-courses-ui' do

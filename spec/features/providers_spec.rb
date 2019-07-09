@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'View providers', type: :feature do
   let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
   let(:provider1) { jsonapi :provider, provider_code: 'A0', include_counts: [:courses] }
   let(:provider2) { jsonapi :provider, provider_code: 'A1', include_counts: [:courses] }
   let(:provider_response) { provider1.render }
@@ -11,7 +12,8 @@ RSpec.feature 'View providers', type: :feature do
 
   scenario 'Navigate to /organisations' do
     stub_omniauth
-    stub_api_v2_request('/providers', providers_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
 
     visit('/organisations')
     expect(find('h1')).to have_content('Organisations')
@@ -22,7 +24,8 @@ RSpec.feature 'View providers', type: :feature do
   scenario 'Navigate to /organisations/A0' do
     allow(Settings).to receive(:rollover).and_return(false)
     stub_omniauth
-    stub_api_v2_request('/providers/A0', provider_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0", provider_response)
 
     visit('/organisations/A0')
     expect(find('h1')).to have_content(provider1.provider_name.to_s)
@@ -39,7 +42,8 @@ RSpec.feature 'View providers', type: :feature do
     scenario 'Navigate to /organisations/A0' do
       allow(Settings).to receive(:rollover).and_return(true)
       stub_omniauth
-      stub_api_v2_request('/providers/A0', provider_response)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0", provider_response)
 
       visit('/organisations/A0')
       expect(find('h1')).to have_content(provider1.provider_name.to_s)

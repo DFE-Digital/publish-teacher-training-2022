@@ -1,19 +1,24 @@
 class ProvidersController < ApplicationController
-  before_action :build_recruitment_cycles, only: %i[show]
   rescue_from JsonApiClient::Errors::NotFound, with: :not_found
 
   def index
-    @providers = Provider.all
+    @providers = Provider
+      .where(year: Settings.current_cycle)
+      .all
+
     render_manage_ui if @providers.empty?
     redirect_to provider_path(@providers.first.provider_code) if @providers.size == 1
   end
 
   def show
-    @provider = Provider.find(params[:code]).first
-  end
+    cycle_year = params.fetch(
+      :recruitment_cycle_year,
+      Settings.current_cycle
+    )
 
-  def build_recruitment_cycles
-    @current_recruitment_cycle = RecruitmentCycle.new(Settings.current_cycle)
-    @next_recruitment_cycle = RecruitmentCycle.new(Settings.current_cycle + 1)
+    @provider = Provider
+      .where(year: cycle_year)
+      .find(params[:code])
+      .first
   end
 end

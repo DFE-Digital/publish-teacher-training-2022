@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Edit locations', type: :feature do
   let(:site) { jsonapi(:site, location_name: 'Main site 1') }
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
 
   let(:provider) do
     jsonapi(:provider, sites: [site]).render
@@ -15,7 +16,8 @@ feature 'Edit locations', type: :feature do
   describe "when visiting a site that doesn’t exist" do
     before do
       stub_omniauth
-      stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider_code}?include=sites", provider)
     end
 
     scenario 'it 404s' do
@@ -29,8 +31,9 @@ feature 'Edit locations', type: :feature do
   describe "without errors" do
     before do
       stub_omniauth
-      stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)
-      stub_api_v2_request("/providers/#{provider_code}/sites/#{site.id}", site, :patch, 200)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider_code}?include=sites", provider)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider_code}/sites/#{site.id}", site, :patch, 200)
     end
 
     scenario 'it shows a location' do
@@ -49,8 +52,9 @@ feature 'Edit locations', type: :feature do
   describe "with validations errors" do
     before do
       stub_omniauth
-      stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)
-      stub_api_v2_request("/providers/#{provider_code}/sites/#{site.id}", build(:error), :patch, 422)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider_code}?include=sites", provider)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider_code}/sites/#{site.id}", build(:error), :patch, 422)
     end
 
     scenario 'displays validation errors' do

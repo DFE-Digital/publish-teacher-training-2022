@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 feature 'Index courses', type: :feature do
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
+  let(:next_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2020') }
   let(:course_1) {
     jsonapi :course,
             name: 'English',
@@ -61,10 +63,18 @@ feature 'Index courses', type: :feature do
     allow(Settings).to receive(:current_cycle).and_return(2019)
     user = build(:user)
     stub_omniauth(user: user)
-    stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider_response[:data]]))
-    stub_api_v2_request("/providers/A123", provider_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}", next_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: [provider_response[:data]]))
+    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: [provider_response[:data]]))
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A123", provider_response)
+    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}/providers/A123", provider_response)
     stub_api_v2_request(
-      "/providers/A123?include=courses.accrediting_provider",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A123?include=courses.accrediting_provider",
+      provider_response
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{next_recruitment_cycle.year}/providers/A123?include=courses.accrediting_provider",
       provider_response
     )
   end
@@ -176,6 +186,21 @@ feature 'Index courses', type: :feature do
   context "during rollover" do
     before do
       allow(Settings).to receive(:rollover).and_return(true)
+<<<<<<< HEAD
+=======
+      user = build(:user)
+      stub_omniauth(user: user)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: [provider_response[:data]]))
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A123", provider_response)
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A123?include=courses.accrediting_provider",
+        provider_response
+      )
+      root_page.load
+      expect(organisation_page).to be_displayed(provider_code: 'A123')
+      organisation_page.current_cycle.click
+      organisation_page.courses.click
+>>>>>>> [1654] refactoring recruitment cycles
     end
 
     scenario "can navigate to a courses page via the current cycle" do

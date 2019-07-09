@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Course fees', type: :feature do
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
   let(:provider) { jsonapi(:provider, provider_code: 'A0') }
   let(:course_1) do
     jsonapi(
@@ -12,6 +13,7 @@ feature 'Course fees', type: :feature do
 
   before do
     stub_omniauth
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
     stub_course_request(provider, course_1)
     stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider.render)
   end

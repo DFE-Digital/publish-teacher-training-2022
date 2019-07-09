@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Edit course vacancies', type: :feature do
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
   let(:course_vacancies_page) { PageObjects::Page::Organisations::CourseVacancies.new }
   let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
   let(:course_code) { 'X104' }
@@ -8,14 +9,15 @@ feature 'Edit course vacancies', type: :feature do
   let!(:sync_courses_request_stub) do
     stub_request(
       :post,
-      "http://localhost:3001/api/v2/providers/A0/courses/" \
+      "http://localhost:3001/api/v2/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0/courses/" \
         "#{course_code}/sync_with_search_and_compare"
     ).to_return(status: 201, body: "")
   end
 
   before do
     stub_omniauth
-    stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", jsonapi(:provider).render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0?include=courses.accrediting_provider", jsonapi(:provider).render)
     stub_request(:patch, %r{\Ahttp://localhost:3001/api/v2/site_statuses/\d+})
     stub_course_request(course)
     course_vacancies_page.load_with_course(course)
@@ -275,7 +277,7 @@ feature 'Edit course vacancies', type: :feature do
 
   def stub_course_request(course)
     stub_api_v2_request(
-      "/providers/A0/courses/#{course.course_code}?include=site_statuses.site",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0/courses/#{course.course_code}?include=site_statuses.site",
       course.render
     )
   end

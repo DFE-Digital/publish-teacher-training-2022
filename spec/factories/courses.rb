@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :course, class: Hash do
     transient do
-      relationships { %i[sites site_statuses provider accrediting_provider] }
+      relationships { %i[sites site_statuses provider accrediting_provider recruitment_cycle] }
       include_nulls { [] }
     end
 
@@ -51,7 +51,7 @@ FactoryBot.define do
     maths { 'expect_to_achieve_before_training_begins' }
     english { 'must_have_qualification_at_application_time' }
     science { 'not_required' }
-    recruitment_cycle_year { '2019' }
+    recruitment_cycle { nil }
 
     trait :with_vacancy do
       has_vacancies? { true }
@@ -93,6 +93,7 @@ FactoryBot.define do
     end
 
     after :initialize do |course|
+      #course.recruitment_cycle_year = recruitment_cycle.year if course.recruitment_cycle
       course.provider_code = provider.provider_code if course.provider
     end
 

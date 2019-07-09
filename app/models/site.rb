@@ -1,6 +1,7 @@
 class Site < Base
-  has_one :site_status
+  belongs_to :recruitment_cycle, through: :provider, param: :recruitment_cycle_year
   belongs_to :provider, param: :provider_code
+  has_one :site_status
 
   REGIONS = [
     ['London', :london],

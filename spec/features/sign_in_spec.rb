@@ -10,7 +10,7 @@ feature 'Sign in', type: :feature do
     user = build :user
 
     stub_omniauth(user: user)
-    stub_api_v2_request('/providers', jsonapi(:providers_response))
+    stub_api_v2_request('/recruitment_cycles/2019/providers', jsonapi(:providers_response))
 
     visit root_path
 
@@ -28,7 +28,7 @@ feature 'Sign in', type: :feature do
       user = build :user, :new
 
       stub_omniauth(user: user)
-      stub_api_v2_request('/providers', jsonapi(:providers_response))
+      stub_api_v2_request('/recruitment_cycles/2019/providers', jsonapi(:providers_response))
       request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
       visit '/signin'
@@ -48,11 +48,9 @@ feature 'Sign in', type: :feature do
       allow(Settings).to receive(:rollover).and_return(true)
     end
 
-    scenario 'new user accepts the transition info page' do
-      user = build :user, :new
 
       stub_omniauth(user: user)
-      stub_api_v2_request('/providers', jsonapi(:providers_response))
+      stub_api_v2_request('/recruitment_cycles/2019/providers', jsonapi(:providers_response))
       request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
       visit '/signin'
@@ -70,7 +68,7 @@ feature 'Sign in', type: :feature do
       user = build :user, :transitioned
 
       stub_omniauth(user: user)
-      stub_api_v2_request('/providers', jsonapi(:providers_response))
+      stub_api_v2_request('/recruitment_cycles/2019/providers', jsonapi(:providers_response))
       request = stub_api_v2_request "/users/#{user.id}/accept_rollover_screen", user.to_jsonapi, :patch
 
       visit '/signin'

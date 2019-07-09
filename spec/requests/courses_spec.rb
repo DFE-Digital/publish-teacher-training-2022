@@ -2,14 +2,16 @@ require 'rails_helper'
 
 describe 'Courses' do
   describe 'POST publish' do
+    let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
     let(:provider) { jsonapi(:provider, provider_code: 'A0') }
     let(:course) { jsonapi(:course, provider: provider) }
 
     before do
       stub_omniauth
       get(auth_dfe_callback_path)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
         course.render,
       )
     end
@@ -17,7 +19,7 @@ describe 'Courses' do
     context "without errors" do
       before do
         stub_api_v2_request(
-          "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+          "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
           nil,
           :post
         )
@@ -33,7 +35,7 @@ describe 'Courses' do
     context "with errors" do
       before do
         stub_api_v2_request(
-          "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+          "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
           build(:error, :for_course_publish),
           :post,
           422

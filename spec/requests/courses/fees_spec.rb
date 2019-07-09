@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'Courses', type: :request do
   describe 'GET fees' do
+    let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
     let(:course_json_api)   { jsonapi :course, name: 'English', course_code: 'EN01', provider: provider, include_nulls: [:accrediting_provider] }
     let(:provider)          { jsonapi(:provider, accredited_body?: true, provider_code: 'A0') }
     let(:course)            { course_json_api.to_resource }
@@ -35,20 +36,21 @@ describe 'Courses', type: :request do
     before do
       stub_omniauth
       get(auth_dfe_callback_path)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
         course_response
       )
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=sites,provider.sites,accrediting_provider",
         course_2_json_api.render
       )
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course_3.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_3.course_code}?include=sites,provider.sites,accrediting_provider",
         course_3_json_api.render
       )
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}?include=courses.accrediting_provider",
         provider_2_response
       )
     end

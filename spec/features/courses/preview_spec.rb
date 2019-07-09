@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'Preview course', type: :feature do
+  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
   let(:course_jsonapi) do
     jsonapi(:course,
             name: 'English',
@@ -43,8 +44,10 @@ feature 'Preview course', type: :feature do
 
   before do
     stub_omniauth
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
     stub_api_v2_request(
-      "/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
       course_response
     )
   end
@@ -52,7 +55,7 @@ feature 'Preview course', type: :feature do
   let(:preview_course_page) { PageObjects::Page::Organisations::CoursePreview.new }
 
   scenario 'viewing the show courses page' do
-    visit preview_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
+    visit preview_provider_recruitment_cycle_course_path(provider.provider_code, current_recruitment_cycle.year, course.course_code)
 
     expect(preview_course_page.title).to have_content(
       "#{course.name} (#{course.course_code})"
