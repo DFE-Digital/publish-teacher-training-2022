@@ -37,7 +37,7 @@
       <ul class="govuk-list govuk-error-summary__list">
         <% @errors.each do |id, messages| %>
           <% messages.each do |message| %>
-            <li>
+            <li data-error-message="<%= message %>">
               <a href="<%= enrichment_error_url(
                 provider_code: @provider.provider_code,
                 course: @course,
