@@ -38,7 +38,19 @@ if (typeof ga === "function") {
   );
 
   if ($formErrorSummary) {
+    const $formErrorMessages = $formErrorSummary.querySelectorAll(
+      "[data-error-message]"
+    );
+
     triggerFormAnalytics("form", "form-publish", "form-error");
+
+    $formErrorMessages.forEach(function($errorMessage) {
+      triggerFormAnalytics(
+        "form",
+        "form-error-message",
+        $errorMessage.getAttribute("data-error-message")
+      );
+    });
   } else if ($formSuccessSummary) {
     triggerFormAnalytics("form", "form-publish", "form-success");
   }
