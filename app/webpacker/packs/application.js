@@ -2,6 +2,7 @@ import "../stylesheets/application.scss";
 import { initAll } from "govuk-frontend";
 import CookieMessage from "scripts/cookie-banner";
 import FormCheckLeave from "scripts/form-check-leave";
+import { triggerFormAnalytics } from "scripts/form-error-tracking";
 
 initAll();
 
@@ -26,4 +27,19 @@ if ($copyWarningMessage) {
   window.onbeforeunload = function() {
     return "You have unsaved changes, are you sure you want to leave?";
   };
+}
+
+if (typeof ga === "function") {
+  const $formErrorSummary = document.querySelector(
+    '[data-ga-event-form="error"]'
+  );
+  const $formSuccessSummary = document.querySelector(
+    '[data-ga-event-form="success"]'
+  );
+
+  if ($formErrorSummary) {
+    triggerFormAnalytics("form", "form-publish", "form-error");
+  } else if ($formSuccessSummary) {
+    triggerFormAnalytics("form", "form-publish", "form-success");
+  }
 }
