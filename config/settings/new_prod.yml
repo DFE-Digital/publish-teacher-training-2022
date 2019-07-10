@@ -1,0 +1,14 @@
+dfe_signin:
+  issuer: https://signin-test-oidc-as.azurewebsites.net
+  profile: https://signin-test-pfl-as.azurewebsites.net
+  secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
+  base_url: https://bat-prod-mcfe-as.azurewebsites.net
+manage_backend:
+  base_url: https://bat-prod-mcbe-as.azurewebsites.net
+manage_ui:
+  base_url: https://bat-prod-mcui-as.azurewebsites.net
+search_ui:
+  base_url: https://bat-prod-sacui-as.azurewebsites.net
+environment:
+  label: 'Beta'
+  selector_name: 'Beta'
