@@ -11,7 +11,7 @@ module CourseHelper
 
   def course_summary_label(key, field)
     if @errors&.key? field
-      content_tag :dt, class: 'govuk-summary-list__key course-parts__fields__label--error' do
+      content_tag :dt, class: 'govuk-summary-list__key app-course-parts__fields__label--error' do
         [
           content_tag(:span, key),
           *@errors[field].map { |error| course_manage_error_link(field, error) }
@@ -27,7 +27,7 @@ module CourseHelper
 
     if value.blank?
       value = 'Empty'
-      css_class += ' course-parts__fields__value--empty'
+      css_class += ' app-course-parts__fields__value--empty'
     end
 
     content_tag :dd, value, class: css_class, data: { qa: "course__#{field}" }

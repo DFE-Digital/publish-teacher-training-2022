@@ -13,7 +13,7 @@
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <abbr class="text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr>
+          <abbr class="app-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr>
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__is_send">
           <%= course.is_send? %>
@@ -81,7 +81,7 @@
           <% if course.sites.size == 1 %>
             <%= course.sites.first.location_name %>
           <% else %>
-            <ul class="govuk-list courses-locations-list">
+            <ul class="govuk-list app-courses-locations-list">
               <% course.alphabetically_sorted_sites.each do |site| %>
                 <li>
                   <%= site.location_name %>
@@ -208,7 +208,7 @@
   </div>
   <% if course.is_running? || course.new_and_not_running? %>
     <div class="govuk-grid-column-one-third">
-      <div class="related">
+      <div class="app-related">
         <h2 class="govuk-heading-m">Changing your basic details</h2>
         <p>At the moment you can only change course locations.</p>
 

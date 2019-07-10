@@ -14,7 +14,7 @@ RSpec.feature 'View helpers', type: :helper do
       end
 
       it "returns correct content" do
-        expect(helper.course_summary_label('About course', :about_course)).to eq("<dt class=\"govuk-summary-list__key course-parts__fields__label--error\"><span>About course</span><a class=\"govuk-link govuk-!-display-block\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Something about the course</a></dt>")
+        expect(helper.course_summary_label('About course', :about_course)).to eq("<dt class=\"govuk-summary-list__key app-course-parts__fields__label--error\"><span>About course</span><a class=\"govuk-link govuk-!-display-block\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Something about the course</a></dt>")
       end
     end
   end
@@ -27,7 +27,7 @@ RSpec.feature 'View helpers', type: :helper do
 
     it "returns 'empty' when value is empty" do
       expect(helper.course_summary_value('', 'about'))
-        .to eq('<dd class="govuk-summary-list__value govuk-summary-list__value--truncate course-parts__fields__value--empty" data-qa="course__about">Empty</dd>')
+        .to eq('<dd class="govuk-summary-list__value govuk-summary-list__value--truncate app-course-parts__fields__value--empty" data-qa="course__about">Empty</dd>')
     end
   end
 
