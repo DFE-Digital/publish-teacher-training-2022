@@ -41,7 +41,7 @@
 </ul>
 
 <% if @provider.courses.count > 10 %>
-  <%= add_course_link(current_user['info']['email'], @provider) %>
+  <%= add_course_link(current_user['info']['email'], @provider, @recruitment_cycle.current?) %>
   <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your course details.</p>
 <% end %>
 
@@ -62,5 +62,5 @@
   </section>
 <% end %>
 
-<%= add_course_link(current_user['info']['email'], @provider) %>
+<%= add_course_link(current_user['info']['email'], @provider, @recruitment_cycle.current?) %>
 <p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>

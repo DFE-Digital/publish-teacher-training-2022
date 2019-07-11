@@ -130,7 +130,7 @@ feature 'Index courses', type: :feature do
     end
 
     scenario "it shows 'add a new course' link" do
-      expect(courses_page).to have_link_to_add_a_course_for_accredited_bodies
+      expect(courses_page).to have_link_to_add_a_course_for_accredited_bodies_current_cycle
     end
   end
 
@@ -169,7 +169,7 @@ feature 'Index courses', type: :feature do
     end
 
     scenario "it shows 'add a new course' link" do
-      expect(courses_page).to have_link_to_add_a_course_for_unaccredited_bodies
+      expect(courses_page).to have_link_to_add_a_course_for_unaccredited_bodies_current_cycle
     end
   end
 
@@ -185,6 +185,7 @@ feature 'Index courses', type: :feature do
 
       expect(courses_page).to be_displayed
       expect(courses_page.caption).to have_content('Current cycle')
+      expect(courses_page).to have_link_to_add_a_course_for_accredited_bodies_current_cycle
     end
 
     scenario "can navigate to a courses page via the next cycle" do
@@ -194,6 +195,7 @@ feature 'Index courses', type: :feature do
 
       expect(courses_page).to be_displayed
       expect(courses_page.caption).to have_content('Next cycle')
+      expect(courses_page).to have_link_to_add_a_course_for_accredited_bodies_next_cycle
     end
 
     describe "courses in the current cycle" do
