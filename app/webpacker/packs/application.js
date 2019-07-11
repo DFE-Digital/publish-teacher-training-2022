@@ -42,7 +42,7 @@ if (typeof ga === "function") {
       "[data-error-message]"
     );
 
-    triggerFormAnalytics("form", "form-publish", "form-error");
+    triggerFormAnalytics("form", "form-submitted", "form-error");
 
     $formErrorMessages.forEach(function($errorMessage) {
       triggerFormAnalytics(
@@ -52,6 +52,6 @@ if (typeof ga === "function") {
       );
     });
   } else if ($formSuccessSummary) {
-    triggerFormAnalytics("form", "form-publish", "form-success");
+    triggerFormAnalytics("form", "form-submitted", "form-success");
   }
 }

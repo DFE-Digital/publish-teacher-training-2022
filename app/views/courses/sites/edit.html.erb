@@ -5,12 +5,12 @@
 <% end %>
 
 <% if @errors.present? %>
-  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary" data-ga-event-form="error">
     <h2 class="govuk-error-summary__title" id="error-summary-title">
       <%= @errors.first %>
     </h2>
     <div class="govuk-error-summary__body">
-      <p class="govuk-body">
+      <p class="govuk-body" data-error-message="Removing all locations would prevent people from applying to this course">
         Removing all locations would prevent people from applying to this course.
         If you want to close applications, you can
         <%= link_to "edit the vacancies for this course",
