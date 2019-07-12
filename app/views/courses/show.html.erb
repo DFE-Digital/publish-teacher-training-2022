@@ -73,7 +73,7 @@
 <div class="course-tabs govuk-tabs">
   <h2 class="govuk-tabs__title">Contents</h2>
 
-  <ul class="govuk-tabs__list" role="tablist">
+  <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item" role="presentation">
       <%=
         link_to "#description",
@@ -84,7 +84,7 @@
       <% end %>
     </li>
 
-    <li class="govuk-tabs__list-item" role="presentation">
+    <li class="govuk-tabs__list-item">
       <%=
         link_to details_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
         class: "govuk-tabs__tab" do
@@ -101,9 +101,9 @@
         <%= render partial: 'courses/description_content' %>
       </div>
       <% unless course.not_running? %>
-        <aside class="govuk-grid-column-one-third" data-qa="course__status_panel">
+        <div class="govuk-grid-column-one-third" data-qa="course__status_panel">
           <%= render partial: 'courses/status_panel' %>
-        </aside>
+        </div>
       <% end %>
     </div>
   </section>
