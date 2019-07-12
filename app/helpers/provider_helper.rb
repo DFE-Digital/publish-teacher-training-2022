@@ -1,6 +1,6 @@
 module ProviderHelper
-  def add_course_url(email, provider, current)
-    cycle_key = current ? 'current_cycle' : 'next_cycle'
+  def add_course_url(email, provider, is_current_cycle:)
+    cycle_key = is_current_cycle ? 'current_cycle' : 'next_cycle'
 
     if provider.accredited_body?
       google_form_url_for(Settings.google_forms[cycle_key].new_course_for_accredited_bodies, email, provider)
@@ -9,8 +9,8 @@ module ProviderHelper
     end
   end
 
-  def add_course_link(email, provider, current)
-    link_to "Add a new course", add_course_url(email, provider, current), class: "govuk-button govuk-!-margin-bottom-2", rel: "noopener noreferrer", target: "_blank"
+  def add_course_link(email, provider, is_current_cycle:)
+    link_to "Add a new course", add_course_url(email, provider, is_current_cycle: is_current_cycle), class: "govuk-button govuk-!-margin-bottom-2", rel: "noopener noreferrer", target: "_blank"
   end
 
   def google_form_url_for(settings, email, provider)
