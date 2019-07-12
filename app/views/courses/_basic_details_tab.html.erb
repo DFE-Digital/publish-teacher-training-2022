@@ -117,15 +117,19 @@
         </div>
       <% end %>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Applications open
-        </dt>
-        <dd class="govuk-summary-list__value" data-qa="course__application_status">
-          <%= course.open_or_closed_for_applications %>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
+      <%#
+        FIXME: This was showing the wrong information and isn't easily corrected
+        https://trello.com/c/l0t1Oun3/
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Applications open
+          </dt>
+          <dd class="govuk-summary-list__value" data-qa="course__application_status">
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+      #%>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">

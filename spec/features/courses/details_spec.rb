@@ -81,9 +81,6 @@ feature 'Course details', type: :feature do
     expect(course_details_page.accredited_body).to have_content(
       provider.provider_name
     )
-    expect(course_details_page.application_status).to have_content(
-      'Open'
-    )
     expect(course_details_page.is_send).to have_content(
       'No'
     )
