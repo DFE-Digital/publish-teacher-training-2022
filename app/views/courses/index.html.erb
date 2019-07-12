@@ -1,29 +1,5 @@
 <%= content_for :page_title, @provider.rolled_over? ? "Courses – #{@recruitment_cycle.title}" : "Courses" %>
-
-<% content_for :before_content do %>
-  <nav class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <% if @has_multiple_providers then %>
-        <li class="govuk-breadcrumbs__list-item">
-          <%= link_to "Organisations", providers_path, class: "govuk-breadcrumbs__link" %>
-        </li>
-      <% end %>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to @provider[:provider_name], provider_path(code: @provider[:provider_code]), class: "govuk-breadcrumbs__link" %>
-      </li>
-      <% if @provider.rolled_over? %>
-        <li class="govuk-breadcrumbs__list-item">
-          <%= link_to @recruitment_cycle.title,
-                      provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year),
-                      class: "govuk-breadcrumbs__link" %>
-        </li>
-      <% end %>
-      <li class="govuk-breadcrumbs__list-item" aria-current="page">
-        Courses
-      </li>
-    </ol>
-  </nav>
-<% end %>
+<%= content_for :before_content, render_breadcrumbs(:courses) %>
 
 <h1 class="govuk-heading-xl">
   <% if @provider.rolled_over? %>

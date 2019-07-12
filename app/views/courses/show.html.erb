@@ -1,32 +1,5 @@
 <%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}#{course.name_and_code} - Courses" %>
-
-<% content_for :before_content do %>
-  <nav class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <% if @has_multiple_providers then %>
-        <li class="govuk-breadcrumbs__list-item">
-          <%= link_to "Organisations", providers_path, class: "govuk-breadcrumbs__link" %>
-        </li>
-      <% end %>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to @provider.provider_name, provider_path(code: @provider.provider_code), class: "govuk-breadcrumbs__link" %>
-      </li>
-      <% if @provider.rolled_over? %>
-        <li class="govuk-breadcrumbs__list-item">
-          <%= link_to @recruitment_cycle.title,
-                      provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year),
-                      class: "govuk-breadcrumbs__link" %>
-        </li>
-      <% end %>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to "Courses", provider_recruitment_cycle_courses_path(@provider.provider_code), class: "govuk-breadcrumbs__link" %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item" aria-current="page">
-        <%= course.name %> (<%= course.course_code %>)
-      </li>
-    </ol>
-  </nav>
-<% end %>
+<%= content_for :before_content, render_breadcrumbs(:course) %>
 
 <% if @errors.present? %>
   <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary" data-ga-event-form="error">
