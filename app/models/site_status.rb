@@ -1,4 +1,7 @@
 class SiteStatus < Base
+  belongs_to :course
+  belongs_to :site
+
   def full_time_vacancies?
     vac_status == 'full_time_vacancies'
   end

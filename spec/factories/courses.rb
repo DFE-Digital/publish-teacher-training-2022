@@ -1,8 +1,9 @@
 FactoryBot.define do
-  factory :course, class: Hash do
+  factory :course do
     transient do
-      relationships { %i[sites site_statuses provider accrediting_provider recruitment_cycle] }
-      include_nulls { [] }
+      sites { [] }
+      site_statuses { [] }
+      recruitment_cycle { build :recruitment_cycle }
     end
 
     sequence(:id)
@@ -15,8 +16,6 @@ FactoryBot.define do
     findable? { true }
     open_for_applications? { false }
     has_vacancies? { false }
-    sites         { [] }
-    site_statuses { [] }
     provider      { nil }
     study_mode    { 'full_time' }
     content_status { "published" }
@@ -51,7 +50,23 @@ FactoryBot.define do
     maths { 'expect_to_achieve_before_training_begins' }
     english { 'must_have_qualification_at_application_time' }
     science { 'not_required' }
-    recruitment_cycle { nil }
+
+    after :build do |course, evaluator|
+      # Necessary gubbins necessary to make JSONAPIClient's associations work.
+      course.sites = []
+      evaluator.sites.each do |site|
+        course.sites << site
+      end
+
+      course.site_statuses = []
+      evaluator.site_statuses.each do |site_status|
+        course.site_statuses << site_status
+      end
+
+      course.recruitment_cycle = evaluator.recruitment_cycle
+      course.provider_code = evaluator.provider.provider_code
+      course.recruitment_cycle_year = evaluator.recruitment_cycle.year
+    end
 
     trait :with_vacancy do
       has_vacancies? { true }
@@ -90,28 +105,6 @@ FactoryBot.define do
       fee_international { 14000 }
       fee_details { Faker::Lorem.sentence(100) }
       financial_support { Faker::Lorem.sentence(100) }
-    end
-
-    after :initialize do |course|
-      #course.recruitment_cycle_year = recruitment_cycle.year if course.recruitment_cycle
-      course.provider_code = provider.provider_code if course.provider
-    end
-
-    initialize_with do |_evaluator|
-      data_attributes = attributes.except(:id, *relationships)
-      relationships_map = Hash[
-        relationships.map do |relationship|
-          [relationship, __send__(relationship)]
-        end
-      ]
-
-      JSONAPIMockSerializable.new(
-        id,
-        'courses',
-        attributes: data_attributes,
-        relationships: relationships_map,
-        include_nulls: include_nulls
-      )
     end
   end
 end

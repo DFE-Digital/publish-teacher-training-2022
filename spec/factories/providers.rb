@@ -1,7 +1,8 @@
 FactoryBot.define do
-  factory :provider, class: Hash do
+  factory :provider do
     transient do
-      relationships { %i[courses sites] }
+      sites { [] }
+      recruitment_cycle { build :recruitment_cycle }
       include_counts { [] }
     end
 
@@ -11,7 +12,6 @@ FactoryBot.define do
     accredited_body? { false }
     can_add_more_sites? { true }
     courses { [] }
-    sites { [] }
     train_with_us { nil }
     train_with_disability { nil }
     website { nil }
@@ -23,33 +23,27 @@ FactoryBot.define do
     address4 { nil }
     postcode { nil }
 
-    initialize_with do |_evaluator|
-      data_attributes = attributes.except(:id, *relationships)
-      relationships_map = Hash[
-        relationships.map do |relationship|
-          [relationship, __send__(relationship)]
-        end
-      ]
+    after :build do |provider, evaluator|
+      # Necessary gubbins necessary to make JSONAPIClient's associations work.
+      provider.sites = []
+      evaluator.sites.each do |site|
+        provider.sites << site
+      end
 
-      JSONAPIMockSerializable.new(
-        id,
-        'providers',
-        attributes: data_attributes,
-        relationships: relationships_map,
-        include_counts: include_counts
-      )
+      provider.recruitment_cycle = evaluator.recruitment_cycle
+      provider.recruitment_cycle_year = evaluator.recruitment_cycle.year
     end
-  end
 
-  factory :providers_response, class: Hash do
-    data {
-      [
-        jsonapi(:provider, provider_code: "A0", include_counts: %i[courses]).render,
-        jsonapi(:provider, provider_code: "A1", include_counts: %i[courses]).render,
-        jsonapi(:provider, provider_code: "A2", include_counts: %i[courses]).render
-      ].map { |d| d[:data] }
-    }
+    factory :providers_response, class: Hash do
+      data {
+        [
+          jsonapi(:provider, provider_code: "A0", include_counts: %i[courses]).render,
+          jsonapi(:provider, provider_code: "A1", include_counts: %i[courses]).render,
+          jsonapi(:provider, provider_code: "A2", include_counts: %i[courses]).render
+        ].map { |d| d[:data] }
+      }
 
-    initialize_with { attributes }
+      initialize_with { attributes }
+    end
   end
 end

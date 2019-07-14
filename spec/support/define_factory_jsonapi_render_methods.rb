@@ -3,13 +3,10 @@ FactoryBot.define do
   after :build do |record|
     # This defines an instance method called to_jsonapi on the object we just
     # created with the factory.
-    record.define_singleton_method(:to_jsonapi) do
-      # Create a string that holds the name of the class, for example
-      # "UserSerializer"
-      serializer_class = "#{record.class}Serializer"
-
+    record.define_singleton_method(:to_jsonapi) do |opts = {}|
       renderer = JSONAPI::Serializable::Renderer.new
-      renderer.render(
+
+      jsonapi = renderer.render(
         record,
         class: {
           # This tells the renderer what serializers to use. The key is going
@@ -17,9 +14,21 @@ FactoryBot.define do
           # serializer class.
           #
           # For example: User: UserSerializer
-          record.class.name.to_sym => serializer_class.constantize
-        }
+          Course: CourseSerializer,
+          Provider: ProviderSerializer,
+          RecruitmentCycle: RecruitmentCycleSerializer,
+          Site: SiteSerializer,
+          SiteStatus: SiteStatusSerializer,
+          User: UserSerializer
+        },
+        include: opts[:include]
       )
+
+      # Somehow, the JSONAPI Serializer reifies these objects as 'nil' if they
+      # include an id with them. No idea why, so this hack is going to have to
+      # suffice for now.
+      jsonapi[:included]&.each { |data| data[:attributes].delete :id }
+      jsonapi
     end
   end
 end

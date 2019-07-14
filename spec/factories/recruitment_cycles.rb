@@ -1,15 +1,10 @@
 FactoryBot.define do
-  factory :recruitment_cycle, class: Hash do
+  factory :recruitment_cycle do
     sequence(:id)
     year { '2019' }
 
-    initialize_with do
-      data_attributes = attributes.except(:id)
-      JSONAPIMockSerializable.new(
-        id,
-        'recruitment_cycles',
-        attributes: data_attributes
-      )
+    trait :next_cycle do
+      year { '2020' }
     end
   end
 end
