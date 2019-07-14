@@ -1,39 +1,62 @@
+# coding: utf-8
+
 require 'rails_helper'
 
 feature 'Course show', type: :feature do
-  let(:provider) { jsonapi(:provider, accredited_body?: false, provider_code: 'A0') }
-  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
-  let(:next_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2020') }
-  let(:course_jsonapi) {
-    jsonapi(:course,
-            has_vacancies?: true,
-            open_for_applications?: true,
-            funding: 'fee',
-            sites: [site],
-            provider: provider,
-            recruitment_cycle: current_recruitment_cycle,
-            fee_uk_eu: 9250,
-            last_published_at: '2019-03-05T14:42:34Z')
-  }
-  let(:site) { jsonapi(:site) }
-  let(:site_status) do
-    jsonapi(:site_status, :full_time_and_part_time, site: site)
+  let(:provider) do
+    build :provider,
+          accredited_body?: false,
+          provider_name: "ACME SCITT A0",
+          provider_code: 'A0'
   end
-  let(:course)          { course_jsonapi.to_resource }
-  let(:course_response) { course_jsonapi.render }
+  let(:current_recruitment_cycle) { build :recruitment_cycle }
+  let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
+  let(:course) do
+    build :course,
+          has_vacancies?: true,
+          course_code: 'C1',
+          open_for_applications?: true,
+          funding: 'fee',
+          fee_uk_eu: 9250,
+          last_published_at: '2019-03-05T14:42:34Z',
+          provider: provider,
+          provider_code: provider.provider_code,
+          recruitment_cycle: current_recruitment_cycle,
+          site_statuses: [site_status],
+          sites: [site]
+  end
+  let(:site) { build :site, code: 'Z' }
+  let(:site_status) do
+    build :site_status,
+          :full_time_and_part_time,
+          site: site
+  end
+
+  let(:course_response) do
+    course.to_jsonapi(
+      include: %i[sites provider accrediting_provider recruitment_cycle]
+    )
+  end
+
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.render
+      data: current_recruitment_cycle.as_json_api
     )
+
     stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course.course_code}" \
+      "?include=sites,provider.sites,accrediting_provider",
       course_response
     )
-    binding.pry
-    visit provider_recruitment_cycle_course_path(provider.provider_code, current_recruitment_cycle.year, course.course_code)
+
+    visit provider_recruitment_cycle_course_path(provider.provider_code,
+                                                 current_recruitment_cycle.year,
+                                                 course.course_code)
   end
 
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
@@ -98,15 +121,13 @@ feature 'Course show', type: :feature do
   end
 
   describe 'with a salaried course' do
-    let(:course_jsonapi) {
-      jsonapi(:course,
-              funding: 'salary',
-              sites: [site],
-              provider: provider,
-              accrediting_provider: provider)
+    let(:course) {
+      build :course,
+            funding: 'salary',
+            sites: [site],
+            provider: provider,
+            accrediting_provider: provider
     }
-    let(:course)          { course_jsonapi.to_resource }
-    let(:course_response) { course_jsonapi.render }
 
     scenario 'it shows the course show page' do
       expect(course_page.caption).to have_content(
@@ -144,17 +165,15 @@ feature 'Course show', type: :feature do
   end
 
   context 'when the course is running' do
-    let(:course_jsonapi) {
-      jsonapi(:course,
-              findable?: true,
-              content_status: 'published',
-              ucas_status: 'running',
-              has_vacancies?: true,
-              open_for_applications?: true,
-              provider: provider)
+    let(:course) {
+      build :course,
+            findable?: true,
+            content_status: 'published',
+            ucas_status: 'running',
+            has_vacancies?: true,
+            open_for_applications?: true,
+            provider: provider
     }
-    let(:course)          { course_jsonapi.to_resource }
-    let(:course_response) { course_jsonapi.render }
 
     scenario 'it displays a status panel' do
       expect(course_page).to have_status_panel
@@ -166,13 +185,11 @@ feature 'Course show', type: :feature do
   end
 
   context 'when the course is not running' do
-    let(:course_jsonapi) {
-      jsonapi(:course,
-              ucas_status: 'not_running',
-              provider: provider)
+    let(:course) {
+      build :course,
+            ucas_status: 'not_running',
+            provider: provider
     }
-    let(:course)          { course_jsonapi.to_resource }
-    let(:course_response) { course_jsonapi.render }
 
     scenario 'it hides the status panel' do
       expect(course_page).not_to have_status_panel
@@ -184,15 +201,14 @@ feature 'Course show', type: :feature do
   end
 
   context 'when the course is new' do
-    let(:course_jsonapi) {
-      jsonapi(:course,
-              findable?: false,
-              content_status: 'draft',
-              ucas_status: 'new',
-              provider: provider)
+    let(:course) {
+      build :course,
+            findable?: false,
+            content_status: 'draft',
+            ucas_status: 'new',
+            provider: provider
+            # recruitment_cycle: current_recruitment_cycle
     }
-    let(:course)          { course_jsonapi.to_resource }
-    let(:course_response) { course_jsonapi.render }
 
     scenario 'it displays a status panel' do
       expect(course_page).to have_status_panel
@@ -204,7 +220,10 @@ feature 'Course show', type: :feature do
     describe 'publishing' do
       before do
         stub_api_v2_request(
-          "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+          "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+          "/providers/#{provider.provider_code}" \
+          "/courses/#{course.course_code}" \
+          "?include=sites,provider.sites,accrediting_provider",
           course_response
         )
       end
@@ -212,8 +231,10 @@ feature 'Course show', type: :feature do
       context 'without errors' do
         before do
           stub_api_v2_request(
-            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
-            nil,
+            "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+            "/providers/#{provider.provider_code}" \
+            "/courses/#{course.course_code}/publish",
+            '',
             :post
           )
         end
@@ -230,17 +251,25 @@ feature 'Course show', type: :feature do
       context 'with errors' do
         before do
           stub_api_v2_request(
-            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+            "/providers/#{provider.provider_code}" \
+            "/courses/#{course.course_code}" \
+            "/publish",
             build(:error, :for_course_publish),
             :post,
             422
           )
           stub_api_v2_request(
-            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}?include=courses.accrediting_provider",
-            provider.render
+            "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+            "/providers/#{provider.provider_code}" \
+            "?include=courses.accrediting_provider",
+            provider.to_jsonapi(include: :courses)
           )
           stub_api_v2_request(
-            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publishable",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+            "/providers/#{provider.provider_code}" \
+            "/courses/#{course.course_code}" \
+            "/publishable",
             build(:error, :for_course_publish),
             :post,
             422

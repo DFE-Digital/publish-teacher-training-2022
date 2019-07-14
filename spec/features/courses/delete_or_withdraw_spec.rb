@@ -1,28 +1,29 @@
 require 'rails_helper'
 
 feature 'Getting rid of a course', type: :feature do
-  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
-  let(:provider) { jsonapi(:provider) }
-  let(:provider_attributes) { provider.attributes }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:provider) { build(:provider, provider_code: 'A0') }
   let(:course) do
-    jsonapi(
-      :course,
-      ucas_status: ucas_status,
-      provider: provider
-    ).render
+    build :course,
+          ucas_status: ucas_status,
+          provider: provider,
+          recruitment_cycle: current_recruitment_cycle
   end
-  let(:course_attributes) { course[:data][:attributes] }
+
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{course.recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
     stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider_attributes[:provider_code]}/courses/#{course_attributes[:course_code]}?include=sites,provider.sites,accrediting_provider",
-      course
+      "/recruitment_cycles/#{course.recruitment_cycle.year}/" \
+      "providers/#{provider.provider_code}/" \
+      "courses/#{course.course_code}" \
+      "?include=sites,provider.sites,accrediting_provider",
+      course.to_jsonapi(include: %i[provider sites])
     )
 
-    course_page.load(provider_code: provider_attributes[:provider_code], recruitment_cycle_year: course_attributes[:recruitment_cycle_year], course_code: course_attributes[:course_code])
+    course_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle.year, course_code: course.course_code)
   end
 
   context "for a running course" do
@@ -32,7 +33,7 @@ feature 'Getting rid of a course', type: :feature do
       course_page.withdraw_link.click
 
       expect(find('.govuk-caption-xl')).to have_content(
-        "#{course_attributes[:name]} (#{course_attributes[:course_code]})"
+        "#{course.name} (#{course.course_code})"
       )
       expect(find('.govuk-heading-xl')).to have_content(
         "Are you sure you want to withdraw this course?"
@@ -51,7 +52,7 @@ feature 'Getting rid of a course', type: :feature do
       course_page.delete_link.click
 
       expect(find('.govuk-caption-xl')).to have_content(
-        "#{course_attributes[:name]} (#{course_attributes[:course_code]})"
+        "#{course.name} (#{course.course_code})"
       )
       expect(find('.govuk-heading-xl')).to have_content(
         "Are you sure you want to delete this course?"

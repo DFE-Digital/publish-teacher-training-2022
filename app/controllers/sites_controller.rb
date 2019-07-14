@@ -7,7 +7,8 @@ class SitesController < ApplicationController
   end
 
   def create
-    @site               = Site.new(site_params.to_h)
+    @site = Site.new(site_params.to_h)
+    @site.recruitment_cycle_year = @provider.recruitment_cycle_year
     @site.provider_code = @provider.provider_code
 
     if @site.save
@@ -53,8 +54,8 @@ private
 
   def build_provider
     cycle_year = params.fetch(
-                   :recruitment_cycle_year,
-                   Settings.current_cycle
+      :recruitment_cycle_year,
+      Settings.current_cycle
                  )
 
     @provider = Provider

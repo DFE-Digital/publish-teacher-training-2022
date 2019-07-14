@@ -14,7 +14,7 @@ module Courses
       end
 
       @course.has_multiple_running_sites_or_study_modes? ? update_vacancies_for_multiple_sites : update_vacancies_for_a_single_site
-      @course.sync_with_search_and_compare(provider_code: @course.provider_code, year: params[:recruitment_cycle_year])
+      @course.sync_with_search_and_compare(provider_code: @course.provider_code, recruitment_cycle_year: params[:recruitment_cycle_year])
       flash[:success] = 'Course vacancies published'
       redirect_to provider_recruitment_cycle_courses_path(params[:provider_code], params[:recruitment_cycle_year])
     end
@@ -41,6 +41,7 @@ module Courses
 
       @site_statuses.each do |site_status|
         site_status.vac_status = vac_status
+        site_status.recruitment_cycle_year = @course.recruitment_cycle_year
         site_status.save
       end
     end
@@ -66,7 +67,7 @@ module Courses
     def build_course
       @course = Course
         .includes(site_statuses: [:site])
-        .where(year: params[:recruitment_cycle_year])
+        .where(recruitment_cycle_year: params[:recruitment_cycle_year])
         .where(provider_code: params[:provider_code])
         .find(params[:code])
         .first

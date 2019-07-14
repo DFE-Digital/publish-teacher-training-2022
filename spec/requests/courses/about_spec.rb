@@ -2,37 +2,43 @@ require 'rails_helper'
 
 describe 'Courses', type: :request do
   describe 'GET about' do
-    let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
-    let(:course_json_api)   { jsonapi :course, name: 'English', course_code: 'EN01', provider: provider, include_nulls: [:accrediting_provider] }
-    let(:provider)          { jsonapi(:provider, accredited_body?: true, provider_code: 'A0') }
-    let(:course)            { course_json_api.to_resource }
-    let(:course_response)   { course_json_api.render }
-
-    let(:course_1_json_api) { jsonapi :course, name: 'English', course_code: 'EN01', include_nulls: [:accrediting_provider] }
-    let(:course_2_json_api) do
-      jsonapi :course,
-              name: 'Biology',
-              include_nulls: [:accrediting_provider],
-              about_course: 'Foo',
-              interview_process: 'Foobar',
-              how_school_placements_work: 'Foobarbar'
+    let(:current_recruitment_cycle) { build :recruitment_cycle }
+    let(:course) do
+      build :course,
+            name: 'English',
+            course_code: 'EN01',
+            provider: provider,
+            include_nulls: [:accrediting_provider],
+            recruitment_cycle: current_recruitment_cycle
     end
-    let(:course_2)            { course_2_json_api.to_resource }
-    let(:courses)             { [course_1_json_api, course_2_json_api] }
-    let(:provider2)           { jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'A0') }
-    let(:provider_2_response) { provider2.render }
+    let(:provider) { build :provider, accredited_body?: true, provider_code: 'A0' }
+    let(:course_response) { course.to_jsonapi(include: %i[sites provider accrediting_provider recruitment_cycle]) }
+
+    let(:course_1) { build :course, name: 'English', course_code: 'EN01', include_nulls: [:accrediting_provider] }
+    let(:course_2) do
+      build :course,
+            name: 'Biology',
+            include_nulls: [:accrediting_provider],
+            about_course: 'Foo',
+            interview_process: 'Foobar',
+            how_school_placements_work: 'Foobarbar'
+    end
+    let(:course_2_response)   { course_2.to_jsonapi }
+    let(:courses)             { [course_1, course_2] }
+    let(:provider2)           { build(:provider, courses: courses, accredited_body?: true, provider_code: 'A0') }
+    let(:provider_2_response) { provider2.to_jsonapi(include: %i[courses accrediting_provider]) }
 
     before do
       stub_omniauth
       get(auth_dfe_callback_path)
-      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
       stub_api_v2_request(
-        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
         course_response
       )
       stub_api_v2_request(
-        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=sites,provider.sites,accrediting_provider",
-        course_2_json_api.render
+        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=sites,provider.sites,accrediting_provider",
+        course_2_response
       )
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}?include=courses.accrediting_provider",
@@ -49,7 +55,7 @@ describe 'Courses', type: :request do
 
     it 'renders the course about' do
       get(about_provider_recruitment_cycle_course_path(provider.provider_code,
-                                                       course.recruitment_cycle_year,
+                                                       course.recruitment_cycle.year,
                                                        course.course_code))
 
       expect(response.body).to include(
@@ -66,7 +72,7 @@ describe 'Courses', type: :request do
     context 'with copy_from parameter' do
       it 'renders the course about with data from chosen' do
         get(about_provider_recruitment_cycle_course_path(provider.provider_code,
-                                                         course.recruitment_cycle_year,
+                                                         course.recruitment_cycle.year,
                                                          course.course_code,
                                                          params: { copy_from: course_2.course_code }))
 
@@ -87,10 +93,10 @@ describe 'Courses', type: :request do
   end
 
   describe 'UPDATE about' do
-    let(:course_json_api)   { jsonapi :course, provider: provider }
-    let(:provider)          { jsonapi(:provider, provider_code: 'A0') }
-    let(:course)            { course_json_api.to_resource }
-    let(:course_response)   { course_json_api.render }
+    let(:current_recruitment_cycle) { build :recruitment_cycle }
+    let(:course)          { build :course, provider: provider }
+    let(:provider)        { build :provider, provider_code: 'A0' }
+    let(:course_response) { course.to_jsonapi(include: %i[sites provider accrediting_provider recruitment_cycle]) }
 
     let(:course_params) do
       {
@@ -117,23 +123,24 @@ describe 'Courses', type: :request do
     before do
       stub_omniauth
       get(auth_dfe_callback_path)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
       stub_api_v2_request(
-        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
         course_response
       )
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}?include=courses.accrediting_provider",
-        provider.render
+        provider.to_jsonapi
       )
     end
 
     context "without errors" do
-      let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
+      let(:current_recruitment_cycle) { build(:recruitment_cycle) }
 
       before do
-        stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+        stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request(
-          "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
+          "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
           {}, :patch, 200
         ).with(body: {
           data: {
@@ -143,23 +150,23 @@ describe 'Courses', type: :request do
           }
         }.to_json)
 
-        patch about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code), params: request_params
+        patch about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle.year, course.course_code), params: request_params
       end
 
       it 'redirects to the course description page' do
         expect(flash[:success]).to include('Your changes have been saved')
-        expect(response).to redirect_to(provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
+        expect(response).to redirect_to(provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle.year, course.course_code))
       end
     end
 
     context "with errors" do
       before do
         stub_api_v2_request(
-          "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+          "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
           build(:error, :for_course_publish), :patch, 422
         )
 
-        patch about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code), params: request_params
+        patch about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle.year, course.course_code), params: request_params
       end
 
       it 'redirects to the course about page' do

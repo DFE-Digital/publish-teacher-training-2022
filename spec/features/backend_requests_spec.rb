@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe 'requests made to mc-be' do
   describe 'the authorization header' do
-    let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year:'2019') }
-    let(:provider1) { jsonapi :provider }
-    let(:provider2) { jsonapi :provider }
+    let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+    let(:provider1) { build :provider }
+    let(:provider2) { build :provider }
 
     it 'is thread-safe' do
       # The api calls in this test should be completely isolated:
@@ -45,16 +45,16 @@ describe 'requests made to mc-be' do
 
       stub_omniauth
 
-      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
 
       # Stub extra dependencies, these calls are not under test here.
       stub_api_v2_request(
-        '/recruitment_cycles/#{current_recruitment_cycle.year}/providers',
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
         jsonapi(:providers_response, data: [provider1, provider2]),
         token: 'tokenUser1'
       )
       stub_api_v2_request(
-        '/recruitment_cycles/#{current_recruitment_cycle.year}/providers',
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
         jsonapi(:providers_response, data: [provider1, provider2]),
         token: 'tokenUser2'
       )
@@ -70,12 +70,12 @@ describe 'requests made to mc-be' do
       # explicit expect() in this test.
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider1.provider_code}",
-        provider1.render,
+        provider1.to_jsonapi,
         token: 'tokenUser1'
       )
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider2.provider_code}",
-        provider2.render,
+        provider2.to_jsonapi,
         token: 'tokenUser2'
       )
 

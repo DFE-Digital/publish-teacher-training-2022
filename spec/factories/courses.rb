@@ -64,8 +64,8 @@ FactoryBot.define do
       end
 
       course.recruitment_cycle = evaluator.recruitment_cycle
-      course.provider_code = evaluator.provider.provider_code
-      course.recruitment_cycle_year = evaluator.recruitment_cycle.year
+      course.provider_code = evaluator.provider&.provider_code
+      course.recruitment_cycle_year = evaluator&.recruitment_cycle&.year
     end
 
     trait :with_vacancy do

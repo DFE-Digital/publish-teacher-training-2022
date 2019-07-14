@@ -141,7 +141,7 @@ private
       .includes(site_statuses: [:site])
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
-      .where(year: cycle_year)
+      .where(recruitment_cycle_year: cycle_year)
       .where(provider_code: @provider_code)
       .find(params[:code])
       .first
@@ -222,7 +222,7 @@ private
     @source_course = Course.includes(:sites)
                            .includes(provider: [:sites])
                            .includes(:accrediting_provider)
-                           .where(year: cycle_year)
+                           .where(recruitment_cycle_year: cycle_year)
                            .where(provider_code: @provider_code)
                            .find(params[:copy_from])
                            .first

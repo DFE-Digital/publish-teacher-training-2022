@@ -3,6 +3,7 @@ FactoryBot.define do
     sequence(:id)
     status { 'running' }
     has_vacancies? { nil }
+    vac_status { '' }
 
     trait :full_time_and_part_time do
       vac_status { 'both_full_time_and_part_time_vacancies' }

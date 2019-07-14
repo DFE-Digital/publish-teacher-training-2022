@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 feature 'Recruitment cycles', type: :feature do
-  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
-  let(:next_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2020') }
-  let(:provider) { jsonapi :provider, provider_code: 'A6' }
+  let(:current_recruitment_cycle) { build :recruitment_cycle, year: '2019' }
+  let(:next_recruitment_cycle) { build :recruitment_cycle, year: '2020' }
+  let(:provider) { build :provider, provider_code: 'A6' }
   let(:recruitment_cycle_page) { PageObjects::Page::Organisations::RecruitmentCycle.new }
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}", next_recruitment_cycle.render)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
-    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}/providers/#{provider.provider_code}", provider.render)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}", provider.render)
+    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}", next_recruitment_cycle.to_jsonapi)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
+    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}/providers/#{provider.provider_code}", provider.to_jsonapi)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}", provider.to_jsonapi)
   end
 
   context 'during a rollover period' do

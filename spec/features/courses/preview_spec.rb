@@ -1,53 +1,65 @@
+# coding: utf-8
+
 require 'rails_helper'
 
 feature 'Preview course', type: :feature do
-  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
-  let(:course_jsonapi) do
-    jsonapi(:course,
-            name: 'English',
-            provider: provider,
-            accrediting_provider: accrediting_provider,
-            course_length: 'OneYear',
-            applications_open_from: '2019-01-01T00:00:00Z',
-            start_date: '2019-09-01T00:00:00Z',
-            fee_uk_eu: '9250.0',
-            fee_international: '9250.0',
-            fee_details: 'Optional fee details',
-            has_scholarship_and_bursary?: true,
-            scholarship_amount: '20000',
-            bursary_amount: '22000',
-            personal_qualities: 'We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.',
-            other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.',
-            about_accrediting_body: 'Something great about the accredited body',
-            interview_process: 'Some helpful guidance about the interview process',
-            has_vacancies?: true,
-            site_statuses: [
-              jsonapi_site_status('Running site with vacancies', :full_time, 'running'),
-              jsonapi_site_status('Suspended site with vacancies', :full_time, 'suspended'),
-              jsonapi_site_status('New site with vacancies', :full_time, 'new_status'),
-              jsonapi_site_status('New site with no vacancies', :no_vacancies, 'new_status'),
-              jsonapi_site_status('Running site with no vacancies', :no_vacancies, 'running')
-            ])
+  let(:current_recruitment_cycle) { build :recruitment_cycle }
+  let(:course) do
+    build :course,
+          name: 'English',
+          provider: provider,
+          accrediting_provider: accrediting_provider,
+          course_length: 'OneYear',
+          applications_open_from: '2019-01-01T00:00:00Z',
+          start_date: '2019-09-01T00:00:00Z',
+          fee_uk_eu: '9250.0',
+          fee_international: '9250.0',
+          fee_details: 'Optional fee details',
+          has_scholarship_and_bursary?: true,
+          scholarship_amount: '20000',
+          bursary_amount: '22000',
+          personal_qualities: 'We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.',
+          other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.',
+          about_accrediting_body: 'Something great about the accredited body',
+          interview_process: 'Some helpful guidance about the interview process',
+          has_vacancies?: true,
+          recruitment_cycle: current_recruitment_cycle,
+          site_statuses: [
+            jsonapi_site_status('Running site with vacancies', :full_time, 'running'),
+            jsonapi_site_status('Suspended site with vacancies', :full_time, 'suspended'),
+            jsonapi_site_status('New site with vacancies', :full_time, 'new_status'),
+            jsonapi_site_status('New site with no vacancies', :no_vacancies, 'new_status'),
+            jsonapi_site_status('Running site with no vacancies', :no_vacancies, 'running')
+          ]
   end
 
   let(:provider) {
-    jsonapi(:provider,
-            provider_code: 'A0',
-            website: 'https://scitt.org',
-            address1: '1 Long Rd',
-            postcode: 'E1 ABC')
+    build(:provider,
+          provider_code: 'A0',
+          website: 'https://scitt.org',
+          address1: '1 Long Rd',
+          postcode: 'E1 ABC')
   }
-  let(:accrediting_provider) { jsonapi(:provider) }
-  let(:course)               { course_jsonapi.to_resource }
-  let(:course_response)      { course_jsonapi.render }
-  let(:decorated_course)     { course.decorate }
+  let(:accrediting_provider) { build(:provider) }
+  let(:course_response)      do
+    course.to_jsonapi(
+      include: [
+        :sites,
+        :provider,
+        :accrediting_provider,
+        :recruitment_cycle,
+        site_statuses: :site
+      ]
+    )
+  end
+  let(:decorated_course) { course.decorate }
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{course.recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
+    stub_api_v2_request("/recruitment_cycles/#{course.recruitment_cycle.year}/recruitment_cycles", current_recruitment_cycle.to_jsonapi)
     stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
       course_response
     )
   end
@@ -199,6 +211,6 @@ feature 'Preview course', type: :feature do
   end
 
   def jsonapi_site_status(name, study_mode, status)
-    jsonapi(:site_status, study_mode, site: jsonapi(:site, location_name: name), status: status)
+    build(:site_status, study_mode, site: build(:site, location_name: name), status: status)
   end
 end

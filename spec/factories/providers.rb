@@ -30,6 +30,11 @@ FactoryBot.define do
         provider.sites << site
       end
 
+      provider.courses = []
+      evaluator.courses.each do |course|
+        provider.courses << course
+      end
+
       provider.recruitment_cycle = evaluator.recruitment_cycle
       provider.recruitment_cycle_year = evaluator.recruitment_cycle.year
     end

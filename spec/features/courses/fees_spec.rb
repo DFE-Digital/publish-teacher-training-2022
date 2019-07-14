@@ -1,29 +1,38 @@
 require 'rails_helper'
 
 feature 'Course fees', type: :feature do
-  let(:current_recruitment_cycle) { jsonapi(:recruitment_cycle, year: '2019') }
-  let(:provider) { jsonapi(:provider, provider_code: 'A0') }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:provider) { build(:provider, provider_code: 'A0') }
   let(:course_1) do
-    jsonapi(
-      :course,
-      :with_fees,
-      provider: provider
-    )
+    build :course,
+          :with_fees,
+          provider: provider,
+          recruitment_cycle: current_recruitment_cycle
   end
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.render)
+    stub_api_v2_request("/recruitment_cycles/#{course_1.recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
     stub_course_request(provider, course_1)
-    stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider.render)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
+      "/providers/A0" \
+      "?include=courses.accrediting_provider",
+      provider.to_jsonapi(
+        include: %i[courses accrediting_provider]
+      )
+    )
   end
 
   let(:course_fees_page) { PageObjects::Page::Organisations::CourseFees.new }
 
   scenario 'viewing the courses fees page' do
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course_1.course_code}",
-      course_1.render, :patch, 200
+      "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course_1.course_code}",
+      course_1.to_jsonapi,
+      :patch, 200
     )
     visit provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
 
@@ -74,8 +83,11 @@ feature 'Course fees', type: :feature do
 
   scenario 'submitting with validation errors' do
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course_1.course_code}",
-      build(:error, :for_course_publish), :patch, 422
+      "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course_1.course_code}",
+      build(:error, :for_course_publish),
+      :patch, 422
     )
 
     visit fees_provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
@@ -91,12 +103,11 @@ feature 'Course fees', type: :feature do
 
   context 'with course_length_other selected' do
     let(:course_1) do
-      jsonapi(
-        :course,
-        :with_fees,
-        course_length: '6 months',
-        provider: provider
-      )
+      build :course,
+            :with_fees,
+            course_length: '6 months',
+            provider: provider,
+            recruitment_cycle: current_recruitment_cycle
     end
 
     scenario 'passes the value into course_length' do
@@ -113,36 +124,39 @@ feature 'Course fees', type: :feature do
 
   context 'when copying course fees from another course' do
     let(:course_2) {
-      jsonapi(
-        :course,
-        name: 'Biology',
-        provider: provider,
-        course_length: 'Something custom',
-        fee_uk_eu: 9500,
-        fee_international: 1200,
-        fee_details: 'Some information about the fees',
-        financial_support: 'Some information about the finance support'
-      )
+      build :course,
+            name: 'Biology',
+            provider: provider,
+            course_length: 'Something custom',
+            fee_uk_eu: 9500,
+            fee_international: 1200,
+            fee_details: 'Some information about the fees',
+            financial_support: 'Some information about the finance support',
+            recruitment_cycle: current_recruitment_cycle
     }
 
     let(:course_3) {
-      jsonapi(
-        :course,
-        name: 'Biology',
-        provider: provider,
-        fee_details: 'Course 3 has just fee details',
-        financial_support: 'and financial support (Course 3)'
-      )
+      build :course,
+            name: 'Biology',
+            provider: provider,
+            fee_details: 'Course 3 has just fee details',
+            financial_support: 'and financial support (Course 3)',
+            recruitment_cycle: current_recruitment_cycle
     }
 
     let(:provider_for_copy_from_list) do
-      jsonapi(:provider, courses: [course_1, course_2, course_3], provider_code: 'A0')
+      build(:provider, courses: [course_1, course_2, course_3], provider_code: 'A0')
     end
 
     before do
       stub_course_request(provider, course_2)
       stub_course_request(provider, course_3)
-      stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", provider_for_copy_from_list.render)
+      stub_api_v2_request(
+        "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
+        "/providers/A0" \
+        "?include=courses.accrediting_provider",
+        provider_for_copy_from_list.to_jsonapi(include: %i[courses accrediting_provider])
+      )
     end
 
     scenario 'all fields get copied if all were present' do
@@ -199,8 +213,13 @@ feature 'Course fees', type: :feature do
 
   def stub_course_request(provider, course)
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
-      course.render
+      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course.course_code}" \
+      "?include=sites,provider.sites,accrediting_provider",
+      course.to_jsonapi(
+        include: %i[sites provider accrediting_provider]
+      )
     )
   end
 end
