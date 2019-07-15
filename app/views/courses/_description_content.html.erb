@@ -16,9 +16,9 @@
   <%= link_to 'About this course', about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: 'govuk-link' %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
-  <%= course_summary_item('About this course', course.about_course, 'about_course') %>
-  <%= course_summary_item('Interview process (optional)', course.interview_process, 'interview_process') %>
-  <%= course_summary_item('How school placements work', course.how_school_placements_work, 'how_school_placements_work') %>
+  <%= enrichment_summary_item('About this course', course.about_course, 'about_course') %>
+  <%= enrichment_summary_item('Interview process (optional)', course.interview_process, 'interview_process') %>
+  <%= enrichment_summary_item('How school placements work', course.how_school_placements_work, 'how_school_placements_work') %>
 </dl>
 
 <h3 class="govuk-heading-m govuk-!-font-size-27">
@@ -29,15 +29,15 @@
   <% end %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
-  <%= course_summary_item('Course length', course.length, 'course_length') %>
+  <%= enrichment_summary_item('Course length', course.length, 'course_length') %>
 
   <% if course.has_fees? %>
-    <%= course_summary_item('Fee for UK and EU students', number_to_currency(course.fee_uk_eu), 'fee_uk_eu') %>
-    <%= course_summary_item('Fee for international students (optional)', number_to_currency(course.fee_international), 'international_fees') %>
-    <%= course_summary_item('Fee details (optional)', course.fee_details, 'fee_details') %>
-    <%= course_summary_item('Financial support you offer (optional)', course.financial_support, 'financial_support') %>
+    <%= enrichment_summary_item('Fee for UK and EU students', number_to_currency(course.fee_uk_eu), 'fee_uk_eu') %>
+    <%= enrichment_summary_item('Fee for international students (optional)', number_to_currency(course.fee_international), 'international_fees') %>
+    <%= enrichment_summary_item('Fee details (optional)', course.fee_details, 'fee_details') %>
+    <%= enrichment_summary_item('Financial support you offer (optional)', course.financial_support, 'financial_support') %>
   <% else %>
-    <%= course_summary_item('Salary', course.salary_details, 'salary_details') %>
+    <%= enrichment_summary_item('Salary', course.salary_details, 'salary_details') %>
   <% end %>
 </dl>
 
@@ -45,7 +45,7 @@
   <%= link_to 'Requirements and eligibility', requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: 'govuk-link' %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
-  <%= course_summary_item('Qualifications needed', course.required_qualifications, 'qualifications') %>
-  <%= course_summary_item('Personal qualities (optional)', course.personal_qualities, 'personal_qualities') %>
-  <%= course_summary_item('Other requirements (optional)', course.other_requirements, 'other_requirements') %>
+  <%= enrichment_summary_item('Qualifications needed', course.required_qualifications, 'qualifications') %>
+  <%= enrichment_summary_item('Personal qualities (optional)', course.personal_qualities, 'personal_qualities') %>
+  <%= enrichment_summary_item('Other requirements (optional)', course.other_requirements, 'other_requirements') %>
 </dl>
