@@ -211,13 +211,13 @@
     </dl>
   </div>
   <% if course.is_running? || course.new_and_not_running? %>
-    <div class="govuk-grid-column-one-third">
+    <aside class="govuk-grid-column-one-third">
       <div class="app-related">
         <h2 class="govuk-heading-m">Changing your basic details</h2>
         <p>At the moment you can only change course locations.</p>
 
         <p>To request other changes to your basic details, or to <%= course.is_running? ? "withdraw" : "delete" %> this course, contact the Becoming a Teacher team:<br /><%= bat_contact_mail_to bat_contact_email_address_with_wrap, subject: "Edit #{course.name} (#{@provider_code}/#{course.course_code})" %></p>
       </div>
-    </div>
+    </aside>
   <% end %>
 </div>
