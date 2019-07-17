@@ -34,4 +34,19 @@ module BreadcrumbHelper
     )
     courses_breadcrumb << [course.name_and_code, path]
   end
+
+  def sites_breadcrumb
+    path = provider_recruitment_cycle_sites_path(@provider.provider_code, @recruitment_cycle.year)
+    recruitment_cycle_breadcrumb << ["Locations", path]
+  end
+
+  def edit_site_breadcrumb
+    path = edit_provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id)
+    sites_breadcrumb << [@site_name_before_update, path]
+  end
+
+  def new_site_breadcrumb
+    path = new_provider_recruitment_cycle_site_path(@provider.provider_code)
+    sites_breadcrumb << ["Add a location", path]
+  end
 end

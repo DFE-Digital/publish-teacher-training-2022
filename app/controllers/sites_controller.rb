@@ -1,5 +1,6 @@
 class SitesController < ApplicationController
   before_action :build_provider, :initialise_errors
+  before_action :build_recruitment_cycle
   before_action :build_site, only: %i[edit update]
 
   def new
@@ -63,6 +64,15 @@ private
       .where(year: cycle_year)
       .find(params[:provider_code])
       .first
+  end
+
+  def build_recruitment_cycle
+    cycle_year = params.fetch(
+      :recruitment_cycle_year,
+      Settings.current_cycle
+    )
+
+    @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
   end
 
   def site_params

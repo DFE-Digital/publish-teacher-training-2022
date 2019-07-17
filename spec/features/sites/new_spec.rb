@@ -6,7 +6,7 @@ feature 'Locations', type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}?include=sites",
       provider.to_jsonapi(include: :sites)
