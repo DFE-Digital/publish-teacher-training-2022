@@ -20,7 +20,10 @@ module Helpers
 
     # This is needed because we check the provider count on all pages
     # TODO: Move this to be returned with the user.
-    stub_api_v2_request('/providers', jsonapi(:provider).render)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{Settings.current_cycle}/providers",
+      build(:provider).to_jsonapi
+    )
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:dfe]
     stub_api_v2_request('/sessions', user.to_jsonapi, :post)
   end

@@ -2,22 +2,24 @@ require 'rails_helper'
 
 describe 'Courses' do
   describe 'POST publish' do
-    let(:provider) { jsonapi(:provider, provider_code: 'A0') }
-    let(:course) { jsonapi(:course, provider: provider) }
+    let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+    let(:provider) { build(:provider, provider_code: 'A0') }
+    let(:course) { build(:course, provider: provider, recruitment_cycle: current_recruitment_cycle) }
 
     before do
       stub_omniauth
       get(auth_dfe_callback_path)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
-        course.render,
+        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+        course.to_jsonapi(include: %i[sites provider accrediting_provider]),
       )
     end
 
     context "without errors" do
       before do
         stub_api_v2_request(
-          "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+          "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
           nil,
           :post
         )
@@ -33,7 +35,7 @@ describe 'Courses' do
     context "with errors" do
       before do
         stub_api_v2_request(
-          "/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
+          "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}/publish",
           build(:error, :for_course_publish),
           :post,
           422

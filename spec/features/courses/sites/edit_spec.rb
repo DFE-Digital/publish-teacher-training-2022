@@ -1,19 +1,21 @@
 require 'rails_helper'
 
 feature 'Edit course sites', type: :feature do
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:course) do
-    jsonapi(
+    build(
       :course,
       sites: [site1],
       provider: provider,
-      accrediting_provider: provider
+      accrediting_provider: provider,
+      recruitment_cycle: current_recruitment_cycle
     )
   end
-  let(:site1) { jsonapi(:site, location_name: 'Site one') }
-  let(:site2) { jsonapi(:site, location_name: 'Site two') }
-  let(:site3) { jsonapi(:site, location_name: 'Another site') }
+  let(:site1) { build(:site, location_name: 'Site one') }
+  let(:site2) { build(:site, location_name: 'Site two') }
+  let(:site3) { build(:site, location_name: 'Another site') }
   let(:provider) do
-    jsonapi(
+    build(
       :provider,
       sites: [site1, site2, site3]
     )
@@ -23,13 +25,21 @@ feature 'Edit course sites', type: :feature do
 
   before do
     stub_omniauth
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
-      course.render
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course.course_code}" \
+      "?include=sites,provider.sites",
+      course.to_jsonapi(include: [:sites, provider: :sites])
     )
+
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites",
-      course.render
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course.course_code}" \
+      "?include=sites,provider.sites,accrediting_provider",
+      course.to_jsonapi(include: [:accrediting_provider, :sites, provider: :sites])
     )
 
     course_details_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
@@ -55,7 +65,9 @@ feature 'Edit course sites', type: :feature do
   context 'adding locations' do
     before do
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}" \
+        "/courses/#{course.course_code}",
         {}, :patch, 200
       ).with(body: {
         data: {
@@ -72,9 +84,13 @@ feature 'Edit course sites', type: :feature do
           attributes: {}
         }
       }.to_json)
+
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
-        course.render
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}" \
+        "/courses/#{course.course_code}" \
+        "?include=sites,provider.sites,accrediting_provider",
+        course.to_jsonapi(include: [:sites, { provider: :sites }, :accrediting_provider])
       )
     end
 
@@ -93,7 +109,9 @@ feature 'Edit course sites', type: :feature do
   describe "with validations errors" do
     before do
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}" \
+        "/courses/#{course.course_code}",
         build(:error), :patch, 422
       ).with(body: {
         data: {

@@ -1,4 +1,5 @@
 class Provider < Base
+  belongs_to :recruitment_cycle, param: :year
   has_many :courses, param: :course_code
   has_many :sites
 

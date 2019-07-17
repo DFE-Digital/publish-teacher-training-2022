@@ -1,14 +1,28 @@
 require "rails_helper"
 
 describe 'sessions' do
-  let(:provider) { jsonapi :provider }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:provider) { build :provider }
+  let(:providers) do
+    [
+      build(:provider, courses: [build(:course)]),
+      build(:provider, courses: [build(:course)]),
+      build(:provider, courses: [build(:course)])
+    ]
+  end
+
+  let(:providers_response) do
+    resource_list_to_jsonapi(providers)
+  end
+
   let(:provider_page) { PageObjects::Page::Organisations::OrganisationPage.new }
   let(:root_page) { PageObjects::Page::RootPage.new }
 
   it 'redirects users back to where they were going on sign-in' do
     stub_omniauth
-    stub_api_v2_request('/providers', jsonapi(:providers_response))
-    stub_api_v2_request("/providers/#{provider.provider_code}", provider.render)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}", provider.to_jsonapi)
 
     visit "/organisations/#{provider.provider_code}"
 
@@ -17,9 +31,10 @@ describe 'sessions' do
 
   it 'redirects users to root when they go straight to the signin page' do
     stub_omniauth
-    stub_api_v2_request('/providers', jsonapi(:providers_response))
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
 
-    visit '/signin'
+    visit "/signin"
 
     expect(root_page).to be_displayed
   end

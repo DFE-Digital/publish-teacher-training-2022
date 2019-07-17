@@ -2,53 +2,59 @@ require 'rails_helper'
 
 describe 'Courses', type: :request do
   describe 'GET fees' do
-    let(:course_json_api)   { jsonapi :course, name: 'English', course_code: 'EN01', provider: provider, include_nulls: [:accrediting_provider] }
-    let(:provider)          { jsonapi(:provider, accredited_body?: true, provider_code: 'A0') }
-    let(:course)            { course_json_api.to_resource }
-    let(:course_response)   { course_json_api.render }
+    let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+    let(:course) do
+      build :course,
+            name: 'English',
+            course_code: 'EN01',
+            provider: provider,
+            include_nulls: [:accrediting_provider],
+            recruitment_cycle: current_recruitment_cycle
+    end
+    let(:provider)        { build(:provider, accredited_body?: true, provider_code: 'A0') }
+    let(:course_response) { course.to_jsonapi(include: %i[sites provider accrediting_provider recruitment_cycle]) }
 
-    let(:course_1_json_api) { jsonapi :course, name: 'English', course_code: 'EN01', include_nulls: [:accrediting_provider] }
-    let(:course_2_json_api) do
-      jsonapi :course,
-              name: 'Biology',
-              include_nulls: [:accrediting_provider],
-              course_length: 'TwoYears',
-              provider: provider,
-              fee_uk_eu: 9500,
-              fee_international: 1200,
-              fee_details: 'Some information about the fees',
-              financial_support: 'Some information about the finance support'
+    let(:course_1) { build :course, name: 'English', course_code: 'EN01', include_nulls: [:accrediting_provider] }
+    let(:course_2) do
+      build :course,
+            name: 'Biology',
+            include_nulls: [:accrediting_provider],
+            course_length: 'TwoYears',
+            provider: provider,
+            fee_uk_eu: 9500,
+            fee_international: 1200,
+            fee_details: 'Some information about the fees',
+            financial_support: 'Some information about the finance support'
     end
-    let(:course_2) { course_2_json_api.to_resource }
-    let(:course_3_json_api) do
-      jsonapi :course,
-              name: 'Chemistry',
-              include_nulls: [:accrediting_provider],
-              fee_details: 'Course 3 fees',
-              financial_support: 'Course 3 financial support'
+    let(:course_3) do
+      build :course,
+            name: 'Chemistry',
+            include_nulls: [:accrediting_provider],
+            fee_details: 'Course 3 fees',
+            financial_support: 'Course 3 financial support'
     end
-    let(:course_3)            { course_3_json_api.to_resource }
-    let(:courses)             { [course_1_json_api, course_2_json_api, course_3_json_api] }
-    let(:provider2)           { jsonapi(:provider, courses: courses, accredited_body?: true, provider_code: 'A0') }
-    let(:provider_2_response) { provider2.render }
+    let(:courses)             { [course_1, course_2, course_3] }
+    let(:provider2)           { build(:provider, courses: courses, accredited_body?: true, provider_code: 'A0') }
+    let(:provider_2_response) { provider2.to_jsonapi(include: %i[courses accrediting_provider]) }
 
     before do
       stub_omniauth
       get(auth_dfe_callback_path)
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
         course_response
       )
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=sites,provider.sites,accrediting_provider",
-        course_2_json_api.render
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=sites,provider.sites,accrediting_provider",
+        course_2.to_jsonapi(include: %i[sites provider accrediting_provider recruitment_cycle])
       )
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/courses/#{course_3.course_code}?include=sites,provider.sites,accrediting_provider",
-        course_3_json_api.render
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_3.course_code}?include=sites,provider.sites,accrediting_provider",
+        course_3.to_jsonapi(include: %i[sites provider accrediting_provider recruitment_cycle])
       )
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}?include=courses.accrediting_provider",
         provider_2_response
       )
     end

@@ -1,5 +1,9 @@
 FactoryBot.define do
-  factory :site, class: Hash do
+  factory :site do
+    transient do
+      recruitment_cycle { build :recruitment_cycle }
+    end
+
     sequence(:id)
     sequence(:code, &:to_s)
     location_name { 'Main Site' }
@@ -10,13 +14,8 @@ FactoryBot.define do
     postcode { nil }
     recruitment_cycle_year { '2019' }
 
-    initialize_with do
-      data_attributes = attributes.except(:id)
-      JSONAPIMockSerializable.new(
-        id,
-        'sites',
-        attributes: data_attributes
-      )
+    after :build do |course, evaluator|
+      course.recruitment_cycle = evaluator.recruitment_cycle
     end
   end
 end

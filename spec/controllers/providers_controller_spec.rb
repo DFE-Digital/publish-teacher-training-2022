@@ -15,8 +15,29 @@ RSpec.describe ProvidersController, type: :controller do
 
     describe 'GET #index' do
       context 'with 2 or more providers' do
+        let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+
+        let(:providers) do
+          [
+            build(:provider, courses: [build(:course)]),
+            build(:provider, courses: [build(:course)]),
+            build(:provider, courses: [build(:course)])
+          ]
+        end
+
+        let(:providers_response) do
+          resource_list_to_jsonapi(providers)
+        end
+
         before do
-          stub_api_v2_request('/providers', jsonapi(:providers_response))
+          stub_api_v2_request(
+            "/recruitment_cycles/#{current_recruitment_cycle.year}",
+            current_recruitment_cycle.to_jsonapi
+          )
+          stub_api_v2_request(
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
+            providers_response
+          )
         end
 
         it 'returns the index page' do
@@ -26,21 +47,31 @@ RSpec.describe ProvidersController, type: :controller do
       end
 
       context 'with 1 provider' do
-        let(:the_provider) { jsonapi(:provider) }
+        let(:provider) { build(:provider) }
+        let(:current_recruitment_cycle) { build(:recruitment_cycle) }
 
         before do
-          stub_api_v2_request('/providers', jsonapi(:providers_response, data: [the_provider]))
+          stub_api_v2_request(
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
+            provider.to_jsonapi
+          )
         end
 
         it 'returns the show page' do
           get :index
-          expect(response).to redirect_to(action: :show, code: the_provider.attributes[:provider_code])
+          expect(response).to redirect_to(action: :show, code: provider.provider_code)
         end
       end
 
       context 'with 0 providers' do
+        let(:providers_response) { nil }
+        let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+
         before do
-          stub_api_v2_request('/providers', jsonapi(:providers_response, data: []))
+          stub_api_v2_request(
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
+            providers_response
+          )
         end
 
         it 'redirects to manage-courses-ui' do

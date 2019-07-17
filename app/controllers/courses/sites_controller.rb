@@ -34,6 +34,7 @@ module Courses
       @course = Course
         .includes(:sites)
         .includes(provider: [:sites])
+        .where(recruitment_cycle_year: params[:recruitment_cycle_year])
         .where(provider_code: @provider_code)
         .find(params[:code])
         .first

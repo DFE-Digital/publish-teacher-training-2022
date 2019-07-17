@@ -1,29 +1,31 @@
 require 'rails_helper'
 
 feature 'Locations', type: :feature do
-  let(:provider) { jsonapi(:provider) }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: '2019') }
+  let(:provider) { build(:provider) }
 
   before do
     stub_omniauth
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle)
     stub_api_v2_request(
-      "/providers/#{provider.provider_code}?include=sites",
-      provider.render
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}?include=sites",
+      provider.to_jsonapi(include: :sites)
     )
   end
 
   context 'with provider with few sites' do
     scenario "locations page should have Add a location button" do
-      visit provider_recruitment_cycle_sites_path(provider.provider_code, '2019')
+      visit provider_recruitment_cycle_sites_path(provider.provider_code, current_recruitment_cycle.year)
 
       expect(page).to have_content('Add a location')
     end
   end
 
   context 'with provider with the maximum number of sites' do
-    let(:provider) { jsonapi(:provider, can_add_more_sites?: false) }
+    let(:provider) { build(:provider, can_add_more_sites?: false) }
 
     scenario "locations page should not have Add a location button" do
-      visit provider_recruitment_cycle_sites_path(provider.provider_code, '2019')
+      visit provider_recruitment_cycle_sites_path(provider.provider_code, current_recruitment_cycle.year)
 
       expect(page).to have_content('you’ve reached the maximum number of locations available')
     end
@@ -32,14 +34,14 @@ feature 'Locations', type: :feature do
   context 'without validation errors' do
     before do
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/sites",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/sites",
         nil,
         :post
       )
     end
 
     scenario 'Adding a location' do
-      visit provider_recruitment_cycle_sites_path(provider.provider_code, '2019')
+      visit provider_recruitment_cycle_sites_path(provider.provider_code, current_recruitment_cycle.year)
 
       click_on 'Add a location'
 
@@ -59,7 +61,7 @@ feature 'Locations', type: :feature do
   context "with validations errors" do
     before do
       stub_api_v2_request(
-        "/providers/#{provider.provider_code}/sites",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/sites",
         build(:error),
         :post,
         422
@@ -67,7 +69,7 @@ feature 'Locations', type: :feature do
     end
 
     scenario 'Adding a location with validation errors' do
-      visit new_provider_recruitment_cycle_site_path(provider.provider_code, '2019')
+      visit new_provider_recruitment_cycle_site_path(provider.provider_code, current_recruitment_cycle.year)
 
       click_on 'Save'
 

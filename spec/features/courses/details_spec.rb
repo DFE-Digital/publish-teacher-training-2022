@@ -1,30 +1,41 @@
 require 'rails_helper'
 
 feature 'Course details', type: :feature do
-  let(:provider) { jsonapi(:provider, accredited_body?: false, sites: [site1, site2]) }
-  let(:course) {
-    jsonapi :course,
-            qualifications: %w[qts pgce],
-            study_mode: 'full_time',
-            start_date: Time.zone.local(2019),
-            sites: [site1, site2],
-            provider: provider,
-            accrediting_provider: provider,
-            open_for_applications?: true
-  }
-  let(:site1) { jsonapi(:site, location_name: 'London') }
-  let(:site2) { jsonapi(:site, location_name: 'Manchester') }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:provider) { build(:provider, provider_code: 'A0', accredited_body?: false, sites: [site1, site2]) }
+  let(:course) do
+    build :course,
+          qualifications: %w[qts pgce],
+          study_mode: 'full_time',
+          start_date: Time.zone.local(2019),
+          sites: [site1, site2],
+          provider: provider,
+          accrediting_provider: provider,
+          open_for_applications?: true,
+          recruitment_cycle: current_recruitment_cycle
+  end
+  let(:site1) { build(:site, location_name: 'London') }
+  let(:site2) { build(:site, location_name: 'Manchester') }
   let(:site_status1) do
-    jsonapi(:site_status, :full_time, site: site1, status: 'running')
+    build(:site_status, :full_time, site: site1, status: 'running')
   end
   let(:site_status2) do
-    jsonapi(:site_status, :part_time, site: site2, status: 'suspended')
+    build(:site_status, :part_time, site: site2, status: 'suspended')
   end
-  let(:course_response) { course.render }
+  let(:course_response) do
+    course.to_jsonapi(
+      include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites]
+    )
+  end
+
   before do
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
     stub_omniauth
     stub_api_v2_request(
-      "/providers/A0/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course.course_code}" \
+      "?include=sites,provider.sites,accrediting_provider",
       course_response
     )
   end
@@ -32,10 +43,10 @@ feature 'Course details', type: :feature do
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
 
   scenario 'viewing the course details page' do
-    visit "/organisations/A0/#{course.recruitment_cycle_year}/courses/#{course.course_code}/details"
+    visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
 
     expect(course_details_page)
-      .to be_displayed(provider_code: 'A0', course_code: course.course_code)
+      .to be_displayed(provider_code: provider.provider_code, course_code: course.course_code)
 
     expect(course_details_page.caption).to have_content(
       course.description
@@ -91,17 +102,17 @@ feature 'Course details', type: :feature do
   end
 
   context 'when the provider only has one location' do
-    let(:provider) { jsonapi(:provider, accredited_body?: false, sites: [site1]) }
-    let(:course) {
-      jsonapi :course,
-              site_statuses: [site_status1],
-              provider: provider,
-              accrediting_provider: provider,
-              ucas_status: 'new'
-    }
+    let(:provider) { build(:provider, provider_code: 'A0', accredited_body?: true, sites: [site1]) }
+    let(:course) do
+      build :course,
+            site_statuses: [site_status1],
+            provider: provider,
+            ucas_status: 'new',
+            recruitment_cycle: current_recruitment_cycle
+    end
 
     scenario 'viewing the course details page' do
-      visit "/organisations/A0/#{course.recruitment_cycle_year}/courses/#{course.course_code}/details"
+      visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
 
       expect(course_details_page).not_to have_edit_locations_link
       expect(course_details_page.manage_provider_locations_link).to have_content(
@@ -111,16 +122,16 @@ feature 'Course details', type: :feature do
   end
 
   context 'when the course is new and not running' do
-    let(:course) {
-      jsonapi :course,
-              sites: [site1, site2],
-              provider: provider,
-              accrediting_provider: provider,
-              ucas_status: 'new'
-    }
+    let(:course) do
+      build :course,
+            sites: [site1, site2],
+            provider: provider,
+            ucas_status: 'new',
+            recruitment_cycle: current_recruitment_cycle
+    end
 
     scenario 'viewing the course details page' do
-      visit "/organisations/A0/#{course.recruitment_cycle_year}/courses/#{course.course_code}/details"
+      visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
 
       expect(course_details_page.locations).to have_content(
         site1.location_name
@@ -133,7 +144,7 @@ feature 'Course details', type: :feature do
 
   scenario 'viewing the show page for a course that does not exist' do
     stub_api_v2_request(
-      "/providers/ZZ/courses/ZZZ?include=sites,provider.sites,accrediting_provider",
+      "/recruitment_cycles/2019/providers/ZZ/courses/ZZZ?include=sites,provider.sites,accrediting_provider",
       '',
       :get,
       404

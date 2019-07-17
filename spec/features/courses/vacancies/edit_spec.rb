@@ -1,21 +1,31 @@
 require 'rails_helper'
 
 feature 'Edit course vacancies', type: :feature do
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:course_vacancies_page) { PageObjects::Page::Organisations::CourseVacancies.new }
   let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
   let(:course_code) { 'X104' }
+  let(:provider) { build(:provider) }
 
   let!(:sync_courses_request_stub) do
     stub_request(
       :post,
-      "http://localhost:3001/api/v2/providers/A0/courses/" \
+      "http://localhost:3001/api/v2/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/" \
         "#{course_code}/sync_with_search_and_compare"
     ).to_return(status: 201, body: "")
   end
 
   before do
     stub_omniauth
-    stub_api_v2_request("/providers/A0?include=courses.accrediting_provider", jsonapi(:provider).render)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}",
+      current_recruitment_cycle.to_jsonapi
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
+      build(:provider).to_jsonapi(include: %i[courses accrediting_provider])
+    )
     stub_request(:patch, %r{\Ahttp://localhost:3001/api/v2/site_statuses/\d+})
     stub_course_request(course)
     course_vacancies_page.load_with_course(course)
@@ -23,10 +33,11 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'A full time course with one running site' do
     let(:course) do
-      jsonapi(
+      build(
         :course,
         :with_full_time_vacancy,
         course_code: course_code,
+        provider: provider,
         site_statuses: [
           jsonapi_site_status('Uni 1', :full_time, 'running'),
           jsonapi_site_status('Not running Uni', :full_time, 'suspended')
@@ -60,10 +71,11 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'A full time course with one running site but no vacancies' do
     let(:course) do
-      jsonapi(
+      build(
         :course,
         :full_time,
         course_code: course_code,
+        provider: provider,
         site_statuses: [
           jsonapi_site_status('Uni 1', :no_vacancies, 'running')
         ]
@@ -96,10 +108,11 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'A full time course with multiple running sites' do
     let(:course) do
-      jsonapi(
+      build(
         :course,
         :with_full_time_vacancy,
         course_code: course_code,
+        provider: provider,
         site_statuses: [
           jsonapi_site_status('Running Uni 1', :full_time, 'running'),
           jsonapi_site_status('Running Uni 2', :full_time, 'running'),
@@ -109,8 +122,8 @@ feature 'Edit course vacancies', type: :feature do
     end
 
     scenario 'shows the edit vacancies page' do
-      expect(course_vacancies_page).to have_link('Back', href: provider_recruitment_cycle_courses_path('A0', course.recruitment_cycle_year))
-      expect(course_vacancies_page).to have_link('Cancel changes', href: provider_recruitment_cycle_courses_path('A0', course.recruitment_cycle_year))
+      expect(course_vacancies_page).to have_link('Back', href: provider_recruitment_cycle_courses_path(provider.provider_code, course.recruitment_cycle_year))
+      expect(course_vacancies_page).to have_link('Cancel changes', href: provider_recruitment_cycle_courses_path(provider.provider_code, course.recruitment_cycle_year))
       expect(course_vacancies_page.title).to have_content('Edit vacancies')
       expect(course_vacancies_page.caption).to have_content(
         "#{course.name} (#{course.course_code})"
@@ -134,10 +147,11 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'A full time course with multiple running sites but no vacancies' do
     let(:course) do
-      jsonapi(
+      build(
         :course,
         :full_time,
         course_code: course_code,
+        provider: provider,
         site_statuses: [
           jsonapi_site_status('Running Uni 1', :no_vacancies, 'running'),
           jsonapi_site_status('Running Uni 2', :no_vacancies, 'running')
@@ -161,10 +175,11 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'A full time or part time course with one site' do
     let(:course) do
-      jsonapi(
+      build(
         :course,
         :with_full_time_or_part_time_vacancy,
         course_code: course_code,
+        provider: provider,
         site_statuses: [
           jsonapi_site_status('Uni full and part time 1', :full_time_and_part_time, 'running'),
         ]
@@ -186,10 +201,11 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'A full time or part time course with multiple running sites' do
     let(:course) do
-      jsonapi(
+      build(
         :course,
         :with_full_time_or_part_time_vacancy,
         course_code: course_code,
+        provider: provider,
         site_statuses: [
           jsonapi_site_status('Uni 1', :full_time, 'running'),
           jsonapi_site_status('Uni 2', :part_time, 'running'),
@@ -218,10 +234,11 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'Removing vacancies for a course' do
     let(:course) do
-      jsonapi(
+      build(
         :course,
         :with_full_time_or_part_time_vacancy,
         course_code: course_code,
+        provider: provider,
         site_statuses: [
           jsonapi_site_status('Uni 1', :full_time, 'running')
         ]
@@ -246,10 +263,11 @@ feature 'Edit course vacancies', type: :feature do
 
   context 'Adding vacancies for a course' do
     let(:course) do
-      jsonapi(
+      build(
         :course,
         :with_full_time_or_part_time_vacancy,
         course_code: course_code,
+        provider: provider,
         site_statuses: [
           jsonapi_site_status('Uni 1', :full_time, 'running')
         ]
@@ -270,13 +288,16 @@ feature 'Edit course vacancies', type: :feature do
   end
 
   def jsonapi_site_status(name, study_mode, status)
-    jsonapi(:site_status, study_mode, site: jsonapi(:site, location_name: name), status: status)
+    build(:site_status, study_mode, site: build(:site, location_name: name), status: status)
   end
 
   def stub_course_request(course)
     stub_api_v2_request(
-      "/providers/A0/courses/#{course.course_code}?include=site_statuses.site",
-      course.render
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}/courses" \
+      "/#{course.course_code}" \
+      "?include=site_statuses.site",
+      course.to_jsonapi(include: [:sites, site_statuses: :site])
     )
   end
 end

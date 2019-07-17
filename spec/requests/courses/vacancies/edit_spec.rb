@@ -2,27 +2,38 @@ require 'rails_helper'
 
 describe 'Edit vacancies' do
   describe 'viewing the edit vacancies page' do
-    let(:course_json_api) do
-      jsonapi(
+    let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+    let(:provider) { build(:provider, provider_code: 'A0') }
+    let(:course) do
+      build(
         :course,
         :with_full_time_or_part_time_vacancy,
+        provider: provider,
         site_statuses: [site_status, site_status_2]
       )
     end
-    let(:course) { course_json_api.to_resource }
-    let(:course_response) { course_json_api.render }
-    let(:site) { jsonapi(:site) }
-    let(:site_status) { jsonapi(:site_status, :full_time_and_part_time, site: site) }
-    let(:site_status_2) { jsonapi(:site_status, :full_time_and_part_time, site: site) }
+    let(:course_response) { course.to_jsonapi(include: { site_statuses: :site }) }
+    let(:site) { build(:site) }
+    let(:site_status) { build(:site_status, :full_time_and_part_time, site: site) }
+    let(:site_status_2) { build(:site_status, :full_time_and_part_time, site: site) }
 
     let(:edit_vacancies_path) do
-      "/organisations/A0/#{course.recruitment_cycle_year}/courses/#{course.course_code}/vacancies"
+      vacancies_provider_recruitment_cycle_course_path(course.provider.provider_code,
+                                                       course.recruitment_cycle.year,
+                                                       course.course_code)
     end
 
     before do
       stub_omniauth
       stub_api_v2_request(
-        "/providers/A0/courses/#{course.course_code}?include=site_statuses.site",
+        "/recruitment_cycles/#{current_recruitment_cycle.year}",
+        current_recruitment_cycle.to_jsonapi
+      )
+      stub_api_v2_request(
+        "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+        "/providers/#{course.provider.provider_code}" \
+        "/courses/#{course.course_code}" \
+        "?include=site_statuses.site",
         course_response
       )
       get(auth_dfe_callback_path)
@@ -31,8 +42,10 @@ describe 'Edit vacancies' do
 
     context 'Default recruitment cycle' do
       it 'should redirect to new sites#index route' do
-        get("/organisations/A0/courses/#{course.course_code}/vacancies")
-        expect(response).to redirect_to(vacancies_provider_recruitment_cycle_course_path('A0', '2019', course.course_code))
+        get("/organisations/#{course.provider.provider_code}/courses/#{course.course_code}/vacancies")
+        expect(response).to redirect_to(vacancies_provider_recruitment_cycle_course_path(course.provider.provider_code,
+                                                                                         current_recruitment_cycle.year,
+                                                                                         course.course_code))
       end
     end
 
@@ -42,10 +55,11 @@ describe 'Edit vacancies' do
 
     describe 'rendering vacancies checkboxes for a course with multiple running sites' do
       context 'with a full time and part time course' do
-        let(:course_json_api) do
-          jsonapi(
+        let(:course) do
+          build(
             :course,
             :with_full_time_or_part_time_vacancy,
+            provider: provider,
             site_statuses: [site_status, site_status_2]
           )
         end
@@ -61,10 +75,11 @@ describe 'Edit vacancies' do
       end
 
       context 'with a full time course' do
-        let(:course_json_api) do
-          jsonapi(
+        let(:course) do
+          build(
             :course,
             :with_full_time_vacancy,
+            provider: provider,
             site_statuses: [site_status, site_status_2]
           )
         end
@@ -83,10 +98,11 @@ describe 'Edit vacancies' do
       end
 
       context 'with a part time course' do
-        let(:course_json_api) do
-          jsonapi(
+        let(:course) do
+          build(
             :course,
             :with_part_time_vacancy,
+            provider: provider,
             site_statuses: [site_status, site_status_2]
           )
         end

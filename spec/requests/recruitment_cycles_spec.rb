@@ -1,11 +1,28 @@
 require 'rails_helper'
 
 describe 'Recruitment cycles' do
-  let(:provider) { jsonapi(:provider) }
+  let(:provider) { build(:provider) }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: '2019') }
+  let(:next_recruitment_cycle) { build(:recruitment_cycle, year: '2020') }
 
   before do
     stub_omniauth
-    stub_api_v2_request("/providers/#{provider.provider_code}", provider.render)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}",
+      current_recruitment_cycle.to_jsonapi
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{next_recruitment_cycle.year}",
+      next_recruitment_cycle.to_jsonapi
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}",
+      provider.to_jsonapi
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{next_recruitment_cycle.year}/providers/#{provider.provider_code}",
+      provider.to_jsonapi
+    )
     get(auth_dfe_callback_path)
   end
 

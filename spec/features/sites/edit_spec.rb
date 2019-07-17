@@ -1,21 +1,32 @@
+# coding: utf-8
+
 require 'rails_helper'
 
 feature 'Edit locations', type: :feature do
   let(:site) { jsonapi(:site, location_name: 'Main site 1') }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: '2019') }
 
   let(:provider) do
-    jsonapi(:provider, sites: [site]).render
+    build(:provider, sites: [site])
   end
 
-  let(:provider_attributes) { provider[:data][:attributes] }
-  let(:provider_code) { provider_attributes[:provider_code] }
+  let(:provider_code) { provider.provider_code }
   let(:locations_page) { PageObjects::Page::LocationsPage.new }
   let(:location_page) { PageObjects::Page::LocationPage.new }
 
   describe "when visiting a site that doesn’t exist" do
     before do
       stub_omniauth
-      stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}",
+        current_recruitment_cycle.to_jsonapi
+      )
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider_code}" \
+        "?include=sites",
+        provider.to_jsonapi(include: :sites)
+      )
     end
 
     scenario 'it 404s' do
@@ -29,8 +40,24 @@ feature 'Edit locations', type: :feature do
   describe "without errors" do
     before do
       stub_omniauth
-      stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)
-      stub_api_v2_request("/providers/#{provider_code}/sites/#{site.id}", site, :patch, 200)
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}",
+        current_recruitment_cycle.to_jsonapi
+      )
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider_code}" \
+        "?include=sites",
+        provider.to_jsonapi(include: :sites)
+      )
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider_code}" \
+        "/sites/#{site.id}",
+        site,
+        :patch,
+        200
+      )
     end
 
     scenario 'it shows a location' do
@@ -49,12 +76,24 @@ feature 'Edit locations', type: :feature do
   describe "with validations errors" do
     before do
       stub_omniauth
-      stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)
-      stub_api_v2_request("/providers/#{provider_code}/sites/#{site.id}", build(:error), :patch, 422)
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}",
+        current_recruitment_cycle.to_jsonapi
+      )
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider_code}" \
+        "?include=sites",
+        provider.to_jsonapi(include: :sites)
+      )
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider_code}/sites/#{site.id}", build(:error), :patch, 422)
     end
 
     scenario 'displays validation errors' do
-      visit edit_provider_recruitment_cycle_site_path(provider_code, site.recruitment_cycle_year, site.id)
+      visit(edit_provider_recruitment_cycle_site_path(
+              provider_code,
+              site.recruitment_cycle_year, site.id
+            ))
 
       expect(location_page).to be_displayed(provider_code: provider_code, site_id: site.id)
 

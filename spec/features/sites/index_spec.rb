@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 feature 'View locations', type: :feature do
+  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: '2019') }
   let(:sites) do
     [
-      jsonapi(:site, location_name: 'Main site 1'),
-      jsonapi(:site, location_name: 'Main site 2'),
-      jsonapi(:site, location_name: 'Main site 3')
+      build(:site, location_name: 'Main site 1'),
+      build(:site, location_name: 'Main site 2'),
+      build(:site, location_name: 'Main site 3')
     ]
   end
 
   let(:provider) do
-    jsonapi(:provider, sites: sites).render
+    build(:provider, sites: sites)
   end
-  let(:provider_attributes) { provider[:data][:attributes] }
-  let(:provider_code) { provider_attributes[:provider_code] }
-  let(:site_response) { sites[0].render }
+  let(:provider_code) { provider.provider_code }
+  let(:site_response) { sites[0].to_jsonapi }
   let(:root_page) { PageObjects::Page::RootPage.new }
   let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
   let(:locations_page) { PageObjects::Page::LocationsPage.new }
@@ -24,12 +24,33 @@ feature 'View locations', type: :feature do
     allow(Settings).to receive(:rollover).and_return(false)
     user = build(:user)
     stub_omniauth(user: user)
-    stub_api_v2_request('/providers', jsonapi(:providers_response, data: [provider[:data]]))
-    stub_api_v2_request("/providers/#{provider_code}", provider)
-    stub_api_v2_request("/providers/#{provider_code}?include=sites", provider)
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}",
+      resource_list_to_jsonapi(current_recruitment_cycle)
+    )
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers",
+      resource_list_to_jsonapi(provider, include: :sites)
+    )
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider_code}",
+      provider.to_jsonapi
+    )
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider_code}?include=sites",
+      provider.to_jsonapi(include: :sites)
+    )
 
     root_page.load
     expect(organisation_page).to be_displayed(provider_code: provider_code)
+
     organisation_page.locations.click
   end
 

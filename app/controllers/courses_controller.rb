@@ -131,11 +131,17 @@ private
   end
 
   def build_course_for_preview
+    cycle_year = params.fetch(
+      :recruitment_cycle_year,
+      Settings.current_cycle
+    )
+
     @provider_code = params[:provider_code]
     @course = Course
       .includes(site_statuses: [:site])
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
+      .where(recruitment_cycle_year: cycle_year)
       .where(provider_code: @provider_code)
       .find(params[:code])
       .first
@@ -144,11 +150,17 @@ private
   end
 
   def build_course
+    cycle_year = params.fetch(
+      :recruitment_cycle_year,
+      Settings.current_cycle
+    )
+
     @provider_code = params[:provider_code]
     @course = Course
       .includes(:sites)
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
+      .where(recruitment_cycle_year: cycle_year)
       .where(provider_code: @provider_code)
       .find(params[:code])
       .first
@@ -161,15 +173,20 @@ private
   end
 
   def build_courses
+    cycle_year = params.fetch(
+      :recruitment_cycle_year,
+      Settings.current_cycle
+    )
+
     @provider = Provider
       .includes(courses: [:accrediting_provider])
+      .where(year: cycle_year)
       .find(params[:provider_code])
       .first
 
     # rubocop:disable Style/MultilineBlockChain
     @courses_by_accrediting_provider = @provider
       .courses
-      .select { |course| course.recruitment_cycle_year == params[:recruitment_cycle_year] }
       .group_by { |course|
         # HOTFIX: A courses API response no included hash seems to cause issues with the
         # .accrediting_provider relationship lookup. To be investigated, for now,
@@ -197,9 +214,15 @@ private
   end
 
   def build_copy_course
+    cycle_year = params.fetch(
+      :recruitment_cycle_year,
+      Settings.current_cycle
+    )
+
     @source_course = Course.includes(:sites)
                            .includes(provider: [:sites])
                            .includes(:accrediting_provider)
+                           .where(recruitment_cycle_year: cycle_year)
                            .where(provider_code: @provider_code)
                            .find(params[:copy_from])
                            .first
@@ -222,6 +245,11 @@ private
   end
 
   def build_recruitment_cycle
-    @recruitment_cycle = RecruitmentCycle.new(params[:recruitment_cycle_year])
+    cycle_year = params.fetch(
+      :recruitment_cycle_year,
+      Settings.current_cycle
+    )
+
+    @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
   end
 end

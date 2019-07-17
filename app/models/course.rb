@@ -1,4 +1,5 @@
 class Course < Base
+  belongs_to :recruitment_cycle, through: :provider, param: :recruitment_cycle_year
   belongs_to :provider, param: :provider_code
   has_many :site_statuses
   has_many :sites, through: :site_statuses, source: :site
