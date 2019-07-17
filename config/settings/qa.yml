@@ -10,6 +10,6 @@ manage_ui:
 search_ui:
   base_url: https://bat-qa-sacui-as.azurewebsites.net
 environment:
-  label: 'QA'
-  selector_name: 'qa'
-rollover: false
+  label: "QA"
+  selector_name: "qa"
+rollover: true
