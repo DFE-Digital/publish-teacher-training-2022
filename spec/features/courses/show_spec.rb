@@ -184,6 +184,24 @@ feature 'Course show', type: :feature do
     end
   end
 
+  context 'when the course has been rolled over' do
+    let(:course) {
+      build :course,
+            findable?: false,
+            content_status: 'rolled_over',
+            ucas_status: 'new',
+            has_vacancies?: true,
+            open_for_applications?: false,
+            provider: provider
+    }
+
+    scenario 'it displays a status panel' do
+      expect(course_page).to have_status_panel
+      expect(course_page.is_findable).to have_content('No')
+      expect(course_page.status_tag).to have_content('Rolled over')
+    end
+  end
+
   context 'when the course is not running' do
     let(:course) {
       build :course,
