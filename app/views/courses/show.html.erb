@@ -29,12 +29,6 @@
     <h2 class="govuk-success-summary__title" id="success-summary-title">
       <%= @published %>
     </h2>
-    <div class="govuk-error-summary__body">
-      <p class="govuk-body">
-        The link for this course is:
-        <%= govuk_link_to search_ui_course_page_url(provider_code: @provider.provider_code, course_code: @course.course_code) %>
-      </p>
-    </div>
   </div>
 <% end %>
 

@@ -262,7 +262,6 @@ feature 'Course show', type: :feature do
 
           expect(course_page).to be_displayed
           expect(course_page.success_summary).to have_content("Your course has been published.")
-          expect(course_page.success_summary).to have_content("The link for this course is: https://localhost:5000/course/#{provider.provider_code}/#{course.course_code}")
         end
       end
 
