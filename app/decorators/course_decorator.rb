@@ -130,6 +130,8 @@ private
       'Draft'
     when 'published_with_unpublished_changes'
       'Published&nbsp;*'
+    when 'rolled_over'
+      'Rolled over'
     end
   end
 
@@ -143,6 +145,8 @@ private
       'phase-tag--draft'
     when 'published_with_unpublished_changes'
       'phase-tag--published'
+    when 'rolled_over'
+      'phase-tag--no-content'
     end
   end
 
