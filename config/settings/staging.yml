@@ -10,6 +10,5 @@ manage_ui:
 search_ui:
   base_url: https://bat-staging-search-and-compare-ui-app.azurewebsites.net
 environment:
-  label: 'Staging'
-  selector_name: 'staging'
-rollover: false
+  label: "Staging"
+  selector_name: "staging"

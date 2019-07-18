@@ -12,4 +12,3 @@ search_ui:
 environment:
   label: "QA"
   selector_name: "qa"
-rollover: true

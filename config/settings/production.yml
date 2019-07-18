@@ -10,6 +10,5 @@ manage_ui:
 search_ui:
   base_url: https://find-postgraduate-teacher-training.education.gov.uk
 environment:
-  label: 'Beta'
-  selector_name: 'beta'
-rollover: false
+  label: "Beta"
+  selector_name: "beta"
