@@ -12,6 +12,15 @@
       <li>delete courses you’re no longer running</li>
     </ul>
 
+    <h2 class="govuk-heading-m">Changes to the professional skills test</h2>
+    <p class="govuk-body">In the next cycle candidates will not need to take a professional skills test.</p>
+
+    <p class="govuk-body govuk-!-margin-bottom-8">
+      <a class="govuk-link" href="https://www.gov.uk/government/news/changes-to-the-professional-skills-test-for-teachers" target="_blank">
+        View the announcement on GOV.UK
+      </a>
+    </p>
+
     <%= form_for :user, url: accept_rollover_path, method: :patch do |f| %>
       <%= f.submit "Continue", class: "govuk-button", data: { qa: 'rollover__continue' } %>
     <% end %>
