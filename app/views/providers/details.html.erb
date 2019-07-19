@@ -1,0 +1,42 @@
+<%= content_for :page_title, "About your organisation" %>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_path(@provider.provider_code)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">
+        <%= @provider.provider_name %>
+      </span>
+      About your organisation
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-summary-list govuk-summary-list--short">
+      <h3 class="govuk-heading-m govuk-!-font-size-27">
+        <%= govuk_link_to "Contact details", manage_ui_url("/organisation/#{@provider.provider_code}/contact") %>
+      </h3>
+      <dl class="govuk-summary-list">
+        <%= enrichment_summary_item('Email address', @provider.email, 'email') %>
+        <%= enrichment_summary_item('Telephone number', @provider.telephone, 'telephone') %>
+        <%= enrichment_summary_item('Website', @provider.website, 'website') %>
+        <%= enrichment_summary_item('Contact address', @provider.full_address, 'address') %>
+      </dl>
+    </div>
+
+    <div class="govuk-summary-list govuk-summary-list--short">
+      <h3 class="govuk-heading-m govuk-!-font-size-27">
+        <%= govuk_link_to "About your organisation", manage_ui_url("/organisation/#{@provider.provider_code}/about") %>
+      </h3>
+      <dl class="govuk-summary-list">
+        <%= enrichment_summary_item('About your organisation', @provider.train_with_us, 'train_with_us') %>
+        <%= enrichment_summary_item('Training with disabilities and other needs', @provider.train_with_disability, 'train_with_disability') %>
+      </dl>
+    </div>
+  </div>
+</div>

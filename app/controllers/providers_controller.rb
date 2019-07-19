@@ -1,4 +1,5 @@
 class ProvidersController < ApplicationController
+  decorates_assigned :provider
   rescue_from JsonApiClient::Errors::NotFound, with: :not_found
 
   def index
@@ -19,6 +20,18 @@ class ProvidersController < ApplicationController
     @provider = Provider
       .where(year: cycle_year)
       .find(params[:code])
+      .first
+  end
+
+  def details
+    cycle_year = params.fetch(
+      :recruitment_cycle_year,
+      Settings.current_cycle
+    )
+
+    @provider = Provider
+      .where(year: cycle_year)
+      .find(params[:provider_code])
       .first
   end
 end

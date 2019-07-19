@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
     # TODO: Extract year constraint to future proof for future cycles
     resources :recruitment_cycles, param: :year, constraints: { year: /2019|2020/ }, path: '', only: :show do
+      get '/details', on: :member, to: 'providers#details'
+
       resources :courses, param: :code do
         get '/vacancies', on: :member, to: 'courses/vacancies#edit'
         put '/vacancies', on: :member, to: 'courses/vacancies#update'

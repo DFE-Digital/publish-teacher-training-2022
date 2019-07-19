@@ -67,6 +67,9 @@ group :development, :test do
   gem 'jsonapi-renderer'
   gem 'jsonapi-serializable'
 
+  # Better use of test helpers such as save_and_open_page/screenshot
+  gem 'launchy'
+
   # Debugging
   gem 'pry-byebug'
   gem 'pry-rails'
