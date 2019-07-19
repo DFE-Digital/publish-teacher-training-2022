@@ -1,0 +1,54 @@
+<div class="govuk-form-group govuk-!-margin-bottom-8" data-qa="course__<%= subject %>_requirements">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h2 class="govuk-fieldset__heading">
+        <%= subject.to_s.titleize %> GCSE
+      </h2>
+    </legend>
+    <div class="govuk-radios govuk-radios--conditional">
+      <% [
+          [
+            '1. Must have (least flexible)',
+            'must_have_qualification_at_application_time',
+            'UCAS will block applications from candidates who haven’t gained their GCSE yet or who need to take an equivalency test.'
+          ],
+          [
+            '2: Taking',
+            'expect_to_achieve_before_training_begins',
+            'You will consider candidates with a pending GCSE. But UCAS will block applications from someone who needs to take an equivalency test.'
+          ],
+          [
+            '3: Equivalence test',
+            'equivalence_test',
+            'You will consider candidates who need to take an equivalency test as well as those with a pending GCSE.'
+          ],
+          [
+            'No GCSE requirement',
+            'not_required'
+          ]
+        ].each do |label, value, guidance|
+      %>
+        <div class="govuk-radios__item">
+          <%= form.radio_button subject,
+                value,
+                class: 'govuk-radios__input',
+                data: {
+                  'aria-describedby': "#{subject}-#{value}-help"
+                },
+                checked: course.send(subject) == value
+          %>
+          <%= form.label subject,
+                label,
+                value: value,
+                class: 'govuk-label govuk-radios__label'
+          %>
+          <% if guidance %>
+            <span id="<%= "#{subject}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
+              <%= guidance %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </fieldset>
+</div>
