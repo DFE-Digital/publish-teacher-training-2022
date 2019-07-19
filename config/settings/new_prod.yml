@@ -10,6 +10,5 @@ manage_ui:
 search_ui:
   base_url: https://bat-prod-sacui-as.azurewebsites.net
 environment:
-  label: 'Beta'
-  selector_name: 'Beta'
-rollover: false
+  label: "Beta"
+  selector_name: "Beta"
