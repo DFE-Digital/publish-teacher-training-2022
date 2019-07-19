@@ -101,6 +101,22 @@ feature 'Course details', type: :feature do
     expect(course_details_page).to have_entry_requirements
   end
 
+  context 'a further education course' do
+    let(:course) do
+      build(
+        :course,
+        provider: provider,
+        level: 'further_education'
+      )
+    end
+
+    scenario 'has no entry requirements' do
+      course_details_page.load_with_course(course)
+      expect(course_details_page.entry_requirements).to have_content('no GCSE requirements')
+      expect(course_details_page.entry_requirements).not_to have_content('Maths GCSE')
+    end
+  end
+
   context 'when the provider only has one location' do
     let(:provider) { build(:provider, provider_code: 'A0', accredited_body?: true, sites: [site1]) }
     let(:course) do

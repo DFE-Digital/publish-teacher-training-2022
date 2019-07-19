@@ -2,6 +2,7 @@ module Courses
   class EntryRequirementsController < ApplicationController
     decorates_assigned :course
     before_action :build_course
+    before_action :not_found_if_further_education
 
     def edit; end
 
@@ -37,6 +38,10 @@ module Courses
         .where(provider_code: params[:provider_code])
         .find(params[:code])
         .first
+    end
+
+    def not_found_if_further_education
+      render file: 'errors/not_found', status: :not_found if course.is_further_education?
     end
   end
 end

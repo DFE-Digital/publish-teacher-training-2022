@@ -23,6 +23,20 @@ feature 'Edit course entry requirements', type: :feature do
     entry_requirements_page.load_with_course(course)
   end
 
+  context 'a further education course' do
+    let(:course) do
+      build(
+        :course,
+        level: 'further_education',
+        provider: provider
+      )
+    end
+
+    scenario '404s when you try to edit entry requirements' do
+      expect(page.status_code).to eq(404)
+    end
+  end
+
   context 'any course' do
     let(:course) do
       build(
@@ -40,7 +54,6 @@ feature 'Edit course entry requirements', type: :feature do
     end
 
     scenario 'can navigate to the edit screen and back again' do
-      pending('Disabled until we put Change link in')
       course_details_page.load_with_course(course)
       click_on 'Change entry requirements'
       expect(entry_requirements_page).to be_displayed
