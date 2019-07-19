@@ -28,6 +28,8 @@ class ProvidersController < ApplicationController
 
   def details; end
 
+  def about; end
+
 private
 
   def build_provider

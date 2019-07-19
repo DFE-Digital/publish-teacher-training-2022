@@ -1,0 +1,88 @@
+<%= content_for :page_title, "Edit 'About your organisation'" %>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_path(@provider.provider_code)) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">
+        <%= @provider.provider_name %>
+      </span>
+      About your organisation
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">
+      This is your chance to tell applicants why they should choose to train
+      with you. You could describe any advantages and special features of you as
+      a training provider.
+    </p>
+    <p class="govuk-body">
+      You must be specific and factual with any claims you make, and support
+      them with evidence. For example:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>don’t say “our students are some of the happiest in the country”</li>
+      <li>
+        do say “the Times Educational Supplement ranked our students as 4th
+        happiest in the country”
+      </li>
+    </ul>
+
+    <%= form_with model: @provider, url: provider_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
+      <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
+        <%= render "shared/form_field",
+          form: f, field: :train_with_us, label: 'Training with you', label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+        <% end %>
+      </div>
+
+      <h2 class="govuk-heading-l">About your accredited body</h2>
+
+      <p id="about-training-provider-hint" class="govuk-body">
+        Describe any advantages and special features of your accredited body. You
+        must be specific and factual with any claims you make, and support them with
+        evidence.
+      </p>
+
+      <h2 class="govuk-heading-l">Training with disabilities and other needs</h2>
+
+      <p class="govuk-body">
+        Say how you support candidates with disabilities and other needs. This
+        could include candidates with:
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>dyslexia</li>
+        <li>physical, hearing and visual impairments</li>
+        <li>mental health conditions</li>
+      </ul>
+      <p class="govuk-body">
+        If accessibility varies between locations, give details. It’s also useful
+        for applicants to know how you’ve accommodated others with specific access
+        needs in the past.
+      </p>
+
+      <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
+        <%= render "shared/form_field",
+          form: f, field: :train_with_disability, label: 'Training with you', label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+        <% end %>
+      </div>
+
+      <%= f.submit "Save", class: "govuk-button" %>
+    <% end %>
+
+    <div class="form-group">
+      <p class="govuk-body">
+        <%= govuk_link_to "Cancel changes", details_provider_recruitment_cycle_path %>
+      </p>
+    </div>
+  </div>
+</div>
