@@ -63,6 +63,14 @@ class Course < Base
     running_site_statuses.length > 1 || full_time_or_part_time?
   end
 
+  def is_primary?
+    level == 'primary'
+  end
+
+  def is_secondary?
+    level == 'secondary'
+  end
+
   def is_further_education?
     level == 'further_education'
   end

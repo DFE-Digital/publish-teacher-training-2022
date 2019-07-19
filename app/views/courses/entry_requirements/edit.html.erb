@@ -30,7 +30,16 @@
 
       <%= render partial: 'courses/entry_requirements/subject_choices', locals: {form: form, subject: :maths } %>
       <%= render partial: 'courses/entry_requirements/subject_choices', locals: {form: form, subject: :english } %>
-      <%= render partial: 'courses/entry_requirements/subject_choices', locals: {form: form, subject: :science } %>
+
+      <% if course.is_primary? %>
+        <%= render partial: 'courses/entry_requirements/subject_choices', locals: {form: form, subject: :science } %>
+      <% else %>
+        <h2 class="govuk-heading-m">
+          Science GCSE
+        </h2>
+        <p class="govuk-body">There is no science GCSE requirement for secondary courses.</p>
+        <%= form.hidden_field 'science', value: 'not_set' %>
+      <% end %>
 
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
       <p class="govuk-body">Changes will appear on UCAS Apply within 2 hours.</p>
