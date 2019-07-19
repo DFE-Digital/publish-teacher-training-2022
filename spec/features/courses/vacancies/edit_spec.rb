@@ -69,7 +69,7 @@ feature 'Edit course vacancies', type: :feature do
     end
   end
 
-  context 'A full time course with one running site but no vacancies' do
+  context 'A full time course with one running site with no vacancies and one new site' do
     let(:course) do
       build(
         :course,
@@ -77,7 +77,8 @@ feature 'Edit course vacancies', type: :feature do
         course_code: course_code,
         provider: provider,
         site_statuses: [
-          jsonapi_site_status('Uni 1', :no_vacancies, 'running')
+          jsonapi_site_status('Uni 1', :no_vacancies, 'running'),
+          jsonapi_site_status('Uni 2', :full_time, 'new_status')
         ]
       )
     end
@@ -106,7 +107,7 @@ feature 'Edit course vacancies', type: :feature do
     end
   end
 
-  context 'A full time course with multiple running sites' do
+  context 'A full time course with multiple new or running sites' do
     let(:course) do
       build(
         :course,
@@ -116,6 +117,8 @@ feature 'Edit course vacancies', type: :feature do
         site_statuses: [
           jsonapi_site_status('Running Uni 1', :full_time, 'running'),
           jsonapi_site_status('Running Uni 2', :full_time, 'running'),
+          jsonapi_site_status('New Uni 3', :full_time, 'new_status'),
+          jsonapi_site_status('New Uni 4', :no_vacancies, 'new_status'),
           jsonapi_site_status('Not running Uni', :full_time, 'suspended')
         ]
       )
@@ -130,18 +133,20 @@ feature 'Edit course vacancies', type: :feature do
       )
     end
 
-    scenario 'only render site statuses that are running' do
+    scenario 'only render site statuses that are new or running' do
       expect(course_vacancies_page).to have_vacancies_radio_choice
       expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
 
       [
         ["Running Uni 1", true],
-        ["Running Uni 2", true]
+        ["Running Uni 2", true],
+        ["New Uni 3", false],
+        ["New Uni 4", false],
       ].each do |name, checked|
-        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+        expect(course_vacancies_page.vacancies_new_or_running_sites_checkboxes).to have_field(name, checked: checked)
       end
 
-      expect(course_vacancies_page.vacancies_running_sites_checkboxes).not_to have_field("Not running Uni")
+      expect(course_vacancies_page.vacancies_new_or_running_sites_checkboxes).not_to have_field("Not running Uni")
     end
   end
 
@@ -154,7 +159,9 @@ feature 'Edit course vacancies', type: :feature do
         provider: provider,
         site_statuses: [
           jsonapi_site_status('Running Uni 1', :no_vacancies, 'running'),
-          jsonapi_site_status('Running Uni 2', :no_vacancies, 'running')
+          jsonapi_site_status('Running Uni 2', :no_vacancies, 'running'),
+          jsonapi_site_status('New Uni 3', :no_vacancies, 'new_status'),
+          jsonapi_site_status('New Uni 4', :full_time, 'new_status'),
         ]
       )
     end
@@ -166,14 +173,16 @@ feature 'Edit course vacancies', type: :feature do
 
       [
         ["Running Uni 1", false],
-        ["Running Uni 2", false]
+        ["Running Uni 2", false],
+        ["New Uni 3", false],
+        ["New Uni 4", false],
       ].each do |name, checked|
-        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+        expect(course_vacancies_page.vacancies_new_or_running_sites_checkboxes).to have_field(name, checked: checked)
       end
     end
   end
 
-  context 'A full time or part time course with one site' do
+  context 'A full time or part time course with one running site and one new site' do
     let(:course) do
       build(
         :course,
@@ -182,24 +191,27 @@ feature 'Edit course vacancies', type: :feature do
         provider: provider,
         site_statuses: [
           jsonapi_site_status('Uni full and part time 1', :full_time_and_part_time, 'running'),
+          jsonapi_site_status('Uni full and part time 2', :no_vacancies, 'new_status')
         ]
       )
     end
 
-    scenario 'presents a radio button choice and shows both study modes for the site' do
+    scenario 'presents a radio button choice and shows both study modes for the sites' do
       expect(course_vacancies_page).to have_vacancies_radio_choice
       expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
 
       [
         ["Uni full and part time 1 (Full time)", true],
-        ["Uni full and part time 1 (Part time)", true]
+        ["Uni full and part time 1 (Part time)", true],
+        ["Uni full and part time 2 (Full time)", false],
+        ["Uni full and part time 2 (Part time)", false]
       ].each do |name, checked|
-        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+        expect(course_vacancies_page.vacancies_new_or_running_sites_checkboxes).to have_field(name, checked: checked)
       end
     end
   end
 
-  context 'A full time or part time course with multiple running sites' do
+  context 'A full time or part time course with multiple new and running sites' do
     let(:course) do
       build(
         :course,
@@ -210,6 +222,7 @@ feature 'Edit course vacancies', type: :feature do
           jsonapi_site_status('Uni 1', :full_time, 'running'),
           jsonapi_site_status('Uni 2', :part_time, 'running'),
           jsonapi_site_status('Uni 3', :full_time_and_part_time, 'running'),
+          jsonapi_site_status('Uni 4', :full_time_and_part_time, 'new_status'),
           jsonapi_site_status('Not running Uni', :full_time, 'suspended')
         ]
       )
@@ -225,9 +238,11 @@ feature 'Edit course vacancies', type: :feature do
         ["Uni 2 (Full time)", false],
         ["Uni 2 (Part time)", true],
         ["Uni 3 (Full time)", true],
-        ["Uni 3 (Part time)", true]
+        ["Uni 3 (Part time)", true],
+        ["Uni 4 (Full time)", false],
+        ["Uni 4 (Part time)", false]
       ].each do |name, checked|
-        expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
+        expect(course_vacancies_page.vacancies_new_or_running_sites_checkboxes).to have_field(name, checked: checked)
       end
     end
   end

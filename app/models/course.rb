@@ -55,12 +55,12 @@ class Course < Base
     content_status == 'published'
   end
 
-  def running_site_statuses
-    site_statuses.select(&:running?)
+  def new_or_running_site_statuses
+    site_statuses.select(&:new_or_running?)
   end
 
-  def has_multiple_running_sites_or_study_modes?
-    running_site_statuses.length > 1 || full_time_or_part_time?
+  def has_multiple_new_or_running_sites_or_study_modes?
+    new_or_running_site_statuses.length > 1 || full_time_or_part_time?
   end
 
 private

@@ -17,7 +17,7 @@
             Edit vacancies
           </h1>
         </legend>
-        <% if @course.has_multiple_running_sites_or_study_modes? %>
+        <% if @course.has_multiple_new_or_running_sites_or_study_modes? %>
           <%= render partial: "courses/vacancies/multiple_sites", locals: { f: form } %>
         <% else %>
           <%= render partial: 'courses/vacancies/single_site', locals: { f: form } %>
@@ -25,7 +25,7 @@
       </fieldset>
       <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated within 2 hours.</p>
 
-      <% if @course.has_multiple_running_sites_or_study_modes? %>
+      <% if @course.has_multiple_new_or_running_sites_or_study_modes? %>
         <%= form.submit "Publish changes", class: "govuk-button" %>
       <% elsif @course.has_vacancies? %>
         <%= form.submit "Close applications", class: "govuk-button govuk-button--warning" %>

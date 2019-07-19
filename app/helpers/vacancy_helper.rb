@@ -1,5 +1,7 @@
 module VacancyHelper
   def vacancy_available_for_course_site_status?(course, site_status, vacancy_study_mode = nil)
+    return false if site_status.new?
+
     case course.study_mode
     when 'full_time'
       site_status.full_time_vacancies?
