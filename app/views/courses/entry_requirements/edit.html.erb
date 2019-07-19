@@ -1,0 +1,41 @@
+<%= content_for :page_title, "GCSE requirements for applicants – #{course.name_and_code}" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<h1 class="govuk-heading-xl">GCSE requirements for applicants</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">
+      By law, all applicants need GCSE grade C/grade 4, or an equivalent, in English and Mathematics – plus Science for Primary courses.
+    </p>
+
+    <p class="govuk-body">
+      Candidates may still be taking a GCSE when they apply. Alternatively, they can take an equivalency test to demonstrate they have the required skills to start a course.
+    </p>
+
+    <p class="govuk-body govuk-!-margin-bottom-8">
+      The codes you pick determine how flexible you are towards those candidates.
+    </p>
+
+    <%= form_for @course,
+          url: entry_requirements_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+          method: :put do |form| %>
+
+      <%= render partial: 'courses/entry_requirements/subject_choices', locals: {form: form, subject: :maths } %>
+      <%= render partial: 'courses/entry_requirements/subject_choices', locals: {form: form, subject: :english } %>
+      <%= render partial: 'courses/entry_requirements/subject_choices', locals: {form: form, subject: :science } %>
+
+      <%= form.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes',
+          details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
+          class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+    <% end %>
+  </div>
+</div>
