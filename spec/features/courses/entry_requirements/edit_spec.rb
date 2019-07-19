@@ -59,7 +59,7 @@ feature 'Edit course entry requirements', type: :feature do
       ].each do |subject|
         expect(entry_requirements_page.send(subject)).to have_field('1. Must have (least flexible)')
         expect(entry_requirements_page.send(subject)).to have_field('2: Taking')
-        expect(entry_requirements_page.send(subject)).to have_field('3: Equivalence test (recommended)')
+        expect(entry_requirements_page.send(subject)).to have_field('3: Equivalence test')
         expect(entry_requirements_page.send(subject)).to have_field('No GCSE requirement')
       end
     end
@@ -72,7 +72,7 @@ feature 'Edit course entry requirements', type: :feature do
       [
         ['maths_requirements', '1. Must have (least flexible)'],
         ['english_requirements', '2: Taking'],
-        ['science_requirements', '3: Equivalence test (recommended)']
+        ['science_requirements', '3: Equivalence test']
       ].each do |subject, field_name|
         expect(entry_requirements_page.send(subject)).to have_field(field_name, checked: true)
       end
