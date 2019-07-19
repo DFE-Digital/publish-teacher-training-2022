@@ -34,6 +34,19 @@ feature 'Edit course entry requirements', type: :feature do
       )
     end
 
+    scenario 'can cancel changes' do
+      click_on 'Cancel changes'
+      expect(course_details_page).to be_displayed
+    end
+
+    scenario 'can navigate to the edit screen and back again' do
+      course_details_page.load_with_course(course)
+      click_on 'Change entry requirements'
+      expect(entry_requirements_page).to be_displayed
+      click_on 'Back'
+      expect(course_details_page).to be_displayed
+    end
+
     scenario 'presents a choice for each subject' do
       expect(entry_requirements_page).to have_maths_requirements
       expect(entry_requirements_page).to have_english_requirements
