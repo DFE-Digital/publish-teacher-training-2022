@@ -39,4 +39,18 @@
       </dl>
     </div>
   </div>
+
+  <aside class="govuk-grid-column-one-third" data-qa="provider__status_panel">
+    <div class="app-related">
+      <div class="govuk-!-margin-bottom-6" data-qa="provider__content-status">
+        <%= provider.status_tag %>
+      </div>
+      <p class="govuk-body">Last published on <%= l(@provider&.last_published_at.to_date) %></p>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
+      <h2 class="govuk-heading-m">View on a course</h2>
+      <p class="govuk-body">This information will show on all your courses.</p>
+      <p class="govuk-body">View any course to see how it will look to applicants.</p>
+    </div>
+  </aside>
 </div>
