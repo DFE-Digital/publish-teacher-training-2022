@@ -101,6 +101,41 @@ feature 'Course details', type: :feature do
     expect(course_details_page).to have_entry_requirements
   end
 
+  context 'a course without required GCSE subjects' do
+    let(:course) do
+      build(
+        :course,
+        provider: provider,
+        gcse_subjects_required: [],
+      )
+    end
+
+    scenario 'has no entry requirements' do
+      course_details_page.load_with_course(course)
+      expect(course_details_page).not_to have_entry_requirements
+    end
+  end
+
+  context 'a course with required GCSE subjects' do
+    let(:course) do
+      build(
+        :course,
+        provider: provider,
+        gcse_subjects_required: %w[maths science],
+        english: 'expect_to_achieve_before_training_begins',
+        science: 'equivalence_test'
+      )
+    end
+
+    scenario 'shows entry requirements' do
+      course_details_page.load_with_course(course)
+      expect(course_details_page).to have_entry_requirements
+      expect(course_details_page.entry_requirements).to have_content('Maths GCSE: Taking')
+      expect(course_details_page.entry_requirements).to have_content('Science GCSE: Equivalence test')
+      expect(course_details_page.entry_requirements).not_to have_content('English GCSE')
+    end
+  end
+
   context 'when the provider only has one location' do
     let(:provider) { build(:provider, provider_code: 'A0', accredited_body?: true, sites: [site1]) }
     let(:course) do

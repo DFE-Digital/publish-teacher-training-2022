@@ -21,10 +21,6 @@
             '3: Equivalence test',
             'equivalence_test',
             'You will consider candidates who need to take an equivalency test as well as those with a pending GCSE.'
-          ],
-          [
-            'No GCSE requirement',
-            'not_required'
           ]
         ].each do |label, value, guidance|
       %>
@@ -34,19 +30,16 @@
                 class: 'govuk-radios__input',
                 data: {
                   'aria-describedby': "#{subject}-#{value}-help"
-                },
-                checked: course.send(subject) == value
+                }
           %>
           <%= form.label subject,
                 label,
                 value: value,
                 class: 'govuk-label govuk-radios__label'
           %>
-          <% if guidance %>
-            <span id="<%= "#{subject}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
-              <%= guidance %>
-            </span>
-          <% end %>
+          <span id="<%= "#{subject}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
+            <%= guidance %>
+          </span>
         </div>
       <% end %>
     </div>

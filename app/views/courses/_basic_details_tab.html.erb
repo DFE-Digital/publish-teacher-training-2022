@@ -160,7 +160,6 @@
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>
-
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Course code
@@ -170,18 +169,24 @@
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          UCAS Apply: GCSE requirements for applicants
-        </dt>
-        <dd class="govuk-summary-list__value govuk-!-padding-right-0" data-qa="course__entry_requirements">
-          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'Maths', gcse_subject_code: course.maths } %>
-          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'English', gcse_subject_code: course.english } %>
-          <%= render partial: 'courses/entry_requirements', locals: { gcse_subject: 'Science', gcse_subject_code: course.science } %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
+      <% if course.gcse_subjects_required.any? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            UCAS Apply: GCSE requirements for applicants
+          </dt>
+          <dd class="govuk-summary-list__value govuk-!-padding-right-0" data-qa="course__entry_requirements">
+            <% course.gcse_subjects_required.each do |subject| %>
+              <%= render partial: 'courses/entry_requirements',
+                    locals: {
+                      gcse_subject: subject.titleize,
+                      gcse_subject_code: course[subject]
+                    } %>
+            <% end %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+          </dd>
+        </div>
+      <% end %>
     </dl>
   </div>
   <% if course.is_running? || course.new_and_not_running? %>

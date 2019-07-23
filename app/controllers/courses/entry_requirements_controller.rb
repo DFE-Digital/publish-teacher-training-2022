@@ -2,6 +2,7 @@ module Courses
   class EntryRequirementsController < ApplicationController
     decorates_assigned :course
     before_action :build_course
+    before_action :not_found_if_no_gcse_subjects_required
 
     def edit; end
 
@@ -37,6 +38,10 @@ module Courses
         .where(provider_code: params[:provider_code])
         .find(params[:code])
         .first
+    end
+
+    def not_found_if_no_gcse_subjects_required
+      render file: 'errors/not_found', status: :not_found if course.gcse_subjects_required.empty?
     end
   end
 end
