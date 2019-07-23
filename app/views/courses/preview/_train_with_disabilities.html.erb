@@ -1,8 +1,10 @@
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-train-with-disabilities">Training with disabilities and other needs</h2>
-  <% if @provider.train_with_disability.present? %>
-    <%= markdown(@provider.train_with_disability) %>
-  <% else %>
-    <p class="app-missing-section">Please add details about <%= link_to 'training with a disability', manage_ui_url("/organisation/#{@provider.provider_code}/about") %>.</p>
-  <% end %>
+  <div data-qa="course__train_with_disabilities">
+    <% if @provider.train_with_disability.present? %>
+      <%= markdown(@provider.train_with_disability) %>
+    <% else %>
+      <p class="app-missing-section">Please add details about <%= link_to 'training with a disability', manage_ui_url("/organisation/#{@provider.provider_code}/about") %>.</p>
+    <% end %>
+  </div>
 </div>

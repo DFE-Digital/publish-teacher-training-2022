@@ -1,10 +1,12 @@
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-about-provider">About the training provider</h2>
-  <% if @provider.train_with_us.present? %>
-    <%= markdown(@provider.train_with_us) %>
-  <% else %>
-    <p class="app-missing-section">Please add details <%= link_to 'about your organisation', manage_ui_url("/organisation/#{@provider.provider_code}/about") %>.</p>
-  <% end %>
+  <div data-qa="course__about_provider">
+    <% if @provider.train_with_us.present? %>
+      <%= markdown(@provider.train_with_us) %>
+    <% else %>
+      <p class="app-missing-section">Please add details <%= link_to 'about your organisation', manage_ui_url("/organisation/#{@provider.provider_code}/about") %>.</p>
+    <% end %>
+  </div>
 
   <% if course.about_accrediting_body.present? %>
     <div data-qa="course__about_accrediting_body">
