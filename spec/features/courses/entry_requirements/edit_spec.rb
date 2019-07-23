@@ -159,6 +159,51 @@ feature 'Edit course entry requirements', type: :feature do
     end
   end
 
+  context 'a course with data that doesn’t align with requirements' do
+    let(:course) do
+      build(
+        :course,
+        provider: provider,
+        maths: 'not_set',
+        english: 'not_set',
+        science: 'not_required',
+        gcse_subjects_required: %w[maths english science]
+      )
+    end
+
+    scenario 'shows an error if the form is submitted without providing answers' do
+      click_on 'Save changes'
+      expect(entry_requirements_page).to be_displayed
+
+      expect(entry_requirements_page.error_flash)
+        .to have_content('You’ll need to correct some information')
+
+      %w[maths english science].each do |s|
+        expect(entry_requirements_page.error_flash).to have_content("Pick an option for #{s.titleize}")
+        expect(entry_requirements_page).to have_selector("##{s}-error")
+      end
+    end
+
+    scenario 'can be updated' do
+      update_course_stub = stub_api_v2_request(
+        "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}" \
+        "/courses/#{course.course_code}",
+        course.to_jsonapi,
+        :patch, 200
+      )
+
+      choose('course_maths_expect_to_achieve_before_training_begins')
+      choose('course_english_expect_to_achieve_before_training_begins')
+      choose('course_science_expect_to_achieve_before_training_begins')
+      click_on 'Save'
+
+      expect(course_details_page).to be_displayed
+      expect(course_details_page.flash).to have_content('Your changes have been saved')
+      expect(update_course_stub).to have_been_requested
+    end
+  end
+
   def stub_course_request
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \

@@ -1,10 +1,13 @@
-<div class="govuk-form-group govuk-!-margin-bottom-8" data-qa="course__<%= subject %>_requirements">
+<div
+  class="<%= cns("govuk-form-group", "govuk-!-margin-bottom-8", "govuk-form-group--error": @errors && @errors[subject]&.any?) %>"
+  data-qa="course__<%= subject %>_requirements">
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
       <h2 class="govuk-fieldset__heading">
         <%= subject.to_s.titleize %> GCSE
       </h2>
     </legend>
+    <%= render "shared/error_messages", field: subject if @errors %>
     <div class="govuk-radios govuk-radios--conditional">
       <% [
           [

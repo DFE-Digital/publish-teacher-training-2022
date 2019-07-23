@@ -7,6 +7,9 @@ module Courses
     def edit; end
 
     def update
+      @errors = missing_subject_errors
+      return render :edit if @errors.any?
+
       if @course.update(course_params)
         flash[:success] = 'Your changes have been saved'
         redirect_to(
@@ -23,6 +26,13 @@ module Courses
     end
 
   private
+
+    def missing_subject_errors
+      course.gcse_subjects_required
+        .reject { |subject| params.dig(:course, subject) }
+        .map { |subject| [subject.to_sym, ["Pick an option for #{subject.titleize}"]] }
+        .to_h
+    end
 
     def course_params
       params.require(:course).permit(
