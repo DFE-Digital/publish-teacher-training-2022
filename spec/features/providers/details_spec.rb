@@ -36,5 +36,8 @@ feature 'View provider', type: :feature do
     )
     expect(org_detail_page.train_with_us).to have_content(provider.train_with_us)
     expect(org_detail_page.train_with_disability).to have_content(provider.train_with_disability)
+
+    expect(org_detail_page).to have_status_panel
+    expect(org_detail_page.content_status).to have_content('Published')
   end
 end

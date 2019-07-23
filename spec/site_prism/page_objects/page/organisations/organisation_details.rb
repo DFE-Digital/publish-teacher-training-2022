@@ -12,6 +12,7 @@ module PageObjects
         element :address, '[data-qa=enrichment__address]'
         element :train_with_us, '[data-qa=enrichment__train_with_us]'
         element :train_with_disability, '[data-qa=enrichment__train_with_disability]'
+        element :status_panel, '[data-qa=provider__status_panel]'
         element :content_status, '[data-qa=provider__content-status]'
       end
     end
