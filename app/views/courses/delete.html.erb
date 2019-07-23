@@ -21,14 +21,19 @@
 
     <p class="govuk-body">Deleting a course is permanent – you can’t undo it. If you need to recreate a course after deleting it, it will have a new course code.</p>
 
-    <h2 class="govuk-heading-m">Contact support to delete this course</h2>
+    <h2 class="govuk-heading-m">Confirm delete</h2>
 
-    <p class="govuk-body">Contact the <%= bat_contact_mail_to 'Becoming a teacher team', subject: "Delete #{course.name} (#{@provider_code}/#{course.course_code})" %> by email to delete this course.</p>
+    <%= form_with model: @course, url: provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :delete do |f| %>
+      <div class="govuk-form-group">
+        <%= f.label 'confirm_course_code', 'Type in the course code to confirm', class: 'govuk-label' %>
+        <%= f.text_field 'confirm_course_code', class: 'govuk-input govuk-input--width-5' %>
+      </div>
+      <hr class="govuk-section-break govuk-section-break--m">
+      <%= f.submit 'Yes I’m sure – delete this course', class: 'govuk-button govuk-button--warning' %>
+    <% end %>
 
-    <p class="govuk-body">In your email include:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>course code</li>
-      <li>course title</li>
-    </ul>
+    <p class="govuk-body govuk-!-margin-top-5">
+      <%= link_to 'Cancel', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link govuk-link--no-visited-state" %>
+    </p>
   </div>
 </div>
