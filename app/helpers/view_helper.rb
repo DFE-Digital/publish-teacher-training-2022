@@ -42,7 +42,7 @@ module ViewHelper
       'fee_uk_eu' => base + '/fees?display_errors=true#fee_uk_eu_wrapper',
       'course_length' => base + (course.has_fees? ? '/fees' : '/salary') + '?display_errors=true#course_length_wrapper',
       'salary_details' => base + '/salary?display_errors=true#salary_details_wrapper',
-      'qualifications' => base + '/requirements?display_errors=true#required_qualifications_wrapper'
+      'required_qualifications' => base + '/requirements?display_errors=true#required_qualifications_wrapper'
     }[field]
   end
 
