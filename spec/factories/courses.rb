@@ -50,6 +50,7 @@ FactoryBot.define do
     maths { 'expect_to_achieve_before_training_begins' }
     english { 'must_have_qualification_at_application_time' }
     science { 'not_required' }
+    gcse_subjects_required { %w[maths english] }
 
     after :build do |course, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.

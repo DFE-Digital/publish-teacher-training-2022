@@ -23,14 +23,29 @@ feature 'Edit course entry requirements', type: :feature do
     entry_requirements_page.load_with_course(course)
   end
 
-  context 'any course' do
+  context 'a course without required GCSE subjects' do
+    let(:course) do
+      build(
+        :course,
+        gcse_subjects_required: [],
+        provider: provider
+      )
+    end
+
+    scenario '404s when you try to edit entry requirements' do
+      expect(page.status_code).to eq(404)
+    end
+  end
+
+  context 'a course with all required subjects (primary)' do
     let(:course) do
       build(
         :course,
         provider: provider,
         maths: 'must_have_qualification_at_application_time',
         english: 'expect_to_achieve_before_training_begins',
-        science: 'equivalence_test'
+        science: 'equivalence_test',
+        gcse_subjects_required: %w[maths english science],
       )
     end
 
@@ -40,7 +55,6 @@ feature 'Edit course entry requirements', type: :feature do
     end
 
     scenario 'can navigate to the edit screen and back again' do
-      pending('Disabled until we put Change link in')
       course_details_page.load_with_course(course)
       click_on 'Change entry requirements'
       expect(entry_requirements_page).to be_displayed
@@ -61,7 +75,6 @@ feature 'Edit course entry requirements', type: :feature do
         expect(entry_requirements_page.send(subject)).to have_field('1. Must have (least flexible)')
         expect(entry_requirements_page.send(subject)).to have_field('2: Taking')
         expect(entry_requirements_page.send(subject)).to have_field('3: Equivalence test')
-        expect(entry_requirements_page.send(subject)).to have_field('No GCSE requirement')
       end
     end
 
@@ -76,6 +89,97 @@ feature 'Edit course entry requirements', type: :feature do
         ['science_requirements', '3: Equivalence test']
       ].each do |subject, field_name|
         expect(entry_requirements_page.send(subject)).to have_field(field_name, checked: true)
+      end
+    end
+
+    scenario 'can be updated' do
+      update_course_stub = stub_api_v2_request(
+        "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}" \
+        "/courses/#{course.course_code}",
+        course.to_jsonapi,
+        :patch, 200
+      )
+
+      choose('course_maths_expect_to_achieve_before_training_begins')
+      choose('course_english_expect_to_achieve_before_training_begins')
+      choose('course_science_expect_to_achieve_before_training_begins')
+      click_on 'Save'
+
+      expect(course_details_page).to be_displayed
+      expect(course_details_page.flash).to have_content('Your changes have been saved')
+      expect(update_course_stub).to have_been_requested
+    end
+  end
+
+  context 'a course without science as a required subject (secondary)' do
+    let(:course) do
+      build(
+        :course,
+        provider: provider,
+        maths: 'must_have_qualification_at_application_time',
+        english: 'expect_to_achieve_before_training_begins',
+        science: 'not_set',
+        gcse_subjects_required: %w[maths english]
+      )
+    end
+
+    scenario 'presents a choice for only Maths and English' do
+      expect(entry_requirements_page).to have_maths_requirements
+      expect(entry_requirements_page).to have_english_requirements
+      expect(entry_requirements_page).not_to have_science_requirements
+
+      %w[
+        maths_requirements
+        english_requirements
+      ].each do |subject|
+        expect(entry_requirements_page.send(subject)).to have_field('1. Must have (least flexible)')
+        expect(entry_requirements_page.send(subject)).to have_field('2: Taking')
+        expect(entry_requirements_page.send(subject)).to have_field('3: Equivalence test')
+      end
+    end
+
+    scenario 'can be updated' do
+      update_course_stub = stub_api_v2_request(
+        "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}" \
+        "/courses/#{course.course_code}",
+        course.to_jsonapi,
+        :patch, 200
+      )
+
+      choose('course_maths_expect_to_achieve_before_training_begins')
+      choose('course_english_expect_to_achieve_before_training_begins')
+      click_on 'Save'
+
+      expect(course_details_page).to be_displayed
+      expect(course_details_page.flash).to have_content('Your changes have been saved')
+      expect(update_course_stub).to have_been_requested
+    end
+  end
+
+  context 'a course with data that doesn’t align with requirements' do
+    let(:course) do
+      build(
+        :course,
+        provider: provider,
+        maths: 'not_set',
+        english: 'not_set',
+        science: 'not_required',
+        gcse_subjects_required: %w[maths english science]
+      )
+    end
+
+    scenario 'shows an error if the form is submitted without providing answers' do
+      click_on 'Save changes'
+      expect(entry_requirements_page).to be_displayed
+
+      expect(entry_requirements_page.error_flash)
+        .to have_content('You’ll need to correct some information')
+
+      %w[maths english science].each do |s|
+        expect(entry_requirements_page.error_flash).to have_content("Pick an option for #{s.titleize}")
+        expect(entry_requirements_page).to have_selector("##{s}-error")
       end
     end
 

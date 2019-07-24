@@ -1,10 +1,13 @@
-<div class="govuk-form-group govuk-!-margin-bottom-8" data-qa="course__<%= subject %>_requirements">
+<div
+  class="<%= cns("govuk-form-group", "govuk-!-margin-bottom-8", "govuk-form-group--error": @errors && @errors[subject]&.any?) %>"
+  data-qa="course__<%= subject %>_requirements">
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
       <h2 class="govuk-fieldset__heading">
         <%= subject.to_s.titleize %> GCSE
       </h2>
     </legend>
+    <%= render "shared/error_messages", field: subject if @errors %>
     <div class="govuk-radios govuk-radios--conditional">
       <% [
           [
@@ -21,10 +24,6 @@
             '3: Equivalence test',
             'equivalence_test',
             'You will consider candidates who need to take an equivalency test as well as those with a pending GCSE.'
-          ],
-          [
-            'No GCSE requirement',
-            'not_required'
           ]
         ].each do |label, value, guidance|
       %>
@@ -34,19 +33,16 @@
                 class: 'govuk-radios__input',
                 data: {
                   'aria-describedby': "#{subject}-#{value}-help"
-                },
-                checked: course.send(subject) == value
+                }
           %>
           <%= form.label subject,
                 label,
                 value: value,
                 class: 'govuk-label govuk-radios__label'
           %>
-          <% if guidance %>
-            <span id="<%= "#{subject}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
-              <%= guidance %>
-            </span>
-          <% end %>
+          <span id="<%= "#{subject}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
+            <%= guidance %>
+          </span>
         </div>
       <% end %>
     </div>
