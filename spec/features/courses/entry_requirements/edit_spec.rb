@@ -55,7 +55,6 @@ feature 'Edit course entry requirements', type: :feature do
     end
 
     scenario 'can navigate to the edit screen and back again' do
-      pending('Disabled until we put Change link in')
       course_details_page.load_with_course(course)
       click_on 'Change entry requirements'
       expect(entry_requirements_page).to be_displayed
