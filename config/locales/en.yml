@@ -41,3 +41,20 @@ en:
     formats:
       default: "%-d %B %Y"
       short: "%B %Y"
+  edit_options:
+    entry_requirements:
+      must_have_qualification_at_application_time:
+        label: '1. Must have (least flexible)'
+        help: 'UCAS will block applications from candidates who haven’t gained their GCSE yet or who need to take an equivalency test.'
+        details_label: 'Must have'
+      expect_to_achieve_before_training_begins:
+        label: '2: Taking'
+        help: 'You will consider candidates with a pending GCSE. But UCAS will block applications from someone who needs to take an equivalency test.'
+        details_label: 'Taking'
+      equivalence_test:
+        label: '3: Equivalence test'
+        help: 'You will consider candidates who need to take an equivalency test as well as those with a pending GCSE.'
+        details_label: 'Equivalence test'
+      not_required:
+        details_label: 'No requirement'
+        help: 'You will receive applications from candidates who will not have a grade C (or 4) or above.'

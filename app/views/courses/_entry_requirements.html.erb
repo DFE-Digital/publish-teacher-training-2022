@@ -1,37 +1,12 @@
-<% case gcse_subject_code %>
-<% when 'must_have_qualification_at_application_time' %>
-  <details class="govuk-details govuk-!-margin-bottom-2">
-    <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text"><%= gcse_subject %> GCSE: Must have</span>
-    </summary>
-    <div class="govuk-details__text">
-      <p class="govuk-body">
-        UCAS will block applications from candidates who haven’t gained their <%= gcse_subject %> GCSE yet or who need to take an equivalency test.
-      </p>
-    </div>
-  </details>
-<% when 'expect_to_achieve_before_training_begins' %>
-  <details class="govuk-details govuk-!-margin-bottom-2">
-    <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text"><%= gcse_subject %> GCSE: Taking</span>
-    </summary>
-    <div class="govuk-details__text">
-      <p class="govuk-body">
-        You will consider candidates with a pending <%= gcse_subject %> GCSE. But UCAS will block applications from someone who needs to take an equivalency test.
-      </p>
-    </div>
-  </details>
-<% when 'equivalence_test' %>
-  <details class="govuk-details govuk-!-margin-bottom-2">
-    <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text"><%= gcse_subject %> GCSE: Equivalence test</span>
-    </summary>
-    <div class="govuk-details__text">
-      <p class="govuk-body">
-        You will consider candidates who need to take an equivalency test as well as those with a pending <%= gcse_subject %> GCSE.
-      </p>
-    </div>
-  </details>
-<% else %>
-  <p class="govuk-body"><%= gcse_subject %> GCSE: No requirement</p>
-<% end %>
+<details class="govuk-details govuk-!-margin-bottom-2">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= gcse_subject %> GCSE: <%= t("edit_options.entry_requirements.#{gcse_subject_code}.details_label") %>
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    <p class="govuk-body">
+      <%= t("edit_options.entry_requirements.#{gcse_subject_code}.help") %>
+    </p>
+  </div>
+</details>
