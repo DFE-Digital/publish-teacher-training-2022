@@ -46,13 +46,33 @@
         <% end %>
       </div>
 
-      <h2 class="govuk-heading-l">About your accredited body</h2>
+      <% if @provider.accredited_bodies.present? %>
+        <h2 class="govuk-heading-l">About your accredited body</h2>
 
-      <p id="about-training-provider-hint" class="govuk-body">
-        Describe any advantages and special features of your accredited body. You
-        must be specific and factual with any claims you make, and support them with
-        evidence.
-      </p>
+        <p id="about-training-provider-hint" class="govuk-body">
+          Describe any advantages and special features of your accredited body. You
+          must be specific and factual with any claims you make, and support them with
+          evidence.
+        </p>
+
+        <% @provider.accredited_bodies.each_with_index do |provider, index| %>
+          <%= f.hidden_field "accredited_bodies[][provider_code]", value: provider["provider_code"], id: nil %>
+          <div class="govuk-character-count" data-module="character-count" data-maxwords="100">
+            <%= render "shared/form_field",
+              form: f,
+              field: "accredited_bodies[][description]",
+              label: "#{provider['provider_name']} (optional)",
+              id: "accredited_bodies[#{index}][description]",
+              label_bold: true do |field, options| %>
+              <%= f.text_area field, options.merge(
+                value: provider['description'],
+                rows: 10,
+                class: 'govuk-textarea js-character-count'
+              ) %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
 
       <h2 class="govuk-heading-l">Training with disabilities and other needs</h2>
 

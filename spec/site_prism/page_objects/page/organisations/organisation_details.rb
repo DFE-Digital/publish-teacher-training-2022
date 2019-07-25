@@ -14,6 +14,7 @@ module PageObjects
         element :train_with_disability, '[data-qa=enrichment__train_with_disability]'
         element :status_panel, '[data-qa=provider__status_panel]'
         element :content_status, '[data-qa=provider__content-status]'
+        element :flash, '.govuk-success-summary'
       end
     end
   end
