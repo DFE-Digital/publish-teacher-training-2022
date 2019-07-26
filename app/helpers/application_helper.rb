@@ -9,22 +9,31 @@ module ApplicationHelper
     markdown.render(source).html_safe
   end
 
-  def course_enrichment_error_link(field, error)
+  def enrichment_error_link(model, field, error)
+    href = case model
+           when :course
+             enrichment_error_url(
+               provider_code: @provider.provider_code,
+               course: @course,
+               field: field.to_s
+             )
+           when :provider
+             provider_enrichment_error_url(
+               provider: @provider,
+               field: field.to_s
+             )
+           end
     content_tag :a, error,
                 class: 'govuk-link govuk-!-display-block',
-                href: enrichment_error_url(
-                  provider_code: @provider.provider_code,
-                  course: @course,
-                  field: field.to_s
-                )
+                href: href
   end
 
-  def enrichment_summary_label(key, field)
+  def enrichment_summary_label(model, key, field)
     if @errors&.key? field
       content_tag :dt, class: 'govuk-summary-list__key app-course-parts__fields__label--error' do
         [
           content_tag(:span, key),
-          *@errors[field].map { |error| course_enrichment_error_link(field, error) }
+          *@errors[field].map { |error| enrichment_error_link(model, field, error) }
         ].reduce(:+)
       end
     else
@@ -43,9 +52,9 @@ module ApplicationHelper
     content_tag :dd, value, class: css_class, data: { qa: "enrichment__#{field}" }
   end
 
-  def enrichment_summary_item(key, value, field)
+  def enrichment_summary_item(model, key, value, field)
     content_tag :div, class: 'govuk-summary-list__row' do
-      enrichment_summary_label(key, field) + enrichment_summary_value(value, field)
+      enrichment_summary_label(model, key, field) + enrichment_summary_value(value, field)
     end
   end
 end
