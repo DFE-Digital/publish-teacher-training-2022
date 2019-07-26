@@ -23,7 +23,7 @@ feature 'View provider', type: :feature do
 
     expect(org_detail_page).to have_link(
       'Contact details',
-      href: "#{Settings.manage_ui.base_url}/organisation/#{provider.provider_code}/contact"
+      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact"
     )
     expect(org_detail_page.caption).to have_content(provider.provider_name)
     expect(org_detail_page.email).to have_content(provider.email)
@@ -32,7 +32,7 @@ feature 'View provider', type: :feature do
 
     expect(org_detail_page).to have_link(
       'About your organisation',
-      href: "#{Settings.manage_ui.base_url}/organisation/#{provider.provider_code}/about"
+      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/about"
     )
     expect(org_detail_page.train_with_us).to have_content(provider.train_with_us)
     expect(org_detail_page.train_with_disability).to have_content(provider.train_with_disability)

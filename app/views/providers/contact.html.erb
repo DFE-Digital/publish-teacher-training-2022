@@ -1,7 +1,7 @@
 <%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Edit 'Contact information'" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_path(@provider.provider_code)) %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_path(provider_code: @provider.provider_code, year: @provider.recruitment_cycle_year)) %>
 <% end %>
 
 <%= render 'shared/errors' %>
