@@ -9,24 +9,7 @@
     </legend>
     <%= render "shared/error_messages", field: subject if @errors %>
     <div class="govuk-radios govuk-radios--conditional">
-      <% [
-          [
-            '1. Must have (least flexible)',
-            'must_have_qualification_at_application_time',
-            'UCAS will block applications from candidates who haven’t gained their GCSE yet or who need to take an equivalency test.'
-          ],
-          [
-            '2: Taking',
-            'expect_to_achieve_before_training_begins',
-            'You will consider candidates with a pending GCSE. But UCAS will block applications from someone who needs to take an equivalency test.'
-          ],
-          [
-            '3: Equivalence test',
-            'equivalence_test',
-            'You will consider candidates who need to take an equivalency test as well as those with a pending GCSE.'
-          ]
-        ].each do |label, value, guidance|
-      %>
+      <% @course.meta['edit_options']['entry_requirements'].each do |value| %>
         <div class="govuk-radios__item">
           <%= form.radio_button subject,
                 value,
@@ -36,12 +19,12 @@
                 }
           %>
           <%= form.label subject,
-                label,
+                t("edit_options.entry_requirements.#{value}.label"),
                 value: value,
                 class: 'govuk-label govuk-radios__label'
           %>
           <span id="<%= "#{subject}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
-            <%= guidance %>
+            <%= t("edit_options.entry_requirements.#{value}.help") %>
           </span>
         </div>
       <% end %>

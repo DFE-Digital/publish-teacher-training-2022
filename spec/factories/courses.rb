@@ -4,6 +4,7 @@ FactoryBot.define do
       sites { [] }
       site_statuses { [] }
       recruitment_cycle { build :recruitment_cycle }
+      edit_options {}
     end
 
     sequence(:id)
@@ -51,6 +52,7 @@ FactoryBot.define do
     english { 'must_have_qualification_at_application_time' }
     science { 'not_required' }
     gcse_subjects_required { %w[maths english] }
+    meta { nil }
 
     after :build do |course, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.
@@ -67,6 +69,11 @@ FactoryBot.define do
       course.recruitment_cycle = evaluator.recruitment_cycle
       course.provider_code = evaluator.provider&.provider_code
       course.recruitment_cycle_year = evaluator&.recruitment_cycle&.year
+
+      if evaluator.edit_options
+        course.meta = {}
+        course.meta['edit_options'] = evaluator.edit_options
+      end
     end
 
     trait :with_vacancy do
