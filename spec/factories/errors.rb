@@ -24,13 +24,25 @@ FactoryBot.define do
       attributes
     end
 
+    trait :for_course_outcome do
+      errors {
+        [
+          {
+            title: "Invalid qualification",
+            detail: "Qualification error",
+            source: { pointer: "/data/attributes/qualification" }
+          }
+        ]
+      }
+    end
+
     trait :for_course_publish do
       errors {
         [
           {
             title: "Invalid about_course",
             detail: "About course can't be blank",
-            source: { pointer: "/data/atributes/about_course" }
+            source: { pointer: "/data/attributes/about_course" }
           }
         ]
       }

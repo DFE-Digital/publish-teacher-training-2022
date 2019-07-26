@@ -1,0 +1,60 @@
+<%= content_for :page_title, "Pick a course outcome – #{course.name_and_code}" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: course,
+          url: outcome_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+          method: :put do |form| %>
+
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-top-0">
+            <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+            Pick a course outcome
+          </h1>
+        </legend>
+        <div class="<%= cns("govuk-form-group", "govuk-!-margin-bottom-8", "govuk-form-group--error": @errors && @errors[:qualification]&.any?) %>"
+        data-qa="course__qualification">
+          <%= render "shared/error_messages", field: :qualification if @errors %>
+          <% @course.meta['edit_options']['qualifications'].each do |value| %>
+            <% help = t("edit_options.qualifications.#{value}.help") %>
+            <% label = t("edit_options.qualifications.#{value}.label") %>
+
+            <div class="govuk-radios__item">
+              <%= form.radio_button :qualification,
+                    value,
+                    class: 'govuk-radios__input',
+                    data: {
+                      'aria-describedby': "#{value}-help"
+                    }
+              %>
+              <%= form.label :qualification,
+                    label,
+                    value: value,
+                    class: 'govuk-label govuk-radios__label'
+              %>
+              <span id="<%= "#{value}-help" %>" class="govuk-hint govuk-radios__hint">
+                <%= help %>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      </fieldset>
+
+      <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
+        class: "govuk-button", data: { qa: 'course__save' }
+      %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes',
+          details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
+          class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+    <% end %>
+  </div>
+</div>
