@@ -58,3 +58,19 @@ en:
       not_required:
         details_label: 'No requirement'
         help: 'You will receive applications from candidates who will not have a grade C (or 4) or above.'
+    qualifications:
+      qts:
+        label: 'QTS'
+        help: 'Qualified teacher status'
+      pgce:
+        label: 'PGCE only (without QTS)'
+        help: 'Postgraduate certificate in education'
+      pgce_with_qts:
+        label: 'PGCE with QTS'
+        help: 'Postgraduate certificate in education with qualified teacher status'
+      pgde:
+        label: 'PGDE only (without QTS)'
+        help: 'Postgraduate diploma in education'
+      pgde_with_qts:
+        label: 'PGDE with QTS'
+        help: 'Postgraduate diploma in education with qualified teacher status'
