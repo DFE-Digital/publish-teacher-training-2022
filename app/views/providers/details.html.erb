@@ -1,5 +1,4 @@
-<%= content_for :page_title, "About your organisation" %>
-
+<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}About your organisation" %>
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_path(@provider.provider_code)) %>
 <% end %>
