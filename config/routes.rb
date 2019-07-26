@@ -58,6 +58,9 @@ Rails.application.routes.draw do
 
         get '/entry-requirements', on: :member, to: 'courses/entry_requirements#edit'
         put '/entry-requirements', on: :member, to: 'courses/entry_requirements#update'
+
+        get '/outcome', on: :member, to: 'courses/outcome#edit'
+        put '/outcome', on: :member, to: 'courses/outcome#update'
       end
 
       resources :sites, path: 'locations', on: :member, except: %i[destroy show]

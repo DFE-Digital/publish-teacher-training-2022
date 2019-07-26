@@ -28,7 +28,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def outcome
-    object.qualifications.sort.map(&:upcase).join(' with ')
+    I18n.t("edit_options.qualifications.#{object.qualification}.label")
   end
 
   def is_send?

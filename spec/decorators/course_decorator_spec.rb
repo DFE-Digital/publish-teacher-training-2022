@@ -8,7 +8,7 @@ describe CourseDecorator do
     build :course,
           course_code: 'A1',
           name: 'Mathematics',
-          qualifications: %w[qts pgce],
+          qualification: 'pgce_with_qts',
           study_mode: 'full_time',
           start_date: Time.zone.local(2019),
           site_statuses: [site_status],
