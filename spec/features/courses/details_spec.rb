@@ -5,7 +5,6 @@ feature 'Course details', type: :feature do
   let(:provider) { build(:provider, provider_code: 'A0', accredited_body?: false, sites: [site1, site2]) }
   let(:course) do
     build :course,
-          qualifications: %w[qts pgce],
           study_mode: 'full_time',
           start_date: Time.zone.local(2019),
           sites: [site1, site2],
