@@ -11,6 +11,7 @@ feature 'Course details', type: :feature do
           provider: provider,
           accrediting_provider: provider,
           open_for_applications?: true,
+          age_range_in_years: '3 to 7',
           recruitment_cycle: current_recruitment_cycle
   end
   let(:site1) { build(:site, location_name: 'London') }
@@ -55,6 +56,9 @@ feature 'Course details', type: :feature do
     )
     expect(course_details_page.subjects).to have_content(
       course.subjects.sort.join('').to_s
+    )
+    expect(course_details_page.age_range).to have_content(
+      '3 to 7'
     )
     expect(course_details_page.qualifications).to have_content(
       'PGCE with QTS'
@@ -132,6 +136,7 @@ feature 'Course details', type: :feature do
       expect(course_details_page.entry_requirements).to have_content('Maths GCSE: Taking')
       expect(course_details_page.entry_requirements).to have_content('Science GCSE: Equivalence test')
       expect(course_details_page.entry_requirements).not_to have_content('English GCSE')
+      expect(course_details_page.age_range).to have_content('Unknown')
     end
   end
 
