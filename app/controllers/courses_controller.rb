@@ -99,6 +99,17 @@ class CoursesController < ApplicationController
 
   def preview; end
 
+  def destroy
+    if params[:course][:confirm_course_code] == @course.course_code
+      @course.destroy
+      redirect_to provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)
+      flash[:success] = "#{@course.name} (#{@course.course_code}) has been deleted"
+    else
+      flash[:error] = "Enter the course code (#{@course.course_code}) to delete this course"
+      redirect_to delete_provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
+    end
+  end
+
   def publish
     if @course.publish
       flash[:success] = "Your course has been published."

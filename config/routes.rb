@@ -34,6 +34,8 @@ Rails.application.routes.draw do
       get '/about', on: :member, to: 'providers#about'
 
       resources :courses, param: :code do
+        delete '/', on: :member, to: 'courses#destroy'
+
         get '/vacancies', on: :member, to: 'courses/vacancies#edit'
         put '/vacancies', on: :member, to: 'courses/vacancies#update'
         get '/details', on: :member, to: 'courses#details'
