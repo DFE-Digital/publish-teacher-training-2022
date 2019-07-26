@@ -140,6 +140,21 @@ feature 'Course details', type: :feature do
     end
   end
 
+  context 'the course is further education' do
+    let(:course) do
+      build(
+        :course,
+        provider: provider,
+        level: 'further_education',
+      )
+    end
+
+    scenario 'viewing the course details page does not show age range' do
+      course_details_page.load_with_course(course)
+      expect(course_details_page).not_to have_age_range
+    end
+  end
+
   context 'when the provider only has one location' do
     let(:provider) { build(:provider, provider_code: 'A0', accredited_body?: true, sites: [site1]) }
     let(:course) do
