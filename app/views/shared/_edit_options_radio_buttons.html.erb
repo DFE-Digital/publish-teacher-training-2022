@@ -1,0 +1,31 @@
+<% legend ||= false %>
+<div
+  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[field]&.any?) %>"
+  data-qa="course__<%= field %>">
+  <fieldset class="govuk-fieldset">
+    <%= legend %>
+    <%= render "shared/error_messages", field: field if @errors %>
+    <% @course.meta['edit_options'][key].each_with_index do |value| %>
+      <% help = t("edit_options.#{key}.#{value}.help") %>
+      <% label = t("edit_options.#{key}.#{value}.label") %>
+
+      <div class="govuk-radios__item">
+        <%= form.radio_button field,
+              value,
+              class: 'govuk-radios__input',
+              data: {
+                'aria-describedby': "#{field}-#{value}-help"
+              }
+        %>
+        <%= form.label field,
+              label,
+              value: value,
+              class: 'govuk-label govuk-radios__label'
+        %>
+        <span id="<%= "#{field}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
+          <%= help %>
+        </span>
+      </div>
+    <% end %>
+  </fieldset>
+</div>
