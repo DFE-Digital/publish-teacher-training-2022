@@ -53,7 +53,7 @@ FactoryBot.define do
     science { 'not_required' }
     gcse_subjects_required { %w[maths english] }
     meta { nil }
-    age_range_in_years { nil }
+    age_range_in_years { '11_to_16' }
 
     after :build do |course, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.

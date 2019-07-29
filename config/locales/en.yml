@@ -74,3 +74,20 @@ en:
       pgde_with_qts:
         label: 'PGDE with QTS'
         help: 'Postgraduate diploma in education with qualified teacher status'
+    age_range_in_years:
+      other:
+        label: 'Another age range'
+      3_to_7:
+        label: '3 to 7'
+      5_to_11:
+        label: '5 to 11'
+      7_to_11:
+        label: '7 to 11'
+      7_to_14:
+        label: '7 to 14 (middle years)'
+      11_to_16:
+        label: '11 to 16'
+      11_to_18:
+        label: '11 to 18'
+      14_to_19:
+        label: '14 to 19'
