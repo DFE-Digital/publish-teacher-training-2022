@@ -19,6 +19,7 @@ module PageObjects
         element :application_status, '[data-qa=course__application_status]'
         element :is_send, '[data-qa=course__is_send]'
         element :subjects, '[data-qa=course__subjects]'
+        element :age_range, '[data-qa=course__age_range]'
         element :level, '[data-qa=course__level]'
         element :entry_requirements, '[data-qa=course__entry_requirements]'
       end

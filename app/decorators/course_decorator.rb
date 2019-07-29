@@ -112,6 +112,10 @@ class CourseDecorator < ApplicationDecorator
     course.recruitment_cycle_year.to_i == Settings.current_cycle + 1
   end
 
+  def age_range
+    object.age_range_in_years || "<span class='app-course-parts__fields__value--empty'>Unknown</span>".html_safe
+  end
+
 private
 
   def not_on_find
