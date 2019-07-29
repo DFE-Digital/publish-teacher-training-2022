@@ -46,6 +46,22 @@ module ViewHelper
     }[field]
   end
 
+  def provider_enrichment_error_url(provider:, field:)
+    base = "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle_year}"
+
+    {
+      'train_with_us' => base + '/about?display_errors=true#provider_train_with_us',
+      'train_with_disability' => base + '/about?display_errors=true#provider_train_with_disability',
+      'email' => base + '/contact?display_errors=true#provider_email',
+      'website' => base + '/contact?display_errors=true#provider_website',
+      'telephone' => base + '/contact?display_errors=true#provider_telephone',
+      'address1' => base + '/contact?display_errors=true#provider_address1',
+      'address3' => base + '/contact?display_errors=true#provider_address3',
+      'address4' => base + '/contact?display_errors=true#provider_address4',
+      'postcode' => base + '/contact?display_errors=true#provider_postcode'
+    }[field]
+  end
+
   def header_environment_class
     "app-header__container--#{Settings.environment.selector_name}"
   end
