@@ -12,6 +12,10 @@ feature 'View provider', type: :feature do
     allow(Settings).to receive(:rollover).and_return(false)
     stub_omniauth
     stub_api_v2_request(
+      "/recruitment_cycles/#{provider.recruitment_cycle.year}",
+      provider.recruitment_cycle.to_jsonapi
+    )
+    stub_api_v2_request(
       "/recruitment_cycles/#{provider.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}",
       provider.to_jsonapi

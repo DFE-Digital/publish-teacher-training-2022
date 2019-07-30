@@ -13,6 +13,13 @@ RSpec.describe ProvidersController, type: :controller do
       @controller = old_controller
     end
 
+    before do
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}",
+        current_recruitment_cycle.to_jsonapi
+      )
+    end
+
     describe 'GET #index' do
       context 'with 2 or more providers' do
         let(:current_recruitment_cycle) { build(:recruitment_cycle) }

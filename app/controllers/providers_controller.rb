@@ -20,20 +20,65 @@ class ProvidersController < ApplicationController
       .first
   end
 
-  def contact; end
+  def details
+    @errors = flash[:error_summary]
+    flash.delete(:error_summary)
+  end
 
-  def details; end
+  def contact
+    show_deep_linked_errors(%i[email telephone website address1 address3 address4 postcode])
+  end
 
-  def about; end
+  def about
+    show_deep_linked_errors(%i[train_with_us train_with_disability])
+  end
+
+  def update
+    if @provider.update(provider_params)
+      flash[:success] = 'Your changes have been saved'
+      redirect_to(
+        details_provider_recruitment_cycle_path(
+          @provider.provider_code,
+          @provider.recruitment_cycle_year
+        )
+      )
+    else
+      @errors = @provider.errors.messages
+
+      render provider_params["page"].to_sym
+    end
+  end
+
+  def publish
+    if @provider.publish
+      flash[:success] = "Your changes have been published."
+    else
+      flash[:error_summary] = @provider.errors.messages
+    end
+
+    redirect_to details_provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year)
+  end
 
 private
 
-  def build_provider
-    cycle_year = params.fetch(
-      :recruitment_cycle_year,
-      Settings.current_cycle
+  def provider_params
+    params.require(:provider).permit(
+      :page,
+      :train_with_us,
+      :train_with_disability,
+      :email,
+      :telephone,
+      :website,
+      :address1,
+      :address2,
+      :address3,
+      :address4,
+      :postcode,
+      :region_code
     )
+  end
 
+  def build_provider
     @provider = Provider
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:provider_code])

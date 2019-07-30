@@ -31,7 +31,10 @@ Rails.application.routes.draw do
     resources :recruitment_cycles, param: :year, constraints: { year: /2019|2020/ }, path: '', only: :show do
       get '/details', on: :member, to: 'providers#details'
       get '/contact', on: :member, to: 'providers#contact'
+      put '/contact', on: :member, to: 'providers#update'
       get '/about', on: :member, to: 'providers#about'
+      put '/about', on: :member, to: 'providers#update'
+      post '/publish', on: :member, to: 'providers#publish'
 
       resources :courses, param: :code do
         delete '/', on: :member, to: 'courses#destroy'
@@ -54,6 +57,7 @@ Rails.application.routes.draw do
         get '/preview', on: :member, to: 'courses#preview'
         get '/locations', on: :member, to: 'courses/sites#edit'
         put '/locations', on: :member, to: 'courses/sites#update'
+        get '/publish', on: :member, to: 'courses#details'
         post '/publish', on: :member, to: 'courses#publish'
 
         get '/entry-requirements', on: :member, to: 'courses/entry_requirements#edit'
