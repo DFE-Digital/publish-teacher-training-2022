@@ -19,7 +19,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @provider, url: provider_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
+    <%= form_with model: @provider, url: contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
+      <%= f.hidden_field :page, value: :contact %>
+
       <%= render "shared/form_field",
         form: f, field: :email, label: "Email address" do |field, options| %>
         <span class="govuk-hint">
