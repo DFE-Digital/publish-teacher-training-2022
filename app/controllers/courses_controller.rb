@@ -191,7 +191,7 @@ private
 
     @provider = Provider
       .includes(courses: [:accrediting_provider])
-      .where(year: cycle_year)
+      .where(recruitment_cycle_year: cycle_year)
       .find(params[:provider_code])
       .first
 

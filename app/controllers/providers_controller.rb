@@ -6,7 +6,7 @@ class ProvidersController < ApplicationController
 
   def index
     @providers = Provider
-      .where(year: Settings.current_cycle)
+      .where(recruitment_cycle_year: Settings.current_cycle)
       .all
 
     render_manage_ui if @providers.empty?
@@ -14,13 +14,8 @@ class ProvidersController < ApplicationController
   end
 
   def show
-    cycle_year = params.fetch(
-      :recruitment_cycle_year,
-      Settings.current_cycle
-    )
-
     @provider = Provider
-      .where(year: cycle_year)
+      .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:code])
       .first
   end
@@ -40,7 +35,7 @@ private
     )
 
     @provider = Provider
-      .where(year: cycle_year)
+      .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:provider_code])
       .first
   end
