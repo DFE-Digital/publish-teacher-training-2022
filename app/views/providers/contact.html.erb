@@ -1,7 +1,7 @@
 <%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Edit 'Contact information'" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(details_provider_recruitment_cycle_path(provider_code: @provider.provider_code, year: @provider.recruitment_cycle_year)) %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
 <% end %>
 
 <%= render 'shared/errors' %>
@@ -19,7 +19,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @provider, url: provider_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
+    <%= form_with model: @provider, url: contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
+      <%= f.hidden_field :page, value: :contact %>
+
       <%= render "shared/form_field",
         form: f, field: :email, label: "Email address" do |field, options| %>
         <span class="govuk-hint">
@@ -84,7 +86,7 @@
 
     <div class="form-group">
       <p class="govuk-body">
-        <%= govuk_link_to "Cancel changes", details_provider_recruitment_cycle_path %>
+        <%= govuk_link_to "Cancel changes", details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
       </p>
     </div>
   </div>

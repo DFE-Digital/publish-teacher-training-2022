@@ -47,5 +47,17 @@ FactoryBot.define do
         ]
       }
     end
+
+    trait :for_provider_update do
+      errors {
+        [
+          {
+            title: "Invalid train_with_us",
+            detail: "Reduce the word count for train with us",
+            source: { pointer: "/data/attributes/train_with_us" }
+          }
+        ]
+      }
+    end
   end
 end

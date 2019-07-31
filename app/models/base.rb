@@ -19,4 +19,25 @@ class Base < JsonApiClient::Resource
 
   self.site = "#{Settings.manage_backend.base_url}/api/v2/"
   self.connection_class = MCBConnection
+
+private
+
+  def post_request(path)
+    post_options = {
+      body: { data: { attributes: {}, type: self.class.to_s.downcase } },
+      params: request_params.to_params
+    }
+
+    self.last_result_set = self.class.requestor.__send__(
+      :request, :post, post_base_url + path, post_options
+    )
+
+    if last_result_set.has_errors?
+      self.fill_errors # Inherited from JsonApiClient::Resource
+      false
+    else
+      self.errors.clear if self.errors
+      true
+    end
+  end
 end

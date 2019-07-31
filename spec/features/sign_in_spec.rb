@@ -13,8 +13,17 @@ feature 'Sign in', type: :feature do
     ]
   end
 
+  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: 2019) }
+
   let(:providers_response) do
     resource_list_to_jsonapi(providers)
+  end
+
+  before do
+    stub_api_v2_request(
+      "/recruitment_cycles/2019",
+      current_recruitment_cycle.to_jsonapi
+    )
   end
 
   scenario 'using DfE Sign-in' do

@@ -14,6 +14,7 @@ module PageObjects
         element :address3, '[data-qa=address3]'
         element :address4, '[data-qa=address4]'
         element :postcode, '[data-qa=postcode]'
+        element :error_flash, '.govuk-error-summary'
       end
     end
   end

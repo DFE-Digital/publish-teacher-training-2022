@@ -1,9 +1,17 @@
 class Provider < Base
-  belongs_to :recruitment_cycle, param: :year
+  belongs_to :recruitment_cycle, param: :recruitment_cycle_year
   has_many :courses, param: :course_code
   has_many :sites
 
   self.primary_key = :provider_code
+
+  def publish
+    post_request('/publish')
+  end
+
+  def publishable?
+    post_request('/publishable')
+  end
 
   def course_count
     relationships.courses[:meta][:count]
@@ -23,5 +31,11 @@ class Provider < Base
 
   def is_published?
     content_status == 'published'
+  end
+
+private
+
+  def post_base_url
+    "#{Provider.site}#{Provider.path}/%<provider_code>s" % path_attributes
   end
 end

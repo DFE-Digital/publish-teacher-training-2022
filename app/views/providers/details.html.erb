@@ -68,10 +68,22 @@
       </div>
       <p class="govuk-body">Last published on <%= l(@provider&.last_published_at.to_date) %></p>
 
-      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
       <h2 class="govuk-heading-m">View on a course</h2>
       <p class="govuk-body">This information will show on all your courses.</p>
       <p class="govuk-body">View any course to see how it will look to applicants.</p>
+
+      <% unless @provider.is_published? %>
+        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
+        <% if @recruitment_cycle.current? %>
+          <h2 class="govuk-heading-m">Publish</h2>
+          <p class="govuk-body">You can make changes to this after publishing it.</p>
+          <%= form_for provider, url: publish_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year), method: :post do |f| %>
+            <%= f.submit "Publish", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'provider__publish' } %>
+          <% end %>
+        <% else %>
+          <p class="govuk-body">You will be able to publish your changes in September before the next cycle opens.</p>
+        <% end %>
+      <% end %>
     </div>
   </aside>
 </div>

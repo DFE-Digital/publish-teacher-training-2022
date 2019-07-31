@@ -28,7 +28,7 @@ RSpec.feature 'View helpers', type: :helper do
 
   describe "#provider_enrichment_error_url" do
     it "returns provider enrichment error URL" do
-      provider = Provider.new(build(:provider).attributes)
+      provider = build(:provider)
       expect(helper.provider_enrichment_error_url(provider: provider, field: 'email')).to eq("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact?display_errors=true#provider_email")
     end
   end

@@ -72,7 +72,7 @@ private
   def add_provider_count_cookie
     begin
       session[:auth_user][:provider_count] =
-        Provider.where(year: Settings.current_cycle).all.size
+        Provider.where(recruitment_cycle_year: Settings.current_cycle).all.size
     rescue StandardError => e
       logger.error "Error setting the provider_count cookie: #{e.class.name}, #{e.message}"
     end

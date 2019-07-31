@@ -1,7 +1,7 @@
 class RecruitmentCyclesController < ApplicationController
   def show
     @recruitment_cycle = RecruitmentCycle.find(params[:year]).first
-    @provider = Provider.where(year: params[:year])
+    @provider = Provider.where(recruitment_cycle_year: params[:year])
       .find(params[:provider_code])
       .first
 

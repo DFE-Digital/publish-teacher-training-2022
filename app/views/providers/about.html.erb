@@ -1,7 +1,7 @@
 <%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Edit 'About your organisation'" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(details_provider_recruitment_cycle_path(provider_code: @provider.provider_code, year: @provider.recruitment_cycle_year)) %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
 <% end %>
 
 <%= render 'shared/errors' %>
@@ -36,7 +36,9 @@
       </li>
     </ul>
 
-    <%= form_with model: @provider, url: provider_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
+    <%= form_with model: @provider, url: about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
+      <%= f.hidden_field :page, value: :about %>
+
       <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
         <%= render "shared/form_field",
           form: f, field: :train_with_us, label: 'Training with you', label_bold: true do |field, options| %>
@@ -81,7 +83,7 @@
 
     <div class="form-group">
       <p class="govuk-body">
-        <%= govuk_link_to "Cancel changes", details_provider_recruitment_cycle_path %>
+        <%= govuk_link_to "Cancel changes", details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
       </p>
     </div>
   </div>
