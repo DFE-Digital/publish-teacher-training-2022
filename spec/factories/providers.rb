@@ -12,8 +12,8 @@ FactoryBot.define do
     accredited_body? { false }
     can_add_more_sites? { true }
     courses { [] }
-    train_with_us { Faker::Lorem.sentence(100) }
-    train_with_disability { Faker::Lorem.sentence(100) }
+    train_with_us { Faker::Lorem.sentence(word_count: 100) }
+    train_with_disability { Faker::Lorem.sentence(word_count: 100) }
     website { nil }
     email { 'info@acme-scitt.org' }
     telephone { '020 8123 4567' }
