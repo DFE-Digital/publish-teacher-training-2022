@@ -112,8 +112,8 @@ FactoryBot.define do
       course_length { 'TwoYears' }
       fee_uk_eu { 7000 }
       fee_international { 14000 }
-      fee_details { Faker::Lorem.sentence(100) }
-      financial_support { Faker::Lorem.sentence(100) }
+      fee_details { Faker::Lorem.sentence(word_count: 100) }
+      financial_support { Faker::Lorem.sentence(word_count: 100) }
     end
   end
 end
