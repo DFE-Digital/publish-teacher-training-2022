@@ -11,7 +11,7 @@ feature 'Course details', type: :feature do
           provider: provider,
           accrediting_provider: provider,
           open_for_applications?: true,
-          age_range_in_years: '3 to 7',
+          age_range_in_years: '3_to_7',
           recruitment_cycle: current_recruitment_cycle
   end
   let(:site1) { build(:site, location_name: 'London') }
@@ -126,7 +126,8 @@ feature 'Course details', type: :feature do
         provider: provider,
         gcse_subjects_required: %w[maths science],
         english: 'expect_to_achieve_before_training_begins',
-        science: 'equivalence_test'
+        science: 'equivalence_test',
+        age_range_in_years: nil,
       )
     end
 

@@ -69,6 +69,11 @@ class CourseDecorator < ApplicationDecorator
     %w[OneYear TwoYears].exclude?(course.course_length)
   end
 
+  def other_age_range?
+    options = object.meta['edit_options']['age_range_in_years']
+    options.exclude?(course.age_range_in_years)
+  end
+
   def ucas_status
     case object.ucas_status
     when 'running'
@@ -113,7 +118,11 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def age_range
-    object.age_range_in_years || "<span class='app-course-parts__fields__value--empty'>Unknown</span>".html_safe
+    if object.age_range_in_years.present?
+      I18n.t("edit_options.age_range_in_years.#{object.age_range_in_years}.label", default: object.age_range_in_years.humanize)
+    else
+      "<span class='app-course-parts__fields__value--empty'>Unknown</span>".html_safe
+    end
   end
 
 private
