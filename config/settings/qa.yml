@@ -2,13 +2,13 @@ dfe_signin:
   issuer: https://signin-test-oidc-as.azurewebsites.net
   profile: https://signin-test-pfl-as.azurewebsites.net
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
-  base_url: https://bat-qa-mcfe-as.azurewebsites.net
+  base_url: https://www2.qa.publish-teacher-training-courses.service.gov.uk
 manage_backend:
-  base_url: https://bat-qa-mcbe-as.azurewebsites.net
+  base_url: https://api2.qa.publish-teacher-training-courses.service.gov.uk
 manage_ui:
-  base_url: https://bat-qa-mcui-as.azurewebsites.net
+  base_url: https://www.qa.publish-teacher-training-courses.service.gov.uk
 search_ui:
-  base_url: https://bat-qa-sacui-as.azurewebsites.net
+  base_url: https://www.qa.find-poqaraduate-teacher-training.service.gov.uk
 environment:
   label: "QA"
   selector_name: "qa"
