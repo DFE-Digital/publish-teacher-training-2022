@@ -109,3 +109,9 @@ $button-colour: #00823b;
     }
   }
 }
+
+// Fixes <wbr> in IE9
+// https://stackoverflow.com/a/23759279
+wbr:after {
+  content: "\00200B";
+}
