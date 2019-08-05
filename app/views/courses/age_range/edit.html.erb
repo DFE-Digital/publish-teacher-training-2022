@@ -35,23 +35,29 @@
             <% end %>
             <div class="govuk-radios__divider">or</div>
             <div class="govuk-radios__item">
-              <%= form.radio_button :age_range_in_years, 'Other', class: 'govuk-radios__input', data: {"aria-controls" => "other-container" },
-                checked: course.other_age_range?,
+              <%= form.radio_button :age_range_in_years, 'other', class: 'govuk-radios__input', data: {"aria-controls" => "other-container" },
+                checked: course.other_age_range? && course.age_range_in_years.present?,
                 aria: { describedby: @errors && @errors[:age_range_in_years] ? "course_age_range_in_years-error" : '' } %>
-              <%= form.label :age_range_in_years, t("edit_options.age_range_in_years.other.label"), value: 'Other', class: 'govuk-label govuk-radios__label' %>
+              <%= form.label :age_range_in_years, t("edit_options.age_range_in_years.other.label"), value: 'other', class: 'govuk-label govuk-radios__label' %>
             </div>
-            <div class="govuk-radios__conditional" id="other-container"">
+            <div class="govuk-radios__conditional <%= 'govuk-radios__conditional--hidden' if !course.other_age_range? %>" id="other-container">
               <p class="govuk-body">Enter an age range in years, for example: 5 to 11. The course must cover 4 or more school years.</p>
-              <div class="govuk-form-group ">
+              <%= render "shared/error_messages", field: :age_range_in_years_from if @errors %>
+              <div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years_from].present?) %>">
                 <label class="govuk-label" for="course_course_age_range_in_years_other_from">From</label>
-                <%= form.text_field 'course_age_range_in_years_other_from',
-                    value: course.other_age_range? ? course.age_range_in_years.split('_').first : '',
+                <%= form.number_field 'course_age_range_in_years_other_from',
+                    min: 0,
+                    max: 46,
+                    value: (course.other_age_range? && course.age_range_in_years.present?) ? course.age_range_in_years.split('_').first : '',
                     class: 'govuk-input govuk-input--width-2' %>
               </div>
-              <div class="govuk-form-group ">
+              <%= render "shared/error_messages", field: :age_range_in_years_to if @errors %>
+              <div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years_to].present?) %>">
                 <label class="govuk-label" for="course_course_age_range_in_years_other_to">To</label>
-                <%= form.text_field 'course_age_range_in_years_other_to',
-                    value: course.other_age_range? ? course.age_range_in_years.split('_').last : '',
+                <%= form.number_field 'course_age_range_in_years_other_to',
+                    min: 4,
+                    max: 50,
+                    value: (course.other_age_range? && course.age_range_in_years.present?) ? course.age_range_in_years.split('_').last : '',
                     class: 'govuk-input govuk-input--width-2' %>
               </div>
             </div>
