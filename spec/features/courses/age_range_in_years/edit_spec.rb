@@ -41,7 +41,8 @@ feature 'Edit course age range in years', type: :feature do
     end
 
     scenario 'can navigate to the edit screen and back again' do
-      age_range_in_years_page.load_with_course(course)
+      course_details_page.load_with_course(course)
+      click_on 'Change age range'
       expect(age_range_in_years_page).to be_displayed
       click_on 'Back'
       expect(course_details_page).to be_displayed

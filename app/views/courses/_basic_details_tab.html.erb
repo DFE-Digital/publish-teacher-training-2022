@@ -39,7 +39,11 @@
           <dd class="govuk-summary-list__value" data-qa="course__age_range">
             <%= course.age_range %>
           </dd>
-          <dd class="govuk-summary-list__actions"></dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_age_range_link" } do %>
+              Change<span class="govuk-visually-hidden"> age range</span>
+            <% end %>
+          </dd>
         </div>
       <% end %>
 
