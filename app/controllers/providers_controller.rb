@@ -74,8 +74,11 @@ private
       :address3,
       :address4,
       :postcode,
-      :region_code
-    )
+      :region_code,
+      accredited_bodies: %i[provider_code description]
+    ).to_h # Without this, accredited_bodies is an array of params objects
+           # instead of an array of plain hashes and gets serialized incorrectly
+           # on its way to the backend.
   end
 
   def build_provider
