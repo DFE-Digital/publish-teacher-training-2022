@@ -71,6 +71,9 @@ Rails.application.routes.draw do
 
         get '/age-range', on: :member, to: 'courses/age_range#edit'
         put '/age-range', on: :member, to: 'courses/age_range#update'
+
+        get '/level-send', on: :member, to: 'courses/level_send#edit'
+        put '/level-send', on: :member, to: 'courses/level_send#update'
       end
 
       resources :sites, path: 'locations', on: :member, except: %i[destroy show]
