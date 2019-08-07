@@ -1,6 +1,5 @@
 class SitesController < ApplicationController
-  before_action :build_provider, :initialise_errors
-  before_action :build_recruitment_cycle
+  before_action :build_provider, :build_recruitment_cycle
   before_action :build_site, only: %i[edit update]
 
   def new
@@ -85,9 +84,5 @@ private
       :postcode,
       :region_code
     )
-  end
-
-  def initialise_errors
-    @errors = {}
   end
 end
