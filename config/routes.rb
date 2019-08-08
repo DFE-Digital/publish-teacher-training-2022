@@ -27,6 +27,9 @@ Rails.application.routes.draw do
     get '/courses/:course_code/delete', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/delete')
     get '/courses/:course_code/preview', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/preview')
 
+    get '/request-access', on: :member, to: 'access_requests#new'
+    post '/request-access', on: :member, to: 'access_requests#create'
+
     # TODO: Extract year constraint to future proof for future cycles
     resources :recruitment_cycles, param: :year, constraints: { year: /2019|2020/ }, path: '', only: :show do
       get '/details', on: :member, to: 'providers#details'

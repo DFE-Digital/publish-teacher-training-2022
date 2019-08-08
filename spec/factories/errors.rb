@@ -59,5 +59,17 @@ FactoryBot.define do
         ]
       }
     end
+
+    trait :for_access_request_create do
+      errors {
+        [
+          {
+            title: "Invalid first_name",
+            detail: "Enter your first name",
+            source: { pointer: "/data/attributes/first_name" }
+          }
+        ]
+      }
+    end
   end
 end
