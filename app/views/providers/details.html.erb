@@ -71,7 +71,9 @@
       <div class="govuk-!-margin-bottom-6" data-qa="provider__content-status">
         <%= provider.status_tag %>
       </div>
-      <p class="govuk-body">Last published on <%= l(@provider&.last_published_at.to_date) %></p>
+      <% if @provider&.last_published_at %>
+        <p class="govuk-body">Last published on <%= l(@provider&.last_published_at.to_date) %></p>
+      <% end %>
 
       <h2 class="govuk-heading-m">View on a course</h2>
       <p class="govuk-body">This information will show on all your courses.</p>
