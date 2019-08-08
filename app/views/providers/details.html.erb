@@ -43,10 +43,10 @@
         <%= govuk_link_to "Contact details", contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
       </h3>
       <dl class="govuk-summary-list">
-        <%= enrichment_summary_item(:provider, 'Email address', @provider.email, 'email') %>
-        <%= enrichment_summary_item(:provider, 'Telephone number', @provider.telephone, 'telephone') %>
-        <%= enrichment_summary_item(:provider, 'Website', @provider.website, 'website') %>
-        <%= enrichment_summary_item(:provider, 'Contact address', @provider.full_address, 'address') %>
+        <%= enrichment_summary_item(:provider, 'Email address', @provider.email, ['email']) %>
+        <%= enrichment_summary_item(:provider, 'Telephone number', @provider.telephone, ['telephone']) %>
+        <%= enrichment_summary_item(:provider, 'Website', @provider.website, ['website']) %>
+        <%= enrichment_summary_item(:provider, 'Contact address', @provider.full_address, ['address1', 'address2', 'address3', 'address4', 'postcode']) %>
       </dl>
     </div>
 
@@ -55,11 +55,11 @@
         <%= govuk_link_to "About your organisation", about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
       </h3>
       <dl class="govuk-summary-list">
-        <%= enrichment_summary_item(:provider, 'About your organisation', @provider.train_with_us, 'train_with_us') %>
-        <%= enrichment_summary_item(:provider, 'Training with disabilities and other needs', @provider.train_with_disability, 'train_with_disability') %>
+        <%= enrichment_summary_item(:provider, 'About your organisation', @provider.train_with_us, ['train_with_us']) %>
+        <%= enrichment_summary_item(:provider, 'Training with disabilities and other needs', @provider.train_with_disability, ['train_with_disability']) %>
         <% if @provider.accredited_bodies.present? %>
           <% @provider.accredited_bodies.each do |provider| %>
-            <%= enrichment_summary_item(:provider, "#{provider['provider_name']} (optional)", provider['description'], "accrediting_provider_#{provider['provider_code']}") %>
+            <%= enrichment_summary_item(:provider, "#{provider['provider_name']} (optional)", provider['description'], ["accrediting_provider_#{provider['provider_code']}"]) %>
           <% end %>
         <% end %>
       </dl>
