@@ -2,22 +2,57 @@ require 'rails_helper'
 
 feature 'View provider', type: :feature do
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
-  let(:provider) do
-    build :provider,
-          provider_code: 'A0',
-          content_status: 'published'
-  end
 
-  scenario 'viewing organisation details page' do
+  before do
     allow(Settings).to receive(:rollover).and_return(false)
     stub_omniauth
+  end
+
+  context "with empty provider details" do
+    let(:provider) do
+      build :provider,
+            provider_code: 'A0',
+            content_status: 'empty',
+            last_published_at: nil
+    end
+
+    it 'renders correctly' do
+      test_details_page 'Empty'
+    end
+  end
+
+  context "with draft provider details" do
+    let(:provider) do
+      build :provider,
+            provider_code: 'A0',
+            content_status: 'draft'
+    end
+
+    it 'renders correctly' do
+      test_details_page 'Draft'
+    end
+  end
+
+  context "with published provider details" do
+    let(:provider) do
+      build :provider,
+            provider_code: 'A0',
+            content_status: 'published'
+    end
+
+    it 'renders correctly' do
+      test_details_page 'Published'
+    end
+  end
+
+  def test_details_page(expected_status)
     stub_api_v2_request(
       "/recruitment_cycles/#{provider.recruitment_cycle.year}",
       provider.recruitment_cycle.to_jsonapi
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{provider.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}",
+        "/providers/#{provider.provider_code}",
       provider.to_jsonapi
     )
 
@@ -42,6 +77,6 @@ feature 'View provider', type: :feature do
     expect(org_detail_page.train_with_disability).to have_content(provider.train_with_disability)
 
     expect(org_detail_page).to have_status_panel
-    expect(org_detail_page.content_status).to have_content('Published')
+    expect(org_detail_page.content_status).to have_content(expected_status)
   end
 end
