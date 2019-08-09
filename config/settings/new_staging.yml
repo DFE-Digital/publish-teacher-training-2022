@@ -1,6 +1,6 @@
 dfe_signin:
-  issuer: https://signin-test-oidc-as.azurewebsites.net
-  profile: https://signin-test-pfl-as.azurewebsites.net
+  issuer: https://pp-oidc.signin.education.gov.uk
+  profile: https://pp-profile.signin.education.gov.uk
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
   base_url: https://www2.staging.publish-teacher-training-courses.service.gov.uk
 manage_backend:
