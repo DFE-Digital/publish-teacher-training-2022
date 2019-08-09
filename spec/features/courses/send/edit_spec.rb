@@ -29,7 +29,7 @@ feature 'Edit course SEND', type: :feature do
         :course,
         is_send: '1',
         edit_options: {
-          is_send_options: ['0', '1']
+          is_send_options: %w['0', '1']
         },
         provider: provider
       )
