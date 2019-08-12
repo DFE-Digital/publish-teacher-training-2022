@@ -5,8 +5,8 @@ feature 'View provider about', type: :feature do
   let(:org_details_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
   let(:accredited_bodies) {
     [
-      { "provider_code" => "Z01" },
-      { "provider_code" => "Z02" }
+      { "provider_name": "Baz", "provider_code" => "Z01" },
+      { "provider_name": "Qux", "provider_code" => "Z02" }
     ]
   }
   let(:provider) do
@@ -38,8 +38,8 @@ feature 'View provider about', type: :feature do
       "train_with_us" => "Foo",
       "train_with_disability" => "Bar",
       "accredited_bodies" => [
-        { "provider_code" => accredited_bodies[0]["provider_code"], "description" => "Baz" },
-        { "provider_code" => accredited_bodies[1]["provider_code"], "description" => "Qux" },
+        { "provider_name": "Baz", "provider_code" => accredited_bodies[0]["provider_code"], "description" => "Baz" },
+        { "provider_name": "Qux", "provider_code" => accredited_bodies[1]["provider_code"], "description" => "Qux" },
       ]
     }
   end
