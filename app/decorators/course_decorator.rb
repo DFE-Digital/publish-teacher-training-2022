@@ -125,6 +125,12 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def applications_open_from_message_for(recruitment_cycle)
+    year = recruitment_cycle.year.to_i
+    day_month = Date.parse(recruitment_cycle.application_start_date).strftime('%-d %B')
+    "On #{day_month} when applications for the #{year - 1} – #{year} cycle open"
+  end
+
 private
 
   def not_on_find
