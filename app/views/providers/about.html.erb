@@ -47,7 +47,7 @@
       </div>
 
       <% if @provider.accredited_bodies.present? %>
-        <h2 class="govuk-heading-l">About your accredited body</h2>
+        <h2 class="govuk-heading-l" id="accredited_bodies-error">About your accredited body</h2>
 
         <p id="about-training-provider-hint" class="govuk-body">
           Describe any advantages and special features of your accredited body. You
@@ -56,6 +56,7 @@
         </p>
 
         <% @provider.accredited_bodies.each_with_index do |provider, index| %>
+          <%= f.hidden_field "accredited_bodies[][provider_name]", value: provider["provider_name"], id: nil %>
           <%= f.hidden_field "accredited_bodies[][provider_code]", value: provider["provider_code"], id: nil %>
           <div class="govuk-character-count" data-module="character-count" data-maxwords="100">
             <%= render "shared/form_field",
