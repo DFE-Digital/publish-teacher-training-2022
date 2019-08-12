@@ -12,19 +12,14 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: course, url: send_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
 
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h2 class="govuk-fieldset__heading">Special educational needs and disability (SEND)</h2>
-        </legend>
-        <div class="govuk-form-group">
-          <div class="govuk-checkboxes" data-module="checkboxes">
-            <div class="govuk-checkboxes__item">
-              <%= form.check_box(:is_send, checked: @course.is_send?(course, form.object, :is_send), data: { qa: 'is_send' }, class: 'govuk-checkboxes__input') %>
-              <%= form.label(:is_send, "This course has an additional SEND specialism", class: 'govuk-label govuk-checkboxes__label') %>
-            </div>
+      <div class="govuk-form-group">
+        <div class="govuk-checkboxes" data-module="checkboxes">
+          <div class="govuk-checkboxes__item">
+            <%= form.check_box(:is_send, checked: @course.is_send?(course, form.object, :is_send), data: { qa: 'is_send' }, class: 'govuk-checkboxes__input') %>
+            <%= form.label(:is_send, "This course has an additional SEND specialism", class: 'govuk-label govuk-checkboxes__label') %>
           </div>
         </div>
-      </fieldset>
+      </div>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
