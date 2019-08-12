@@ -46,7 +46,7 @@
       <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: '2019' } %>
     <% end %>
 
-    <h2 class="govuk-heading-m"><%= govuk_link_to "Request access for someone else", manage_ui_url("/organisation/#{@provider.provider_code}/request-access") %></h2>
+    <h2 class="govuk-heading-m"><%= govuk_link_to "Request access for someone else", request_access_provider_path(code: @provider.provider_code) %></h2>
     <p class="govuk-body govuk-!-margin-bottom-8">You can request a DfE Sign-in account for others who manage your courses.</p>
   </div>
   <aside class="govuk-grid-column-one-third">
