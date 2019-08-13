@@ -4,7 +4,7 @@
     <% if @provider.train_with_us.present? %>
       <%= markdown(@provider.train_with_us) %>
     <% else %>
-      <p class="app-missing-section">Please add details <%= link_to 'about your organisation', manage_ui_url("/organisation/#{@provider.provider_code}/about") %>.</p>
+      <p class="app-missing-section">Please add details <%= link_to 'about your organisation', about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>.</p>
     <% end %>
   </div>
 

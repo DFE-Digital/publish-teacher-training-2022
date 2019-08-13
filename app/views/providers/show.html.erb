@@ -33,7 +33,7 @@
       </ul>
     <% end %>
 
-    <h2 class="govuk-heading-m"><%= govuk_link_to "About your organisation", manage_ui_url("/organisation/#{@provider.provider_code}/details") %></h2>
+    <h2 class="govuk-heading-m"><%= govuk_link_to "About your organisation", details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %></h2>
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
       <li>write about your organisation</li>
