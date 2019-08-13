@@ -4,7 +4,7 @@
     <% if @provider.train_with_disability.present? %>
       <%= markdown(@provider.train_with_disability) %>
     <% else %>
-      <p class="app-missing-section">Please add details about <%= link_to 'training with a disability', manage_ui_url("/organisation/#{@provider.provider_code}/about") %>.</p>
+      <p class="app-missing-section">Please add details about <%= link_to 'training with a disability', about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>.</p>
     <% end %>
   </div>
 </div>
