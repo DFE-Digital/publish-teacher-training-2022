@@ -74,6 +74,9 @@ Rails.application.routes.draw do
 
         get '/start-date', on: :member, to: 'courses/start_date#edit'
         put '/start-date', on: :member, to: 'courses/start_date#update'
+
+        get '/applications-open', on: :member, to: 'courses/applications_open#edit'
+        put '/applications-open', on: :member, to: 'courses/applications_open#update'
       end
 
       resources :sites, path: 'locations', on: :member, except: %i[destroy show]

@@ -63,6 +63,18 @@ class Course < Base
     running_site_statuses.length > 1 || full_time_or_part_time?
   end
 
+  def year
+    applications_open_from.split('-').first
+  end
+
+  def month
+    applications_open_from.split('-').second
+  end
+
+  def day
+    applications_open_from.split('-').third
+  end
+
 private
 
   def post_base_url

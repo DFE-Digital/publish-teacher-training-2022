@@ -137,19 +137,19 @@
         </div>
       <% end %>
 
-      <%#
-        FIXME: This was showing the wrong information and isn't easily corrected
-        https://trello.com/c/l0t1Oun3/
-
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Applications open
-          </dt>
-          <dd class="govuk-summary-list__value" data-qa="course__application_status">
-          </dd>
-          <dd class="govuk-summary-list__actions"></dd>
-        </div>
-      #%>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Applications open
+        </dt>
+        <dd class="govuk-summary-list__value" data-qa="course__application_open_from">
+          <%= l(course.applications_open_from&.to_date) %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_start_date_link" } do %>
+            Change<span class="govuk-visually-hidden"> applications open date</span>
+          <% end %>
+        </dd>
+      </div>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
