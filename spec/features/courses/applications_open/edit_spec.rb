@@ -28,7 +28,8 @@ feature 'Edit course applications open', type: :feature do
       build(
         :course,
         applications_open_from: '2018-10-09',
-        provider: provider
+        provider: provider,
+        recruitment_cycle: current_recruitment_cycle
       )
     end
 
@@ -86,6 +87,24 @@ feature 'Edit course applications open', type: :feature do
       expect(course_details_page.flash).to have_content('Your changes have been saved')
       expect(update_course_stub).to have_been_requested
     end
+
+    context 'for the current recruitment cycle' do
+      scenario 'has the correct content' do
+        expect(applications_open_page).to(
+          have_content("As soon as the course is on Find")
+        )
+      end
+    end
+
+    context 'for the next recruitment cycle' do
+      let(:current_recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
+
+      scenario 'has the correct content' do
+        expect(applications_open_page).to(
+          have_content("As soon as the course is on Find")
+        )
+      end
+    end
   end
 
   context 'a course with an applications open from value of 2018-12-12' do
@@ -93,9 +112,6 @@ feature 'Edit course applications open', type: :feature do
       build(
         :course,
         applications_open_from: '2018-12-12',
-        edit_options: {
-          applications_open_from: %w[2018-10-09 other]
-        },
         provider: provider
       )
     end
