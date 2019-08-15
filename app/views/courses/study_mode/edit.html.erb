@@ -1,0 +1,49 @@
+<%= content_for :page_title, "Full time of part time – #{course.name_and_code}" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: course, url: full_part_time_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
+      <div
+        class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:study_mode]&.any?) %>"
+        data-qa="course__study_mode">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              Full time or part time?
+            </h1>
+          </legend>
+
+          <%= render "shared/error_messages", field: :study_modes if @errors %>
+          <div class="govuk-radios" data-module="radios">
+            <% @course.meta['edit_options']['study_modes'].each do |value| %>
+              <div class="govuk-radios__item">
+                <%= form.radio_button :study_mode,
+                        value,
+                        class: 'govuk-radios__input' %>
+                <%= form.label :study_mode,
+                        t("edit_options.study_modes.#{value}.label"),
+                        value: value,
+                        class: 'govuk-label govuk-radios__label' %>
+              </div>
+            <% end %>
+          </div>
+        </fieldset>
+      </div>
+
+      <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
+        class: "govuk-button", data: { qa: 'course__save' }
+      %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes',
+          details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
+          class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+    <% end %>
+  </div>
+</div>
