@@ -33,14 +33,6 @@
       </ul>
     <% end %>
 
-    <h2 class="govuk-heading-m"><%= govuk_link_to "About your organisation", details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %></h2>
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
-      <li>write about your organisation</li>
-      <li>set your contact details</li>
-      <li>publish this information on all course pages</li>
-    </ul>
-
     <% unless @provider.rolled_over? %>
       <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: '2019' } %>
       <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: '2019' } %>
