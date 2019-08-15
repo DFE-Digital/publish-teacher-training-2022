@@ -145,9 +145,9 @@
           <%= l(course.applications_open_from&.to_date) %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_start_date_link" } do %>
+          <!-- <%= link_to applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_start_date_link" } do %>
             Change<span class="govuk-visually-hidden"> applications open date</span>
-          <% end %>
+          <% end %> -->
         </dd>
       </div>
 
