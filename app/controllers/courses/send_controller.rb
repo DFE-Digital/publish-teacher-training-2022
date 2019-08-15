@@ -1,6 +1,6 @@
 module Courses
   class SendController < ApplicationController
-    include EditBasicDetail
+    include CourseBasicDetailConcern
 
   private
 

@@ -1,4 +1,4 @@
-module EditBasicDetail
+module CourseBasicDetailConcern
   extend ActiveSupport::Concern
 
   included do

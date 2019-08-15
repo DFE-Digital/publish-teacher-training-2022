@@ -1,7 +1,7 @@
 module Courses
   class ApplicationsOpenController < ApplicationController
     before_action :build_recruitment_cycle
-    include EditBasicDetail
+    include CourseBasicDetailConcern
 
   private
 

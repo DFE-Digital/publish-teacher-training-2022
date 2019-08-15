@@ -1,6 +1,6 @@
 module Courses
   class OutcomeController < ApplicationController
-    include EditBasicDetail
+    include CourseBasicDetailConcern
 
   private
 
