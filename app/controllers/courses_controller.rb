@@ -13,6 +13,8 @@ class CoursesController < ApplicationController
 
   def details; end
 
+  def request_change; end
+
   def update
     # Course length should be saved as `course_length` so if "other" is selected then pass that text value into `course_length`
     if params[:course][:course_length_other_length].present? && params[:course][:course_length] == 'Other'

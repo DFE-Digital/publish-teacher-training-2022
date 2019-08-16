@@ -4,6 +4,7 @@ feature 'Edit course study mode', type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:study_mode_page) { PageObjects::Page::Organisations::CourseStudyMode.new }
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
+  let(:course_request_change_page) { PageObjects::Page::Organisations::CourseRequestChange.new }
   let(:provider) { build(:provider) }
 
   before do
@@ -78,6 +79,36 @@ feature 'Edit course study mode', type: :feature do
       expect(course_details_page).to be_displayed
       expect(course_details_page.flash).to have_content('Your changes have been saved')
       expect(update_course_stub).to have_been_requested
+    end
+  end
+
+  context 'a full time course' do
+    let(:course) do
+      build(
+        :course,
+        study_mode: 'full_time',
+        edit_options: {
+          study_modes: %w[full_time part_time full_time_or_part_time]
+        },
+        provider: provider
+      )
+    end
+
+    scenario 'updating to a full time of part time course' do
+      update_course_stub = stub_api_v2_request(
+        "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}" \
+        "/courses/#{course.course_code}",
+        course.to_jsonapi,
+        :patch, 200
+      )
+
+      choose('course_study_mode_full_time_or_part_time')
+      click_on 'Save'
+
+      expect(course_request_change_page).to be_displayed
+      expect(course_request_change_page.title).to have_content('Request a change to this course')
+      expect(update_course_stub).not_to have_been_requested
     end
   end
 
