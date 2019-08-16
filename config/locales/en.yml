@@ -33,9 +33,9 @@ en:
   number:
     currency:
       format:
-        unit: '£'
-        delimiter: ','
-        separator: '.'
+        unit: "£"
+        delimiter: ","
+        separator: "."
         precision: 0
   date:
     formats:
@@ -44,50 +44,57 @@ en:
   edit_options:
     entry_requirements:
       must_have_qualification_at_application_time:
-        label: '1. Must have (least flexible)'
-        help: 'UCAS will block applications from candidates who haven’t gained their GCSE yet or who need to take an equivalency test.'
-        details_label: 'Must have'
+        label: "1. Must have (least flexible)"
+        help: "UCAS will block applications from candidates who haven’t gained their GCSE yet or who need to take an equivalency test."
+        details_label: "Must have"
       expect_to_achieve_before_training_begins:
-        label: '2: Taking'
-        help: 'You will consider candidates with a pending GCSE. But UCAS will block applications from someone who needs to take an equivalency test.'
-        details_label: 'Taking'
+        label: "2: Taking"
+        help: "You will consider candidates with a pending GCSE. But UCAS will block applications from someone who needs to take an equivalency test."
+        details_label: "Taking"
       equivalence_test:
-        label: '3: Equivalence test'
-        help: 'You will consider candidates who need to take an equivalency test as well as those with a pending GCSE.'
-        details_label: 'Equivalence test'
+        label: "3: Equivalence test"
+        help: "You will consider candidates who need to take an equivalency test as well as those with a pending GCSE."
+        details_label: "Equivalence test"
       not_required:
-        details_label: 'No requirement'
-        help: 'You will receive applications from candidates who will not have a grade C (or 4) or above.'
+        details_label: "No requirement"
+        help: "You will receive applications from candidates who will not have a grade C (or 4) or above."
     qualifications:
       qts:
-        label: 'QTS'
-        help: 'Qualified teacher status'
+        label: "QTS"
+        help: "Qualified teacher status"
       pgce:
-        label: 'PGCE only (without QTS)'
-        help: 'Postgraduate certificate in education'
+        label: "PGCE only (without QTS)"
+        help: "Postgraduate certificate in education"
       pgce_with_qts:
-        label: 'PGCE with QTS'
-        help: 'Postgraduate certificate in education with qualified teacher status'
+        label: "PGCE with QTS"
+        help: "Postgraduate certificate in education with qualified teacher status"
       pgde:
-        label: 'PGDE only (without QTS)'
-        help: 'Postgraduate diploma in education'
+        label: "PGDE only (without QTS)"
+        help: "Postgraduate diploma in education"
       pgde_with_qts:
-        label: 'PGDE with QTS'
-        help: 'Postgraduate diploma in education with qualified teacher status'
+        label: "PGDE with QTS"
+        help: "Postgraduate diploma in education with qualified teacher status"
     age_range_in_years:
       other:
-        label: 'Another age range'
+        label: "Another age range"
       3_to_7:
-        label: '3 to 7'
+        label: "3 to 7"
       5_to_11:
-        label: '5 to 11'
+        label: "5 to 11"
       7_to_11:
-        label: '7 to 11'
+        label: "7 to 11"
       7_to_14:
-        label: '7 to 14 (middle years)'
+        label: "7 to 14 (middle years)"
       11_to_16:
-        label: '11 to 16'
+        label: "11 to 16"
       11_to_18:
-        label: '11 to 18'
+        label: "11 to 18"
       14_to_19:
-        label: '14 to 19'
+        label: "14 to 19"
+    study_modes:
+      part_time:
+        label: "Part time"
+      full_time:
+        label: "Full time"
+      full_time_or_part_time:
+        label: "Full time or part time"

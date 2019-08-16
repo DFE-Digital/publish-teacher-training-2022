@@ -94,7 +94,11 @@
         <dd class="govuk-summary-list__value" data-qa="course__study_mode">
           <%= course.study_mode.humanize %>
         </dd>
-        <dd class="govuk-summary-list__actions"></dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to full_part_time_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_study_mode_link" } do %>
+            Change<span class="govuk-visually-hidden"> full time of part time</span>
+          <% end %>
+        </dd>
       </div>
 
       <div class="govuk-summary-list__row">

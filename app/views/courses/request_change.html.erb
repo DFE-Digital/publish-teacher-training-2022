@@ -1,0 +1,20 @@
+<%= content_for :page_title, "Request a change to this course" %>
+
+<h1 class="govuk-heading-xl">
+  Request a change to this course
+</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        We're still working on this feature.
+      </strong>
+    </div>
+
+    <p class="govuk-body">When the feature is ready, you'll be able to make the change yourself.</p>
+
+    <p class="govuk-body">Until then, contact the <%= bat_contact_mail_to name = 'Becoming A Teacher team', subject: "Edit #{course.name} (#{@provider_code}/#{course.course_code})" %>, who will make the change for you.</p>
+  </div>
+</div>

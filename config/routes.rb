@@ -80,6 +80,11 @@ Rails.application.routes.draw do
 
         get '/send', on: :member, to: 'courses/send#edit'
         put '/send', on: :member, to: 'courses/send#update'
+
+        get '/full-part-time', on: :member, to: 'courses/study_mode#edit'
+        put '/full-part-time', on: :member, to: 'courses/study_mode#update'
+
+        get '/request-change', on: :member, to: 'courses#request_change'
       end
 
       resources :sites, path: 'locations', on: :member, except: %i[destroy show]

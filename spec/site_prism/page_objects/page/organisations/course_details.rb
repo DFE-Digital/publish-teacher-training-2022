@@ -6,6 +6,7 @@ module PageObjects
 
         element :qualifications, '[data-qa=course__qualifications]'
         element :study_mode, '[data-qa=course__study_mode]'
+        element :edit_study_mode_link, '[data-qa=course__edit_study_mode_link]'
         element :start_date, '[data-qa=course__start_date]'
         element :name, '[data-qa=course__name]'
         element :description, '[data-qa=course__description]'
