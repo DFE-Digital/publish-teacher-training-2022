@@ -77,6 +77,9 @@ Rails.application.routes.draw do
 
         get '/applications-open', on: :member, to: 'courses/applications_open#edit'
         put '/applications-open', on: :member, to: 'courses/applications_open#update'
+
+        get '/send', on: :member, to: 'courses/send#edit'
+        put '/send', on: :member, to: 'courses/send#update'
       end
 
       resources :sites, path: 'locations', on: :member, except: %i[destroy show]
