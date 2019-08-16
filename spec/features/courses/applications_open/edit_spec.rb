@@ -101,7 +101,7 @@ feature 'Edit course applications open', type: :feature do
 
       scenario 'has the correct content' do
         expect(applications_open_page).to(
-          have_content("As soon as the course is on Find")
+          have_content("when applications for the #{current_recruitment_cycle.year}")
         )
       end
     end
