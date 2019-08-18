@@ -6,28 +6,19 @@
 <%= render 'shared/errors' %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course,
-          url: outcome_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
-          method: :put do |form| %>
+    <div class="govuk-grid-column-two-thirds">
+        <%= form_with model: course,
+            url: outcome_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+            method: :put do |form| %>
 
-      <% legend = capture do %>
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h1 class="govuk-fieldset__heading">
-            <span class="govuk-caption-xl"><%= course.name_and_code %></span>
-            Pick a course outcome
-          </h1>
-        </legend>
-      <% end %>
+        <% course_name_and_code = capture do %>
+          <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+        <% end %>
 
-      <%= render "shared/edit_options_radio_buttons",
-            form: form,
-            legend: legend,
-            key: 'qualifications',
-            field: :qualification %>
+        <%= render 'form', form: form, course_name_and_code: course_name_and_code %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
-        class: "govuk-button", data: { qa: 'course__save' }
+                      class: "govuk-button", data: { qa: 'course__save' }
       %>
 
       <p class="govuk-body">
