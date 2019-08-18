@@ -39,6 +39,10 @@ Rails.application.routes.draw do
       put '/about', on: :member, to: 'providers#update'
       post '/publish', on: :member, to: 'providers#publish'
 
+      resource :courses, only: [] do
+        resource :outcome, on: :member, only: %i[new], controller: 'courses/outcome'
+      end
+
       resources :courses, param: :code do
         delete '/', on: :member, to: 'courses#destroy'
 

@@ -1,0 +1,32 @@
+<%= content_for :page_title, "Pick a course outcome" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(
+                           @provider.provider_code,
+                           @provider.recruitment_cycle_year
+                        )) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: course,
+                  url: new_provider_recruitment_cycle_courses_outcome_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year
+                  ),
+                  method: :put do |form| %>
+
+      <%= render 'form', form: form, course_name_and_code: nil %>
+
+      <%= form.submit "Continue",
+                      class: "govuk-button", data: { qa: 'course__save' } %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes',
+                    provider_recruitment_cycle_courses_path(course.provider_code, course.recruitment_cycle_year),
+                    class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+    <% end %>
+  </div>
+</div>
