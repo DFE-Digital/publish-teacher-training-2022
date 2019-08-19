@@ -42,7 +42,7 @@ class SessionsController < ApplicationController
   end
 
   def failure
-    redirect_to "/401"
+    redirect_to unauthorized_path
   end
 
   def destroy

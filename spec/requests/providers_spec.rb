@@ -38,7 +38,7 @@ describe 'Providers', type: :request do
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: []))
         get(providers_path)
-        expect(response).to redirect_to(Settings.manage_ui.base_url)
+        expect(response).to redirect_to(unauthorized_path)
       end
     end
   end
