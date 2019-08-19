@@ -1,31 +1,4 @@
 module Helpers
-  def url_for_resource_collection(resource)
-    if resource.is_a? RecruitmentCycle
-      '/recruitment_cycles'
-    elsif resource.is_a? Provider
-      url_for_resource(resource.recruitment_cycle) + '/providers'
-    elsif resource.is_a? Course
-      url_for_resource(resource.provider) + '/courses'
-    end
-  end
-
-  def url_for_resource(resource)
-    base_url = url_for_resource_collection(resource)
-
-    if resource.is_a?(RecruitmentCycle)
-      "#{base_url}/#{resource.year}"
-    elsif resource.is_a?(Provider)
-      "#{base_url}/#{resource.provider_code}"
-    elsif resource.is_a?(Course)
-      "#{base_url}/#{resource.course_code}"
-    end
-  end
-
-  def url_for_new_resource(resource)
-    base_url = url_for_resource_collection(resource)
-    "#{base_url}/new"
-  end
-
   def stub_omniauth(user: nil)
     user ||= build(:user)
 
@@ -113,6 +86,35 @@ module Helpers
 
     jsonapi_response ||= resource_list_to_jsonapi([])
     stub_api_v2_request(url, jsonapi_response)
+  end
+
+private
+
+  def url_for_resource(resource)
+    base_url = url_for_resource_collection(resource)
+
+    if resource.is_a?(RecruitmentCycle)
+      "#{base_url}/#{resource.year}"
+    elsif resource.is_a?(Provider)
+      "#{base_url}/#{resource.provider_code}"
+    elsif resource.is_a?(Course)
+      "#{base_url}/#{resource.course_code}"
+    end
+  end
+
+  def url_for_resource_collection(resource)
+    if resource.is_a? RecruitmentCycle
+      '/recruitment_cycles'
+    elsif resource.is_a? Provider
+      url_for_resource(resource.recruitment_cycle) + '/providers'
+    elsif resource.is_a? Course
+      url_for_resource(resource.provider) + '/courses'
+    end
+  end
+
+  def url_for_new_resource(resource)
+    base_url = url_for_resource_collection(resource)
+    "#{base_url}/new"
   end
 end
 
