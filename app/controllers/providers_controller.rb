@@ -9,7 +9,7 @@ class ProvidersController < ApplicationController
       .where(recruitment_cycle_year: Settings.current_cycle)
       .all
 
-    render_manage_ui if @providers.empty?
+    redirect_to unauthorized_path if @providers.empty?
     redirect_to provider_path(@providers.first.provider_code) if @providers.size == 1
   end
 

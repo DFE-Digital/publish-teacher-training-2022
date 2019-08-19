@@ -21,4 +21,11 @@ RSpec.describe ErrorsController, type: :controller do
       expect(response).to have_http_status(:forbidden)
     end
   end
+
+  describe 'GET #unauthorized' do
+    it 'returns unauthorized' do
+      get :unauthorized
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end

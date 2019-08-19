@@ -23,4 +23,11 @@ class ErrorsController < ApplicationController
       format.json { render json: { error: 'Forbidden' }, status: :forbidden }
     end
   end
+
+  def unauthorized
+    respond_to do |format|
+      format.html { render status: :unauthorized }
+      format.json { render json: { error: 'Unauthorized' }, status: :unauthorized }
+    end
+  end
 end

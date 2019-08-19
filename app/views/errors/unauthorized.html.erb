@@ -1,0 +1,15 @@
+<%= content_for :page_title, "We don’t know which organisation you’re part of" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">We don’t know which organisation you’re part of</h1>
+    <p class="govuk-body">You have successfully signed in with your DfE account but we don’t recognise the email address you’ve used. This might have happened if you were forwarded the original invitation email or if you’ve recently updated your email address.</p>
+    <p class="govuk-body">We need more information from you before we can give you access to your organisation’s courses.</p>
+    <p class="govuk-body">To gain access, please:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>check that you signed up using the email address we contacted</li>
+      <li>contact us to tell us which organisation you need access to</li>
+    </ul>
+    <p class="govuk-body"><%= bat_contact_mail_to "Contact us by email to request access to your organisation", subject: "Publish teacher training courses access request" %></p>
+  </div>
+</div>

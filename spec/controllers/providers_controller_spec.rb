@@ -83,7 +83,7 @@ RSpec.describe ProvidersController, type: :controller do
 
         it 'redirects to manage-courses-ui' do
           get :index
-          expect(response).to redirect_to(Settings.manage_ui.base_url)
+          expect(response).to redirect_to(unauthorized_path)
         end
       end
     end
