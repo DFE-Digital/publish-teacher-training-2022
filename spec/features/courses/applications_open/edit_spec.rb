@@ -38,7 +38,7 @@ feature 'Edit course applications open', type: :feature do
       expect(course_details_page).to be_displayed
     end
 
-    xscenario 'can navigate to the edit screen and back again' do
+    scenario 'can navigate to the edit screen and back again' do
       course_details_page.load_with_course(course)
       click_on 'Change applications open date'
       expect(applications_open_page).to be_displayed
