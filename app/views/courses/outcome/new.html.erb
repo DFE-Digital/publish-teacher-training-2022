@@ -20,13 +20,8 @@
       <%= render 'form', form: form, course_name_and_code: nil %>
 
       <%= form.submit "Continue",
-                      class: "govuk-button", data: { qa: 'course__save' } %>
-
-      <p class="govuk-body">
-        <%= link_to 'Cancel changes',
-                    provider_recruitment_cycle_courses_path(course.provider_code, course.recruitment_cycle_year),
-                    class: "govuk-link govuk-link--no-visited-state" %>
-      </p>
+                      class: "govuk-button",
+                      data: { qa: 'course__save' } %>
     <% end %>
   </div>
 </div>
