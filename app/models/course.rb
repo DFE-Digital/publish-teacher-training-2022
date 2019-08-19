@@ -11,6 +11,19 @@ class Course < Base
 
   self.primary_key = :course_code
 
+  # Fetch a "new" record from the backend API.
+  def self.fetch_new(recruitment_cycle_year:, provider_code:)
+    # Using .find(:new) here is a little bit hacky, but this is the only way I
+    # could find to construct the URL with `.../courses/new` at the end, and at
+    # the end of the day jsonapi defines ids as being strings so it's in no way
+    # invalid. If we can find a way to use custom endpoints or other to improve
+    # this we should.
+    Course.where(recruitment_cycle_year: recruitment_cycle_year,
+                 provider_code: provider_code)
+      .find(:new)
+      .first
+  end
+
   def publish
     post_request('/publish')
   end

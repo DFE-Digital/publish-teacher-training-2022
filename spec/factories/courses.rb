@@ -166,6 +166,7 @@ FactoryBot.define do
     end
 
     trait :new do
+      id                     { nil }
       qualification          { nil }
       course_code            { nil }
       name                   { nil }

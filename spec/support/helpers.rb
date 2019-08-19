@@ -119,7 +119,5 @@ private
 end
 
 RSpec.configure do |config|
-  config.include Helpers, type: :feature
-  config.include Helpers, type: :controller
-  config.include Helpers, type: :request
+  config.include Helpers
 end

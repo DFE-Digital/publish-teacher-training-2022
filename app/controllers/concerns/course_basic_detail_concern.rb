@@ -8,17 +8,10 @@ module CourseBasicDetailConcern
   end
 
   def new
-    # Using .find(:new) here is a little bit hacky, but this is the only way I
-    # could find to construct the URL with `.../courses/new` at the end, and at
-    # the end of the day jsonapi defines ids as being strings so it's in no way
-    # invalid. If we can find a way to use custom enpoints or other to improve
-    # this we should.
-    @course = Course
-                .where(recruitment_cycle_year: params[:recruitment_cycle_year],
-                       provider_code: params[:provider_code])
-                .find(:new)
-                .first
-    nil
+    @course = Course.fetch_new(
+      recruitment_cycle_year: @provider.recruitment_cycle_year,
+      provider_code: @provider.provider_code
+    )
   end
 
   def edit; end
