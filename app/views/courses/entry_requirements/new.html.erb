@@ -1,6 +1,9 @@
-<%= content_for :page_title, "GCSE requirements for applicants – #{course.name_and_code}" %>
+<%= content_for :page_title, "GCSE requirements for applicants" %>
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
+  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(
+    @provider.provider_code,
+    @provider.recruitment_cycle_year
+ )) %>
 <% end %>
 
 <%= render 'shared/errors' %>
@@ -25,20 +28,21 @@
     </p>
 
     <%= form_with model: course,
-          url: entry_requirements_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
-          method: :put do |form| %>
+                  url: new_provider_recruitment_cycle_courses_entry_requirements_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year
+                  ),
+                  method: :put do |form| %>
+
 
       <%= render 'form', form: form, gcse_subjects_required: course.gcse_subjects_required %>
 
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-      <p class="govuk-body">Changes will appear on UCAS Apply within 2 hours.</p>
-
-      <%= form.submit "Save changes", class: "govuk-button", data: { qa: 'course__save' } %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes',
-          details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
-          class: "govuk-link govuk-link--no-visited-state" %>
+        <%= form.submit "Continue",
+                      class: "govuk-button",
+                      data: { qa: 'course__save' } %>
       </p>
     <% end %>
   </div>

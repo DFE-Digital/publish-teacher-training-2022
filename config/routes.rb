@@ -41,6 +41,7 @@ Rails.application.routes.draw do
 
       resource :courses, only: [] do
         resource :outcome, on: :member, only: %i[new], controller: 'courses/outcome'
+        resource :entry_requirements, on: :member, only: %i[new], controller: 'courses/entry_requirements'
       end
 
       resources :courses, param: :code do
