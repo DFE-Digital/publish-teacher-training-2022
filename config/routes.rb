@@ -40,7 +40,9 @@ Rails.application.routes.draw do
       post '/publish', on: :member, to: 'providers#publish'
 
       resource :courses, only: [] do
-        resource :outcome, on: :member, only: %i[new], controller: 'courses/outcome'
+        resource :outcome, on: :member, only: %i[new], controller: 'courses/outcome' do
+          get 'continue'
+        end
         resource :entry_requirements, on: :member, only: %i[new], controller: 'courses/entry_requirements' do
           get 'continue'
         end
