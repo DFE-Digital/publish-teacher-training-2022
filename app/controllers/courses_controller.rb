@@ -15,6 +15,10 @@ class CoursesController < ApplicationController
 
   def request_change; end
 
+  def new
+    redirect_to new_provider_recruitment_cycle_courses_outcome_path(@course.provider_code, @course.recruitment_cycle_year)
+  end
+
   def update
     # Course length should be saved as `course_length` so if "other" is selected then pass that text value into `course_length`
     if params[:course][:course_length_other_length].present? && params[:course][:course_length] == 'Other'
