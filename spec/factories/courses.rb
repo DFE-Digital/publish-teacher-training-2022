@@ -54,6 +54,7 @@ FactoryBot.define do
                         "July #{recruitment_cycle.year.to_i + 1}"]
         }
       end
+      gcse_subjects_required_using_level { false }
     end
 
     sequence(:id)
@@ -123,6 +124,17 @@ FactoryBot.define do
       if evaluator.edit_options
         course.meta = {}
         course.meta['edit_options'] = evaluator.edit_options
+      end
+
+      if evaluator.gcse_subjects_required_using_level
+        course.gcse_subjects_required = case course.level
+                                        when :primary
+                                          %w[maths english science]
+                                        when :secondary
+                                          %w[maths english]
+                                        else
+                                          []
+                                        end
       end
     end
 
