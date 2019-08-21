@@ -12,6 +12,7 @@ module PageObjects
         element :description, '[data-qa=course__description]'
         element :course_code, '[data-qa=course__course_code]'
         element :locations, '[data-qa=course__locations]'
+        element :locations_list, '[data-qa=courses__locations-list]'
         element :edit_locations_link, '[data-qa=course__edit_locations_link]'
         element :manage_provider_locations_link, '[data-qa=course__manage_provider_locations_link]'
         element :apprenticeship, '[data-qa=course__apprenticeship]'

@@ -173,6 +173,7 @@ feature 'Course details', type: :feature do
       visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
 
       expect(course_details_page).not_to have_edit_locations_link
+      expect(course_details_page).not_to have_locations_list
       expect(course_details_page.manage_provider_locations_link).to have_content(
         "Manage all your locations"
       )

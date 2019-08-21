@@ -108,8 +108,8 @@
         <dd class="govuk-summary-list__value" data-qa="course__locations">
           <% if course.sites.size == 1 %>
             <%= course.sites.first.location_name %>
-          <% else %>
-            <ul class="govuk-list app-courses-locations-list">
+          <% elsif course.sites.size > 1 %>
+            <ul class="govuk-list app-courses-locations-list" data-qa="courses__locations-list">
               <% course.alphabetically_sorted_sites.each do |site| %>
                 <li>
                   <%= site.location_name %>
