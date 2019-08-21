@@ -222,6 +222,23 @@
           </dd>
         </div>
       <% end %>
+      <% if course.next_cycle? && course.has_fees? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Allocations
+          </dt>
+          <dd class="govuk-summary-list__value govuk-!-padding-right-0" data-qa="course__allocations_info">
+            <% if course.subjects.include?('Physical education') %>
+              <p class="govuk-body">Recruitment to fee-funded PE courses is limited by the number of places allocated to you by DfE.</p>
+              <p class="govuk-body">If you haven't already, you must <%= govuk_link_to "request allocations", "https://drive.google.com/open?id=1ujS6MbWMdXOSEWOCd3voV3d4L2HjT-g2zIOzWfqbDa8" %></p>
+            <% else %>
+              Recruitment is not restricted
+            <% end %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+          </dd>
+        </div>
+      <% end %>
     </dl>
   </div>
   <% if course.is_running? || course.new_and_not_running? %>
