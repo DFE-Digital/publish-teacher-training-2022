@@ -24,6 +24,7 @@ module PageObjects
         element :edit_age_range_link, '[data-qa=course__edit_age_range_link]'
         element :level, '[data-qa=course__level]'
         element :entry_requirements, '[data-qa=course__entry_requirements]'
+        element :allocations_info, '[data-qa=course__allocations_info]'
       end
     end
   end

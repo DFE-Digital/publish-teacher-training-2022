@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Course details', type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:next_recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
   let(:provider) { build(:provider, provider_code: 'A0', accredited_body?: false, sites: [site1, site2]) }
   let(:course) do
     build :course,
@@ -30,6 +31,7 @@ feature 'Course details', type: :feature do
 
   before do
     stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
+    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}", next_recruitment_cycle.to_jsonapi)
     stub_omniauth
     stub_api_v2_request(
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
@@ -214,5 +216,66 @@ feature 'Course details', type: :feature do
     expect(course_details_page)
     .to be_displayed(provider_code: 'ZZ', course_code: 'ZZZ')
     expect(course_details_page.title.text).to eq 'Page not found'
+  end
+
+  describe 'allocations' do
+    let(:course) do
+      build :course,
+            provider: provider,
+            recruitment_cycle: next_recruitment_cycle
+    end
+
+    context 'when the course is in the next recruitment cycle' do
+      scenario 'displays no restrictions' do
+        course_details_page.load_with_course(course)
+        expect(course_details_page.allocations_info).to have_content(
+          'Recruitment is not restricted'
+        )
+      end
+
+      context 'when the course is Physical Education' do
+        let(:course) do
+          build :course,
+                provider: provider,
+                recruitment_cycle: next_recruitment_cycle,
+                subjects: ["Secondary", "Physical education"]
+        end
+
+        scenario 'displays no restrictions' do
+          course_details_page.load_with_course(course)
+          expect(course_details_page.allocations_info).to have_content(
+            'Recruitment to fee-funded PE courses is limited by the number of places allocated to you by DfE.'
+          )
+        end
+      end
+
+      context 'when the course is in the current recruitment cycle' do
+        let(:course) do
+          build :course,
+                provider: provider,
+                recruitment_cycle: current_recruitment_cycle
+        end
+
+        scenario 'displays no restrictions' do
+          course_details_page.load_with_course(course)
+          expect(course_details_page).to_not have_allocations_info
+        end
+      end
+    end
+  end
+
+  context 'displays allocation restrictions' do
+    let(:course) do
+      build :course,
+            provider: provider,
+            recruitment_cycle: next_recruitment_cycle
+    end
+
+    scenario 'displays no restrictions' do
+      course_details_page.load_with_course(course)
+      expect(course_details_page.allocations_info).to have_content(
+        'Recruitment is not restricted'
+      )
+    end
   end
 end
