@@ -106,7 +106,9 @@
           Locations
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__locations">
-          <% if course.sites.size == 1 %>
+          <% if course.sites.empty? %>
+            <span class="app-course-parts__fields__value--empty">None</span>
+          <% elsif course.sites.size == 1 %>
             <%= course.sites.first.location_name %>
           <% else %>
             <ul class="govuk-list app-courses-locations-list">
@@ -117,18 +119,10 @@
               <% end %>
             </ul>
           <% end %>
-          <% if @provider.sites.size == 1 %>
-            <p class="govuk-body govuk-hint">You can’t change this because you only have 1&nbsp;location</p>
-            <p class="govuk-body">
-              <%= link_to "Manage all your locations", provider_recruitment_cycle_sites_path(@provider.provider_code), class: "govuk-link", data: { qa: "course__manage_provider_locations_link" } %>
-            </p>
-          <% end %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <% if @provider.sites.size > 1 %>
-            <%= link_to locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_locations_link" } do %>
-              Change<span class="govuk-visually-hidden"> locations</span>
-            <% end %>
+          <%= link_to locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_locations_link" } do %>
+            Change<span class="govuk-visually-hidden"> locations</span>
           <% end %>
         </dd>
       </div>

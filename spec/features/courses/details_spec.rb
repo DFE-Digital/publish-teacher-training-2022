@@ -161,26 +161,6 @@ feature 'Course details', type: :feature do
     end
   end
 
-  context 'when the provider only has one location' do
-    let(:provider) { build(:provider, provider_code: 'A0', accredited_body?: true, sites: [site1]) }
-    let(:course) do
-      build :course,
-            site_statuses: [site_status1],
-            provider: provider,
-            ucas_status: 'new',
-            recruitment_cycle: current_recruitment_cycle
-    end
-
-    scenario 'viewing the course details page' do
-      visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
-
-      expect(course_details_page).not_to have_edit_locations_link
-      expect(course_details_page.manage_provider_locations_link).to have_content(
-        "Manage all your locations"
-      )
-    end
-  end
-
   context 'when the course is new and not running' do
     let(:course) do
       build :course,
