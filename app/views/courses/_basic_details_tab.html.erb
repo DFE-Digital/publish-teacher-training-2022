@@ -230,10 +230,14 @@
         <h2 class="govuk-heading-m">Changing your basic details</h2>
         <p>At the moment you can change:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>course locations</li>
-          <li>GCSE requirements</li>
+          <li><abbr class="app-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr> specialism</li>
           <li>age range</li>
           <li>outcome</li>
+          <li>full time or part time</li>
+          <li>course locations</li>
+          <li>application open date</li>
+          <li>course start date</li>
+          <li>GCSE requirements</li>
         </ul>
 
         <p>To request other changes to your basic details contact the Becoming a Teacher team:<br /><%= bat_contact_mail_to bat_contact_email_address_with_wrap, subject: "Edit #{course.name} (#{@provider_code}/#{course.course_code})" %></p>
