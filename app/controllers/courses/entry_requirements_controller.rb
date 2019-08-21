@@ -1,9 +1,7 @@
 module Courses
   class EntryRequirementsController < ApplicationController
     include CourseBasicDetailConcern
-    prepend_before_action :authenticate, :build_provider, :build_course
 
-    # weird
     before_action :not_found_if_no_gcse_subjects_required
 
   private
