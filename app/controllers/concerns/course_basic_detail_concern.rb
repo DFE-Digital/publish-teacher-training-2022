@@ -1,9 +1,17 @@
-module EditBasicDetail
+module CourseBasicDetailConcern
   extend ActiveSupport::Concern
 
   included do
     decorates_assigned :course
-    before_action :build_course
+    before_action :build_provider, only: :new
+    before_action :build_course, only: %i[edit update]
+  end
+
+  def new
+    @course = Course.fetch_new(
+      recruitment_cycle_year: @provider.recruitment_cycle_year,
+      provider_code: @provider.provider_code
+    )
   end
 
   def edit; end
@@ -28,6 +36,13 @@ module EditBasicDetail
   end
 
 private
+
+  def build_provider
+    @provider = Provider
+                  .where(recruitment_cycle_year: params[:recruitment_cycle_year])
+                  .find(params[:provider_code])
+                  .first
+  end
 
   def build_course
     @course = Course

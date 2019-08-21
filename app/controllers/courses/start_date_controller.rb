@@ -1,6 +1,6 @@
 module Courses
   class StartDateController < ApplicationController
-    include EditBasicDetail
+    include CourseBasicDetailConcern
 
   private
 

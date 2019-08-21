@@ -1,6 +1,6 @@
 module Courses
   class StudyModeController < ApplicationController
-    include EditBasicDetail
+    include CourseBasicDetailConcern
 
     def update
       if params[:course][:study_mode] == 'full_time_or_part_time'

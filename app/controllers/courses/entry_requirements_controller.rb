@@ -1,6 +1,6 @@
 module Courses
   class EntryRequirementsController < ApplicationController
-    include EditBasicDetail
+    include CourseBasicDetailConcern
     before_action :not_found_if_no_gcse_subjects_required
 
   private

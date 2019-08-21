@@ -1,9 +1,11 @@
+# coding: utf-8
+
 require 'rails_helper'
 
 feature 'Edit course vacancies', type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:course_vacancies_page) { PageObjects::Page::Organisations::CourseVacancies.new }
-  let(:courses_page) { PageObjects::Page::Organisations::Courses.new }
+  let(:courses_page) { PageObjects::Page::Organisations::CoursesPage.new }
   let(:course_code) { 'X104' }
   let(:provider) { build(:provider) }
 

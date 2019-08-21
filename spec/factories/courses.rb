@@ -4,7 +4,56 @@ FactoryBot.define do
       sites { [] }
       site_statuses { [] }
       recruitment_cycle { build :recruitment_cycle }
-      edit_options {}
+      edit_options do
+        # Shamelessly copied from backend. Also, will need updating when any of
+        # these change, but having these is essential to making this factory
+        # produce valid and usable objects.
+
+        age_range_in_years = case level
+                             when :primary
+                               %w[
+                               3_to_7
+                               5_to_11
+                               7_to_11
+                               7_to_14
+                             ]
+                             when :secondary
+                               %w[
+                               11_to_16
+                               11_to_18
+                               14_to_19
+                             ]
+                             end
+
+        qualifications = case level
+                         when :further_education
+                           %w[pgce pdge]
+                         else
+                           %w[qts pgce_with_qts pgde_with_qts]
+                         end
+
+        {
+          entry_requirements: %i[
+            must_have_qualification_at_application_time
+            expect_to_achieve_before_training_begins
+            equivalence_test
+          ],
+          qualifications: qualifications,
+          age_range_in_years: age_range_in_years,
+          start_dates: ["August #{recruitment_cycle.year.to_i}",
+                        "September #{recruitment_cycle.year.to_i}",
+                        "October #{recruitment_cycle.year.to_i}",
+                        "November #{recruitment_cycle.year.to_i}",
+                        "December #{recruitment_cycle.year.to_i}",
+                        "January #{recruitment_cycle.year.to_i + 1}",
+                        "February #{recruitment_cycle.year.to_i + 1}",
+                        "March #{recruitment_cycle.year.to_i + 1}",
+                        "April #{recruitment_cycle.year.to_i + 1}",
+                        "May #{recruitment_cycle.year.to_i + 1}",
+                        "June #{recruitment_cycle.year.to_i + 1}",
+                        "July #{recruitment_cycle.year.to_i + 1}"]
+        }
+      end
     end
 
     sequence(:id)
@@ -114,6 +163,30 @@ FactoryBot.define do
       fee_international { 14000 }
       fee_details { Faker::Lorem.sentence(word_count: 100) }
       financial_support { Faker::Lorem.sentence(word_count: 100) }
+    end
+
+    trait :new do
+      id                     { nil }
+      qualification          { nil }
+      course_code            { nil }
+      name                   { nil }
+      description            { nil }
+      study_mode             { nil }
+      content_status         { nil }
+      ucas_status            { nil }
+      start_date             { nil }
+      funding                { nil }
+      applications_open_from { nil }
+      level                  { nil }
+      subjects               { nil }
+      last_published_at      { nil }
+      scholarship_amount     { nil }
+      bursary_amount         { nil }
+      maths                  { nil }
+      english                { nil }
+      science                { nil }
+      gcse_subjects_required { nil }
+      age_range_in_years     { nil }
     end
   end
 end
