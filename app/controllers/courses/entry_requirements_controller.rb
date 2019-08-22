@@ -2,7 +2,15 @@ module Courses
   class EntryRequirementsController < ApplicationController
     include CourseBasicDetailConcern
 
-    before_action :not_found_if_no_gcse_subjects_required
+    before_action :not_found_if_no_gcse_subjects_required, except: :continue
+
+    def continue
+      redirect_to new_provider_recruitment_cycle_courses_outcome_path(
+        params[:provider_code],
+        params[:recruitment_cycle_year],
+        course_params
+      )
+    end
 
   private
 

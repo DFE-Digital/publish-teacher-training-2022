@@ -28,11 +28,11 @@
     </p>
 
     <%= form_with model: course,
-                  url: new_provider_recruitment_cycle_courses_entry_requirements_path(
+                  url: continue_provider_recruitment_cycle_courses_entry_requirements_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year
                   ),
-                  method: :put do |form| %>
+                  method: :get do |form| %>
 
 
       <%= render 'form_fields', form: form, gcse_subjects_required: course.gcse_subjects_required %>
