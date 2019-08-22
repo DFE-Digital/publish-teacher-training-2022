@@ -3,7 +3,7 @@ module CourseBasicDetailConcern
 
   included do
     decorates_assigned :course
-    before_action :build_provider, :build_new_course, only: :new
+    before_action :build_provider, :build_new_course, only: %i[new continue]
     before_action :build_course, only: %i[edit update]
   end
 

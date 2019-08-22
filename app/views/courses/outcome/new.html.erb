@@ -11,11 +11,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: course,
-                  url: new_provider_recruitment_cycle_courses_outcome_path(
+                  url: continue_provider_recruitment_cycle_courses_outcome_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year
                   ),
-                  method: :put do |form| %>
+                  method: :get do |form| %>
 
       <%= render 'form_fields', form: form, course_name_and_code: nil %>
 
