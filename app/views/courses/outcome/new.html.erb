@@ -17,7 +17,7 @@
                   ),
                   method: :put do |form| %>
 
-      <%= render 'form', form: form, course_name_and_code: nil %>
+      <%= render 'form_fields', form: form, course_name_and_code: nil %>
 
       <%= form.submit "Continue",
                       class: "govuk-button",

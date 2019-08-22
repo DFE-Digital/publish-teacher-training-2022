@@ -15,7 +15,7 @@
           <span class="govuk-caption-xl"><%= course.name_and_code %></span>
         <% end %>
 
-        <%= render 'form', form: form, course_name_and_code: course_name_and_code %>
+        <%= render 'form_fields', form: form, course_name_and_code: course_name_and_code %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
                       class: "govuk-button", data: { qa: 'course__save' }
