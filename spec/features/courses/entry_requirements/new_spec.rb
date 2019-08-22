@@ -51,6 +51,11 @@ feature 'new course entry_requirements', type: :feature do
         expect(new_entry_requirements_page.send(subject)).to have_field('2: Taking')
         expect(new_entry_requirements_page.send(subject)).to have_field('3: Equivalence test')
       end
+
+      choose('course_maths_expect_to_achieve_before_training_begins')
+      click_on 'Continue'
+
+      expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
     end
   end
 
@@ -80,6 +85,11 @@ feature 'new course entry_requirements', type: :feature do
         expect(new_entry_requirements_page.send(subject)).to have_field('2: Taking')
         expect(new_entry_requirements_page.send(subject)).to have_field('3: Equivalence test')
       end
+
+      choose('course_english_expect_to_achieve_before_training_begins')
+      click_on 'Continue'
+
+      expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
     end
   end
 end
