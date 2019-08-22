@@ -1,0 +1,15 @@
+<% gcse_subjects_required.each do |subject| %>
+    <% legend = capture do %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h2 class="govuk-fieldset__heading">
+          <%= subject.to_s.titleize %> GCSE
+        </h2>
+      </legend>
+    <% end %>
+
+    <%= render "shared/edit_options_radio_buttons",
+          form: form,
+          legend: legend,
+          key: 'entry_requirements',
+          field: subject.to_sym %>
+  <% end %>

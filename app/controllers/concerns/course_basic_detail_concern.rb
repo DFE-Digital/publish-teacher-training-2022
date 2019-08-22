@@ -3,16 +3,11 @@ module CourseBasicDetailConcern
 
   included do
     decorates_assigned :course
-    before_action :build_provider, only: :new
+    before_action :build_provider, :build_new_course, only: :new
     before_action :build_course, only: %i[edit update]
   end
 
-  def new
-    @course = Course.fetch_new(
-      recruitment_cycle_year: @provider.recruitment_cycle_year,
-      provider_code: @provider.provider_code
-    )
-  end
+  def new; end
 
   def edit; end
 
@@ -36,6 +31,13 @@ module CourseBasicDetailConcern
   end
 
 private
+
+  def build_new_course
+    @course = Course.fetch_new(
+      recruitment_cycle_year: @provider.recruitment_cycle_year,
+      provider_code: @provider.provider_code
+    )
+  end
 
   def build_provider
     @provider = Provider
