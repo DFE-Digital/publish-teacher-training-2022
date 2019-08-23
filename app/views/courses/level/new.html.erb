@@ -1,0 +1,32 @@
+<%= content_for :page_title, "Pick a course type" %>
+
+<%= render 'shared/errors' %>
+
+<h1 class="govuk-heading-xl">
+  What type of course?
+</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: course,
+                  url: continue_provider_recruitment_cycle_courses_level_path(
+                    @course.provider_code,
+                    @course.recruitment_cycle_year,
+                    @course.course_code
+                  ),
+                  method: :get do |form| %>
+      <h2 class="govuk-heading-m remove-top-margin">Level</h2>
+
+      <%= render 'form_fields', form: form %>
+
+      <h2 class="govuk-heading-m remove-top-margin">
+        Special educational needs and disability (SEND)
+      </h2>
+
+      <%= render 'courses/send/form_fields', form: form %>
+
+      <%= form.submit "Continue",
+                      class: "govuk-button",
+                      data: { qa: 'course__save' } %>
+    <% end %>
+  </div>
+</div>

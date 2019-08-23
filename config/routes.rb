@@ -49,6 +49,9 @@ Rails.application.routes.draw do
         resource :study_mode, on: :member, only: %i[new], controller: 'courses/study_mode' do
           get 'continue'
         end
+        resource :level, on: :member, only: %i[new], controller: 'courses/level' do
+          get 'continue'
+        end
         get 'confirmation'
       end
 
