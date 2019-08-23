@@ -90,6 +90,9 @@ Rails.application.routes.draw do
         get '/send', on: :member, to: 'courses/send#edit'
         put '/send', on: :member, to: 'courses/send#update'
 
+        get '/level', on: :member, to: 'courses/level#edit'
+        put '/level', on: :member, to: 'courses/level#update'
+
         get '/full-part-time', on: :member, to: 'courses/study_mode#edit'
         put '/full-part-time', on: :member, to: 'courses/study_mode#update'
 

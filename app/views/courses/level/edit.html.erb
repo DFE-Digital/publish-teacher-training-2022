@@ -1,0 +1,54 @@
+<%= content_for :page_title, "Edit Level – #{course.name_and_code}" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(
+    details_provider_recruitment_cycle_course_path(
+      course.provider_code,
+      course.recruitment_cycle_year,
+      course.course_code
+    )) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<h1 class="govuk-heading-xl">
+  What type of course?
+</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: course,
+                  url: level_provider_recruitment_cycle_course_path(
+                    @course.provider_code,
+                    @course.recruitment_cycle_year,
+                    @course.course_code
+                  ),
+                  method: :put do |form| %>
+      <h2 class="govuk-heading-m remove-top-margin">Level</h2>
+
+      <div class="govuk-form-group ">
+        <div class="govuk-radios govuk-radios" data-module="radios">
+          <% %i[primary secondary further_education].each do |level| %>
+            <div class="govuk-radios__item">
+              <%= form.radio_button :level, level,
+                class: 'govuk-radios__input',
+                data: { qa: "course__#{level}" } %>
+              <%= form.label :level, value: level,
+                class: 'govuk-label govuk-radios__label' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
+        class: "govuk-button", data: { qa: 'course__save' } %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes',
+          details_provider_recruitment_cycle_course_path(
+            course.provider_code,
+            course.recruitment_cycle_year,
+            course.course_code
+          ), class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+    <% end %>
+  </div>
+</div>
