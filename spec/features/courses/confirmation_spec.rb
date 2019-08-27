@@ -18,12 +18,15 @@ feature 'Course confirmation', type: :feature do
 
   scenario 'viewing the course details page' do
     visit confirmation_provider_recruitment_cycle_courses_path(
-      provider.provider_code,
-      provider.recruitment_cycle_year
+            provider.provider_code,
+            provider.recruitment_cycle_year,
+            { qualification: 'qts' }
           )
-
     expect(course_confirmation_page.title).to have_content(
       "Check your answers before confirming"
+    )
+    expect(course_confirmation_page.qualifications).to have_content(
+      "QTS"
     )
   end
 end

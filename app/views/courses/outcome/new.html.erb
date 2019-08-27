@@ -17,7 +17,7 @@
                   ),
                   method: :get do |form| %>
 
-      <%= render 'form_fields', form: form, course_name_and_code: nil %>
+      <%= render 'form_fields', form: form, course_name_and_code: nil, value: params[:qualification] %>
 
       <%= form.submit "Continue",
                       class: "govuk-button",

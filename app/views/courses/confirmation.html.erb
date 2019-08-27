@@ -8,6 +8,22 @@
     <%= form_with model: course,
                   url: new_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year),
                   method: :post do |f| %>
+      <%= f.hidden_field :qualification, value: params.dig(:qualification) %>
+      <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Outcome
+          </dt>
+          <dd class="govuk-summary-list__value" data-qa="course__qualifications">
+            <%= I18n.t("edit_options.qualifications.#{params.dig(:qualification)}.label") %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to new_provider_recruitment_cycle_courses_outcome_path(@provider.provider_code, @provider.recruitment_cycle_year, params: params.to_enum.to_h), class: "govuk-link", data: { qa: "course__edit_entry_requirements_link" } do %>
+              Change<span class="govuk-visually-hidden"> outcome</span>
+            <% end %>
+          </dd>
+        </div>
+      </dl>
 
       <hr class="govuk-section-break govuk-section-break--l">
 
