@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
   before_action :build_courses, only: %i[index about requirements fees salary]
   before_action :build_course, except: %i[index preview]
   before_action :build_course_for_preview, only: :preview
-  before_action :build_provider, except: :index
+  before_action :build_provider, except: %i[index confirmation]
   before_action :filter_courses, only: %i[about requirements fees salary]
   before_action :build_copy_course, if: -> { params[:copy_from].present? }
 
@@ -14,6 +14,13 @@ class CoursesController < ApplicationController
   def details; end
 
   def request_change; end
+
+  def confirmation
+    @provider = Provider
+      .where(recruitment_cycle_year: @recruitment_cycle.year)
+      .find(params[:provider_code])
+      .first
+  end
 
   def new
     redirect_to new_provider_recruitment_cycle_courses_outcome_path(@course.provider_code, @course.recruitment_cycle_year)

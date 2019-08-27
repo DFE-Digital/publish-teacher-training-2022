@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         resource :entry_requirements, on: :member, only: %i[new], controller: 'courses/entry_requirements' do
           get 'continue'
         end
+        get 'confirmation'
       end
 
       resources :courses, param: :code do

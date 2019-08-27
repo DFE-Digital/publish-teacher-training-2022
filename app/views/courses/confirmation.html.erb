@@ -1,0 +1,23 @@
+<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}New course" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Check your answers before confirming
+    </h1>
+    <%= form_with model: course,
+                  url: new_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year),
+                  method: :post do |f| %>
+
+      <hr class="govuk-section-break govuk-section-break--l">
+
+      <p class="govuk-body">
+        <%= f.submit "Save new course",
+                      class: "govuk-button",
+                      data: { qa: 'course__save' } %>
+      </p>
+
+      <p class="govuk-body">Saving this course will not publish it.</p>
+    <% end %>
+  </div>
+</div>
