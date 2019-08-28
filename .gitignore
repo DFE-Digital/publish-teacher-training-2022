@@ -32,3 +32,6 @@ config/environments/*.local.yml
 
 *.log
 coverage
+
+/.vscode/*
+/.devcontainer/*
