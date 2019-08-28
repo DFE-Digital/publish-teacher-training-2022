@@ -84,9 +84,6 @@ feature 'Edit course study mode', type: :feature do
       build(
         :course,
         study_mode: 'full_time',
-        edit_options: {
-          study_modes: %w[full_time part_time full_time_or_part_time]
-        },
         provider: provider
       )
     end
