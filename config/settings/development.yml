@@ -1,14 +1,14 @@
 dfe_signin:
   issuer: https://signin-test-oidc-as.azurewebsites.net
   profile: https://signin-test-pfl-as.azurewebsites.net
-  secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
-  base_url: https://www2.dev.publish-teacher-training-courses.service.gov.uk
+  base_url: https://localhost:3000
 manage_backend:
-  base_url: https://api2.dev.publish-teacher-training-courses.service.gov.uk
+  secret: secret
+  base_url: http://localhost:3001
 manage_ui:
-  base_url: https://www.dev.publish-teacher-training-courses.service.gov.uk
+  base_url: https://localhost:44364
 search_ui:
-  base_url: https://www.dev.find-postgraduate-teacher-training.service.gov.uk
+  base_url: https://localhost:5000
 environment:
   label: 'Development'
   selector_name: 'development'
