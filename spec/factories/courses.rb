@@ -51,7 +51,8 @@ FactoryBot.define do
                         "April #{recruitment_cycle.year.to_i + 1}",
                         "May #{recruitment_cycle.year.to_i + 1}",
                         "June #{recruitment_cycle.year.to_i + 1}",
-                        "July #{recruitment_cycle.year.to_i + 1}"]
+                        "July #{recruitment_cycle.year.to_i + 1}"],
+          study_modes: %w[full_time part_time full_time_or_part_time]
         }
       end
       gcse_subjects_required_using_level { false }

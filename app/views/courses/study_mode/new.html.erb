@@ -1,0 +1,28 @@
+<%= content_for :page_title, "Full time of part time" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(
+                           @provider.provider_code,
+                           @provider.recruitment_cycle_year
+                        )) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: course,
+                  url: continue_provider_recruitment_cycle_courses_study_mode_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year
+                  ),
+                  method: :get do |form| %>
+
+      <%= render 'form_fields', form: form %>
+
+      <%= form.submit "Continue",
+                      class: "govuk-button",
+                      data: { qa: 'course__save' } %>
+
+    <% end %>
+  </div>
+</div>
