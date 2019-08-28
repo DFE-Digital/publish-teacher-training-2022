@@ -73,7 +73,11 @@
           <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
             <%= course.apprenticeship? %>
           </dd>
-          <dd class="govuk-summary-list__actions"></dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to apprenticeship_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_entry_requirements_link" } do %>
+              Change<span class="govuk-visually-hidden"> apprenticeship</span>
+            <% end %>
+          </dd>
         </div>
       <% else %>
         <div class="govuk-summary-list__row">

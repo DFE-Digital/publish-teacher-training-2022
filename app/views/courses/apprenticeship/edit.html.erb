@@ -1,0 +1,50 @@
+<%= content_for :page_title, "Edit Apprenticeship – #{course.name_and_code}" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<h1 class="govuk-heading-xl">
+</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= form_with model: course, url: apprenticeship_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
+      <div
+        class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:program_type]&.any?) %>"
+        data-qa="course__program_type">
+
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              Is this a teaching apprenticeship?
+            </h1>
+          </legend>
+
+          <%= render "shared/error_messages", field: :program_type if @errors %>
+          <div class="govuk-radios" data-module="radios">
+            <% @course.meta['edit_options']['program_type'].each do |value| %>
+              <div class="govuk-radios__item">
+                <%= form.radio_button :program_type,
+                        value,
+                        class: 'govuk-radios__input' %>
+                <%= form.label :program_type,
+                        t("edit_options.apprenticeship.#{value}.label"),
+                        value: value,
+                        class: 'govuk-label govuk-radios__label' %>
+              </div>
+            <% end %>
+          </div>
+        </fieldset>
+      </div>
+
+      <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
+        class: "govuk-button", data: { qa: 'course__save' }
+      %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes', details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+    <% end %>
+  </div>
+</div>
