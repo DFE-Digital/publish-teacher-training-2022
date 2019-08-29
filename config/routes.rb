@@ -52,6 +52,9 @@ Rails.application.routes.draw do
         resource :level, on: :member, only: %i[new], controller: 'courses/level' do
           get 'continue'
         end
+        resource :start_date, on: :member, only: %i[new], controller: 'courses/start_date', path: 'start-date' do
+          get 'continue'
+        end
         get 'confirmation'
       end
 
