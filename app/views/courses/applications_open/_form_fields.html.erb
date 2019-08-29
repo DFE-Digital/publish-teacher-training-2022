@@ -12,7 +12,7 @@
     <div class="govuk-radios__item">
       <%= form.radio_button :applications_open_from, 'other',
             class: 'govuk-radios__input',
-            checked: @course.applications_open_from != @recruitment_cycle.application_start_date,
+            checked: @course.applications_open_from.present? && @course.applications_open_from != @recruitment_cycle.application_start_date,
             aria: { 'controls': 'other-container' },  data: { qa: 'applications_open_from_other' }
       %>
       <%= form.label :applications_open_from,
@@ -21,7 +21,7 @@
       %>
     </div>
     <div class="govuk-radios__conditional <%=
-      "govuk-radios__conditional--hidden" unless @course.applications_open_from != @recruitment_cycle.application_start_date
+      "govuk-radios__conditional--hidden" unless @course.applications_open_from.present? && @course.applications_open_from  != @recruitment_cycle.application_start_date
     %>" id="other-container">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
