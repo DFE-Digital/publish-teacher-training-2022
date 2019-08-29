@@ -77,15 +77,15 @@ class Course < Base
   end
 
   def year
-    applications_open_from.split('-').first
+    applications_open_from.split('-').first if applications_open_from.present?
   end
 
   def month
-    applications_open_from.split('-').second
+    applications_open_from.split('-').second if applications_open_from.present?
   end
 
   def day
-    applications_open_from.split('-').third
+    applications_open_from.split('-').third if applications_open_from.present?
   end
 
 private
