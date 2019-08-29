@@ -23,7 +23,7 @@ feature 'Edit course fee or salary status', type: :feature do
     fee_or_salary_page.load_with_course(course)
   end
 
-  context 'A course that can be an apprenticeship' do
+  context 'A course belonging to a non-accredited body' do
     let(:program_type) { 'pg_teaching_apprenticeship' }
     let(:program_types) { %w[pg_teaching_apprenticeship school_direct_training_programme school_direct_salaried_training_programme] }
     let(:course) do
@@ -42,7 +42,7 @@ feature 'Edit course fee or salary status', type: :feature do
       expect(course_details_page).to be_displayed
     end
 
-    scenario 'can navigate to the edit screen and back again' do
+    xscenario 'can navigate to the edit screen and back again' do
       course_details_page.load_with_course(course)
       click_on 'Change fee or salary'
       expect(fee_or_salary_page).to be_displayed
@@ -50,7 +50,7 @@ feature 'Edit course fee or salary status', type: :feature do
       expect(course_details_page).to be_displayed
     end
 
-    scenario 'presents the correct choices for each study mode' do
+    scenario 'presents the correct choices' do
       expect(fee_or_salary_page).to have_program_type_fields
       expect(fee_or_salary_page.program_type_fields)
         .to have_selector('[for="course_program_type_pg_teaching_apprenticeship"]', text: 'Teaching apprenticeship (with salary)')
@@ -97,7 +97,7 @@ feature 'Edit course fee or salary status', type: :feature do
       end
     end
 
-    scenario 'it can be updated to a salraied direct training program' do
+    scenario 'it can be updated to a salaried direct training program' do
       update_course_stub = stub_api_v2_request(
         "/recruitment_cycles/#{course.recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
