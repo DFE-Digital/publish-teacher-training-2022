@@ -1,0 +1,26 @@
+<%= content_for :page_title, "Pick a start date" %>
+
+<%= render 'shared/errors' %>
+
+<h1 class="govuk-heading-xl">
+  When does the course start
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: course,
+                  url: continue_provider_recruitment_cycle_courses_start_date_path(
+                    @course.provider_code,
+                    @course.recruitment_cycle_year,
+                    @course.course_code
+                  ),
+                  method: :get do |form| %>
+
+      <%= render 'form_fields', form: form %>
+
+      <%= form.submit "Continue",
+                      class: "govuk-button",
+                      data: { qa: 'course__save' } %>
+    <% end %>
+  </div>
+</div>
