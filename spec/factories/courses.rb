@@ -52,7 +52,8 @@ FactoryBot.define do
                         "May #{recruitment_cycle.year.to_i + 1}",
                         "June #{recruitment_cycle.year.to_i + 1}",
                         "July #{recruitment_cycle.year.to_i + 1}"],
-          study_modes: %w[full_time part_time full_time_or_part_time]
+          study_modes: %w[full_time part_time full_time_or_part_time],
+          program_type: %w[pg_teaching_apprenticeship higher_education_program]
         }
       end
       gcse_subjects_required_using_level { false }
@@ -105,6 +106,7 @@ FactoryBot.define do
     gcse_subjects_required { %w[maths english] }
     meta { nil }
     age_range_in_years { '11_to_16' }
+    program_type { 'pg_teaching_apprenticeship' }
 
     after :build do |course, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.

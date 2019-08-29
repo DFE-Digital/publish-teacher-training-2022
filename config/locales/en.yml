@@ -98,3 +98,10 @@ en:
         label: "Full time"
       full_time_or_part_time:
         label: "Full time or part time"
+    apprenticeship:
+      pg_teaching_apprenticeship:
+        label: "Yes"
+      higher_education_programme:
+        label: "No"
+      scitt_programme:
+        label: "No"
