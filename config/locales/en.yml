@@ -105,3 +105,10 @@ en:
         label: "No"
       scitt_programme:
         label: "No"
+    fee_or_salary:
+      pg_teaching_apprenticeship:
+        label: "Teaching apprenticeship (with salary)"
+      school_direct_training_programme:
+        label: "Fee paying (no salary)"
+      school_direct_salaried_training_programme:
+        label: "Salaried"

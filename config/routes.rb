@@ -103,6 +103,9 @@ Rails.application.routes.draw do
         get '/apprenticeship', on: :member, to: 'courses/apprenticeship#edit'
         put '/apprenticeship', on: :member, to: 'courses/apprenticeship#update'
 
+        get '/fee-or-salary', on: :member, to: 'courses/fee_or_salary#edit'
+        put '/fee-or-salary', on: :member, to: 'courses/fee_or_salary#update'
+
         get '/full-part-time', on: :member, to: 'courses/study_mode#edit'
         put '/full-part-time', on: :member, to: 'courses/study_mode#update'
 
