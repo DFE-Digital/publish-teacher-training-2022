@@ -15,6 +15,7 @@ module PageObjects
         element :status_panel, '[data-qa=provider__status_panel]'
         element :content_status, '[data-qa=provider__content-status]'
         element :flash, '.govuk-success-summary'
+        elements :breadcrumbs, '.govuk-breadcrumbs__link'
       end
     end
   end

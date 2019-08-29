@@ -31,6 +31,7 @@ feature 'Recruitment cycles', type: :feature do
         expect(recruitment_cycle_page.title).to have_content('Current cycle')
         expect(recruitment_cycle_page).to have_link('Locations', href: "/organisations/#{provider.provider_code}/#{year}/locations")
         expect(recruitment_cycle_page).to have_link('Courses',   href: "/organisations/#{provider.provider_code}/#{year}/courses")
+        expect(recruitment_cycle_page).to have_link('About your organisation', href: "/organisations/#{provider.provider_code}/#{year}/details")
       end
     end
 
@@ -45,6 +46,7 @@ feature 'Recruitment cycles', type: :feature do
         expect(recruitment_cycle_page.title).to have_content('Next cycle')
         expect(recruitment_cycle_page).to have_link('Locations', href: "/organisations/#{provider.provider_code}/#{year}/locations")
         expect(recruitment_cycle_page).to have_link('Courses',   href: "/organisations/#{provider.provider_code}/#{year}/courses")
+        expect(recruitment_cycle_page).to have_link('About your organisation', href: "/organisations/#{provider.provider_code}/#{year}/details")
       end
     end
   end

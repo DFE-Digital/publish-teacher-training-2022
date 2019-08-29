@@ -4,7 +4,6 @@ feature 'View provider', type: :feature do
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
 
   before do
-    allow(Settings).to receive(:rollover).and_return(false)
     stub_omniauth
   end
 
@@ -58,6 +57,8 @@ feature 'View provider', type: :feature do
 
     visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
 
+    expect_breadcrumbs_to_be_correct
+
     expect(current_path).to eq details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
 
     expect(org_detail_page).to have_link(
@@ -78,5 +79,15 @@ feature 'View provider', type: :feature do
 
     expect(org_detail_page).to have_status_panel
     expect(org_detail_page.content_status).to have_content(expected_status)
+  end
+
+  def expect_breadcrumbs_to_be_correct
+    breadcrumbs = org_detail_page.breadcrumbs
+
+    expect(breadcrumbs[0].text).to eq(provider.provider_name)
+    expect(breadcrumbs[0]["href"]).to eq("/organisations/#{provider.provider_code}")
+
+    expect(breadcrumbs[1].text).to eq(provider.recruitment_cycle.title)
+    expect(breadcrumbs[1]["href"]).to eq("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}")
   end
 end

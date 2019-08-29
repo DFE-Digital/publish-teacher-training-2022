@@ -18,6 +18,7 @@
     <% end %>
     <hr class="govuk-section-break govuk-section-break--m">
 
+    <%= render partial: 'recruitment_cycles/about_organisation', locals: { provider: @provider, year: params[:year] } %>
     <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: params[:year] } %>
     <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: params[:year] } %>
   </div>

@@ -15,7 +15,7 @@ FactoryBot.define do
     train_with_us { Faker::Lorem.sentence(word_count: 100) }
     accredited_bodies { [] }
     train_with_disability { Faker::Lorem.sentence(word_count: 100) }
-    website { nil }
+    website { 'https://cat.me' }
     email { 'info@acme-scitt.org' }
     telephone { '020 8123 4567' }
     address1 { nil }
