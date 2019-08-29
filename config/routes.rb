@@ -126,6 +126,18 @@ Rails.application.routes.draw do
   get "/rollover", to: "pages#rollover", as: :rollover
   patch '/accept-rollover', to: 'users#accept_rollover'
 
+  # redirect URL's from legacy c# app
+  get '/organisation/:provider_code', to: redirect('/organisations/%{provider_code}', status: 301)
+  get '/organisation/:provider_code/details', to: redirect('/organisations/%{provider_code}/details', status: 301)
+  get '/organisation/:provider_code/contact', to: redirect('/organisations/%{provider_code}/contact', status: 301)
+  get '/organisation/:provider_code/request-access', to: redirect('/organisations/%{provider_code}/request-access', status: 301)
+  get '/organisation/:provider_code/course/self/:course_code', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}', status: 301)
+  get '/organisation/:provider_code/course/:accrediting_provider/:course_code', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}', status: 301)
+  get '/organisation/:provider_code/course/self/:course_code/about', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/about', status: 301)
+  get '/organisation/:provider_code/course/:accrediting_provider/:course_code/about', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/about', status: 301)
+  get '/organisation/:provider_code/course/self/:course_code/fees-and-length', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/fees', status: 301)
+  get '/organisation/:provider_code/course/:accrediting_provider/:course_code/fees-and-length', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/fees', status: 301)
+
   match '/401', to: 'errors#unauthorized', via: :all, as: 'unauthorized'
   match '/404', to: 'errors#not_found', via: :all
   match '/403', to: 'errors#forbidden', via: :all
