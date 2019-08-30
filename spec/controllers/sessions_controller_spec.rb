@@ -82,10 +82,10 @@ RSpec.describe SessionsController, type: :controller do
         allow(Base).to receive(:connection)
       end
 
-      it "redirects to Manage UI root" do
+      it "redirects to unauthorized" do
         get :create
 
-        expect(subject).to redirect_to(Settings.manage_ui.base_url)
+        expect(subject).to redirect_to(unauthorized_path)
       end
     end
 
@@ -96,10 +96,10 @@ RSpec.describe SessionsController, type: :controller do
         allow(Base).to receive(:connection)
       end
 
-      it "redirects to Manage UI root" do
+      it "redirects to unauthorized" do
         get :create
 
-        expect(subject).to redirect_to(Settings.manage_ui.base_url)
+        expect(subject).to redirect_to(unauthorized_path)
       end
     end
   end
