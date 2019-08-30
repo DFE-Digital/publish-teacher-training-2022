@@ -19,8 +19,10 @@
           <%= course.is_send? %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_is_send" } do %>
-            Change<span class="govuk-visually-hidden"> SEND</span>
+          <% unless course.is_published? %>
+            <%= link_to send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_is_send" } do %>
+              Change<span class="govuk-visually-hidden"> SEND</span>
+            <% end %>
           <% end %>
         </dd>
       </div>
@@ -157,8 +159,10 @@
           <%= l(course.applications_open_from&.to_date) %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_start_date_link" } do %>
-            Change<span class="govuk-visually-hidden"> applications open date</span>
+          <% unless course.is_published? %>
+            <%= link_to applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_open_applications_link" } do %>
+              Change<span class="govuk-visually-hidden"> applications open date</span>
+            <% end %>
           <% end %>
         </dd>
       </div>
@@ -171,8 +175,10 @@
           <%= l(course.start_date&.to_date, format: :short) %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to start_date_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_start_date_link" } do %>
-            Change<span class="govuk-visually-hidden"> start date</span>
+          <% unless course.is_published? %>
+            <%= link_to start_date_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_start_date_link" } do %>
+              Change<span class="govuk-visually-hidden"> start date</span>
+            <% end %>
           <% end %>
         </dd>
       </div>

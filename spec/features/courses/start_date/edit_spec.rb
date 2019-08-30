@@ -23,11 +23,27 @@ feature 'Edit course start date', type: :feature do
     start_date_page.load_with_course(course)
   end
 
+  context 'published course' do
+    let(:course) do
+      build(
+        :course,
+        content_status: 'published',
+        provider: provider
+      )
+    end
+
+    scenario 'should not show edit link' do
+      course_details_page.load_with_course(course)
+      expect(course_details_page).to_not have_edit_start_date_link
+    end
+  end
+
   context 'a course with a start date of october 2019' do
     let(:course) do
       build(
         :course,
         start_date: 'October 2019',
+        content_status: 'draft',
         edit_options: {
           start_dates: ['October 2019', 'November 2019']
         },
