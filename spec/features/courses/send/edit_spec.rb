@@ -23,11 +23,27 @@ feature 'Edit course SEND', type: :feature do
     send_page.load_with_course(course)
   end
 
+  context 'published course' do
+    let(:course) do
+      build(
+        :course,
+        content_status: 'published',
+        provider: provider
+      )
+    end
+
+    scenario 'should not show edit link' do
+      course_details_page.load_with_course(course)
+      expect(course_details_page).to_not have_edit_is_send_link
+    end
+  end
+
   context 'a course with a send value of true' do
     let(:course) do
       build(
         :course,
         is_send: '1',
+        content_status: 'draft',
         edit_options: {
           is_send_options: %w[0 1]
         },

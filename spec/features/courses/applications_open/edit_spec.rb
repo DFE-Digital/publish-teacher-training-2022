@@ -23,11 +23,28 @@ feature 'Edit course applications open', type: :feature do
     applications_open_page.load_with_course(course)
   end
 
+  context 'published course' do
+    let(:course) do
+      build(
+        :course,
+        content_status: 'published',
+        provider: provider
+      )
+    end
+
+    scenario 'should not show edit link' do
+      course_details_page.load_with_course(course)
+      expect(course_details_page).to_not have_edit_application_status_link
+    end
+  end
+
+
   context 'a course with an applications open from value of 2018-10-09' do
     let(:course) do
       build(
         :course,
         applications_open_from: '2018-10-09',
+        content_status: 'draft',
         provider: provider,
         recruitment_cycle: current_recruitment_cycle
       )
