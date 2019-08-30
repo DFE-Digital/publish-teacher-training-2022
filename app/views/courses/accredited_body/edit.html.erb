@@ -1,0 +1,59 @@
+<%= content_for :page_title, "Pick an accredited body  – #{course.name_and_code}" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Who is the accredited body?
+    </h1>
+
+    <%= form_with model: course,
+          url: accredited_body_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+          method: :put do |form| %>
+
+      <div class="govuk-form-group">
+        <div class="govuk-radios" data-module="radios" data-qa="course__accredited_body">
+          <% @provider.accredited_bodies.each do |provider| %>
+            <div class="govuk-radios__item">
+              <%= form.radio_button :accrediting_provider_code,
+                                    provider["provider_code"],
+                                    checked: provider["provider_code"] == @course.accrediting_provider&.provider_code,
+                                    class: 'govuk-radios__input' %>
+              <%= form.label :accrediting_provider_code,
+                             provider["provider_name"],
+                             value: provider["provider_code"],
+                             class: 'govuk-label govuk-radios__label' %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+
+      <details class="govuk-details govuk-!-margin-bottom-2">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            Help with adding a different accredited body
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-body">
+            Contact the Becoming a Teacher team to request a different accredited body: <%= bat_contact_mail_to bat_contact_email_address_with_wrap, subject: "Edit #{@course.name} (#{@provider.provider_code}/#{@course.course_code}) accredited body" %>
+          </p>
+        </div>
+      </details>
+
+      <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
+                      class: "govuk-button govuk-!-margin-top-3", data: { qa: 'course__save' } %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes',
+          details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
+          class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+    <% end %>
+  </div>
+</div>

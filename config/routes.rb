@@ -91,6 +91,9 @@ Rails.application.routes.draw do
         get '/outcome', on: :member, to: 'courses/outcome#edit'
         put '/outcome', on: :member, to: 'courses/outcome#update'
 
+        get '/accredited-body', on: :member, to: 'courses/accredited_body#edit'
+        put '/accredited-body', on: :member, to: 'courses/accredited_body#update'
+
         get '/age-range', on: :member, to: 'courses/age_range#edit'
         put '/age-range', on: :member, to: 'courses/age_range#update'
 
