@@ -18,9 +18,9 @@
             <%= I18n.t("edit_options.qualifications.#{params.dig(:qualification)}.label") %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to new_provider_recruitment_cycle_courses_outcome_path(@provider.provider_code, @provider.recruitment_cycle_year, params: params.to_enum.to_h), class: "govuk-link", data: { qa: "course__edit_entry_requirements_link" } do %>
+            <%#= link_to new_provider_recruitment_cycle_courses_outcome_path(@provider.provider_code, @provider.recruitment_cycle_year, params: params.to_enum.to_h), class: "govuk-link", data: { qa: "course__edit_entry_requirements_link" } do %>
               Change<span class="govuk-visually-hidden"> outcome</span>
-            <% end %>
+            <%# end %>
           </dd>
         </div>
       </dl>

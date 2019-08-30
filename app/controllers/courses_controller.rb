@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
   before_action :initialise_errors
   before_action :build_recruitment_cycle
   before_action :build_courses, only: %i[index about requirements fees salary]
-  before_action :build_course, except: %i[index preview]
+  before_action :build_course, except: %i[index preview confirmation]
   before_action :build_course_for_preview, only: :preview
   before_action :build_provider, except: %i[index confirmation]
   before_action :filter_courses, only: %i[about requirements fees salary]
@@ -20,6 +20,13 @@ class CoursesController < ApplicationController
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:provider_code])
       .first
+
+    @course = Course.build_new(
+      course_params.to_unsafe_hash.merge(
+        recruitment_cycle_year: @provider.recruitment_cycle_year,
+        provider_code: @provider.provider_code
+      )
+    ).first
   end
 
   def new
