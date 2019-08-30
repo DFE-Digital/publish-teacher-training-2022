@@ -5,10 +5,8 @@ dfe_signin:
 manage_backend:
   secret: secret
   base_url: http://localhost:3001
-manage_ui:
-  base_url: https://localhost:44364
 search_ui:
   base_url: https://localhost:5000
 environment:
-  label: 'Development'
-  selector_name: 'development'
+  label: "Development"
+  selector_name: "development"

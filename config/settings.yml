@@ -16,9 +16,6 @@ manage_backend:
   secret: <%= SecureRandom.base64 %>
   # URL of the API app (manage-courses-backend)
   base_url: http://localhost:3001
-manage_ui:
-  # URL of the c# ui app (manage-courses-ui)
-  base_url: https://localhost:44364
 search_ui:
   # URL of the C# search ui app (search-and-compare-ui)
   base_url: https://localhost:5000
@@ -44,7 +41,7 @@ google_forms:
 service_support:
   contact_email_address: becomingateacher@digital.education.gov.uk
 environment:
-  label: 'Beta'
-  selector_name: 'beta'
+  label: "Beta"
+  selector_name: "beta"
 rollover: true
 current_cycle: 2019

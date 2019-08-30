@@ -4,10 +4,8 @@ dfe_signin:
   base_url: https://localhost:3000
 manage_backend:
   base_url: http://localhost:3001
-manage_ui:
-  base_url: https://localhost:44364
 search_ui:
   base_url: https://localhost:5000
 environment:
-  label: 'Test'
-  selector_name: 'test'
+  label: "Test"
+  selector_name: "test"

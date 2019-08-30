@@ -5,8 +5,6 @@ dfe_signin:
   base_url: https://www2.publish-teacher-training-courses.service.gov.uk
 manage_backend:
   base_url: https://api2.publish-teacher-training-courses.service.gov.uk
-manage_ui:
-  base_url: https://www.publish-teacher-training-courses.service.gov.uk
 search_ui:
   base_url: https://find-postgraduate-teacher-training.education.gov.uk
 environment:

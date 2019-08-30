@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, except: :not_found
-  rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_manage_ui
-  rescue_from JsonApiClient::Errors::AccessDenied, with: :render_manage_ui
+  rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_unauthorized
+  rescue_from JsonApiClient::Errors::AccessDenied, with: :render_unauthorized
 
   before_action :authenticate
 
@@ -13,8 +13,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_manage_ui
-    redirect_to Settings.manage_ui.base_url
+  def render_unauthorized
+    redirect_to unauthorized_path
   end
 
   helper_method :current_user
