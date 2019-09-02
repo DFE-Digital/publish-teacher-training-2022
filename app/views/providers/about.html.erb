@@ -46,7 +46,7 @@
         <% end %>
       </div>
 
-      <% if @provider.accredited_bodies.present? %>
+      <% if provider.accredited_bodies.present? %>
         <h2 class="govuk-heading-l" id="accredited_bodies-error">About your accredited body</h2>
 
         <p id="about-training-provider-hint" class="govuk-body">
@@ -55,7 +55,7 @@
           evidence.
         </p>
 
-        <% @provider.accredited_bodies.sort_by { |provider| provider['provider_name'] }.each_with_index do |provider,index| %>
+        <% provider.accredited_bodies.each_with_index do |provider,index| %>
           <%= f.hidden_field "accredited_bodies[][provider_name]", value: provider["provider_name"], id: nil %>
           <%= f.hidden_field "accredited_bodies[][provider_code]", value: provider["provider_code"], id: nil %>
           <div class="govuk-character-count" data-module="character-count" data-maxwords="100">

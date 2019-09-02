@@ -3,6 +3,7 @@ module Courses
     include CourseBasicDetailConcern
 
     before_action :build_provider
+    decorates_assigned :provider
 
   private
 
