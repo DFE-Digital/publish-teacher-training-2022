@@ -20,6 +20,7 @@ feature 'Edit accredited body', type: :feature do
     stub_omniauth
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(course)
     stub_api_v2_resource(course, include: "accrediting_provider")
     stub_api_v2_resource(course, include: "sites,provider.sites,accrediting_provider")
 
@@ -28,16 +29,16 @@ feature 'Edit accredited body', type: :feature do
 
   context 'a course with no accredited body' do
     let(:provider) { build(:provider) }
-    let(:course) { build(:course, provider: provider) }
+    let(:course) { build(:course, provider: provider, content_status: "draft") }
 
     scenario 'can cancel changes' do
       click_on 'Cancel changes'
       expect(course_details_page).to be_displayed
     end
 
-    xscenario 'can navigate to the edit screen and back again' do
+    scenario 'can navigate to the edit screen and back again' do
       course_details_page.load_with_course(course)
-      click_on 'Change outcome'
+      click_on 'Change accredited body'
       expect(accredited_body_page).to be_displayed
       click_on 'Back'
       expect(course_details_page).to be_displayed

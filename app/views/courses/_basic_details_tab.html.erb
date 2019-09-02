@@ -145,7 +145,13 @@
           <dd class="govuk-summary-list__value" data-qa="course__accredited_body">
             <%= course.accrediting_provider&.provider_name %>
           </dd>
-          <dd class="govuk-summary-list__actions"></dd>
+          <dd class="govuk-summary-list__actions">
+            <% unless course.is_published? %>
+              <%= link_to accredited_body_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link" do %>
+                Change<span class="govuk-visually-hidden"> accredited body</span>
+              <% end %>
+            <% end %>
+          </dd>
         </div>
       <% end %>
 
