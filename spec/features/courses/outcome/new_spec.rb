@@ -4,6 +4,9 @@ feature 'new course outcome', type: :feature do
   let(:new_outcome_page) do
     PageObjects::Page::Organisations::Courses::NewOutcomePage.new
   end
+  let(:new_entry_requirements_page) do
+    PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
+  end
   let(:provider) { build(:provider) }
   let(:course) { build(:course, provider: provider) }
 
@@ -14,13 +17,24 @@ feature 'new course outcome', type: :feature do
     stub_api_v2_new_resource(new_course)
   end
 
-  scenario "sends user to entry requirements" do
-    visit "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}" \
-    "/courses/outcome/new"
+  context 'Selecting QTS' do
+    before do
+      visit "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}" \
+      "/courses/outcome/new"
 
-    choose('course_qualification_qts')
-    click_on 'Continue'
+      choose('course_qualification_qts')
+      click_on 'Continue'
+    end
 
-    expect(current_path).to eq new_provider_recruitment_cycle_courses_entry_requirements_path(provider.provider_code, provider.recruitment_cycle_year)
+    scenario "sends user to entry requirements" do
+      expect(new_entry_requirements_page).to be_displayed(
+        provider_code: provider.provider_code,
+        recruitment_cycle_year: provider.recruitment_cycle_year
+      )
+    end
+
+    scenario "stores the qualification in the URL" do
+      expect(new_entry_requirements_page.url_matches['query']).to eq('course[qualification]' => 'qts')
+    end
   end
 end

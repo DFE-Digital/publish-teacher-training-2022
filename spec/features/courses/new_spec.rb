@@ -2,15 +2,23 @@ require "rails_helper"
 
 feature 'new course', type: :feature do
   let(:recruitment_cycle) { build(:recruitment_cycle) }
+  let(:new_level_page) do
+    PageObjects::Page::Organisations::Courses::NewLevelPage.new
+  end
   let(:new_outcome_page) do
     PageObjects::Page::Organisations::Courses::NewOutcomePage.new
+  end
+  let(:new_entry_requirements_page) do
+    PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
   end
   let(:provider) { build(:provider) }
   let(:course) do
     build :course,
           :new,
           provider: provider,
-          recruitment_cycle: recruitment_cycle
+          recruitment_cycle: recruitment_cycle,
+          level: :primary,
+          gcse_subjects_required_using_level: true
   end
 
   before do
@@ -22,7 +30,7 @@ feature 'new course', type: :feature do
   end
 
   scenario 'redirects and renders new course outcome page' do
-    visit new_provider_recruitment_cycle_course_path(provider.provider_code, provider.recruitment_cycle_year)
+    go_to_new_course_page_for_provider(provider)
 
     expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
 
@@ -41,5 +49,76 @@ feature 'new course', type: :feature do
     expect(new_outcome_page.qualification_fields).to have_pgce_with_qts
     expect(new_outcome_page.qualification_fields).to have_pgde_with_qts
     new_outcome_page.qualification_fields.qts.click
+  end
+
+  context 'course creation flow' do
+    scenario 'creates the correct course' do
+      # This is intended to be a test which will go through the entire flow
+      # and ensure that the correct page gets displayed at the end
+      # with the correct course being created
+
+      go_to_new_course_page_for_provider(provider)
+
+      expect(new_outcome_page).to be_displayed
+      new_outcome_page.qualification_fields.qts.click
+      stub_api_v2_new_resource(course)
+      new_outcome_page.continue.click
+
+      expect_page_to_be_displayed_with_query(
+        page: new_entry_requirements_page,
+        expected_query: {
+          'course[qualification]' => 'qts'
+        }
+      )
+
+      select_entry_requirements
+
+      # They loop for now
+
+      expect_page_to_be_displayed_with_query(
+        page: new_outcome_page,
+        expected_query: {
+          'course[qualification]' => 'qts',
+          'course[english]' => 'must_have_qualification_at_application_time',
+          'course[maths]' => 'must_have_qualification_at_application_time',
+          'course[science]' => 'must_have_qualification_at_application_time'
+        }
+      )
+
+      # Ensure that everything gets carried through for course creation
+
+      new_outcome_page.qualification_fields.pgce_with_qts.click
+      stub_api_v2_new_resource(course)
+      new_outcome_page.continue.click
+
+      expect_page_to_be_displayed_with_query(
+        page: new_entry_requirements_page,
+        expected_query: {
+          'course[qualification]' => 'pgce_with_qts',
+          'course[english]' => 'must_have_qualification_at_application_time',
+          'course[maths]' => 'must_have_qualification_at_application_time',
+          'course[science]' => 'must_have_qualification_at_application_time'
+        }
+      )
+    end
+  end
+
+private
+
+  def go_to_new_course_page_for_provider(provider)
+    visit new_provider_recruitment_cycle_course_path(provider.provider_code, provider.recruitment_cycle_year)
+  end
+
+  def expect_page_to_be_displayed_with_query(page:, expected_query:)
+    expect(page).to be_displayed
+    query = page.url_matches['query']
+    expect(query).to eq(expected_query)
+  end
+
+  def select_entry_requirements
+    new_entry_requirements_page.maths_requirements.choose('course_maths_must_have_qualification_at_application_time')
+    new_entry_requirements_page.english_requirements.choose('course_english_must_have_qualification_at_application_time')
+    new_entry_requirements_page.science_requirements.choose('course_science_must_have_qualification_at_application_time')
+    new_entry_requirements_page.continue.click
   end
 end

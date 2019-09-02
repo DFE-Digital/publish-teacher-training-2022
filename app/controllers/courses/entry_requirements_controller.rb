@@ -5,10 +5,9 @@ module Courses
     before_action :not_found_if_no_gcse_subjects_required, except: :continue
 
     def continue
-      redirect_to new_provider_recruitment_cycle_courses_outcome_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course_params
+      redirect_to next_step(
+        current_step: :entry_requirements,
+        course_params: course_params.merge(@course_creation_params)
       )
     end
 

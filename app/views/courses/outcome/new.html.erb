@@ -13,7 +13,8 @@
     <%= form_with model: course,
                   url: continue_provider_recruitment_cycle_courses_outcome_path(
                     @provider.provider_code,
-                    @provider.recruitment_cycle_year
+                    @provider.recruitment_cycle_year,
+                    course: @course_creation_params
                   ),
                   method: :get do |form| %>
 

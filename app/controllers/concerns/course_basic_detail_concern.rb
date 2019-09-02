@@ -4,6 +4,7 @@ module CourseBasicDetailConcern
   included do
     decorates_assigned :course
     before_action :build_provider, :build_new_course, only: %i[new continue]
+    before_action :get_previous_course_creation_params, only: %i[new continue]
     before_action :build_course, only: %i[edit update]
   end
 
@@ -52,5 +53,29 @@ private
       .where(provider_code: params[:provider_code])
       .find(params[:code])
       .first
+  end
+
+  def get_previous_course_creation_params
+    return unless params.has_key?(:course)
+
+    @course_creation_params = params.require(:course).permit(
+      :qualification, :maths, :english, :science
+    )
+  end
+
+  def next_step(current_step:, course_params:)
+    if current_step == :outcome
+      new_provider_recruitment_cycle_courses_entry_requirements_path(
+        params[:provider_code],
+        params[:recruitment_cycle_year],
+        course: course_params
+      )
+    elsif current_step == :entry_requirements
+      new_provider_recruitment_cycle_courses_outcome_path(
+        params[:provider_code],
+        params[:recruitment_cycle_year],
+        course: course_params.merge(@course_creation_params)
+      )
+    end
   end
 end
