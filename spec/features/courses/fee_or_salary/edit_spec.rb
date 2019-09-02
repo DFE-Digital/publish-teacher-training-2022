@@ -42,7 +42,7 @@ feature 'Edit course fee or salary status', type: :feature do
       expect(course_details_page).to be_displayed
     end
 
-    xscenario 'can navigate to the edit screen and back again' do
+    scenario 'can navigate to the edit screen and back again' do
       course_details_page.load_with_course(course)
       click_on 'Change fee or salary'
       expect(fee_or_salary_page).to be_displayed
