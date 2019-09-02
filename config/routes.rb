@@ -58,6 +58,9 @@ Rails.application.routes.draw do
         resource :applications_open, on: :member, only: %i[new], controller: 'courses/applications_open', path: 'applications-open' do
           get 'continue'
         end
+        resource :age_range, on: :member, only: %i[new], controller: 'courses/age_range', path: 'age-range' do
+          get 'continue'
+        end
         get 'confirmation'
       end
 
