@@ -43,10 +43,10 @@ Rails.application.routes.draw do
         resource :outcome, on: :member, only: %i[new], controller: 'courses/outcome' do
           get 'continue'
         end
-        resource :entry_requirements, on: :member, only: %i[new], controller: 'courses/entry_requirements' do
+        resource :entry_requirements, on: :member, only: %i[new], controller: 'courses/entry_requirements', path: 'entry-requirements' do
           get 'continue'
         end
-        resource :study_mode, on: :member, only: %i[new], controller: 'courses/study_mode' do
+        resource :study_mode, on: :member, only: %i[new], controller: 'courses/study_mode', path: 'full-part-time' do
           get 'continue'
         end
         resource :level, on: :member, only: %i[new], controller: 'courses/level' do

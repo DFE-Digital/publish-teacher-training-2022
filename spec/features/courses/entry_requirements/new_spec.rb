@@ -17,8 +17,10 @@ feature 'new course entry_requirements', type: :feature do
 
   context 'level further_education' do
     scenario 'creating a new course' do
-      visit "/organisations/#{provider.provider_code}/#{recruitment_cycle.year}" \
-      "/courses/entry_requirements/new"
+      visit new_provider_recruitment_cycle_courses_entry_requirements_path(
+        provider.provider_code,
+        recruitment_cycle.year
+      )
       expect(page.status_code).to eq(404)
     end
   end
@@ -26,8 +28,10 @@ feature 'new course entry_requirements', type: :feature do
   context 'level primary' do
     let(:level) { :primary }
     scenario 'creating a new course' do
-      visit "/organisations/#{provider.provider_code}/#{recruitment_cycle.year}" \
-      "/courses/entry_requirements/new"
+      visit new_provider_recruitment_cycle_courses_entry_requirements_path(
+        provider.provider_code,
+        recruitment_cycle.year
+      )
 
       expect(page.status_code).to eq(200)
 
@@ -62,8 +66,10 @@ feature 'new course entry_requirements', type: :feature do
   context 'level secondary' do
     let(:level) { :secondary }
     scenario 'creating a new course' do
-      visit "/organisations/#{provider.provider_code}/#{recruitment_cycle.year}" \
-      "/courses/entry_requirements/new"
+      visit new_provider_recruitment_cycle_courses_entry_requirements_path(
+        provider.provider_code,
+        recruitment_cycle.year
+      )
 
       expect(page.status_code).to eq(200)
       expect(new_entry_requirements_page).to(
