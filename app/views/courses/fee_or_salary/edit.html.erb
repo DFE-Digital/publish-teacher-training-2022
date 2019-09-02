@@ -11,7 +11,7 @@
   <div class="govuk-grid-column-full">
     <%= form_with model: course, url: fee_or_salary_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
 
-      <%= render 'form_fields', form: form %>
+      <%= render 'form_fields', form: form, program_types: @course.meta['edit_options']['program_type'] %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
         class: "govuk-button", data: { qa: 'course__save' }
