@@ -17,7 +17,7 @@
 
       <div class="govuk-form-group">
         <div class="govuk-radios" data-module="radios" data-qa="course__accredited_body">
-          <% @provider.accredited_bodies.each do |provider| %>
+          <% provider.accredited_bodies.each do |provider| %>
             <div class="govuk-radios__item">
               <%= form.radio_button :accrediting_provider_code,
                                     provider["provider_code"],

@@ -54,8 +54,8 @@
       </h3>
       <dl class="govuk-summary-list">
         <%= enrichment_summary_item(:provider, 'About your organisation', @provider.train_with_us, ['train_with_us']) %>
-        <% if @provider.accredited_bodies.present? %>
-          <% @provider.accredited_bodies.sort_by { |provider| provider['provider_name'] }.each do |provider| %>
+        <% if provider.accredited_bodies.present? %>
+          <% provider.accredited_bodies.each do |provider| %>
           <%= enrichment_summary_item(:provider, "#{provider['provider_name']} (optional)", provider['description'], ["accrediting_provider_#{provider['provider_code']}"]) %>
           <% end %>
         <% end %>
