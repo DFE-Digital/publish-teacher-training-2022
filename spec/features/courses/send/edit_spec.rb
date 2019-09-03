@@ -23,18 +23,39 @@ feature 'Edit course SEND', type: :feature do
     send_page.load_with_course(course)
   end
 
-  context 'published course' do
-    let(:course) do
-      build(
-        :course,
-        content_status: 'published',
-        provider: provider
-      )
+  context 'editing is send' do
+    context 'if the backend has indicated that is send can be edited' do
+      let(:course) do
+        build(
+          :course,
+          edit_options: {
+            show_is_send: true
+          },
+          provider: provider
+        )
+      end
+
+      scenario 'should show the edit link' do
+        course_details_page.load_with_course(course)
+        expect(course_details_page).to have_edit_is_send_link
+      end
     end
 
-    scenario 'should not show edit link' do
-      course_details_page.load_with_course(course)
-      expect(course_details_page).to_not have_edit_is_send_link
+    context 'if the backend has indicated that is send cannot be edited' do
+      let(:course) do
+        build(
+          :course,
+          edit_options: {
+            show_is_send: false
+          },
+          provider: provider
+        )
+      end
+
+      scenario 'should not show the edit link' do
+        course_details_page.load_with_course(course)
+        expect(course_details_page).to_not have_edit_is_send_link
+      end
     end
   end
 
@@ -45,7 +66,8 @@ feature 'Edit course SEND', type: :feature do
         is_send: '1',
         content_status: 'draft',
         edit_options: {
-          is_send_options: %w[0 1]
+          is_send_options: %w[0 1],
+          show_is_send: true
         },
         provider: provider
       )

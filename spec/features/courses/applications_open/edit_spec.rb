@@ -23,18 +23,39 @@ feature 'Edit course applications open', type: :feature do
     applications_open_page.load_with_course(course)
   end
 
-  context 'published course' do
-    let(:course) do
-      build(
-        :course,
-        content_status: 'published',
-        provider: provider
-      )
+  context 'editing applications open' do
+    context 'if the backend has indicated that applications open can be edited' do
+      let(:course) do
+        build(
+          :course,
+          edit_options: {
+            show_applications_open: true
+          },
+          provider: provider
+        )
+      end
+
+      scenario 'should show the edit link' do
+        course_details_page.load_with_course(course)
+        expect(course_details_page).to have_edit_open_applications_link
+      end
     end
 
-    scenario 'should not show edit link' do
-      course_details_page.load_with_course(course)
-      expect(course_details_page).to_not have_edit_application_status_link
+    context 'if the backend has indicated that applications open cannot be edited' do
+      let(:course) do
+        build(
+          :course,
+          edit_options: {
+            show_applications_open: false
+          },
+          provider: provider
+        )
+      end
+
+      scenario 'should not show edit link' do
+        course_details_page.load_with_course(course)
+        expect(course_details_page).to_not have_edit_open_applications_link
+      end
     end
   end
 
@@ -45,6 +66,9 @@ feature 'Edit course applications open', type: :feature do
         :course,
         applications_open_from: '2018-10-09',
         content_status: 'draft',
+        edit_options: {
+          show_applications_open: true
+        },
         provider: provider,
         recruitment_cycle: current_recruitment_cycle
       )
