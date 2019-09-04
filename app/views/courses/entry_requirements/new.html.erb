@@ -34,7 +34,11 @@
                   method: :get do |form| %>
 
 
-      <%= form.hidden_field(:qualification, value: @course_creation_params['qualification']) %>
+      <%= render 'shared/course_creation_hidden_fields',
+        form: form,
+        course_creation_params: @course_creation_params,
+        except_keys: [:maths, :english, :science]
+      %>
       <%= render 'form_fields', form: form, gcse_subjects_required: course.gcse_subjects_required %>
 
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">

@@ -86,8 +86,6 @@ private
   end
 
   def get_previous_course_creation_params
-    @course_creation_params = {} unless params.has_key?(:course)
-
     @course_creation_params = course_params
   end
 

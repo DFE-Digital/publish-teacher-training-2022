@@ -17,10 +17,11 @@
                   ),
                   method: :get do |form| %>
 
-      <%= form.hidden_field(:maths, value: @course_creation_params['maths']) unless @course_creation_params['maths'].nil? %>
-      <%= form.hidden_field(:english, value: @course_creation_params['english']) unless @course_creation_params['english'].nil? %>
-      <%= form.hidden_field(:science, value: @course_creation_params['science']) unless @course_creation_params['science'].nil? %>
-
+      <%= render 'shared/course_creation_hidden_fields',
+        form: form,
+        course_creation_params: @course_creation_params,
+        except_keys: [:qualification]
+      %>
       <%= render 'form_fields', form: form, course_name_and_code: nil %>
 
       <%= form.submit "Continue",

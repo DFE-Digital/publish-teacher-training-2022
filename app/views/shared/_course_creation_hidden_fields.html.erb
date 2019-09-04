@@ -1,0 +1,4 @@
+<% course_creation_params.except(*except_keys).each do |k, v| %>
+  <%= form.hidden_field(k, value: v) %>
+<% end %>
+
