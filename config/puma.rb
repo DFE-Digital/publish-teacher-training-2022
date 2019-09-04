@@ -36,27 +36,6 @@ if env == "development"
   cert = "#{Dir.pwd}/#{File.join('config', 'localhost', 'https', 'localhost.crt')}"
   key = "#{Dir.pwd}/#{File.join('config', 'localhost', 'https', 'localhost.key')}"
 
-  unless File.exist?(cert) && File.exist?(key)
-    def generate_root_cert(root_key)
-      root_ca = OpenSSL::X509::Certificate.new
-      root_ca.version = 2 # cf. RFC 5280 - to make it a "v3" certificate
-      root_ca.serial = 0x0
-      root_ca.subject = OpenSSL::X509::Name.parse "/C=GB/L=London/O=DfE/CN=localhost"
-      root_ca.issuer = root_ca.subject # root CA's are "self-signed"
-      root_ca.public_key = root_key.public_key
-      root_ca.not_before = Time.now
-      root_ca.not_after = root_ca.not_before + 2 * 365 * 24 * 60 * 60 # 2 years validity
-      root_ca.sign(root_key, OpenSSL::Digest::SHA256.new)
-      root_ca
-    end
-
-    root_key = OpenSSL::PKey::RSA.new(2048)
-    File.write(key, root_key, mode: 'wb')
-
-    root_cert = generate_root_cert(root_key)
-    File.write(cert, root_cert, mode: 'wb')
-  end
-
   ssl_bind '127.0.0.1', listen_port, cert: cert, key: key, verify_mode: 'none'
 else
   port listen_port
