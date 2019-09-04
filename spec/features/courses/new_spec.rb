@@ -11,6 +11,30 @@ feature 'new course', type: :feature do
   let(:new_entry_requirements_page) do
     PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
   end
+  let(:build_new_course_request) { stub_build_course_request(initial_params) }
+  let(:build_new_course_with_outcome_request) do
+    stub_build_course_request(initial_params.merge('attrs[course][qualification]' => 'qts'))
+  end
+  let(:build_new_course_with_outcome_and_entry_requirements_request) do
+    stub_build_course_request(
+      initial_params.merge(
+        'attrs[course][qualification]' => 'qts',
+        'attrs[course][english]' => 'must_have_qualification_at_application_time',
+        'attrs[course][maths]' => 'must_have_qualification_at_application_time',
+        'attrs[course][science]' => 'must_have_qualification_at_application_time'
+      )
+    )
+  end
+  let(:build_new_course_with_outcome_2_and_entry_requirements_request) do
+    stub_build_course_request(
+      initial_params.merge(
+        'attrs[course][qualification]' => 'pgce_with_qts',
+        'attrs[course][english]' => 'must_have_qualification_at_application_time',
+        'attrs[course][maths]' => 'must_have_qualification_at_application_time',
+        'attrs[course][science]' => 'must_have_qualification_at_application_time'
+      )
+    )
+  end
   let(:provider) { build(:provider) }
   let(:course) do
     build :course,
@@ -27,28 +51,40 @@ feature 'new course', type: :feature do
     stub_api_v2_resource(provider)
     stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
     stub_api_v2_new_resource(course)
+    build_new_course_request
+    build_new_course_with_outcome_request
+    build_new_course_with_outcome_and_entry_requirements_request
+    build_new_course_with_outcome_2_and_entry_requirements_request
   end
 
-  scenario 'redirects and renders new course outcome page' do
-    go_to_new_course_page_for_provider(provider)
+  context 'Beginning the course creation flow' do
+    scenario "builds the new course on the API" do
+      go_to_new_course_page_for_provider(provider)
 
-    expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
+      expect(build_new_course_request).to have_been_made
+    end
 
-    expect(new_outcome_page).to(
-      be_displayed(
-        recruitment_cycle_year: recruitment_cycle.year,
-        provider_code: provider.provider_code
+    scenario 'redirects and renders new course outcome page' do
+      go_to_new_course_page_for_provider(provider)
+
+      expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
+
+      expect(new_outcome_page).to(
+        be_displayed(
+          recruitment_cycle_year: recruitment_cycle.year,
+          provider_code: provider.provider_code
+        )
       )
-    )
 
-    # The qualifications for a new course that hasn't had it's level set just
-    # happens to result in these qualifications. This will change when the new
-    # course flow properly sets the level of the course.
-    expect(new_outcome_page).to have_qualification_fields
-    expect(new_outcome_page.qualification_fields).to have_qts
-    expect(new_outcome_page.qualification_fields).to have_pgce_with_qts
-    expect(new_outcome_page.qualification_fields).to have_pgde_with_qts
-    new_outcome_page.qualification_fields.qts.click
+      # The qualifications for a new course that hasn't had it's level set just
+      # happens to result in these qualifications. This will change when the new
+      # course flow properly sets the level of the course.
+      expect(new_outcome_page).to have_qualification_fields
+      expect(new_outcome_page.qualification_fields).to have_qts
+      expect(new_outcome_page.qualification_fields).to have_pgce_with_qts
+      expect(new_outcome_page.qualification_fields).to have_pgde_with_qts
+      new_outcome_page.qualification_fields.qts.click
+    end
   end
 
   context 'course creation flow' do
@@ -120,5 +156,27 @@ private
     new_entry_requirements_page.english_requirements.choose('course_english_must_have_qualification_at_application_time')
     new_entry_requirements_page.science_requirements.choose('course_science_must_have_qualification_at_application_time')
     new_entry_requirements_page.continue.click
+  end
+
+  def initial_params
+    {
+      provider_code: provider.provider_code,
+      recruitment_cycle_year: provider.recruitment_cycle_year
+    }
+  end
+
+  def stub_build_course_request(params)
+    stub_api_v2_request(
+      build_course_request_url(params),
+      course.to_jsonapi
+    )
+  end
+
+  def build_course_request_url(params)
+    base_url = "/recruitment_cycles/#{provider.recruitment_cycle_year}" \
+      "/providers/#{provider.provider_code}/courses/build_new?"
+    url_params = params.map { |k, v| "#{k}=#{v}" }.join("&")
+
+    base_url + url_params
   end
 end

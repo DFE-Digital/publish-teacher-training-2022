@@ -13,10 +13,13 @@
     <%= form_with model: course,
                   url: continue_provider_recruitment_cycle_courses_outcome_path(
                     @provider.provider_code,
-                    @provider.recruitment_cycle_year,
-                    course: @course_creation_params
+                    @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
+
+      <%= form.hidden_field(:maths, value: @course_creation_params['maths']) unless @course_creation_params['maths'].nil? %>
+      <%= form.hidden_field(:english, value: @course_creation_params['english']) unless @course_creation_params['english'].nil? %>
+      <%= form.hidden_field(:science, value: @course_creation_params['science']) unless @course_creation_params['science'].nil? %>
 
       <%= render 'form_fields', form: form, course_name_and_code: nil %>
 
