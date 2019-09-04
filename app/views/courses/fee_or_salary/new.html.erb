@@ -1,0 +1,34 @@
+<%= content_for :page_title, "Edit Fee or Salary" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(
+                           @provider.provider_code,
+                           @provider.recruitment_cycle_year
+                        )) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<h1 class="govuk-heading-xl">
+</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= form_with model: course,
+                    url: continue_provider_recruitment_cycle_courses_fee_or_salary_path(
+                      @provider.provider_code,
+                      @provider.recruitment_cycle_year
+                    ),
+                    method: :get do |form| %>
+      <%= render 'form_fields', form: form,
+        program_types: %i[pg_teaching_apprenticeship
+                          school_direct_training_programme
+                          school_direct_salaried_training_programme]
+      %>
+
+      <%= form.submit "Continue",
+                      class: "govuk-button",
+                      data: { qa: 'course__save' } %>
+
+    <% end %>
+  </div>
+</div>
+

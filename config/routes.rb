@@ -64,6 +64,9 @@ Rails.application.routes.draw do
         resource :apprenticeship, on: :member, only: %i[new], controller: 'courses/apprenticeship' do
           get 'continue'
         end
+        resource :fee_or_salary, on: :member, only: %i[new], controller: 'courses/fee_or_salary', path: 'fee-or-salary' do
+          get 'continue'
+        end
         get 'confirmation'
       end
 
