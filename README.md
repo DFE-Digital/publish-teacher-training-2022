@@ -12,10 +12,21 @@
 
 1. Run `yarn` to install node dependencies
 2. Run `bundle install` to install the gem dependencies
-3. Run `touch config/settings/development.local.yml` and set a value for `dfe_signin.secret`
+3. Create new file `config/settings/development.local.yml` with the below contents.
 4. Run `bundle exec foreman start -f Procfile.dev` to launch the app on https://localhost:3000.
 
-You will also need to add the automatically generated SSL certificate to your OS keychain. On macOS:
+### Sign-in config
+```
+# config/settings/development.local.yml
+dfe_signin:
+    secret: dfe_sign_in_test_server_client_secret_here
+```
+
+### Trust the TLS certificate
+
+You will also need to add the automatically generated SSL certificate to your OS keychain to make the browser trust the local site.
+
+On macOS:
 
 ```bash
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain config/localhost/https/localhost.crt
