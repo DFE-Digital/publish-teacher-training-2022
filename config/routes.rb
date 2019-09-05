@@ -1,5 +1,10 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  constraints(host: /www\./) do
+    match "/(*path)" => redirect { |_, req| "#{Settings.dfe_signin.base_url}#{req.fullpath}" },
+      via: %i[get post put]
+  end
+
   # DfE Sign In
   get "/signin", to: "sessions#new", as: "signin"
   get "/signout", to: "sessions#signout", as: "signout"
