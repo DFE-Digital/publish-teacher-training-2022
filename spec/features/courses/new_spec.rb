@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature 'new course', :focus, type: :feature do
+feature 'new course', type: :feature do
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:new_level_page) do
     PageObjects::Page::Organisations::Courses::NewLevelPage.new

@@ -15,6 +15,9 @@ feature 'new course outcome', type: :feature do
     stub_api_v2_resource(provider)
     new_course = build(:course, :new, provider: provider, gcse_subjects_required_using_level: true)
     stub_api_v2_new_resource(new_course)
+    stub_api_v2_build_course
+    stub_api_v2_build_course(qualification: 'qts')
+    # TODO test build course stuff
   end
 
   context 'Selecting QTS' do

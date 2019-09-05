@@ -7,12 +7,13 @@ feature 'new course entry_requirements', type: :feature do
   end
   let(:provider) { build(:provider) }
   let(:level) { :further_education }
+  let(:course)  { build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true) }
 
   before do
     stub_omniauth
     stub_api_v2_resource(provider)
-    new_course = build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true)
-    stub_api_v2_new_resource(new_course)
+    stub_api_v2_new_resource(course)
+    stub_api_v2_build_course
   end
 
   context 'level further_education' do
@@ -27,6 +28,10 @@ feature 'new course entry_requirements', type: :feature do
 
   context 'level primary' do
     let(:level) { :primary }
+    before do
+      stub_api_v2_build_course(maths: 'expect_to_achieve_before_training_begins')
+    end
+
     scenario 'creating a new course' do
       visit new_provider_recruitment_cycle_courses_entry_requirements_path(
         provider.provider_code,
@@ -65,6 +70,9 @@ feature 'new course entry_requirements', type: :feature do
 
   context 'level secondary' do
     let(:level) { :secondary }
+    before do
+      stub_api_v2_build_course(english: 'expect_to_achieve_before_training_begins')
+    end
     scenario 'creating a new course' do
       visit new_provider_recruitment_cycle_courses_entry_requirements_path(
         provider.provider_code,
