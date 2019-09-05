@@ -17,6 +17,7 @@ describe '/organisations/:provider_code/:year/courses/:course_code/outcome/new',
     new_course = build(:course, :new, provider: provider)
     stub_api_v2_new_resource(new_course)
     stub_api_v2_resource_collection([course])
+    stub_api_v2_build_course
   end
 
   it 'renders the new outcome page' do

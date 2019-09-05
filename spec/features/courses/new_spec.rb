@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature 'new course', type: :feature do
+feature 'new course', :focus, type: :feature do
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:new_level_page) do
     PageObjects::Page::Organisations::Courses::NewLevelPage.new
@@ -36,9 +36,7 @@ feature 'new course', type: :feature do
     build :course,
           :new,
           provider: provider,
-          recruitment_cycle: recruitment_cycle,
-          level: :primary,
-          gcse_subjects_required_using_level: true
+          gcse_subjects_required: %w[maths science english]
   end
 
   before do
