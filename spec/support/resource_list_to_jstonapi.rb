@@ -12,7 +12,8 @@ def resource_list_to_jsonapi(resource_list, **opts)
       RecruitmentCycle: RecruitmentCycleSerializer,
       Site: SiteSerializer,
       SiteStatus: SiteStatusSerializer,
-      User: UserSerializer
+      User: UserSerializer,
+      ProviderSuggestion: ProviderSuggestionSerializer
     },
     include: opts[:include],
     meta: opts[:meta]

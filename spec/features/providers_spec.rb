@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'View providers', type: :feature do
+feature 'View providers', type: :feature do
   let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider_1) { build :provider, provider_code: 'A0', include_counts: [:courses] }

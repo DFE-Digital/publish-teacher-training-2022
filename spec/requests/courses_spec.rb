@@ -16,6 +16,25 @@ describe 'Courses' do
       )
     end
 
+    describe 'GET search' do
+      it 'renders providers search' do
+        stub_api_v2_request(
+          "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=accrediting_provider",
+          course.to_jsonapi(include: %i[accrediting_provider]),
+        )
+        current_recruitment_cycle = build(:recruitment_cycle, year: '2019')
+        stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
+        stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}", provider.to_jsonapi)
+
+        provider1 = build(:provider, provider_name: 'asd')
+        provider2 = build(:provider, provider_name: 'aoe')
+        stub_api_v2_request("/providers/suggest?query=a", resource_list_to_jsonapi([provider1, provider2]))
+        get(accredited_body_search_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code, query: 'a'))
+        expect(response.body).to include('asd')
+        expect(response.body).to include('aoe')
+      end
+    end
+
     context "without errors" do
       before do
         stub_api_v2_request(

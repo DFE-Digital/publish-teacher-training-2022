@@ -5,6 +5,7 @@ for_selector = ->(code) { "[for=\"#{id_selector.(code)}\"]" }
 
 feature 'Edit accredited body', type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:accredited_body_search) { PageObjects::Page::Organisations::CourseAccreditedBodySearch.new }
   let(:accredited_body_page) { PageObjects::Page::Organisations::CourseAccreditedBody.new }
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
   let(:accrediting_provider_1) { build(:provider) }
@@ -43,6 +44,14 @@ feature 'Edit accredited body', type: :feature do
       click_on 'Back'
       expect(course_details_page).to be_displayed
     end
+
+    scenario 'can search for an accredited body' do
+      searching_returns_some_results
+      fill_in "Name of accredited body", with: 'ACME'
+      click_on "Save and publish changes"
+
+      expect(accredited_body_search).to be_displayed
+    end
   end
 
   context 'a course with accredited bodies' do
@@ -69,6 +78,51 @@ feature 'Edit accredited body', type: :feature do
         )
     end
 
+    scenario 'presents the option to choose another accrediting body' do
+      expect(accredited_body_page).to have_content("A new accredited body you’re working with")
+      expect(accredited_body_page).to have_content("Name of accredited body")
+    end
+
+    context 'accrediting body search' do
+      context "with some results" do
+        before do
+          searching_returns_some_results
+          choose "A new accredited body you’re working with"
+          fill_in "Name of accredited body", with: 'ACME'
+          click_on "Save and publish changes"
+        end
+
+        scenario 'goes to search page when a partial accrediting body is specified' do
+          expect(accredited_body_search).to be_displayed
+        end
+
+        scenario 'shows all providers from a search' do
+          expect(accredited_body_search.accredited_body_options.length).to eq(4)
+        end
+      end
+
+      context "with no results" do
+        before do
+          searching_returns_no_results
+          choose "A new accredited body you’re working with"
+          fill_in "Name of accredited body", with: 'ACME'
+          click_on "Save and publish changes"
+        end
+
+        scenario 'goes to search page when a partial accrediting body is specified' do
+          expect(accredited_body_search).to be_displayed
+        end
+
+        scenario 'says no providers were found' do
+          expect(accredited_body_search).to have_content("We did not find any")
+        end
+
+        scenario 'shows no providers' do
+          expect(accredited_body_search.accredited_body_options.length).to eq(0)
+        end
+      end
+    end
+
     scenario 'has the correct value selected' do
       expect(accredited_body_page.accredited_body_fields)
         .to have_field(
@@ -90,16 +144,69 @@ feature 'Edit accredited body', type: :feature do
           type: "courses",
           attributes: {
             accrediting_provider_code: accrediting_provider_1.provider_code,
+            accredited_body: ''
           }
         }
       }.to_json)
 
-      choose(accrediting_provider_1.provider_name)
-      click_on 'Save'
+      choose accrediting_provider_1.provider_name
+      click_on "Save and publish changes"
 
       expect(course_details_page).to be_displayed
       expect(course_details_page.flash).to have_content('Your changes have been saved')
       expect(update_course_stub).to have_been_requested
     end
+
+    context 'validations' do
+      context "choosing" do
+        let(:course) { build(:course, provider: provider) }
+
+        scenario "shows error when no option is chosen" do
+          click_on "Save and publish changes"
+
+          expect(accredited_body_page).to be_displayed
+          expect(accredited_body_page).to have_content('Pick an accredited body')
+        end
+      end
+
+      context "searching" do
+        before do
+          choose "A new accredited body you’re working with"
+        end
+
+        scenario "shows error when query is empty or too short" do
+          fill_in "Name of accredited body", with: ''
+          click_on "Save and publish changes"
+
+          expect(accredited_body_page).to be_displayed
+          expect(accredited_body_page).to have_content('search too short')
+
+          fill_in "Name of accredited body", with: 'AT'
+          click_on "Save and publish changes"
+
+          expect(accredited_body_page).to be_displayed
+          expect(accredited_body_page).to have_content('search too short')
+        end
+      end
+    end
+  end
+
+  def searching_returns_some_results
+    stub_api_v2_request(
+      '/providers/suggest?query=ACME',
+      resource_list_to_jsonapi([
+        build(:provider_suggestion, provider_name: 'ACME 1', provider_code: 'A01'),
+        build(:provider_suggestion, provider_name: 'ACME 2'),
+        build(:provider_suggestion, provider_name: 'ACME 3'),
+        build(:provider_suggestion, provider_name: 'ACME 4')
+      ])
+    )
+  end
+
+  def searching_returns_no_results
+    stub_api_v2_request(
+      '/providers/suggest?query=ACME',
+      resource_list_to_jsonapi([])
+    )
   end
 end
