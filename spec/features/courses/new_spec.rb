@@ -11,28 +11,24 @@ feature 'new course', type: :feature do
   let(:new_entry_requirements_page) do
     PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
   end
-  let(:build_new_course_request) { stub_build_course_request(initial_params) }
+  let(:build_new_course_request) { stub_api_v2_build_course }
   let(:build_new_course_with_outcome_request) do
-    stub_build_course_request(initial_params.merge('attrs[course][qualification]' => 'qts'))
+    stub_api_v2_build_course('qualification' => 'qts')
   end
   let(:build_new_course_with_outcome_and_entry_requirements_request) do
-    stub_build_course_request(
-      initial_params.merge(
-        'attrs[course][qualification]' => 'qts',
-        'attrs[course][english]' => 'must_have_qualification_at_application_time',
-        'attrs[course][maths]' => 'must_have_qualification_at_application_time',
-        'attrs[course][science]' => 'must_have_qualification_at_application_time'
-      )
+    stub_api_v2_build_course(
+      'qualification' => 'qts',
+      'english' => 'must_have_qualification_at_application_time',
+      'maths' => 'must_have_qualification_at_application_time',
+      'science' => 'must_have_qualification_at_application_time'
     )
   end
   let(:build_new_course_with_outcome_2_and_entry_requirements_request) do
-    stub_build_course_request(
-      initial_params.merge(
-        'attrs[course][qualification]' => 'pgce_with_qts',
-        'attrs[course][english]' => 'must_have_qualification_at_application_time',
-        'attrs[course][maths]' => 'must_have_qualification_at_application_time',
-        'attrs[course][science]' => 'must_have_qualification_at_application_time'
-      )
+    stub_api_v2_build_course(
+      'qualification' => 'pgce_with_qts',
+      'english' => 'must_have_qualification_at_application_time',
+      'maths' => 'must_have_qualification_at_application_time',
+      'science' => 'must_have_qualification_at_application_time'
     )
   end
   let(:provider) { build(:provider) }
@@ -163,20 +159,5 @@ private
       provider_code: provider.provider_code,
       recruitment_cycle_year: provider.recruitment_cycle_year
     }
-  end
-
-  def stub_build_course_request(params)
-    stub_api_v2_request(
-      build_course_request_url(params),
-      course.to_jsonapi
-    )
-  end
-
-  def build_course_request_url(params)
-    base_url = "/recruitment_cycles/#{provider.recruitment_cycle_year}" \
-      "/providers/#{provider.provider_code}/courses/build_new?"
-    url_params = params.map { |k, v| "#{k}=#{v}" }.join("&")
-
-    base_url + url_params
   end
 end

@@ -94,6 +94,13 @@ module Helpers
     stub_api_v2_request(url, jsonapi_response)
   end
 
+  def stub_api_v2_build_course(params = {})
+    stub_api_v2_request(
+      url_for_build_course_with_params(params),
+      course.to_jsonapi
+    )
+  end
+
 private
 
   def url_for_resource(resource)
@@ -121,6 +128,17 @@ private
   def url_for_new_resource(resource)
     base_url = url_for_resource_collection(resource)
     "#{base_url}/new"
+  end
+
+  def url_for_build_course_with_params(params)
+    provider_code = provider.provider_code
+    recruitment_cycle_year = provider.recruitment_cycle_year
+    url = "/recruitment_cycles/#{recruitment_cycle_year}" \
+      "/providers/#{provider_code}/courses/build_new?" \
+      "provider_code=#{provider_code}&recruitment_cycle_year=#{recruitment_cycle_year}&"
+
+    url_params = params.map { |k, v| "attrs[course][#{k}]=#{v}" }.join("&")
+    url + url_params
   end
 end
 
