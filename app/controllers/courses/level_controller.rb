@@ -21,7 +21,11 @@ module Courses
     def errors; end
 
     def course_params
-      params.require(:course).permit(:level, :is_send)
+      if params.key?(:course)
+        params.require(:course).permit(:level, :is_send)
+      else
+        ActionController::Parameters.new({}).permit
+      end
     end
   end
 end

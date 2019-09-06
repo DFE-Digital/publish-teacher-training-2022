@@ -4,7 +4,7 @@ module CourseBasicDetailConcern
   included do
     decorates_assigned :course
     before_action :build_provider, :build_new_course, only: %i[new continue]
-    before_action :get_previous_course_creation_params, only: %i[new continue]
+    before_action :build_previous_course_creation_params, only: %i[new continue]
     before_action :build_course, only: %i[edit update]
   end
 
@@ -94,7 +94,7 @@ private
     end
   end
 
-  def get_previous_course_creation_params
+  def build_previous_course_creation_params
     @course_creation_params = course_params
   end
 

@@ -5,16 +5,17 @@ feature 'new course study mode', type: :feature do
     PageObjects::Page::Organisations::Courses::NewStudyModePage.new
   end
 
+  let(:course) { build(:course, :new, provider: provider) }
   let(:provider) { build(:provider) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do
     stub_omniauth
     stub_api_v2_resource(provider)
-    new_course = build(:course, :new, provider: provider)
-    stub_api_v2_new_resource(new_course)
     stub_api_v2_resource(recruitment_cycle)
-    stub_api_v2_resource_collection([new_course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_build_course
+    stub_api_v2_build_course(study_mode: 'full_time_or_part_time')
   end
 
   scenario "sends user to confirmation page" do

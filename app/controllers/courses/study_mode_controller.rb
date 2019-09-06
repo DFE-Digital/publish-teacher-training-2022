@@ -31,7 +31,11 @@ module Courses
     end
 
     def course_params
-      params.require(:course).permit(:study_mode)
+      if params.key?(:course)
+        params.require(:course).permit(:study_mode)
+      else
+        ActionController::Parameters.new({}).permit
+      end
     end
   end
 end

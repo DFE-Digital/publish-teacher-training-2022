@@ -4,16 +4,17 @@ feature 'new course apprenticeship', type: :feature do
   let(:new_apprenticeship_page) do
     PageObjects::Page::Organisations::Courses::NewApprenticeshipPage.new
   end
+  let(:course) { build(:course, :new, provider: provider) }
   let(:provider) { build(:provider) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do
     stub_omniauth
     stub_api_v2_resource(provider)
-    new_course = build(:course, :new, provider: provider)
-    stub_api_v2_new_resource(new_course)
     stub_api_v2_resource(recruitment_cycle)
-    stub_api_v2_resource_collection([new_course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_build_course
+    stub_api_v2_build_course(program_type: 'higher_education_programme')
   end
 
   scenario "sends user to entry requirements" do
