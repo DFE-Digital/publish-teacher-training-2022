@@ -17,6 +17,11 @@
                   ),
                   method: :get do |form| %>
 
+      <%= render 'shared/course_creation_hidden_fields',
+        form: form,
+        course_creation_params: @course_creation_params,
+        except_keys: [:qualification]
+      %>
       <%= render 'form_fields', form: form, course_name_and_code: nil %>
 
       <%= form.submit "Continue",

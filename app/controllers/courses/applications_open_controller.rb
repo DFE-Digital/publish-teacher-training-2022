@@ -31,16 +31,17 @@ module Courses
     end
 
     def course_params
-      applications_open_from =
-        if actual_params['applications_open_from'] == 'other'
-          "#{actual_params['year']}-#{actual_params['month']}-#{actual_params['day']}"
-        else
-          actual_params['applications_open_from']
-        end
-
-      {
-        applications_open_from: applications_open_from
-      }
+      if params.key?(:course)
+        applications_open_from =
+          if actual_params['applications_open_from'] == 'other'
+            "#{actual_params['year']}-#{actual_params['month']}-#{actual_params['day']}"
+          else
+            actual_params['applications_open_from']
+          end
+        ActionController::Parameters.new(applications_open_from: applications_open_from).permit(:applications_open_from)
+      else
+        ActionController::Parameters.new({}).permit
+      end
     end
 
     def build_recruitment_cycle

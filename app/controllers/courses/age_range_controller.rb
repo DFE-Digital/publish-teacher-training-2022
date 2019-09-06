@@ -73,10 +73,10 @@ module Courses
     end
 
     def build_new_course
-      @course = Course.fetch_new(
+      @course = Course.build_new(
         recruitment_cycle_year: @provider.recruitment_cycle_year,
         provider_code: @provider.provider_code
-      )
+      ).first
     end
   end
 end

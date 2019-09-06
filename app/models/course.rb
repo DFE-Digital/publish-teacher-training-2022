@@ -5,24 +5,15 @@ class Course < Base
   has_many :sites, through: :site_statuses, source: :site
 
   custom_endpoint :sync_with_search_and_compare, on: :member, request_method: :post
+  custom_endpoint :build_new, on: :collection, request_method: :get
 
   property :fee_international, type: :string
   property :fee_uk_eu, type: :string
+  property :maths, type: :string
+  property :english, type: :string
+  property :science, type: :string
 
   self.primary_key = :course_code
-
-  # Fetch a "new" record from the backend API.
-  def self.fetch_new(recruitment_cycle_year:, provider_code:)
-    # Using .find(:new) here is a little bit hacky, but this is the only way I
-    # could find to construct the URL with `.../courses/new` at the end, and at
-    # the end of the day jsonapi defines ids as being strings so it's in no way
-    # invalid. If we can find a way to use custom endpoints or other to improve
-    # this we should.
-    Course.where(recruitment_cycle_year: recruitment_cycle_year,
-                 provider_code: provider_code)
-      .find(:new)
-      .first
-  end
 
   def publish
     post_request('/publish')

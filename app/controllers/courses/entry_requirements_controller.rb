@@ -5,11 +5,7 @@ module Courses
     before_action :not_found_if_no_gcse_subjects_required, except: :continue
 
     def continue
-      redirect_to new_provider_recruitment_cycle_courses_outcome_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course_params
-      )
+      redirect_to next_step(current_step: :entry_requirements)
     end
 
   private
@@ -19,14 +15,6 @@ module Courses
         .reject { |subject| params.dig(:course, subject) }
         .map { |subject| [subject.to_sym, ["Pick an option for #{subject.titleize}"]] }
         .to_h
-    end
-
-    def course_params
-      params.require(:course).permit(
-        :maths,
-        :english,
-        :science
-      )
     end
 
     def not_found_if_no_gcse_subjects_required

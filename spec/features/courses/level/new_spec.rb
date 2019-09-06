@@ -5,13 +5,14 @@ feature 'New course level', type: :feature do
     PageObjects::Page::Organisations::Courses::NewLevelPage.new
   end
   let(:provider) { build(:provider) }
-  let(:course) { build(:course, provider: provider, level: :primary) }
+  let(:course) { build(:course, :new, provider: provider, gcse_subjects_required_using_level: true) }
 
   before do
     stub_omniauth
     stub_api_v2_resource(provider)
-    new_course = build(:course, :new, provider: provider, gcse_subjects_required_using_level: true)
-    stub_api_v2_new_resource(new_course)
+    stub_api_v2_new_resource(course)
+    stub_api_v2_build_course
+    stub_api_v2_build_course(is_send: 0, level: 'secondary')
   end
 
   scenario "sends user to entry requirements" do
