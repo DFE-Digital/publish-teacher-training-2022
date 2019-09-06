@@ -16,5 +16,12 @@
     <%= f.submit "Publish", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'course__publish' } %>
   <% end %>
 <% else %>
-  <p class="govuk-body">You will be able to publish your courses in September before the next cycle opens.</p>
+  <% if course.is_published? %>
+    <p class="govuk-body">Publish your changes and they will appear on Find when the cycle opens in October.</p>
+  <% else %>
+    <p class="govuk-body">Publish this course and it will appear on Find when the cycle opens in October.</p>
+  <% end %>
+  <%= form_for course, url: publish_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :post do |f| %>
+    <%= f.submit "Publish in October", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'course__publish' } %>
+  <% end %>
 <% end %>

@@ -199,6 +199,7 @@ feature 'Course show', type: :feature do
       expect(course_page).to have_status_panel
       expect(course_page.is_findable).to have_content('No')
       expect(course_page.status_tag).to have_content('Rolled over')
+      expect(course_page.publish).to have_content('Publish in October')
     end
   end
 
