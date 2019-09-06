@@ -157,6 +157,7 @@ Rails.application.routes.draw do
   get '/organisation/:provider_code/course/:accrediting_provider/:course_code/about', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/about', status: 301)
   get '/organisation/:provider_code/course/self/:course_code/fees-and-length', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/fees', status: 301)
   get '/organisation/:provider_code/course/:accrediting_provider/:course_code/fees-and-length', to: redirect('/organisations/%{provider_code}/2019/courses/%{course_code}/fees', status: 301)
+  get '/auth/cb', to: redirect('/', status: 301)
 
   match '/401', to: 'errors#unauthorized', via: :all, as: 'unauthorized'
   match '/404', to: 'errors#not_found', via: :all
