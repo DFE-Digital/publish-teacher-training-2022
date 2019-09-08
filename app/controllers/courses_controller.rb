@@ -17,9 +17,13 @@ class CoursesController < ApplicationController
 
   def confirmation
     @provider = Provider
-      .where(recruitment_cycle_year: @recruitment_cycle.year)
+      .where(recruitment_cycle_year: params[:recruitment_cycle_year])
       .find(params[:provider_code])
       .first
+
+    @course = Course.new(
+      attributes: params
+    )
   end
 
   def new
