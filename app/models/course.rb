@@ -5,7 +5,6 @@ class Course < Base
   has_many :sites, through: :site_statuses, source: :site
 
   custom_endpoint :sync_with_search_and_compare, on: :member, request_method: :post
-  custom_endpoint :build_new, on: :collection, request_method: :get
 
   property :fee_international, type: :string
   property :fee_uk_eu, type: :string
@@ -21,6 +20,20 @@ class Course < Base
 
   def publishable?
     post_request('/publishable')
+  end
+
+  def self.build_new(params)
+    response = connection.run(:get, "#{Course.site}build_new_course?#{params.to_query}")
+
+    course = Course.new(response.body["data"]["attributes"])
+    course.meta = response.body["data"]["meta"]
+
+    response.body["data"]["errors"].each do |error_hash|
+      key = error_hash["source"]["pointer"].sub("/data/attributes/", "")
+      course.errors.add(key, error_hash["detail"])
+    end
+
+    course
   end
 
   def full_time?

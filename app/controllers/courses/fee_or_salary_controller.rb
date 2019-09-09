@@ -19,13 +19,5 @@ module Courses
   private
 
     def errors; end
-
-    def course_params
-      if params.key?(:course)
-        params.require(:course).permit(:program_type)
-      else
-        ActionController::Parameters.new({}).permit
-      end
-    end
   end
 end

@@ -18,7 +18,7 @@ describe Course do
       Course.build_new(
         recruitment_cycle_year: recruitment_cycle.year,
         provider_code: provider.provider_code
-      ).first
+      )
     end
 
     it 'makes a request to the api' do
