@@ -20,10 +20,10 @@
       <% end %>
     </li>
 
-    <li class="govuk-tabs__list-item" role="presentation">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
       <%=
         link_to "#basic_details",
-        class: "govuk-tabs__tab govuk-tabs__tab--selected", id: "basic_details_tab", role: 'tab', tabindex: '-1', aria: { selected: true } do
+        class: "govuk-tabs__tab", id: "basic_details_tab", role: 'tab', tabindex: '-1', aria: { selected: true } do
       %>
         Basic details<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Locations, outcome, subject</span>

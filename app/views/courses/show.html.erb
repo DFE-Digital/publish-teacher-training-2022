@@ -2,7 +2,7 @@
 <%= content_for :before_content, render_breadcrumbs(:course) %>
 
 <% if @errors.present? %>
-  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary" data-ga-event-form="error">
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary" data-ga-event-form="error">
     <h2 class="govuk-error-summary__title" id="error-summary-title">
       You’ll need to correct some information.
     </h2>
@@ -25,7 +25,7 @@
 <% end %>
 
 <% if @published.present? %>
-  <div class="govuk-success-summary" aria-labelledby="success-summary-title" role="alert" tabindex="-1" data-module="error-summary" data-ga-event-form="success">
+  <div class="govuk-success-summary" aria-labelledby="success-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary" data-ga-event-form="success">
     <h2 class="govuk-success-summary__title" id="success-summary-title">
       <%= @published %>
     </h2>
@@ -41,10 +41,10 @@
   <h2 class="govuk-tabs__title">Contents</h2>
 
   <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item" role="presentation">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
       <%=
         link_to "#description",
-        class: "govuk-tabs__tab govuk-tabs__tab--selected", role: 'tab', tabindex: '-1', aria: { selected: true } do
+        class: "govuk-tabs__tab", role: 'tab', tabindex: '-1', aria: { selected: true } do
       %>
         Description<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Content, fees and eligibility</span>

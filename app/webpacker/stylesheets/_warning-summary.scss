@@ -1,10 +1,15 @@
 .govuk-warning-summary {
-  @include govuk-focusable;
   @include govuk-text-colour;
   @include govuk-responsive-padding(4);
   @include govuk-responsive-margin(8, "bottom");
 
-  border: $govuk-border-width-mobile solid govuk-colour("orange");
+  border: $govuk-border-width-narrow solid govuk-colour("orange");
+
+  &:focus {
+    outline: $govuk-focus-width solid $govuk-focus-colour;
+    // Ensure outline appears outside of the element
+    outline-offset: 0;
+  }
 
   @include govuk-media-query($from: tablet) {
     border: $govuk-border-width solid govuk-colour("orange");

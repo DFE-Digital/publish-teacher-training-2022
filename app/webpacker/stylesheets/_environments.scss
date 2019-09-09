@@ -1,5 +1,5 @@
 .app-tag--development {
-  background: govuk-colour("grey-1");
+  background: govuk-colour("dark-grey");
 }
 
 .app-tag--staging,
@@ -9,7 +9,7 @@
 }
 
 .app-header__container--development {
-  border-bottom-color: govuk-colour("grey-1");
+  border-bottom-color: govuk-colour("dark-grey");
 }
 
 .app-header__container--staging,

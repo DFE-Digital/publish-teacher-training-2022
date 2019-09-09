@@ -10,7 +10,7 @@
     </legend>
 
     <%= render "shared/error_messages", field: :study_modes if @errors %>
-    <div class="govuk-radios" data-module="radios">
+    <div class="govuk-radios" data-module="govuk-radios">
       <% @course.meta['edit_options']['study_modes'].each do |value| %>
         <div class="govuk-radios__item">
           <%= form.radio_button :study_mode,

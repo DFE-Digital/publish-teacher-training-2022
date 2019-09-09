@@ -1,21 +1,17 @@
 .phase-tag {
-  &--small {
-    padding: 4px 8px 1px;
-  }
-
   &--no-content {
     background: govuk-colour("white");
-    color: govuk-colour("grey-1");
-    border: 2px solid lighten(govuk-colour("grey-1"), 10%);
-    margin-top: -1px;
+    border: 2px solid lighten(govuk-colour("dark-grey"), 10%);
+    color: govuk-colour("dark-grey");
     margin-bottom: -1px;
+    margin-top: -1px;
   }
 
   &--not-running {
-    background: govuk-colour("grey-3");
+    background: govuk-colour("light-grey");
     color: govuk-colour("black");
-    margin-top: -1px;
     margin-bottom: -1px;
+    margin-top: -1px;
   }
 
   &--draft {

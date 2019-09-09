@@ -31,10 +31,10 @@
         <li>say whether there are any fees or others costs – if there are no fees for this course, you should also say so</li>
       </ul>
 
-      <div id="salary_details_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
+      <div id="salary_details_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
         <%= render "shared/form_field",
           form: f, field: :salary_details, label: 'Salary', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
         <% end %>
       </div>
 
