@@ -236,6 +236,10 @@
               {
                 "name": "SENTRY_DSN",
                 "value": "[parameters('sentryDSN')]"
+              },
+              {
+                "name": "WEBSITE_SLOT_POLL_WORKER_FOR_CHANGE_NOTIFICATION",
+                "value": "0"
               }
             ]
           },
