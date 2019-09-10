@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    if current_user
+    if current_user.present?
       assign_sentry_contexts
       add_token_to_connection
       set_has_multiple_providers
