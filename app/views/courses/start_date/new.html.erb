@@ -10,9 +10,8 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: course,
                   url: continue_provider_recruitment_cycle_courses_start_date_path(
-                    @course.provider_code,
-                    @course.recruitment_cycle_year,
-                    @course.course_code
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
 
