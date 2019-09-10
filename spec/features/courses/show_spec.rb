@@ -41,21 +41,13 @@ feature 'Course show', type: :feature do
   before do
     stub_omniauth
 
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      data: current_recruitment_cycle.as_json_api
-    )
+    stub_api_v2_resource current_recruitment_cycle
+    stub_api_v2_resource next_recruitment_cycle
+    stub_api_v2_resource course,
+                         include: 'sites,provider.sites,accrediting_provider'
 
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=sites,provider.sites,accrediting_provider",
-      course_response
-    )
-
-    visit provider_recruitment_cycle_course_path(provider.provider_code,
-                                                 current_recruitment_cycle.year,
+    visit provider_recruitment_cycle_course_path(course.provider.provider_code,
+                                                 course.recruitment_cycle.year,
                                                  course.course_code)
   end
 
@@ -185,21 +177,29 @@ feature 'Course show', type: :feature do
   end
 
   context 'when the course has been rolled over' do
+    let(:rolled_over_provider) do
+      build :provider,
+            recruitment_cycle: next_recruitment_cycle,
+            accredited_body?: false,
+            provider_name: "ACME SCITT A0",
+            provider_code: 'A0'
+    end
     let(:course) {
       build :course,
+            recruitment_cycle: next_recruitment_cycle,
             findable?: false,
             content_status: 'rolled_over',
             ucas_status: 'new',
             has_vacancies?: true,
             open_for_applications?: false,
-            provider: provider
+            provider: rolled_over_provider
     }
 
     scenario 'it displays a status panel' do
       expect(course_page).to have_status_panel
       expect(course_page.is_findable).to have_content('No')
       expect(course_page.status_tag).to have_content('Rolled over')
-      expect(course_page.publish).to have_content('Publish in October')
+      expect(course_page.publish.value).to eq 'Publish in October'
     end
   end
 
