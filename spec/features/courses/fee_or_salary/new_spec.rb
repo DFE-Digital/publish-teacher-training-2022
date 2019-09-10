@@ -5,12 +5,15 @@ feature 'new course fee or salary', type: :feature do
     PageObjects::Page::Organisations::Courses::NewFeeOrSalaryPage.new
   end
 
+  let(:course) { build(:course, :new, provider: provider) }
   let(:provider) { build(:provider) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do
     stub_omniauth
     stub_api_v2_resource(provider)
+    stub_api_v2_build_course
+    stub_api_v2_build_course(program_type: 'pg_teaching_apprenticeship')
     new_course = build(:course, :new, provider: provider)
     stub_api_v2_new_resource(new_course)
     stub_api_v2_resource(recruitment_cycle)
