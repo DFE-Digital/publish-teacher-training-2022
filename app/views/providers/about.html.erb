@@ -39,10 +39,10 @@
     <%= form_with model: @provider, url: about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
       <%= f.hidden_field :page, value: :about %>
 
-      <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
+      <div class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
         <%= render "shared/form_field",
           form: f, field: :train_with_us, label: 'Training with you', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
         <% end %>
       </div>
 
@@ -58,7 +58,7 @@
         <% provider.accredited_bodies.each_with_index do |provider,index| %>
           <%= f.hidden_field "accredited_bodies[][provider_name]", value: provider["provider_name"], id: nil %>
           <%= f.hidden_field "accredited_bodies[][provider_code]", value: provider["provider_code"], id: nil %>
-          <div class="govuk-character-count" data-module="character-count" data-maxwords="100">
+          <div class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
             <%= render "shared/form_field",
               form: f,
               field: "accredited_bodies[][description]",
@@ -68,7 +68,7 @@
               <%= f.text_area field, options.merge(
                 value: provider['description'],
                 rows: 10,
-                class: 'govuk-textarea js-character-count'
+                class: 'govuk-textarea govuk-js-character-count'
               ) %>
             <% end %>
           </div>
@@ -92,10 +92,10 @@
         needs in the past.
       </p>
 
-      <div class="govuk-character-count" data-module="character-count" data-maxwords="250">
+      <div class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
         <%= render "shared/form_field",
           form: f, field: :train_with_disability, label: 'Training with disabilities and other needs', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
         <% end %>
       </div>
 

@@ -16,7 +16,7 @@
           method: :put do |form| %>
 
       <div class="govuk-form-group">
-        <div class="govuk-radios" data-module="radios" data-qa="course__accredited_body">
+        <div class="govuk-radios" data-module="govuk-radios" data-qa="course__accredited_body">
           <% provider.accredited_bodies.each do |provider| %>
             <div class="govuk-radios__item">
               <%= form.radio_button :accrediting_provider_code,
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <details class="govuk-details govuk-!-margin-bottom-2">
+      <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
         <summary class="govuk-details__summary">
           <span class="govuk-details__summary-text">
             Help with adding a different accredited body

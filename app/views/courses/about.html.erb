@@ -38,7 +38,7 @@
 
       <p class="govuk-body">Don’t repeat the same description for different courses. If you’re copying content you should tailor it to fit this course.</p>
 
-      <details class="govuk-details">
+      <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
           <span class="govuk-details__summary-text">
             Several courses in the same subject?
@@ -49,10 +49,10 @@
         </div>
       </details>
 
-      <div id="about_course_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="400">
+      <div id="about_course_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="400">
         <%= render "shared/form_field",
           form: f, field: :about_course, label: 'About this course', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 20, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 20, class: 'govuk-textarea govuk-js-character-count') %>
         <% end %>
       </div>
 
@@ -69,10 +69,10 @@
         <li>details of any tests they’ll need to sit</li>
       </ul>
 
-      <div id="interview_process_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
+      <div id="interview_process_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
         <%= render "shared/form_field",
           form: f, field: :interview_process, label: 'Interview process (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
         <% end %>
       </div>
 
@@ -95,10 +95,10 @@
         <li>how many schools you partner with in total</li>
       </ul>
 
-      <div id="how_school_placements_work_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="350">
+      <div id="how_school_placements_work_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="350">
         <%= render "shared/form_field",
           form: f, field: :how_school_placements_work, label: 'How school placements work', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
         <% end %>
       </div>
 

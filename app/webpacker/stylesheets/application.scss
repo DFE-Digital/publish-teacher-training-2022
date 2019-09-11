@@ -1,5 +1,5 @@
 $success-green: #00823b;
-@import "../../../node_modules/govuk-frontend/all";
+@import "../../../node_modules/govuk-frontend/govuk/all";
 
 // Not in design system:
 $button-colour: #00823b;
@@ -18,7 +18,7 @@ $button-colour: #00823b;
 }
 
 .app-related {
-  background-color: govuk-colour("grey-4");
+  background-color: govuk-colour("light-grey");
   padding: govuk-spacing(4);
 
   .govuk-select {
@@ -31,7 +31,7 @@ $button-colour: #00823b;
 }
 
 .app-course-parts__fields__value--empty {
-  color: govuk-colour("grey-1");
+  color: govuk-colour("dark-grey");
 }
 
 .app-course-parts__fields__label--error {
@@ -42,7 +42,7 @@ $button-colour: #00823b;
 }
 
 .app-preview-banner {
-  background: govuk-colour("grey-4");
+  background: govuk-colour("light-grey");
   margin-top: govuk-spacing(2);
   padding: govuk-spacing(4);
 }
@@ -101,7 +101,7 @@ $button-colour: #00823b;
     position: relative;
 
     &:before {
-      color: govuk-colour("grey-1");
+      color: govuk-colour("dark-grey");
       content: "\2013";
       left: -16px;
       position: absolute;
@@ -114,4 +114,10 @@ $button-colour: #00823b;
 // https://stackoverflow.com/a/23759279
 wbr:after {
   content: "\00200B";
+}
+
+// Required since govuk-frontend 3.0.0
+.app-table--vertical-align-middle .govuk-table__header,
+.app-table--vertical-align-middle .govuk-table__cell {
+  vertical-align: middle;
 }

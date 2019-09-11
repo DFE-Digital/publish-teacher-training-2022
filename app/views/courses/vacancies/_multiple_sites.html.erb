@@ -1,6 +1,6 @@
 <div class="govuk-form-group">
   <%= hidden_field_tag('change_vacancies_confirmation', true) %>
-  <div class="govuk-radios govuk-!-margin-bottom-7" data-module="radios">
+  <div class="govuk-radios govuk-!-margin-bottom-7" data-module="govuk-radios">
     <div class="govuk-radios__item">
       <%= f.radio_button :has_vacancies, 'false', class: 'govuk-radios__input', checked: !@course.has_vacancies? %>
       <%= f.label :has_vacancies_false, 'There are no vacancies', class: "govuk-label govuk-radios__label govuk-!-font-weight-bold" %>

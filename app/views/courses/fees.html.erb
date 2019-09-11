@@ -63,10 +63,10 @@
         <li>any other costs</li>
       </ul>
 
-      <div id="fee_details_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
+      <div id="fee_details_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
         <%= render "shared/form_field",
           form: f, field: :fee_details, label: 'Fee details (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
         <% end %>
       </div>
 
@@ -76,10 +76,10 @@
       <p class="govuk-body">If applicable, say more about the financial support you offer for this course. For example, any bursaries available.</p>
       <p class="govuk-body">You don’t need to add details of any DfE bursaries and subject scholarships here. These will be published automatically to your course page</p>
 
-      <div id="financial_support_wrapper" class="govuk-character-count" data-module="character-count" data-maxwords="250">
+      <div id="financial_support_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
         <%= render "shared/form_field",
           form: f, field: :financial_support, label: 'Financial support you offer (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea js-character-count') %>
+          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
         <% end %>
       </div>
 

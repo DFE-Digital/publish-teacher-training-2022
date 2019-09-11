@@ -6,7 +6,7 @@
 
     <%= render "shared/error_messages", field: :course_length %>
 
-    <div class="govuk-radios" data-module="radios">
+    <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
         <%= f.radio_button :course_length, 'OneYear', class: 'govuk-radios__input',
           checked: course.course_length == 'OneYear',

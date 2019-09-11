@@ -4,17 +4,19 @@
     padding: govuk-spacing(6) 0 0;
   }
 
-  .govuk-tabs__tab {
-    font-weight: bold;
-    color: $govuk-link-colour;
-    text-align: left;
+  .govuk-tabs {
+    &__tab {
+      color: $govuk-link-colour;
+      font-weight: bold;
+      text-align: left;
+      text-decoration: none;
+    }
 
-    &--selected {
-      color: $govuk-text-colour;
+    &__list-item--selected {
       background-color: govuk-colour("white");
       border-top: govuk-spacing(1) solid $govuk-link-colour;
+      color: $govuk-text-colour;
       padding-top: govuk-spacing(2);
-      text-decoration: none;
     }
   }
 }
