@@ -5,7 +5,7 @@
     "resourceEnvironmentName": {
       "type": "string",
       "metadata": {
-        "description": "The environment of the resource."
+        "description": "The prefix and environment of the resource."
       }
     },
     "serviceName": {
@@ -122,7 +122,7 @@
   },
   "variables": {
     "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
-    "resourceNamePrefix": "[toLower(concat('bat-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
+    "resourceNamePrefix": "[toLower(concat(parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
     "keyvaultCertificateName": "[if(greater(length(parameters('certificateName')),0), parameters('certificateName'), replace(parameters('customHostName'), '.', '-'))]",
     "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
     "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
