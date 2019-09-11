@@ -7,6 +7,7 @@ feature 'new course fee or salary', type: :feature do
 
   let(:course) { build(:course, :new, provider: provider) }
   let(:provider) { build(:provider) }
+  let(:course) { build(:course, :new, provider: provider) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do
@@ -14,10 +15,9 @@ feature 'new course fee or salary', type: :feature do
     stub_api_v2_resource(provider)
     stub_api_v2_build_course
     stub_api_v2_build_course(program_type: 'pg_teaching_apprenticeship')
-    new_course = build(:course, :new, provider: provider)
-    stub_api_v2_new_resource(new_course)
     stub_api_v2_resource(recruitment_cycle)
-    stub_api_v2_resource_collection([new_course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_build_course
   end
 
   scenario "sends user to confirmation page" do

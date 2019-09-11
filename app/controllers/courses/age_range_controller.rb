@@ -54,7 +54,11 @@ module Courses
   private
 
     def course_params
-      params.require(:course).permit(:age_range_in_years)
+      if params.key? :course
+        params.require(:course).permit(:age_range_in_years)
+      else
+        ActionController::Parameters.new({}).permit(:course)
+      end
     end
 
     def build_provider
@@ -76,7 +80,7 @@ module Courses
       @course = Course.build_new(
         recruitment_cycle_year: @provider.recruitment_cycle_year,
         provider_code: @provider.provider_code
-      ).first
+      )
     end
   end
 end

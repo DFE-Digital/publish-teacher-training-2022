@@ -34,22 +34,11 @@ module CourseBasicDetailConcern
 private
 
   def build_new_course
-    course = Course.build_new(
+    @course = Course.build_new(
       recruitment_cycle_year: @provider.recruitment_cycle_year,
       provider_code: @provider.provider_code,
-      attrs: {
-        course: course_params.to_unsafe_hash
-      }
+      course: course_params.to_unsafe_hash
     )
-
-    @course = if course.errors.any?
-                Course.new(
-                  attributes: course_params.to_h,
-                  meta: { edit_options: course.meta['edit_options'] }
-                )
-              else
-                @course = course.first
-              end
   end
 
   def build_provider

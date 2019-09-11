@@ -13,6 +13,7 @@ feature 'Course show', type: :feature do
   let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
   let(:course) do
     build :course,
+          :with_fees,
           has_vacancies?: true,
           course_code: 'C1',
           open_for_applications?: true,
@@ -23,6 +24,12 @@ feature 'Course show', type: :feature do
           provider_code: provider.provider_code,
           recruitment_cycle: current_recruitment_cycle,
           site_statuses: [site_status],
+          about_course: 'Foo',
+          interview_process: 'Foo',
+          how_school_placements_work: 'Foo',
+          required_qualifications: 'Foo',
+          personal_qualities: 'Foo',
+          other_requirements: 'Foo',
           sites: [site]
   end
   let(:site) { build :site, code: 'Z' }
@@ -72,13 +79,13 @@ feature 'Course show', type: :feature do
         course.how_school_placements_work
       )
       expect(course_page.length).to have_content(
-        course.course_length
+        "Up to 2 years"
       )
       expect(course_page.uk_fees).to have_content(
         '£9,250'
       )
       expect(course_page.international_fees).to have_content(
-        course.fee_international
+        "£14,000"
       )
       expect(course_page.fee_details).to have_content(
         course.fee_details
@@ -115,10 +122,18 @@ feature 'Course show', type: :feature do
   describe 'with a salaried course' do
     let(:course) {
       build :course,
+            :with_fees,
             funding: 'salary',
             sites: [site],
             provider: provider,
-            accrediting_provider: provider
+            accrediting_provider: provider,
+            about_course: 'Foo',
+            interview_process: 'Foo',
+            how_school_placements_work: 'Foo',
+            required_qualifications: 'Foo',
+            personal_qualities: 'Foo',
+            salary_details: 'Foo',
+            other_requirements: 'Foo'
     }
 
     scenario 'it shows the course show page' do
@@ -138,7 +153,7 @@ feature 'Course show', type: :feature do
         course.how_school_placements_work
       )
       expect(course_page.length).to have_content(
-        course.course_length
+        "Up to 2 years"
       )
       expect(course_page.salary).to have_content(
         course.salary_details
