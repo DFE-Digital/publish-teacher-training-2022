@@ -95,4 +95,29 @@ describe UsersController, type: :controller do
       end
     end
   end
+
+  describe 'GET #accept_terms' do
+    context "with working request" do
+      before do
+        stub_api_v2_request("/users/#{user.id}/accept_terms", {}, :patch, 200)
+      end
+
+      it "redirects to providers index" do
+        get :accept_terms
+        expect(response).to redirect_to(providers_path)
+      end
+    end
+
+    context "with client error" do
+      before do
+        stub_api_v2_request("/users/#{user.id}/accept_terms", {}, :patch, 400)
+      end
+
+      it "redirects to providers index" do
+        get :accept_terms
+        expect(Raven).to have_received(:capture_exception).with(instance_of(JsonApiClient::Errors::ClientError))
+        expect(response).to redirect_to(providers_path)
+      end
+    end
+  end
 end

@@ -145,6 +145,8 @@ Rails.application.routes.draw do
   patch '/accept-transition-info', to: 'users#accept_transition_info'
   get "/rollover", to: "pages#rollover", as: :rollover
   patch '/accept-rollover', to: 'users#accept_rollover'
+  get "/accept-terms", to: "pages#accept_terms"
+  patch '/accept-terms', to: 'users#accept_terms'
 
   # redirect URL's from legacy c# app
   get '/organisation/:provider_code', to: redirect('/organisations/%{provider_code}', status: 301)

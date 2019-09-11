@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, except: :not_found
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_unauthorized
-  rescue_from JsonApiClient::Errors::AccessDenied, with: :render_unauthorized
+  rescue_from JsonApiClient::Errors::AccessDenied, with: :render_accept_terms
 
   before_action :authenticate
 
@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
 
   def render_unauthorized
     redirect_to unauthorized_path
+  end
+
+  def render_accept_terms
+    redirect_to accept_terms_path
   end
 
   helper_method :current_user
