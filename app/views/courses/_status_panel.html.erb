@@ -21,9 +21,9 @@
   <% if course.is_running? %>
     <h3 class="govuk-heading-m">Withdraw</h3>
     <p class="govuk-body">Remove this course from Find and close applications.</p>
-    <%= link_to 'Withdraw this course', withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link--destructive", data: { qa: "course__withdraw-link" } %>
+    <%= link_to 'Withdraw this course', withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link--destructive govuk-body-s", data: { qa: "course__withdraw-link" } %>
   <% elsif course.new_and_not_running? %>
     <h3 class="govuk-heading-m govuk-visually-hidden">Delete</h3>
-    <%= link_to 'Delete this course', delete_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link--destructive", data: { qa: "course__delete-link" } %>
+    <%= link_to 'Delete this course', delete_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link--destructive govuk-body-s", data: { qa: "course__delete-link" } %>
   <% end %>
 </div>
