@@ -3,6 +3,7 @@ require 'rails_helper'
 feature 'Sign in', type: :feature do
   let(:transition_info_page) { PageObjects::Page::TransitionInfo.new }
   let(:rollover_page)        { PageObjects::Page::Rollover.new }
+  let(:accept_terms_page)    { PageObjects::Page::AcceptTerms.new }
   let(:organisations_page)   { PageObjects::Page::OrganisationsPage.new }
   let(:root_page)            { PageObjects::Page::RootPage.new }
   let(:providers) do
@@ -91,6 +92,36 @@ feature 'Sign in', type: :feature do
 
     expect(rollover_page.title).to have_content('Begin preparing for the next cycle')
     rollover_page.continue.click
+
+    expect(organisations_page).to be_displayed
+    expect(request).to have_been_made
+  end
+
+  scenario 'new user accepts the terms and conditions page with rollover disabled' do
+    allow(Settings).to receive(:rollover).and_return(false)
+    user = build :user, :transitioned
+
+    stub_api_v2_request(
+      "/recruitment_cycles/2019",
+      current_recruitment_cycle.to_jsonapi,
+      :get, 403
+    )
+
+    stub_omniauth(user: user)
+    stub_api_v2_request('/recruitment_cycles/2019/providers', providers_response)
+    request = stub_api_v2_request "/users/#{user.id}/accept_terms", user.to_jsonapi, :patch
+
+    visit '/signin'
+
+    stub_api_v2_request(
+      "/recruitment_cycles/2019",
+      current_recruitment_cycle.to_jsonapi
+    )
+
+    expect(accept_terms_page).to be_displayed
+
+    expect(accept_terms_page.title).to have_content('Before you begin')
+    accept_terms_page.continue.click
 
     expect(organisations_page).to be_displayed
     expect(request).to have_been_made

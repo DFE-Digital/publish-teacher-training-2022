@@ -7,6 +7,10 @@ class UsersController < ApplicationController
     accept_screen('accept_rollover_screen', providers_path)
   end
 
+  def accept_terms
+    accept_screen('accept_terms', providers_path)
+  end
+
 private
 
   def accept_screen(method, path)

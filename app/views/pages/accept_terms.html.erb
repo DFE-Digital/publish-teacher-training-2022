@@ -1,0 +1,29 @@
+<%= content_for :page_title, "Accept Terms and Conditions" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Before you begin</h1>
+    <p class="govuk-body">We need you to read and agree to our terms and conditions.</p>
+    <p class="govuk-body">These set out your responsibilities when publishing content to Publish teacher training courses. This includes making sure your content:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>is relevant to the service and accurate</li>
+      <li>is not offensive, inappropriate or discriminatory</li>
+      <li>belongs to you</li>
+    </ul>
+    <p class="govuk-body">Read our full <%= govuk_link_to "terms and conditions", terms_path %>.</p>
+
+    <hr class="govuk-footer__section-break">
+
+    <%= form_for :user, url: accept_terms_path, method: :patch do |f| %>
+      <div class="govuk-form-group">
+        <div class="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <%= f.check_box :terms_accepted, class: 'govuk-checkboxes__input' %>
+            <%= f.label :terms_accepted, "I agree to the terms and conditions", class: 'govuk-label govuk-checkboxes__label' %>
+          </div>
+        </div>
+      </div>
+      <%= f.submit "Continue", class: "govuk-button", data: { qa: 'terms__continue' } %>
+    <% end %>
+  </div>
+</div>

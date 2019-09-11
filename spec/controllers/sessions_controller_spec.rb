@@ -99,7 +99,7 @@ RSpec.describe SessionsController, type: :controller do
       it "redirects to unauthorized" do
         get :create
 
-        expect(subject).to redirect_to(unauthorized_path)
+        expect(subject).to redirect_to(accept_terms_path)
       end
     end
   end

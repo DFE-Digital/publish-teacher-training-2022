@@ -14,4 +14,6 @@ class PagesController < ApplicationController
   def transition_info; end
 
   def rollover; end
+
+  def accept_terms; end
 end
