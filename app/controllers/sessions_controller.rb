@@ -24,13 +24,7 @@ class SessionsController < ApplicationController
     # current_user['user_id'] won't be set until set_user_session is run
     Raven.user_context(id: current_user['user_id'])
 
-    if user.state == 'new'
-      redirect_to transition_info_path
-    elsif Settings.rollover && user.state == 'transitioned'
-      redirect_to rollover_path
-    else
-      redirect_to session[:redirect_back_to] || root_path
-    end
+    redirect_to_correct_page(user)
   end
 
   def signout
@@ -54,5 +48,17 @@ private
 
   def auth_hash
     request.env["omniauth.auth"]
+  end
+
+  def redirect_to_correct_page(user)
+    if user.accept_terms_date_utc.nil?
+      redirect_to accept_terms_path
+    elsif user.state == 'new'
+      redirect_to transition_info_path
+    elsif Settings.rollover && user.state == 'transitioned'
+      redirect_to rollover_path
+    else
+      redirect_to session[:redirect_back_to] || root_path
+    end
   end
 end

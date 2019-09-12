@@ -104,7 +104,7 @@ describe UsersController, type: :controller do
 
       it "redirects to providers index" do
         get :accept_terms, params: { user: { terms_accepted: "1" } }
-        expect(response).to redirect_to(providers_path)
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -116,7 +116,7 @@ describe UsersController, type: :controller do
       it "redirects to providers index" do
         get :accept_terms, params: { user: { terms_accepted: "1" } }
         expect(Raven).to have_received(:capture_exception).with(instance_of(JsonApiClient::Errors::ClientError))
-        expect(response).to redirect_to(providers_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end

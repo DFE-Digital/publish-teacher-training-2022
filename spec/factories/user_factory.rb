@@ -16,5 +16,9 @@ FactoryBot.define do
     trait :transitioned do
       state { 'transitioned' }
     end
+
+    trait :inactive do
+      accept_terms_date_utc { nil }
+    end
   end
 end
