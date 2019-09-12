@@ -8,7 +8,12 @@ class UsersController < ApplicationController
   end
 
   def accept_terms
-    accept_screen('accept_terms', providers_path)
+    if params.require(:user)[:terms_accepted] == '1'
+      accept_screen('accept_terms', providers_path)
+    else
+      @errors = { user_terms_accepted: ['You must accept the terms and conditions to continue'] }
+      render file: 'pages/accept_terms'
+    end
   end
 
 private

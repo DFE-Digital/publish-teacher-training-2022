@@ -1,5 +1,7 @@
 <%= content_for :page_title, "Accept Terms and Conditions" %>
 
+<%= render 'shared/errors' %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Before you begin</h1>
@@ -17,7 +19,7 @@
     <%= form_for :user, url: accept_terms_path, method: :patch do |f| %>
       <div class="govuk-form-group">
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
+          <div class="govuk-checkboxes__item" id="user_terms_accepted-error">
             <%= f.check_box :terms_accepted, class: 'govuk-checkboxes__input' %>
             <%= f.label :terms_accepted, "I agree to the terms and conditions", class: 'govuk-label govuk-checkboxes__label' %>
           </div>
