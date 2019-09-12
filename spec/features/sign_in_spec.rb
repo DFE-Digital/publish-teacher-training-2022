@@ -123,6 +123,12 @@ feature 'Sign in', type: :feature do
     expect(accept_terms_page.title).to have_content('Before you begin')
     accept_terms_page.continue.click
 
+    expect(accept_terms_page).to be_displayed
+
+    expect(accept_terms_page).to have_content('You must accept the terms')
+    check('I agree to the terms and conditions')
+    accept_terms_page.continue.click
+
     expect(organisations_page).to be_displayed
     expect(request).to have_been_made
   end
