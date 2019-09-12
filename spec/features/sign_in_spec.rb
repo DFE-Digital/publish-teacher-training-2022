@@ -97,9 +97,9 @@ feature 'Sign in', type: :feature do
     expect(request).to have_been_made
   end
 
-  scenario 'new user accepts the terms and conditions page with rollover disabled' do
+  scenario 'new inactive user accepts the terms and conditions page with rollover disabled' do
     allow(Settings).to receive(:rollover).and_return(false)
-    user = build :user, :transitioned
+    user = build :user, :inactive, :new
 
     stub_api_v2_request(
       "/recruitment_cycles/2019",
@@ -129,7 +129,7 @@ feature 'Sign in', type: :feature do
     check('I agree to the terms and conditions')
     accept_terms_page.continue.click
 
-    expect(organisations_page).to be_displayed
+    expect(transition_info_page).to be_displayed
     expect(request).to have_been_made
   end
 end

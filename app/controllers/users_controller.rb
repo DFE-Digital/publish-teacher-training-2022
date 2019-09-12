@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def accept_terms
     if params.require(:user)[:terms_accepted] == '1'
-      accept_screen('accept_terms', providers_path)
+      accept_screen('accept_terms', page_after_accept_terms)
     else
       @errors = { user_terms_accepted: ['You must accept the terms and conditions to continue'] }
       render file: 'pages/accept_terms'
@@ -30,6 +30,17 @@ private
       redirect_to path
     else
       raise e
+    end
+  end
+
+  def page_after_accept_terms
+    case session[:auth_user]["state"]
+    when 'new'
+      transition_info_path
+    when 'transitioned'
+      rollover_path
+    else
+      session[:redirect_back_to] || root_path
     end
   end
 end

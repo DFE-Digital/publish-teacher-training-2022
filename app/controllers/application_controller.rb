@@ -67,6 +67,7 @@ private
     user = Session.create(first_name: current_user_info[:first_name],
                           last_name: current_user_info[:last_name])
     session[:auth_user]['user_id'] = user.id
+    session[:auth_user]['state'] = user.state
 
     add_provider_count_cookie
 
