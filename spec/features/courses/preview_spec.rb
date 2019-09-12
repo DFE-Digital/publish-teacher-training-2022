@@ -22,6 +22,9 @@ feature 'Preview course', type: :feature do
           other_requirements: 'You will need three years of prior work experience, but not necessarily in an educational context.',
           about_accrediting_body: 'Something great about the accredited body',
           interview_process: 'Some helpful guidance about the interview process',
+          how_school_placements_work: 'Some info about how school placements work',
+          about_course: 'This is a course',
+          required_qualifications: 'You need some qualifications for this course',
           has_vacancies?: true,
           recruitment_cycle: current_recruitment_cycle,
           site_statuses: [
