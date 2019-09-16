@@ -6,15 +6,11 @@ class ApplicationController < ActionController::Base
   before_action :authenticate
 
   def not_found
-    respond_to do |format|
-      format.html { render 'errors/not_found', status: :not_found }
-      format.json { render json: { error: 'Resource not found' }, status: :not_found }
-      format.all { render status: :not_found, body: nil }
-    end
+    respond_with_error(template: 'errors/not_found', status: :not_found, error_text: 'Resource not found')
   end
 
   def render_unauthorized
-    redirect_to unauthorized_path
+    respond_with_error(template: 'errors/unauthorized', status: :unauthorized, error_text: 'Unauthorized request')
   end
 
   def render_accept_terms
@@ -61,6 +57,14 @@ class ApplicationController < ActionController::Base
   end
 
 private
+
+  def respond_with_error(template:, status:, error_text:)
+    respond_to do |format|
+      format.html { render template, status: status }
+      format.json { render json: { error: error_text }, status: status }
+      format.all { render status: status, body: nil }
+    end
+  end
 
   def set_user_session
     # TODO: we should return a session object here with a 'user' attached to id.
