@@ -5,6 +5,11 @@ feature 'View provider', type: :feature do
 
   before do
     stub_omniauth
+
+    stub_api_v2_resource(provider.recruitment_cycle)
+    stub_api_v2_resource(provider)
+
+    visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
   end
 
   context "with empty provider details" do
@@ -44,19 +49,34 @@ feature 'View provider', type: :feature do
     end
   end
 
+  context "Current recruitment cycle" do
+    let(:provider) { build(:provider, content_status: 'draft') }
+
+    it 'Displays the publish button' do
+      expect(org_detail_page.publish_button).to be_present
+    end
+  end
+
+  context "Next recruitment cycle" do
+    let(:provider) do
+      recruitment_cycle = build(:recruitment_cycle, year: Settings.current_cycle + 1)
+      build(
+        :provider,
+        content_status: 'draft',
+        recruitment_cycle: recruitment_cycle
+      )
+    end
+
+    it 'Displays the publish in next cycle button' do
+      expect(org_detail_page.publish_in_next_cycle_button).to be_present
+    end
+
+    it 'Displays additional information about publishing' do
+      expect(org_detail_page.next_recruitment_cycle_publishing_information)
+    end
+  end
+
   def test_details_page(expected_status)
-    stub_api_v2_request(
-      "/recruitment_cycles/#{provider.recruitment_cycle.year}",
-      provider.recruitment_cycle.to_jsonapi
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{provider.recruitment_cycle.year}" \
-        "/providers/#{provider.provider_code}",
-      provider.to_jsonapi
-    )
-
-    visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-
     expect_breadcrumbs_to_be_correct
 
     expect(current_path).to eq details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)

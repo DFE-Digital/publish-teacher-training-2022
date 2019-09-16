@@ -79,15 +79,18 @@
 
       <% unless @provider.is_published? %>
         <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
-        <% if @recruitment_cycle.current? %>
           <h2 class="govuk-heading-m">Publish</h2>
-          <p class="govuk-body">You can make changes to this after publishing it.</p>
-          <%= form_for provider, url: publish_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year), method: :post do |f| %>
-            <%= f.submit "Publish", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'provider__publish' } %>
+          <% if @recruitment_cycle.current? %>
+            <p class="govuk-body">You can make changes to this after publishing it.</p>
+            <%= form_for provider, url: publish_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year), method: :post do |f| %>
+              <%= f.submit "Publish", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'provider__publish' } %>
+            <% end %>
+          <% else %>
+            <p class="govuk-body" data-qa="provider__next_cycle_publish_help_text">This will appear on all your courses on Find in October, when the new cycle opens.</p>
+            <%= form_for provider, url: publish_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year), method: :post do |f| %>
+              <%= f.submit "Publish in October", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'provider__publish_next_cycle' } %>
+            <% end %>
           <% end %>
-        <% else %>
-          <p class="govuk-body">You will be able to publish your changes in September before the next cycle opens.</p>
-        <% end %>
       <% end %>
     </div>
   </aside>
