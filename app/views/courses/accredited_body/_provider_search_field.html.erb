@@ -1,0 +1,12 @@
+<div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:accredited_body]&.any?) %>">
+  <%= form.label :accredited_body,
+    for: 'course_accredited_body',
+    class: 'govuk-label' do %>
+    Name of accredited body
+    <%= render "shared/error_messages", field: :accredited_body %>
+    <span class="govuk-hint">Enter the name or provider code</span>
+  <% end %>
+  <%= form.text_field :accredited_body,
+    autocomplete: 'off',
+    class: 'govuk-input govuk-input govuk-!-width-two-thirds' %>
+</div>

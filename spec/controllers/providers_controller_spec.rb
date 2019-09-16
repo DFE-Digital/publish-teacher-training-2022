@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ProvidersController, type: :controller do
+describe ProvidersController, type: :controller do
   context "with authenticated user" do
     before do
       stub_omniauth

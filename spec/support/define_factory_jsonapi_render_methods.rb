@@ -14,12 +14,14 @@ FactoryBot.define do
           # serializer class.
           #
           # For example: User: UserSerializer
+          # This is done in two places, perhaps they should be unified?
           Course: CourseSerializer,
           Provider: ProviderSerializer,
           RecruitmentCycle: RecruitmentCycleSerializer,
           Site: SiteSerializer,
           SiteStatus: SiteStatusSerializer,
-          User: UserSerializer
+          User: UserSerializer,
+          ProviderSuggestion: ProviderSuggestionSerializer
         },
         include: opts[:include]
       )
