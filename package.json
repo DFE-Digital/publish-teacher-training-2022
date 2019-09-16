@@ -1,11 +1,18 @@
 {
   "dependencies": {
     "@rails/webpacker": "^4.0",
+    "accessible-autocomplete": "^1.6.2",
     "copy-webpack-plugin": "^5.0.4",
     "govuk-frontend": "^3.2.0",
     "set-value": "^3.0.1"
   },
   "devDependencies": {
+    "jest": "^24.9.0",
     "webpack-dev-server": "^3.8.1"
+  },
+  "jest": {
+    "roots": [
+      "app"
+    ]
   }
 }
