@@ -2,7 +2,7 @@ module PageObjects
   module Page
     module Organisations
       class OrganisationDetails < PageObjects::Base
-        set_url '/organisations/{provider_code}/details'
+        set_url '/organisations/{provider_code}/{recruitment_cycle_year}/details'
 
         element :title, '.govuk-heading-xl'
         element :caption, '.govuk-caption-xl'
@@ -16,6 +16,9 @@ module PageObjects
         element :content_status, '[data-qa=provider__content-status]'
         element :flash, '.govuk-success-summary'
         elements :breadcrumbs, '.govuk-breadcrumbs__link'
+        element :publish_button, '[data-qa=provider__publish]'
+        element :publish_in_next_cycle_button, '[data-qa=provider__publish_next_cycle]'
+        element :next_recruitment_cycle_publishing_information, '[data-qa=provider__next_cycle_publish_help_text]'
       end
     end
   end
