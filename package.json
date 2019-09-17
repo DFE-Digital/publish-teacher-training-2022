@@ -6,6 +6,6 @@
     "set-value": "^3.0.1"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.8.1"
   }
 }
