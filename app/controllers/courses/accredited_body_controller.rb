@@ -9,7 +9,7 @@ module Courses
       @errors = errors
       return render :edit if @errors.present?
 
-      if course_params[:accrediting_provider_code] == 'other'
+      if update_params[:accrediting_provider_code] == 'other'
         redirect_to(
           accredited_body_search_provider_recruitment_cycle_course_path(
             @course.provider_code,
@@ -18,7 +18,7 @@ module Courses
             query: course_params[:accredited_body]
           )
         )
-      elsif @course.update(course_params)
+      elsif @course.update(update_params)
         flash[:success] = 'Your changes have been saved'
         redirect_to(
           details_provider_recruitment_cycle_course_path(
@@ -50,7 +50,7 @@ module Courses
 
       if code == 'other' && query.length < 3
         errors = { accredited_body: ["Accredited body search too short, enter 2 or more characters"] }
-      elsif code.nil?
+      elsif code.blank?
         errors = { accrediting_provider_code: ["Pick an accredited body"] }
       end
 
@@ -68,8 +68,22 @@ module Courses
 
     def course_params
       params.require(:course).permit(
-        :accrediting_provider_code, :accredited_body
+        :autocompleted_provider_code,
+        :accrediting_provider_code,
+        :accredited_body
       )
+    end
+
+    def update_params
+      autocompleted_code = course_params[:autocompleted_provider_code]
+      code = course_params[:accrediting_provider_code]
+
+      {
+        accrediting_provider_code: if autocompleted_code.blank?
+          then code
+          else autocompleted_code
+        end
+      }
     end
   end
 end

@@ -149,6 +149,8 @@ Rails.application.routes.draw do
   get "/accept-terms", to: "pages#accept_terms"
   patch '/accept-terms', to: 'users#accept_terms'
 
+  get "/providers/suggest", to: "provider_suggestions#suggest"
+
   # redirect URL's from legacy c# app
   get '/organisation/:provider_code', to: redirect('/organisations/%{provider_code}', status: 301)
   get '/organisation/:provider_code/details', to: redirect('/organisations/%{provider_code}/details', status: 301)
