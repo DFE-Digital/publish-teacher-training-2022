@@ -82,10 +82,10 @@ RSpec.describe SessionsController, type: :controller do
         allow(Base).to receive(:connection)
       end
 
-      it "redirects to unauthorized" do
+      it "Returns unauthorized status" do
         get :create
 
-        expect(subject).to redirect_to(unauthorized_path)
+        expect(response.status).to be(401)
       end
     end
 
