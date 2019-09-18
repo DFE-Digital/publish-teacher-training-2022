@@ -36,7 +36,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def funding
-    case object.funding
+    case object.funding_type
     when 'salary'
       'Salaried'
     when 'apprenticeship'
@@ -47,7 +47,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def apprenticeship?
-    object.funding == 'apprenticeship' ? 'Yes' : 'No'
+    object.funding_type == 'apprenticeship' ? 'Yes' : 'No'
   end
 
   def sorted_subjects
@@ -98,7 +98,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def funding_option
-    if object.funding == 'salary'
+    if object.funding_type == 'salary'
       "Salary"
     elsif object.has_scholarship_and_bursary?
       "Scholarship, bursary or student finance if you’re eligible"

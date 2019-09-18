@@ -61,7 +61,7 @@ class Course < Base
   end
 
   def has_fees?
-    funding == 'fee'
+    funding_type == 'fee'
   end
 
   def has_unpublished_changes?

@@ -1,6 +1,6 @@
 <div
-  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:program_type]&.any?) %>"
-  data-qa="course__program_type">
+  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:funding_type]&.any?) %>"
+  data-qa="course__funding_type">
 
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -9,19 +9,29 @@
       </h1>
     </legend>
 
-    <%= render "shared/error_messages", field: :program_type if @errors %>
+    <%= render "shared/error_messages", field: :funding_type if @errors %>
     <div class="govuk-radios" data-module="govuk-radios">
-      <% @course.meta['edit_options']['program_type'].each do |value| %>
-        <div class="govuk-radios__item">
-          <%= form.radio_button :program_type,
-                  value,
-                  class: 'govuk-radios__input' %>
-          <%= form.label :program_type,
-                  t("edit_options.apprenticeship.#{value}.label"),
-                  value: value,
-                  class: 'govuk-label govuk-radios__label' %>
-        </div>
-      <% end %>
+      <div class="govuk-radios__item">
+        <%= form.radio_button :funding_type,
+                'apprenticeship',
+                class: 'govuk-radios__input' %>
+        <%= form.label :funding_type,
+                'Yes',
+                value: 'apprenticeship',
+                class: 'govuk-label govuk-radios__label',
+                data: { qa: 'course__funding_type_apprenticeship' }%>
+      </div>
+
+      <div class="govuk-radios__item">
+        <%= form.radio_button :funding_type,
+                'fee',
+                class: 'govuk-radios__input' %>
+        <%= form.label :funding_type,
+                'No',
+                value: 'fee',
+                class: 'govuk-label govuk-radios__label',
+                data: { qa: 'course__funding_type_fee' }%>
+      </div>
     </div>
   </fieldset>
 </div>

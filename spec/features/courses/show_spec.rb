@@ -123,7 +123,7 @@ feature 'Course show', type: :feature do
     let(:course) {
       build :course,
             :with_fees,
-            funding: 'salary',
+            funding_type: 'salary',
             sites: [site],
             provider: provider,
             accrediting_provider: provider,

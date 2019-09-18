@@ -5,11 +5,12 @@ module PageObjects
         class NewFeeOrSalaryPage < CourseBase
           set_url '/organisations/{provider_code}/{recruitment_cycle_year}/courses/fee-or-salary/new'
 
-          section :program_type_fields, '[data-qa="course__program_type"]' do
-            element :pg_teaching_apprenticeship, '#course_program_type_pg_teaching_apprenticeship'
-            element :school_direct_training_programme, '#course_program_type_school_direct_training_programme'
-            element :school_direct_salaried_training_programme, '#course_program_type_school_direct_salaried_training_programme'
+          section :funding_type_fields, '[data-qa="course__funding_type"]' do
+            element :apprenticeship, '[data-qa="course__funding_type_apprenticeship"]'
+            element :fee, '[data-qa="course__funding_type_fee"]'
+            element :salaried, '[data-qa="course__funding_type_salary"]'
           end
+          element :save, '[data-qa="course__save"]'
         end
       end
     end
