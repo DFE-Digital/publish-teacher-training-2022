@@ -15,6 +15,11 @@
                   method: :get do |form| %>
       <h2 class="govuk-heading-m remove-top-margin">Level</h2>
 
+      <%= render 'shared/course_creation_hidden_fields',
+        form: form,
+        course_creation_params: @course_creation_params,
+        except_keys: [:level]
+      %>
       <%= render 'form_fields', form: form %>
 
       <h2 class="govuk-heading-m remove-top-margin">

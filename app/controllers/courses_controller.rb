@@ -23,7 +23,7 @@ class CoursesController < ApplicationController
   end
 
   def new
-    redirect_to new_provider_recruitment_cycle_courses_outcome_path(@course.provider_code, @course.recruitment_cycle_year)
+    redirect_to new_provider_recruitment_cycle_courses_level_path(@course.provider_code, @course.recruitment_cycle_year)
   end
 
   def update

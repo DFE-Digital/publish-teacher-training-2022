@@ -78,6 +78,9 @@ private
         :english,
         :science,
         :funding_type,
+        :level,
+        :is_send,
+        :program_type
       )
     else
       ActionController::Parameters.new({}).permit(:course)
@@ -90,10 +93,22 @@ private
 
   def next_step(current_step:)
     if current_step == :outcome
+      new_provider_recruitment_cycle_courses_apprenticeship_path(
+        params[:provider_code],
+        params[:recruitment_cycle_year],
+        course: course_params
+      )
+    elsif current_step == :apprenticeship
       new_provider_recruitment_cycle_courses_entry_requirements_path(
         params[:provider_code],
         params[:recruitment_cycle_year],
         course: course_params,
+      )
+    elsif current_step == :level
+      new_provider_recruitment_cycle_courses_outcome_path(
+        params[:provider_code],
+        params[:recruitment_cycle_year],
+        course: course_params
       )
     elsif current_step == :entry_requirements
       new_provider_recruitment_cycle_courses_outcome_path(
