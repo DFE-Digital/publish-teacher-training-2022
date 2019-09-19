@@ -143,8 +143,7 @@ feature 'Edit accredited body', type: :feature do
           course_code: course.course_code,
           type: "courses",
           attributes: {
-            accrediting_provider_code: accrediting_provider_1.provider_code,
-            accredited_body: ''
+            accrediting_provider_code: accrediting_provider_1.provider_code
           }
         }
       }.to_json)

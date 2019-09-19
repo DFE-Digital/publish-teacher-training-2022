@@ -1,8 +1,10 @@
 import "../stylesheets/application.scss";
+import "accessible-autocomplete/dist/accessible-autocomplete.min.css";
 import { initAll } from "govuk-frontend";
 import CookieMessage from "scripts/cookie-banner";
 import FormCheckLeave from "scripts/form-check-leave";
 import { triggerFormAnalytics } from "scripts/form-error-tracking";
+import initAutocomplete from "scripts/autocomplete";
 
 initAll();
 
@@ -54,4 +56,14 @@ if (typeof ga === "function") {
   } else if ($formSuccessSummary) {
     triggerFormAnalytics("form", "form-submitted", "form-success");
   }
+}
+
+try {
+  const $autocomplete = document.getElementById("provider-autocomplete");
+  const $input = document.getElementById("course_accredited_body");
+  if ($autocomplete) {
+    initAutocomplete($autocomplete, $input);
+  }
+} catch (err) {
+  console.error("Failed to initialise provider autocomplete:", err);
 }
