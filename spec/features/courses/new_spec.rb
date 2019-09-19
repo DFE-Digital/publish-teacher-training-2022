@@ -15,28 +15,6 @@ feature "new course", type: :feature do
     PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
   end
   let(:build_new_course_request) { stub_api_v2_build_course }
-<<<<<<< HEAD
-  let(:build_new_course_with_outcome_request) do
-    stub_api_v2_build_course("qualification" => "qts")
-  end
-  let(:build_new_course_with_outcome_and_entry_requirements_request) do
-    stub_api_v2_build_course(
-      "qualification" => "qts",
-      "english" => "must_have_qualification_at_application_time",
-      "maths" => "must_have_qualification_at_application_time",
-      "science" => "must_have_qualification_at_application_time",
-    )
-  end
-  let(:build_new_course_with_outcome_2_and_entry_requirements_request) do
-    stub_api_v2_build_course(
-      "qualification" => "pgce_with_qts",
-      "english" => "must_have_qualification_at_application_time",
-      "maths" => "must_have_qualification_at_application_time",
-      "science" => "must_have_qualification_at_application_time",
-    )
-  end
-=======
->>>>>>> 22508ca... [2026] Hook up four steps
   let(:provider) { build(:provider) }
   let(:course) do
     build :course,
@@ -84,14 +62,7 @@ feature "new course", type: :feature do
     end
   end
 
-<<<<<<< HEAD
-  context "course creation flow" do
-    scenario "creates the correct course" do
-      # This is intended to be a test which will go through the entire flow
-      # and ensure that the correct page gets displayed at the end
-      # with the correct course being created
-=======
-  context 'course creation flow', :focus do
+  context 'course creation flow' do
     context 'SCITT' do
       scenario 'creates the correct course' do
         # This is intended to be a test which will go through the entire flow
@@ -107,7 +78,6 @@ feature "new course", type: :feature do
       end
     end
   end
->>>>>>> 22508ca... [2026] Hook up four steps
 
 private
 
@@ -116,17 +86,8 @@ private
     course_creation_params[:is_send] = '0'
     stub_build_course_with_params(course_creation_params)
 
-<<<<<<< HEAD
-      expect_page_to_be_displayed_with_query(
-        page: new_entry_requirements_page,
-        expected_query: {
-          "course[qualification]" => "qts",
-        },
-      )
-=======
     new_level_page.level_fields.primary.click
     new_level_page.continue.click
->>>>>>> 22508ca... [2026] Hook up four steps
 
     expect_page_to_be_displayed_with_query(
       page: new_outcome_page,
@@ -136,21 +97,9 @@ private
     course_creation_params
   end
 
-<<<<<<< HEAD
-      expect_page_to_be_displayed_with_query(
-        page: new_outcome_page,
-        expected_query: {
-          "course[qualification]" => "qts",
-          "course[english]" => "must_have_qualification_at_application_time",
-          "course[maths]" => "must_have_qualification_at_application_time",
-          "course[science]" => "must_have_qualification_at_application_time",
-        },
-      )
-=======
   def select_outcome(course_creation_params)
     course_creation_params[:qualification] = 'qts'
     stub_build_course_with_params(course_creation_params)
->>>>>>> 22508ca... [2026] Hook up four steps
 
     new_outcome_page.qualification_fields.qts.click
     new_outcome_page.continue.click
@@ -160,20 +109,7 @@ private
       expected_query_params: course_creation_params
     )
 
-<<<<<<< HEAD
-      expect_page_to_be_displayed_with_query(
-        page: new_entry_requirements_page,
-        expected_query: {
-          "course[qualification]" => "pgce_with_qts",
-          "course[english]" => "must_have_qualification_at_application_time",
-          "course[maths]" => "must_have_qualification_at_application_time",
-          "course[science]" => "must_have_qualification_at_application_time",
-        },
-      )
-    end
-=======
     course_creation_params
->>>>>>> 22508ca... [2026] Hook up four steps
   end
 
   def select_apprenticeship(course_creation_params)
@@ -184,6 +120,25 @@ private
 
     expect_page_to_be_displayed_with_query(
       page: new_entry_requirements_page,
+      expected_query_params: course_creation_params
+    )
+
+    course_creation_params
+  end
+
+  def select_entry_requirements(course_creation_params)
+    course_creation_params[:english] = 'must_have_qualification_at_application_time'
+    course_creation_params[:maths] = 'must_have_qualification_at_application_time'
+    course_creation_params[:science] = 'must_have_qualification_at_application_time'
+    stub_build_course_with_params(course_creation_params)
+
+    new_entry_requirements_page.maths_requirements.choose('course_maths_must_have_qualification_at_application_time')
+    new_entry_requirements_page.english_requirements.choose('course_english_must_have_qualification_at_application_time')
+    new_entry_requirements_page.science_requirements.choose('course_science_must_have_qualification_at_application_time')
+    new_entry_requirements_page.continue.click
+
+    expect_page_to_be_displayed_with_query(
+      page: new_outcome_page,
       expected_query_params: course_creation_params
     )
 
@@ -205,25 +160,6 @@ private
     expect(page).to be_displayed
     query = page.url_matches['query']
     expect(query).to eq(url_params)
-  end
-
-  def select_entry_requirements(course_creation_params)
-    course_creation_params[:english] = 'must_have_qualification_at_application_time'
-    course_creation_params[:maths] = 'must_have_qualification_at_application_time'
-    course_creation_params[:science] = 'must_have_qualification_at_application_time'
-    stub_build_course_with_params(course_creation_params)
-
-    new_entry_requirements_page.maths_requirements.choose('course_maths_must_have_qualification_at_application_time')
-    new_entry_requirements_page.english_requirements.choose('course_english_must_have_qualification_at_application_time')
-    new_entry_requirements_page.science_requirements.choose('course_science_must_have_qualification_at_application_time')
-    new_entry_requirements_page.continue.click
-
-    expect_page_to_be_displayed_with_query(
-      page: new_outcome_page,
-      expected_query_params: course_creation_params
-    )
-
-    course_creation_params
   end
 
   def initial_params
