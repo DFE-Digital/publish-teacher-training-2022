@@ -33,21 +33,21 @@ feature "new course apprenticeship", type: :feature do
     new_apprenticeship_page.funding_type_fields.apprenticeship.click
     new_apprenticeship_page.continue.click
 
-    expect(current_path).to eq new_provider_recruitment_cycle_courses_entry_requirements_path(provider.provider_code, provider.recruitment_cycle_year)
+    expect(current_path).to eq new_provider_recruitment_cycle_courses_study_mode_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
-  context 'Higher education program type' do
+  context "Higher education program type" do
     let(:next_step_page) do
-      PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
+      PageObjects::Page::Organisations::Courses::NewStudyModePage.new
     end
-    let(:selected_fields) { { program_type: 'higher_education_programme' } }
+    let(:selected_fields) { { funding_type: "apprenticeship" } }
     let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
     before do
-      choose('course_program_type_higher_education_programme')
-      click_on 'Continue'
+      new_apprenticeship_page.funding_type_fields.apprenticeship.click
+      new_apprenticeship_page.continue.click
     end
 
-    it_behaves_like 'a course creation page'
+    it_behaves_like "a course creation page"
   end
 end

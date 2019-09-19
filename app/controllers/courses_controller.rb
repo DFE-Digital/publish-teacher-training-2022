@@ -20,6 +20,8 @@ class CoursesController < ApplicationController
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:provider_code])
       .first
+
+    build_new_course
   end
 
   def new
@@ -136,21 +138,44 @@ class CoursesController < ApplicationController
 private
 
   def course_params
-    params.require(:course).permit(
-      :page,
-      :about_course,
-      :course_length,
-      :course_length_other_length,
-      :fee_details,
-      :fee_international,
-      :fee_uk_eu,
-      :financial_support,
-      :how_school_placements_work,
-      :interview_process,
-      :other_requirements,
-      :personal_qualities,
-      :salary_details,
-      :required_qualifications,
+    if params.key? :course
+      params.require(:course).permit(
+        :page,
+        :about_course,
+        :course_length,
+        :course_length_other_length,
+        :fee_details,
+        :fee_international,
+        :fee_uk_eu,
+        :financial_support,
+        :how_school_placements_work,
+        :interview_process,
+        :other_requirements,
+        :personal_qualities,
+        :salary_details,
+        :required_qualifications,
+        :qualification, # qualification is actually "outcome"
+        :maths,
+        :english,
+        :science,
+        :level,
+        :is_send,
+        :program_type,
+        :study_mode,
+        :applications_open_from,
+        :start_date,
+        :funding_type,
+      )
+    else
+      ActionController::Parameters.new({}).permit(:course)
+    end
+  end
+
+  def build_new_course
+    @course = Course.build_new(
+      recruitment_cycle_year: @provider.recruitment_cycle_year,
+      provider_code: @provider.provider_code,
+      course: course_params.to_unsafe_hash,
     )
   end
 

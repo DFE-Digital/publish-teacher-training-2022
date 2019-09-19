@@ -5,6 +5,7 @@ feature "Course confirmation", type: :feature do
   let(:course_confirmation_page) do
     PageObjects::Page::Organisations::CourseConfirmation.new
   end
+  let(:course) { build(:course) }
   let(:provider) { build(:provider) }
 
   before do
@@ -14,13 +15,14 @@ feature "Course confirmation", type: :feature do
     new_course = build(:course, :new, provider: provider)
     stub_api_v2_resource_collection([new_course], include: "sites,provider.sites,accrediting_provider")
     stub_api_v2_new_resource(new_course)
+    stub_api_v2_build_course
   end
 
   scenario "viewing the course details page" do
     visit confirmation_provider_recruitment_cycle_courses_path(
       provider.provider_code,
       provider.recruitment_cycle_year,
-          )
+    )
 
     expect(course_confirmation_page.title).to have_content(
       "Check your answers before confirming",

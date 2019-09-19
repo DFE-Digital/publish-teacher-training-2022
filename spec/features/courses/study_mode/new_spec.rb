@@ -5,7 +5,14 @@ feature "new course study mode", type: :feature do
     PageObjects::Page::Organisations::Courses::NewStudyModePage.new
   end
 
-  let(:course) { build(:course, :new, provider: provider) }
+  let(:course) do
+    build(
+      :course,
+      :new,
+      provider: provider,
+      gcse_subjects_required: %w[maths science english],
+    )
+  end
   let(:provider) { build(:provider) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
@@ -33,6 +40,6 @@ feature "new course study mode", type: :feature do
 
     click_on "Continue"
 
-    expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+    expect(current_path).to eq new_provider_recruitment_cycle_courses_entry_requirements_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 end

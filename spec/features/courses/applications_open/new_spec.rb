@@ -35,6 +35,6 @@ feature "new course applications open", type: :feature do
 
     click_on "Continue"
 
-    expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+    expect(current_path).to eq new_provider_recruitment_cycle_courses_start_date_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 end

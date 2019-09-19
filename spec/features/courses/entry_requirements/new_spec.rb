@@ -12,6 +12,7 @@ feature "new course entry_requirements", type: :feature do
   before do
     stub_omniauth
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_new_resource(course)
     stub_api_v2_build_course
   end
@@ -64,7 +65,7 @@ feature "new course entry_requirements", type: :feature do
       choose("course_maths_expect_to_achieve_before_training_begins")
       click_on "Continue"
 
-      expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
+      expect(current_path).to eq new_provider_recruitment_cycle_courses_applications_open_path(provider.provider_code, provider.recruitment_cycle_year)
     end
   end
 
@@ -103,7 +104,7 @@ feature "new course entry_requirements", type: :feature do
       choose("course_english_expect_to_achieve_before_training_begins")
       click_on "Continue"
 
-      expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
+      expect(current_path).to eq new_provider_recruitment_cycle_courses_applications_open_path(provider.provider_code, provider.recruitment_cycle_year)
     end
   end
 end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature 'New course level', type: :feature do
+feature "New course level", type: :feature do
   let(:new_level_page) do
     PageObjects::Page::Organisations::Courses::NewLevelPage.new
   end
@@ -25,11 +25,11 @@ feature 'New course level', type: :feature do
     expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
-  context 'Selecting primary' do
+  context "Selecting primary" do
     let(:next_step_page) do
       PageObjects::Page::Organisations::Courses::NewOutcomePage.new
     end
-    let(:selected_fields) { { level: 'primary', is_send: '0' } }
+    let(:selected_fields) { { level: "primary", is_send: "0" } }
     let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
     before do
@@ -38,6 +38,6 @@ feature 'New course level', type: :feature do
       new_level_page.continue.click
     end
 
-    it_behaves_like 'a course creation page'
+    it_behaves_like "a course creation page"
   end
 end

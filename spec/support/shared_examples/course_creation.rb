@@ -1,8 +1,8 @@
-shared_examples_for 'a course creation page' do
+shared_examples_for "a course creation page" do
   scenario "sends user to the next step page" do
     expect(next_step_page).to be_displayed(
       provider_code: provider.provider_code,
-      recruitment_cycle_year: provider.recruitment_cycle_year
+      recruitment_cycle_year: provider.recruitment_cycle_year,
     )
   end
 
@@ -12,8 +12,8 @@ shared_examples_for 'a course creation page' do
       res
     end
 
-    expect(next_step_page.url_matches['query']).to eq(
-      query_hash
+    expect(next_step_page.url_matches["query"]).to eq(
+      query_hash,
     )
   end
 

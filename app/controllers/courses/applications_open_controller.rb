@@ -1,19 +1,18 @@
 module Courses
   class ApplicationsOpenController < ApplicationController
     before_action :build_recruitment_cycle
+    before_action :build_course_params, only: :update
     include CourseBasicDetailConcern
 
     def continue
+      build_course_params
+
       @errors = errors
 
       if @errors.present?
         render :new
       else
-        redirect_to confirmation_provider_recruitment_cycle_courses_path(
-          params[:provider_code],
-          params[:recruitment_cycle_year],
-          course_params,
-        )
+        redirect_to next_step(current_step: :applications_open)
       end
     end
 
@@ -22,15 +21,26 @@ module Courses
     def errors; end
 
     def actual_params
-      params.require(:course).permit(
-        :applications_open_from,
-        :day,
-        :month,
-        :year,
-      )
+      params.require(:course)
+        .except(
+          :qualification,
+          :maths,
+          :english,
+          :science,
+          :funding_type,
+          :level,
+          :is_send,
+          :study_mode,
+        )
+        .permit(
+          :applications_open_from,
+          :day,
+          :month,
+          :year,
+        )
     end
 
-    def course_params
+    def build_course_params
       if params.key?(:course)
         applications_open_from =
           if actual_params["applications_open_from"] == "other"
@@ -38,7 +48,7 @@ module Courses
           else
             actual_params["applications_open_from"]
           end
-        ActionController::Parameters.new(applications_open_from: applications_open_from).permit(:applications_open_from)
+        params["course"]["applications_open_from"] = applications_open_from
       else
         ActionController::Parameters.new({}).permit
       end
