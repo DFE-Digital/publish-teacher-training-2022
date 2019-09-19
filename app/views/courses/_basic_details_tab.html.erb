@@ -66,7 +66,6 @@
           <% end %>
         </dd>
       </div>
-
       <% if @provider.accredited_body? %>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
@@ -75,12 +74,11 @@
           <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
             <%= course.apprenticeship? %>
           </dd>
-
           <dd class="govuk-summary-list__actions">
             <% if !course.is_published? %>
-            <%= link_to apprenticeship_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_entry_requirements_link" } do %>
-              Change<span class="govuk-visually-hidden"> apprenticeship</span>
-                <% end %>
+              <%= link_to apprenticeship_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_apprenticeship_link" } do %>
+                Change<span class="govuk-visually-hidden"> apprenticeship</span>
+              <% end %>
             <% end %>
           </dd>
         </div>
@@ -94,7 +92,7 @@
           </dd>
           <dd class="govuk-summary-list__actions">
             <% if !course.is_published? %>
-              <%= link_to fee_or_salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_entry_requirements_link" } do %>
+              <%= link_to fee_or_salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_funding_link" } do %>
                 Change<span class="govuk-visually-hidden"> fee or salary</span>
               <% end %>
             <% end %>

@@ -258,4 +258,23 @@ feature 'Course details', type: :feature do
       )
     end
   end
+
+  context 'an unpublished course' do
+    context 'a self accredited course' do
+      let(:course) { build(:course, accrediting_provider: nil, content_status: 'draft', provider: provider, accredited_body: true) }
+      let(:provider) { build(:provider, accredited_body?: true) }
+      scenario 'displays a link to edit apprenticeship' do
+        course_details_page.load_with_course(course)
+        expect(course_details_page).to have_edit_apprenticeship_link
+      end
+    end
+
+    context 'an externally accredited course' do
+      let(:course) { build(:course, content_status: 'draft', provider: provider) }
+      scenario 'displays a link to edit funding type' do
+        course_details_page.load_with_course(course)
+        expect(course_details_page).to have_edit_funding_link
+      end
+    end
+  end
 end
