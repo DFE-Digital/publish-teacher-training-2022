@@ -50,7 +50,7 @@ feature 'Course salary', type: :feature do
       "#{course.name} (#{course.course_code})"
     )
     expect(course_salary_page.title).to have_content(
-      "Course length and salary"
+      'Course length and salary'
     )
     expect(course_salary_page).to have_enrichment_form
     expect(course_salary_page.course_length_one_year).to be_checked

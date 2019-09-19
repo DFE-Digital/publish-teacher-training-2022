@@ -17,7 +17,7 @@ feature 'Course show', type: :feature do
           has_vacancies?: true,
           course_code: 'C1',
           open_for_applications?: true,
-          funding: 'fee',
+          funding_type: 'fee',
           fee_uk_eu: 9250,
           last_published_at: '2019-03-05T14:42:34Z',
           provider: provider,
