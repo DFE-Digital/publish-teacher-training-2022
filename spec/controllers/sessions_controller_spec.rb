@@ -91,8 +91,10 @@ RSpec.describe SessionsController, type: :controller do
 
     context "if user has not accepted terms and conditions" do
       before do
+        env_double = double(body: { "meta" => { "error_type" => "user_not_accepted_terms_and_conditions" } })
+
         allow(Session).to receive(:create)
-          .and_raise(JsonApiClient::Errors::AccessDenied, "forbidden")
+          .and_raise(JsonApiClient::Errors::AccessDenied, env_double)
         allow(Base).to receive(:connection)
       end
 

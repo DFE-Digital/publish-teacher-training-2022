@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, except: :not_found
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_unauthorized
-  rescue_from JsonApiClient::Errors::AccessDenied, with: :render_accept_terms
+  rescue_from JsonApiClient::Errors::AccessDenied, with: :render_access_denied
 
   before_action :authenticate
 
@@ -13,8 +13,12 @@ class ApplicationController < ActionController::Base
     respond_with_error(template: 'errors/unauthorized', status: :unauthorized, error_text: 'Unauthorized request')
   end
 
-  def render_accept_terms
-    redirect_to accept_terms_path
+  def render_access_denied(exception)
+    if user_has_not_accepted_terms(exception.env.body)
+      redirect_to accept_terms_path
+    else
+      respond_with_error(template: 'errors/unauthorized', status: :forbidden, error_text: 'Forbidden request')
+    end
   end
 
   helper_method :current_user
@@ -57,6 +61,11 @@ class ApplicationController < ActionController::Base
   end
 
 private
+
+  def user_has_not_accepted_terms(response_body)
+    response_body.key?("meta") &&
+      response_body["meta"]["error_type"] == "user_not_accepted_terms_and_conditions"
+  end
 
   def respond_with_error(template:, status:, error_text:)
     respond_to do |format|

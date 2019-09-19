@@ -103,7 +103,11 @@ feature 'Sign in', type: :feature do
 
     stub_api_v2_request(
       "/recruitment_cycles/2019",
-      current_recruitment_cycle.to_jsonapi,
+      {
+        meta: {
+          error_type: 'user_not_accepted_terms_and_conditions'
+        }
+      },
       :get, 403
     )
 
