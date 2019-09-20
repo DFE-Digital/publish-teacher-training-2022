@@ -72,7 +72,7 @@ group :development, :test do
   gem 'pry-rails'
 
   # Testing framework
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 4.0.0.beta2'
 
   # A Ruby static code analyzer and formatter
   gem 'rubocop', require: false
