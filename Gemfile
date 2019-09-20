@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 6.0'
 
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
@@ -17,9 +17,6 @@ gem 'webpacker'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-
-# Manage multiple processes i.e. web server and webpack
-gem 'foreman'
 
 # Canonical meta tag
 gem 'canonical-rails'
@@ -75,7 +72,7 @@ group :development, :test do
   gem 'pry-rails'
 
   # Testing framework
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 4.0.0.beta2'
 
   # A Ruby static code analyzer and formatter
   gem 'rubocop', require: false

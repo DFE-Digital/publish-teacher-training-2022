@@ -13,9 +13,10 @@
 1. Run `yarn` to install node dependencies
 2. Run `bundle install` to install the gem dependencies
 3. Create new file `config/settings/development.local.yml` with the below contents.
-4. Run `bundle exec foreman start -f Procfile.dev` to launch the app on https://localhost:3000.
+4. Run `bundle exec rails s` to launch the app on https://localhost:3000.
 
 ### Sign-in config
+
 ```
 # config/settings/development.local.yml
 dfe_signin:
@@ -40,9 +41,10 @@ Install Docker and Docker Compose.
 docker-compose up --build
 ```
 
-*Warning*: Running docker seems to slow down local development significantly on macOS.
+_Warning_: Running docker seems to slow down local development significantly on macOS.
 
 ## Running specs and linter (SCSS and Ruby)
+
 ```
 bundle exec rake
 ```
@@ -76,6 +78,7 @@ bundle exec govuk-lint-sass app/webpacker/styles
 Refer to the [the config gem](https://github.com/railsconfig/config#accessing-the-settings-object) to understand the `file based settings` loading order.
 
 To override file based via `Machine based env variables settings`
+
 ```bash
 cat config/settings.yml
 file

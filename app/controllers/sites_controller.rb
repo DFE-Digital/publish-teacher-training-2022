@@ -48,7 +48,7 @@ private
     if @site
       @site_name_before_update = @site.location_name.dup
     else
-      render file: 'errors/not_found', status: :not_found
+      render template: 'errors/not_found', status: :not_found
     end
   end
 

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       accept_screen('accept_terms', page_after_accept_terms)
     else
       @errors = { user_terms_accepted: ['You must accept the terms and conditions to continue'] }
-      render file: 'pages/accept_terms'
+      render template: 'pages/accept_terms'
     end
   end
 
