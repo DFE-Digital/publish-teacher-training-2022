@@ -28,7 +28,7 @@ module Helpers
     stub_api_v2_request('/sessions', user.to_jsonapi, :post)
   end
 
-  def stub_api_v2_request(url_path, stub, method = :get, status = 200, token: nil)
+  def stub_api_v2_request(url_path, stub, method = :get, status = 200, token: nil, body: nil)
     url = "#{Settings.manage_backend.base_url}/api/v2#{url_path}"
 
     stubbed_request = stub_request(method, url)
@@ -37,6 +37,10 @@ module Helpers
                           body: stub.to_json,
                           headers: { 'Content-Type': 'application/vnd.api+json' }
                         )
+    if body
+      stubbed_request.with(body: body)
+    end
+
     if token
       stubbed_request.with(
         headers: {

@@ -63,7 +63,7 @@ FactoryBot.define do
                         "June #{recruitment_cycle.year.to_i + 1}",
                         "July #{recruitment_cycle.year.to_i + 1}"],
           study_modes: %w[full_time part_time full_time_or_part_time],
-          program_type: %w[pg_teaching_apprenticeship higher_education_programme]
+          funding_type: %w[fee apprenticeship salary]
         }
       end
       gcse_subjects_required_using_level { false }
@@ -86,7 +86,7 @@ FactoryBot.define do
     accrediting_provider { nil }
     qualification { 'pgce_with_qts' }
     start_date     { Time.zone.local(2019) }
-    funding        { 'fee' }
+    funding_type { 'fee' }
     applications_open_from { DateTime.new(2019).utc.iso8601 }
     is_send? { false }
     level { "secondary" }

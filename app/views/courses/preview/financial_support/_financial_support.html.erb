@@ -1,7 +1,7 @@
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-financial-support">Financial support</h2>
 
-  <% if course.funding == 'salaried' %>
+  <% if course.funding_type == 'salary' %>
     <%= render partial: 'courses/preview/financial_support/salaried' %>
   <% else %>
 

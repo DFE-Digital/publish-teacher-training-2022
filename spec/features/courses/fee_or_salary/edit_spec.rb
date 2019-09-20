@@ -24,15 +24,12 @@ feature 'Edit course fee or salary status', type: :feature do
   end
 
   context 'A course belonging to a non-accredited body' do
-    let(:program_type) { 'pg_teaching_apprenticeship' }
-    let(:program_types) { %w[pg_teaching_apprenticeship school_direct_training_programme school_direct_salaried_training_programme] }
+    let(:funding_type) { 'fee' }
+
     let(:course) do
       build(
         :course,
-        program_type: program_type,
-        edit_options: {
-          program_type: program_types
-        },
+        funding_type: funding_type,
         provider: provider
       )
     end
@@ -51,67 +48,37 @@ feature 'Edit course fee or salary status', type: :feature do
     end
 
     scenario 'presents the correct choices' do
-      expect(fee_or_salary_page).to have_program_type_fields
-      expect(fee_or_salary_page.program_type_fields)
-        .to have_selector('[for="course_program_type_pg_teaching_apprenticeship"]', text: 'Teaching apprenticeship (with salary)')
-      expect(fee_or_salary_page.program_type_fields)
-        .to have_selector('[for="course_program_type_school_direct_training_programme"]', text: 'Fee paying (no salary)')
-      expect(fee_or_salary_page.program_type_fields)
-        .to have_selector('[for="course_program_type_school_direct_salaried_training_programme"]', text: 'Salaried')
+      expect(fee_or_salary_page).to have_funding_type_fields
+      expect(fee_or_salary_page.funding_type_fields)
+        .to have_apprenticeship
+      expect(fee_or_salary_page.funding_type_fields)
+        .to have_fee
+      expect(fee_or_salary_page.funding_type_fields)
+        .to have_salary
     end
 
-    context 'and it is an apprenticeship' do
-      scenario 'it has the correct value selected' do
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_pg_teaching_apprenticeship', checked: true)
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_school_direct_training_programme', checked: false)
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_school_direct_salaried_training_programme', checked: false)
-      end
-    end
-
-    context 'and it is a direct training programme' do
-      let(:program_type) { 'school_direct_training_programme' }
-
-      scenario 'it has the correct value selected' do
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_pg_teaching_apprenticeship', checked: false)
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_school_direct_training_programme', checked: true)
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_school_direct_salaried_training_programme', checked: false)
-      end
-    end
-
-    context 'and it is a direct salaried training programme' do
-      let(:program_type) { 'school_direct_salaried_training_programme' }
-
-      scenario 'it has the correct value selected' do
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_pg_teaching_apprenticeship', checked: false)
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_school_direct_training_programme', checked: false)
-        expect(fee_or_salary_page.program_type_fields)
-          .to have_field('course_program_type_school_direct_salaried_training_programme', checked: true)
-      end
-    end
-
-    scenario 'it can be updated to a salaried direct training program' do
-      update_course_stub = stub_api_v2_request(
-        "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-        "/providers/#{provider.provider_code}" \
-        "/courses/#{course.course_code}",
-        course.to_jsonapi,
-        :patch, 200
+    scenario 'clicking salaried sets funding type to salaried' do
+      patch_stub = stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}/courses" \
+        "/#{course.course_code}",
+        {},
+        :patch,
+        body: {
+          data: {
+            course_code: course.course_code,
+            type: 'courses',
+            attributes: {
+              funding_type: 'salary'
+            }
+          }
+        }.to_json
       )
 
-      choose('course_program_type_school_direct_salaried_training_programme')
-      click_on 'Save'
+      fee_or_salary_page.funding_type_fields.salary.click
+      fee_or_salary_page.save.click
 
-      expect(course_details_page).to be_displayed
-      expect(course_details_page.flash).to have_content('Your changes have been saved')
-      expect(update_course_stub).to have_been_requested
+      expect(patch_stub).to have_been_requested
     end
   end
 

@@ -55,7 +55,12 @@ module Courses
 
     def course_params
       if params.key? :course
-        params.require(:course).permit(:age_range_in_years)
+        params.require(:course)
+          .except(
+            :course_age_range_in_years_other_from,
+            :course_age_range_in_years_other_to
+)
+          .permit(:age_range_in_years)
       else
         ActionController::Parameters.new({}).permit(:course)
       end

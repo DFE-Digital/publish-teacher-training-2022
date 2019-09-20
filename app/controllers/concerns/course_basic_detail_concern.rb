@@ -76,7 +76,8 @@ private
         :qualification, # qualification is actually "outcome"
         :maths,
         :english,
-        :science
+        :science,
+        :funding_type
       )
     else
       ActionController::Parameters.new({}).permit(:course)

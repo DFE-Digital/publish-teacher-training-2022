@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 feature 'new course apprenticeship', type: :feature do
   let(:new_apprenticeship_page) do
@@ -14,14 +14,20 @@ feature 'new course apprenticeship', type: :feature do
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
-    stub_api_v2_build_course(program_type: 'higher_education_programme')
+    stub_api_v2_build_course(funding_type: 'apprenticeship')
+
+    visit new_provider_recruitment_cycle_courses_apprenticeship_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
-  scenario "sends user to entry requirements" do
-    visit new_provider_recruitment_cycle_courses_apprenticeship_path(provider.provider_code, provider.recruitment_cycle_year)
+  scenario 'presents the correct choices' do
+    expect(new_apprenticeship_page).to have_funding_type_fields
+    expect(new_apprenticeship_page.funding_type_fields).to have_apprenticeship
+    expect(new_apprenticeship_page.funding_type_fields).to have_fee
+  end
 
-    choose('course_program_type_higher_education_programme')
-    click_on 'Continue'
+  scenario 'sends user to entry requirements' do
+    new_apprenticeship_page.funding_type_fields.apprenticeship.click
+    new_apprenticeship_page.save.click
 
     expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
   end

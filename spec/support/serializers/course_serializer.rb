@@ -16,4 +16,5 @@ class CourseSerializer < JSONAPI::Serializable::Resource
   attribute :provider_code
   attribute :recruitment_cycle
   attribute :recruitment_cycle_year
+  attribute :funding_type
 end

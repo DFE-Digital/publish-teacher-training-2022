@@ -16,7 +16,7 @@ module Courses
 
     def course_params
       if params.key?(:course)
-        params.require(:course).permit(:program_type)
+        params.require(:course).permit(:funding_type)
       else
         ActionController::Parameters.new({}).permit
       end
