@@ -30,7 +30,8 @@ feature 'Edit course fee or salary status', type: :feature do
       build(
         :course,
         funding_type: funding_type,
-        provider: provider
+        provider: provider,
+        content_status: 'draft'
       )
     end
 
