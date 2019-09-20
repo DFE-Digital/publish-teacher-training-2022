@@ -40,6 +40,10 @@
 
     <h2 class="govuk-heading-m"><%= govuk_link_to "Request access for someone else", request_access_provider_path(code: @provider.provider_code) %></h2>
     <p class="govuk-body govuk-!-margin-bottom-8">You can request a DfE Sign-in account for others who manage your courses.</p>
+
+    <h2 class="govuk-heading-m"><%= govuk_link_to "UCAS contacts", ucas_contacts_provider_path(code: @provider.provider_code) %></h2>
+    <p class="govuk-body govuk-!-margin-bottom-8">You can update your contacts for UCAS.</p>
+
   </div>
   <aside class="govuk-grid-column-one-third">
     <div class="app-related">

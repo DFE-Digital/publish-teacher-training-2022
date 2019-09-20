@@ -50,6 +50,7 @@ feature 'View providers', type: :feature do
 
     expect(organisation_page).to have_link('Locations', href: '/organisations/A0/2019/locations')
     expect(organisation_page).to have_link('Courses', href: '/organisations/A0/2019/courses')
+    expect(organisation_page).to have_link('UCAS contacts', href: '/organisations/A0/ucas-contacts')
   end
 
   context 'Rollover' do
