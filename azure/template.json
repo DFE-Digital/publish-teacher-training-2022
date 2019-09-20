@@ -199,6 +199,9 @@
           "runtimeStack": {
             "value": "[variables('appServiceRuntimeStack')]"
           },
+          "http20Enabled":{
+            "value": true
+            },
           "appServiceAppSettings": {
             "value": [
               {
