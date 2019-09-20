@@ -18,9 +18,6 @@ gem 'webpacker'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-# Manage multiple processes i.e. web server and webpack
-gem 'foreman'
-
 # Canonical meta tag
 gem 'canonical-rails'
 
