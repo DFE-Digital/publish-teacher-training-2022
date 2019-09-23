@@ -16,21 +16,21 @@ Rails.application.routes.draw do
 
   resources :providers, path: "organisations", param: :code do
     # Redirect legacy URLS to default recruitment cycle i.e. 2019
-    get "/locations", to: redirect("/organisations/%{provider_code}/2019/locations")
-    get "/locations/:location_id/edit", to: redirect("/organisations/%{provider_code}/2019/locations/%{location_id}/edit")
-    get "/locations/new", to: redirect("/organisations/%{provider_code}/2019/locations/new")
-    get "/courses", to: redirect("/organisations/%{provider_code}/2019/courses")
-    get "/courses/:course_code", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}")
-    get "/courses/:course_code/locations", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/locations")
-    get "/courses/:course_code/vacancies", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/vacancies")
-    get "/courses/:course_code/about", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/about")
-    get "/courses/:course_code/details", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/details")
-    get "/courses/:course_code/fees", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/fees")
-    get "/courses/:course_code/salary", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/salary")
-    get "/courses/:course_code/requirements", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/requirements")
-    get "/courses/:course_code/withdraw", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/withdraw")
-    get "/courses/:course_code/delete", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/delete")
-    get "/courses/:course_code/preview", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/preview")
+    get "/locations", to: redirect("/organisations/%{provider_code}/2020/locations")
+    get "/locations/:location_id/edit", to: redirect("/organisations/%{provider_code}/2020/locations/%{location_id}/edit")
+    get "/locations/new", to: redirect("/organisations/%{provider_code}/2020/locations/new")
+    get "/courses", to: redirect("/organisations/%{provider_code}/2020/courses")
+    get "/courses/:course_code", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}")
+    get "/courses/:course_code/locations", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/locations")
+    get "/courses/:course_code/vacancies", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/vacancies")
+    get "/courses/:course_code/about", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/about")
+    get "/courses/:course_code/details", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/details")
+    get "/courses/:course_code/fees", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/fees")
+    get "/courses/:course_code/salary", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/salary")
+    get "/courses/:course_code/requirements", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/requirements")
+    get "/courses/:course_code/withdraw", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/withdraw")
+    get "/courses/:course_code/delete", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/delete")
+    get "/courses/:course_code/preview", to: redirect("/organisations/%{provider_code}/2020/courses/%{course_code}/preview")
 
     get "/request-access", on: :member, to: "access_requests#new"
     post "/request-access", on: :member, to: "access_requests#create"
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     get "/ucas-contacts", on: :member, to: "ucas_contacts#index"
 
     # TODO: Extract year constraint to future proof for future cycles
-    resources :recruitment_cycles, param: :year, constraints: { year: /2019|2020/ }, path: "", only: :show do
+    resources :recruitment_cycles, param: :year, constraints: { year: /2019|2020|2021/ }, path: "", only: :show do
       get "/details", on: :member, to: "providers#details"
       get "/contact", on: :member, to: "providers#contact"
       put "/contact", on: :member, to: "providers#update"

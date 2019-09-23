@@ -7,50 +7,36 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <% if @provider.rolled_over? %>
-      <h2 class="govuk-heading-m">
-        <%= link_to 'Current cycle (2019 - 2020)',
-                          provider_recruitment_cycle_path(@provider.provider_code, '2019'),
-                          data: { qa: 'provider__courses__current_cycle' },
-                          class: "govuk-link" %>
-      </h2>
-      <p class="govuk-body">Use this section to:</p>
-      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
-        <li>manage courses in the current cycle</li>
-        <li>edit locations and vacancies in the current cycle</li>
-      </ul>
+    <h2 class="govuk-heading-l" data-qa="provider__courses__current_cycle">New cycle (<%= @recruitment_cycle.year_range %>)</h2>
+    <p class="govuk-body">Before 1 October you must:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>publish your organisations information</li>
+      <li>publish the courses you are running this year</li>
+      <li>remove any mention of the skills test requirement</li>
+    </ul>
+    <p class="govuk-body">Courses you publish will be listed on <%= govuk_link_to "Find postgraduate teacher training", Settings.search_ui.base_url %> from 1 October. Applications will open on 8 October.</p>
+    <p class="govuk-body govuk-!-margin-bottom-8">Candidates can only apply to published courses.</p>
 
-      <h2 class="govuk-heading-m">
-        <%= link_to 'Next cycle (2020 - 2021)',
-                          provider_recruitment_cycle_path(@provider.provider_code, '2020'),
-                          data: { qa: 'provider__courses__next_cycle' },
-                          class: "govuk-link" %>
-      </h2>
-      <p class="govuk-body">Use this section to:</p>
-      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
-        <li>prepare courses for the next cycle</li>
-        <li>manage locations needed for the next cycle</li>
-      </ul>
-    <% end %>
-
-    <% unless @provider.rolled_over? %>
-      <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: '2019' } %>
-      <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: '2019' } %>
-    <% end %>
-
-    <h2 class="govuk-heading-m"><%= govuk_link_to "Request access for someone else", request_access_provider_path(code: @provider.provider_code) %></h2>
-    <p class="govuk-body govuk-!-margin-bottom-8">You can request a DfE Sign-in account for others who manage your courses.</p>
-
-    <h2 class="govuk-heading-m"><%= govuk_link_to "UCAS contacts", ucas_contacts_provider_path(code: @provider.provider_code) %></h2>
-    <p class="govuk-body govuk-!-margin-bottom-8">You can update your contacts for UCAS.</p>
-
+    <%= render partial: 'recruitment_cycles/about_organisation', locals: { provider: @provider, year: '2020' } %>
+    <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: '2020' } %>
+    <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: '2020' } %>
   </div>
+
   <aside class="govuk-grid-column-one-third">
     <div class="app-related">
-      <h2 class="govuk-heading-m">New features in Publish</h2>
-      <p class="govuk-body"><%= govuk_link_to "View a list of new features", new_features_path %> we plan to introduce in the coming months.</p>
 
-      <h2 class="govuk-heading-m">Support and guidance</h2>
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= govuk_link_to "Request access", request_access_provider_path(code: @provider.provider_code) %></h2>
+      <p class="govuk-body">Request a DfE Sign-in account for others who manage your courses.</p>
+
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= govuk_link_to "UCAS contacts", ucas_contacts_provider_path(code: @provider.provider_code) %></h2>
+      <p class="govuk-body">Update or request UCAS contact details.</p>
+
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= govuk_link_to "New features", new_features_path %></h2>
+      <p class="govuk-body">View a list of new features we are working on.</p>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+
+      <h2 class="govuk-heading-s">Support and guidance</h2>
       <p class="govuk-body">If you have a question, or you’ve had a problem using Publish, you can email:</p>
       <p class="govuk-body govuk-!-margin-bottom-0"><%= bat_contact_mail_to bat_contact_email_address_with_wrap, subject: "Support and guidance" %></p>
     </div>

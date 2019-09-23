@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Access Requests", type: :feature do
-  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: "2019") }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider) }
 
   before do

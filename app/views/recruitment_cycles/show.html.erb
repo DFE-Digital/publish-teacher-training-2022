@@ -7,19 +7,13 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <% if @recruitment_cycle.next? %>
-      <p class="govuk-body-l">
-        Prepare your courses and locations for the next cycle. All your courses, locations and details have been copied from the current&nbsp;cycle.
-      </p>
-    <% else %>
-      <p class="govuk-body-l">
-        Manage courses, locations and vacancies in the current&nbsp;cycle.
-      </p>
-    <% end %>
+    <p class="govuk-body-l">
+      View your courses and locations from the <%= @recruitment_cycle.year_range %> recruitment cycle.
+    </p>
     <hr class="govuk-section-break govuk-section-break--m">
 
-    <%= render partial: 'recruitment_cycles/about_organisation', locals: { provider: @provider, year: params[:year] } %>
-    <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: params[:year] } %>
-    <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: params[:year] } %>
+    <h2 class="govuk-heading-m"><%= govuk_link_to "About your organisation", details_provider_recruitment_cycle_path(@provider.provider_code, params[:year]) %></h2>
+    <h2 class="govuk-heading-m"><%= link_to "Courses", provider_recruitment_cycle_courses_path(@provider.provider_code, params[:year]), class: "govuk-link", data: { qa: 'provider__courses' } %></h2>
+    <h2 class="govuk-heading-m"><%= link_to "Locations", provider_recruitment_cycle_sites_path(@provider.provider_code, params[:year]), class: "govuk-link", data: { qa: 'provider__locations' } %></h2>
   </div>
 </div>

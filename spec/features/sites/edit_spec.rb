@@ -4,7 +4,7 @@ require "rails_helper"
 
 feature "Edit locations", type: :feature do
   let(:site) { jsonapi(:site, location_name: "Main site 1") }
-  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: "2019") }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
 
   let(:provider) do
     build(:provider, sites: [site])
@@ -30,7 +30,7 @@ feature "Edit locations", type: :feature do
     end
 
     scenario "it 404s" do
-      visit edit_provider_recruitment_cycle_site_path(provider_code, "2019", "not_a_site")
+      visit edit_provider_recruitment_cycle_site_path(provider_code, current_recruitment_cycle.year.to_s, "not_a_site")
       expect(location_page).not_to be_displayed
       expect(page.status_code).to eq(404)
       expect(page.body).to have_content("Page not found")
