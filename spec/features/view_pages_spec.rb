@@ -46,6 +46,6 @@ RSpec.feature 'View pages', type: :feature do
 
   scenario "Navigate to /accessibility" do
     visit accessibility_path
-    expect(find('h1')).to have_content('Accessibility statement for Find postgraduate teacher training')
+    expect(find('h1')).to have_content('Accessibility statement for Publish teacher training courses')
   end
 end
