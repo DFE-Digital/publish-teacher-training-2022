@@ -139,6 +139,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/accessibility", to: "pages#accessibility", as: :accessibility
   get "/cookies", to: "pages#cookies", as: :cookies
   get "/terms-conditions", to: "pages#terms", as: :terms
   get "/privacy-policy", to: "pages#privacy", as: :privacy
