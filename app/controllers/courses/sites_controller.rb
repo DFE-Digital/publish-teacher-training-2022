@@ -3,7 +3,7 @@ module Courses
     decorates_assigned :course
     before_action(
       :build_course,
-      :build_provider
+      :build_provider,
     )
 
     def edit; end
@@ -18,7 +18,7 @@ module Courses
       @course.sites = @provider.sites.select { |site| selected_site_ids.include?(site.id) }
 
       if @course.save
-        success_message = @course.is_running? ? 'Course locations saved and published' : 'Course locations saved'
+        success_message = @course.is_running? ? "Course locations saved and published" : "Course locations saved"
         redirect_to provider_recruitment_cycle_course_path(params[:provider_code], params[:recruitment_cycle_year], params[:code]), flash: { success: success_message }
       else
         @errors = @course.errors.full_messages

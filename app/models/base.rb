@@ -9,7 +9,7 @@ class Base < JsonApiClient::Resource
         request_method,
         path,
         params: params,
-        headers: headers.update('Authorization' => authorization),
+        headers: headers.update("Authorization" => authorization),
         body: body
       )
     end
@@ -25,7 +25,7 @@ private
   def post_request(path)
     post_options = {
       body: { data: { attributes: {}, type: self.class.to_s.downcase } },
-      params: request_params.to_params
+      params: request_params.to_params,
     }
 
     self.last_result_set = self.class.requestor.__send__(

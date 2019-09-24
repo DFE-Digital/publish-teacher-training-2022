@@ -1,4 +1,4 @@
-require_relative 'boot'
+require_relative "boot"
 
 require "rails"
 # Pick the frameworks you want:
@@ -30,7 +30,7 @@ module ManageCoursesFrontend
     config.exceptions_app = self.routes
 
     config.session_store :cookie_store,
-                         key: '_publish_teacher_training_courses_session',
+                         key: "_publish_teacher_training_courses_session",
                          expire_after: 6.hours
   end
 end

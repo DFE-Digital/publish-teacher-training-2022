@@ -13,10 +13,10 @@ def resource_list_to_jsonapi(resource_list, **opts)
       Site: SiteSerializer,
       SiteStatus: SiteStatusSerializer,
       User: UserSerializer,
-      ProviderSuggestion: ProviderSuggestionSerializer
+      ProviderSuggestion: ProviderSuggestionSerializer,
     },
     include: opts[:include],
-    meta: opts[:meta]
+    meta: opts[:meta],
   )
 
   # Somehow, the JSONAPI Serializer reifies these objects as 'nil' if they

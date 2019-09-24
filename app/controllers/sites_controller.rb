@@ -12,7 +12,7 @@ class SitesController < ApplicationController
     @site.provider_code = @provider.provider_code
 
     if @site.save
-      redirect_to provider_recruitment_cycle_sites_path(@site.provider_code), flash: { success: 'Your location has been created' }
+      redirect_to provider_recruitment_cycle_sites_path(@site.provider_code), flash: { success: "Your location has been created" }
     else
       @errors = @site.errors.messages
 
@@ -32,7 +32,7 @@ class SitesController < ApplicationController
     @site.provider_code = @provider.provider_code
 
     if @site.update(site_params)
-      redirect_to provider_recruitment_cycle_sites_path(@site.provider_code, @site.recruitment_cycle_year), flash: { success: 'Your changes have been published' }
+      redirect_to provider_recruitment_cycle_sites_path(@site.provider_code, @site.recruitment_cycle_year), flash: { success: "Your changes have been published" }
     else
       @errors = @site.errors.messages
 
@@ -48,14 +48,14 @@ private
     if @site
       @site_name_before_update = @site.location_name.dup
     else
-      render template: 'errors/not_found', status: :not_found
+      render template: "errors/not_found", status: :not_found
     end
   end
 
   def build_provider
     cycle_year = params.fetch(
       :recruitment_cycle_year,
-      Settings.current_cycle
+      Settings.current_cycle,
                  )
 
     @provider = Provider
@@ -68,7 +68,7 @@ private
   def build_recruitment_cycle
     cycle_year = params.fetch(
       :recruitment_cycle_year,
-      Settings.current_cycle
+      Settings.current_cycle,
     )
 
     @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
@@ -82,7 +82,7 @@ private
       :address3,
       :address4,
       :postcode,
-      :region_code
+      :region_code,
     )
   end
 end

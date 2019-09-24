@@ -21,9 +21,9 @@ FactoryBot.define do
           Site: SiteSerializer,
           SiteStatus: SiteStatusSerializer,
           User: UserSerializer,
-          ProviderSuggestion: ProviderSuggestionSerializer
+          ProviderSuggestion: ProviderSuggestionSerializer,
         },
-        include: opts[:include]
+        include: opts[:include],
       )
 
       # Somehow, the JSONAPI Serializer reifies these objects as 'nil' if they

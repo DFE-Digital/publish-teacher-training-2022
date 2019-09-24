@@ -28,19 +28,19 @@ class CoursesController < ApplicationController
 
   def update
     # Course length should be saved as `course_length` so if "other" is selected then pass that text value into `course_length`
-    if params[:course][:course_length_other_length].present? && params[:course][:course_length] == 'Other'
+    if params[:course][:course_length_other_length].present? && params[:course][:course_length] == "Other"
       params[:course][:course_length] = params[:course][:course_length_other_length]
     end
     params[:course].delete(:course_length_other_length)
 
     if @course.update(course_params)
-      flash[:success] = 'Your changes have been saved'
+      flash[:success] = "Your changes have been saved"
       redirect_to(
         provider_recruitment_cycle_course_path(
           @course.provider_code,
           @course.recruitment_cycle_year,
-          @course.course_code
-        )
+          @course.course_code,
+        ),
       )
     else
       @errors = @course.errors.messages
@@ -62,9 +62,9 @@ class CoursesController < ApplicationController
 
     if params[:copy_from].present?
       @copied_fields = [
-        ['About the course', 'about_course'],
-        ['Interview process', 'interview_process'],
-        ['How school placements work', 'how_school_placements_work']
+        ["About the course", "about_course"],
+        ["Interview process", "interview_process"],
+        ["How school placements work", "how_school_placements_work"],
       ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
@@ -74,9 +74,9 @@ class CoursesController < ApplicationController
 
     if params[:copy_from].present?
       @copied_fields = [
-        ['Qualifications needed', 'required_qualifications'],
-        ['Personal qualities', 'personal_qualities'],
-        ['Other requirements', 'other_requirements']
+        ["Qualifications needed", "required_qualifications"],
+        ["Personal qualities", "personal_qualities"],
+        ["Other requirements", "other_requirements"],
       ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
@@ -86,11 +86,11 @@ class CoursesController < ApplicationController
 
     if params[:copy_from].present?
       @copied_fields = [
-        ['Course length', 'course_length'],
-        ['Fee for UK and EU students', 'fee_uk_eu'],
-        ['Fee for international students', 'fee_international'],
-        ['Fee details', 'fee_details'],
-        ['Financial support', 'financial_support']
+        ["Course length", "course_length"],
+        ["Fee for UK and EU students", "fee_uk_eu"],
+        ["Fee for international students", "fee_international"],
+        ["Fee details", "fee_details"],
+        ["Financial support", "financial_support"],
       ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
@@ -100,8 +100,8 @@ class CoursesController < ApplicationController
 
     if params[:copy_from].present?
       @copied_fields = [
-        ['Course length', 'course_length'],
-        ['Salary details', 'salary_details']
+        ["Course length", "course_length"],
+        ["Salary details", "salary_details"],
       ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
@@ -150,14 +150,14 @@ private
       :other_requirements,
       :personal_qualities,
       :salary_details,
-      :required_qualifications
+      :required_qualifications,
     )
   end
 
   def build_course_for_preview
     cycle_year = params.fetch(
       :recruitment_cycle_year,
-      Settings.current_cycle
+      Settings.current_cycle,
     )
 
     @provider_code = params[:provider_code]
@@ -170,13 +170,13 @@ private
       .find(params[:code])
       .first
   rescue JsonApiClient::Errors::NotFound
-    render file: 'errors/not_found', status: :not_found
+    render file: "errors/not_found", status: :not_found
   end
 
   def build_course
     cycle_year = params.fetch(
       :recruitment_cycle_year,
-      Settings.current_cycle
+      Settings.current_cycle,
     )
 
     @provider_code = params[:provider_code]
@@ -189,7 +189,7 @@ private
       .find(params[:code])
       .first
   rescue JsonApiClient::Errors::NotFound
-    render template: 'errors/not_found', status: :not_found
+    render template: "errors/not_found", status: :not_found
   end
 
   def build_provider
@@ -199,7 +199,7 @@ private
   def build_courses
     cycle_year = params.fetch(
       :recruitment_cycle_year,
-      Settings.current_cycle
+      Settings.current_cycle,
     )
 
     @provider = Provider
@@ -240,7 +240,7 @@ private
   def build_copy_course
     cycle_year = params.fetch(
       :recruitment_cycle_year,
-      Settings.current_cycle
+      Settings.current_cycle,
     )
 
     @source_course = Course.includes(:sites)
@@ -271,7 +271,7 @@ private
   def build_recruitment_cycle
     cycle_year = params.fetch(
       :recruitment_cycle_year,
-      Settings.current_cycle
+      Settings.current_cycle,
     )
 
     @recruitment_cycle = RecruitmentCycle.find(cycle_year).first

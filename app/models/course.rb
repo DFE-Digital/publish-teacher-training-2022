@@ -15,11 +15,11 @@ class Course < Base
   self.primary_key = :course_code
 
   def publish
-    post_request('/publish')
+    post_request("/publish")
   end
 
   def publishable?
-    post_request('/publishable')
+    post_request("/publishable")
   end
 
   def self.build_new(params)
@@ -37,31 +37,31 @@ class Course < Base
   end
 
   def full_time?
-    study_mode == 'full_time'
+    study_mode == "full_time"
   end
 
   def part_time?
-    study_mode == 'part_time'
+    study_mode == "part_time"
   end
 
   def full_time_or_part_time?
-    study_mode == 'full_time_or_part_time'
+    study_mode == "full_time_or_part_time"
   end
 
   def is_running?
-    ucas_status == 'running'
+    ucas_status == "running"
   end
 
   def not_running?
-    ucas_status == 'not_running'
+    ucas_status == "not_running"
   end
 
   def new_and_not_running?
-    ucas_status == 'new'
+    ucas_status == "new"
   end
 
   def has_fees?
-    funding_type == 'fee'
+    funding_type == "fee"
   end
 
   def has_unpublished_changes?
@@ -69,7 +69,7 @@ class Course < Base
   end
 
   def is_published?
-    content_status == 'published'
+    content_status == "published"
   end
 
   def running_site_statuses
@@ -81,15 +81,15 @@ class Course < Base
   end
 
   def year
-    applications_open_from.split('-').first if applications_open_from.present?
+    applications_open_from.split("-").first if applications_open_from.present?
   end
 
   def month
-    applications_open_from.split('-').second if applications_open_from.present?
+    applications_open_from.split("-").second if applications_open_from.present?
   end
 
   def day
-    applications_open_from.split('-').third if applications_open_from.present?
+    applications_open_from.split("-").third if applications_open_from.present?
   end
 
 private

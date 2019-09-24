@@ -3,7 +3,7 @@ module PageObjects
     module Organisations
       module Courses
         class StartDatePage < CourseBase
-          set_url '/organisations/{provider_code}/{recruitment_cycle_year}/courses/start_date/new'
+          set_url "/organisations/{provider_code}/{recruitment_cycle_year}/courses/start_date/new"
         end
       end
     end

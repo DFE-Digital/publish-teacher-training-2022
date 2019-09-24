@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Edit course start date', type: :feature do
+feature "Edit course start date", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:start_date_page) { PageObjects::Page::Organisations::CourseStartDate.new }
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
@@ -10,12 +10,12 @@ feature 'Edit course start date', type: :feature do
     stub_omniauth
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.to_jsonapi
+      current_recruitment_cycle.to_jsonapi,
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
-      build(:provider).to_jsonapi(include: %i[courses accrediting_provider])
+      build(:provider).to_jsonapi(include: %i[courses accrediting_provider]),
     )
 
     stub_course_request
@@ -23,72 +23,72 @@ feature 'Edit course start date', type: :feature do
     start_date_page.load_with_course(course)
   end
 
-  context 'editing start date' do
-    context 'if the backend has indicated that start date can be edited' do
+  context "editing start date" do
+    context "if the backend has indicated that start date can be edited" do
       let(:course) do
         build(
           :course,
           edit_options: {
             show_start_date: true,
-            start_dates: ['October 2019', 'November 2019']
+            start_dates: ["October 2019", "November 2019"],
           },
-          provider: provider
+          provider: provider,
         )
       end
 
-      scenario 'should show the edit link' do
+      scenario "should show the edit link" do
         course_details_page.load_with_course(course)
         expect(course_details_page).to have_edit_start_date_link
       end
     end
 
-    context 'if the backend has indicated that start date cannot be edited' do
+    context "if the backend has indicated that start date cannot be edited" do
       let(:course) do
         build(
           :course,
           edit_options: {
             show_start_date: false,
-            start_dates: ['October 2019', 'November 2019']
+            start_dates: ["October 2019", "November 2019"],
           },
-          provider: provider
+          provider: provider,
         )
       end
 
-      scenario 'should not show the edit link' do
+      scenario "should not show the edit link" do
         course_details_page.load_with_course(course)
         expect(course_details_page).to_not have_edit_start_date_link
       end
     end
   end
 
-  context 'a course with a start date of october 2019' do
+  context "a course with a start date of october 2019" do
     let(:course) do
       build(
         :course,
-        start_date: 'October 2019',
-        content_status: 'draft',
+        start_date: "October 2019",
+        content_status: "draft",
         edit_options: {
-          start_dates: ['October 2019', 'November 2019'],
-          show_start_date: true
+          start_dates: ["October 2019", "November 2019"],
+          show_start_date: true,
         },
-        provider: provider
+        provider: provider,
       )
     end
 
-    scenario 'can cancel changes' do
-      click_on 'Cancel changes'
+    scenario "can cancel changes" do
+      click_on "Cancel changes"
       expect(course_details_page).to be_displayed
     end
 
-    scenario 'can navigate to the edit screen and back again' do
+    scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
-      click_on 'Change start date'
+      click_on "Change start date"
       expect(start_date_page).to be_displayed
-      click_on 'Back'
+      click_on "Back"
       expect(course_details_page).to be_displayed
     end
 
-    scenario 'presents a choice for each start date' do
+    scenario "presents a choice for each start date" do
       expect(start_date_page).to have_start_date_field
       expect(start_date_page.start_date_field)
         .to have_selector('[value="October 2019"]')
@@ -96,11 +96,11 @@ feature 'Edit course start date', type: :feature do
         .to have_selector('[value="November 2019"]')
     end
 
-    scenario 'has the correct value selected' do
-      expect(start_date_page.start_date_field.value).to eq('October 2019')
+    scenario "has the correct value selected" do
+      expect(start_date_page.start_date_field.value).to eq("October 2019")
     end
 
-    scenario 'can be updated' do
+    scenario "can be updated" do
       update_course_stub = stub_api_v2_request(
         "/recruitment_cycles/#{course.recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
@@ -109,11 +109,11 @@ feature 'Edit course start date', type: :feature do
         :patch, 200
       )
 
-      select('November 2019')
-      click_on 'Save'
+      select("November 2019")
+      click_on "Save"
 
       expect(course_details_page).to be_displayed
-      expect(course_details_page.flash).to have_content('Your changes have been saved')
+      expect(course_details_page.flash).to have_content("Your changes have been saved")
       expect(update_course_stub).to have_been_requested
     end
   end
@@ -123,7 +123,7 @@ feature 'Edit course start date', type: :feature do
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}/courses" \
       "/#{course.course_code}",
-      course.to_jsonapi
+      course.to_jsonapi,
     )
   end
 
@@ -133,7 +133,7 @@ feature 'Edit course start date', type: :feature do
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
       "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites])
+      course.to_jsonapi(include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
     )
   end
 end

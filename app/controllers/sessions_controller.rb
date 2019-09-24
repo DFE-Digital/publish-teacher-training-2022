@@ -9,20 +9,20 @@ class SessionsController < ApplicationController
     session[:auth_user] = HashWithIndifferentAccess.new(
       "uid" => auth_hash.dig("uid"),
       "info" => HashWithIndifferentAccess.new(
-        email: auth_hash.dig("info", 'email'),
-        first_name: auth_hash.dig("info", 'first_name'),
-        last_name: auth_hash.dig("info", 'last_name')
+        email: auth_hash.dig("info", "email"),
+        first_name: auth_hash.dig("info", "first_name"),
+        last_name: auth_hash.dig("info", "last_name"),
       ),
-      'credentials' => HashWithIndifferentAccess.new(
-        'id_token' => auth_hash.dig('credentials', :id_token)
-      )
+      "credentials" => HashWithIndifferentAccess.new(
+        "id_token" => auth_hash.dig("credentials", :id_token),
+      ),
     )
 
-    Raven.tags_context(sign_in_user_id: current_user.fetch('uid'))
+    Raven.tags_context(sign_in_user_id: current_user.fetch("uid"))
     add_token_to_connection
     user = set_user_session
     # current_user['user_id'] won't be set until set_user_session is run
-    Raven.user_context(id: current_user['user_id'])
+    Raven.user_context(id: current_user["user_id"])
 
     redirect_to_correct_page(user)
   end
@@ -53,9 +53,9 @@ private
   def redirect_to_correct_page(user)
     if user.accept_terms_date_utc.nil?
       redirect_to accept_terms_path
-    elsif user.state == 'new'
+    elsif user.state == "new"
       redirect_to transition_info_path
-    elsif Settings.rollover && user.state == 'transitioned'
+    elsif Settings.rollover && user.state == "transitioned"
       redirect_to rollover_path
     else
       redirect_to session[:redirect_back_to] || root_path

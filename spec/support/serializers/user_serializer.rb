@@ -1,5 +1,5 @@
 class UserSerializer < JSONAPI::Serializable::Resource
-  type 'users'
+  type "users"
 
-  attributes(*FactoryBot.attributes_for('user').keys)
+  attributes(*FactoryBot.attributes_for("user").keys)
 end

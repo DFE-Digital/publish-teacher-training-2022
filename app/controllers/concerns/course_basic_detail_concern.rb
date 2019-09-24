@@ -17,13 +17,13 @@ module CourseBasicDetailConcern
     return render :edit if @errors.present?
 
     if @course.update(course_params)
-      flash[:success] = 'Your changes have been saved'
+      flash[:success] = "Your changes have been saved"
       redirect_to(
         details_provider_recruitment_cycle_course_path(
           @course.provider_code,
           @course.recruitment_cycle_year,
-          @course.course_code
-        )
+          @course.course_code,
+        ),
       )
     else
       @errors = @course.errors.messages
@@ -37,7 +37,7 @@ private
     @course = Course.build_new(
       recruitment_cycle_year: @provider.recruitment_cycle_year,
       provider_code: @provider.provider_code,
-      course: course_params.to_unsafe_hash
+      course: course_params.to_unsafe_hash,
     )
   end
 
@@ -77,7 +77,7 @@ private
         :maths,
         :english,
         :science,
-        :funding_type
+        :funding_type,
       )
     else
       ActionController::Parameters.new({}).permit(:course)
@@ -93,13 +93,13 @@ private
       new_provider_recruitment_cycle_courses_entry_requirements_path(
         params[:provider_code],
         params[:recruitment_cycle_year],
-        course: course_params
+        course: course_params,
       )
     elsif current_step == :entry_requirements
       new_provider_recruitment_cycle_courses_outcome_path(
         params[:provider_code],
         params[:recruitment_cycle_year],
-        course: course_params
+        course: course_params,
       )
     end
   end

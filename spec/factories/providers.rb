@@ -15,17 +15,17 @@ FactoryBot.define do
     train_with_us { Faker::Lorem.sentence(word_count: 100) }
     accredited_bodies { [] }
     train_with_disability { Faker::Lorem.sentence(word_count: 100) }
-    website { 'https://cat.me' }
-    email { 'info@acme-scitt.org' }
-    telephone { '020 8123 4567' }
+    website { "https://cat.me" }
+    email { "info@acme-scitt.org" }
+    telephone { "020 8123 4567" }
     address1 { nil }
     address2 { nil }
     address3 { nil }
     address4 { nil }
     postcode { nil }
-    recruitment_cycle_year { '2019' }
+    recruitment_cycle_year { "2019" }
     last_published_at { DateTime.new(2019).utc.iso8601 }
-    content_status { 'Published' }
+    content_status { "Published" }
     utt_contact do
       {
         name: "utt_contact@acme-scitt.org",
@@ -85,7 +85,7 @@ FactoryBot.define do
         [
           jsonapi(:provider, provider_code: "A0", include_counts: %i[courses]).render,
           jsonapi(:provider, provider_code: "A1", include_counts: %i[courses]).render,
-          jsonapi(:provider, provider_code: "A2", include_counts: %i[courses]).render
+          jsonapi(:provider, provider_code: "A2", include_counts: %i[courses]).render,
         ].map { |d| d[:data] }
       }
 

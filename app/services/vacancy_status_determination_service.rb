@@ -7,7 +7,7 @@ class VacancyStatusDeterminationService
     new(
       vacancy_status_full_time: vacancy_status_full_time,
       vacancy_status_part_time: vacancy_status_part_time,
-      course:                   course
+      course:                   course,
     ).call
   end
 
@@ -20,28 +20,28 @@ class VacancyStatusDeterminationService
   def call
     vacancy_status = if course.full_time_or_part_time?
                        if vacancy_status_full_time? && vacancy_status_part_time?
-                         'both_full_time_and_part_time_vacancies'
+                         "both_full_time_and_part_time_vacancies"
                        elsif vacancy_status_full_time?
-                         'full_time_vacancies'
+                         "full_time_vacancies"
                        elsif vacancy_status_part_time?
-                         'part_time_vacancies'
+                         "part_time_vacancies"
                        end
                      elsif course.full_time? && vacancy_status_full_time?
-                       'full_time_vacancies'
+                       "full_time_vacancies"
                      elsif course.part_time? && vacancy_status_part_time?
-                       'part_time_vacancies'
+                       "part_time_vacancies"
                      end
 
-    vacancy_status || 'no_vacancies'
+    vacancy_status || "no_vacancies"
   end
 
 private
 
   def vacancy_status_full_time?
-    vacancy_status_full_time == '1'
+    vacancy_status_full_time == "1"
   end
 
   def vacancy_status_part_time?
-    vacancy_status_part_time == '1'
+    vacancy_status_part_time == "1"
   end
 end

@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Getting rid of a course', type: :feature do
+feature "Getting rid of a course", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
-  let(:provider) { build(:provider, provider_code: 'A0') }
+  let(:provider) { build(:provider, provider_code: "A0") }
   let(:course) do
     build :course,
           ucas_status: ucas_status,
@@ -20,23 +20,23 @@ feature 'Getting rid of a course', type: :feature do
       "providers/#{provider.provider_code}/" \
       "courses/#{course.course_code}" \
       "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: %i[provider sites])
+      course.to_jsonapi(include: %i[provider sites]),
     )
 
     course_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle.year, course_code: course.course_code)
   end
 
   context "for a running course" do
-    let(:ucas_status) { 'running' }
+    let(:ucas_status) { "running" }
 
-    scenario 'withdrawing can be requested via support' do
+    scenario "withdrawing can be requested via support" do
       course_page.withdraw_link.click
 
-      expect(find('.govuk-caption-xl')).to have_content(
-        "#{course.name} (#{course.course_code})"
+      expect(find(".govuk-caption-xl")).to have_content(
+        "#{course.name} (#{course.course_code})",
       )
-      expect(find('.govuk-heading-xl')).to have_content(
-        "Are you sure you want to withdraw this course?"
+      expect(find(".govuk-heading-xl")).to have_content(
+        "Are you sure you want to withdraw this course?",
       )
     end
 
@@ -46,16 +46,16 @@ feature 'Getting rid of a course', type: :feature do
   end
 
   context "for a new course" do
-    let(:ucas_status) { 'new' }
+    let(:ucas_status) { "new" }
 
-    scenario 'deletion can be requested via support' do
+    scenario "deletion can be requested via support" do
       course_page.delete_link.click
 
-      expect(find('.govuk-caption-xl')).to have_content(
-        "#{course.name} (#{course.course_code})"
+      expect(find(".govuk-caption-xl")).to have_content(
+        "#{course.name} (#{course.course_code})",
       )
-      expect(find('.govuk-heading-xl')).to have_content(
-        "Are you sure you want to delete this course?"
+      expect(find(".govuk-heading-xl")).to have_content(
+        "Are you sure you want to delete this course?",
       )
     end
 
@@ -65,7 +65,7 @@ feature 'Getting rid of a course', type: :feature do
   end
 
   context "for a non-running course" do
-    let(:ucas_status) { 'not_running' }
+    let(:ucas_status) { "not_running" }
 
     scenario "deletion isn't possible" do
       expect(course_page).to_not have_delete_link

@@ -5,18 +5,18 @@ FactoryBot.define do
         {
           title: "Invalid location_name",
           detail: "Name is missing",
-          source: { pointer: "/data/attributes/location_name" }
+          source: { pointer: "/data/attributes/location_name" },
         },
         {
           title: "Invalid postcode",
           detail: "Postcode is missing",
-          source: { pointer: "/data/attributes/postcode" }
+          source: { pointer: "/data/attributes/postcode" },
         },
         {
           title: "Invalid postcode",
           detail: "Postcode is invalid",
-          source: { pointer: "/data/attributes/postcode" }
-        }
+          source: { pointer: "/data/attributes/postcode" },
+        },
       ]
     }
 
@@ -30,8 +30,8 @@ FactoryBot.define do
           {
             title: "Invalid qualification",
             detail: "Qualification error",
-            source: { pointer: "/data/attributes/qualification" }
-          }
+            source: { pointer: "/data/attributes/qualification" },
+          },
         ]
       }
     end
@@ -42,8 +42,8 @@ FactoryBot.define do
           {
             title: "Invalid about_course",
             detail: "About course can't be blank",
-            source: { pointer: "/data/attributes/about_course" }
-          }
+            source: { pointer: "/data/attributes/about_course" },
+          },
         ]
       }
     end
@@ -54,8 +54,8 @@ FactoryBot.define do
           {
             title: "Invalid train_with_us",
             detail: "Reduce the word count for train with us",
-            source: { pointer: "/data/attributes/train_with_us" }
-          }
+            source: { pointer: "/data/attributes/train_with_us" },
+          },
         ]
       }
     end
@@ -66,8 +66,8 @@ FactoryBot.define do
           {
             title: "Invalid first_name",
             detail: "Enter your first name",
-            source: { pointer: "/data/attributes/first_name" }
-          }
+            source: { pointer: "/data/attributes/first_name" },
+          },
         ]
       }
     end

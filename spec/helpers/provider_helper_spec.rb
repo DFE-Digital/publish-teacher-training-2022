@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'View helpers', type: :helper do
-  let(:email) { 'ab+test@c.com' }
-  let(:html_escaped_version_of_email) { 'ab%2Btest%40c.com' }
+feature "View helpers", type: :helper do
+  let(:email) { "ab+test@c.com" }
+  let(:html_escaped_version_of_email) { "ab%2Btest%40c.com" }
   let(:provider) { build(:provider) }
 
   describe "#add_course_link" do

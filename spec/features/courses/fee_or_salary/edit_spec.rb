@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Edit course fee or salary status', type: :feature do
+feature "Edit course fee or salary status", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:fee_or_salary_page) { PageObjects::Page::Organisations::CourseFeeOrSalary.new }
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
@@ -10,12 +10,12 @@ feature 'Edit course fee or salary status', type: :feature do
     stub_omniauth
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.to_jsonapi
+      current_recruitment_cycle.to_jsonapi,
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
-      provider.to_jsonapi(include: %i[courses accrediting_provider])
+      provider.to_jsonapi(include: %i[courses accrediting_provider]),
     )
 
     stub_course_request
@@ -23,32 +23,32 @@ feature 'Edit course fee or salary status', type: :feature do
     fee_or_salary_page.load_with_course(course)
   end
 
-  context 'A course belonging to a non-accredited body' do
-    let(:funding_type) { 'fee' }
+  context "A course belonging to a non-accredited body" do
+    let(:funding_type) { "fee" }
 
     let(:course) do
       build(
         :course,
         funding_type: funding_type,
         provider: provider,
-        content_status: 'draft'
+        content_status: "draft",
       )
     end
 
-    scenario 'can cancel changes' do
-      click_on 'Cancel changes'
+    scenario "can cancel changes" do
+      click_on "Cancel changes"
       expect(course_details_page).to be_displayed
     end
 
-    scenario 'can navigate to the edit screen and back again' do
+    scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
-      click_on 'Change fee or salary'
+      click_on "Change fee or salary"
       expect(fee_or_salary_page).to be_displayed
-      click_on 'Back'
+      click_on "Back"
       expect(course_details_page).to be_displayed
     end
 
-    scenario 'presents the correct choices' do
+    scenario "presents the correct choices" do
       expect(fee_or_salary_page).to have_funding_type_fields
       expect(fee_or_salary_page.funding_type_fields)
         .to have_apprenticeship
@@ -58,7 +58,7 @@ feature 'Edit course fee or salary status', type: :feature do
         .to have_salary
     end
 
-    scenario 'clicking salaried sets funding type to salaried' do
+    scenario "clicking salaried sets funding type to salaried" do
       patch_stub = stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}/courses" \
@@ -68,12 +68,12 @@ feature 'Edit course fee or salary status', type: :feature do
         body: {
           data: {
             course_code: course.course_code,
-            type: 'courses',
+            type: "courses",
             attributes: {
-              funding_type: 'salary'
-            }
-          }
-        }.to_json
+              funding_type: "salary",
+            },
+          },
+        }.to_json,
       )
 
       fee_or_salary_page.funding_type_fields.salary.click
@@ -88,7 +88,7 @@ feature 'Edit course fee or salary status', type: :feature do
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}/courses" \
       "/#{course.course_code}",
-      course.to_jsonapi
+      course.to_jsonapi,
     )
   end
 
@@ -98,7 +98,7 @@ feature 'Edit course fee or salary status', type: :feature do
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
       "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites])
+      course.to_jsonapi(include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
     )
   end
 end
