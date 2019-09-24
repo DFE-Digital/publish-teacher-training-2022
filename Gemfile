@@ -7,7 +7,7 @@ ruby '2.6.1'
 gem 'rails', '~> 6.0'
 
 # Use Puma as the app server
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 4.2'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
