@@ -66,5 +66,10 @@ Rails.application.configure do
   # Logging
   config.log_level = :info
   config.log_tags = [:request_id] # Prepend all log lines with the following tags.
-  config.logger = ActiveSupport::Logger.new(STDOUT)
+  if Settings.logstash.host && Settings.logstash.port
+    config.logger = LogStashLogger.new(Settings.logstash.to_h)
+  else
+    config.logger = ActiveSupport::Logger.new(STDOUT)
+    config.logger.warn("logstash not configured, falling back to standard Rails logging")
+  end
 end

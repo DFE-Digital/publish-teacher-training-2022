@@ -45,3 +45,9 @@ environment:
   selector_name: "beta"
 rollover: true
 current_cycle: 2019
+application_name: manage-courses-frontend
+logstash:
+  type: tcp
+  host: # Our hostname here
+  port: # Our port here
+  ssl_enable: true
