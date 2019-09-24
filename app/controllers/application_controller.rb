@@ -29,6 +29,8 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if current_user.present?
+      logger.debug("Authenticated user session found " + current_user.to_s)
+
       assign_sentry_contexts
       assign_logstash_contexts
       add_token_to_connection
@@ -38,7 +40,16 @@ class ApplicationController < ActionController::Base
         set_user_session
         Raven.user_context(id: current_user["user_id"])
       end
+
+      logger.debug("User authenticated " + {
+                     id: current_user['user_id'],
+                     email: current_user['info']&.fetch('email', ''),
+                     uid: current_user['uid']
+                   }.to_s)
     else
+      logger.debug("Authenticated user session not found " + {
+                     redirect_back_to: request.path
+                   }.to_s)
       session[:redirect_back_to] = request.path
       redirect_to "/signin"
     end
@@ -77,6 +88,11 @@ private
   end
 
   def set_user_session
+    logger.debug("Creating new session for user " + {
+                   email: current_user['info'].fetch('email', ''),
+                   signin_id: current_user_dfe_signin_id
+                 }.to_s)
+
     # TODO: we should return a session object here with a 'user' attached to id.
     user = Session.create(first_name: current_user_info[:first_name],
                           last_name: current_user_info[:last_name])
