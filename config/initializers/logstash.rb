@@ -1,5 +1,8 @@
 LogStashLogger.configure do |config|
   config.customize_event do |event|
+    event["application"] = Settings.application_name
+    event["environment"] = Rails.env
+
     if Thread.current.key? :logstash
       if Thread.current[:logstash].key? :user_id
         event["user_id"] = Thread.current[:logstash][:user_id]
