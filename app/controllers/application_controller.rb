@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
   def authenticate
     if current_user.present?
       assign_sentry_contexts
+      assign_logstash_contexts
       add_token_to_connection
       set_has_multiple_providers
 
@@ -111,5 +112,11 @@ private
   def assign_sentry_contexts
     Raven.user_context(id: current_user['user_id'])
     Raven.tags_context(sign_in_user_id: current_user.fetch('uid'))
+  end
+
+  def assign_logstash_contexts
+    Thread.current[:logstash] ||= {}
+    Thread.current[:logstash][:user_id] = current_user['user_id']
+    Thread.current[:logstash][:sign_in_user_id] = current_user['uid']
   end
 end
