@@ -42,13 +42,13 @@ class ApplicationController < ActionController::Base
       end
 
       logger.debug("User authenticated " + {
-                     id: current_user['user_id'],
-                     email: current_user['info']&.fetch('email', ''),
-                     uid: current_user['uid']
+                     id: current_user["user_id"],
+                     email: current_user["info"]&.fetch("email", ""),
+                     uid: current_user["uid"],
                    }.to_s)
     else
       logger.debug("Authenticated user session not found " + {
-                     redirect_back_to: request.path
+                     redirect_back_to: request.path,
                    }.to_s)
       session[:redirect_back_to] = request.path
       redirect_to "/signin"
@@ -89,8 +89,8 @@ private
 
   def set_user_session
     logger.debug("Creating new session for user " + {
-                   email: current_user['info'].fetch('email', ''),
-                   signin_id: current_user_dfe_signin_id
+                   email: current_user["info"].fetch("email", ""),
+                   signin_id: current_user_dfe_signin_id,
                  }.to_s)
 
     # TODO: we should return a session object here with a 'user' attached to id.

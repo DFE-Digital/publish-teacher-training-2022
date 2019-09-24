@@ -1,4 +1,4 @@
-Rails.application.configure do
+Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
   # Settings specified here will take precedence over those in config/application.rb.
@@ -57,4 +57,11 @@ Rails.application.configure do
 
   # Logging
   config.log_level = Settings.log_level
+
+  if Settings.logstash.host && Settings.logstash.port
+    config.logger = LogStashLogger.new(Settings.logstash.to_h)
+  else
+    config.logger = ActiveSupport::Logger.new(STDOUT)
+    config.logger.warn("logstash not configured, falling back to standard Rails logging")
+  end
 end
