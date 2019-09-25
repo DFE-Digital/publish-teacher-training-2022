@@ -10,3 +10,4 @@ search_ui:
 environment:
   label: "Development"
   selector_name: "development"
+log_level: debug

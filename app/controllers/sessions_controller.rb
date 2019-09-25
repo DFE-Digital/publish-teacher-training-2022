@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
     user = set_user_session
     # current_user['user_id'] won't be set until set_user_session is run
     Raven.user_context(id: current_user["user_id"])
+    logger.debug("User session create " + session[:auth_user].to_s)
 
     redirect_to_correct_page(user)
   end

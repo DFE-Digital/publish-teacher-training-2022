@@ -51,3 +51,4 @@ logstash:
   host: # Our hostname here
   port: # Our port here
   ssl_enable: true
+log_level: info
