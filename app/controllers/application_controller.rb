@@ -27,9 +27,19 @@ class ApplicationController < ActionController::Base
     @current_user ||= session[:auth_user] if session[:auth_user]
   end
 
+  def log_safe_current_user(reload: false)
+    if @log_safe_current_user.nil? || reload
+      @log_safe_current_user = current_user.dup
+      email = @log_safe_current_user["info"]&.fetch("email", "")
+      @log_safe_current_user.delete("info")
+      @log_safe_current_user["email_md5"] = Digest::MD5.hexdigest(email)
+    end
+    @log_safe_current_user
+  end
+
   def authenticate
     if current_user.present?
-      logger.debug("Authenticated user session found " + current_user.to_s)
+      logger.debug { "Authenticated user session found " + log_safe_current_user.to_s }
 
       assign_sentry_contexts
       assign_logstash_contexts
@@ -39,13 +49,9 @@ class ApplicationController < ActionController::Base
       if current_user["user_id"].blank?
         set_user_session
         Raven.user_context(id: current_user["user_id"])
+        logger.debug { "User session set. " + log_safe_current_user(reload: true).to_s }
       end
 
-      logger.debug("User authenticated " + {
-                     id: current_user["user_id"],
-                     email: current_user["info"]&.fetch("email", ""),
-                     uid: current_user["uid"],
-                   }.to_s)
     else
       logger.debug("Authenticated user session not found " + {
                      redirect_back_to: request.path,
@@ -88,10 +94,12 @@ private
   end
 
   def set_user_session
-    logger.debug("Creating new session for user " + {
-                   email: current_user["info"].fetch("email", ""),
-                   signin_id: current_user_dfe_signin_id,
-                 }.to_s)
+    logger.debug {
+      "Creating new session for user " + {
+        email_md5: log_safe_current_user["email_md5"],
+        signin_id: current_user_dfe_signin_id,
+      }.to_s
+    }
 
     # TODO: we should return a session object here with a 'user' attached to id.
     user = Session.create(first_name: current_user_info[:first_name],
