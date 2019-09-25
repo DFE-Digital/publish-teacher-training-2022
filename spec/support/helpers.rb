@@ -45,7 +45,7 @@ module Helpers
       stubbed_request.with(
         headers: {
           "Accept"          => "application/vnd.api+json",
-          "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+          "Accept-Encoding" => "gzip,deflate",
           "Authorization"   => "Bearer #{token}",
           "Content-Type"    => "application/vnd.api+json",
           "User-Agent"      => "Faraday v0.15.4",
