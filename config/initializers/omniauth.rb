@@ -9,23 +9,23 @@ module OmniAuth
           state: new_state,
           nonce: (new_nonce if options.send_nonce),
           hd: options.hd,
-          prompt: :consent
+          prompt: :consent,
         }
         client.authorization_uri(opts.reject { |_, v| v.nil? })
       end
 
       def callback_phase
-        error = request.params['error_reason'] || request.params['error']
-        if error == 'sessionexpired'
-          return redirect('/signin')
+        error = request.params["error_reason"] || request.params["error"]
+        if error == "sessionexpired"
+          return redirect("/signin")
         elsif error
-          raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
-        elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
+          raise CallbackError.new(request.params["error"], request.params["error_description"] || request.params["error_reason"], request.params["error_uri"])
+        elsif request.params["state"].to_s.empty? || request.params["state"] != stored_state
           # Monkey patch: Ensure a basic 401 rack response with no body or header isn't served
           # return Rack::Response.new(['401 Unauthorized'], 401).finish
-          return redirect('/auth/failure')
-        elsif !request.params['code']
-          return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
+          return redirect("/auth/failure")
+        elsif !request.params["code"]
+          return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params["error"]))
         else
           options.issuer = issuer if options.issuer.blank?
           discover! if options.discovery
@@ -63,11 +63,11 @@ if Settings.dfe_signin.issuer.present?
       identifier: Settings.dfe_signin.identifier,
       secret: Settings.dfe_signin.secret,
       redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/callback",
-      authorization_endpoint: '/auth',
-      jwks_uri: '/certs',
+      authorization_endpoint: "/auth",
+      jwks_uri: "/certs",
       token_endpoint: "/token",
-      userinfo_endpoint: '/me'
-    }
+      userinfo_endpoint: "/me",
+    },
   }
 
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
@@ -80,20 +80,20 @@ if Settings.dfe_signin.issuer.present?
     def call(env)
       request = Rack::Request.new(env)
 
-      if request.path == '/auth/failure'
+      if request.path == "/auth/failure"
         response = Rack::Response.new
-        response.redirect('/401')
+        response.redirect("/401")
         response.finish
-      elsif request.path == '/auth/dfe/callback' && request.params.empty? && !OmniAuth.config.test_mode
+      elsif request.path == "/auth/dfe/callback" && request.params.empty? && !OmniAuth.config.test_mode
         response = Rack::Response.new
-        response.redirect('/dfe/sessions/new')
+        response.redirect("/dfe/sessions/new")
         response.finish
       else
         @app.call(env)
       end
     rescue ActionController::InvalidAuthenticityToken
       response = Rack::Response.new
-      response.redirect('/signin')
+      response.redirect("/signin")
       response.finish
     end
   end

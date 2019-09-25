@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Course confirmation', type: :feature do
+feature "Course confirmation", type: :feature do
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:course_confirmation_page) do
     PageObjects::Page::Organisations::CourseConfirmation.new
@@ -16,14 +16,14 @@ feature 'Course confirmation', type: :feature do
     stub_api_v2_new_resource(new_course)
   end
 
-  scenario 'viewing the course details page' do
+  scenario "viewing the course details page" do
     visit confirmation_provider_recruitment_cycle_courses_path(
       provider.provider_code,
-      provider.recruitment_cycle_year
+      provider.recruitment_cycle_year,
           )
 
     expect(course_confirmation_page.title).to have_content(
-      "Check your answers before confirming"
+      "Check your answers before confirming",
     )
   end
 end

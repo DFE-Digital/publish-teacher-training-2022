@@ -12,7 +12,7 @@ module Courses
         redirect_to confirmation_provider_recruitment_cycle_courses_path(
           params[:provider_code],
           params[:recruitment_cycle_year],
-          course_params
+          course_params,
         )
       end
     end
@@ -26,17 +26,17 @@ module Courses
         :applications_open_from,
         :day,
         :month,
-        :year
+        :year,
       )
     end
 
     def course_params
       if params.key?(:course)
         applications_open_from =
-          if actual_params['applications_open_from'] == 'other'
+          if actual_params["applications_open_from"] == "other"
             "#{actual_params['year']}-#{actual_params['month']}-#{actual_params['day']}"
           else
-            actual_params['applications_open_from']
+            actual_params["applications_open_from"]
           end
         ActionController::Parameters.new(applications_open_from: applications_open_from).permit(:applications_open_from)
       else
@@ -47,7 +47,7 @@ module Courses
     def build_recruitment_cycle
       cycle_year = params.fetch(
         :recruitment_cycle_year,
-        Settings.current_cycle
+        Settings.current_cycle,
       )
 
       @recruitment_cycle = RecruitmentCycle.find(cycle_year).first

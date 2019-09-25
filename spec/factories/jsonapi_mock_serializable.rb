@@ -13,7 +13,7 @@ FactoryBot.define do
         jsonapi_type,
         attributes: data_attributes,
         relationships: relationships_map,
-        include_counts: jsonapi_include_counts
+        include_counts: jsonapi_include_counts,
       )
     end
   end

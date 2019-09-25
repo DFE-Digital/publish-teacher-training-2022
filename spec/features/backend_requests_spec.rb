@@ -1,12 +1,12 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'requests made to mc-be' do
-  describe 'the authorization header' do
+describe "requests made to mc-be" do
+  describe "the authorization header" do
     let(:current_recruitment_cycle) { build(:recruitment_cycle) }
     let(:provider1) { build :provider }
     let(:provider2) { build :provider }
 
-    it 'is thread-safe' do
+    it "is thread-safe" do
       # The api calls in this test should be completely isolated:
       # - request 1 + provider 1 + user 1 token
       # should not be in any way mixed up with:
@@ -51,12 +51,12 @@ describe 'requests made to mc-be' do
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
         jsonapi(:providers_response, data: [provider1, provider2]),
-        token: 'tokenUser1'
+        token: "tokenUser1",
       )
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
         jsonapi(:providers_response, data: [provider1, provider2]),
-        token: 'tokenUser2'
+        token: "tokenUser2",
       )
 
       # Stub the expected provider-code & token pairings.
@@ -71,12 +71,12 @@ describe 'requests made to mc-be' do
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider1.provider_code}",
         provider1.to_jsonapi,
-        token: 'tokenUser1'
+        token: "tokenUser1",
       )
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider2.provider_code}",
         provider2.to_jsonapi,
-        token: 'tokenUser2'
+        token: "tokenUser2",
       )
 
       # Intercept a call to `find` in the middle of the flow of a provider1
@@ -86,7 +86,7 @@ describe 'requests made to mc-be' do
                            .and_wrap_original do |method, *args|
         thread = Thread.new do # thread2
           # stable JWT encoding mock
-          allow(JWT).to receive(:encode).and_return('tokenUser2')
+          allow(JWT).to receive(:encode).and_return("tokenUser2")
           # fire off a concurrent call to trigger the race condition:
           visit("/organisations/#{provider2.provider_code}")
         end
@@ -104,7 +104,7 @@ describe 'requests made to mc-be' do
                            .and_call_original
 
       # stable JWT encoding mock
-      allow(JWT).to receive(:encode).and_return('tokenUser1')
+      allow(JWT).to receive(:encode).and_return("tokenUser1")
 
       # Fire off the provider1 call (the first of the two concurrent threads)
       visit("/organisations/#{provider1.provider_code}")

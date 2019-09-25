@@ -30,7 +30,7 @@ class JSONAPIMockSerializable
     included_relationships = get_related.map(&:to_jsonapi_data)
     {
       data: to_jsonapi_data,
-      included: included_relationships
+      included: included_relationships,
     }
   end
 
@@ -39,25 +39,25 @@ class JSONAPIMockSerializable
       [
         name, if name.in?(include_nulls)
                 {
-                  data: nil
+                  data: nil,
                 }
               elsif data.nil?
                 {
-                  meta: { included: false }
+                  meta: { included: false },
                 }
               elsif name.in?(include_counts)
                 {
                   meta: {
-                    count: data.size
-                  }
+                    count: data.size,
+                  },
                 }
               elsif data.is_a? Array
                 {
-                  data: data.map(&:to_jsonapi_relationship)
+                  data: data.map(&:to_jsonapi_relationship),
                 }
               else
                 {
-                  data: data.to_jsonapi_relationship
+                  data: data.to_jsonapi_relationship,
                 }
               end
       ]
@@ -66,7 +66,7 @@ class JSONAPIMockSerializable
     data = {
       id: id.to_s,
       type: type,
-      attributes: attributes
+      attributes: attributes,
     }
     if relationships_jsonapi.any?
       data[:relationships] = relationships_jsonapi
@@ -77,7 +77,7 @@ class JSONAPIMockSerializable
   def to_jsonapi_relationship
     {
       id: id.to_s,
-      type: type
+      type: type,
     }
   end
 

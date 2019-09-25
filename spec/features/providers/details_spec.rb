@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'View provider', type: :feature do
+feature "View provider", type: :feature do
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
 
   before do
@@ -15,44 +15,44 @@ feature 'View provider', type: :feature do
   context "with empty provider details" do
     let(:provider) do
       build :provider,
-            provider_code: 'A0',
-            content_status: 'empty',
+            provider_code: "A0",
+            content_status: "empty",
             last_published_at: nil
     end
 
-    it 'renders correctly' do
-      test_details_page 'Empty'
+    it "renders correctly" do
+      test_details_page "Empty"
     end
   end
 
   context "with draft provider details" do
     let(:provider) do
       build :provider,
-            provider_code: 'A0',
-            content_status: 'draft'
+            provider_code: "A0",
+            content_status: "draft"
     end
 
-    it 'renders correctly' do
-      test_details_page 'Draft'
+    it "renders correctly" do
+      test_details_page "Draft"
     end
   end
 
   context "with published provider details" do
     let(:provider) do
       build :provider,
-            provider_code: 'A0',
-            content_status: 'published'
+            provider_code: "A0",
+            content_status: "published"
     end
 
-    it 'renders correctly' do
-      test_details_page 'Published'
+    it "renders correctly" do
+      test_details_page "Published"
     end
   end
 
   context "Current recruitment cycle" do
-    let(:provider) { build(:provider, content_status: 'draft') }
+    let(:provider) { build(:provider, content_status: "draft") }
 
-    it 'Displays the publish button' do
+    it "Displays the publish button" do
       expect(org_detail_page.publish_button).to be_present
     end
   end
@@ -62,16 +62,16 @@ feature 'View provider', type: :feature do
       recruitment_cycle = build(:recruitment_cycle, year: Settings.current_cycle + 1)
       build(
         :provider,
-        content_status: 'draft',
-        recruitment_cycle: recruitment_cycle
+        content_status: "draft",
+        recruitment_cycle: recruitment_cycle,
       )
     end
 
-    it 'Displays the publish in next cycle button' do
+    it "Displays the publish in next cycle button" do
       expect(org_detail_page.publish_in_next_cycle_button).to be_present
     end
 
-    it 'Displays additional information about publishing' do
+    it "Displays additional information about publishing" do
       expect(org_detail_page.next_recruitment_cycle_publishing_information)
     end
   end
@@ -82,8 +82,8 @@ feature 'View provider', type: :feature do
     expect(current_path).to eq details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
 
     expect(org_detail_page).to have_link(
-      'Contact details',
-      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact"
+      "Contact details",
+      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact",
     )
     expect(org_detail_page.caption).to have_content(provider.provider_name)
     expect(org_detail_page.email).to have_content(provider.email)
@@ -91,8 +91,8 @@ feature 'View provider', type: :feature do
     expect(org_detail_page.telephone).to have_content(provider.telephone)
 
     expect(org_detail_page).to have_link(
-      'About your organisation',
-      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/about"
+      "About your organisation",
+      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/about",
     )
     expect(org_detail_page.train_with_us).to have_content(provider.train_with_us)
     expect(org_detail_page.train_with_disability).to have_content(provider.train_with_disability)

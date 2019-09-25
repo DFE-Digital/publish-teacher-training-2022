@@ -3,7 +3,7 @@ module PageObjects
     module Organisations
       module Courses
         class NewApplicationsOpenPage < CourseBase
-          set_url '/organisations/{provider_code}/{recruitment_cycle_year}/courses/application_open/new'
+          set_url "/organisations/{provider_code}/{recruitment_cycle_year}/courses/application_open/new"
 
           element :applications_open_field, '[data-qa="applications_open_from"]'
           element :applications_open_field_other, '[data-qa="applications_open_from_other"]'

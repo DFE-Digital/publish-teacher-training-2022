@@ -6,7 +6,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def vacancies
-    content = object.has_vacancies? ? 'Yes' : 'No'
+    content = object.has_vacancies? ? "Yes" : "No"
     content += " (" + edit_vacancy_link + ")"
     content.html_safe
   end
@@ -24,7 +24,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def open_or_closed_for_applications
-    object.open_for_applications? ? 'Open' : 'Closed'
+    object.open_for_applications? ? "Open" : "Closed"
   end
 
   def outcome
@@ -32,22 +32,22 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def is_send?
-    object.is_send? ? 'Yes' : 'No'
+    object.is_send? ? "Yes" : "No"
   end
 
   def funding
     case object.funding_type
-    when 'salary'
-      'Salaried'
-    when 'apprenticeship'
-      'Teaching apprenticeship (with salary)'
-    when 'fee'
-      'Fee paying (no salary)'
+    when "salary"
+      "Salaried"
+    when "apprenticeship"
+      "Teaching apprenticeship (with salary)"
+    when "fee"
+      "Fee paying (no salary)"
     end
   end
 
   def apprenticeship?
-    object.funding_type == 'apprenticeship' ? 'Yes' : 'No'
+    object.funding_type == "apprenticeship" ? "Yes" : "No"
   end
 
   def sorted_subjects
@@ -56,10 +56,10 @@ class CourseDecorator < ApplicationDecorator
 
   def length
     case object.course_length
-    when 'OneYear'
-      '1 year'
-    when 'TwoYears'
-      'Up to 2 years'
+    when "OneYear"
+      "1 year"
+    when "TwoYears"
+      "Up to 2 years"
     else
       object.course_length
     end
@@ -70,18 +70,18 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def other_age_range?
-    options = object.meta['edit_options']['age_range_in_years']
+    options = object.meta["edit_options"]["age_range_in_years"]
     options.exclude?(course.age_range_in_years)
   end
 
   def ucas_status
     case object.ucas_status
-    when 'running'
-      'Running'
-    when 'new'
-      'New – not yet running'
-    when 'not_running'
-      'Not running'
+    when "running"
+      "Running"
+    when "new"
+      "New – not yet running"
+    when "not_running"
+      "Not running"
     end
   end
 
@@ -98,7 +98,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def funding_option
-    if object.funding_type == 'salary'
+    if object.funding_type == "salary"
       "Salary"
     elsif object.has_scholarship_and_bursary?
       "Scholarship, bursary or student finance if you’re eligible"
@@ -131,7 +131,7 @@ class CourseDecorator < ApplicationDecorator
       "As soon as the course is on Find (recommended)"
     else
       year = recruitment_cycle.year.to_i
-      day_month = Date.parse(recruitment_cycle.application_start_date).strftime('%-d %B')
+      day_month = Date.parse(recruitment_cycle.application_start_date).strftime("%-d %B")
       "On #{day_month} when applications for the #{year} – #{year + 1} cycle open"
     end
   end
@@ -140,13 +140,13 @@ private
 
   def not_on_find
     if object.new_and_not_running?
-      'No – still in draft'
+      "No – still in draft"
     else
-      'No'
+      "No"
     end
   end
 
   def edit_vacancy_link
-    h.link_to('Edit', h.vacancies_provider_recruitment_cycle_course_path(provider_code: object.provider_code, recruitment_cycle_year: object.recruitment_cycle_year, code: object.course_code), class: 'govuk-link')
+    h.link_to("Edit", h.vacancies_provider_recruitment_cycle_course_path(provider_code: object.provider_code, recruitment_cycle_year: object.recruitment_cycle_year, code: object.course_code), class: "govuk-link")
   end
 end

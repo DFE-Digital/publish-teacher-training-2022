@@ -6,11 +6,11 @@ class Provider < Base
   self.primary_key = :provider_code
 
   def publish
-    post_request('/publish')
+    post_request("/publish")
   end
 
   def publishable?
-    post_request('/publishable')
+    post_request("/publishable")
   end
 
   def course_count
@@ -30,7 +30,7 @@ class Provider < Base
   end
 
   def is_published?
-    content_status == 'published'
+    content_status == "published"
   end
 
 private

@@ -1,6 +1,6 @@
 module ProviderHelper
   def add_course_url(email, provider, is_current_cycle:)
-    cycle_key = is_current_cycle ? 'current_cycle' : 'next_cycle'
+    cycle_key = is_current_cycle ? "current_cycle" : "next_cycle"
 
     if provider.accredited_body?
       google_form_url_for(Settings.google_forms[cycle_key].new_course_for_accredited_bodies, email, provider)

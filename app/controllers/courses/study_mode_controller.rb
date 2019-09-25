@@ -11,13 +11,13 @@ module Courses
         redirect_to confirmation_provider_recruitment_cycle_courses_path(
           params[:provider_code],
           params[:recruitment_cycle_year],
-          course_params
+          course_params,
         )
       end
     end
 
     def update
-      if params[:course][:study_mode] == 'full_time_or_part_time'
+      if params[:course][:study_mode] == "full_time_or_part_time"
         redirect_to request_change_provider_recruitment_cycle_course_path(params[:provider_code], params[:recruitment_cycle_year], params[:code])
       else
         super

@@ -10,7 +10,7 @@ module Courses
       redirect_to confirmation_provider_recruitment_cycle_courses_path(
         params[:provider_code],
         params[:recruitment_cycle_year],
-        course_params
+        course_params,
       )
     end
 
@@ -37,13 +37,13 @@ module Courses
       return render :edit if @errors.present?
 
       if @course.update(course_params)
-        flash[:success] = 'Your changes have been saved'
+        flash[:success] = "Your changes have been saved"
         redirect_to(
           details_provider_recruitment_cycle_course_path(
             @course.provider_code,
             @course.recruitment_cycle_year,
-            @course.course_code
-          )
+            @course.course_code,
+          ),
         )
       else
         @errors = @course.errors.messages
@@ -58,7 +58,7 @@ module Courses
         params.require(:course)
           .except(
             :course_age_range_in_years_other_from,
-            :course_age_range_in_years_other_to
+            :course_age_range_in_years_other_to,
 )
           .permit(:age_range_in_years)
       else
@@ -84,7 +84,7 @@ module Courses
     def build_new_course
       @course = Course.build_new(
         recruitment_cycle_year: @provider.recruitment_cycle_year,
-        provider_code: @provider.provider_code
+        provider_code: @provider.provider_code,
       )
     end
   end

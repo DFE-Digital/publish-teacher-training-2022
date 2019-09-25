@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe ProvidersController, type: :controller do
   context "with authenticated user" do
@@ -16,19 +16,19 @@ describe ProvidersController, type: :controller do
     before do
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}",
-        current_recruitment_cycle.to_jsonapi
+        current_recruitment_cycle.to_jsonapi,
       )
     end
 
-    describe 'GET #index' do
-      context 'with 2 or more providers' do
+    describe "GET #index" do
+      context "with 2 or more providers" do
         let(:current_recruitment_cycle) { build(:recruitment_cycle) }
 
         let(:providers) do
           [
             build(:provider, courses: [build(:course)]),
             build(:provider, courses: [build(:course)]),
-            build(:provider, courses: [build(:course)])
+            build(:provider, courses: [build(:course)]),
           ]
         end
 
@@ -39,49 +39,49 @@ describe ProvidersController, type: :controller do
         before do
           stub_api_v2_request(
             "/recruitment_cycles/#{current_recruitment_cycle.year}",
-            current_recruitment_cycle.to_jsonapi
+            current_recruitment_cycle.to_jsonapi,
           )
           stub_api_v2_request(
             "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
-            providers_response
+            providers_response,
           )
         end
 
-        it 'returns the index page' do
+        it "returns the index page" do
           get :index
           expect(response).to have_http_status(:success)
         end
       end
 
-      context 'with 1 provider' do
+      context "with 1 provider" do
         let(:provider) { build(:provider) }
         let(:current_recruitment_cycle) { build(:recruitment_cycle) }
 
         before do
           stub_api_v2_request(
             "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
-            provider.to_jsonapi
+            provider.to_jsonapi,
           )
         end
 
-        it 'returns the show page' do
+        it "returns the show page" do
           get :index
           expect(response).to redirect_to(action: :show, code: provider.provider_code)
         end
       end
 
-      context 'with 0 providers' do
+      context "with 0 providers" do
         let(:providers_response) { nil }
         let(:current_recruitment_cycle) { build(:recruitment_cycle) }
 
         before do
           stub_api_v2_request(
             "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
-            providers_response
+            providers_response,
           )
         end
 
-        it 'redirects to manage-courses-ui' do
+        it "redirects to manage-courses-ui" do
           get :index
           expect(response).to redirect_to(unauthorized_path)
         end

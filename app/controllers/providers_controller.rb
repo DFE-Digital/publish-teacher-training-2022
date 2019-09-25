@@ -35,12 +35,12 @@ class ProvidersController < ApplicationController
 
   def update
     if @provider.update(provider_params)
-      flash[:success] = 'Your changes have been saved'
+      flash[:success] = "Your changes have been saved"
       redirect_to(
         details_provider_recruitment_cycle_path(
           @provider.provider_code,
-          @provider.recruitment_cycle_year
-        )
+          @provider.recruitment_cycle_year,
+        ),
       )
     else
       @errors = @provider.errors.messages
@@ -75,7 +75,7 @@ private
       :address4,
       :postcode,
       :region_code,
-      accredited_bodies: %i[provider_name provider_code description]
+      accredited_bodies: %i[provider_name provider_code description],
     ).to_h # Without this, accredited_bodies is an array of params objects
            # instead of an array of plain hashes and gets serialized incorrectly
            # on its way to the backend.

@@ -5,8 +5,8 @@ RSpec.describe SessionsController, type: :controller do
     it "redirects the user to DfE Sign-in's session end endpoint" do
       @request.session["auth_user"] = {
         "credentials" => {
-          "id_token" => "123"
-        }
+          "id_token" => "123",
+        },
       }
 
       get :signout
@@ -25,13 +25,13 @@ RSpec.describe SessionsController, type: :controller do
       }
     }
     let(:user) { build :user, **user_info }
-    let(:user_id) { '101' }
+    let(:user_id) { "101" }
     let(:sign_in_user_id) { SecureRandom.uuid }
 
     before do
       @request.env["omniauth.auth"] = {
         "info" => user.attributes.stringify_keys,
-        'uid' => sign_in_user_id
+        "uid" => sign_in_user_id,
       }
     end
 
@@ -47,26 +47,26 @@ RSpec.describe SessionsController, type: :controller do
         get :create
 
         expect(subject).to redirect_to("/")
-        user_info = @request.session[:auth_user]['info']
-        expect(@request.session[:auth_user]['user_id']).to eq user_id
-        expect(user_info['email']).to eq user.attributes[:email]
-        expect(user_info['first_name']).to eq user.attributes[:first_name]
-        expect(user_info['last_name']).to eq user.attributes[:last_name]
+        user_info = @request.session[:auth_user]["info"]
+        expect(@request.session[:auth_user]["user_id"]).to eq user_id
+        expect(user_info["email"]).to eq user.attributes[:email]
+        expect(user_info["first_name"]).to eq user.attributes[:first_name]
+        expect(user_info["last_name"]).to eq user.attributes[:last_name]
       end
 
-      describe 'sentry contexts' do
+      describe "sentry contexts" do
         before do
           allow(Raven).to receive(:user_context)
           allow(Raven).to receive(:tags_context)
         end
 
-        it 'sets the user id' do
+        it "sets the user id" do
           get :create
 
           expect(Raven).to have_received(:user_context).with(id: user_id)
         end
 
-        it 'sets the DFE sign-in id in the tags context' do
+        it "sets the DFE sign-in id in the tags context" do
           get :create
 
           expect(Raven).to have_received(:tags_context)
@@ -110,8 +110,8 @@ RSpec.describe SessionsController, type: :controller do
     it "destroys the session and redirects to root" do
       @request.session["auth_user"] = {
         "credentials" => {
-          "id_token" => "123"
-        }
+          "id_token" => "123",
+        },
       }
 
       get :destroy

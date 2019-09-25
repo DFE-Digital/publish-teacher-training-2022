@@ -4,28 +4,28 @@ module Helpers
 
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:dfe] = {
-      'provider' => 'dfe',
-      'uid'      => SecureRandom.uuid,
-      'info'     => {
-        'first_name' => user.first_name,
-        'last_name'  => user.last_name,
-        'email'      => user.email,
-        'id'         => user.id,
-        'state'      => user.state
+      "provider" => "dfe",
+      "uid"      => SecureRandom.uuid,
+      "info"     => {
+        "first_name" => user.first_name,
+        "last_name"  => user.last_name,
+        "email"      => user.email,
+        "id"         => user.id,
+        "state"      => user.state,
       },
-      'credentials' => {
-        'token_id' => '123'
-      }
+      "credentials" => {
+        "token_id" => "123",
+      },
     }
 
     # This is needed because we check the provider count on all pages
     # TODO: Move this to be returned with the user.
     stub_api_v2_request(
       "/recruitment_cycles/#{Settings.current_cycle}/providers",
-      build(:provider).to_jsonapi
+      build(:provider).to_jsonapi,
     )
-    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:dfe]
-    stub_api_v2_request('/sessions', user.to_jsonapi, :post)
+    Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:dfe]
+    stub_api_v2_request("/sessions", user.to_jsonapi, :post)
   end
 
   def stub_api_v2_request(url_path, stub, method = :get, status = 200, token: nil, body: nil)
@@ -35,7 +35,7 @@ module Helpers
                         .to_return(
                           status: status,
                           body: stub.to_json,
-                          headers: { 'Content-Type': 'application/vnd.api+json' }
+                          headers: { 'Content-Type': "application/vnd.api+json" },
                         )
     if body
       stubbed_request.with(body: body)
@@ -44,12 +44,12 @@ module Helpers
     if token
       stubbed_request.with(
         headers: {
-          'Accept'          => 'application/vnd.api+json',
-          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'Authorization'   => "Bearer #{token}",
-          'Content-Type'    => 'application/vnd.api+json',
-          'User-Agent'      => 'Faraday v0.15.4'
-        }
+          "Accept"          => "application/vnd.api+json",
+          "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+          "Authorization"   => "Bearer #{token}",
+          "Content-Type"    => "application/vnd.api+json",
+          "User-Agent"      => "Faraday v0.15.4",
+        },
       )
     end
 
@@ -104,7 +104,7 @@ module Helpers
     jsonapi_response[:data][:errors] = []
     stub_api_v2_request(
       url_for_build_course_with_params(params),
-      jsonapi_response
+      jsonapi_response,
     )
   end
 
@@ -124,11 +124,11 @@ private
 
   def url_for_resource_collection(resource)
     if resource.is_a? RecruitmentCycle
-      '/recruitment_cycles'
+      "/recruitment_cycles"
     elsif resource.is_a? Provider
-      url_for_resource(resource.recruitment_cycle) + '/providers'
+      url_for_resource(resource.recruitment_cycle) + "/providers"
     elsif resource.is_a? Course
-      url_for_resource(resource.provider) + '/courses'
+      url_for_resource(resource.provider) + "/courses"
     end
   end
 

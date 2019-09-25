@@ -11,7 +11,7 @@ module Courses
         redirect_to confirmation_provider_recruitment_cycle_courses_path(
           params[:provider_code],
           params[:recruitment_cycle_year],
-          course_params
+          course_params,
         )
       end
     end

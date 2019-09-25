@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe UsersController, type: :controller do
   let(:user) { build :user }
@@ -17,7 +17,7 @@ describe UsersController, type: :controller do
     allow(Settings).to receive(:rollover).and_return(true)
   end
 
-  describe 'GET #accept_transition_info' do
+  describe "GET #accept_transition_info" do
     context "with working request" do
       before do
         stub_api_v2_request("/users/#{user.id}/accept_transition_screen", {}, :patch, 200)
@@ -42,7 +42,7 @@ describe UsersController, type: :controller do
     end
   end
 
-  describe 'GET #accept_transition_info when rollover is disabled' do
+  describe "GET #accept_transition_info when rollover is disabled" do
     before do
       allow(Settings).to receive(:rollover).and_return(false)
     end
@@ -71,7 +71,7 @@ describe UsersController, type: :controller do
     end
   end
 
-  describe 'GET #accept_rollover' do
+  describe "GET #accept_rollover" do
     context "with working request" do
       before do
         stub_api_v2_request("/users/#{user.id}/accept_rollover_screen", {}, :patch, 200)
@@ -96,7 +96,7 @@ describe UsersController, type: :controller do
     end
   end
 
-  describe 'GET #accept_terms' do
+  describe "GET #accept_terms" do
     context "with working request" do
       before do
         stub_api_v2_request("/users/#{user.id}/accept_terms", {}, :patch, 200)

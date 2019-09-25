@@ -6,18 +6,18 @@ class ApplicationController < ActionController::Base
   before_action :authenticate
 
   def not_found
-    respond_with_error(template: 'errors/not_found', status: :not_found, error_text: 'Resource not found')
+    respond_with_error(template: "errors/not_found", status: :not_found, error_text: "Resource not found")
   end
 
   def render_unauthorized
-    respond_with_error(template: 'errors/unauthorized', status: :unauthorized, error_text: 'Unauthorized request')
+    respond_with_error(template: "errors/unauthorized", status: :unauthorized, error_text: "Unauthorized request")
   end
 
   def render_access_denied(exception)
     if user_has_not_accepted_terms(exception.env.body)
       redirect_to accept_terms_path
     else
-      respond_with_error(template: 'errors/unauthorized', status: :forbidden, error_text: 'Forbidden request')
+      respond_with_error(template: "errors/unauthorized", status: :forbidden, error_text: "Forbidden request")
     end
   end
 
@@ -34,22 +34,22 @@ class ApplicationController < ActionController::Base
       add_token_to_connection
       set_has_multiple_providers
 
-      if current_user['user_id'].blank?
+      if current_user["user_id"].blank?
         set_user_session
-        Raven.user_context(id: current_user['user_id'])
+        Raven.user_context(id: current_user["user_id"])
       end
     else
       session[:redirect_back_to] = request.path
-      redirect_to '/signin'
+      redirect_to "/signin"
     end
   end
 
   def current_user_info
-    current_user['info']
+    current_user["info"]
   end
 
   def current_user_dfe_signin_id
-    current_user['uid']
+    current_user["uid"]
   end
 
   def set_has_multiple_providers
@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   end
 
   def has_multiple_providers?
-    provider_count = session.to_hash.dig('auth_user', 'provider_count')
+    provider_count = session.to_hash.dig("auth_user", "provider_count")
     provider_count.nil? || provider_count > 1
   end
 
@@ -80,8 +80,8 @@ private
     # TODO: we should return a session object here with a 'user' attached to id.
     user = Session.create(first_name: current_user_info[:first_name],
                           last_name: current_user_info[:last_name])
-    session[:auth_user]['user_id'] = user.id
-    session[:auth_user]['state'] = user.state
+    session[:auth_user]["user_id"] = user.id
+    session[:auth_user]["state"] = user.state
 
     add_provider_count_cookie
 
@@ -99,8 +99,8 @@ private
 
   def add_token_to_connection
     payload = {
-      email:           current_user_info['email'].to_s,
-      sign_in_user_id: current_user_dfe_signin_id
+      email:           current_user_info["email"].to_s,
+      sign_in_user_id: current_user_dfe_signin_id,
     }
     token = JWT.encode(payload,
                        Settings.manage_backend.secret,
@@ -110,13 +110,13 @@ private
   end
 
   def assign_sentry_contexts
-    Raven.user_context(id: current_user['user_id'])
-    Raven.tags_context(sign_in_user_id: current_user.fetch('uid'))
+    Raven.user_context(id: current_user["user_id"])
+    Raven.tags_context(sign_in_user_id: current_user.fetch("uid"))
   end
 
   def assign_logstash_contexts
     Thread.current[:logstash] ||= {}
-    Thread.current[:logstash][:user_id] = current_user['user_id']
-    Thread.current[:logstash][:sign_in_user_id] = current_user['uid']
+    Thread.current[:logstash][:user_id] = current_user["user_id"]
+    Thread.current[:logstash][:sign_in_user_id] = current_user["uid"]
   end
 end

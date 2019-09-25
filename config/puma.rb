@@ -9,7 +9,7 @@ threads threads_count, threads_count
 
 # Specifies the `environment` that Puma will run in.
 #
-env = ENV.fetch("RAILS_ENV", 'development')
+env = ENV.fetch("RAILS_ENV", "development")
 environment env
 
 # Specifies the number of `workers` to boot in clustered mode.
@@ -51,13 +51,13 @@ if env == "development"
     end
 
     root_key = OpenSSL::PKey::RSA.new(2048)
-    File.write(key, root_key, mode: 'wb')
+    File.write(key, root_key, mode: "wb")
 
     root_cert = generate_root_cert(root_key)
-    File.write(cert, root_cert, mode: 'wb')
+    File.write(cert, root_cert, mode: "wb")
   end
 
-  ssl_bind '127.0.0.1', listen_port, cert: cert, key: key, verify_mode: 'none'
+  ssl_bind "127.0.0.1", listen_port, cert: cert, key: key, verify_mode: "none"
 else
   port listen_port
 end

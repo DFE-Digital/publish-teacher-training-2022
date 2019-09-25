@@ -18,7 +18,7 @@ module Courses
     end
 
     def not_found_if_no_gcse_subjects_required
-      render template: 'errors/not_found', status: :not_found if course.gcse_subjects_required.empty?
+      render template: "errors/not_found", status: :not_found if course.gcse_subjects_required.empty?
     end
   end
 end

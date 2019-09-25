@@ -8,7 +8,7 @@ class AccessRequestsController < ApplicationController
 
     if @access_request.save
       redirect_to provider_path(params[:code]),
-                  flash: { success: 'Your request for access has been submitted' }
+                  flash: { success: "Your request for access has been submitted" }
     else
       @errors = @access_request.errors.messages
 
@@ -24,7 +24,7 @@ private
       :last_name,
       :email_address,
       :organisation,
-      :reason
+      :reason,
     ).to_h
   end
 end

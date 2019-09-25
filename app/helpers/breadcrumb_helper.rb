@@ -30,7 +30,7 @@ module BreadcrumbHelper
     path = provider_recruitment_cycle_course_path(
       @provider.provider_code,
       course.recruitment_cycle_year,
-      course.course_code
+      course.course_code,
     )
     courses_breadcrumb << [course.name_and_code, path]
   end

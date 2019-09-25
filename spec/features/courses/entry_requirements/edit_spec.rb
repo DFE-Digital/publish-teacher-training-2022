@@ -1,13 +1,13 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Edit course entry requirements', type: :feature do
+feature "Edit course entry requirements", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:entry_requirements_page) { PageObjects::Page::Organisations::CourseEntryRequirements.new }
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
   let(:provider) { build(:provider) }
   let(:edit_options) {
     {
-      entry_requirements: %w[must_have_qualification_at_application_time expect_to_achieve_before_training_begins equivalence_test]
+      entry_requirements: %w[must_have_qualification_at_application_time expect_to_achieve_before_training_begins equivalence_test],
     }
   }
 
@@ -15,12 +15,12 @@ feature 'Edit course entry requirements', type: :feature do
     stub_omniauth
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.to_jsonapi
+      current_recruitment_cycle.to_jsonapi,
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
-      build(:provider).to_jsonapi(include: %i[courses accrediting_provider])
+      build(:provider).to_jsonapi(include: %i[courses accrediting_provider]),
     )
 
     stub_course_request
@@ -28,48 +28,48 @@ feature 'Edit course entry requirements', type: :feature do
     entry_requirements_page.load_with_course(course)
   end
 
-  context 'a course without required GCSE subjects' do
+  context "a course without required GCSE subjects" do
     let(:course) do
       build(
         :course,
         edit_options: edit_options,
         gcse_subjects_required: [],
-        provider: provider
+        provider: provider,
       )
     end
 
-    scenario '404s when you try to edit entry requirements' do
+    scenario "404s when you try to edit entry requirements" do
       expect(page.status_code).to eq(404)
     end
   end
 
-  context 'a course with all required subjects (primary)' do
+  context "a course with all required subjects (primary)" do
     let(:course) do
       build(
         :course,
         edit_options: edit_options,
         provider: provider,
-        maths: 'must_have_qualification_at_application_time',
-        english: 'expect_to_achieve_before_training_begins',
-        science: 'equivalence_test',
+        maths: "must_have_qualification_at_application_time",
+        english: "expect_to_achieve_before_training_begins",
+        science: "equivalence_test",
         gcse_subjects_required: %w[maths english science],
       )
     end
 
-    scenario 'can cancel changes' do
-      click_on 'Cancel changes'
+    scenario "can cancel changes" do
+      click_on "Cancel changes"
       expect(course_details_page).to be_displayed
     end
 
-    scenario 'can navigate to the edit screen and back again' do
+    scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
-      click_on 'Change entry requirements'
+      click_on "Change entry requirements"
       expect(entry_requirements_page).to be_displayed
-      click_on 'Back'
+      click_on "Back"
       expect(course_details_page).to be_displayed
     end
 
-    scenario 'presents a choice for each subject' do
+    scenario "presents a choice for each subject" do
       expect(entry_requirements_page).to have_maths_requirements
       expect(entry_requirements_page).to have_english_requirements
       expect(entry_requirements_page).to have_science_requirements
@@ -79,27 +79,27 @@ feature 'Edit course entry requirements', type: :feature do
         english_requirements
         science_requirements
       ].each do |subject|
-        expect(entry_requirements_page.send(subject)).to have_field('1. Must have (least flexible)')
-        expect(entry_requirements_page.send(subject)).to have_field('2: Taking')
-        expect(entry_requirements_page.send(subject)).to have_field('3: Equivalence test')
+        expect(entry_requirements_page.send(subject)).to have_field("1. Must have (least flexible)")
+        expect(entry_requirements_page.send(subject)).to have_field("2: Taking")
+        expect(entry_requirements_page.send(subject)).to have_field("3: Equivalence test")
       end
     end
 
-    scenario 'has the correct value selected' do
+    scenario "has the correct value selected" do
       expect(entry_requirements_page).to have_maths_requirements
       expect(entry_requirements_page).to have_english_requirements
       expect(entry_requirements_page).to have_science_requirements
 
       [
-        ['maths_requirements', '1. Must have (least flexible)'],
-        ['english_requirements', '2: Taking'],
-        ['science_requirements', '3: Equivalence test']
+        ["maths_requirements", "1. Must have (least flexible)"],
+        ["english_requirements", "2: Taking"],
+        ["science_requirements", "3: Equivalence test"],
       ].each do |subject, field_name|
         expect(entry_requirements_page.send(subject)).to have_field(field_name, checked: true)
       end
     end
 
-    scenario 'can be updated' do
+    scenario "can be updated" do
       update_course_stub = stub_api_v2_request(
         "/recruitment_cycles/#{course.recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
@@ -108,31 +108,31 @@ feature 'Edit course entry requirements', type: :feature do
         :patch, 200
       )
 
-      choose('course_maths_expect_to_achieve_before_training_begins')
-      choose('course_english_expect_to_achieve_before_training_begins')
-      choose('course_science_expect_to_achieve_before_training_begins')
-      click_on 'Save'
+      choose("course_maths_expect_to_achieve_before_training_begins")
+      choose("course_english_expect_to_achieve_before_training_begins")
+      choose("course_science_expect_to_achieve_before_training_begins")
+      click_on "Save"
 
       expect(course_details_page).to be_displayed
-      expect(course_details_page.flash).to have_content('Your changes have been saved')
+      expect(course_details_page.flash).to have_content("Your changes have been saved")
       expect(update_course_stub).to have_been_requested
     end
   end
 
-  context 'a course without science as a required subject (secondary)' do
+  context "a course without science as a required subject (secondary)" do
     let(:course) do
       build(
         :course,
         edit_options: edit_options,
         provider: provider,
-        maths: 'must_have_qualification_at_application_time',
-        english: 'expect_to_achieve_before_training_begins',
-        science: 'not_set',
-        gcse_subjects_required: %w[maths english]
+        maths: "must_have_qualification_at_application_time",
+        english: "expect_to_achieve_before_training_begins",
+        science: "not_set",
+        gcse_subjects_required: %w[maths english],
       )
     end
 
-    scenario 'presents a choice for only Maths and English' do
+    scenario "presents a choice for only Maths and English" do
       expect(entry_requirements_page).to have_maths_requirements
       expect(entry_requirements_page).to have_english_requirements
       expect(entry_requirements_page).not_to have_science_requirements
@@ -141,13 +141,13 @@ feature 'Edit course entry requirements', type: :feature do
         maths_requirements
         english_requirements
       ].each do |subject|
-        expect(entry_requirements_page.send(subject)).to have_field('1. Must have (least flexible)')
-        expect(entry_requirements_page.send(subject)).to have_field('2: Taking')
-        expect(entry_requirements_page.send(subject)).to have_field('3: Equivalence test')
+        expect(entry_requirements_page.send(subject)).to have_field("1. Must have (least flexible)")
+        expect(entry_requirements_page.send(subject)).to have_field("2: Taking")
+        expect(entry_requirements_page.send(subject)).to have_field("3: Equivalence test")
       end
     end
 
-    scenario 'can be updated' do
+    scenario "can be updated" do
       update_course_stub = stub_api_v2_request(
         "/recruitment_cycles/#{course.recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
@@ -156,35 +156,35 @@ feature 'Edit course entry requirements', type: :feature do
         :patch, 200
       )
 
-      choose('course_maths_expect_to_achieve_before_training_begins')
-      choose('course_english_expect_to_achieve_before_training_begins')
-      click_on 'Save'
+      choose("course_maths_expect_to_achieve_before_training_begins")
+      choose("course_english_expect_to_achieve_before_training_begins")
+      click_on "Save"
 
       expect(course_details_page).to be_displayed
-      expect(course_details_page.flash).to have_content('Your changes have been saved')
+      expect(course_details_page.flash).to have_content("Your changes have been saved")
       expect(update_course_stub).to have_been_requested
     end
   end
 
-  context 'a course with data that doesn’t align with requirements' do
+  context "a course with data that doesn’t align with requirements" do
     let(:course) do
       build(
         :course,
         edit_options: edit_options,
         provider: provider,
-        maths: 'not_set',
-        english: 'not_set',
-        science: 'not_required',
-        gcse_subjects_required: %w[maths english science]
+        maths: "not_set",
+        english: "not_set",
+        science: "not_required",
+        gcse_subjects_required: %w[maths english science],
       )
     end
 
-    scenario 'shows an error if the form is submitted without providing answers' do
-      click_on 'Save changes'
+    scenario "shows an error if the form is submitted without providing answers" do
+      click_on "Save changes"
       expect(entry_requirements_page).to be_displayed
 
       expect(entry_requirements_page.error_flash)
-        .to have_content('You’ll need to correct some information')
+        .to have_content("You’ll need to correct some information")
 
       %w[maths english science].each do |s|
         expect(entry_requirements_page.error_flash).to have_content("Pick an option for #{s.titleize}")
@@ -192,7 +192,7 @@ feature 'Edit course entry requirements', type: :feature do
       end
     end
 
-    scenario 'can be updated' do
+    scenario "can be updated" do
       update_course_stub = stub_api_v2_request(
         "/recruitment_cycles/#{course.recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
@@ -201,13 +201,13 @@ feature 'Edit course entry requirements', type: :feature do
         :patch, 200
       )
 
-      choose('course_maths_expect_to_achieve_before_training_begins')
-      choose('course_english_expect_to_achieve_before_training_begins')
-      choose('course_science_expect_to_achieve_before_training_begins')
-      click_on 'Save'
+      choose("course_maths_expect_to_achieve_before_training_begins")
+      choose("course_english_expect_to_achieve_before_training_begins")
+      choose("course_science_expect_to_achieve_before_training_begins")
+      click_on "Save"
 
       expect(course_details_page).to be_displayed
-      expect(course_details_page.flash).to have_content('Your changes have been saved')
+      expect(course_details_page.flash).to have_content("Your changes have been saved")
       expect(update_course_stub).to have_been_requested
     end
   end
@@ -217,7 +217,7 @@ feature 'Edit course entry requirements', type: :feature do
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}/courses" \
       "/#{course.course_code}",
-      course.to_jsonapi
+      course.to_jsonapi,
     )
   end
 
@@ -227,7 +227,7 @@ feature 'Edit course entry requirements', type: :feature do
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
       "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites])
+      course.to_jsonapi(include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
     )
   end
 end

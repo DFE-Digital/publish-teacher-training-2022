@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'View provider UCAS contact', type: :feature do
+feature "View provider UCAS contact", type: :feature do
   let(:org_ucas_contacts_page) { PageObjects::Page::Organisations::UcasContacts.new }
   let(:provider) do
     build :provider,
-          provider_code: 'A0'
+          provider_code: "A0"
   end
 
   before do
@@ -13,12 +13,12 @@ feature 'View provider UCAS contact', type: :feature do
     stub_api_v2_resource(provider)
   end
 
-  scenario 'viewing organisation UCAS contacts page' do
+  scenario "viewing organisation UCAS contacts page" do
     visit ucas_contacts_provider_path(provider.provider_code)
 
     expect(current_path).to eq ucas_contacts_provider_path(provider.provider_code)
 
-    expect(org_ucas_contacts_page.title).to have_content('UCAS contacts')
+    expect(org_ucas_contacts_page.title).to have_content("UCAS contacts")
 
     expect(org_ucas_contacts_page.utt_contact).to have_content(provider.utt_contact[:name])
     expect(org_ucas_contacts_page.web_link_contact).to have_content(provider.web_link_contact[:name])
