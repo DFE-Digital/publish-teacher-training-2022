@@ -5,7 +5,7 @@ class RecruitmentCyclesController < ApplicationController
       .find(params[:provider_code])
       .first
 
-    if !@provider.rolled_over?
+    if params[:year] == Settings.current_cycle.to_s
       redirect_to provider_path(@provider.provider_code)
     end
   end
