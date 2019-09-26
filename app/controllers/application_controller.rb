@@ -81,6 +81,8 @@ class ApplicationController < ActionController::Base
 private
 
   def user_has_not_accepted_terms(response_body)
+    return false unless response_body.is_a?(Hash)
+
     response_body.key?("meta") &&
       response_body["meta"]["error_type"] == "user_not_accepted_terms_and_conditions"
   end
