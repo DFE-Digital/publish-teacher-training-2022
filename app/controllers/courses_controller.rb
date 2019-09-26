@@ -165,6 +165,7 @@ private
         :applications_open_from,
         :start_date,
         :funding_type,
+        :age_range_in_years,
       )
     else
       ActionController::Parameters.new({}).permit(:course)

@@ -63,6 +63,8 @@ private
           :day,
           :month,
           :year,
+          :course_age_range_in_years_other_from,
+          :course_age_range_in_years_other_to,
         )
         .permit(
           :page,
@@ -90,6 +92,7 @@ private
           :study_mode,
           :applications_open_from,
           :start_date,
+          :age_range_in_years,
         )
     else
       ActionController::Parameters.new({}).permit(:course)
@@ -144,6 +147,11 @@ private
         course: course_params,
       ),
       start_date: new_provider_recruitment_cycle_courses_start_date_path(
+        params[:provider_code],
+        params[:recruitment_cycle_year],
+        course: course_params,
+      ),
+      age_range: new_provider_recruitment_cycle_courses_age_range_path(
         params[:provider_code],
         params[:recruitment_cycle_year],
         course: course_params,

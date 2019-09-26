@@ -27,6 +27,11 @@
             </h1>
           </legend>
           <%= render "shared/error_messages", field: :age_range_in_years if @errors %>
+          <%= render 'shared/course_creation_hidden_fields',
+            form: form,
+            course_creation_params: @course_creation_params,
+            except_keys: [:age_range_in_years]
+          %>
           <%= render 'form_fields', form: form %>
         </fieldset>
       </div>

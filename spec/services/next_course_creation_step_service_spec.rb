@@ -11,6 +11,13 @@ describe NextCourseCreationStepService do
   context "SCITT Provider" do
     context "Current step: Level" do
       let(:current_step) { :level }
+      let(:expected_next_step) { :age_range }
+
+      include_examples "next step"
+    end
+
+    context "Current step: Age reange" do
+      let(:current_step) { :age_range }
       let(:expected_next_step) { :outcome }
 
       include_examples "next step"

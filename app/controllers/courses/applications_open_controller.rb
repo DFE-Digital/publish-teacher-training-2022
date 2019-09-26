@@ -31,6 +31,7 @@ module Courses
           :level,
           :is_send,
           :study_mode,
+          :age_range_in_years,
         )
         .permit(
           :applications_open_from,

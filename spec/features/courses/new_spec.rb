@@ -5,6 +5,9 @@ feature "new course", type: :feature do
   let(:new_level_page) do
     PageObjects::Page::Organisations::Courses::NewLevelPage.new
   end
+  let(:new_age_range_page) do
+    PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
+  end
   let(:new_outcome_page) do
     PageObjects::Page::Organisations::Courses::NewOutcomePage.new
   end
@@ -31,7 +34,9 @@ feature "new course", type: :feature do
   let(:course) do
     build :course,
           :new,
+          level: :primary,
           provider: provider,
+          subjects: %w[English],
           gcse_subjects_required: %w[maths science english]
   end
 
@@ -75,6 +80,7 @@ feature "new course", type: :feature do
 
         expect(new_level_page).to be_displayed
         course_creation_params = select_level({})
+        course_creation_params = select_age_range(course_creation_params)
         course_creation_params = select_outcome(course_creation_params)
         course_creation_params = select_apprenticeship(course_creation_params)
         course_creation_params = select_study_mode(course_creation_params)
@@ -97,6 +103,21 @@ private
 
     new_level_page.level_fields.primary.click
     new_level_page.continue.click
+
+    expect_page_to_be_displayed_with_query(
+      page: new_age_range_page,
+      expected_query_params: course_creation_params,
+    )
+
+    course_creation_params
+  end
+
+  def select_age_range(course_creation_params)
+    course_creation_params[:age_range_in_years] = "5_to_11"
+    stub_build_course_with_params(course_creation_params)
+
+    choose("course_age_range_in_years_5_to_11")
+    click_on "Continue"
 
     expect_page_to_be_displayed_with_query(
       page: new_outcome_page,
@@ -138,6 +159,7 @@ private
 
   def select_study_mode(course_creation_params)
     course_creation_params[:study_mode] = "full_time"
+    course.study_mode = "full_time"
     stub_build_course_with_params(course_creation_params)
 
     new_study_mode_page.study_mode_fields.full_time.click
@@ -152,7 +174,8 @@ private
   end
 
   def select_applications_open_from(course_creation_params)
-    course_creation_params[:applications_open_from] = "2018-10-09"
+    course_creation_params[:applications_open_from] = "2019-10-09"
+    course.applications_open_from = DateTime.new(2019, 10, 9).utc.iso8601
     stub_build_course_with_params(course_creation_params)
 
     new_applications_open_page.applications_open_field.click
@@ -167,10 +190,11 @@ private
   end
 
   def select_start_date(course_creation_params)
-    course_creation_params[:start_date] = "September 2019"
+    course_creation_params[:start_date] = "September 2020"
+    course.start_date = Time.zone.local(2019, 9)
     stub_build_course_with_params(course_creation_params)
 
-    new_start_date_page.select "September 2019"
+    new_start_date_page.select "September 2020"
     new_start_date_page.continue.click
 
     #Addressable, the gem site-prism relies on, cannot match parameters containing a +
