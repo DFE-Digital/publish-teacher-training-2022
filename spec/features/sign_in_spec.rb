@@ -43,6 +43,7 @@ feature "Sign in", type: :feature do
   end
 
   scenario "new user accepts the transition info page" do
+    allow(Settings).to receive(:rollover).and_return(true)
     user = build :user, :new
 
     stub_omniauth(user: user)
@@ -80,6 +81,7 @@ feature "Sign in", type: :feature do
   end
 
   scenario "new user accepts the rollover page" do
+    allow(Settings).to receive(:rollover).and_return(true)
     user = build :user, :transitioned
 
     stub_omniauth(user: user)
