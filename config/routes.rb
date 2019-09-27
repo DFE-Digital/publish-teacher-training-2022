@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     get "/ucas-contacts", on: :member, to: "ucas_contacts#index"
 
     # TODO: Extract year constraint to future proof for future cycles
-    resources :recruitment_cycles, param: :year, constraints: { year: /2019|2020|2021/ }, path: "", only: :show do
+    resources :recruitment_cycles, param: :year, constraints: { year: /2020|2021/ }, path: "", only: :show do
       get "/details", on: :member, to: "providers#details"
       get "/contact", on: :member, to: "providers#contact"
       put "/contact", on: :member, to: "providers#update"
