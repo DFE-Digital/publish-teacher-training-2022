@@ -105,62 +105,39 @@ private
 
   def next_step(current_step:)
     next_step = NextCourseCreationStepService.new.execute(current_step: current_step)
+    next_page = course_creation_path_for(next_step)
 
-    if course_creation_paths.key?(next_step)
-      course_creation_paths[next_step]
-    else
+    if next_page.nil?
       raise "No path defined for next step: #{next_step}"
     end
+
+    next_page
   end
 
-  def course_creation_paths
-    {
-      apprenticeship:  new_provider_recruitment_cycle_courses_apprenticeship_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-      # Currently the page isnt built - so skip
-      location: new_provider_recruitment_cycle_courses_entry_requirements_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-      entry_requirements: new_provider_recruitment_cycle_courses_entry_requirements_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-      outcome: new_provider_recruitment_cycle_courses_outcome_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-      full_or_part_time: new_provider_recruitment_cycle_courses_study_mode_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-      applications_open: new_provider_recruitment_cycle_courses_applications_open_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-      start_date: new_provider_recruitment_cycle_courses_start_date_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-      age_range: new_provider_recruitment_cycle_courses_age_range_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-      confirmation: confirmation_provider_recruitment_cycle_courses_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      ),
-    }
+  def course_creation_path_for(page)
+    path_params = { course: course_params }
+
+    case page
+    when :apprenticeship
+      new_provider_recruitment_cycle_courses_apprenticeship_path(path_params)
+    # Currently the location page isnt built - so we skip that step
+    # and go to the entry_requirements for now
+    when :location
+      new_provider_recruitment_cycle_courses_entry_requirements_path(path_params)
+    when :entry_requirements
+      new_provider_recruitment_cycle_courses_entry_requirements_path(path_params)
+    when :outcome
+      new_provider_recruitment_cycle_courses_outcome_path(path_params)
+    when :full_or_part_time
+      new_provider_recruitment_cycle_courses_study_mode_path(path_params)
+    when :applications_open
+      new_provider_recruitment_cycle_courses_applications_open_path(path_params)
+    when :start_date
+      new_provider_recruitment_cycle_courses_start_date_path(path_params)
+    when :age_range
+      new_provider_recruitment_cycle_courses_age_range_path(path_params)
+    when :confirmation
+      confirmation_provider_recruitment_cycle_courses_path(path_params)
+    end
   end
 end

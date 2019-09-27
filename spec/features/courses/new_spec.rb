@@ -174,8 +174,8 @@ private
   end
 
   def select_applications_open_from(course_creation_params)
-    course_creation_params[:applications_open_from] = "2019-10-09"
-    course.applications_open_from = DateTime.new(2019, 10, 9).utc.iso8601
+    course_creation_params[:applications_open_from] = recruitment_cycle.application_start_date
+    course.applications_open_from = DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601
     stub_build_course_with_params(course_creation_params)
 
     new_applications_open_page.applications_open_field.click

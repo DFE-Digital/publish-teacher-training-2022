@@ -41,6 +41,8 @@ module Courses
         )
     end
 
+    # This is needed to handle the fact that dates are optionally specified as year/month/day in the UI
+    # This method assigns the params to the correct YYYY-MM-DD value given what is selected
     def build_course_params
       if params.key?(:course)
         applications_open_from =
