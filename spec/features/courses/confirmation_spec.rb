@@ -27,5 +27,19 @@ feature "Course confirmation", type: :feature do
     expect(course_confirmation_page.title).to have_content(
       "Check your answers before confirming",
     )
+
+    expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
+    expect(course_confirmation_page.details.is_send.text).to eq("No")
+    expect(course_confirmation_page.details.subjects.text).to include("English")
+    expect(course_confirmation_page.details.subjects.text).to include("English with Primary")
+    expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
+    expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
+    expect(course_confirmation_page.details.locations.text).to eq("None")
+    expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
+    expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
+    expect(course_confirmation_page.details.name.text).to eq("English")
+    expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
+    expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
+    expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
   end
 end
