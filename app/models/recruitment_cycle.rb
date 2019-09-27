@@ -17,19 +17,13 @@ class RecruitmentCycle < Base
     year.to_i == Settings.current_cycle + 1
   end
 
-  def previous?
-    year.to_i == Settings.current_cycle - 1
-  end
-
   def year_range
     "#{year} – #{year.to_i + 1}"
   end
 
   def title
     if current?
-      "New cycle (#{year_range})"
-    elsif previous?
-      "Previous cycle (#{year_range})"
+      "Current cycle (#{year_range})"
     elsif next?
       "Next cycle (#{year_range})"
     else

@@ -9,7 +9,7 @@ describe "Providers", type: :request do
   describe "GET index" do
     context "with 1 provider" do
       it "redirects to providers show" do
-        current_recruitment_cycle = build(:recruitment_cycle)
+        current_recruitment_cycle = build(:recruitment_cycle, year: "2019")
         provider = build(:provider)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", provider.to_jsonapi)
@@ -20,7 +20,7 @@ describe "Providers", type: :request do
 
     context "with 2 or more providers" do
       it "renders providers index" do
-        current_recruitment_cycle = build(:recruitment_cycle)
+        current_recruitment_cycle = build(:recruitment_cycle, year: "2019")
         provider1 = build(:provider, include_counts: [:courses])
         provider2 = build(:provider, include_counts: [:courses])
         providers = [provider1, provider2]
@@ -46,7 +46,7 @@ describe "Providers", type: :request do
   describe "GET show" do
     it "render providers show" do
       provider = build(:provider)
-      current_recruitment_cycle = build(:recruitment_cycle)
+      current_recruitment_cycle = build(:recruitment_cycle, year: "2019")
       stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
       stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}", provider.to_jsonapi)
       get(provider_path(provider.provider_code))
@@ -55,7 +55,7 @@ describe "Providers", type: :request do
 
     context "provider does not exist" do
       it "renders not found" do
-        current_recruitment_cycle = build(:recruitment_cycle)
+        current_recruitment_cycle = build(:recruitment_cycle, year: "2019")
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/foo", {}, :get, 404)
         get(provider_path("foo"))

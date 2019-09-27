@@ -13,8 +13,12 @@ module BreadcrumbHelper
   end
 
   def recruitment_cycle_breadcrumb
-    path = provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year)
-    provider_breadcrumb << [@recruitment_cycle.title, path]
+    if @provider.rolled_over?
+      path = provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year)
+      provider_breadcrumb << [@recruitment_cycle.title, path]
+    else
+      provider_breadcrumb
+    end
   end
 
   def courses_breadcrumb

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Locations", type: :feature do
-  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: "2019") }
   let(:provider) { build(:provider) }
 
   before do

@@ -12,7 +12,7 @@ FactoryBot.define do
     address3 { nil }
     address4 { nil }
     postcode { nil }
-    recruitment_cycle_year { "2020" }
+    recruitment_cycle_year { "2019" }
 
     after :build do |course, evaluator|
       course.recruitment_cycle = evaluator.recruitment_cycle

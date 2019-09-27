@@ -60,11 +60,11 @@ feature "Edit course applications open", type: :feature do
   end
 
 
-  context "a course with an applications open from value of 2019-10-09" do
+  context "a course with an applications open from value of 2018-10-09" do
     let(:course) do
       build(
         :course,
-        applications_open_from: "2019-10-09",
+        applications_open_from: "2018-10-09",
         content_status: "draft",
         edit_options: {
           show_applications_open: true,
@@ -88,7 +88,7 @@ feature "Edit course applications open", type: :feature do
     end
 
     scenario "has the correct value selected" do
-      expect(applications_open_page.applications_open_field.value).to eq("2019-10-09")
+      expect(applications_open_page.applications_open_field.value).to eq("2018-10-09")
     end
 
     scenario "selected radio to be checked" do
@@ -112,7 +112,7 @@ feature "Edit course applications open", type: :feature do
           course_code: course.course_code,
           type: "courses",
           attributes: {
-            applications_open_from: "2019-11-11",
+            applications_open_from: "2018-11-11",
           },
         },
       }.to_json)
@@ -120,7 +120,7 @@ feature "Edit course applications open", type: :feature do
       choose("course_applications_open_from_other")
       fill_in "course_day", with: "11"
       fill_in "course_month", with: "11"
-      fill_in "course_year", with: "2019"
+      fill_in "course_year", with: "2018"
 
 
       click_on "Save"
@@ -148,11 +148,11 @@ feature "Edit course applications open", type: :feature do
     end
   end
 
-  context "a course with an applications open from value of 2019-12-12" do
+  context "a course with an applications open from value of 2018-12-12" do
     let(:course) do
       build(
         :course,
-        applications_open_from: "2019-12-12",
+        applications_open_from: "2018-12-12",
         provider: provider,
       )
     end
@@ -161,7 +161,7 @@ feature "Edit course applications open", type: :feature do
       expect(applications_open_page.applications_open_field_other).to be_checked
       expect(applications_open_page.applications_open_field_day.value).to eq("12")
       expect(applications_open_page.applications_open_field_month.value).to eq("12")
-      expect(applications_open_page.applications_open_field_year.value).to eq("2019")
+      expect(applications_open_page.applications_open_field_year.value).to eq("2018")
     end
   end
 

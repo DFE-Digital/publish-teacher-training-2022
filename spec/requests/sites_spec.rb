@@ -10,21 +10,21 @@ describe "Sites" do
   end
 
   describe "GET index" do
-    it "redirects to /2020/locations" do
+    it "redirects to /2019/locations" do
       get("/organisations/#{provider.provider_code}/locations")
       expect(response).to redirect_to(provider_recruitment_cycle_sites_path(provider.provider_code, site.recruitment_cycle_year))
     end
   end
 
   describe "GET new" do
-    it "redirects to /2020/locations/new" do
+    it "redirects to /2019/locations/new" do
       get("/organisations/#{provider.provider_code}/locations/new")
       expect(response).to redirect_to(new_provider_recruitment_cycle_site_path(provider.provider_code, site.recruitment_cycle_year))
     end
   end
 
   describe "GET edit" do
-    it "redirects to /2020/location/:site_id/edit" do
+    it "redirects to /2019/location/:site_id/edit" do
       get("/organisations/#{provider.provider_code}/locations/#{site.id}/edit")
       expect(response).to redirect_to(edit_provider_recruitment_cycle_site_path(provider.provider_code, site.recruitment_cycle_year, site.id))
     end

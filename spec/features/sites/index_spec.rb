@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "View locations", type: :feature do
-  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: "2019") }
   let(:sites) do
     [
       build(:site, location_name: "Main site 1"),
