@@ -30,7 +30,7 @@ feature "Edit locations", type: :feature do
     end
 
     scenario "it 404s" do
-      visit edit_provider_recruitment_cycle_site_path(provider_code, current_recruitment_cycle.year.to_s, "not_a_site")
+      visit edit_provider_recruitment_cycle_site_path(provider_code, Settings.current_cycle, "not_a_site")
       expect(location_page).not_to be_displayed
       expect(page.status_code).to eq(404)
       expect(page.body).to have_content("Page not found")

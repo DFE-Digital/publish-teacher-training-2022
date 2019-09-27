@@ -26,9 +26,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">
-        <%= @provider.provider_name %>
-      </span>
+      <span class="govuk-caption-xl"><%= @recruitment_cycle.title %></span>
       About your organisation
     </h1>
   </div>
@@ -80,7 +78,7 @@
       <% unless @provider.is_published? %>
         <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
           <h2 class="govuk-heading-m">Publish</h2>
-          <% if @recruitment_cycle.current? %>
+          <% if @recruitment_cycle.current_and_open? %>
             <p class="govuk-body">You can make changes to this after publishing it.</p>
             <%= form_for provider, url: publish_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year), method: :post do |f| %>
               <%= f.submit "Publish", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'provider__publish' } %>

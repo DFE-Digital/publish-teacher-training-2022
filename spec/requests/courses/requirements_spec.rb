@@ -48,7 +48,7 @@ describe "Courses", type: :request do
     context "Default recruitment cycle" do
       it "should redirect to new courses#requirements route" do
         get("/organisations/#{provider.provider_code}/courses/#{course.course_code}/requirements")
-        expect(response).to redirect_to(requirements_provider_recruitment_cycle_course_path(provider.provider_code, current_recruitment_cycle.year, course.course_code))
+        expect(response).to redirect_to(requirements_provider_recruitment_cycle_course_path(provider.provider_code, Settings.current_cycle, course.course_code))
       end
     end
 

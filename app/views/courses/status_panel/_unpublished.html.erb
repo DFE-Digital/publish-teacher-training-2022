@@ -9,7 +9,7 @@
 <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
 
 <h4 class="govuk-heading-m">Publish</h4>
-<% if @recruitment_cycle.current? %>
+<% if @recruitment_cycle.current_and_open? %>
   <p class="govuk-body">Publish your changes.</p>
   <p class="govuk-body">You can make changes to this course after publishing it.</p>
   <%= form_for course, url: publish_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :post do |f| %>

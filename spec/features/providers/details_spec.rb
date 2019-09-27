@@ -4,6 +4,7 @@ feature "View provider", type: :feature do
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
 
   before do
+    allow(Settings).to receive(:current_cycle_open).and_return(true)
     stub_omniauth
 
     stub_api_v2_resource(provider.recruitment_cycle)
@@ -85,7 +86,7 @@ feature "View provider", type: :feature do
       "Contact details",
       href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact",
     )
-    expect(org_detail_page.caption).to have_content(provider.provider_name)
+
     expect(org_detail_page.email).to have_content(provider.email)
     expect(org_detail_page.website).to have_content(provider.website)
     expect(org_detail_page.telephone).to have_content(provider.telephone)
@@ -107,7 +108,9 @@ feature "View provider", type: :feature do
     expect(breadcrumbs[0].text).to eq(provider.provider_name)
     expect(breadcrumbs[0]["href"]).to eq("/organisations/#{provider.provider_code}")
 
-    expect(breadcrumbs[1].text).to eq(provider.recruitment_cycle.title)
-    expect(breadcrumbs[1]["href"]).to eq("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}")
+    if Settings.rollover
+      expect(breadcrumbs[1].text).to eq(provider.recruitment_cycle.title)
+      expect(breadcrumbs[1]["href"]).to eq("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}")
+    end
   end
 end

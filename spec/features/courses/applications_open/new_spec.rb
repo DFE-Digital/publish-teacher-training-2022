@@ -15,7 +15,7 @@ feature "new course applications open", type: :feature do
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
-    stub_api_v2_build_course(applications_open_from: "2019-10-09")
+    stub_api_v2_build_course(applications_open_from: "2018-10-09")
   end
 
   scenario "sends user to confirmation page" do

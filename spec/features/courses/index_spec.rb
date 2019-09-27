@@ -82,6 +82,7 @@ feature "View locations", type: :feature do
       allow(Settings).to receive(:rollover).and_return(true)
       root_page.load
       expect(organisation_page).to be_displayed(provider_code: provider_code)
+      organisation_page.current_cycle.click
       organisation_page.locations.click
 
       expect(locations_page).to be_displayed(provider_code: provider_code)

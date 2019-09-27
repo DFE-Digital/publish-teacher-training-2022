@@ -29,6 +29,7 @@ feature "View providers", type: :feature do
 
 
   scenario "Navigate to /organisations/A0" do
+    allow(Settings).to receive(:rollover).and_return(false)
     stub_omniauth
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
@@ -44,10 +45,32 @@ feature "View providers", type: :feature do
     expect(find("h1")).to have_content(provider_1.provider_name.to_s)
     expect(organisation_page).not_to have_selector(".govuk-breadcrumbs")
 
-    expect(organisation_page).to have_current_cycle
+    expect(organisation_page).not_to have_current_cycle
+    expect(organisation_page).not_to have_next_cycle
 
-    expect(organisation_page).to have_link("Locations", href: "/organisations/A0/#{current_recruitment_cycle.year}/locations")
-    expect(organisation_page).to have_link("Courses", href: "/organisations/A0/#{current_recruitment_cycle.year}/courses")
+    expect(organisation_page).to have_link("Locations", href: "/organisations/A0/#{Settings.current_cycle}/locations")
+    expect(organisation_page).to have_link("Courses", href: "/organisations/A0/#{Settings.current_cycle}/courses")
     expect(organisation_page).to have_link("UCAS contacts", href: "/organisations/A0/ucas-contacts")
+  end
+
+  context "Rollover" do
+    scenario "Navigate to /organisations/A0" do
+      allow(Settings).to receive(:rollover).and_return(true)
+      stub_omniauth
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}",
+        current_recruitment_cycle.to_jsonapi,
+      )
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers/#{provider_1.provider_code}",
+        provider_response,
+      )
+
+      visit provider_path(provider_1.provider_code)
+      expect(find("h1")).to have_content(provider_1.provider_name.to_s)
+      expect(organisation_page).to have_current_cycle
+      expect(organisation_page).to have_next_cycle
+    end
   end
 end

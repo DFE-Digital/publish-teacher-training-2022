@@ -5,7 +5,7 @@ feature "Handling Forbidden responses from the backend", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/2020", "", :get, 403)
+    stub_api_v2_request("/recruitment_cycles/#{Settings.current_cycle}", "", :get, 403)
   end
 
   it "Does not redirect the page" do

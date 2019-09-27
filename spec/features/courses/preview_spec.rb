@@ -127,7 +127,7 @@ feature "Preview course", type: :feature do
     )
 
     expect(preview_course_page).to have_content(
-      "The course fees for #{current_recruitment_cycle.year_range} are as follows",
+      "The course fees for #{Settings.current_cycle} – #{Settings.current_cycle + 1} are as follows",
     )
 
     expect(preview_course_page.uk_fees).to have_content(

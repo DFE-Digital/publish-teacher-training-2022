@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Courses – #{@recruitment_cycle.title}" %>
+<%= content_for :page_title, @provider.rolled_over? ? "Courses – #{@recruitment_cycle.title}" : "Courses" %>
 <%= content_for :before_content, render_breadcrumbs(:courses) %>
 
 <h1 class="govuk-heading-xl">
@@ -14,7 +14,7 @@
   <li>copy content between courses</li>
 </ul>
 
-<% if @provider.courses.count > 10 && @recruitment_cycle.year >= Settings.current_cycle.to_s %>
+<% if @provider.courses.count > 10 %>
   <%= add_course_link(current_user['info']['email'], @provider, is_current_cycle: @recruitment_cycle.current?) %>
   <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your course details.</p>
 <% end %>
@@ -36,7 +36,5 @@
   </section>
 <% end %>
 
-<% if @recruitment_cycle.year >= Settings.current_cycle.to_s %>
-  <%= add_course_link(current_user['info']['email'], @provider, is_current_cycle: @recruitment_cycle.current?) %>
-  <p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>
-<% end %>
+<%= add_course_link(current_user['info']['email'], @provider, is_current_cycle: @recruitment_cycle.current?) %>
+<p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>

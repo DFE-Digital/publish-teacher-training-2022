@@ -2,40 +2,48 @@ require "rails_helper"
 
 describe "Recruitment cycles" do
   let(:provider) { build(:provider) }
-  let(:previous_recruitment_cycle) { build(:recruitment_cycle, :previous_cycle) }
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:next_recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
 
   before do
+    allow(Settings).to receive(:current_cycle_open).and_return(true)
     stub_omniauth
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
       current_recruitment_cycle.to_jsonapi,
     )
     stub_api_v2_request(
-      "/recruitment_cycles/#{previous_recruitment_cycle.year}",
-      previous_recruitment_cycle.to_jsonapi,
+      "/recruitment_cycles/#{next_recruitment_cycle.year}",
+      next_recruitment_cycle.to_jsonapi,
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}",
       provider.to_jsonapi,
     )
     stub_api_v2_request(
-      "/recruitment_cycles/#{previous_recruitment_cycle.year}/providers/#{provider.provider_code}",
+      "/recruitment_cycles/#{next_recruitment_cycle.year}/providers/#{provider.provider_code}",
       provider.to_jsonapi,
     )
     get(auth_dfe_callback_path)
   end
 
   describe "GET show" do
-    it "redirects to the provider#show page" do
+    it "redirects to the course index page" do
+      allow(Settings).to receive(:rollover).and_return(false)
+
       get("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}")
+      expect(response).to redirect_to(provider_path(provider.provider_code))
+
+      get("/organisations/#{provider.provider_code}/#{next_recruitment_cycle.year}")
       expect(response).to redirect_to(provider_path(provider.provider_code))
     end
 
-    context "Previous cycle" do
+    context "rollover" do
       it "renders the recruitment cycle page" do
-        get("/organisations/#{provider.provider_code}/#{previous_recruitment_cycle.year}")
-        expect(response.body).to include("Previous cycle (2019 – 2020)")
+        allow(Settings).to receive(:rollover).and_return(true)
+
+        get("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}")
+        expect(response.body).to include("Current cycle")
       end
     end
   end
