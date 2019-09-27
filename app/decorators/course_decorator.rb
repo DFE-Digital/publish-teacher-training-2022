@@ -13,9 +13,9 @@ class CourseDecorator < ApplicationDecorator
 
   def on_find(provider = object.provider)
     if object.findable?
-      if current_cycle?
+      if current_cycle_and_open?
         h.govuk_link_to("Yes - view online", h.search_ui_course_page_url(provider_code: provider.provider_code, course_code: object.course_code))
-      elsif next_cycle?
+      else
         "Yes – from October"
       end
     else
@@ -111,6 +111,10 @@ class CourseDecorator < ApplicationDecorator
 
   def current_cycle?
     course.recruitment_cycle_year.to_i == Settings.current_cycle
+  end
+
+  def current_cycle_and_open?
+    current_cycle? && Settings.current_cycle_open
   end
 
   def next_cycle?
