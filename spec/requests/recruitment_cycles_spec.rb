@@ -6,6 +6,7 @@ describe "Recruitment cycles" do
   let(:next_recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
 
   before do
+    allow(Settings).to receive(:current_cycle_open).and_return(true)
     stub_omniauth
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",

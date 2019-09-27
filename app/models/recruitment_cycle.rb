@@ -13,6 +13,10 @@ class RecruitmentCycle < Base
     year.to_i == Settings.current_cycle
   end
 
+  def current_and_open?
+    current? && Settings.current_cycle_open
+  end
+
   def next?
     year.to_i == Settings.current_cycle + 1
   end
@@ -22,8 +26,10 @@ class RecruitmentCycle < Base
   end
 
   def title
-    if current?
+    if current_and_open?
       "Current cycle (#{year_range})"
+    elsif current?
+      "New cycle (#{year_range})"
     elsif next?
       "Next cycle (#{year_range})"
     else

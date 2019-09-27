@@ -7,6 +7,7 @@ feature "Recruitment cycles", type: :feature do
   let(:recruitment_cycle_page) { PageObjects::Page::Organisations::RecruitmentCycle.new }
 
   before do
+    allow(Settings).to receive(:current_cycle_open).and_return(true)
     stub_omniauth
     stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}", next_recruitment_cycle.to_jsonapi)
     stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
