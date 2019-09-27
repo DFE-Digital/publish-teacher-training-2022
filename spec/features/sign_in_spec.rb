@@ -14,7 +14,7 @@ feature "Sign in", type: :feature do
     ]
   end
 
-  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: 2019) }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
 
   let(:providers_response) do
     resource_list_to_jsonapi(providers)
@@ -22,7 +22,7 @@ feature "Sign in", type: :feature do
 
   before do
     stub_api_v2_request(
-      "/recruitment_cycles/2019",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}",
       current_recruitment_cycle.to_jsonapi,
     )
   end
@@ -32,7 +32,7 @@ feature "Sign in", type: :feature do
     user = build :user
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/2019/providers",
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
                         providers_response)
 
     visit root_path
@@ -46,7 +46,7 @@ feature "Sign in", type: :feature do
     user = build :user, :new
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/2019/providers", providers_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
     request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
     visit "/signin"
@@ -65,7 +65,7 @@ feature "Sign in", type: :feature do
     user = build :user, :new
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/2019/providers", providers_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
     request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
     visit "/signin"
@@ -83,7 +83,7 @@ feature "Sign in", type: :feature do
     user = build :user, :transitioned
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/2019/providers", providers_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
     request = stub_api_v2_request "/users/#{user.id}/accept_rollover_screen", user.to_jsonapi, :patch
 
     visit "/signin"
@@ -102,7 +102,7 @@ feature "Sign in", type: :feature do
     user = build :user, :inactive, :new
 
     stub_api_v2_request(
-      "/recruitment_cycles/2019",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}",
       {
         meta: {
           error_type: "user_not_accepted_terms_and_conditions",
@@ -112,13 +112,13 @@ feature "Sign in", type: :feature do
     )
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/2019/providers", providers_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
     request = stub_api_v2_request "/users/#{user.id}/accept_terms", user.to_jsonapi, :patch
 
     visit "/signin"
 
     stub_api_v2_request(
-      "/recruitment_cycles/2019",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}",
       current_recruitment_cycle.to_jsonapi,
     )
 

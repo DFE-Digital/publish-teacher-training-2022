@@ -126,8 +126,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def applications_open_from_message_for(recruitment_cycle)
-    is_current_recruitment_cycle = recruitment_cycle.year == Settings.current_cycle.to_s
-    if is_current_recruitment_cycle
+    if current_cycle?
       "As soon as the course is on Find (recommended)"
     else
       year = recruitment_cycle.year.to_i

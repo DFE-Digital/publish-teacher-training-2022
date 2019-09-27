@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe "Recruitment cycles" do
   let(:provider) { build(:provider) }
-  let(:current_recruitment_cycle) { build(:recruitment_cycle, year: "2019") }
-  let(:next_recruitment_cycle) { build(:recruitment_cycle, year: "2020") }
+  let(:current_recruitment_cycle) { build(:recruitment_cycle) }
+  let(:next_recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
 
   before do
     stub_omniauth
@@ -30,10 +30,10 @@ describe "Recruitment cycles" do
     it "redirects to the course index page" do
       allow(Settings).to receive(:rollover).and_return(false)
 
-      get("/organisations/#{provider.provider_code}/2019")
+      get("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}")
       expect(response).to redirect_to(provider_path(provider.provider_code))
 
-      get("/organisations/#{provider.provider_code}/2020")
+      get("/organisations/#{provider.provider_code}/#{next_recruitment_cycle.year}")
       expect(response).to redirect_to(provider_path(provider.provider_code))
     end
 
@@ -41,8 +41,8 @@ describe "Recruitment cycles" do
       it "renders the recruitment cycle page" do
         allow(Settings).to receive(:rollover).and_return(true)
 
-        get("/organisations/#{provider.provider_code}/2019")
-        expect(response.body).to include("Current cycle (2019 – 2020)")
+        get("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}")
+        expect(response.body).to include("Current cycle")
       end
     end
   end

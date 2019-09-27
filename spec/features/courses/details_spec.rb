@@ -184,14 +184,14 @@ feature "Course details", type: :feature do
 
   scenario "viewing the show page for a course that does not exist" do
     stub_api_v2_request(
-      "/recruitment_cycles/2019/providers/ZZ/courses/ZZZ?include=sites,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{Settings.current_cycle}/providers/ZZ/courses/ZZZ?include=sites,provider.sites,accrediting_provider",
       "",
       :get,
       404,
     )
 
     course
-    visit "/organisations/ZZ/2019/courses/ZZZ/details"
+    visit "/organisations/ZZ/#{Settings.current_cycle}/courses/ZZZ/details"
 
     expect(course_details_page)
     .to be_displayed(provider_code: "ZZ", course_code: "ZZZ")

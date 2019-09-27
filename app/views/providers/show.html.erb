@@ -9,8 +9,8 @@
   <div class="govuk-grid-column-two-thirds">
     <% if @provider.rolled_over? %>
       <h2 class="govuk-heading-m">
-        <%= link_to 'Current cycle (2019 - 2020)',
-                          provider_recruitment_cycle_path(@provider.provider_code, '2019'),
+        <%= link_to "Current cycle (#{Settings.current_cycle} - #{Settings.current_cycle + 1})",
+                          provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle),
                           data: { qa: 'provider__courses__current_cycle' },
                           class: "govuk-link" %>
       </h2>
@@ -21,8 +21,8 @@
       </ul>
 
       <h2 class="govuk-heading-m">
-        <%= link_to 'Next cycle (2020 - 2021)',
-                          provider_recruitment_cycle_path(@provider.provider_code, '2020'),
+        <%= link_to "Next cycle (#{Settings.current_cycle + 1} - #{Settings.current_cycle + 2})",
+                          provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle + 1),
                           data: { qa: 'provider__courses__next_cycle' },
                           class: "govuk-link" %>
       </h2>
@@ -34,8 +34,8 @@
     <% end %>
 
     <% unless @provider.rolled_over? %>
-      <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: '2019' } %>
-      <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: '2019' } %>
+      <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: Settings.current_cycle } %>
+      <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: Settings.current_cycle } %>
     <% end %>
 
     <h2 class="govuk-heading-m"><%= govuk_link_to "Request access for someone else", request_access_provider_path(code: @provider.provider_code) %></h2>

@@ -1,8 +1,8 @@
 require "rails_helper"
 
 feature "Recruitment cycles", type: :feature do
-  let(:current_recruitment_cycle) { build :recruitment_cycle, year: "2019" }
-  let(:next_recruitment_cycle) { build :recruitment_cycle, year: "2020" }
+  let(:current_recruitment_cycle) { build :recruitment_cycle }
+  let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
   let(:provider) { build :provider, provider_code: "A6" }
   let(:recruitment_cycle_page) { PageObjects::Page::Organisations::RecruitmentCycle.new }
 
@@ -17,11 +17,10 @@ feature "Recruitment cycles", type: :feature do
   context "during a rollover period" do
     before do
       allow(Settings).to receive(:rollover).and_return(true)
-      allow(Settings).to receive(:current_cycle).and_return(2019)
     end
 
     context "the current cycle page" do
-      let(:year) { 2019 }
+      let(:year) { Settings.current_cycle }
 
       before do
         recruitment_cycle_page.load(provider_code: provider.provider_code, recruitment_cycle_year: year)
@@ -36,7 +35,7 @@ feature "Recruitment cycles", type: :feature do
     end
 
     context "the next cycle page" do
-      let(:year) { 2020 }
+      let(:year) { Settings.current_cycle + 1 }
 
       before do
         recruitment_cycle_page.load(provider_code: provider.provider_code, recruitment_cycle_year: year)

@@ -22,7 +22,7 @@ describe "Courses" do
           "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=accrediting_provider",
           course.to_jsonapi(include: %i[accrediting_provider]),
         )
-        current_recruitment_cycle = build(:recruitment_cycle, year: "2019")
+        current_recruitment_cycle = build(:recruitment_cycle)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}", provider.to_jsonapi)
 
