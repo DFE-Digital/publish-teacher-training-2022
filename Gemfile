@@ -27,7 +27,7 @@ gem "omniauth_openid_connect", "~> 0.3"
 
 # App Insights for Azure
 gem "application_insights"
-gem "pkg-config", "~> 1.3.8"
+gem "pkg-config", "~> 1.3.9"
 
 # Parsing JSON from an API
 gem "json_api_client"
