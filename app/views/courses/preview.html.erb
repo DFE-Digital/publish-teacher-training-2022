@@ -56,11 +56,6 @@
         <li><%= link_to 'Interview process', '#section-interviews', class: 'govuk-link' %></li>
       <% end %>
       <li><%= link_to 'How school placements work', '#section-schools', class: 'govuk-link' %></li>
-      <% if course.has_fees? %>
-        <li><%= link_to 'Fees', '#section-fees', class: 'govuk-link' %></li>
-      <% else %>
-        <li><%= link_to 'Salary', '#section-salary', class: 'govuk-link' %></li>
-      <% end %>
       <li><%= link_to 'Financial support', '#section-financial-support', class: 'govuk-link' %></li>
       <li><%= link_to 'Requirements', '#section-entry', class: 'govuk-link' %></li>
       <li><%= link_to 'About the training provider', '#section-about-provider', class: 'govuk-link' %></li>
@@ -78,13 +73,12 @@
 
     <%= render partial: 'courses/preview/about_schools' %>
 
-    <% if course.has_fees? %>
-      <%= render partial: 'courses/preview/fees' %>
-    <% else %>
-      <%= render partial: 'courses/preview/salary' %>
-    <% end %>
-
-    <%= render partial: 'courses/preview/financial_support/financial_support' %>
+    <div class="govuk-!-margin-bottom-8">
+      <h2 class="govuk-heading-l" id="section-financial-support">Financial support</h2>
+      <div class="govuk-inset-text">
+        <p class="govuk-body">Bursaries, scholarships and financial support for 2020/21 will be announced soon.</p>
+      </div>
+    </div>
 
     <%= render partial: 'courses/preview/entry_requirements_qualifications' %>
 

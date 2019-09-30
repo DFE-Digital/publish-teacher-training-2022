@@ -127,33 +127,7 @@ feature "Preview course", type: :feature do
     )
 
     expect(preview_course_page).to have_content(
-      "The course fees for #{Settings.current_cycle} – #{Settings.current_cycle + 1} are as follows",
-    )
-
-    expect(preview_course_page.uk_fees).to have_content(
-      "£9,250",
-    )
-
-    expect(preview_course_page.eu_fees).to have_content(
-      "£9,250",
-    )
-
-    expect(preview_course_page.international_fees).to have_content(
-      "£9,250",
-    )
-
-    expect(preview_course_page.fee_details).to have_content(
-      decorated_course.fee_details,
-    )
-
-    expect(preview_course_page).to_not have_salary_details
-
-    expect(preview_course_page.scholarship_amount).to have_content(
-      "£20,000",
-    )
-
-    expect(preview_course_page.bursary_amount).to have_content(
-      "£22,000",
+      "Bursaries, scholarships and financial support for 2020/21 will be announced soon.",
     )
 
     expect(preview_course_page.required_qualifications).to have_content(
