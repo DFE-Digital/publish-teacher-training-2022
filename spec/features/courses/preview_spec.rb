@@ -148,14 +148,6 @@ feature "Preview course", type: :feature do
 
     expect(preview_course_page).to_not have_salary_details
 
-    expect(preview_course_page.scholarship_amount).to have_content(
-      "£20,000",
-    )
-
-    expect(preview_course_page.bursary_amount).to have_content(
-      "£22,000",
-    )
-
     expect(preview_course_page.required_qualifications).to have_content(
       course.required_qualifications,
     )
