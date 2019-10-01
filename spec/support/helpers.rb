@@ -143,8 +143,7 @@ private
     url = "/build_new_course?" \
       "provider_code=#{provider_code}&recruitment_cycle_year=#{recruitment_cycle_year}&"
 
-    url_params = params.map { |k, v| "course[#{k}]=#{v}" }.join("&")
-    url + url_params
+    url + params.to_query("course")
   end
 end
 

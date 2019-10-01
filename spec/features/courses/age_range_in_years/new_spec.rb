@@ -1,8 +1,11 @@
 require "rails_helper"
 
-feature "new course outcome", type: :feature do
+feature "new course age range", type: :feature do
   let(:new_age_range_page) do
     PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
+  end
+  let(:new_outcome_page) do
+    PageObjects::Page::Organisations::Courses::NewOutcomePage.new
   end
   let(:provider) { build(:provider) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
@@ -10,10 +13,7 @@ feature "new course outcome", type: :feature do
     build(:course,
           :new,
           provider: provider,
-          level: "primary",
-          edit_options: {
-            age_range_in_years: %w[3_to_7 5_to_11 7_to_11 7_to_14],
-          })
+          level: :primary)
   end
 
   before do
@@ -22,10 +22,7 @@ feature "new course outcome", type: :feature do
     new_course = build(:course,
                        :new,
                        provider: provider,
-                       level: "primary",
-                       edit_options: {
-                         age_range_in_years: %w[3_to_7 5_to_11 7_to_11 7_to_14],
-                       })
+                       level: :primary)
     stub_api_v2_new_resource(new_course)
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([new_course], include: "sites,provider.sites,accrediting_provider")
@@ -38,9 +35,11 @@ feature "new course outcome", type: :feature do
       provider.recruitment_cycle_year,
     )
 
+    stub_api_v2_build_course(age_range_in_years: "3_to_7")
     choose("course_age_range_in_years_3_to_7")
     click_on "Continue"
 
-    expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+
+    expect(new_outcome_page).to be_displayed
   end
 end

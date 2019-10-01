@@ -31,6 +31,16 @@ module CourseBasicDetailConcern
     end
   end
 
+  def continue
+    @errors = errors
+
+    if @errors.present?
+      render :new
+    else
+      redirect_to next_step
+    end
+  end
+
 private
 
   def build_new_course
@@ -58,27 +68,42 @@ private
 
   def course_params
     if params.key? :course
-      params.require(:course).permit(
-        :page,
-        :about_course,
-        :course_length,
-        :course_length_other_length,
-        :fee_details,
-        :fee_international,
-        :fee_uk_eu,
-        :financial_support,
-        :how_school_placements_work,
-        :interview_process,
-        :other_requirements,
-        :personal_qualities,
-        :salary_details,
-        :required_qualifications,
-        :qualification, # qualification is actually "outcome"
-        :maths,
-        :english,
-        :science,
-        :funding_type,
-      )
+      params.require(:course)
+        .except(
+          :day,
+          :month,
+          :year,
+          :course_age_range_in_years_other_from,
+          :course_age_range_in_years_other_to,
+        )
+        .permit(
+          :page,
+          :about_course,
+          :course_length,
+          :course_length_other_length,
+          :fee_details,
+          :fee_international,
+          :fee_uk_eu,
+          :financial_support,
+          :how_school_placements_work,
+          :interview_process,
+          :other_requirements,
+          :personal_qualities,
+          :salary_details,
+          :required_qualifications,
+          :qualification, # qualification is actually "outcome"
+          :maths,
+          :english,
+          :science,
+          :funding_type,
+          :level,
+          :is_send,
+          :program_type,
+          :study_mode,
+          :applications_open_from,
+          :start_date,
+          :age_range_in_years,
+        )
     else
       ActionController::Parameters.new({}).permit(:course)
     end
@@ -88,19 +113,41 @@ private
     @course_creation_params = course_params
   end
 
-  def next_step(current_step:)
-    if current_step == :outcome
-      new_provider_recruitment_cycle_courses_entry_requirements_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      )
-    elsif current_step == :entry_requirements
-      new_provider_recruitment_cycle_courses_outcome_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course: course_params,
-      )
+  def next_step
+    next_step = NextCourseCreationStepService.new.execute(current_step: current_step)
+    next_page = course_creation_path_for(next_step)
+
+    if next_page.nil?
+      raise "No path defined for next step: #{next_step}"
+    end
+
+    next_page
+  end
+
+  def course_creation_path_for(page)
+    path_params = { course: course_params }
+
+    case page
+    when :apprenticeship
+      new_provider_recruitment_cycle_courses_apprenticeship_path(path_params)
+    # Currently the location page isnt built - so we skip that step
+    # and go to the entry_requirements for now
+    when :location
+      new_provider_recruitment_cycle_courses_entry_requirements_path(path_params)
+    when :entry_requirements
+      new_provider_recruitment_cycle_courses_entry_requirements_path(path_params)
+    when :outcome
+      new_provider_recruitment_cycle_courses_outcome_path(path_params)
+    when :full_or_part_time
+      new_provider_recruitment_cycle_courses_study_mode_path(path_params)
+    when :applications_open
+      new_provider_recruitment_cycle_courses_applications_open_path(path_params)
+    when :start_date
+      new_provider_recruitment_cycle_courses_start_date_path(path_params)
+    when :age_range
+      new_provider_recruitment_cycle_courses_age_range_path(path_params)
+    when :confirmation
+      confirmation_provider_recruitment_cycle_courses_path(path_params)
     end
   end
 end

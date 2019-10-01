@@ -4,11 +4,11 @@ module Courses
 
     before_action :not_found_if_no_gcse_subjects_required, except: :continue
 
-    def continue
-      redirect_to next_step(current_step: :entry_requirements)
-    end
-
   private
+
+    def current_step
+      :entry_requirements
+    end
 
     def errors
       course.gcse_subjects_required

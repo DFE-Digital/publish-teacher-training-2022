@@ -1,18 +1,8 @@
 module Courses
   class AgeRangeController < ApplicationController
+    include CourseBasicDetailConcern
     decorates_assigned :course
     before_action :build_course, only: %i[edit update]
-    before_action :build_provider, :build_new_course, only: %i[new continue]
-
-    def new; end
-
-    def continue
-      redirect_to confirmation_provider_recruitment_cycle_courses_path(
-        params[:provider_code],
-        params[:recruitment_cycle_year],
-        course_params,
-      )
-    end
 
     def update
       # Age range 'other' override
@@ -53,25 +43,11 @@ module Courses
 
   private
 
-    def course_params
-      if params.key? :course
-        params.require(:course)
-          .except(
-            :course_age_range_in_years_other_from,
-            :course_age_range_in_years_other_to,
-)
-          .permit(:age_range_in_years)
-      else
-        ActionController::Parameters.new({}).permit(:course)
-      end
+    def current_step
+      :age_range
     end
 
-    def build_provider
-      @provider = Provider
-                    .where(recruitment_cycle_year: params[:recruitment_cycle_year])
-                    .find(params[:provider_code])
-                    .first
-    end
+    def errors; end
 
     def build_course
       @course = Course
@@ -79,13 +55,6 @@ module Courses
         .where(provider_code: params[:provider_code])
         .find(params[:code])
         .first
-    end
-
-    def build_new_course
-      @course = Course.build_new(
-        recruitment_cycle_year: @provider.recruitment_cycle_year,
-        provider_code: @provider.provider_code,
-      )
     end
   end
 end

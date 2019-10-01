@@ -12,6 +12,7 @@ feature "new course entry_requirements", type: :feature do
   before do
     stub_omniauth
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_new_resource(course)
     stub_api_v2_build_course
   end
@@ -29,7 +30,11 @@ feature "new course entry_requirements", type: :feature do
   context "level primary" do
     let(:level) { :primary }
     before do
-      stub_api_v2_build_course(maths: "expect_to_achieve_before_training_begins")
+      stub_api_v2_build_course(
+        maths: "expect_to_achieve_before_training_begins",
+        english: "expect_to_achieve_before_training_begins",
+        science: "expect_to_achieve_before_training_begins",
+      )
     end
 
     scenario "creating a new course" do
@@ -62,16 +67,21 @@ feature "new course entry_requirements", type: :feature do
       end
 
       choose("course_maths_expect_to_achieve_before_training_begins")
+      choose("course_english_expect_to_achieve_before_training_begins")
+      choose("course_science_expect_to_achieve_before_training_begins")
       click_on "Continue"
 
-      expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
+      expect(current_path).to eq new_provider_recruitment_cycle_courses_applications_open_path(provider.provider_code, provider.recruitment_cycle_year)
     end
   end
 
   context "level secondary" do
     let(:level) { :secondary }
     before do
-      stub_api_v2_build_course(english: "expect_to_achieve_before_training_begins")
+      stub_api_v2_build_course(
+        maths: "expect_to_achieve_before_training_begins",
+        english: "expect_to_achieve_before_training_begins",
+      )
     end
     scenario "creating a new course" do
       visit new_provider_recruitment_cycle_courses_entry_requirements_path(
@@ -101,9 +111,10 @@ feature "new course entry_requirements", type: :feature do
       end
 
       choose("course_english_expect_to_achieve_before_training_begins")
+      choose("course_maths_expect_to_achieve_before_training_begins")
       click_on "Continue"
 
-      expect(current_path).to eq new_provider_recruitment_cycle_courses_outcome_path(provider.provider_code, provider.recruitment_cycle_year)
+      expect(current_path).to eq new_provider_recruitment_cycle_courses_applications_open_path(provider.provider_code, provider.recruitment_cycle_year)
     end
   end
 end

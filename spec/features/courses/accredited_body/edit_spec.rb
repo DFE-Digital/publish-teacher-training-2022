@@ -49,7 +49,6 @@ feature "Edit accredited body", type: :feature do
       searching_returns_some_results
       fill_in "Name of accredited body", with: "ACME"
       click_on "Save and publish changes"
-
       expect(accredited_body_search).to be_displayed
     end
   end
