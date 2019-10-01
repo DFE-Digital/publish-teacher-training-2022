@@ -4,20 +4,9 @@
   <% if course.funding_type == 'salary' %>
     <%= render partial: 'courses/preview/financial_support/salaried' %>
   <% else %>
-
-    <% if course.has_scholarship_and_bursary? %>
-      <%= render partial: 'courses/preview/financial_support/scholarship_and_bursary' %>
-    <% elsif course.has_bursary? %>
-      <%= render partial: 'courses/preview/financial_support/bursary' %>
-    <% else %>
-      <p class="govuk-body">
-        You may be eligible for a <a href="https://www.gov.uk/teacher-training-funding" class="govuk-link">loan while you study</a>.
-      </p>
-    <% end %>
-
-    <p class="govuk-body">
-      <a href="https://getintoteaching.education.gov.uk/explore-my-options/overseas-graduates" class="govuk-link">Financial support if you’re from outside the UK</a>.
-    </p>
+    <div class="govuk-inset-text">
+      <p class="govuk-body">Bursaries, scholarships and financial support for 2020/21 will be announced soon.</p>
+    </div>
   <% end %>
 
   <% if course.financial_support.present? %>
