@@ -45,7 +45,7 @@ environment:
   selector_name: "beta"
 rollover: false
 current_cycle: 2020
-current_cycle_open: false
+current_cycle_open: true
 application_name: manage-courses-frontend
 logstash:
   type: tcp
