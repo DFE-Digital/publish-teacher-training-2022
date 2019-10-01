@@ -4,10 +4,6 @@ module Courses
     decorates_assigned :course
     before_action :build_course, only: %i[edit update]
 
-    def continue
-      redirect_to next_step(current_step: :age_range)
-    end
-
     def update
       # Age range 'other' override
       course = params.dig(:course)
@@ -46,6 +42,12 @@ module Courses
     end
 
   private
+
+    def current_step
+      :age_range
+    end
+
+    def errors; end
 
     def build_course
       @course = Course

@@ -12,7 +12,7 @@ module Courses
       if @errors.present?
         render :new
       else
-        redirect_to next_step(current_step: :applications_open)
+        redirect_to next_step
       end
     end
 
@@ -64,6 +64,10 @@ module Courses
       )
 
       @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
+    end
+
+    def current_step
+      :applications_open
     end
   end
 end

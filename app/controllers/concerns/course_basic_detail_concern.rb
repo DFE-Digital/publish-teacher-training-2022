@@ -31,6 +31,16 @@ module CourseBasicDetailConcern
     end
   end
 
+  def continue
+    @errors = errors
+
+    if @errors.present?
+      render :new
+    else
+      redirect_to next_step
+    end
+  end
+
 private
 
   def build_new_course
@@ -103,7 +113,7 @@ private
     @course_creation_params = course_params
   end
 
-  def next_step(current_step:)
+  def next_step
     next_step = NextCourseCreationStepService.new.execute(current_step: current_step)
     next_page = course_creation_path_for(next_step)
 
