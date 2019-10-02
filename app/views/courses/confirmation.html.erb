@@ -5,9 +5,15 @@
     <h1 class="govuk-heading-xl">
       Check your answers before confirming
     </h1>
+    <%= render 'shared/errors' %>
     <%= form_with model: course,
-                  url: new_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year),
+                  url: provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year),
                   method: :post do |f| %>
+      <%= render 'shared/course_creation_hidden_fields',
+        form: f,
+        course_creation_params: @course_creation_params,
+        except_keys: []
+      %>
       <hr class="govuk-section-break govuk-section-break--l">
       <div class="govuk-grid-row govuk-!-margin-bottom-9">
         <div class="govuk-grid-column-full">

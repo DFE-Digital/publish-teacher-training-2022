@@ -4,7 +4,7 @@ module PageObjects
       class CourseConfirmation < CourseBase
         set_url "/organisations/{provider_code}/{recruitment_cycle_year}/courses/confirmation{?query*}"
 
-        element :continue, '[data-qa="course__save"]'
+        element :save, '[data-qa="course__save"]'
 
         section :details, '[data-qa="course__details"]' do
           element :level, '[data-qa="course__level"]'
