@@ -3,7 +3,7 @@ require "rails_helper"
 feature "New course start date", type: :feature do
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider) }
-  let(:course) { build(:course, :new, provider: provider) }
+  let(:course) { build(:course, provider: provider) }
 
   before do
     stub_omniauth
@@ -15,7 +15,7 @@ feature "New course start date", type: :feature do
     stub_api_v2_build_course(start_date: "September #{Settings.current_cycle}")
   end
 
-  scenario "choose coure start date" do
+  scenario "choose course start date" do
     visit "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}" \
     "/courses/start-date/new"
 
