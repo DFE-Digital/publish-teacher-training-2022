@@ -34,7 +34,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-summary-list govuk-summary-list--short">
+    <div class="govuk-summary-list govuk-summary-list--short govuk-!-margin-top-0">
       <h3 class="govuk-heading-m govuk-!-font-size-27">
         <%= govuk_link_to "Contact details", contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
       </h3>
@@ -64,32 +64,9 @@
 
   <aside class="govuk-grid-column-one-third" data-qa="provider__status_panel">
     <div class="app-related">
-      <div class="govuk-!-margin-bottom-6" data-qa="provider__content-status">
-        <%= provider.status_tag %>
-      </div>
-      <% if @provider&.last_published_at %>
-        <p class="govuk-body">Last published on <%= l(@provider&.last_published_at.to_date) %></p>
-      <% end %>
-
       <h2 class="govuk-heading-m">View on a course</h2>
       <p class="govuk-body">This information will show on all your courses.</p>
-      <p class="govuk-body">View any course to see how it will look to applicants.</p>
-
-      <% unless @provider.is_published? %>
-        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
-          <h2 class="govuk-heading-m">Publish</h2>
-          <% if @recruitment_cycle.current_and_open? %>
-            <p class="govuk-body">You can make changes to this after publishing it.</p>
-            <%= form_for provider, url: publish_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year), method: :post do |f| %>
-              <%= f.submit "Publish", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'provider__publish' } %>
-            <% end %>
-          <% else %>
-            <p class="govuk-body" data-qa="provider__next_cycle_publish_help_text">This will appear on all your courses on Find in October, when the new cycle opens.</p>
-            <%= form_for provider, url: publish_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year), method: :post do |f| %>
-              <%= f.submit "Publish in October", class: "govuk-button govuk-!-margin-bottom-0", data: { qa: 'provider__publish_next_cycle' } %>
-            <% end %>
-          <% end %>
-      <% end %>
+      <p class="govuk-body">View any course to see how it looks to applicants.</p>
     </div>
   </aside>
 </div>
