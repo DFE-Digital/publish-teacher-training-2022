@@ -13,12 +13,8 @@ module PageObjects
         element :train_with_us, "[data-qa=enrichment__train_with_us]"
         element :train_with_disability, "[data-qa=enrichment__train_with_disability]"
         element :status_panel, "[data-qa=provider__status_panel]"
-        element :content_status, "[data-qa=provider__content-status]"
         element :flash, ".govuk-success-summary"
         elements :breadcrumbs, ".govuk-breadcrumbs__link"
-        element :publish_button, "[data-qa=provider__publish]"
-        element :publish_in_next_cycle_button, "[data-qa=provider__publish_next_cycle]"
-        element :next_recruitment_cycle_publishing_information, "[data-qa=provider__next_cycle_publish_help_text]"
       end
     end
   end

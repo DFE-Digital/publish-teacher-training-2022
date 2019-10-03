@@ -77,7 +77,7 @@ feature "View provider about", type: :feature do
     click_on "Save"
 
     expect(org_details_page.flash).to have_content(
-      "Your changes have been saved",
+      "Your changes have been published",
     )
     expect(current_path).to eq details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year)
   end

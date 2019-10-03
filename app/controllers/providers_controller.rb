@@ -35,7 +35,7 @@ class ProvidersController < ApplicationController
 
   def update
     if @provider.update(provider_params)
-      flash[:success] = "Your changes have been saved"
+      flash[:success] = "Your changes have been published"
       redirect_to(
         details_provider_recruitment_cycle_path(
           @provider.provider_code,
