@@ -19,15 +19,19 @@
 
     <p class="govuk-body">Once you’ve withdrawn a course, you can’t publish it again this cycle.</p>
 
-    <h2 class="govuk-heading-m">Contact support to withdraw this course</h2>
+    <h2 class="govuk-heading-m">Confirm withdrawal</h2>
 
-    <p class="govuk-body">Contact the <%= bat_contact_mail_to 'Becoming a teacher team', subject: "Withdraw #{course.name} (#{@provider_code}/#{course.course_code})" %> by email to withdraw this course.</p>
+    <%= form_with model: @course, url: withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :post do |f| %>
+      <div class="govuk-form-group">
+        <%= f.label 'confirm_course_code', 'Type in the course code to confirm', class: 'govuk-label' %>
+        <%= f.text_field 'confirm_course_code', class: 'govuk-input govuk-input--width-5' %>
+      </div>
+      <hr class="govuk-section-break govuk-section-break--m">
+      <%= f.submit 'Yes I’m sure – withdraw this course', class: 'govuk-button govuk-button--warning' %>
+    <% end %>
 
-    <p class="govuk-body">In your email include:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>course code</li>
-      <li>course title</li>
-      <li>a reason why this course needs to be withdrawn</li>
-    </ul>
+    <p class="govuk-body govuk-!-margin-top-5">
+      <%= link_to 'Cancel', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link govuk-link--no-visited-state" %>
+    </p>
   </div>
 </div>

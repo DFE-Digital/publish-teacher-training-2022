@@ -22,6 +22,10 @@ class Course < Base
     post_request("/publishable")
   end
 
+  def withdraw
+    post_request("/withdraw")
+  end
+
   def self.build_new(params)
     response = connection.run(:get, "#{Course.site}build_new_course?#{params.to_query}")
 
