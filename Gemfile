@@ -64,6 +64,7 @@ group :development, :test do
   gem "govuk-lint"
 
   # Ability to render JSONAPI
+  gem "jsonapi-deserializable"
   gem "jsonapi-renderer"
   gem "jsonapi-serializable"
 

@@ -7,6 +7,7 @@ class CourseSerializer < JSONAPI::Serializable::Resource
 
   has_many :site_statuses
   has_many :sites
+  has_many :subjects
 
   attributes(*FactoryBot.attributes_for("course").keys)
 

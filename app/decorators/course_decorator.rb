@@ -51,7 +51,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def sorted_subjects
-    object.subjects.sort.join("<br>").html_safe
+    object.subjects.map(&:subject_name).sort.join("<br>").html_safe
   end
 
   def length

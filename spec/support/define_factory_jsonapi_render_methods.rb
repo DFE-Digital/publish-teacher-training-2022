@@ -22,6 +22,7 @@ FactoryBot.define do
           SiteStatus: SiteStatusSerializer,
           User: UserSerializer,
           ProviderSuggestion: ProviderSuggestionSerializer,
+          Subject: SubjectSerializer,
         },
         include: opts[:include],
       )

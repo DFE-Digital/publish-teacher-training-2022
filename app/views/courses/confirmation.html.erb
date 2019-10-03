@@ -184,7 +184,7 @@
                   Allocations
                 </dt>
                 <dd class="govuk-summary-list__value govuk-!-padding-right-0" data-qa="course__allocations_info">
-                  <% if course.subjects.include?('Physical education') %>
+                  <% if course.has_physical_education_subject? %>
                     <p class="govuk-body">Recruitment to fee-funded PE courses is limited by the number of places allocated to you by DfE.</p>
                     <p class="govuk-body">If you haven't already, you must <%= govuk_link_to "request allocations", "https://docs.google.com/forms/d/e/1FAIpQLScxhMGaYil9KB4XWfVXG7Y_VQ-lmmr_xEkjWetcjIgLgTCIIA/viewform?usp=sf_link" %></p>
                   <% else %>

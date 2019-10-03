@@ -14,8 +14,8 @@ feature "Edit course fee or salary status", type: :feature do
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
-      provider.to_jsonapi(include: %i[courses accrediting_provider]),
+      "/providers/#{provider.provider_code}?include=subjects,courses.accrediting_provider",
+      provider.to_jsonapi(include: %i[subjects courses accrediting_provider]),
     )
 
     stub_course_request
@@ -97,8 +97,8 @@ feature "Edit course fee or salary status", type: :feature do
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
-      "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
+      "?include=subjects,sites,provider.sites,accrediting_provider",
+      course.to_jsonapi(include: [:subjects, :sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
     )
   end
 end

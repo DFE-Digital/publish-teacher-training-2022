@@ -3,6 +3,7 @@ FactoryBot.define do
     transient do
       sites { [] }
       site_statuses { [] }
+      subjects { [] }
       recruitment_cycle { build :recruitment_cycle }
       edit_options do
         # Shamelessly copied from backend. Also, will need updating when any of
@@ -90,7 +91,6 @@ FactoryBot.define do
     applications_open_from { DateTime.new(2019).utc.iso8601 }
     is_send? { false }
     level { "secondary" }
-    subjects { ["English", "English with Primary"] }
     about_course { nil }
     interview_process { nil }
     how_school_placements_work { nil }
@@ -120,6 +120,7 @@ FactoryBot.define do
 
     after :build do |course, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.
+      # https://github.com/JsonApiClient/json_api_client/issues/342
       course.sites = []
       evaluator.sites.each do |site|
         course.sites << site
@@ -128,6 +129,11 @@ FactoryBot.define do
       course.site_statuses = []
       evaluator.site_statuses.each do |site_status|
         course.site_statuses << site_status
+      end
+
+      course.subjects = []
+      evaluator.subjects&.each do |subject|
+        course.subjects << subject
       end
 
       course.recruitment_cycle = evaluator.recruitment_cycle

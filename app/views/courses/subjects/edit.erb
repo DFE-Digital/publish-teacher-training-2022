@@ -1,0 +1,40 @@
+<%= content_for :page_title, "Change subjects – #{course.name_and_code}" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: course,
+          url: subjects_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+          method: :put do |form| %>
+
+      <div
+        class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:subjects]&.any?) %>"
+        data-qa="course__subjects">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+              Change subjects
+            </h1>
+          </legend>
+          <%= render "shared/error_messages", field: :subjects if @errors %>
+          <%= render 'form_fields', form: form %>
+        </fieldset>
+      </div>
+
+      <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
+        class: "govuk-button", data: { qa: 'course__save' }
+      %>
+
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes',
+          details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
+          class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+    <% end %>
+  </div>
+</div>

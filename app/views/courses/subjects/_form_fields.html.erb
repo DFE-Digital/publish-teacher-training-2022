@@ -1,0 +1,1 @@
+<%= form.select :master_subject, @course.meta['edit_options']['subjects'].map { |subject| [subject["attributes"]["subject_name"], subject["id"]]}, {}, data: { qa: 'course__subjects' } %>

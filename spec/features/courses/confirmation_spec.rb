@@ -8,20 +8,17 @@ feature "Course confirmation", type: :feature do
   let(:course_page) do
     PageObjects::Page::Organisations::Course.new
   end
+
+  let(:course) { build(:course, provider: provider, subjects: [build(:subject, subject_name: "English"), build(:subject, subject_name: "English with Primary")]) }
   let(:provider) { build(:provider) }
-  let(:course) do
-    build(
-      :course,
-      provider: provider,
-    )
-  end
 
   before do
     stub_omniauth
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
-    stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
-    stub_api_v2_new_resource(course)
+    new_course = build(:course, :new, provider: provider)
+    stub_api_v2_resource_collection([new_course], include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_new_resource(new_course)
     stub_api_v2_build_course
 
     visit confirmation_provider_recruitment_cycle_courses_path(
@@ -61,7 +58,7 @@ feature "Course confirmation", type: :feature do
     context "Successfully" do
       scenario "It creates the course on the API" do
         course.course_code = "A123"
-        stub_api_v2_resource(course, include: "sites,provider.sites,accrediting_provider")
+        stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
         course_create_request = stub_api_v2_request(
           "/recruitment_cycles/#{course.recruitment_cycle.year}" \
           "/providers/#{provider.provider_code}" \
@@ -77,7 +74,7 @@ feature "Course confirmation", type: :feature do
 
       scenario "It displays the course page when created" do
         course.course_code = "A123"
-        stub_api_v2_resource(course, include: "sites,provider.sites,accrediting_provider")
+        stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
         stub_api_v2_request(
           "/recruitment_cycles/#{course.recruitment_cycle.year}" \
           "/providers/#{provider.provider_code}" \

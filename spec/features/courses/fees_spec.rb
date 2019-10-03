@@ -216,6 +216,16 @@ feature "Course fees", type: :feature do
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
+      "?include=subjects,sites,provider.sites,accrediting_provider",
+      course.to_jsonapi(
+        include: %i[subjects sites provider accrediting_provider],
+      ),
+    )
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course.course_code}" \
       "?include=sites,provider.sites,accrediting_provider",
       course.to_jsonapi(
         include: %i[sites provider accrediting_provider],

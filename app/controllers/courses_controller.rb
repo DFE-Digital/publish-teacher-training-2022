@@ -240,6 +240,7 @@ private
 
     @provider_code = params[:provider_code]
     @course = Course
+      .includes(:subjects)
       .includes(site_statuses: [:site])
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
@@ -259,6 +260,7 @@ private
 
     @provider_code = params[:provider_code]
     @course = Course
+      .includes(:subjects)
       .includes(:sites)
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
@@ -321,13 +323,15 @@ private
       Settings.current_cycle,
     )
 
-    @source_course = Course.includes(:sites)
-                           .includes(provider: [:sites])
-                           .includes(:accrediting_provider)
-                           .where(recruitment_cycle_year: cycle_year)
-                           .where(provider_code: @provider_code)
-                           .find(params[:copy_from])
-                           .first
+    @source_course = Course
+      .includes(:subjects)
+      .includes(:sites)
+      .includes(provider: [:sites])
+      .includes(:accrediting_provider)
+      .where(recruitment_cycle_year: cycle_year)
+      .where(provider_code: @provider_code)
+      .find(params[:copy_from])
+      .first
   end
 
   def copy_field_if_present_in_source_course(field)

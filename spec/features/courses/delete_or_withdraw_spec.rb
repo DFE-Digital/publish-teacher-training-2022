@@ -19,8 +19,8 @@ feature "Getting rid of a course", type: :feature do
       "/recruitment_cycles/#{course.recruitment_cycle.year}/" \
       "providers/#{provider.provider_code}/" \
       "courses/#{course.course_code}" \
-      "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: %i[provider sites]),
+      "?include=subjects,sites,provider.sites,accrediting_provider",
+      course.to_jsonapi(include: %i[subjects provider sites]),
     )
 
     course_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle.year, course_code: course.course_code)
