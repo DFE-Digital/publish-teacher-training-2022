@@ -13,13 +13,15 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     context "user is authenticated" do
+      let(:user_first_name) { "John" }
+      let(:user_last_name) { "Smith" }
       let(:user_email) { "email@example.com" }
       let(:sign_in_user_id) { SecureRandom.uuid }
 
       let(:user_info) do
         {
-          "first_name" => "John",
-          "last_name" => "Smith",
+          "first_name" => user_first_name,
+          "last_name" => user_last_name,
           "email" => user_email,
         }
       end
@@ -28,6 +30,8 @@ RSpec.describe ApplicationController, type: :controller do
         {
           email:           user_email.to_s,
           sign_in_user_id: sign_in_user_id,
+          first_name:      user_first_name,
+          last_name:       user_last_name,
         }
       end
 

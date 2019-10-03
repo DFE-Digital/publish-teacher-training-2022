@@ -126,6 +126,8 @@ private
   def add_token_to_connection
     payload = {
       email:           current_user_info["email"].to_s,
+      first_name:      current_user_info["first_name"].to_s,
+      last_name:       current_user_info["last_name"].to_s,
       sign_in_user_id: current_user_dfe_signin_id,
     }
     token = JWT.encode(payload,
