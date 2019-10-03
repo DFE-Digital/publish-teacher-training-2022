@@ -76,6 +76,11 @@ class Course < Base
     content_status == "published"
   end
 
+  def is_withdrawn?
+    content_status == "withdrawn"
+  end
+
+
   def running_site_statuses
     site_statuses.select(&:running?)
   end
