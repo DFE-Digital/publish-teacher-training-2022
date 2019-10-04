@@ -4,9 +4,9 @@
   <% if course.funding_type == 'salary' %>
     <%= render partial: 'courses/preview/financial_support/salaried' %>
   <% else %>
-    <div class="govuk-inset-text">
-      <p class="govuk-body">Bursaries, scholarships and financial support for 2020/21 will be announced soon.</p>
-    </div>
+    <p class="app-missing-section">
+      You can’t preview information about bursaries, scholarships and financial support, but it will be displayed in Find postgraduate teacher training.
+    </p>
   <% end %>
 
   <% if course.financial_support.present? %>
