@@ -12,8 +12,7 @@
     </td>
   <% end %>
   <td class="govuk-table__cell" data-qa="courses-table__status">
-    <!-- TODO: Test this -->
-    <% unless course.not_running? || course.is_withdrawn? %>
+    <% if course.is_running? || course.is_withdrawn? %>
       <%= course.status_tag %>
     <% end %>
   </td>

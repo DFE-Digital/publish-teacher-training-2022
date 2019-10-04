@@ -31,9 +31,9 @@ feature "Withdraw course", type: :feature do
     stub_api_v2_request(
       "/recruitment_cycles/#{course.recruitment_cycle.year}/" \
       "providers/#{provider.provider_code}/" \
-      "courses/#{course.course_code}",
+      "courses/#{course.course_code}/withdraw",
       {},
-      :withdraw, 200
+      :post, 200
     )
 
     course_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle.year, course_code: course.course_code)

@@ -34,7 +34,7 @@ describe Course do
 
   context "#is_withdrawn?" do
     context "With a withdrawn course" do
-      let(:course) { build(:course, content_status: 'withdrawn') }
+      let(:course) { build(:course, content_status: "withdrawn") }
 
       it "is withdrawn" do
         expect(course.is_withdrawn?).to eq(true)
@@ -42,7 +42,7 @@ describe Course do
     end
 
     context "With a published course" do
-      let(:course) { build(:course, content_status: 'published') }
+      let(:course) { build(:course, content_status: "published") }
 
       it "is not withdrawn" do
         expect(course.is_withdrawn?).to eq(false)
