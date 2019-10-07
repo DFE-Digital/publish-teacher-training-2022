@@ -31,4 +31,22 @@ describe Course do
       expect(fetched_new_course.type).to eq "courses"
     end
   end
+
+  context "#is_withdrawn?" do
+    context "With a withdrawn course" do
+      let(:course) { build(:course, content_status: "withdrawn") }
+
+      it "is withdrawn" do
+        expect(course.is_withdrawn?).to eq(true)
+      end
+    end
+
+    context "With a published course" do
+      let(:course) { build(:course, content_status: "published") }
+
+      it "is not withdrawn" do
+        expect(course.is_withdrawn?).to eq(false)
+      end
+    end
+  end
 end

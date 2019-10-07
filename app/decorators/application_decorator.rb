@@ -19,6 +19,8 @@ private
       "Published&nbsp;*"
     when "rolled_over"
       "Rolled over"
+    when "withdrawn"
+      "Withdrawn"
     end
   end
 
@@ -26,6 +28,8 @@ private
     case object.content_status
     when "published"
       "phase-tag--published"
+    when "withdrawn"
+      "phase-tag--withdrawn"
     when "empty"
       "phase-tag--no-content"
     when "draft"

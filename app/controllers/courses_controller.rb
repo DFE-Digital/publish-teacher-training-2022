@@ -147,6 +147,21 @@ class CoursesController < ApplicationController
 
   def withdraw; end
 
+  def withdraw_course
+    if request.post?
+      if params[:course][:confirm_course_code] == @course.course_code
+        @course.withdraw
+        redirect_to provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)
+        flash[:success] = "#{@course.name} (#{@course.course_code}) has been withdrawn"
+      else
+        flash[:error] = "Enter the course code (#{@course.course_code}) to withdraw this course"
+        redirect_to withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
+      end
+    else
+      render template: "courses/withdraw"
+    end
+  end
+
   def delete; end
 
   def preview; end

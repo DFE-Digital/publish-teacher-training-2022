@@ -93,7 +93,9 @@ Rails.application.routes.draw do
         get "/salary", on: :member, to: "courses#salary"
         patch "/salary", on: :member, to: "courses#update"
 
-        get "/withdraw", on: :member, to: "courses#withdraw"
+        get "/withdraw", on: :member, to: "courses#withdraw_course"
+        post "/withdraw", on: :member, to: "courses#withdraw_course"
+
         get "/delete", on: :member, to: "courses#delete"
         get "/preview", on: :member, to: "courses#preview"
         get "/locations", on: :member, to: "courses/sites#edit"

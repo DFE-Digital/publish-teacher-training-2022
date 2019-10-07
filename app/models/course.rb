@@ -22,6 +22,10 @@ class Course < Base
     post_request("/publishable")
   end
 
+  def withdraw
+    post_request("/withdraw")
+  end
+
   def self.build_new(params)
     response = connection.run(:get, "#{Course.site}build_new_course?#{params.to_query}")
 
@@ -70,6 +74,10 @@ class Course < Base
 
   def is_published?
     content_status == "published"
+  end
+
+  def is_withdrawn?
+    content_status == "withdrawn"
   end
 
   def running_site_statuses

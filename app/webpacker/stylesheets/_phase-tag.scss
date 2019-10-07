@@ -18,6 +18,11 @@
     background: govuk-colour("orange");
   }
 
+  &--withdrawn {
+    background: govuk-colour("mid-grey");
+    color: govuk-colour("black");
+  }
+
   &--published {
     background: $button-colour;
   }
