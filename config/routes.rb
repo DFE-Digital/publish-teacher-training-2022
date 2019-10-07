@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       put "/about", on: :member, to: "providers#update"
       post "/publish", on: :member, to: "providers#publish"
 
-      resource :courses, only: [] do
+      resource :courses, only: %i[create] do
         resource :outcome, on: :member, only: %i[new], controller: "courses/outcome" do
           get "continue"
         end

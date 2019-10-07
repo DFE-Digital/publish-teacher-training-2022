@@ -21,7 +21,44 @@ class CoursesController < ApplicationController
       .find(params[:provider_code])
       .first
 
+    @course_creation_params = course_params
+
     build_new_course
+  end
+
+  def create
+    @provider = Provider
+      .where(recruitment_cycle_year: @recruitment_cycle.year)
+      .find(params[:provider_code])
+      .first
+
+    @course = Course.new(
+      course_params.to_h.merge(
+        recruitment_cycle_year: @provider.recruitment_cycle_year,
+        provider_code: @provider.provider_code,
+      ),
+    )
+
+    # We currently don't support setting the name of the course
+    # Nor does the API provide it
+    @course.name = "Temporary name"
+
+    if @course.save
+      redirect_to(
+        provider_recruitment_cycle_course_path(
+          @course.provider_code,
+          @course.recruitment_cycle_year,
+          @course.course_code,
+        ),
+      )
+    else
+      @errors = @course.errors.messages
+
+      @course_creation_params = course_params
+      build_new_course
+
+      render :confirmation
+    end
   end
 
   def new

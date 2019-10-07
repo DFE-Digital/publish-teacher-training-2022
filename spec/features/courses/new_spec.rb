@@ -37,7 +37,18 @@ feature "new course", type: :feature do
           level: :primary,
           provider: provider,
           subjects: %w[English],
+          course_code: "A123",
+          content_status: "draft",
           gcse_subjects_required: %w[maths science english]
+  end
+  let(:course_creation_request) do
+    stub_api_v2_request(
+      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses",
+      course.to_jsonapi,
+      :post, 200
+    )
   end
 
   before do
@@ -87,14 +98,31 @@ feature "new course", type: :feature do
         course_creation_params = select_entry_requirements(course_creation_params)
         course_creation_params = select_applications_open_from(course_creation_params)
 
-        _course_creation_params = select_start_date(course_creation_params)
+        select_start_date(course_creation_params)
 
-        ## Next step: Test that it hits the course create endpoint on the API
+        # Add a temporary name
+        course.name = "Temporary name"
+        course_creation_params[:name] = "Temporary name"
+
+        save_course
+
+        expect(
+          course_creation_request.with do |request|
+            request_attributes = JSON.parse(request.body)["data"]["attributes"]
+            expect(request_attributes.symbolize_keys).to eq(course_creation_params)
+          end,
+        ).to have_been_made
       end
     end
   end
 
 private
+
+  def save_course
+    course_creation_request
+    stub_api_v2_resource(course, include: "sites,provider.sites,accrediting_provider")
+    confirmation_page.save.click
+  end
 
   def select_level(course_creation_params)
     course_creation_params[:level] = "primary"
