@@ -83,4 +83,80 @@ describe CourseDecorator do
       end
     end
   end
+
+  context "status tag" do
+    let(:status_tag) { course.decorate.status_tag }
+
+    context "A non running course" do
+      let(:course) { build(:course, ucas_status: "not_running") }
+
+      it "Returns nil" do
+        expect(status_tag).to be_nil
+      end
+    end
+
+    context "An empty course" do
+      let(:course) { build(:course, content_status: "empty") }
+
+      it "Returns phase tag published" do
+        expect(status_tag).to include("phase-tag--no-content")
+      end
+
+      it "Returns text empty" do
+        expect(status_tag).to include("Empty")
+      end
+    end
+
+    context "A draft course" do
+      let(:course) { build(:course, content_status: "draft") }
+
+      it "Returns phase tag published" do
+        expect(status_tag).to include("phase-tag--draft")
+      end
+
+      it "Returns text draft" do
+        expect(status_tag).to include("Draft")
+      end
+    end
+
+    context "A published with unpublished changes course" do
+      let(:course) { build(:course, content_status: "published_with_unpublished_changes") }
+
+      it "Returns phase tag published" do
+        expect(status_tag).to include("phase-tag--published")
+      end
+
+      it "Returns text published*" do
+        expect(status_tag).to include("Published&nbsp;*")
+      end
+
+      it "Returns unpublished status hint" do
+        expect(status_tag).to include("*&nbsp;Unpublished&nbsp;changes")
+      end
+    end
+
+    context "A rolled over course" do
+      let(:course) { build(:course, content_status: "rolled_over") }
+
+      it "Returns phase tag no content" do
+        expect(status_tag).to include("phase-tag--no-content")
+      end
+
+      it "Returns text rolled over" do
+        expect(status_tag).to include("Rolled over")
+      end
+    end
+
+    context "A withdrawn course" do
+      let(:course) { build(:course, content_status: "withdrawn") }
+
+      it "Returns phase tag withdrawn" do
+        expect(status_tag).to include("phase-tag--withdrawn")
+      end
+
+      it "Returns text withdrawn" do
+        expect(status_tag).to include("Withdrawn")
+      end
+    end
+  end
 end

@@ -12,9 +12,7 @@
     </td>
   <% end %>
   <td class="govuk-table__cell" data-qa="courses-table__status">
-    <% if course.is_running? || course.is_withdrawn? %>
-      <%= course.status_tag %>
-    <% end %>
+    <%= course.status_tag %>
   </td>
   <td class="govuk-table__cell" data-qa="courses-table__findable">
     <%= course.on_find(@provider) %>

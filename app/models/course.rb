@@ -80,6 +80,10 @@ class Course < Base
     content_status == "withdrawn"
   end
 
+  def is_not_withdrawn?
+    content_status != "withdrawn"
+  end
+
   def running_site_statuses
     site_statuses.select(&:running?)
   end
