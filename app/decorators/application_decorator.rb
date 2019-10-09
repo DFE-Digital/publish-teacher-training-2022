@@ -1,7 +1,5 @@
 class ApplicationDecorator < Draper::Decorator
   def status_tag
-    return unless course.is_running? || course.new_and_not_running? || course.is_withdrawn?
-
     tag = h.content_tag(:div, status_tag_content.html_safe, class: "govuk-tag phase-tag--small #{status_tag_css_class}")
     tag += unpublished_status_hint if object.has_unpublished_changes?
     tag.html_safe
@@ -10,6 +8,8 @@ class ApplicationDecorator < Draper::Decorator
 private
 
   def status_tag_content
+    return "Withdrawn" if object.ucas_status == "not_running"
+
     case object.content_status
     when "published"
       "Published"
@@ -27,6 +27,8 @@ private
   end
 
   def status_tag_css_class
+    return "phase-tag--withdrawn" if object.ucas_status == "not_running"
+
     case object.content_status
     when "published"
       "phase-tag--published"

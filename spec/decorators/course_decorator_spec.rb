@@ -90,8 +90,12 @@ describe CourseDecorator do
     context "A non running course" do
       let(:course) { build(:course, ucas_status: "not_running") }
 
-      it "Returns nil" do
-        expect(status_tag).to be_nil
+      it "Returns phase tag withdrawn" do
+        expect(status_tag).to include("phase-tag--withdrawn")
+      end
+
+      it "Returns text withdrawn" do
+        expect(status_tag).to include("Withdrawn")
       end
     end
 
