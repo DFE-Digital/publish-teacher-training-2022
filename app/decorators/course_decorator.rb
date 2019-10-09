@@ -7,7 +7,7 @@ class CourseDecorator < ApplicationDecorator
 
   def vacancies
     content = object.has_vacancies? ? "Yes" : "No"
-    content += " (" + edit_vacancy_link + ")"
+    content += " (" + edit_vacancy_link + ")" unless object.is_withdrawn?
     content.html_safe
   end
 
@@ -144,6 +144,8 @@ private
   def not_on_find
     if object.new_and_not_running?
       "No – still in draft"
+    elsif object.is_withdrawn?
+      "No – withdrawn"
     else
       "No"
     end

@@ -7,20 +7,13 @@
     margin-top: -1px;
   }
 
-  &--not-running {
-    background: govuk-colour("light-grey");
-    color: govuk-colour("black");
-    margin-bottom: -1px;
-    margin-top: -1px;
-  }
-
   &--draft {
     background: govuk-colour("orange");
   }
 
   &--withdrawn {
-    background: govuk-colour("mid-grey");
-    color: govuk-colour("black");
+    background: govuk-colour("black");
+    color: govuk-colour("white");
   }
 
   &--published {

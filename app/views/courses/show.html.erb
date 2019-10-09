@@ -67,11 +67,9 @@
       <div class="govuk-grid-column-two-thirds">
         <%= render partial: 'courses/description_content' %>
       </div>
-      <% unless course.not_running? %>
-        <div class="govuk-grid-column-one-third" data-qa="course__status_panel">
-          <%= render partial: 'courses/status_panel' %>
-        </div>
-      <% end %>
+      <div class="govuk-grid-column-one-third" data-qa="course__status_panel">
+        <%= render partial: 'courses/status_panel' %>
+      </div>
     </div>
   </section>
 </div>
