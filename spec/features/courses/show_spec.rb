@@ -218,19 +218,28 @@ feature "Course show", type: :feature do
     end
   end
 
-  context "when the course is not running" do
+  context "when the course is withdrawn" do
     let(:course) {
       build :course,
+            findable?: false,
+            content_status: "withdrawn",
             ucas_status: "not_running",
             provider: provider
     }
 
-    scenario "it hides the status panel" do
-      expect(course_page).not_to have_status_panel
+    scenario "it displays a status panel" do
+      expect(course_page).to have_status_panel
+      expect(course_page.is_findable).to have_content("No – withdrawn")
+      expect(course_page.status_tag).to have_content("Withdrawn")
+      expect(course_page.open_for_applications).to have_content("Closed")
+      expect(course_page.has_vacancies).to have_content("No")
+      expect(course_page).to have_preview_link
+      expect(course_page).not_to have_last_published_at
+      expect(course_page).not_to have_publish
     end
 
     scenario "it shows a warning about the course status" do
-      expect(course_page).to have_content("This course is not running.")
+      expect(course_page).to have_content("This course has been withdrawn")
     end
   end
 
