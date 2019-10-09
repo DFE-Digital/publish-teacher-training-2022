@@ -77,7 +77,7 @@ class Course < Base
   end
 
   def is_withdrawn?
-    content_status == "withdrawn"
+    content_status == "withdrawn" || not_running?
   end
 
   def running_site_statuses
