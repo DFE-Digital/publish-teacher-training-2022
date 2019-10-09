@@ -8,37 +8,26 @@ class ApplicationDecorator < Draper::Decorator
 private
 
   def status_tag_content
-    case object.content_status
-    when "published"
-      "Published"
-    when "empty"
-      "Empty"
-    when "draft"
-      "Draft"
-    when "published_with_unpublished_changes"
-      "Published&nbsp;*"
-    when "rolled_over"
-      "Rolled over"
-    when "withdrawn"
-      "Withdrawn"
-    end
+    return status_tags[:withdrawn][:content] if object.ucas_status == "not_running"
+
+    status_tags[object.content_status.to_sym][:content]
   end
 
   def status_tag_css_class
-    case object.content_status
-    when "published"
-      "phase-tag--published"
-    when "withdrawn"
-      "phase-tag--withdrawn"
-    when "empty"
-      "phase-tag--no-content"
-    when "draft"
-      "phase-tag--draft"
-    when "published_with_unpublished_changes"
-      "phase-tag--published"
-    when "rolled_over"
-      "phase-tag--no-content"
-    end
+    return status_tags[:withdrawn][:css_class] if object.ucas_status == "not_running"
+
+    status_tags[object.content_status.to_sym][:css_class]
+  end
+
+  def status_tags
+    {
+      published: { css_class: "phase-tag--published", content: "Published" },
+      withdrawn: { css_class: "phase-tag--withdrawn", content: "Withdrawn" },
+      empty: { css_class: "phase-tag--no-content", content: "Empty" },
+      draft: { css_class: "phase-tag--draft", content: "Draft" },
+      published_with_unpublished_changes: { css_class: "phase-tag--published",  content: "Published&nbsp;*" },
+      rolled_over: { css_class: "phase-tag--no-content", content: "Rolled over" },
+    }
   end
 
   def unpublished_status_hint

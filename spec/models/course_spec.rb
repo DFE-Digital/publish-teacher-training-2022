@@ -49,4 +49,30 @@ describe Course do
       end
     end
   end
+
+  context "#not_running?" do
+    context "With a ucas status of new" do
+      let(:course) { build(:course, ucas_status: "new") }
+
+      it "is running" do
+        expect(course.not_running?).to eq(false)
+      end
+    end
+
+    context "With a ucas status of running" do
+      let(:course) { build(:course, ucas_status: "running") }
+
+      it "is running" do
+        expect(course.not_running?).to eq(false)
+      end
+    end
+
+    context "With a ucas status of not_running" do
+      let(:course) { build(:course, ucas_status: "not_running") }
+
+      it "is not running" do
+        expect(course.not_running?).to eq(true)
+      end
+    end
+  end
 end
