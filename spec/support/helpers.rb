@@ -48,7 +48,7 @@ module Helpers
           "Accept-Encoding" => "gzip,deflate",
           "Authorization"   => "Bearer #{token}",
           "Content-Type"    => "application/vnd.api+json",
-          "User-Agent"      => "Faraday v0.15.4",
+          "User-Agent"      => "Faraday v0.17.0",
         },
       )
     end
