@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get "/auth/failure", to: "sessions#failure"
 
   root to: "providers#index"
+  get "/organisations", to: redirect("/")
 
   resources :providers, path: "organisations", param: :code do
     # Redirect year-less URLs to current recruitment cycle

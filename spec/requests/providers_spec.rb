@@ -7,13 +7,14 @@ describe "Providers", type: :request do
   end
 
   describe "GET index" do
+    let(:path) { root_path } # providers_path redirects to root, and the list is rendered from there
     context "with 1 provider" do
       it "redirects to providers show" do
         current_recruitment_cycle = build(:recruitment_cycle)
         provider = build(:provider)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", provider.to_jsonapi)
-        get(providers_path)
+        get(path)
         expect(response).to redirect_to provider_path(provider.provider_code)
       end
     end
@@ -26,7 +27,7 @@ describe "Providers", type: :request do
         providers = [provider1, provider2]
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", resource_list_to_jsonapi(providers))
-        get(providers_path)
+        get(path)
         expect(response.body).to include("Organisations")
         expect(response.body).to include(provider1.provider_name)
       end
@@ -37,7 +38,7 @@ describe "Providers", type: :request do
         current_recruitment_cycle = build(:recruitment_cycle)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: []))
-        get(providers_path)
+        get(path)
         expect(response).to have_http_status(:forbidden)
         expect(response.body).to include("We don’t know which organisation you’re part of")
       end
