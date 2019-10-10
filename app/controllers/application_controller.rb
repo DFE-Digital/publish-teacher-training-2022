@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     if user_has_not_accepted_terms(exception.env.body)
       redirect_to accept_terms_path
     else
-      respond_with_error(template: "errors/unauthorized", status: :forbidden, error_text: "Forbidden request")
+      respond_with_error(template: "errors/forbidden", status: :forbidden, error_text: "Forbidden request")
     end
   end
 

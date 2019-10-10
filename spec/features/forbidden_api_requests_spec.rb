@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Handling Forbidden responses from the backend", type: :feature do
-  let(:unauthorized_page) { PageObjects::Page::Unauthorized.new }
+  let(:forbidden_page) { PageObjects::Page::Forbidden.new }
 
   before do
     stub_omniauth
@@ -13,8 +13,8 @@ feature "Handling Forbidden responses from the backend", type: :feature do
     expect(page.current_path).to eq("/organisations/A0")
   end
 
-  it "Renders the unauthorized page" do
+  it "Renders the forbidden page" do
     visit "/organisations/A0/"
-    expect(unauthorized_page.unauthorized_text).to be_visible
+    expect(forbidden_page.forbidden_text).to be_visible
   end
 end
