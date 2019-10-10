@@ -33,12 +33,13 @@ describe "Providers", type: :request do
     end
 
     context "user has no providers" do
-      it "redirects to manage-courses-ui" do
+      it "shows no-providers page" do
         current_recruitment_cycle = build(:recruitment_cycle)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: []))
         get(providers_path)
-        expect(response).to redirect_to(unauthorized_path)
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to include("We don’t know which organisation you’re part of")
       end
     end
   end

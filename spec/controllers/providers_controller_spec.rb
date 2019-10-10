@@ -81,9 +81,9 @@ describe ProvidersController, type: :controller do
           )
         end
 
-        it "redirects to manage-courses-ui" do
+        it "responds with forbidden" do
           get :index
-          expect(response).to redirect_to(unauthorized_path)
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end
