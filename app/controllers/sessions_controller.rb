@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
   end
 
   def failure
-    redirect_to unauthorized_path
+    render "errors/unauthorized", status: :unauthorized
   end
 
   def destroy
