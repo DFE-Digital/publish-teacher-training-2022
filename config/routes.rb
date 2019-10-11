@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       via: %i[get post put]
   end
 
+  get :ping, controller: :health_checks
+
   # DfE Sign In
   get "/signin", to: "sessions#new", as: "signin"
   get "/signout", to: "sessions#signout", as: "signout"
