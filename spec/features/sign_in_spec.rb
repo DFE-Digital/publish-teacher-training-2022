@@ -76,7 +76,7 @@ feature "Sign in", type: :feature do
     expect(transition_info_page.title).to have_content("Important new features")
     transition_info_page.continue.click
 
-    expect(organisations_page).to be_displayed
+    expect(root_page).to be_displayed
     expect(request).to have_been_made
   end
 
@@ -95,7 +95,7 @@ feature "Sign in", type: :feature do
     expect(rollover_page.title).to have_content("Begin preparing for the next cycle")
     rollover_page.continue.click
 
-    expect(organisations_page).to be_displayed
+    expect(root_page).to be_displayed
     expect(request).to have_been_made
   end
 
