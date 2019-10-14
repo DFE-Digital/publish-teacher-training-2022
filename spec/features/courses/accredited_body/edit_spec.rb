@@ -23,7 +23,7 @@ feature "Edit accredited body", type: :feature do
     stub_api_v2_resource(provider)
     stub_api_v2_resource(course)
     stub_api_v2_resource(course, include: "accrediting_provider")
-    stub_api_v2_resource(course, include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
 
     accredited_body_page.load_with_course(course)
   end

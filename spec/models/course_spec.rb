@@ -1,9 +1,9 @@
 require "rails_helper"
 
 describe Course do
+  let(:provider)          { build :provider }
+  let(:course)            { build :course, :new, provider: provider }
   describe "#build_new" do
-    let(:provider)          { build :provider }
-    let(:course)            { build :course, :new, provider: provider }
     let(:recruitment_cycle) { course.recruitment_cycle }
     let(:build_course_stub) { stub_api_v2_build_course }
 
@@ -73,6 +73,18 @@ describe Course do
       it "is not running" do
         expect(course.not_running?).to eq(true)
       end
+    end
+  end
+
+  context "#has_physical_education_subject?" do
+    it "has a physical education subject" do
+      course = build(:course, subjects: [build(:subject, subject_name: "Physical education")])
+      expect(course.has_physical_education_subject?).to eq(true)
+    end
+
+    it "does not have a physical education subject" do
+      course = build(:course, subjects: [build(:subject, subject_name: "Biology")])
+      expect(course.has_physical_education_subject?).to eq(false)
     end
   end
 end

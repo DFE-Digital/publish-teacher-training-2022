@@ -62,7 +62,7 @@ feature "Preview course", type: :feature do
     stub_api_v2_request("/recruitment_cycles/#{course.recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
     stub_api_v2_request("/recruitment_cycles/#{course.recruitment_cycle.year}/recruitment_cycles", current_recruitment_cycle.to_jsonapi)
     stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/A0/courses/#{course.course_code}?include=site_statuses.site,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/A0/courses/#{course.course_code}?include=subjects,site_statuses.site,provider.sites,accrediting_provider",
       course_response,
     )
   end

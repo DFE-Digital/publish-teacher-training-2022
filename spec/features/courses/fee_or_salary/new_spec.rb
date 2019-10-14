@@ -16,7 +16,7 @@ feature "new course fee or salary", type: :feature do
     stub_api_v2_build_course
     stub_api_v2_build_course(funding_type: "fee")
     stub_api_v2_resource(recruitment_cycle)
-    stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
 
     visit new_provider_recruitment_cycle_courses_fee_or_salary_path(provider.provider_code, provider.recruitment_cycle_year)

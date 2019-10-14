@@ -25,7 +25,7 @@ feature "Course details", type: :feature do
   end
   let(:course_response) do
     course.to_jsonapi(
-      include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites],
+      include: [:subjects, :sites, :accrediting_provider, :recruitment_cycle, provider: :sites],
     )
   end
 
@@ -37,7 +37,7 @@ feature "Course details", type: :feature do
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
-      "?include=sites,provider.sites,accrediting_provider",
+      "?include=subjects,sites,provider.sites,accrediting_provider",
       course_response,
     )
   end
@@ -65,6 +65,11 @@ feature "Course details", type: :feature do
     expect(course_details_page.edit_age_range_link).to have_content(
       "Change age range",
     )
+
+    expect(course_details_page.edit_subjects_link).to have_content(
+      "Change subjects",
+    )
+
     expect(course_details_page.qualifications).to have_content(
       "PGCE with QTS",
     )
@@ -184,7 +189,7 @@ feature "Course details", type: :feature do
 
   scenario "viewing the show page for a course that does not exist" do
     stub_api_v2_request(
-      "/recruitment_cycles/#{Settings.current_cycle}/providers/ZZ/courses/ZZZ?include=sites,provider.sites,accrediting_provider",
+      "/recruitment_cycles/#{Settings.current_cycle}/providers/ZZ/courses/ZZZ?include=subjects,sites,provider.sites,accrediting_provider",
       "",
       :get,
       404,
@@ -218,7 +223,7 @@ feature "Course details", type: :feature do
           build :course,
                 provider: provider,
                 recruitment_cycle: next_recruitment_cycle,
-                subjects: ["Secondary", "Physical education"]
+                subjects: [build(:subject, subject_name: "Biology"), build(:subject, subject_name: "Physical education")]
         end
 
         scenario "displays no restrictions" do

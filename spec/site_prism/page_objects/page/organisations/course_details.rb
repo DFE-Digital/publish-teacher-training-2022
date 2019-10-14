@@ -26,6 +26,7 @@ module PageObjects
         element :is_send, "[data-qa=course__is_send]"
         element :edit_is_send_link, "[data-qa=course__edit_is_send]"
         element :subjects, "[data-qa=course__subjects]"
+        element :edit_subjects_link, "[data-qa=course__edit_subjects_link]"
         element :age_range, "[data-qa=course__age_range]"
         element :edit_age_range_link, "[data-qa=course__edit_age_range_link]"
         element :level, "[data-qa=course__level]"

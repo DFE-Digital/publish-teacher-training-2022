@@ -41,7 +41,7 @@ feature "Course show", type: :feature do
 
   let(:course_response) do
     course.to_jsonapi(
-      include: %i[sites provider accrediting_provider recruitment_cycle],
+      include: %i[subjects sites provider accrediting_provider recruitment_cycle],
     )
   end
 
@@ -51,7 +51,7 @@ feature "Course show", type: :feature do
     stub_api_v2_resource current_recruitment_cycle
     stub_api_v2_resource next_recruitment_cycle
     stub_api_v2_resource course,
-                         include: "sites,provider.sites,accrediting_provider"
+                         include: "subjects,sites,provider.sites,accrediting_provider"
 
     visit provider_recruitment_cycle_course_path(course.provider.provider_code,
                                                  course.recruitment_cycle.year,
@@ -266,7 +266,7 @@ feature "Course show", type: :feature do
           "/recruitment_cycles/#{current_recruitment_cycle.year}" \
           "/providers/#{provider.provider_code}" \
           "/courses/#{course.course_code}" \
-          "?include=sites,provider.sites,accrediting_provider",
+          "?include=subjects,sites,provider.sites,accrediting_provider",
           course_response,
         )
       end

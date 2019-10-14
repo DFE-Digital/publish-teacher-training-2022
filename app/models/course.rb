@@ -3,6 +3,7 @@ class Course < Base
   belongs_to :provider, param: :provider_code
   has_many :site_statuses
   has_many :sites, through: :site_statuses, source: :site
+  has_many :subjects
 
   custom_endpoint :sync_with_search_and_compare, on: :member, request_method: :post
 
@@ -29,7 +30,7 @@ class Course < Base
   def self.build_new(params)
     response = connection.run(:get, "#{Course.site}build_new_course?#{params.to_query}")
 
-    course = Course.new(response.body["data"]["attributes"])
+    course = Course.parser.parse(Course, response).first
     course.meta = response.body["data"]["meta"]
 
     response.body["data"]["errors"].each do |error_hash|
@@ -38,6 +39,10 @@ class Course < Base
     end
 
     course
+  end
+
+  def has_physical_education_subject?
+    subjects.map(&:subject_name).include?("Physical education")
   end
 
   def full_time?

@@ -36,9 +36,9 @@ feature "new course", type: :feature do
           :new,
           level: :primary,
           provider: provider,
-          subjects: %w[English],
           course_code: "A123",
           content_status: "draft",
+          subjects: [build(:subject, subject_name: "Primary with Mathematics")],
           gcse_subjects_required: %w[maths science english]
   end
   let(:course_creation_request) do
@@ -55,7 +55,7 @@ feature "new course", type: :feature do
     stub_omniauth
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
-    stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_new_resource(course)
     build_new_course_request
   end
@@ -120,7 +120,7 @@ private
 
   def save_course
     course_creation_request
-    stub_api_v2_resource(course, include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
     confirmation_page.save.click
   end
 

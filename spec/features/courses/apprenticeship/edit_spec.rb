@@ -94,8 +94,8 @@ feature "Edit course apprenticeship status", type: :feature do
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
-      "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
+      "?include=subjects,sites,provider.sites,accrediting_provider",
+      course.to_jsonapi(include: [:subjects, :sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
     )
   end
 end

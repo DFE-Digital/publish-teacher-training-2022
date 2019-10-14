@@ -38,8 +38,8 @@ feature "Edit course sites", type: :feature do
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
-      "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:accrediting_provider, :sites, provider: :sites]),
+      "?include=subjects,sites,provider.sites,accrediting_provider",
+      course.to_jsonapi(include: [:subjects, :accrediting_provider, :sites, provider: :sites]),
     )
 
     course_details_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
@@ -89,8 +89,8 @@ feature "Edit course sites", type: :feature do
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}" \
-        "?include=sites,provider.sites,accrediting_provider",
-        course.to_jsonapi(include: [:sites, { provider: :sites }, :accrediting_provider]),
+        "?include=subjects,sites,provider.sites,accrediting_provider",
+        course.to_jsonapi(include: [:subjects, :sites, { provider: :sites }, :accrediting_provider]),
       )
     end
 

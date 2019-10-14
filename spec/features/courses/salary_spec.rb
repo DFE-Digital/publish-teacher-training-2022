@@ -170,9 +170,9 @@ feature "Course salary", type: :feature do
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
-      "?include=sites,provider.sites,accrediting_provider",
+      "?include=subjects,sites,provider.sites,accrediting_provider",
       course.to_jsonapi(
-        include: %i[sites provider accrediting_provider recruitment_cycle],
+        include: %i[subjects sites provider accrediting_provider recruitment_cycle],
       ),
     )
   end

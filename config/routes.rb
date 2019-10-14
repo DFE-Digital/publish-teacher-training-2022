@@ -116,6 +116,9 @@ Rails.application.routes.draw do
         put "/accredited-body", on: :member, to: "courses/accredited_body#update"
         get "/accredited-body/search", on: :member, to: "courses/accredited_body#search"
 
+        get "/subjects", on: :member, to: "courses/subjects#edit"
+        put "/subjects", on: :member, to: "courses/subjects#update"
+
         get "/age-range", on: :member, to: "courses/age_range#edit"
         put "/age-range", on: :member, to: "courses/age_range#update"
 

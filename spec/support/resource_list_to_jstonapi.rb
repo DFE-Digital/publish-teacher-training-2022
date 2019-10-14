@@ -14,6 +14,7 @@ def resource_list_to_jsonapi(resource_list, **opts)
       SiteStatus: SiteStatusSerializer,
       User: UserSerializer,
       ProviderSuggestion: ProviderSuggestionSerializer,
+      Subject: SubjectSerializer,
     },
     include: opts[:include],
     meta: opts[:meta],

@@ -15,6 +15,10 @@ describe CourseDecorator do
           provider: provider,
           accrediting_provider: provider,
           course_length: "OneYear",
+          subjects: [
+            build(:subject, subject_name: "English"),
+            build(:subject, subject_name: "Mathematics"),
+          ],
           open_for_applications?: true,
           last_published_at: "2019-03-05T14:42:34Z",
           recruitment_cycle: current_recruitment_cycle
@@ -37,7 +41,7 @@ describe CourseDecorator do
   end
 
   it "returns a list of subjects in alphabetical order" do
-    expect(decorated_course.sorted_subjects).to eq("English<br>English with Primary")
+    expect(decorated_course.sorted_subjects).to eq("English<br>Mathematics")
   end
 
   it "returns if applications are open or closed" do

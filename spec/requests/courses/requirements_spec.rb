@@ -12,7 +12,7 @@ describe "Courses", type: :request do
             recruitment_cycle: current_recruitment_cycle
     end
     let(:provider) { build(:provider, accredited_body?: true, provider_code: "A0") }
-    let(:course_response) { course.to_jsonapi(include: %i[sites provider accrediting_provider]) }
+    let(:course_response) { course.to_jsonapi(include: %i[subjects sites provider accrediting_provider]) }
 
     let(:course_1) { build :course, name: "English", course_code: "EN01", include_nulls: [:accrediting_provider] }
     let(:course_2) do
@@ -32,11 +32,11 @@ describe "Courses", type: :request do
       get(auth_dfe_callback_path)
       stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
       stub_api_v2_request(
-        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=subjects,sites,provider.sites,accrediting_provider",
         course_response,
       )
       stub_api_v2_request(
-        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=sites,provider.sites,accrediting_provider",
+        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=subjects,sites,provider.sites,accrediting_provider",
         course_2.to_jsonapi,
       )
       stub_api_v2_request(
