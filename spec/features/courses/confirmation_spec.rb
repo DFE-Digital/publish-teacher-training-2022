@@ -9,7 +9,7 @@ feature "Course confirmation", type: :feature do
     PageObjects::Page::Organisations::Course.new
   end
 
-  let(:course) { build(:course, provider: provider, subjects: [build(:subject, subject_name: "English"), build(:subject, subject_name: "English with Primary")]) }
+  let(:course) { build(:course, provider: provider, subjects: [build(:subject, :english), build(:subject, :mathematics)]) }
   let(:provider) { build(:provider) }
 
   before do
@@ -42,7 +42,7 @@ feature "Course confirmation", type: :feature do
     expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
     expect(course_confirmation_page.details.is_send.text).to eq("No")
     expect(course_confirmation_page.details.subjects.text).to include("English")
-    expect(course_confirmation_page.details.subjects.text).to include("English with Primary")
+    expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
     expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
     expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
     expect(course_confirmation_page.details.locations.text).to eq("None")
@@ -127,7 +127,7 @@ private
     expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
     expect(course_confirmation_page.details.is_send.text).to eq("No")
     expect(course_confirmation_page.details.subjects.text).to include("English")
-    expect(course_confirmation_page.details.subjects.text).to include("English with Primary")
+    expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
     expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
     expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
     expect(course_confirmation_page.details.locations.text).to eq("None")

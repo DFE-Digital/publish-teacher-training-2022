@@ -103,7 +103,7 @@ private
           :applications_open_from,
           :start_date,
           :age_range_in_years,
-          :master_subject,
+          :master_subject_id,
         )
     else
       ActionController::Parameters.new({}).permit(:course)

@@ -139,6 +139,10 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def selectable_master_subjects
+    meta["edit_options"]["subjects"].map { |subject| [subject["attributes"]["subject_name"], subject["id"]] }
+  end
+
 private
 
   def not_on_find
