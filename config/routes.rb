@@ -38,7 +38,8 @@ Rails.application.routes.draw do
     get "/request-access", on: :member, to: "access_requests#new"
     post "/request-access", on: :member, to: "access_requests#create"
 
-    get "/ucas-contacts", on: :member, to: "ucas_contacts#index"
+    resource :ucas_contacts, path: 'ucas-contacts', on: :member, only: %i[show] do
+    end
 
     # TODO: Extract year constraint to future proof for future cycles
     resources :recruitment_cycles, param: :year, constraints: { year: /2020|2021/ }, path: "", only: :show do

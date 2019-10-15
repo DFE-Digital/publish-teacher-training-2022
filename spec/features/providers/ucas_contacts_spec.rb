@@ -14,9 +14,9 @@ feature "View provider UCAS contact", type: :feature do
   end
 
   scenario "viewing organisation UCAS contacts page" do
-    visit ucas_contacts_provider_path(provider.provider_code)
+    visit provider_ucas_contacts_path(provider.provider_code)
 
-    expect(current_path).to eq ucas_contacts_provider_path(provider.provider_code)
+    expect(current_path).to eq provider_ucas_contacts_path(provider.provider_code)
 
     expect(org_ucas_contacts_page.title).to have_content("UCAS contacts")
 

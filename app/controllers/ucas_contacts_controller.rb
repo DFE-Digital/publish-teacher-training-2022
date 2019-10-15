@@ -1,6 +1,6 @@
 class UcasContactsController < ApplicationController
-  def index
-    provider_code = params[:code]
+  def show
+    provider_code = params[:provider_code]
     raise "missing provider code" unless provider_code
 
     @provider = Provider
