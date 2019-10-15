@@ -100,7 +100,7 @@ module Helpers
   end
 
   def stub_api_v2_build_course(params = {})
-    jsonapi_response = course.to_jsonapi(include: [:subjects])
+    jsonapi_response = course.to_jsonapi(include: [:subjects, :sites])
     jsonapi_response[:data][:meta] = course.meta
     jsonapi_response[:data][:errors] = []
     stub_api_v2_request(

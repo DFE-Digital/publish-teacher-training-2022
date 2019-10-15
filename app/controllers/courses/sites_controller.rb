@@ -1,9 +1,10 @@
 module Courses
   class SitesController < ApplicationController
     decorates_assigned :course
-    include CourseBasicDetailConcern
+    before_action :build_course_params, only: %i[continue]
 
-    before_action :build_course
+    include CourseBasicDetailConcern
+    before_action :build_course, only: %i[edit update]
     before_action :build_provider_with_sites
 
     def edit; end
@@ -28,6 +29,23 @@ module Courses
     end
 
   private
+
+    def current_step
+      :location
+    end
+
+    def errors
+    end
+
+    def build_course_params
+      selected_site_ids = params.dig(:course, :site_statuses_attributes)
+        .values
+        .select { |field| field["selected"] == "1" }
+        .map { |field| field["id"] }
+
+      params["course"]["site_ids"] = selected_site_ids
+      params["course"].delete("site_statuses_attributes")
+    end
 
     def build_provider_with_sites
       @provider = Provider
