@@ -11,6 +11,7 @@ module PageObjects
         element :admin_contact, '[data-qa="provider__admin_contact"]'
         element :gt12_contact, '[data-qa="provider__gt12_contact"]'
         element :application_alert_contact, '[data-qa="provider__application_alert_contact"]'
+        element :send_application_alerts, '[data-qa="provider__send_application_alerts"]'
       end
     end
   end

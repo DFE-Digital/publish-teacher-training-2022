@@ -172,6 +172,21 @@
     <dl class="govuk-summary-list govuk-!-margin-top-6 govuk-!-margin-bottom-9">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
+          Get alerts from UCAS?
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body" data-qa="provider__send_application_alerts">
+            <% if @provider.send_application_alerts.present? %>
+              <%= t("edit_options.send_application_alerts.#{@provider.send_application_alerts}.label") %>
+            <% else %>
+              Information unknown
+            <% end %>
+          </p>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
           Email address (or URL) printed in the letter
         </dt>
         <dd class="govuk-summary-list__value">
