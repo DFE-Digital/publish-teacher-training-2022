@@ -1,10 +1,10 @@
 module Courses
   class SitesController < ApplicationController
     decorates_assigned :course
-    before_action(
-      :build_course,
-      :build_provider,
-    )
+    include CourseBasicDetailConcern
+
+    before_action :build_course
+    before_action :build_provider_with_sites
 
     def edit; end
 
@@ -29,6 +29,14 @@ module Courses
 
   private
 
+    def build_provider_with_sites
+      @provider = Provider
+                    .includes(:sites)
+                    .where(recruitment_cycle_year: params[:recruitment_cycle_year])
+                    .find(params[:provider_code])
+                    .first
+    end
+
     def build_course
       @provider_code = params[:provider_code]
       @course = Course
@@ -38,10 +46,6 @@ module Courses
         .where(provider_code: @provider_code)
         .find(params[:code])
         .first
-    end
-
-    def build_provider
-      @provider = @course.provider
     end
   end
 end
