@@ -30,7 +30,7 @@ feature "New course sites" do
     stub_api_v2_build_course
     build_course_with_sites_request
     build_course_with_two_sites_request
-    new_locations_page.load(provider_code: provider.provider_code, recruitment_cycle_year: current_recruitment_cycle.year)
+    new_locations_page.load(provider_code: provider.provider_code, recruitment_cycle_year: current_recruitment_cycle.year, course: {})
   end
 
   scenario "It loads the page" do
@@ -69,6 +69,18 @@ feature "New course sites" do
 
     scenario "It pre-checks the site" do
       expect(new_locations_page).to have_checked_field(site3.location_name)
+    end
+  end
+
+  context "With a provider with a single site" do
+    let(:provider) { build(:provider, sites: [site2]) }
+
+    scenario "It transitions to the entry requirements page" do
+      expect(new_entry_requirements_page).to be_displayed
+    end
+
+    scenario "It builds a new course with the providers site id to the query" do
+      expect(build_course_with_sites_request).to have_been_made.at_least_once
     end
   end
 end

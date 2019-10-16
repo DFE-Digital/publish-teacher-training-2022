@@ -7,6 +7,13 @@ module Courses
     before_action :build_course, only: %i[edit update]
     before_action :build_provider_with_sites
 
+    def new
+      if @provider.sites.count == 1
+        set_default_site
+        redirect_to next_step
+      end
+    end
+
     def edit; end
 
     def update
@@ -35,6 +42,11 @@ module Courses
     end
 
     def errors; end
+
+    def set_default_site
+      params["course"] ||= {}
+      params["course"]["sites_ids"] = [@provider.sites.first.id]
+    end
 
     def build_course_params
       selected_site_ids = params.dig(:course, :site_statuses_attributes)
