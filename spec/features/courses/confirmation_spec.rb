@@ -8,8 +8,9 @@ feature "Course confirmation", type: :feature do
   let(:course_page) do
     PageObjects::Page::Organisations::Course.new
   end
-
-  let(:course) { build(:course, provider: provider, subjects: [build(:subject, :english), build(:subject, :mathematics)]) }
+  let(:site1) { build(:site, location_name: "Site one") }
+  let(:site2) { build(:site, location_name: "Site two") }
+  let(:course) { build(:course, provider: provider, sites: [site1, site2], subjects: [build(:subject, :english), build(:subject, :mathematics)]) }
   let(:provider) { build(:provider) }
 
   before do
@@ -45,7 +46,7 @@ feature "Course confirmation", type: :feature do
     expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
     expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
     expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
-    expect(course_confirmation_page.details.locations.text).to eq("None")
+    expect(course_confirmation_page.details.locations.text).to eq("Site one Site two")
     expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
     expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
     expect(course_confirmation_page.details.name.text).to eq("English")
@@ -130,7 +131,7 @@ private
     expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
     expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
     expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
-    expect(course_confirmation_page.details.locations.text).to eq("None")
+    expect(course_confirmation_page.details.locations.text).to eq("Site one Site two")
     expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
     expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
     expect(course_confirmation_page.details.name.text).to eq("English")

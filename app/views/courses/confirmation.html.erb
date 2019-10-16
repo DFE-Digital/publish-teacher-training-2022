@@ -107,7 +107,19 @@
                 Locations
               </dt>
               <dd class="govuk-summary-list__value" data-qa="course__locations">
-                <span class="app-course-parts__fields__value--empty">None</span>
+                <% if course.sites.empty? %>
+                  <span class="app-course-parts__fields__value--empty">None</span>
+                <% elsif course.sites.size == 1 %>
+                  <%= course.sites.first.location_name %>
+                <% else %>
+                  <ul class="govuk-list app-courses-locations-list">
+                    <% course.alphabetically_sorted_sites.each do |site| %>
+                      <li>
+                        <%= site.location_name %>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
               </dd>
               <dd class="govuk-summary-list__actions">
                 Change<span class="govuk-visually-hidden"> locations</span>
