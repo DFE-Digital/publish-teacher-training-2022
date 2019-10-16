@@ -104,7 +104,7 @@ private
           :start_date,
           :age_range_in_years,
           :master_subject_id,
-          site_ids: [],
+          sites_ids: [],
         )
     else
       ActionController::Parameters.new({}).permit(:course)
@@ -133,7 +133,7 @@ private
     when :apprenticeship
       new_provider_recruitment_cycle_courses_apprenticeship_path(path_params)
     when :location
-      new_provider_recruitment_cycle_courses_entry_requirements_path(path_params)
+      new_provider_recruitment_cycle_courses_locations_path(path_params)
     when :entry_requirements
       new_provider_recruitment_cycle_courses_entry_requirements_path(path_params)
     when :outcome

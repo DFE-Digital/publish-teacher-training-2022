@@ -34,8 +34,7 @@ module Courses
       :location
     end
 
-    def errors
-    end
+    def errors; end
 
     def build_course_params
       selected_site_ids = params.dig(:course, :site_statuses_attributes)
@@ -43,7 +42,7 @@ module Courses
         .select { |field| field["selected"] == "1" }
         .map { |field| field["id"] }
 
-      params["course"]["site_ids"] = selected_site_ids
+      params["course"]["sites_ids"] = selected_site_ids
       params["course"].delete("site_statuses_attributes")
     end
 

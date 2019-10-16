@@ -4,7 +4,7 @@ FactoryBot.define do
       recruitment_cycle { build :recruitment_cycle }
     end
 
-    sequence(:id)
+    sequence(:id, &:to_s)
     sequence(:code, &:to_s)
     location_name { "Main Site" }
     address1 { nil }

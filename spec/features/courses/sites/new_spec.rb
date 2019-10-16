@@ -11,11 +11,12 @@ feature "New course sites" do
     build(
       :provider,
       sites: [site1, site2, site3],
-      recruitment_cycle: current_recruitment_cycle
+      recruitment_cycle: current_recruitment_cycle,
     )
   end
   let(:course) { build(:course) }
-  let(:build_course_with_sites_request) { stub_api_v2_build_course(site_ids: [site2.id]) }
+  let(:build_course_with_sites_request) { stub_api_v2_build_course(sites_ids: [site2.id]) }
+  let(:build_course_with_two_sites_request) { stub_api_v2_build_course(sites_ids: [site1.id, site2.id]) }
 
   before do
     stub_omniauth
@@ -28,6 +29,7 @@ feature "New course sites" do
     )
     stub_api_v2_build_course
     build_course_with_sites_request
+    build_course_with_two_sites_request
     new_locations_page.load(provider_code: provider.provider_code, recruitment_cycle_year: current_recruitment_cycle.year)
   end
 
@@ -45,6 +47,14 @@ feature "New course sites" do
     new_locations_page.continue.click
 
     expect(build_course_with_sites_request).to have_been_made.at_least_once
+  end
+
+  scenario "It builds a new course with two selected sites" do
+    new_locations_page.check(site1.location_name)
+    new_locations_page.check(site2.location_name)
+    new_locations_page.continue.click
+
+    expect(build_course_with_two_sites_request).to have_been_made.at_least_once
   end
 
   scenario "It transitions to the entry requirements page" do

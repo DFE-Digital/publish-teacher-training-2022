@@ -218,6 +218,7 @@ private
         :start_date,
         :funding_type,
         :age_range_in_years,
+        sites_ids: [],
       )
     else
       ActionController::Parameters.new({}).permit(:course)

@@ -32,6 +32,7 @@ module Courses
           :is_send,
           :study_mode,
           :age_range_in_years,
+          :sites_ids,
         )
         .permit(
           :applications_open_from,
