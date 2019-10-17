@@ -52,6 +52,8 @@ feature "Course confirmation", type: :feature do
     expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
     expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
     expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
+    expect(course_confirmation_page.preview.name.text).to include("English")
+    expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
   end
 
   context "Saving the course" do
@@ -137,5 +139,7 @@ private
     expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
     expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
     expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
+    expect(course_confirmation_page.preview.name.text).to include("English")
+    expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
   end
 end

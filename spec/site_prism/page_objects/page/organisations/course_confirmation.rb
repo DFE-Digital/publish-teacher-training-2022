@@ -20,6 +20,11 @@ module PageObjects
           element :description, '[data-qa="course__description"]'
           element :entry_requirements, '[data-qa="course__entry_requirements"]'
         end
+
+        section :preview, '[data-qa="course__preview"]' do
+          element :name, '[data-qa="course__name"]'
+          element :description, '[data-qa="course__description"]'
+        end
       end
     end
   end
