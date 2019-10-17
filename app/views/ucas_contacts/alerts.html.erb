@@ -1,4 +1,7 @@
 <%= content_for :page_title, "Email alerts for new applications" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_ucas_contacts_path(@provider.provider_code)) %>
+<% end %>
 <main class="govuk-main-wrapper " id="main-content" role="main">
 
   <h1 class="govuk-heading-xl" data-qa="ucas_contacts__alerts__main_heading">

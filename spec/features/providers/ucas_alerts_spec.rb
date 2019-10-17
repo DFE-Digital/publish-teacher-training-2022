@@ -59,6 +59,11 @@ feature "Edit UCAS email alerts", type: :feature do
     end
   end
 
+  scenario "can navigate back to ucas contacts page" do
+    click_on "Back"
+    expect(org_ucas_contacts_page).to be_displayed
+  end
+
 private
 
   def set_alerts_request_stub_expectation(expected_setting)
