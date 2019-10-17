@@ -49,12 +49,9 @@ feature "View provider UCAS contact", type: :feature do
     end
   end
 
-  # scenario "can navigate to the edit alerts screen and back again" do
-  #   course_details_page.load_with_course(course)
-  #   click_on "Change fee or salary"
-  #   expect(fee_or_salary_page).to be_displayed
-  #   click_on "Back"
-  #   expect(course_details_page).to be_displayed
-  # end
-  #
+  scenario "can navigate to the edit alerts screen" do
+    visit provider_ucas_contacts_path(provider.provider_code)
+    org_ucas_contacts_page.send_application_alerts_link.click
+    expect(current_path).to eq alerts_provider_ucas_contacts_path(provider.provider_code)
+  end
 end

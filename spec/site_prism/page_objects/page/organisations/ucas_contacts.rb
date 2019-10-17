@@ -12,6 +12,7 @@ module PageObjects
         element :gt12_contact, '[data-qa="provider__gt12_contact"]'
         element :application_alert_contact, '[data-qa="provider__application_alert_contact"]'
         element :send_application_alerts, '[data-qa="provider__send_application_alerts"]'
+        element :send_application_alerts_link, "a[data-qa=send_application_alerts__change]", text: "Change"
       end
     end
   end

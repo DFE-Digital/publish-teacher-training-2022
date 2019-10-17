@@ -183,7 +183,9 @@
             <% end %>
           </p>
         </dd>
-        <dd class="govuk-summary-list__actions"></dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to "Change", alerts_provider_ucas_contacts_path(@provider.provider_code), class: "govuk-link", data: { qa: 'send_application_alerts__change' } %>
+        </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
