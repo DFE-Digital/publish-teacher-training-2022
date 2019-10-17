@@ -26,11 +26,16 @@ feature "new course", type: :feature do
   let(:new_entry_requirements_page) do
     PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
   end
+  let(:new_locations_page) do
+    PageObjects::Page::Organisations::Courses::NewLocationsPage.new
+  end
   let(:confirmation_page) do
     PageObjects::Page::Organisations::CourseConfirmation.new
   end
   let(:build_new_course_request) { stub_api_v2_build_course }
-  let(:provider) { build(:provider) }
+  let(:site1) { build(:site, location_name: "Site one") }
+  let(:site2) { build(:site, location_name: "Site two") }
+  let(:provider) { build(:provider, sites: [site1, site2]) }
   let(:course) do
     build :course,
           :new,
@@ -55,6 +60,7 @@ feature "new course", type: :feature do
     stub_omniauth
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_new_resource(course)
     build_new_course_request
@@ -95,6 +101,7 @@ feature "new course", type: :feature do
         course_creation_params = select_outcome(course_creation_params)
         course_creation_params = select_apprenticeship(course_creation_params)
         course_creation_params = select_study_mode(course_creation_params)
+        course_creation_params = select_location(course_creation_params)
         course_creation_params = select_entry_requirements(course_creation_params)
         course_creation_params = select_applications_open_from(course_creation_params)
 
@@ -194,6 +201,23 @@ private
     new_study_mode_page.continue.click
 
     expect_page_to_be_displayed_with_query(
+      page: new_locations_page,
+      expected_query_params: course_creation_params,
+    )
+
+    course_creation_params
+  end
+
+  def select_location(course_creation_params)
+    course_creation_params[:sites_ids] = [site1.id, site2.id]
+    course.sites = [site1, site2]
+    stub_build_course_with_params(course_creation_params)
+
+    new_locations_page.check(site1.location_name)
+    new_locations_page.check(site2.location_name)
+    new_locations_page.continue.click
+
+    expect_page_to_be_displayed_with_query(
       page: new_entry_requirements_page,
       expected_query_params: course_creation_params,
     )
@@ -270,12 +294,11 @@ private
   end
 
   def expect_page_to_be_displayed_with_query(page:, expected_query_params:)
-    url_params = {}
-    expected_query_params.each { |k, v| url_params["course[#{k}]"] = v }
+    current_query_string = current_url.match('\?(.*)$').captures.first
+    url_params = { course: expected_query_params }
 
     expect(page).to be_displayed
-    query = page.url_matches["query"]
-    expect(query).to eq(url_params)
+    expect(current_query_string).to eq(url_params.to_query)
   end
 
   def initial_params

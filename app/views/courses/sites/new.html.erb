@@ -1,0 +1,30 @@
+<%= content_for :page_title, "Pick the training locations for this course" %>
+
+<h1 class="govuk-heading-xl">Pick the training locations for this course</h1>
+
+<%= form_for course, url: continue_provider_recruitment_cycle_courses_locations_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :get do |f| %>
+  <%= render 'shared/course_creation_hidden_fields',
+    form: f,
+    course_creation_params: @course_creation_params,
+    except_keys: [:sites_ids]
+  %>
+
+  <div class="govuk-form-group">
+    <div class="govuk-checkboxes">
+      <%= f.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sf| %>
+        <% site = sf.object %>
+        <div class="govuk-checkboxes__item">
+          <%= sf.check_box 'selected', checked: course.has_site?(site), class: 'govuk-checkboxes__input' %>
+          <%= sf.label 'selected', class: 'govuk-label govuk-checkboxes__label'  do %>
+            <strong data-qa="site__name"><%= site.location_name %></strong>
+          <% end %>
+          <span class="govuk-hint govuk-checkboxes__hint">
+            <%= site.full_address %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= f.submit "Contine", class: "govuk-button", data: { qa: 'course__save' } %>
+<% end %>

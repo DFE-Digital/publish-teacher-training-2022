@@ -29,6 +29,13 @@ feature "Edit course sites", type: :feature do
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
+      "?include=sites",
+      provider.to_jsonapi(include: [:sites]),
+    )
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
       "?include=sites,provider.sites",
       course.to_jsonapi(include: [:sites, provider: :sites]),

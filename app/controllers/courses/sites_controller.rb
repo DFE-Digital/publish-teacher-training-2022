@@ -1,10 +1,18 @@
 module Courses
   class SitesController < ApplicationController
     decorates_assigned :course
-    before_action(
-      :build_course,
-      :build_provider,
-    )
+    before_action :build_course_params, only: %i[continue]
+
+    include CourseBasicDetailConcern
+    before_action :build_course, only: %i[edit update]
+    before_action :build_provider_with_sites
+
+    def new
+      if @provider.sites.count == 1
+        set_default_site
+        redirect_to next_step
+      end
+    end
 
     def edit; end
 
@@ -29,6 +37,35 @@ module Courses
 
   private
 
+    def current_step
+      :location
+    end
+
+    def errors; end
+
+    def set_default_site
+      params["course"] ||= {}
+      params["course"]["sites_ids"] = [@provider.sites.first.id]
+    end
+
+    def build_course_params
+      selected_site_ids = params.dig(:course, :site_statuses_attributes)
+        .values
+        .select { |field| field["selected"] == "1" }
+        .map { |field| field["id"] }
+
+      params["course"]["sites_ids"] = selected_site_ids
+      params["course"].delete("site_statuses_attributes")
+    end
+
+    def build_provider_with_sites
+      @provider = Provider
+                    .includes(:sites)
+                    .where(recruitment_cycle_year: params[:recruitment_cycle_year])
+                    .find(params[:provider_code])
+                    .first
+    end
+
     def build_course
       @provider_code = params[:provider_code]
       @course = Course
@@ -38,10 +75,6 @@ module Courses
         .where(provider_code: @provider_code)
         .find(params[:code])
         .first
-    end
-
-    def build_provider
-      @provider = @course.provider
     end
   end
 end

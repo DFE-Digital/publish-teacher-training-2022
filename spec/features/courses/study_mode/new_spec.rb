@@ -4,6 +4,9 @@ feature "new course study mode", type: :feature do
   let(:new_study_mode_page) do
     PageObjects::Page::Organisations::Courses::NewStudyModePage.new
   end
+  let(:new_locations_page) do
+    PageObjects::Page::Organisations::Courses::NewLocationsPage.new
+  end
 
   let(:course) do
     build(
@@ -19,6 +22,7 @@ feature "new course study mode", type: :feature do
   before do
     stub_omniauth
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
@@ -40,6 +44,6 @@ feature "new course study mode", type: :feature do
 
     click_on "Continue"
 
-    expect(current_path).to eq new_provider_recruitment_cycle_courses_entry_requirements_path(provider.provider_code, provider.recruitment_cycle_year)
+    expect(new_locations_page).to be_displayed
   end
 end

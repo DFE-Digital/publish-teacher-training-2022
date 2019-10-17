@@ -94,7 +94,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def has_site?(site)
-    object.sites.include?(site)
+    object.sites.any? { |s| s.id == site.id }
   end
 
   def funding_option
