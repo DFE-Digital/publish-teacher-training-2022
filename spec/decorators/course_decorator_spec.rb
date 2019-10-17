@@ -4,6 +4,10 @@ describe CourseDecorator do
   let(:current_recruitment_cycle) { build :recruitment_cycle }
   let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
   let(:provider) { build(:provider, accredited_body?: false) }
+  let(:english) { build(:subject, :english) }
+  let(:mathematics) { build(:subject, :mathematics) }
+  let(:subjects) { [english, mathematics] }
+
   let(:course) {
     build :course,
           course_code: "A1",
@@ -15,10 +19,7 @@ describe CourseDecorator do
           provider: provider,
           accrediting_provider: provider,
           course_length: "OneYear",
-          subjects: [
-            build(:subject, subject_name: "English"),
-            build(:subject, subject_name: "Mathematics"),
-          ],
+          subjects: subjects,
           open_for_applications?: true,
           last_published_at: "2019-03-05T14:42:34Z",
           recruitment_cycle: current_recruitment_cycle
@@ -165,6 +166,23 @@ describe CourseDecorator do
       it "Returns text withdrawn" do
         expect(status_tag).to include("Withdrawn")
       end
+    end
+  end
+
+  describe "#selectable_master_subjects" do
+    let(:course) do
+      build(:course, edit_options: {
+        subjects: subjects.map do |subject|
+          subject.to_jsonapi[:data]
+        end,
+      })
+    end
+
+    it "gets the name and id" do
+      expect(decorated_course.selectable_master_subjects).to eq([
+        [english.subject_name, english.id],
+        [mathematics.subject_name, mathematics.id],
+      ])
     end
   end
 end

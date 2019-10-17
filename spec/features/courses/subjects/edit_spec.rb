@@ -1,20 +1,19 @@
 require "rails_helper"
 
-xfeature "Edit course subjects", type: :feature do
+feature "Edit course subjects", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:subjects_page) { PageObjects::Page::Organisations::CourseSubjects.new }
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
   let(:course_request_change_page) { PageObjects::Page::Organisations::CourseRequestChange.new }
   let(:provider) { build(:provider, site: site) }
-  let(:subjects) { [] }
   let(:site) { build(:site) }
   let(:site_status) { build(:site_status, site: site) }
-  let(:edit_options) { { subjects: subjects } }
+  let(:edit_options) { { subjects: [] } }
   let(:course) do
     build(:course,
           provider: provider,
           edit_options: edit_options,
-          subjects: subjects,
+          subjects: [],
           sites: [site],
           site_statuses: [site_status])
   end
@@ -38,21 +37,26 @@ xfeature "Edit course subjects", type: :feature do
   end
 
   context "with a given set of subjects" do
-    let(:subjects) { [build(:subject, subject_code: "00")] }
+    let(:english_subject) { build(:subject, :english) }
+    let(:subjects) { [english_subject, build(:subject, :biology)] }
     let(:edit_options) do
       {
         subjects: subjects,
       }
     end
 
-    scenario "can select a subject based on the level" do
-      stub_api_v2_resource(course, jsonapi_response: "{\"data\":{\"course_code\":\"X102\",\"type\":\"courses\",\"relationships\":{\"subjects\":{\"data\":[{\"type\":\"subjects\",\"id\":\"2\"}]}},\"attributes\":{}}}")
-
+    scenario "can select a master subject based on the level" do
       subjects_page.load_with_course(course)
+      edit_subject_stub = stub_api_v2_resource(course, method: :patch)
 
       subjects_page.subjects_fields.select(subjects.first.subject_name)
       subjects_page.save.click
       expect(course_details_page).to be_displayed
+
+      expect(edit_subject_stub.with do |request|
+        subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
+        expect(subjects).to match_array([{ "type" => "subject", "id" => english_subject.id.to_s }])
+      end).to have_been_made
     end
   end
 end

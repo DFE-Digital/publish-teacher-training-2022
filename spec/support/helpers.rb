@@ -58,7 +58,8 @@ module Helpers
 
   def stub_api_v2_resource(resource,
                            jsonapi_response: nil,
-                           include: nil)
+                           include: nil,
+                           method: :get)
     query_params = {}
     query_params[:include] = include if include.present?
 
@@ -66,7 +67,7 @@ module Helpers
     url += "?#{query_params.to_param}" if query_params.any?
 
     jsonapi_response ||= resource.to_jsonapi(include: include)
-    stub_api_v2_request(url, jsonapi_response)
+    stub_api_v2_request(url, jsonapi_response, method)
   end
 
   def stub_api_v2_new_resource(resource, jsonapi_response = nil)
