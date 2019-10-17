@@ -1,8 +1,9 @@
 module Courses
   class SubjectsController < ApplicationController
-    include CourseBasicDetailConcern
     decorates_assigned :course
     before_action :build_course, only: %i[edit update]
+    before_action :build_course_params, only: [:continue]
+    include CourseBasicDetailConcern
 
     def update
       master_subject_id = params.dig(:course, :master_subject_id)
@@ -29,7 +30,7 @@ module Courses
   private
 
     def current_step
-      nil
+      :subjects
     end
 
     def errors; end
@@ -41,6 +42,11 @@ module Courses
                   .where(provider_code: params[:provider_code])
                   .find(params[:code])
                   .first
+    end
+
+    def build_course_params
+      params[:course][:subjects_ids] = [params[:course][:master_subject_id]]
+      params[:course].delete :master_subject_id
     end
   end
 end

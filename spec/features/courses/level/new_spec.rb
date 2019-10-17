@@ -5,7 +5,7 @@ feature "New course level", type: :feature do
     PageObjects::Page::Organisations::Courses::NewLevelPage.new
   end
   let(:provider) { build(:provider) }
-  let(:course) { build(:course, :new, provider: provider, level: :primary, gcse_subjects_required_using_level: true) }
+  let(:course) { build(:course, :new, provider: provider, level: :primary, gcse_subjects_required_using_level: true, edit_options: { subjects: [] }) }
 
   before do
     stub_omniauth
@@ -22,12 +22,12 @@ feature "New course level", type: :feature do
     choose "Secondary"
     click_on "Continue"
 
-    expect(current_path).to eq new_provider_recruitment_cycle_courses_age_range_path(provider.provider_code, provider.recruitment_cycle_year)
+    expect(current_path).to eq new_provider_recruitment_cycle_courses_subjects_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
   context "Selecting primary" do
     let(:next_step_page) do
-      PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
+      PageObjects::Page::Organisations::Courses::NewSubjectsPage.new
     end
     let(:selected_fields) { { level: "primary", is_send: "0" } }
     let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }

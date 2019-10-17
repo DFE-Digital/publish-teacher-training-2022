@@ -16,10 +16,7 @@ class CoursesController < ApplicationController
   def request_change; end
 
   def confirmation
-    @provider = Provider
-      .where(recruitment_cycle_year: @recruitment_cycle.year)
-      .find(params[:provider_code])
-      .first
+    build_provider_from_provider_code
 
     @course_creation_params = course_params
 
@@ -27,10 +24,7 @@ class CoursesController < ApplicationController
   end
 
   def create
-    @provider = Provider
-      .where(recruitment_cycle_year: @recruitment_cycle.year)
-      .find(params[:provider_code])
-      .first
+    build_provider_from_provider_code
 
     @course = Course.new(
       course_params.to_h.merge(
@@ -38,6 +32,10 @@ class CoursesController < ApplicationController
         provider_code: @provider.provider_code,
       ),
     )
+
+    @course.subjects = params.dig("course", "subjects_ids")&.map do |subject_id|
+      Subject.new(id: subject_id)
+    end
 
     # We currently don't support setting the name of the course
     # Nor does the API provide it
@@ -189,6 +187,13 @@ class CoursesController < ApplicationController
 
 private
 
+  def build_provider_from_provider_code
+    @provider = Provider
+      .where(recruitment_cycle_year: @recruitment_cycle.year)
+      .find(params[:provider_code])
+      .first
+  end
+
   def course_params
     if params.key? :course
       params.require(:course).permit(
@@ -218,6 +223,7 @@ private
         :start_date,
         :funding_type,
         :age_range_in_years,
+        subjects_ids: [],
         sites_ids: [],
       )
     else
