@@ -48,4 +48,13 @@ feature "View provider UCAS contact", type: :feature do
       expect(org_ucas_contacts_page.send_application_alerts).to have_content("Get an email for each application you receive")
     end
   end
+
+  # scenario "can navigate to the edit alerts screen and back again" do
+  #   course_details_page.load_with_course(course)
+  #   click_on "Change fee or salary"
+  #   expect(fee_or_salary_page).to be_displayed
+  #   click_on "Back"
+  #   expect(course_details_page).to be_displayed
+  # end
+  #
 end
