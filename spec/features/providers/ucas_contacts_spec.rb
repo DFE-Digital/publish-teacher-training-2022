@@ -49,9 +49,17 @@ feature "View provider UCAS contact", type: :feature do
     end
   end
 
-  scenario "can navigate to the edit alerts screen" do
-    visit provider_ucas_contacts_path(provider.provider_code)
-    org_ucas_contacts_page.send_application_alerts_link.click
-    expect(current_path).to eq alerts_provider_ucas_contacts_path(provider.provider_code)
+  describe "can navigate to the edit alerts screen" do
+    scenario "with the change alerts link" do
+      visit provider_ucas_contacts_path(provider.provider_code)
+      org_ucas_contacts_page.send_application_alerts_link.click
+      expect(current_path).to eq alerts_provider_ucas_contacts_path(provider.provider_code)
+    end
+
+    scenario "with the change email link" do
+      visit provider_ucas_contacts_path(provider.provider_code)
+      org_ucas_contacts_page.application_alert_contact_link.click
+      expect(current_path).to eq alerts_provider_ucas_contacts_path(provider.provider_code)
+    end
   end
 end

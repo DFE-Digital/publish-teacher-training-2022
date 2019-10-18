@@ -69,6 +69,17 @@ feature "Edit UCAS email alerts", type: :feature do
     expect(org_ucas_contacts_page).to be_displayed
   end
 
+  scenario "changing the email address" do
+    page.application_alert_contact.set "bob@example.org"
+    set_alerts_request_stub_expectation do |request_attributes|
+      expect(request_attributes["send_application_alerts"]).to eq("none")
+      expect(request_attributes["application_alert_contact"]).to eq("bob@example.org")
+    end
+    click_on "Save"
+    expect(org_ucas_contacts_page).to be_displayed
+    expect(org_ucas_contacts_page.flash).to have_content("Your changes have been saved")
+  end
+
 private
 
   def set_alerts_request_stub_expectation(&attribute_validator)

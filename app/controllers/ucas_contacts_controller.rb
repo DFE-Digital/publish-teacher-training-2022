@@ -24,6 +24,7 @@ class UcasContactsController < ApplicationController
 private
 
   def provider_params
-    params.require(:provider).permit(:send_application_alerts)
+    params.require(:provider)
+      .permit(:send_application_alerts, :application_alert_contact)
   end
 end
