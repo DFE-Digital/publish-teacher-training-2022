@@ -176,11 +176,7 @@
         </dt>
         <dd class="govuk-summary-list__value">
           <p class="govuk-body" data-qa="provider__send_application_alerts">
-            <% if @provider.send_application_alerts.present? %>
-              <%= t("edit_options.send_application_alerts.#{@provider.send_application_alerts}.label") %>
-            <% else %>
-              Information unknown
-            <% end %>
+            <%= t("edit_options.send_application_alerts.#{@provider.send_application_alerts}.label") %>
           </p>
         </dd>
         <dd class="govuk-summary-list__actions">

@@ -7,6 +7,8 @@ class UcasContactsController < ApplicationController
                   .where(recruitment_cycle_year: Settings.current_cycle)
                   .find(provider_code)
                   .first
+
+    @provider.send_application_alerts = "none" unless @provider.send_application_alerts
   end
 
   def show; end

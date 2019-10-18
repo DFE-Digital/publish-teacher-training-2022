@@ -28,10 +28,10 @@ feature "View provider UCAS contact", type: :feature do
     expect(org_ucas_contacts_page.admin_contact).to have_content(provider.admin_contact[:name])
     expect(org_ucas_contacts_page.gt12_contact).to have_content(provider.gt12_contact)
     expect(org_ucas_contacts_page.application_alert_contact).to have_content(provider.application_alert_contact)
-    expect(org_ucas_contacts_page.send_application_alerts).to have_content("Information unknown")
+    expect(org_ucas_contacts_page.send_application_alerts).to have_content("Don’t get an email")
   end
 
-  context "email alerts: no" do
+  context "email alerts: none" do
     let(:provider) { build(:provider, send_application_alerts: "none") }
 
     scenario "viewing organisation UCAS contacts page" do
