@@ -25,6 +25,7 @@ feature "Edit UCAS email alerts", type: :feature do
     page.alerts_enabled_fields.none.click
     click_on "Save"
     expect(org_ucas_contacts_page).to be_displayed
+    expect(org_ucas_contacts_page.flash).to have_content("Your changes have been saved")
   end
 
   scenario "can cancel changes" do

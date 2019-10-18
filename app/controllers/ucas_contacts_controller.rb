@@ -15,7 +15,8 @@ class UcasContactsController < ApplicationController
 
   def update_alerts
     @provider.update(provider_params)
-    redirect_to provider_ucas_contacts_path(@provider.provider_code)
+    redirect_to provider_ucas_contacts_path(@provider.provider_code),
+                flash: { success: "Your changes have been saved" }
   end
 
 private

@@ -4,6 +4,7 @@ module PageObjects
       class UcasContacts < PageObjects::Base
         set_url "/organisations/{provider_code}/ucas-contacts"
 
+        element :flash, ".govuk-success-summary"
         element :utt_contact, '[data-qa="provider__utt_contact"]'
         element :web_link_contact, '[data-qa="provider__web_link_contact"]'
         element :finance_contact, '[data-qa="provider__finance_contact"]'
