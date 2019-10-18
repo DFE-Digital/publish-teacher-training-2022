@@ -1,0 +1,88 @@
+<%= content_for :page_title, "Email alerts for new applications" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_ucas_contacts_path(@provider.provider_code)) %>
+<% end %>
+
+<h1 class="govuk-heading-xl" data-qa="ucas_contacts__alerts__main_heading">
+  Email alerts for new applications
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+  <%= form_with model: @provider, url: alerts_provider_ucas_contacts_path(@provider.provider_code), data: { qa: 'ucas_contacts__alerts_form' } do |form| %>
+
+      <div data-qa="ucas_contacts__alerts_enabled">
+        <div class="govuk-radios__item">
+          <%= form.radio_button :send_application_alerts,
+                                "all",
+                                class: 'govuk-radios__input',
+                                data: { qa: 'ucas_contacts__alerts_enabled__all'}
+          %>
+          <%= form.label :send_application_alerts,
+                         "Get an email for each application you receive",
+                         value: "all",
+                         class: 'govuk-label govuk-radios__label' %>
+
+        </div>
+        <div class="govuk-radios__item">
+          <%= form.radio_button :send_application_alerts,
+                                "none",
+                                class: 'govuk-radios__input',
+                                data: { qa: 'ucas_contacts__alerts_enabled__none'}
+          %>
+          <%= form.label :send_application_alerts,
+                         "Don’t get an email",
+                         value: "none",
+                         class: 'govuk-label govuk-radios__label' %>
+        </div>
+      </div>
+
+      <hr class="govuk-section-break govuk-section-break--l">
+      <%= form.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
+    <% end %>
+
+
+    <!--
+    <div class="govuk-form-group ">
+      <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="radio-ucas-alerts-part-1" type="radio" name="ucas-alerts" value="Get an email for each application you receive" checked="">
+          <label class="govuk-label govuk-radios__label" for="radio-ucas-alerts-part-1">
+            Get an email for each application you receive
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="radio-ucas-alerts-part-2" type="radio" name="ucas-alerts" value="Don’t get an email">
+          <label class="govuk-label govuk-radios__label" for="radio-ucas-alerts-part-2">
+            Don’t get an email
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--l">
+    <h2 class="govuk-heading-l">Who are the alerts sent to?</h2>
+
+    <div class="govuk-form-group ">
+      <label class="govuk-label " for="ucas-alert-email-to">Email address UCAS should send alerts to</label>
+      <input class="govuk-input govuk-input--width-20" name="ucas-alert-email-to" type="text" id="ucas-alert-email-to" value="">
+    </div>
+
+    <div class="govuk-form-group ">
+      <div class="govuk-checkboxes" data-module="checkboxes">
+        <div class="govuk-checkboxes__item">
+          <input id="checkbox-part-1" type="checkbox" name="agree-to-share" value="I give permission to share this email with UCAS" class="govuk-checkboxes__input">
+          <label for="checkbox-part-1" class="govuk-label govuk-checkboxes__label">
+            I give permission to share this email with UCAS
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--l">
+-->
+      <p class="govuk-body">
+        <%= link_to 'Cancel changes', provider_ucas_contacts_path(@provider.provider_code), class: "govuk-link govuk-link--no-visited-state" %>
+      </p>
+  </div>
+</div>

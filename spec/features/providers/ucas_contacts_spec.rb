@@ -4,7 +4,8 @@ feature "View provider UCAS contact", type: :feature do
   let(:org_ucas_contacts_page) { PageObjects::Page::Organisations::UcasContacts.new }
   let(:provider) do
     build :provider,
-          provider_code: "A0"
+          provider_code: "A0",
+          send_application_alerts: nil
   end
 
   before do
@@ -14,9 +15,9 @@ feature "View provider UCAS contact", type: :feature do
   end
 
   scenario "viewing organisation UCAS contacts page" do
-    visit ucas_contacts_provider_path(provider.provider_code)
+    visit provider_ucas_contacts_path(provider.provider_code)
 
-    expect(current_path).to eq ucas_contacts_provider_path(provider.provider_code)
+    expect(current_path).to eq provider_ucas_contacts_path(provider.provider_code)
 
     expect(org_ucas_contacts_page.title).to have_content("UCAS contacts")
 
@@ -27,5 +28,30 @@ feature "View provider UCAS contact", type: :feature do
     expect(org_ucas_contacts_page.admin_contact).to have_content(provider.admin_contact[:name])
     expect(org_ucas_contacts_page.gt12_contact).to have_content(provider.gt12_contact)
     expect(org_ucas_contacts_page.application_alert_contact).to have_content(provider.application_alert_contact)
+    expect(org_ucas_contacts_page.send_application_alerts).to have_content("Don’t get an email")
+  end
+
+  context "email alerts: none" do
+    let(:provider) { build(:provider, send_application_alerts: "none") }
+
+    scenario "viewing organisation UCAS contacts page" do
+      visit provider_ucas_contacts_path(provider.provider_code)
+      expect(org_ucas_contacts_page.send_application_alerts).to have_content("Don’t get an email")
+    end
+  end
+
+  context "email alerts: all" do
+    let(:provider) { build(:provider, send_application_alerts: "all") }
+
+    scenario "viewing organisation UCAS contacts page" do
+      visit provider_ucas_contacts_path(provider.provider_code)
+      expect(org_ucas_contacts_page.send_application_alerts).to have_content("Get an email for each application you receive")
+    end
+  end
+
+  scenario "can navigate to the edit alerts screen" do
+    visit provider_ucas_contacts_path(provider.provider_code)
+    org_ucas_contacts_page.send_application_alerts_link.click
+    expect(current_path).to eq alerts_provider_ucas_contacts_path(provider.provider_code)
   end
 end

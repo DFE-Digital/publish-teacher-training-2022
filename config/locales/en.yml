@@ -112,3 +112,8 @@ en:
         label: "Fee paying (no salary)"
       school_direct_salaried_training_programme:
         label: "Salaried"
+    send_application_alerts:
+      none:
+        label: "Don’t get an email"
+      all:
+        label: "Get an email for each application you receive"

@@ -63,6 +63,7 @@ FactoryBot.define do
     end
     gt12_contact { "gt12_contact@acme-scitt.org" }
     application_alert_contact { "application_alert_contact@acme-scitt.org" }
+    send_application_alerts { "all" }
 
     after :build do |provider, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.
