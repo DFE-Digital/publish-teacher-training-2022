@@ -17,8 +17,6 @@ feature "Edit UCAS email alerts", type: :feature do
     expect(page.title).to have_content("Email alerts for new applications")
     expect(page.main_heading).to have_content("Email alerts for new applications")
     expect(page).to have_alerts_enabled_fields
-    expect(page.alerts_enabled_fields).to have_all
-    expect(page.alerts_enabled_fields).to have_none
     expect(page.alerts_enabled_fields.all).not_to be_checked
     expect(page.alerts_enabled_fields.none).not_to be_checked
     set_alerts_request_stub_expectation("none")
