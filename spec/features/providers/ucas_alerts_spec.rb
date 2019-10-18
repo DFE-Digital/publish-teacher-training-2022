@@ -19,7 +19,9 @@ feature "Edit UCAS email alerts", type: :feature do
     expect(page).to have_alerts_enabled_fields
     expect(page.alerts_enabled_fields.all).not_to be_checked
     expect(page.alerts_enabled_fields.none).to be_checked
-    set_alerts_request_stub_expectation("all")
+    set_alerts_request_stub_expectation do |request_attributes|
+      expect(request_attributes["send_application_alerts"]).to eq("all")
+    end
     page.alerts_enabled_fields.all.click
     click_on "Save"
     expect(org_ucas_contacts_page).to be_displayed
@@ -38,7 +40,9 @@ feature "Edit UCAS email alerts", type: :feature do
     scenario "selecting and saving an option" do
       expect(page.alerts_enabled_fields.all).not_to be_checked
       expect(page.alerts_enabled_fields.none).to be_checked
-      set_alerts_request_stub_expectation("all")
+      set_alerts_request_stub_expectation do |request_attributes|
+        expect(request_attributes["send_application_alerts"]).to eq("all")
+      end
       page.alerts_enabled_fields.all.click
       click_on "Save"
       expect(org_ucas_contacts_page).to be_displayed
@@ -51,7 +55,9 @@ feature "Edit UCAS email alerts", type: :feature do
     scenario "selecting and saving an option" do
       expect(page.alerts_enabled_fields.all).to be_checked
       expect(page.alerts_enabled_fields.none).not_to be_checked
-      set_alerts_request_stub_expectation("none")
+      set_alerts_request_stub_expectation do |request_attributes|
+        expect(request_attributes["send_application_alerts"]).to eq("none")
+      end
       page.alerts_enabled_fields.none.click
       click_on "Save"
       expect(org_ucas_contacts_page).to be_displayed
@@ -65,16 +71,16 @@ feature "Edit UCAS email alerts", type: :feature do
 
 private
 
-  def set_alerts_request_stub_expectation(expected_setting)
-    post_stub = stub_api_v2_request(
+  def set_alerts_request_stub_expectation(&attribute_validator)
+    stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}",
       provider.to_jsonapi,
-      :patch, 200
-    )
-    post_stub.with do |request|
-      body = JSON.parse(request.body)
-      expect(body["data"]["attributes"]["send_application_alerts"]).to eq(expected_setting)
+      :patch,
+      200,
+    ) do |request_body_json|
+      request_attributes = request_body_json["data"]["attributes"]
+      attribute_validator.call(request_attributes)
     end
   end
 end
