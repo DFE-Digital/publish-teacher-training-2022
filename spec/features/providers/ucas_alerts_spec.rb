@@ -71,6 +71,7 @@ feature "Edit UCAS email alerts", type: :feature do
 
   scenario "changing the email address" do
     page.application_alert_contact.set "bob@example.org"
+    page.share_with_ucas_permission.click
     set_alerts_request_stub_expectation do |request_attributes|
       expect(request_attributes["send_application_alerts"]).to eq("none")
       expect(request_attributes["application_alert_contact"]).to eq("bob@example.org")
@@ -78,6 +79,13 @@ feature "Edit UCAS email alerts", type: :feature do
     click_on "Save"
     expect(org_ucas_contacts_page).to be_displayed
     expect(org_ucas_contacts_page.flash).to have_content("Your changes have been saved")
+  end
+
+  scenario "not ticking permissions box for sharing with ucas" do
+    page.application_alert_contact.set "bob@example.org"
+    click_on "Save"
+    expect(page).to be_displayed(provider_code: provider.provider_code)
+    expect(page.error_summary).to have_content("Please give permission to share this email with UCAS")
   end
 
 private

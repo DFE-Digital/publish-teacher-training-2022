@@ -3,6 +3,8 @@
   <%= govuk_back_link_to(provider_ucas_contacts_path(@provider.provider_code)) %>
 <% end %>
 
+<%= render 'shared/errors' %>
+
 <h1 class="govuk-heading-xl" data-qa="ucas_contacts__alerts__main_heading">
   Email alerts for new applications
 </h1>
@@ -22,7 +24,6 @@
                          "Get an email for each application you receive",
                          value: "all",
                          class: 'govuk-label govuk-radios__label' %>
-
         </div>
         <div class="govuk-radios__item">
           <%= form.radio_button :send_application_alerts,
@@ -48,18 +49,21 @@
                              data: { qa: 'ucas_contacts__application_alert_contact' }%>
       </div>
 
-      <!-- TODO
       <div class="govuk-form-group ">
         <div class="govuk-checkboxes" data-module="checkboxes">
           <div class="govuk-checkboxes__item">
-            <input id="checkbox-part-1" type="checkbox" name="agree-to-share" value="I give permission to share this email with UCAS" class="govuk-checkboxes__input">
-            <label for="checkbox-part-1" class="govuk-label govuk-checkboxes__label">
-              I give permission to share this email with UCAS
-            </label>
+            <%= form.check_box :share_with_ucas_permission,
+                                  checked: false,
+                                  class: 'govuk-checkboxes__input',
+                                  data: { qa: 'ucas_contacts__share_with_ucas_permission'}
+            %>
+            <%= form.label :share_with_ucas_permission,
+                           "I give permission to share this email with UCAS",
+                           value: "all",
+                           class: 'govuk-label govuk-checkboxes__label' %>
           </div>
         </div>
       </div>
-      -->
 
       <hr class="govuk-section-break govuk-section-break--l">
 
