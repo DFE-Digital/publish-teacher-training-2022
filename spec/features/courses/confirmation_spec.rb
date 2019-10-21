@@ -10,17 +10,37 @@ feature "Course confirmation", type: :feature do
   end
   let(:site1) { build(:site, location_name: "Site one") }
   let(:site2) { build(:site, location_name: "Site two") }
-  let(:course) { build(:course, provider: provider, sites: [site1, site2], subjects: [build(:subject, :english), build(:subject, :mathematics)]) }
+  let(:course) do
+    build(:course,
+          provider: provider,
+          sites: [site1, site2],
+          subjects: [
+            build(:subject, :english),
+            build(:subject, :mathematics),
+          ],
+          edit_options: {
+            age_range_in_years: [],
+            study_modes: [],
+            start_dates: [],
+            entry_requirements: [],
+            qualifications: [],
+          })
+  end
   let(:provider) { build(:provider) }
 
   before do
-    stub_omniauth
+    stub_omniauth(provider: provider)
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     new_course = build(:course, :new, provider: provider)
     stub_api_v2_resource_collection([new_course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_new_resource(new_course)
+
     stub_api_v2_build_course
+    stub_api_v2_build_course(level: course.level)
+
+    visit signin_path
     visit confirmation_provider_recruitment_cycle_courses_path(
       provider.provider_code,
       provider.recruitment_cycle_year,
@@ -116,6 +136,116 @@ feature "Course confirmation", type: :feature do
           "Cats are important",
         )
       end
+    end
+  end
+
+  describe "Changing properties" do
+    shared_examples "goes to the edit page" do
+      it "goes to the edit page" do
+        expect(destination_page).to be_displayed
+        expect(destination_page).to have_current_path(/goto_confirmation=true/)
+        expect(destination_page).to have_current_path(/course%5Blevel%5D=#{course.level}/)
+      end
+    end
+
+    context "level" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewLevelPage.new }
+
+      before do
+        course_confirmation_page.details.edit_level.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "is send" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewLevelPage.new }
+
+      before do
+        course_confirmation_page.details.edit_is_send.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "age range" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewAgeRangePage.new }
+
+      before do
+        course_confirmation_page.details.edit_age_range.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "apprenticeship" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewApprenticeshipPage.new }
+
+      before do
+        course_confirmation_page.details.edit_apprenticeship.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "study mode" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewStudyModePage.new }
+
+      before do
+        course_confirmation_page.details.edit_study_mode.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "locations page" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewLocationsPage.new }
+
+      before do
+        course_confirmation_page.details.edit_locations.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "application open from page" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewApplicationsOpenPage.new }
+
+      before do
+        course_confirmation_page.details.edit_application_open_from.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "start date page" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewStartDatePage.new }
+
+      before do
+        course_confirmation_page.details.edit_start_date.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "entry requirements page" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
+
+      before do
+        course_confirmation_page.details.edit_entry_requirements.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "course outcome page" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewCourseOutcome.new }
+
+      before do
+        course_confirmation_page.details.edit_qualifications.click
+      end
+
+      include_examples "goes to the edit page"
     end
   end
 

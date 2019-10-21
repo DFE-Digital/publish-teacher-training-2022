@@ -120,7 +120,7 @@
           Locations
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__locations">
-          <% if course.sites.nil? ||course.sites.empty? %>
+          <% if course.sites.nil? || course.sites.empty? %>
             <span class="app-course-parts__fields__value--empty">None</span>
           <% elsif course.sites.size == 1 %>
             <%= course.sites.first.location_name %>

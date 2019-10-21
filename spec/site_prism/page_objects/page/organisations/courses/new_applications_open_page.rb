@@ -2,7 +2,7 @@ module PageObjects
   module Page
     module Organisations
       module Courses
-        class NewApplicationsOpenPage < CourseBase
+        class NewApplicationsOpenPage < NewCourseBase
           set_url "/organisations/{provider_code}/{recruitment_cycle_year}/courses/applications-open/new{?query*}"
 
           element :applications_open_field, '[data-qa="applications_open_from"]'
@@ -10,7 +10,6 @@ module PageObjects
           element :applications_open_field_day, '[data-qa="day"]'
           element :applications_open_field_month, '[data-qa="month"]'
           element :applications_open_field_year, '[data-qa="year"]'
-          element :continue, '[data-qa="course__save"]'
         end
       end
     end

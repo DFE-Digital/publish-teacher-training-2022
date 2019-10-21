@@ -12,23 +12,18 @@
 </h1>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= form_with model: course,
-                    url: continue_provider_recruitment_cycle_courses_fee_or_salary_path(
+    <%= form_with url: continue_provider_recruitment_cycle_courses_fee_or_salary_path(
                       @provider.provider_code,
                       @provider.recruitment_cycle_year
                     ),
                     method: :get do |form| %>
-      <%= render 'form_fields', form: form,
-        program_types: %i[pg_teaching_apprenticeship
-                          school_direct_training_programme
-                          school_direct_salaried_training_programme]
-      %>
-
-      <%= form.submit "Continue",
-                      class: "govuk-button",
-                      data: { qa: 'course__save' } %>
-
+      <%= render "courses/new_fields_holder", form: form, except_keys: [] do |fields| %>
+        <%= render "form_fields", form: fields,
+          program_types: %i[pg_teaching_apprenticeship
+                            school_direct_training_programme
+                            school_direct_salaried_training_programme]
+        %>
+      <% end %>
     <% end %>
   </div>
 </div>
-

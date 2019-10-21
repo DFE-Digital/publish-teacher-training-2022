@@ -6,14 +6,7 @@ module Courses
 
     def continue
       build_course_params
-
-      @errors = errors
-
-      if @errors.present?
-        render :new
-      else
-        redirect_to next_step
-      end
+      super
     end
 
   private
@@ -34,6 +27,7 @@ module Courses
           :age_range_in_years,
           :sites_ids,
           :subjects_ids,
+          :goto_confirmation,
         )
         .permit(
           :applications_open_from,

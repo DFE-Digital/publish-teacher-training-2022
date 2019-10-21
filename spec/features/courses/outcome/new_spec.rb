@@ -10,12 +10,24 @@ feature "new course outcome", type: :feature do
 
   before do
     stub_omniauth
+    stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_build_course(qualification: "qts")
     new_course = build(:course, :new, provider: provider, gcse_subjects_required_using_level: true)
     stub_api_v2_new_resource(new_course)
     empty_build_course_request
 
     visit_new_outcome_page
+  end
+
+  scenario "sends user back to course confirmation" do
+    visit_new_outcome_page(goto_confirmation: true)
+
+    new_outcome_page.qualification_fields.qts.choose
+    new_outcome_page.continue.click
+
+    expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
   context "Loading the page" do
@@ -51,8 +63,11 @@ feature "new course outcome", type: :feature do
 
 private
 
-  def visit_new_outcome_page
-    visit "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}" \
-    "/courses/outcome/new"
+  def visit_new_outcome_page(**query_params)
+    visit new_provider_recruitment_cycle_courses_outcome_path(
+      provider.provider_code,
+      provider.recruitment_cycle.year,
+      query_params,
+    )
   end
 end

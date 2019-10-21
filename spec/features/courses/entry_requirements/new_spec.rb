@@ -7,13 +7,23 @@ feature "new course entry_requirements", type: :feature do
   end
   let(:provider) { build(:provider) }
   let(:level) { :further_education }
-  let(:course)  { build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true) }
+  let(:course)  do
+    build(:course,
+          :new,
+          provider: provider,
+          level: level,
+          gcse_subjects_required_using_level: true,
+          study_mode: "full_time",
+          applications_open_from: "2019-10-09",
+          start_date: "2019-10-09")
+  end
 
   before do
-    stub_omniauth
+    stub_omniauth(provider: provider)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_new_resource(course)
+    stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
   end
 
@@ -84,10 +94,7 @@ feature "new course entry_requirements", type: :feature do
       )
     end
     scenario "creating a new course" do
-      visit new_provider_recruitment_cycle_courses_entry_requirements_path(
-        provider.provider_code,
-        recruitment_cycle.year,
-      )
+      visit_new_entry_requirements
 
       expect(page.status_code).to eq(200)
       expect(new_entry_requirements_page).to(
@@ -116,5 +123,25 @@ feature "new course entry_requirements", type: :feature do
 
       expect(current_path).to eq new_provider_recruitment_cycle_courses_applications_open_path(provider.provider_code, provider.recruitment_cycle_year)
     end
+
+    scenario "sends user back to course confirmation" do
+      visit_new_entry_requirements(goto_confirmation: true)
+
+      choose("course_english_expect_to_achieve_before_training_begins")
+      choose("course_maths_expect_to_achieve_before_training_begins")
+      new_entry_requirements_page.continue.click
+
+      expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+    end
+  end
+
+
+  def visit_new_entry_requirements(**query_params)
+    visit signin_path
+    visit new_provider_recruitment_cycle_courses_entry_requirements_path(
+      provider.provider_code,
+      recruitment_cycle.year,
+      query_params,
+    )
   end
 end

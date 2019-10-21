@@ -1,5 +1,4 @@
 <%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}New course" %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
@@ -26,7 +25,11 @@
                 <%= course.level&.humanize %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                  Change<span class="govuk-visually-hidden"> Level</span>
+                <%= course_creation_change_button(
+                  "level",
+                  "level",
+                  :new_provider_recruitment_cycle_courses_level_path
+                ) %>
               </dd>
             </div>
 
@@ -38,7 +41,11 @@
                 <%= course.is_send? %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> SEND</span>
+                <%= course_creation_change_button(
+                  "SEND",
+                  "is_send",
+                  :new_provider_recruitment_cycle_courses_level_path
+                ) %>
               </dd>
             </div>
 
@@ -62,7 +69,11 @@
                 <%= course.age_range %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> age range</span>
+                <%= course_creation_change_button(
+                  "age range",
+                  "age_range",
+                  :new_provider_recruitment_cycle_courses_age_range_path
+                ) %>
               </dd>
             </div>
 
@@ -74,7 +85,11 @@
                 <%= course.outcome %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> outcome</span>
+                <%= course_creation_change_button(
+                  "outcome",
+                  "qualifications",
+                  :new_provider_recruitment_cycle_courses_outcome_path
+                ) %>
               </dd>
             </div>
 
@@ -86,7 +101,11 @@
                 <%= course.apprenticeship? %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> apprenticeship</span>
+                <%= course_creation_change_button(
+                  "apprenticeship",
+                  "apprenticeship",
+                  :new_provider_recruitment_cycle_courses_apprenticeship_path
+                ) %>
               </dd>
             </div>
 
@@ -98,7 +117,11 @@
                 <%= course.study_mode.humanize %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> full time of part time</span>
+                <%= course_creation_change_button(
+                  "full time or part time",
+                  "study_mode",
+                  :new_provider_recruitment_cycle_courses_study_mode_path
+                ) %>
               </dd>
             </div>
 
@@ -122,7 +145,11 @@
                 <% end %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> locations</span>
+                <%= course_creation_change_button(
+                  "locations",
+                  "locations",
+                  :new_provider_recruitment_cycle_courses_locations_path
+                ) %>
               </dd>
             </div>
 
@@ -134,7 +161,11 @@
                 <%= l(course.applications_open_from&.to_date) %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> applications open date</span>
+                <%= course_creation_change_button(
+                  "applications open date",
+                  "application_open_from",
+                  :new_provider_recruitment_cycle_courses_applications_open_path
+                ) %>
               </dd>
             </div>
 
@@ -146,7 +177,11 @@
                 <%= l(course.start_date&.to_date, format: :short) %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> start date</span>
+                <%= course_creation_change_button(
+                  "start date",
+                  "start_date",
+                  :new_provider_recruitment_cycle_courses_start_date_path
+                ) %>
               </dd>
             </div>
 
@@ -157,9 +192,7 @@
               <dd class="govuk-summary-list__value" data-qa="course__name">
                 <%= course.name %>
               </dd>
-              <dd class="govuk-summary-list__actions">
-                Change<span class="govuk-visually-hidden"> title</span>
-              </dd>
+              <dd class="govuk-summary-list__actions"></dd>
             </div>
 
             <div class="govuk-summary-list__row">
@@ -186,7 +219,11 @@
                   <% end %>
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  Change<span class="govuk-visually-hidden"> entry requirements</span>
+                  <%= course_creation_change_button(
+                    "entry requirements",
+                    "entry_requirements",
+                    :new_provider_recruitment_cycle_courses_entry_requirements_path
+                  ) %>
                 </dd>
               </div>
             <% end %>

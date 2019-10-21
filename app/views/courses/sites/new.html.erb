@@ -2,7 +2,9 @@
 
 <h1 class="govuk-heading-xl">Pick the training locations for this course</h1>
 
-<%= form_for course, url: continue_provider_recruitment_cycle_courses_locations_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :get do |f| %>
+<%= form_for course,
+  url: continue_provider_recruitment_cycle_courses_locations_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+  method: :get do |f| %>
   <%= render 'shared/course_creation_hidden_fields',
     form: f,
     course_creation_params: @course_creation_params,

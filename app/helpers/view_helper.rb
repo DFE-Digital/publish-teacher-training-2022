@@ -1,4 +1,10 @@
 module ViewHelper
+  def course_creation_change_button(display_name, property_name, path)
+    link_to send(path, @provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true)), class: "govuk-link", data: { qa: "course__edit_#{property_name}_link" } do
+      "Change<span class=\"govuk-visually-hidden\"> #{display_name}</span>"
+    end
+  end
+
   def govuk_link_to(body, url = body, html_options = { class: "govuk-link" })
     link_to body, url, html_options
   end

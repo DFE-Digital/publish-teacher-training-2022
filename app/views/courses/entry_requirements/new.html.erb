@@ -26,28 +26,14 @@
     <p class="govuk-body govuk-!-margin-bottom-8">
       The codes you pick determine how flexible you are towards those candidates.
     </p>
-    <%= form_with model: course,
-                  url: continue_provider_recruitment_cycle_courses_entry_requirements_path(
+    <%= form_with url: continue_provider_recruitment_cycle_courses_entry_requirements_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
-
-
-      <%= render 'shared/course_creation_hidden_fields',
-        form: form,
-        course_creation_params: @course_creation_params,
-        except_keys: [:maths, :english, :science]
-      %>
-      <%= render 'form_fields', form: form, gcse_subjects_required: course.gcse_subjects_required %>
-
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-
-      <p class="govuk-body">
-        <%= form.submit "Continue",
-                      class: "govuk-button",
-                      data: { qa: 'course__save' } %>
-      </p>
+      <%= render "courses/new_fields_holder", form: form, except_keys: [:maths, :english, :science] do |fields| %>
+        <%= render 'form_fields', form: fields, gcse_subjects_required: course.gcse_subjects_required %>
+      <% end %>
     <% end %>
   </div>
 </div>

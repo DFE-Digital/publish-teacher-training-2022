@@ -1,0 +1,21 @@
+<%= render 'shared/course_creation_hidden_fields',
+  form: form,
+  course_creation_params: @meta_course_creation_params,
+  except_keys: []
+%>
+
+<%= fields model: course do |fields| %>
+  <%= render 'shared/course_creation_hidden_fields',
+    form: fields,
+    course_creation_params: @course_creation_params,
+    except_keys: except_keys
+  %>
+  <%= yield fields %>
+<% end %>
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<p class="govuk-body">
+  <%= form.submit "Continue",
+                class: "govuk-button",
+                data: { qa: 'course__save' } %>
+</p>

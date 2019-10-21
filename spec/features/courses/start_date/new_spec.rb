@@ -1,6 +1,7 @@
 require "rails_helper"
 
 feature "New course start date", type: :feature do
+  let(:new_start_date_page) { PageObjects::Page::Organisations::CourseStartDate.new }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider) }
   let(:course) { build(:course, provider: provider) }
@@ -16,12 +17,30 @@ feature "New course start date", type: :feature do
   end
 
   scenario "choose course start date" do
-    visit "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}" \
-    "/courses/start-date/new"
+    visit_new_start_date_page
 
     select "September #{Settings.current_cycle}"
     click_on "Continue"
 
     expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+  end
+
+  scenario "sends user back to course confirmation" do
+    visit_new_start_date_page(goto_confirmation: true)
+
+    select "September #{Settings.current_cycle}"
+    new_start_date_page.continue.click
+
+    expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+  end
+
+private
+
+  def visit_new_start_date_page(**query_params)
+    visit new_provider_recruitment_cycle_courses_start_date_path(
+      provider.provider_code,
+      provider.recruitment_cycle.year,
+      query_params,
+    )
   end
 end

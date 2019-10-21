@@ -8,7 +8,11 @@ feature "new course apprenticeship", type: :feature do
     build(:course,
           :new,
           provider: provider,
-          gcse_subjects_required: %w[maths science english])
+          gcse_subjects_required: %w[maths science english],
+          study_mode: "full_time_or_part_time",
+          gcse_subjects_required_using_level: true,
+          applications_open_from: "2019-10-09",
+          start_date: "2019-10-09")
   end
   let(:provider) { build(:provider) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
@@ -17,7 +21,7 @@ feature "new course apprenticeship", type: :feature do
     stub_omniauth
     stub_api_v2_resource(provider)
     stub_api_v2_resource(recruitment_cycle)
-    stub_api_v2_resource_collection([course], include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
     stub_api_v2_build_course(funding_type: "apprenticeship")
     visit new_provider_recruitment_cycle_courses_apprenticeship_path(provider.provider_code, provider.recruitment_cycle_year)
@@ -36,6 +40,15 @@ feature "new course apprenticeship", type: :feature do
     expect(current_path).to eq new_provider_recruitment_cycle_courses_study_mode_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
+  scenario "sends user back to course confirmation" do
+    visit_new_apprenticeship_page(goto_confirmation: true)
+
+    new_apprenticeship_page.funding_type_fields.apprenticeship.click
+    new_apprenticeship_page.continue.click
+
+    expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+  end
+
   context "Higher education program type" do
     let(:next_step_page) do
       PageObjects::Page::Organisations::Courses::NewStudyModePage.new
@@ -49,5 +62,9 @@ feature "new course apprenticeship", type: :feature do
     end
 
     it_behaves_like "a course creation page"
+  end
+
+  def visit_new_apprenticeship_page(**query_params)
+    visit new_provider_recruitment_cycle_courses_apprenticeship_path(provider.provider_code, provider.recruitment_cycle_year, query_params)
   end
 end

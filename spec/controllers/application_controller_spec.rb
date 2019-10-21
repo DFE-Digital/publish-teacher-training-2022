@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ApplicationController, type: :controller do
+describe ApplicationController, type: :controller do
   before do
     controller.response = response
   end
