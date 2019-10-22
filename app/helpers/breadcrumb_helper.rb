@@ -54,4 +54,9 @@ module BreadcrumbHelper
     path = new_provider_recruitment_cycle_site_path(@provider.provider_code)
     sites_breadcrumb << ["Add a location", path]
   end
+
+  def ucas_contacts_breadcrumb
+    path = provider_ucas_contacts_path(@provider.provider_code)
+    provider_breadcrumb << ["UCAS contacts", path]
+  end
 end
