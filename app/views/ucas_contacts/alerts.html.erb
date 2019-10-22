@@ -50,6 +50,7 @@
       </div>
 
       <div class="govuk-form-group ">
+        <%= render 'shared/error_messages', field: :share_with_ucas_permission %>
         <div class="govuk-checkboxes" data-module="checkboxes">
           <div class="govuk-checkboxes__item">
             <%= form.check_box :share_with_ucas_permission,
