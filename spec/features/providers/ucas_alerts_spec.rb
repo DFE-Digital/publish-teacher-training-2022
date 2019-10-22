@@ -85,7 +85,7 @@ feature "Edit UCAS email alerts", type: :feature do
     page.application_alert_contact.set "bob@example.org"
     click_on "Save"
     expect(page).to be_displayed(provider_code: provider.provider_code)
-    expect(page.error_summary).to have_content("Please give permission to share this email with UCAS")
+    expect(page.error_summary).to have_content("Please give permission to share this email address with UCAS")
     expect(page.application_alert_contact.value).to eq("bob@example.org")
   end
 

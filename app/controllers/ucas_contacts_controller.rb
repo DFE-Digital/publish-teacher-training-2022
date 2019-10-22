@@ -19,7 +19,7 @@ class UcasContactsController < ApplicationController
     email_changed = @provider.application_alert_contact != provider_params["application_alert_contact"]
     permission_given = params["provider"]["share_with_ucas_permission"] != "1"
     if permission_given && email_changed
-      @errors = { share_with_ucas_permission: ["Please give permission to share this email with UCAS"] }
+      @errors = { share_with_ucas_permission: ["Please give permission to share this email address with UCAS"] }
       @provider.application_alert_contact = provider_params["application_alert_contact"]
       render :alerts
     else
