@@ -32,9 +32,10 @@
                                 data: { qa: 'ucas_contacts__alerts_enabled__none'}
           %>
           <%= form.label :send_application_alerts,
-                         "Don’t get an email",
                          value: "none",
-                         class: 'govuk-label govuk-radios__label' %>
+                         class: 'govuk-label govuk-radios__label' do %>
+            Don’t get an email <span class='govuk-visually-hidden'> for each application you receive</span>
+          <% end %>
         </div>
       </div>
 
