@@ -29,13 +29,6 @@ feature "Edit course subjects", type: :feature do
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
   end
 
-  scenario "can visit the subject edit page" do
-    course_details_page.load_with_course(course)
-    expect(course_details_page).to be_displayed
-    course_details_page.edit_subjects_link.click
-    expect(subjects_page).to be_displayed
-  end
-
   context "with a given set of subjects" do
     let(:english_subject) { build(:subject, :english) }
     let(:subjects) { [english_subject, build(:subject, :biology)] }

@@ -35,9 +35,6 @@
           <%= course.sorted_subjects %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to subjects_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_subjects_link" } do %>
-            Change<span class="govuk-visually-hidden"> subjects</span>
-          <% end %>
         </dd>
       </div>
 
