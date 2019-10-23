@@ -32,16 +32,6 @@
         <li>manage locations needed for the next cycle</li>
       </ul>
     <% else %>
-      <p class="govuk-body">For the new cycle (<%= @recruitment_cycle.year_range %>) you must:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>publish your provider profile (in ‘About your organisation’)</li>
-        <li>publish your course descriptions</li>
-        <li>remove any references to the literacy and numeracy skills tests – candidates starting training in 2020 won’t need to take these</li>
-      </ul>
-      <p class="govuk-body">Publish your courses and they will be listed on <%= govuk_link_to "Find postgraduate teacher training", Settings.search_ui.base_url %> from 1 October.</p>
-      <p class="govuk-body">Applications will open on 8 October.</p>
-      <p class="govuk-body govuk-!-margin-bottom-8">Candidates can only apply to published courses.</p>
-
       <%= render partial: 'recruitment_cycles/about_organisation', locals: { provider: @provider, year: Settings.current_cycle } %>
       <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: Settings.current_cycle } %>
       <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: Settings.current_cycle } %>
