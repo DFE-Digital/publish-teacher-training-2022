@@ -66,10 +66,6 @@ feature "Course details", type: :feature do
       "Change age range",
     )
 
-    expect(course_details_page.edit_subjects_link).to have_content(
-      "Change subjects",
-    )
-
     expect(course_details_page.qualifications).to have_content(
       "PGCE with QTS",
     )
