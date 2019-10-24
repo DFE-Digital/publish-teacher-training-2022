@@ -136,6 +136,18 @@ feature "new course", type: :feature do
                   },
                 ],
               },
+              "sites" => {
+                "data" => [
+                  {
+                    "type" => "sites",
+                    "id" => site1.id,
+                  },
+                  {
+                    "type" => "sites",
+                    "id" => site2.id,
+                  },
+                ],
+              },
             )
           end,
         ).to have_been_made

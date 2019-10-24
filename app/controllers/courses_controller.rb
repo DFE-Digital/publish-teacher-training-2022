@@ -25,17 +25,7 @@ class CoursesController < ApplicationController
 
   def create
     build_provider_from_provider_code
-
-    @course = Course.new(
-      course_params.to_h.merge(
-        recruitment_cycle_year: @provider.recruitment_cycle_year,
-        provider_code: @provider.provider_code,
-      ),
-    )
-
-    @course.subjects = params.dig("course", "subjects_ids")&.map do |subject_id|
-      Subject.new(id: subject_id)
-    end
+    build_course_from_params
 
     if @course.save
       redirect_to(
@@ -52,6 +42,23 @@ class CoursesController < ApplicationController
       build_new_course
 
       render :confirmation
+    end
+  end
+
+  def build_course_from_params
+    @course = Course.new(
+      course_params.to_h.merge(
+        recruitment_cycle_year: @provider.recruitment_cycle_year,
+        provider_code: @provider.provider_code,
+      ),
+    )
+
+    @course.subjects = params.dig("course", "subjects_ids")&.map do |subject_id|
+      Subject.new(id: subject_id)
+    end
+
+    @course.sites = params.dig("course", "sites_ids")&.map do |site_id|
+      Site.new(id: site_id)
     end
   end
 
