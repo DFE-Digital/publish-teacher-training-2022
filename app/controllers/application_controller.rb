@@ -10,7 +10,10 @@ class ApplicationController < ActionController::Base
   end
 
   def render_unauthorized
-    respond_with_error(template: "errors/unauthorized", status: :unauthorized, error_text: "Unauthorized request")
+    # Backend responds with 401 if there is no matching record in the users table.
+    # Show the "We don’t know which organisation you’re part of" page to give users a route
+    # to getting access
+    render "providers/no_providers", status: :unauthorized
   end
 
   def handle_access_denied(exception)
