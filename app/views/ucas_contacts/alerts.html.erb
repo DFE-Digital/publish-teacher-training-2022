@@ -44,8 +44,10 @@
       <h2 class="govuk-heading-l">Who are the alerts sent to?</h2>
 
       <div class="govuk-form-group ">
-        <label class="govuk-label " for="ucas-alert-email-to">Email address UCAS should send alerts to</label>
-        <%= form.email_field 'application_alert_contact',
+        <%= form.label :application_alert_contact, class: 'govuk-label' do %>
+          Email address UCAS should send alerts to
+        <% end %>
+        <%= form.email_field :application_alert_contact,
                              class: 'govuk-input govuk-!-width-two-thirds',
                              data: { qa: 'ucas_contacts__application_alert_contact' }%>
       </div>
