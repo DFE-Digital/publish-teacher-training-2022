@@ -27,7 +27,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    @current_user ||= session[:auth_user] if session[:auth_user]
+    if session[:auth_user]
+      @current_user ||= session[:auth_user]
+    elsif development_mode_auth?
+      email = authenticate_with_http_basic { |u, p| p == development_mode_password(u) && u }
+      setup_development_mode_session(email) if email
+    end
   end
 
   def log_safe_current_user(reload: false)
@@ -38,6 +43,10 @@ class ApplicationController < ActionController::Base
       @log_safe_current_user["email_md5"] = Digest::MD5.hexdigest(email)
     end
     @log_safe_current_user
+  end
+
+  def development_mode_auth?
+    Settings.key?(:authorised_users)
   end
 
   def authenticate
@@ -55,6 +64,9 @@ class ApplicationController < ActionController::Base
         logger.debug { "User session set. " + log_safe_current_user(reload: true).to_s }
       end
 
+    elsif development_mode_auth?
+      logger.debug("Develepmont mode authenticated " + log_safe_current_user.to_s)
+      request_http_basic_authentication("Development Mode")
     else
       logger.debug("Authenticated user session not found " + {
                      redirect_back_to: request.path,
@@ -82,6 +94,26 @@ class ApplicationController < ActionController::Base
   end
 
 private
+
+  def development_mode_password(email)
+    Rails.env.development? && Settings&.authorised_users&.[](email)
+  end
+
+  def setup_development_mode_session(email)
+    session[:auth_user] = HashWithIndifferentAccess.new(
+      uid: SecureRandom.uuid,
+      info: HashWithIndifferentAccess.new(
+        email: email,
+        # We don't have the user's name here, but it doesn't matter what we send
+        # to the backend since we're in development mode now anyway, right??!
+        first_name: "Development",
+        last_name: "User",
+      ),
+      credentials: HashWithIndifferentAccess.new(
+        id_token: "id_token",
+      ),
+    )
+  end
 
   def user_has_not_accepted_terms(response_body)
     return false unless response_body.is_a?(Hash)
