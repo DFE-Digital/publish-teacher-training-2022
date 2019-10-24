@@ -5,6 +5,9 @@ feature "new course", type: :feature do
   let(:new_level_page) do
     PageObjects::Page::Organisations::Courses::NewLevelPage.new
   end
+  let(:new_subjects_page) do
+    PageObjects::Page::Organisations::Courses::NewSubjectsPage.new
+  end
   let(:new_age_range_page) do
     PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
   end
@@ -36,15 +39,19 @@ feature "new course", type: :feature do
   let(:site1) { build(:site, location_name: "Site one") }
   let(:site2) { build(:site, location_name: "Site two") }
   let(:provider) { build(:provider, sites: [site1, site2]) }
+  let(:english) { build(:subject, :english) }
+
   let(:course) do
-    build :course,
-          :new,
-          level: :primary,
-          provider: provider,
-          course_code: "A123",
-          content_status: "draft",
-          subjects: [build(:subject, subject_name: "Primary with Mathematics")],
-          gcse_subjects_required: %w[maths science english]
+    model = build :course,
+                  :new,
+                  level: :primary,
+                  provider: provider,
+                  course_code: "A123",
+                  content_status: "draft",
+                  subjects: [build(:subject, subject_name: "Primary with Mathematics")],
+                  gcse_subjects_required: %w[maths science english]
+    model.meta[:edit_options][:subjects] = [english]
+    model
   end
   let(:course_creation_request) do
     stub_api_v2_request(
@@ -97,6 +104,7 @@ feature "new course", type: :feature do
 
         expect(new_level_page).to be_displayed
         course_creation_params = select_level({})
+        course_creation_params = select_subjects(course_creation_params)
         course_creation_params = select_age_range(course_creation_params)
         course_creation_params = select_outcome(course_creation_params)
         course_creation_params = select_apprenticeship(course_creation_params)
@@ -119,6 +127,22 @@ feature "new course", type: :feature do
             expect(request_attributes.symbolize_keys).to eq(course_creation_params)
           end,
         ).to have_been_made
+
+        expect(
+          course_creation_request.with do |request|
+            request_relationships = JSON.parse(request.body)["data"]["relationships"]
+            expect(request_relationships).to eq(
+              "subjects" => {
+                "data" => [
+                  {
+                    "type" => "subjects",
+                    "id" => english.id,
+                  },
+                ],
+              },
+            )
+          end,
+        ).to have_been_made
       end
     end
   end
@@ -138,6 +162,22 @@ private
 
     new_level_page.level_fields.primary.click
     new_level_page.continue.click
+
+    expect_page_to_be_displayed_with_query(
+      page: new_subjects_page,
+      expected_query_params: course_creation_params,
+    )
+
+    course_creation_params
+  end
+
+  def select_subjects(course_creation_params)
+    course_creation_params[:level] = "primary"
+    course_creation_params[:subjects_ids] = [english.id]
+    stub_build_course_with_params(course_creation_params)
+
+    new_subjects_page.subjects_fields.select(english.subject_name)
+    new_subjects_page.continue.click
 
     expect_page_to_be_displayed_with_query(
       page: new_age_range_page,

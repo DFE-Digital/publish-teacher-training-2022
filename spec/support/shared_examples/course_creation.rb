@@ -7,13 +7,8 @@ shared_examples_for "a course creation page" do
   end
 
   scenario "stores the selected field" do
-    query_hash = selected_fields.reduce({}) do |res, (k, v)|
-      res["course[#{k}]"] = v
-      res
-    end
-
-    expect(next_step_page.url_matches["query"]).to eq(
-      query_hash,
+    expect(next_step_page.url_matches["query"].to_query).to eq(
+      selected_fields.to_query(:course),
     )
   end
 

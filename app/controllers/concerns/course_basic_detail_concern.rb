@@ -105,6 +105,7 @@ private
           :age_range_in_years,
           :master_subject_id,
           sites_ids: [],
+          subjects_ids: [],
         )
     else
       ActionController::Parameters.new({}).permit(:course)
@@ -146,6 +147,8 @@ private
       new_provider_recruitment_cycle_courses_start_date_path(path_params)
     when :age_range
       new_provider_recruitment_cycle_courses_age_range_path(path_params)
+    when :subjects
+      new_provider_recruitment_cycle_courses_subjects_path(path_params)
     when :confirmation
       confirmation_provider_recruitment_cycle_courses_path(path_params)
     end

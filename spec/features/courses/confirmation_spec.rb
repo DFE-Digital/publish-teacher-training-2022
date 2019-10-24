@@ -21,7 +21,6 @@ feature "Course confirmation", type: :feature do
     stub_api_v2_resource_collection([new_course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_new_resource(new_course)
     stub_api_v2_build_course
-
     visit confirmation_provider_recruitment_cycle_courses_path(
       provider.provider_code,
       provider.recruitment_cycle_year,

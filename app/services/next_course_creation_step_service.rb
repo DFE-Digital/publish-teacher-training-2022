@@ -2,6 +2,8 @@ class NextCourseCreationStepService
   def execute(current_step:)
     case current_step
     when :level
+      :subjects
+    when :subjects
       :age_range
     when :age_range
       :outcome
