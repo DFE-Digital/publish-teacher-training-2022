@@ -13,6 +13,8 @@ class NextCourseCreationStepService
       else
         :fee_or_salary
       end
+    when :fee_or_salary
+      :full_or_part_time
     when :apprenticeship
       :full_or_part_time
     when :full_or_part_time

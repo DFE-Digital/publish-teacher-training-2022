@@ -21,6 +21,13 @@ describe NextCourseCreationStepService do
       include_examples "next step"
     end
 
+    context "Current step: Fee or salary" do
+      let(:current_step) { :fee_or_salary }
+      let(:expected_next_step) { :full_or_part_time }
+
+      include_examples "next step"
+    end
+
     context "Current step: Location" do
       let(:current_step) { :location }
       let(:expected_next_step) { :accredited_body }

@@ -29,9 +29,18 @@ feature "new course fee or salary", type: :feature do
     expect(new_fee_or_salary_page.funding_type_fields).to have_salaried
   end
 
-  scenario "sends user to confirmation page" do
-    new_fee_or_salary_page.funding_type_fields.fee.click
-    new_fee_or_salary_page.save.click
-    expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+  context "Selecting values" do
+    let(:next_step_page) do
+      PageObjects::Page::Organisations::Courses::NewStudyModePage.new
+    end
+    let(:selected_fields) { { funding_type: "fee" } }
+    let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
+
+    before do
+      new_fee_or_salary_page.funding_type_fields.fee.click
+      new_fee_or_salary_page.save.click
+    end
+
+    it_behaves_like "a course creation page"
   end
 end
