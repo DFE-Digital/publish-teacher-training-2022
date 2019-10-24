@@ -37,10 +37,6 @@ class CoursesController < ApplicationController
       Subject.new(id: subject_id)
     end
 
-    # We currently don't support setting the name of the course
-    # Nor does the API provide it
-    @course.name = "Temporary name"
-
     if @course.save
       redirect_to(
         provider_recruitment_cycle_course_path(

@@ -38,7 +38,7 @@ feature "new course", type: :feature do
   let(:build_new_course_request) { stub_api_v2_build_course }
   let(:site1) { build(:site, location_name: "Site one") }
   let(:site2) { build(:site, location_name: "Site two") }
-  let(:provider) { build(:provider, sites: [site1, site2]) }
+  let(:provider) { build(:provider, accredited_body?: true, sites: [site1, site2]) }
   let(:english) { build(:subject, :english) }
 
   let(:course) do
@@ -114,10 +114,6 @@ feature "new course", type: :feature do
         course_creation_params = select_applications_open_from(course_creation_params)
 
         select_start_date(course_creation_params)
-
-        # Add a temporary name
-        course.name = "Temporary name"
-        course_creation_params[:name] = "Temporary name"
 
         save_course
 
