@@ -3,12 +3,12 @@ require "rails_helper"
 feature "Edit course subjects", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:subjects_page) { PageObjects::Page::Organisations::CourseSubjects.new }
-  let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
+  let(:languages_page) { PageObjects::Page::Organisations::CourseModernLanguages.new }
   let(:course_request_change_page) { PageObjects::Page::Organisations::CourseRequestChange.new }
   let(:provider) { build(:provider, site: site) }
   let(:site) { build(:site) }
   let(:site_status) { build(:site_status, site: site) }
-  let(:edit_options) { { subjects: [] } }
+  let(:edit_options) { { subjects: [], modern_languages: [] } }
   let(:course) do
     build(:course,
           provider: provider,
@@ -29,12 +29,13 @@ feature "Edit course subjects", type: :feature do
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
   end
 
-  context "with a given set of subjects" do
+  context "with a given set of potential subjects" do
     let(:english_subject) { build(:subject, :english) }
     let(:subjects) { [english_subject, build(:subject, :biology)] }
     let(:edit_options) do
       {
         subjects: subjects,
+        modern_languages: [],
       }
     end
 
@@ -44,7 +45,7 @@ feature "Edit course subjects", type: :feature do
 
       subjects_page.subjects_fields.select(subjects.first.subject_name)
       subjects_page.save.click
-      expect(course_details_page).to be_displayed
+      expect(languages_page).to be_displayed
 
       expect(edit_subject_stub.with do |request|
         subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
@@ -80,6 +81,31 @@ feature "Edit course subjects", type: :feature do
       subjects_page.save.click
       expect(course_details_page).to be_displayed
       expect(edit_subject_stub).not_to have_been_made
+    end
+  end
+
+  context "with a subject already set" do
+    let(:english_subject) { build(:subject, :english) }
+    let(:biology_subject) { build(:subject, :biology) }
+    let(:subjects) { [english_subject, biology_subject] }
+    let(:edit_options) do
+      {
+        subjects: subjects,
+        modern_languages: [],
+      }
+    end
+    let(:course) do
+      build(:course,
+            provider: provider,
+            edit_options: edit_options,
+            subjects: subjects,
+            sites: [site],
+            site_statuses: [site_status])
+    end
+
+    scenario "it should automatically select the current subject" do
+      subjects_page.load_with_course(course)
+      expect(subjects_page).to have_select("course_master_subject_id", selected: english_subject.subject_name)
     end
   end
 end

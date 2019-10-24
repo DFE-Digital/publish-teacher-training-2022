@@ -18,7 +18,7 @@ module Courses
       elsif @course.update(subjects: selected_subjects)
         flash[:success] = "Your changes have been saved"
         redirect_to(
-          details_provider_recruitment_cycle_course_path(
+          modern_languages_provider_recruitment_cycle_course_path(
             @course.provider_code,
             @course.recruitment_cycle_year,
             @course.course_code,

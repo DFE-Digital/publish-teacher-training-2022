@@ -128,6 +128,9 @@ Rails.application.routes.draw do
         get "/subjects", on: :member, to: "courses/subjects#edit"
         put "/subjects", on: :member, to: "courses/subjects#update"
 
+        get "/modern-languages", on: :member, to: "courses/modern_languages#edit"
+        put "/modern-languages", on: :member, to: "courses/modern_languages#update"
+
         get "/age-range", on: :member, to: "courses/age_range#edit"
         put "/age-range", on: :member, to: "courses/age_range#update"
 

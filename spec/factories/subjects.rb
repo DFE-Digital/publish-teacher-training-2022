@@ -32,5 +32,9 @@ FactoryBot.define do
     trait :french do
       subject_name { "French" }
     end
+
+    trait :japanese do
+      subject_name { "Japanese" }
+    end
   end
 end

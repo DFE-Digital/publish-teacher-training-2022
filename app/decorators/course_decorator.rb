@@ -143,6 +143,10 @@ class CourseDecorator < ApplicationDecorator
     meta["edit_options"]["subjects"].map { |subject| [subject["attributes"]["subject_name"], subject["id"]] }
   end
 
+  def subject_present?(subject_to_find)
+    subjects.map { |subject| subject["id"] }.include?(subject_to_find["id"])
+  end
+
 private
 
   def not_on_find
