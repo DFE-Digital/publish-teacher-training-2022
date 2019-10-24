@@ -33,6 +33,15 @@ On macOS:
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain config/localhost/https/localhost.crt
 ```
 
+### Troubleshooting
+What to do if you come across the following errors after running the server.
+
+1. `Webpacker::Manifest::MissingEntryError`
+Run `bundle exec rake assets:precompile`
+
+2. `Rack::OAuth2::Client::Error`
+Check your `config/settings/development.local.yml` for typos!
+
 ## Docker
 
 Install Docker and Docker Compose.
