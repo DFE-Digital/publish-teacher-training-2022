@@ -5,8 +5,6 @@ dfe_signin:
   issuer: https://signin-test-oidc-as.azurewebsites.net
   # URL of the users profile
   profile: https://signin-test-pfl-as.azurewebsites.net
-  # This value must be set otherwise sign in will fail
-  secret: foobar
   # URL of this app for the callback after sigining in
   base_url: https://localhost:3000
 manage_backend:

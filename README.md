@@ -34,13 +34,8 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 ```
 
 ### Troubleshooting
-What to do if you come across the following errors after running the server.
 
-1. `Webpacker::Manifest::MissingEntryError`
-Run `bundle exec rake assets:precompile`
-
-2. `Rack::OAuth2::Client::Error`
-Check your `config/settings/development.local.yml` for typos!
+If after running the server, you come across a `Webpacker::Manifest::MissingEntryError` run `bundle exec rake assets:precompile`.
 
 ## Docker
 

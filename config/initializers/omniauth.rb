@@ -40,12 +40,21 @@ module OmniAuth
         fail!(:timeout, e)
       rescue ::SocketError => e
         fail!(:failed_to_connect, e)
+      # Adding this provides some nicer / additional logging but not why the error was caused
+      rescue Rack::OAuth2::Client::Error => e
+        fail!(:invalid_client, e)
       end
     end
   end
 end
 
 class OmniAuth::Strategies::Dfe < OmniAuth::Strategies::OpenIDConnect; end
+
+# Removing the default secret from config/settings.yml allows app to fail fast
+# with explicit reason as to why
+if !Settings.dfe_signin.secret.present?
+  raise 'dfe_signin secret not set in config/settings'
+end
 
 if Settings.dfe_signin.issuer.present?
   dfe_sign_in_issuer_uri = URI.parse(Settings.dfe_signin.issuer)
