@@ -70,6 +70,10 @@ class CoursesController < ApplicationController
     end
     params[:course].delete(:course_length_other_length)
 
+    # Remove commas from fees
+    params[:course][:fee_uk_eu].gsub!(",", "") if params[:course][:fee_uk_eu].present?
+    params[:course][:fee_international].gsub!(",", "") if params[:course][:fee_international].present?
+
     if @course.update(course_params)
       flash[:success] = "Your changes have been saved"
       redirect_to(
