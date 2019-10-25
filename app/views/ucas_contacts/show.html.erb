@@ -196,7 +196,11 @@
             <% end %>
           </p>
         </dd>
-        <dd class="govuk-summary-list__actions"></dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to alerts_provider_ucas_contacts_path(@provider.provider_code), class: "govuk-link", data: { qa: 'application_alert_contact__change' } do %>
+            Change<span class="govuk-visually-hidden"> email alerts for new applications</span>
+          <% end %>
+        </dd>
       </div>
     </dl>
   </div>

@@ -10,6 +10,10 @@ module PageObjects
           element :all, '[data-qa="ucas_contacts__alerts_enabled__all"]'
           element :none, '[data-qa="ucas_contacts__alerts_enabled__none"]'
         end
+        element :application_alert_contact, 'input[data-qa="ucas_contacts__application_alert_contact"]'
+        element :share_with_ucas_permission, '[data-qa="ucas_contacts__share_with_ucas_permission"]'
+
+        element :error_summary, ".govuk-error-summary"
       end
     end
   end
