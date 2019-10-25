@@ -3,8 +3,12 @@ require "rails_helper"
 feature "Edit UCAS email alerts", type: :feature do
   let(:page) { PageObjects::Page::Organisations::UcasContactsAlerts.new }
   let(:org_ucas_contacts_page) { PageObjects::Page::Organisations::UcasContacts.new }
-  let(:provider) { build(:provider, send_application_alerts: nil) }
   let(:current_recruitment_cycle) { build :recruitment_cycle }
+  let(:provider) do
+    build(:provider,
+          send_application_alerts: nil,
+          application_alert_contact: nil)
+  end
 
   before do
     stub_omniauth
@@ -69,24 +73,32 @@ feature "Edit UCAS email alerts", type: :feature do
     expect(org_ucas_contacts_page).to be_displayed
   end
 
-  scenario "changing the email address" do
-    page.application_alert_contact.set "bob@example.org"
-    page.share_with_ucas_permission.click
-    set_alerts_request_stub_expectation do |request_attributes|
-      expect(request_attributes["send_application_alerts"]).to eq("none")
-      expect(request_attributes["application_alert_contact"]).to eq("bob@example.org")
-    end
-    click_on "Save"
-    expect(org_ucas_contacts_page).to be_displayed
-    expect(org_ucas_contacts_page.flash).to have_content("Your changes have been saved")
-  end
+  context "with contact email already set" do
+    let(:provider) {
+      build(:provider,
+            send_application_alerts: "all",
+            application_alert_contact: "weeble@example.org")
+    }
 
-  scenario "not ticking permissions box for sharing with ucas" do
-    page.application_alert_contact.set "bob@example.org"
-    click_on "Save"
-    expect(page).to be_displayed(provider_code: provider.provider_code)
-    expect(page.error_summary).to have_content("Please give permission to share this email address with UCAS")
-    expect(page.application_alert_contact.value).to eq("bob@example.org")
+    scenario "changing the email address" do
+      page.application_alert_contact.set "bob@example.org"
+      page.share_with_ucas_permission.click
+      set_alerts_request_stub_expectation do |request_attributes|
+        expect(request_attributes["application_alert_contact"]).to eq("bob@example.org")
+      end
+      click_on "Save"
+      expect(org_ucas_contacts_page).to be_displayed
+      expect(org_ucas_contacts_page.flash).to have_content("Your changes have been saved")
+    end
+
+    scenario "not ticking permissions box for sharing with ucas" do
+      page.application_alert_contact.set "bob@example.org"
+      page.alerts_enabled_fields.none.click
+      click_on "Save"
+      expect(page).to be_displayed(provider_code: provider.provider_code)
+      expect(page.error_summary).to have_content("Please give permission to share this email address with UCAS")
+      expect(page.application_alert_contact.value).to eq("bob@example.org")
+    end
   end
 
 private
