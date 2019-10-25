@@ -55,16 +55,16 @@
         <div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:share_with_ucas_permission]&.any?) %>">
         <div class="govuk-checkboxes" data-module="checkboxes">
           <div class="govuk-checkboxes__item">
-            <%= form.label :share_with_ucas_permission,
-                           class: 'govuk-label govuk-checkboxes__label' do %>
-              I give permission to share this email address with UCAS
-              <%= render 'shared/error_messages', field: :share_with_ucas_permission %>
-            <% end %>
             <%= form.check_box :share_with_ucas_permission,
                                   checked: false,
                                   class: 'govuk-checkboxes__input',
                                   data: { qa: 'ucas_contacts__share_with_ucas_permission'}
             %>
+            <%= form.label :share_with_ucas_permission,
+                           class: 'govuk-label govuk-checkboxes__label' do %>
+              I give permission to share this email address with UCAS
+              <%= render 'shared/error_messages', field: :share_with_ucas_permission %>
+            <% end %>
           </div>
         </div>
       </div>
