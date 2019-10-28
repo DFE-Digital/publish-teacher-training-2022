@@ -8,11 +8,7 @@ class NextCourseCreationStepService
     when :age_range
       :outcome
     when :outcome
-      if current_provider.accredited_body?
-        :apprenticeship
-      else
-        :fee_or_salary
-      end
+      handle_outcome(current_provider)
     when :fee_or_salary
       :full_or_part_time
     when :apprenticeship
@@ -20,17 +16,31 @@ class NextCourseCreationStepService
     when :full_or_part_time
       :location
     when :location
-      if current_provider.accredited_body?
-        :entry_requirements
-      else
-        :accredited_body
-      end
+      handle_location(current_provider)
     when :entry_requirements
       :applications_open
     when :applications_open
       :start_date
     when :start_date
       :confirmation
+    end
+  end
+
+private
+
+  def handle_outcome(provider)
+    if provider.accredited_body?
+      :apprenticeship
+    else
+      :fee_or_salary
+    end
+  end
+
+  def handle_location(provider)
+    if provider.accredited_body?
+      :entry_requirements
+    else
+      :accredited_body
     end
   end
 end
