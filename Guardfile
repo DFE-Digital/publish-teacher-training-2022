@@ -26,7 +26,7 @@
 
 # rubocop:disable Metrics/BlockLength
 group :red_green_refactor, halt_on_fail: true do
-  guard :rspec, cmd: 'bundle exec spring rspec', failed_mode: :keep do
+  guard :rspec, cmd: "bundle exec spring rspec", failed_mode: :keep do
     require "guard/rspec/dsl"
     dsl = Guard::RSpec::Dsl.new(self)
 
