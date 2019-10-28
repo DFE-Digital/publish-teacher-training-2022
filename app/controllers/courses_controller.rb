@@ -64,17 +64,7 @@ class CoursesController < ApplicationController
   end
 
   def update
-    # Course length should be saved as `course_length` so if "other" is selected then pass that text value into `course_length`
-    if params[:course][:course_length_other_length].present? && params[:course][:course_length] == "Other"
-      params[:course][:course_length] = params[:course][:course_length_other_length]
-    end
-    params[:course].delete(:course_length_other_length)
-
-    # A user has been struggling to input a number in the course fees box because
-    # our validations do not allow commas to be added. eg 9,000 is not accepted.
-    # By stripping commas out the backend will not reject such input.
-    params[:course][:fee_uk_eu].gsub!(",", "") if params[:course][:fee_uk_eu].present?
-    params[:course][:fee_international].gsub!(",", "") if params[:course][:fee_international].present?
+    massage_update_course_params
 
     if @course.update(course_params)
       flash[:success] = "Your changes have been saved"
@@ -370,5 +360,19 @@ private
     )
 
     @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
+  end
+
+  def massage_update_course_params
+    # Course length should be saved as `course_length` so if "other" is selected then pass that text value into `course_length`
+    if params[:course][:course_length_other_length].present? && params[:course][:course_length] == "Other"
+      params[:course][:course_length] = params[:course][:course_length_other_length]
+    end
+    params[:course].delete(:course_length_other_length)
+
+    # A user has been struggling to input a number in the course fees box because
+    # our validations do not allow commas to be added. eg 9,000 is not accepted.
+    # By stripping commas out the backend will not reject such input.
+    params[:course][:fee_uk_eu].gsub!(",", "") if params[:course][:fee_uk_eu].present?
+    params[:course][:fee_international].gsub!(",", "") if params[:course][:fee_international].present?
   end
 end
