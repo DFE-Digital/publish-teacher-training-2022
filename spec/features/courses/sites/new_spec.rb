@@ -4,6 +4,7 @@ feature "New course sites" do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:new_locations_page) { PageObjects::Page::Organisations::Courses::NewLocationsPage.new }
   let(:new_entry_requirements_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
+  let(:new_accredited_body_page) { PageObjects::Page::Organisations::Courses::NewAccreditedBodyPage.new }
   let(:site1) { build(:site, location_name: "Site one") }
   let(:site2) { build(:site, location_name: "Site two") }
   let(:site3) { build(:site, location_name: "Another site") }
@@ -82,6 +83,14 @@ feature "New course sites" do
 
     scenario "It builds a new course with the providers site id to the query" do
       expect(build_course_with_sites_request).to have_been_made.at_least_once
+    end
+  end
+
+  context "With a accredited provider" do
+    let(:provider) { build(:provider, sites: [site2], accredited_body?: false) }
+
+    scenario "It transitions to the accredited body page" do
+      expect(new_accredited_body_page).to be_displayed
     end
   end
 end

@@ -2,10 +2,15 @@ module Courses
   class AccreditedBodyController < ApplicationController
     include CourseBasicDetailConcern
 
-    before_action :build_provider
+    before_action :build_course_params, only: :continue
     decorates_assigned :provider
 
+    def edit
+      build_provider
+    end
+
     def update
+      build_provider
       @errors = errors
       return render :edit if @errors.present?
 
@@ -15,7 +20,7 @@ module Courses
             @course.provider_code,
             @course.recruitment_cycle_year,
             @course.course_code,
-            query: course_params[:accredited_body],
+            query: update_course_params[:accredited_body],
           ),
         )
       elsif @course.update(update_params)
@@ -44,8 +49,8 @@ module Courses
   private
 
     def errors
-      code = course_params[:accrediting_provider_code]
-      query = course_params[:accredited_body]
+      code = update_course_params[:accrediting_provider_code]
+      query = update_course_params[:accredited_body]
       errors = {}
 
       if code == "other" && query.length < 3
@@ -66,7 +71,7 @@ module Courses
         .first
     end
 
-    def course_params
+    def update_course_params
       params.require(:course).permit(
         :autocompleted_provider_code,
         :accrediting_provider_code,
@@ -75,8 +80,8 @@ module Courses
     end
 
     def update_params
-      autocompleted_code = course_params[:autocompleted_provider_code]
-      code = course_params[:accrediting_provider_code]
+      autocompleted_code = update_course_params[:autocompleted_provider_code]
+      code = update_course_params[:accrediting_provider_code]
 
       {
         accrediting_provider_code: if autocompleted_code.blank?
