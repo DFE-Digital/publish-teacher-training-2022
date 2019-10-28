@@ -70,6 +70,9 @@ class CoursesController < ApplicationController
     end
     params[:course].delete(:course_length_other_length)
 
+    # A user has been struggling to input a number in the course fees box because
+    # our validations do not allow commas to be added. eg 9,000 is not accepted.
+    # By stripping commas out the backend will not reject such input.
     params[:course][:fee_uk_eu].gsub!(",", "") if params[:course][:fee_uk_eu].present?
     params[:course][:fee_international].gsub!(",", "") if params[:course][:fee_international].present?
 
