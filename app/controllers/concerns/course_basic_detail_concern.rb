@@ -104,6 +104,7 @@ private
           :start_date,
           :age_range_in_years,
           :master_subject_id,
+          :funding_type,
           sites_ids: [],
           subjects_ids: [],
         )
@@ -117,7 +118,7 @@ private
   end
 
   def next_step
-    next_step = NextCourseCreationStepService.new.execute(current_step: current_step)
+    next_step = NextCourseCreationStepService.new.execute(current_step: current_step, current_provider: @provider)
     next_page = course_creation_path_for(next_step)
 
     if next_page.nil?
@@ -149,6 +150,8 @@ private
       new_provider_recruitment_cycle_courses_age_range_path(path_params)
     when :subjects
       new_provider_recruitment_cycle_courses_subjects_path(path_params)
+    when :fee_or_salary
+      new_provider_recruitment_cycle_courses_fee_or_salary_path(path_params)
     when :confirmation
       confirmation_provider_recruitment_cycle_courses_path(path_params)
     end

@@ -11,6 +11,7 @@ feature "New course sites" do
     build(
       :provider,
       sites: [site1, site2, site3],
+      accredited_body?: true,
       recruitment_cycle: current_recruitment_cycle,
     )
   end
@@ -73,7 +74,7 @@ feature "New course sites" do
   end
 
   context "With a provider with a single site" do
-    let(:provider) { build(:provider, sites: [site2]) }
+    let(:provider) { build(:provider, sites: [site2], accredited_body?: true) }
 
     scenario "It transitions to the entry requirements page" do
       expect(new_entry_requirements_page).to be_displayed

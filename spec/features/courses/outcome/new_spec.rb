@@ -26,7 +26,7 @@ feature "new course outcome", type: :feature do
 
   context "Selecting QTS" do
     let(:next_step_page) do
-      PageObjects::Page::Organisations::Courses::NewApprenticeshipPage.new
+      PageObjects::Page::Organisations::Courses::NewFeeOrSalaryPage.new
     end
     let(:selected_fields) { { qualification: "qts" } }
     let(:build_course_with_selected_value_request) { stub_api_v2_build_course(qualification: "qts") }
@@ -38,6 +38,15 @@ feature "new course outcome", type: :feature do
     end
 
     it_behaves_like "a course creation page"
+
+    context "With an accredited body provider" do
+      let(:provider) { build(:provider, accredited_body?: true) }
+      let(:next_step_page) do
+        PageObjects::Page::Organisations::Courses::NewApprenticeshipPage.new
+      end
+
+      it_behaves_like "a course creation page"
+    end
   end
 
 private

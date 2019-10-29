@@ -3,12 +3,41 @@ describe NextCourseCreationStepService do
 
   shared_examples "next step" do
     it "Returns the correct next step" do
-      next_step = service.execute(current_step: current_step)
+      next_step = service.execute(
+        current_step: current_step,
+        current_provider: provider,
+      )
       expect(next_step).to eq(expected_next_step)
     end
   end
 
+  context "School Direct" do
+    let(:provider) { build(:provider, accredited_body?: false) }
+
+    context "Current step: Outcome" do
+      let(:current_step) { :outcome }
+      let(:expected_next_step) { :fee_or_salary }
+
+      include_examples "next step"
+    end
+
+    context "Current step: Fee or salary" do
+      let(:current_step) { :fee_or_salary }
+      let(:expected_next_step) { :full_or_part_time }
+
+      include_examples "next step"
+    end
+
+    context "Current step: Location" do
+      let(:current_step) { :location }
+      let(:expected_next_step) { :accredited_body }
+
+      include_examples "next step"
+    end
+  end
+
   context "SCITT Provider" do
+    let(:provider) { build(:provider, accredited_body?: true) }
     context "Current step: Level" do
       let(:current_step) { :level }
       let(:expected_next_step) { :subjects }
