@@ -85,6 +85,7 @@ Rails.application.routes.draw do
         end
         resource :accredited_body, on: :member, only: %i[new], controller: "courses/accredited_body", path: "accredited-body" do
           get "continue"
+          get "search_new"
         end
         resource :fee_or_salary, on: :member, only: %i[new], controller: "courses/fee_or_salary", path: "fee-or-salary" do
           get "continue"

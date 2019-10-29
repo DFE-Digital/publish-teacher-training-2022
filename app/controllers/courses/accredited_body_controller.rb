@@ -1,17 +1,45 @@
 module Courses
   class AccreditedBodyController < ApplicationController
+    before_action :build_course_params, only: :continue
     include CourseBasicDetailConcern
 
-    before_action :build_course_params, only: :continue
     decorates_assigned :provider
 
     def edit
       build_provider
     end
 
+    def continue
+      other_selected_with_no_autocompleted_code = course_params[:accrediting_provider_code] == "other" && @autocompleted_provider_code.blank?
+
+      if other_selected_with_no_autocompleted_code
+        redirect_to(
+          search_new_provider_recruitment_cycle_courses_accredited_body_path(
+            query: @accredited_body,
+            course: course_params,
+          ),
+        )
+      else
+        params[:course][:accrediting_provider_code] = @autocompleted_provider_code if @autocompleted_provider_code.present?
+        super
+      end
+    end
+
+    def search_new
+      build_provider
+      build_new_course
+      build_previous_course_creation_params
+      @query = params[:query]
+      @provider_suggestions = ProviderSuggestion.suggest(@query)
+    rescue JsonApiClient::Errors::ClientError => e
+      @errors = e
+    end
+
     def update
       build_provider
-      @errors = errors
+      code = update_course_params[:accrediting_provider_code]
+      query = update_course_params[:accredited_body]
+      @errors = errors_for_search_query(code, query)
       return render :edit if @errors.present?
 
       if update_params[:accrediting_provider_code] == "other"
@@ -48,9 +76,18 @@ module Courses
 
   private
 
-    def errors
-      code = update_course_params[:accrediting_provider_code]
-      query = update_course_params[:accredited_body]
+    def current_step
+      :accredited_body
+    end
+
+    def errors; end
+
+    def build_course_params
+      @accredited_body = params[:course].delete(:accredited_body)
+      @autocompleted_provider_code = params[:course].delete(:autocompleted_provider_code)
+    end
+
+    def errors_for_search_query(code, query)
       errors = {}
 
       if code == "other" && query.length < 3
