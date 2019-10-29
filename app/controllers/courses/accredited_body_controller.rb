@@ -39,27 +39,14 @@ module Courses
       build_provider
       code = update_course_params[:accrediting_provider_code]
       query = update_course_params[:accredited_body]
+
       @errors = errors_for_search_query(code, query)
       return render :edit if @errors.present?
 
       if update_params[:accrediting_provider_code] == "other"
-        redirect_to(
-          accredited_body_search_provider_recruitment_cycle_course_path(
-            @course.provider_code,
-            @course.recruitment_cycle_year,
-            @course.course_code,
-            query: update_course_params[:accredited_body],
-          ),
-        )
+        redirect_to_provider_search
       elsif @course.update(update_params)
-        flash[:success] = "Your changes have been saved"
-        redirect_to(
-          details_provider_recruitment_cycle_course_path(
-            @course.provider_code,
-            @course.recruitment_cycle_year,
-            @course.course_code,
-          ),
-        )
+        redirect_to_update_successful
       else
         @errors = @course.errors.messages
         render :edit
@@ -75,6 +62,28 @@ module Courses
     end
 
   private
+
+    def redirect_to_provider_search
+      redirect_to(
+        accredited_body_search_provider_recruitment_cycle_course_path(
+          @course.provider_code,
+          @course.recruitment_cycle_year,
+          @course.course_code,
+          query: update_course_params[:accredited_body],
+        ),
+      )
+    end
+
+    def redirect_to_update_successful
+      flash[:success] = "Your changes have been saved"
+      redirect_to(
+        details_provider_recruitment_cycle_course_path(
+          @course.provider_code,
+          @course.recruitment_cycle_year,
+          @course.course_code,
+        ),
+      )
+    end
 
     def current_step
       :accredited_body
