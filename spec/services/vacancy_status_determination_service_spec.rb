@@ -14,7 +14,15 @@ describe VacancyStatusDeterminationService do
     end
 
     context "with a full time or part time course" do
-      let(:course) { double(:course, full_time_or_part_time?: true) }
+      # let(:course) {
+      #   double(
+      #     :course,
+      #     full_time_or_part_time?: true,
+      #     full_time?: false,
+      #     part_time?: false
+      # ) }
+
+      let(:course) { build_stubbed(:course, :full_time_or_part_time) }
 
       context "with a full time and part time vacancies" do
         let(:vacancy_status_full_time) { "1" }
@@ -41,14 +49,7 @@ describe VacancyStatusDeterminationService do
     end
 
     context "with a full time course" do
-      let(:course) do
-        double(
-          :course,
-          full_time_or_part_time?: false,
-          full_time?: true,
-          part_time?: false,
-        )
-      end
+      let(:course) { build_stubbed(:course, :full_time) }
 
       context "with a full time vacancy" do
         let(:vacancy_status_full_time) { "1" }
@@ -62,14 +63,7 @@ describe VacancyStatusDeterminationService do
     end
 
     context "with a part time course" do
-      let(:course) do
-        double(
-          :course,
-          full_time_or_part_time?: false,
-          full_time?: false,
-          part_time?: true,
-        )
-      end
+      let(:course) { build_stubbed(:course, :part_time) }
 
       context "with a part time vacancy" do
         let(:vacancy_status_part_time) { "1" }

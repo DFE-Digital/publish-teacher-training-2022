@@ -1,3 +1,5 @@
+require 'byebug'
+
 class VacancyStatusDeterminationService
   attr_reader :vacancy_status_full_time,
               :vacancy_status_part_time,
@@ -8,7 +10,7 @@ class VacancyStatusDeterminationService
       vacancy_status_full_time: vacancy_status_full_time,
       vacancy_status_part_time: vacancy_status_part_time,
       course:                   course,
-    ).call
+    ).vacancy_status
   end
 
   def initialize(vacancy_status_full_time:, vacancy_status_part_time:, course:)
@@ -17,25 +19,30 @@ class VacancyStatusDeterminationService
     @course                   = course
   end
 
-  def call
-    vacancy_status = if course.full_time_or_part_time?
-                       if vacancy_status_full_time? && vacancy_status_part_time?
-                         "both_full_time_and_part_time_vacancies"
-                       elsif vacancy_status_full_time?
-                         "full_time_vacancies"
-                       elsif vacancy_status_part_time?
-                         "part_time_vacancies"
-                       end
-                     elsif course.full_time? && vacancy_status_full_time?
-                       "full_time_vacancies"
-                     elsif course.part_time? && vacancy_status_part_time?
-                       "part_time_vacancies"
-                     end
+  def vacancy_status
+    return "both_full_time_and_part_time_vacancies" if full_or_part_time?
+    return "full_time_vacancies" if full_time?
+    return "part_time_vacancies" if part_time?
 
-    vacancy_status || "no_vacancies"
+    "no_vacancies"
   end
 
 private
+
+  def part_time?
+    (course.full_time_or_part_time? && vacancy_status_part_time?) ||
+      (course.part_time? && vacancy_status_part_time?)
+  end
+
+  def full_time?
+    (course.full_time_or_part_time? && vacancy_status_full_time?) ||
+      (course.full_time? && vacancy_status_full_time?)
+  end
+
+  def full_or_part_time?
+    course.full_time_or_part_time? &&
+      (vacancy_status_full_time? && vacancy_status_part_time?)
+  end
 
   def vacancy_status_full_time?
     vacancy_status_full_time == "1"
