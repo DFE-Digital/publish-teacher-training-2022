@@ -83,6 +83,18 @@ feature "Course fees", type: :feature do
     expect(current_path).to eq provider_recruitment_cycle_course_path("A0", course_1.recruitment_cycle_year, course_1.course_code)
   end
 
+  scenario "setting length to 'other'" do
+    visit fees_provider_recruitment_cycle_course_path("A0", course_1.recruitment_cycle_year, course_1.course_code)
+    choose "Other"
+    fill_in "Course length", with: "4 years"
+    set_fees_request_stub_expectation do |request_attributes|
+      expect(request_attributes["course_length"]).to eq("4 years")
+    end
+    click_on "Save"
+    expect(course_fees_page.flash).to have_content("Your changes have been saved")
+    expect(current_path).to eq provider_recruitment_cycle_course_path("A0", course_1.recruitment_cycle_year, course_1.course_code)
+  end
+
   scenario "submitting with validation errors" do
     stub_api_v2_request(
       "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
