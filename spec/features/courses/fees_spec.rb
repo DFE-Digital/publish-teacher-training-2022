@@ -26,14 +26,7 @@ feature "Course fees", type: :feature do
 
   let(:course_fees_page) { PageObjects::Page::Organisations::CourseFees.new }
 
-  scenario "viewing the courses fees page" do
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course_1.course_code}",
-      course_1.to_jsonapi,
-      :patch, 200
-    )
+  scenario "viewing and updating fees" do
     visit provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
 
     click_on "Course length and fees"
@@ -65,14 +58,23 @@ feature "Course fees", type: :feature do
     )
 
     choose "1 year"
-    fill_in "Fee for UK and EU students", with: 8000
-    fill_in "Fee for international students (optional)", with: 16000
+    fill_in "Fee for UK and EU students", with: "8,000"
+    fill_in "Fee for international students (optional)", with: "16,000"
+
     fill_in "Fee details (optional)", with: "Test fee details"
     fill_in(
       "Financial support you offer (optional)",
       with: "Test financial support",
     )
 
+
+    set_fees_request_stub_expectation do |request_attributes|
+      expect(request_attributes["course_length"]).to eq("OneYear")
+      expect(request_attributes["fee_uk_eu"]).to eq("8000")
+      expect(request_attributes["fee_international"]).to eq("16000")
+      expect(request_attributes["fee_details"]).to eq("Test fee details")
+      expect(request_attributes["financial_support"]).to eq("Test financial support")
+    end
     click_on "Save"
 
     expect(course_fees_page.flash).to have_content(
@@ -211,6 +213,8 @@ feature "Course fees", type: :feature do
     end
   end
 
+private
+
   def stub_course_request(provider, course)
     stub_api_v2_request(
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
@@ -231,5 +235,18 @@ feature "Course fees", type: :feature do
         include: %i[sites provider accrediting_provider],
       ),
     )
+  end
+
+  def set_fees_request_stub_expectation(&attribute_validator)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course_1.course_code}",
+      course_1.to_jsonapi,
+      :patch, 200
+    ) do |request_body_json|
+      request_attributes = request_body_json["data"]["attributes"]
+      attribute_validator.call(request_attributes)
+    end
   end
 end
