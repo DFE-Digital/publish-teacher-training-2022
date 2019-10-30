@@ -20,5 +20,17 @@ FactoryBot.define do
     trait :english_with_primary do
       subject_name { "English with primary" }
     end
+
+    trait :modern_languages do
+      subject_name { "Modern Languages" }
+    end
+
+    trait :russian do
+      subject_name { "Russian" }
+    end
+
+    trait :french do
+      subject_name { "French" }
+    end
   end
 end

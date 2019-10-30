@@ -52,4 +52,35 @@ feature "Edit course subjects", type: :feature do
       end).to have_been_made
     end
   end
+
+  context "if subjects have not been changed" do
+    let(:modern_languages_subject) { build(:subject, :modern_languages) }
+    let(:russian_subject) { build(:subject, :russian) }
+    let(:french_subject) { build(:subject, :french) }
+    let(:subjects) { [modern_languages_subject, russian_subject, french_subject] }
+    let(:course) do
+      build(:course,
+            provider: provider,
+            edit_options: edit_options,
+            subjects: subjects,
+            sites: [site],
+            site_statuses: [site_status])
+    end
+    let(:edit_options) do
+      {
+        subjects: [modern_languages_subject],
+        modern_languagess: [russian_subject, french_subject],
+      }
+    end
+
+    scenario "it does not update the course" do
+      subjects_page.load_with_course(course)
+      edit_subject_stub = stub_api_v2_resource(course, method: :patch)
+
+      subjects_page.subjects_fields.select(subjects.first.subject_name)
+      subjects_page.save.click
+      expect(course_details_page).to be_displayed
+      expect(edit_subject_stub).not_to have_been_made
+    end
+  end
 end
