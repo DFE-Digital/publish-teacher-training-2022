@@ -69,7 +69,6 @@ feature "Edit course subjects", type: :feature do
     let(:edit_options) do
       {
         subjects: [modern_languages_subject],
-        modern_languagess: [russian_subject, french_subject],
       }
     end
 
