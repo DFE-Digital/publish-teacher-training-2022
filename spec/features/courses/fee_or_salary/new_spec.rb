@@ -11,7 +11,7 @@ feature "new course fee or salary", type: :feature do
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do
-    stub_omniauth
+    stub_omniauth(provider: provider)
     stub_api_v2_resource(provider)
     stub_api_v2_build_course
     stub_api_v2_build_course(funding_type: "fee")
@@ -19,10 +19,11 @@ feature "new course fee or salary", type: :feature do
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
 
-    visit new_provider_recruitment_cycle_courses_fee_or_salary_path(provider.provider_code, provider.recruitment_cycle_year)
+    visit signin_path
   end
 
   scenario "presents the correct choices" do
+    visit_fee_or_salary
     expect(new_fee_or_salary_page).to have_funding_type_fields
     expect(new_fee_or_salary_page.funding_type_fields).to have_apprenticeship
     expect(new_fee_or_salary_page.funding_type_fields).to have_fee
@@ -37,10 +38,26 @@ feature "new course fee or salary", type: :feature do
     let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
     before do
+      visit_fee_or_salary
       new_fee_or_salary_page.funding_type_fields.fee.click
-      new_fee_or_salary_page.save.click
+      new_fee_or_salary_page.continue.click
     end
 
     it_behaves_like "a course creation page"
+  end
+
+  scenario "sends user to confirmation page" do
+    visit_fee_or_salary(goto_confirmation: true)
+    new_fee_or_salary_page.funding_type_fields.fee.click
+    new_fee_or_salary_page.continue.click
+    expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+  end
+
+  def visit_fee_or_salary(**query_params)
+    visit new_provider_recruitment_cycle_courses_fee_or_salary_path(
+      provider.provider_code,
+      provider.recruitment_cycle_year,
+      query_params,
+    )
   end
 end

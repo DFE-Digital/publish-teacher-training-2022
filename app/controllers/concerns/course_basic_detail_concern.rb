@@ -5,6 +5,7 @@ module CourseBasicDetailConcern
     decorates_assigned :course
     before_action :build_provider, :build_new_course, only: %i[new continue]
     before_action :build_previous_course_creation_params, only: %i[new continue]
+    before_action :build_meta_course_creation_params, only: %i[new continue]
     before_action :build_course, only: %i[edit update]
   end
 
@@ -36,6 +37,8 @@ module CourseBasicDetailConcern
 
     if @errors.present?
       render :new
+    elsif params[:goto_confirmation].present?
+      redirect_to confirmation_provider_recruitment_cycle_courses_path(path_params)
     else
       redirect_to next_step
     end
@@ -75,6 +78,7 @@ private
           :year,
           :course_age_range_in_years_other_from,
           :course_age_range_in_years_other_to,
+          :goto_confirmation,
         )
         .permit(
           :page,
@@ -117,6 +121,10 @@ private
     @course_creation_params = course_params
   end
 
+  def build_meta_course_creation_params
+    @meta_course_creation_params = params.slice(:goto_confirmation)
+  end
+
   def next_step
     next_step = NextCourseCreationStepService.new.execute(current_step: current_step, current_provider: @provider)
     next_page = course_creation_path_for(next_step)
@@ -128,9 +136,11 @@ private
     next_page
   end
 
-  def course_creation_path_for(page)
-    path_params = { course: course_params }
+  def path_params
+    { course: course_params }
+  end
 
+  def course_creation_path_for(page)
     case page
     when :apprenticeship
       new_provider_recruitment_cycle_courses_apprenticeship_path(path_params)

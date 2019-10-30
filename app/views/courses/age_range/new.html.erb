@@ -10,36 +10,27 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course,
-                  url: continue_provider_recruitment_cycle_courses_age_range_path(
+    <%= form_with url: continue_provider_recruitment_cycle_courses_age_range_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
 
-      <div
-        class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years]&.any?) %>"
-        data-qa="course__age_range_in_years">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading">
-              Specify an age range
-            </h1>
-          </legend>
-          <%= render "shared/error_messages", field: :age_range_in_years if @errors %>
-          <%= render 'shared/course_creation_hidden_fields',
-            form: form,
-            course_creation_params: @course_creation_params,
-            except_keys: [:age_range_in_years]
-          %>
-          <%= render 'form_fields', form: form %>
-        </fieldset>
-      </div>
-
-      <%= form.submit "Continue",
-                      class: "govuk-button",
-                      data: { qa: 'course__save' } %>
-
+      <%= render "courses/new_fields_holder", form: form, except_keys: [:age_range_in_years] do |fields| %>
+        <div
+          class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years]&.any?) %>"
+          data-qa="course__age_range_in_years">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Specify an age range
+              </h1>
+            </legend>
+            <%= render "shared/error_messages", field: :age_range_in_years if @errors %>
+            <%= render 'form_fields', form: fields %>
+          </fieldset>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
