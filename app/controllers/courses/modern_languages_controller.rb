@@ -17,7 +17,9 @@ module Courses
     end
 
     def update
-      if @course.update(subjects: old_non_language_subjects + new_language_subjects)
+      updated_subject_list = strip_non_language_subjects
+      updated_subject_list += selected_language_subjects
+      if @course.update(subjects: updated_subject_list)
         flash[:success] = "Your changes have been saved"
         redirect_to(
           details_provider_recruitment_cycle_course_path(
@@ -34,19 +36,14 @@ module Courses
 
   private
 
-    def new_language_subjects
-      language_ids = params.dig(:course, :language_ids)
-      found_languages_ids = available_languages_ids & language_ids
-
-      found_languages_ids.map do |language_id|
-        Subject.new(id: language_id)
-      end
+    def strip_non_language_subjects
+      @course.subjects.reject { |s| available_languages_ids.include?(s.id) }
     end
 
-    def old_non_language_subjects
-      @course.subjects.reject do |subject|
-        available_languages_ids.include?(subject.id)
-      end
+    def selected_language_subjects
+      language_ids = params.dig(:course, :language_ids)
+      found_languages_ids = available_languages_ids & language_ids
+      found_languages_ids.map { |id| Subject.new(id: id) }
     end
 
     def available_languages_ids
