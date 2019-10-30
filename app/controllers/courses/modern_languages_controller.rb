@@ -55,10 +55,6 @@ module Courses
       end
     end
 
-    def current_step
-      nil
-    end
-
     def errors; end
 
     def build_course
