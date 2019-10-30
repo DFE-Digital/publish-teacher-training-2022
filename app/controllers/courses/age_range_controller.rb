@@ -28,11 +28,15 @@ module Courses
   private
 
     def update_age_range_param
-      if age_from_param.present? && age_to_param.present? && age_range_is_other?
+      if valid_custom_age_range?
         params[:course][:age_range_in_years] = "#{age_from_param}_to_#{age_to_param}"
       elsif age_range_is_other?
         params[:course][:age_range_in_years] = nil
       end
+    end
+
+    def valid_custom_age_range?
+      age_from_param.present? && age_to_param.present? && age_range_is_other?
     end
 
     def build_errors
