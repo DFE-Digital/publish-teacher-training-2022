@@ -55,7 +55,9 @@ feature "Edit course age range in years", type: :feature do
       expect(age_range_in_years_page.age_range_fields)
         .to have_selector('[for="course_age_range_in_years_11_to_18"]', text: "11 to 18")
       expect(age_range_in_years_page.age_range_fields)
-          .to have_selector('[for="course_age_range_in_years_14_to_19"]', text: "14 to 19")
+        .to have_selector('[for="course_age_range_in_years_14_to_19"]', text: "14 to 19")
+      expect(age_range_in_years_page.age_range_fields)
+        .to have_selector('[for="course_age_range_in_years_other"]', text: "Another age range")
     end
 
     scenario "has the correct value selected" do
@@ -63,7 +65,24 @@ feature "Edit course age range in years", type: :feature do
         .to have_field("course_age_range_in_years_11_to_16", checked: true)
     end
 
-    scenario "can be updated" do
+    scenario "can be updated with a pre-determined age range" do
+      update_course_stub = stub_api_v2_request(
+        "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+        "/providers/#{provider.provider_code}" \
+        "/courses/#{course.course_code}",
+        course.to_jsonapi,
+        :patch, 200
+        )
+
+      choose("course_age_range_in_years_14_to_19")
+      click_on "Save"
+
+      expect(course_details_page).to be_displayed
+      expect(course_details_page.flash).to have_content("Your changes have been saved")
+      expect(update_course_stub).to have_been_requested
+    end
+
+    scenario "can be updated with a custom age range" do
       update_course_stub = stub_api_v2_request(
         "/recruitment_cycles/#{course.recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
@@ -72,7 +91,17 @@ feature "Edit course age range in years", type: :feature do
         :patch, 200
       )
 
-      choose("course_age_range_in_years_14_to_19")
+      choose("course_age_range_in_years_other")
+      click_on "Save"
+
+      expect(age_range_in_years_page).to be_displayed
+      expect(age_range_in_years_page.error_flash).to have_content(
+        "You’ll need to correct some information.\nEnter an age for both from and to Enter an age Enter an age",
+      )
+
+      fill_in("course_course_age_range_in_years_other_from", with: "16")
+      fill_in("course_course_age_range_in_years_other_to", with: "19")
+
       click_on "Save"
 
       expect(course_details_page).to be_displayed
