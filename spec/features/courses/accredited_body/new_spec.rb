@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Edit accredited body", type: :feature do
+feature "Edit accredited body" do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider) }
   let(:course) { build(:course, provider: provider) }

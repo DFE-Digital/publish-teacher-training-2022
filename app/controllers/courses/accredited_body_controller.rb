@@ -26,6 +26,9 @@ module Courses
     end
 
     def search_new
+      # These are not before_action hooks as they conflict with hooks
+      # defined within the CourseBasicDetailConcern and cannot be overridden
+      # without causing failures in other routes in this controller
       build_provider
       build_new_course
       build_previous_course_creation_params
