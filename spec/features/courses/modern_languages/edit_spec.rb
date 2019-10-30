@@ -91,6 +91,7 @@ feature "Edit course modern languages", type: :feature do
 
     scenario "can select multiple modern language subjects" do
       languages_page.load_with_course(course)
+      expect(page).to have_field("course_language_ids_#{french_subject.id}", checked: true)
       patch_course_stub = set_patch_course_expectation do |subjects|
         expect(subjects).to match_array([
                                           include("id" => modern_languages_subject.id.to_s),
@@ -106,12 +107,6 @@ feature "Edit course modern languages", type: :feature do
 
       expect(course_details_page).to be_displayed
       expect(patch_course_stub).to have_been_made
-    end
-
-    scenario "checks the current modern language subjects is selected" do
-      languages_page.load_with_course(course)
-
-      expect(page).to have_field("course_language_ids_#{french_subject.id}", checked: true)
     end
   end
 
