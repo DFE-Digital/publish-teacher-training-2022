@@ -52,21 +52,21 @@ feature "Edit course modern languages", type: :feature do
 
     scenario "can select multiple modern language subjects" do
       languages_page.load_with_course(course)
-      edit_languages_stub = stub_api_v2_resource(course, method: :patch)
+
+      patch_course_stub = set_patch_course_expectation do |subjects|
+        expect(subjects).to match_array([
+                                          include("id" => modern_languages_subject.id.to_s),
+                                          include("id" => french_subject.id.to_s),
+                                          include("id" => japanese_subject.id.to_s),
+                                        ])
+      end
 
       languages_page.languages_fields.find('[data-qa="checkbox_language_French"]').click
       languages_page.languages_fields.find('[data-qa="checkbox_language_Japanese"]').click
       languages_page.save.click
-      expect(course_details_page).to be_displayed
 
-      expect(edit_languages_stub.with do |request|
-        subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
-        expect(subjects).to match_array([
-          include("id" => modern_languages_subject.id.to_s),
-          include("id" => french_subject.id.to_s),
-          include("id" => japanese_subject.id.to_s),
-        ])
-      end).to have_been_made
+      expect(course_details_page).to be_displayed
+      expect(patch_course_stub).to have_been_made
     end
   end
 
@@ -91,22 +91,21 @@ feature "Edit course modern languages", type: :feature do
 
     scenario "can select multiple modern language subjects" do
       languages_page.load_with_course(course)
-      edit_languages_stub = stub_api_v2_resource(course, method: :patch)
+      patch_course_stub = set_patch_course_expectation do |subjects|
+        expect(subjects).to match_array([
+                                          include("id" => modern_languages_subject.id.to_s),
+                                          include("id" => russian_subject.id.to_s),
+                                          include("id" => japanese_subject.id.to_s),
+                                        ])
+      end
 
       languages_page.languages_fields.find('[data-qa="checkbox_language_French"]').click
       languages_page.languages_fields.find('[data-qa="checkbox_language_Russian"]').click
       languages_page.languages_fields.find('[data-qa="checkbox_language_Japanese"]').click
       languages_page.save.click
-      expect(course_details_page).to be_displayed
 
-      expect(edit_languages_stub.with do |request|
-        subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
-        expect(subjects).to match_array([
-          include("id" => modern_languages_subject.id.to_s),
-          include("id" => russian_subject.id.to_s),
-          include("id" => japanese_subject.id.to_s),
-        ])
-      end).to have_been_made
+      expect(course_details_page).to be_displayed
+      expect(patch_course_stub).to have_been_made
     end
 
     scenario "checks the current modern language subjects is selected" do
@@ -126,6 +125,15 @@ feature "Edit course modern languages", type: :feature do
     scenario "redirects to course details page" do
       languages_page.load_with_course(course)
       expect(course_details_page).to be_displayed
+    end
+  end
+
+private
+
+  def set_patch_course_expectation(&attribute_validator)
+    stub_api_v2_resource(course, method: :patch) do |request_body_json|
+      subjects = request_body_json["data"]["relationships"]["subjects"]["data"]
+      attribute_validator.call(subjects)
     end
   end
 end
