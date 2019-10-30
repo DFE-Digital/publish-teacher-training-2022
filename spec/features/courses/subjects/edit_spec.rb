@@ -3,6 +3,7 @@ require "rails_helper"
 feature "Edit course subjects", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:subjects_page) { PageObjects::Page::Organisations::CourseSubjects.new }
+  let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
   let(:languages_page) { PageObjects::Page::Organisations::CourseModernLanguages.new }
   let(:course_request_change_page) { PageObjects::Page::Organisations::CourseRequestChange.new }
   let(:provider) { build(:provider, site: site) }
