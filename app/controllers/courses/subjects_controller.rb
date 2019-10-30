@@ -6,7 +6,7 @@ module Courses
     include CourseBasicDetailConcern
 
     def update
-      if subjects_have_been_changed?
+      if subjects_have_not_been_changed?
         flash[:success] = "Your subject hasn't been changed"
         redirect_to(
           details_provider_recruitment_cycle_course_path(
@@ -32,7 +32,7 @@ module Courses
 
   private
 
-    def subjects_have_been_changed?
+    def subjects_have_not_been_changed?
       subjects_match?(selected_subjects, existing_non_language_subjects)
     end
 
