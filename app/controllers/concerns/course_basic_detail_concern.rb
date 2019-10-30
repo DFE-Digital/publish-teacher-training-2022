@@ -109,6 +109,7 @@ private
           :age_range_in_years,
           :master_subject_id,
           :funding_type,
+          :accrediting_provider_code,
           sites_ids: [],
           subjects_ids: [],
         )
@@ -154,6 +155,8 @@ private
       new_provider_recruitment_cycle_courses_study_mode_path(path_params)
     when :applications_open
       new_provider_recruitment_cycle_courses_applications_open_path(path_params)
+    when :accredited_body
+      new_provider_recruitment_cycle_courses_accredited_body_path(path_params)
     when :start_date
       new_provider_recruitment_cycle_courses_start_date_path(path_params)
     when :age_range

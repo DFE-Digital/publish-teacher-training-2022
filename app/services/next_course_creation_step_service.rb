@@ -17,6 +17,8 @@ class NextCourseCreationStepService
       :location
     when :location
       handle_location(current_provider)
+    when :accredited_body
+      :entry_requirements
     when :entry_requirements
       :applications_open
     when :applications_open
