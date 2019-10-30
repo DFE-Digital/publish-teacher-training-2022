@@ -16,18 +16,18 @@ feature "Edit accredited body", type: :feature do
   }
 
   before do
-    stub_omniauth
+    stub_omniauth(provider: provider)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_build_course
     stub_api_v2_build_course(level: "primary")
 
-    2.times do
-      visit new_provider_recruitment_cycle_courses_accredited_body_path(
-        provider.provider_code,
-        current_recruitment_cycle.year,
-        course: { level: "primary" },
-      )
-    end
+    visit signin_path
+    visit new_provider_recruitment_cycle_courses_accredited_body_path(
+      provider.provider_code,
+      current_recruitment_cycle.year,
+      course: { level: "primary" },
+    )
   end
 
   context "A provider with accredited bodies" do
