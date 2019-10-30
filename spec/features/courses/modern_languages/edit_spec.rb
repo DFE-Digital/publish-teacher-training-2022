@@ -99,9 +99,9 @@ feature "Edit course modern languages", type: :feature do
                                         ])
       end
 
-      languages_page.languages_fields.find('[data-qa="checkbox_language_French"]').click
-      languages_page.languages_fields.find('[data-qa="checkbox_language_Russian"]').click
-      languages_page.languages_fields.find('[data-qa="checkbox_language_Japanese"]').click
+      languages_page.language_checkbox("French").click
+      languages_page.language_checkbox("Russian").click
+      languages_page.language_checkbox("Japanese").click
       languages_page.save.click
 
       expect(course_details_page).to be_displayed

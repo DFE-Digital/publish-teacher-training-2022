@@ -6,6 +6,10 @@ module PageObjects
 
         element :languages_fields, '[data-qa="course__languages"]'
         element :save, '[data-qa="course__save"]'
+
+        def language_checkbox(name)
+          languages_fields.find("[data-qa=\"checkbox_language_#{name}\"]")
+        end
       end
     end
   end
