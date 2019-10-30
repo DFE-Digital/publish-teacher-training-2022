@@ -36,7 +36,7 @@ module Courses
 
     def new_language_subjects
       language_ids = params.dig(:course, :language_ids)
-      found_languages_ids = potential_languages_ids & language_ids
+      found_languages_ids = available_languages_ids & language_ids
 
       found_languages_ids.map do |language_id|
         Subject.new(id: language_id)
@@ -45,11 +45,11 @@ module Courses
 
     def old_non_language_subjects
       @course.subjects.reject do |subject|
-        potential_languages_ids.include?(subject.id)
+        available_languages_ids.include?(subject.id)
       end
     end
 
-    def potential_languages_ids
+    def available_languages_ids
       @course.meta[:edit_options][:modern_languages].map do |language|
         language["id"]
       end

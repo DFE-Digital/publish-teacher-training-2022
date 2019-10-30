@@ -116,7 +116,7 @@ feature "Edit course modern languages", type: :feature do
     end
   end
 
-  context "if no potential modern languages exist for the course" do
+  context "if no modern languages are available for the course" do
     let(:edit_options) do
       {
         modern_languages: nil,

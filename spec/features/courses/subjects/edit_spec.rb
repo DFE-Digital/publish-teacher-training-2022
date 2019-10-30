@@ -29,7 +29,7 @@ feature "Edit course subjects", type: :feature do
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
   end
 
-  context "with a given set of potential subjects" do
+  context "with a given set of available subjects" do
     let(:english_subject) { build(:subject, :english) }
     let(:subjects) { [english_subject, build(:subject, :biology)] }
     let(:edit_options) do
