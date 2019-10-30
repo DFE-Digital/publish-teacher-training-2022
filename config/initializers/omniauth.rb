@@ -40,6 +40,9 @@ module OmniAuth
         fail!(:timeout, e)
       rescue ::SocketError => e
         fail!(:failed_to_connect, e)
+      rescue Rack::OAuth2::Client::Error => e
+        Rails.logger.error "Auth failure, is Settings.dfe_signin.secret correct? #{e}"
+        raise
       end
     end
   end
