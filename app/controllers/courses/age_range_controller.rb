@@ -39,43 +39,37 @@ module Courses
     end
 
     def build_errors
-      from_and_to_error = "Enter an age in both From and To"
-      from_missing_error = "Enter an age in From"
-      to_missing_error = "Enter an age in To"
-      from_invalid_error = "Enter a valid age in From"
-      to_invalid_error = "Enter a valid age in To"
-
       if age_range_from_and_to_missing?
         return {
-          age_range_in_years: [from_and_to_error],
-          age_range_in_years_from: [from_missing_error],
-          age_range_in_years_to: [to_missing_error],
+          age_range_in_years: [t("age_range.errors.from_and_to_error")],
+          age_range_in_years_from: [t("age_range.errors.from_missing_error")],
+          age_range_in_years_to: [t("age_range.errors.to_missing_error")],
         }
       end
 
       if age_range_from_missing?
         return {
-          age_range_in_years_from: [from_missing_error],
+          age_range_in_years_from: [t("age_range.errors.from_missing_error")],
         }
       end
 
       if age_range_to_missing?
         return {
-          age_range_in_years_to: [to_missing_error],
+          age_range_in_years_to: [t("age_range.errors.to_missing_error")],
         }
       end
 
       if age_range_from_invalid?
         return {
-          age_range_in_years: [from_invalid_error],
-          age_range_in_years_from: [from_invalid_error],
+          age_range_in_years: [t("age_range.errors.from_invalid_error")],
+          age_range_in_years_from: [t("age_range.errors.from_invalid_error")],
         }
       end
 
       if age_range_less_than_4?
         {
-          age_range_in_years: [to_invalid_error],
-          age_range_in_years_to: [to_invalid_error],
+          age_range_in_years: [t("age_range.errors.to_invalid_error")],
+          age_range_in_years_to: [t("age_range.errors.to_invalid_error")],
         }
       end
     end
