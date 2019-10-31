@@ -5,6 +5,7 @@ describe CourseDecorator do
   let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
   let(:provider) { build(:provider, accredited_body?: false) }
   let(:english) { build(:subject, :english) }
+  let(:biology) { build(:subject, :biology) }
   let(:mathematics) { build(:subject, :mathematics) }
   let(:subjects) { [english, mathematics] }
 
@@ -183,6 +184,16 @@ describe CourseDecorator do
         [english.subject_name, english.id],
         [mathematics.subject_name, mathematics.id],
       ])
+    end
+  end
+
+  describe "#subject_present?" do
+    it "returns true when the subject id exists" do
+      expect(decorated_course.subject_present?(english)).to eq(true)
+    end
+
+    it "returns true when the subject id does not exists" do
+      expect(decorated_course.subject_present?(biology)).to eq(false)
     end
   end
 end
