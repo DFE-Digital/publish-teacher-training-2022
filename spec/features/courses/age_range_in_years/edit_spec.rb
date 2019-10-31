@@ -74,8 +74,8 @@ feature "Edit course age range in years", type: :feature do
         :patch, 200
         )
 
-      choose("course_age_range_in_years_14_to_19")
-      click_on "Save"
+      age_range_in_years_page.age_range_14_to_19.click
+      age_range_in_years_page.save.click
 
       expect(course_details_page).to be_displayed
       expect(course_details_page.flash).to have_content("Your changes have been saved")
@@ -91,12 +91,10 @@ feature "Edit course age range in years", type: :feature do
         :patch, 200
       )
 
-      choose("course_age_range_in_years_other")
-
-      fill_in("course_course_age_range_in_years_other_from", with: "14")
-      fill_in("course_course_age_range_in_years_other_to", with: "19")
-
-      click_on "Save"
+      age_range_in_years_page.age_range_other.click
+      age_range_in_years_page.age_range_from_field.set("14")
+      age_range_in_years_page.age_range_to_field.set("19")
+      age_range_in_years_page.save.click
 
       expect(course_details_page).to be_displayed
       expect(course_details_page.flash).to have_content("Your changes have been saved")
@@ -105,8 +103,8 @@ feature "Edit course age range in years", type: :feature do
 
     context "displaying errors for custom age range selection" do
       scenario "From and To ages is missing" do
-        choose("course_age_range_in_years_other")
-        click_on "Save"
+        age_range_in_years_page.age_range_other.click
+        age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page.error_flash).to have_content(
@@ -115,9 +113,9 @@ feature "Edit course age range in years", type: :feature do
       end
 
       scenario "From age is missing" do
-        choose("course_age_range_in_years_other")
-        fill_in("course_course_age_range_in_years_other_from", with: "16")
-        click_on "Save"
+        age_range_in_years_page.age_range_other.click
+        age_range_in_years_page.age_range_from_field.set("16")
+        age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page.error_flash).to have_content(
@@ -126,9 +124,9 @@ feature "Edit course age range in years", type: :feature do
       end
 
       scenario "To age is missing" do
-        choose("course_age_range_in_years_other")
-        fill_in("course_course_age_range_in_years_other_to", with: "19")
-        click_on "Save"
+        age_range_in_years_page.age_range_other.click
+        age_range_in_years_page.age_range_to_field.set("19")
+        age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page.error_flash).to have_content(
@@ -137,10 +135,10 @@ feature "Edit course age range in years", type: :feature do
       end
 
       scenario "From age is greater then To age" do
-        choose("course_age_range_in_years_other")
-        fill_in("course_course_age_range_in_years_other_from", with: "19")
-        fill_in("course_course_age_range_in_years_other_to", with: "17")
-        click_on "Save"
+        age_range_in_years_page.age_range_other.click
+        age_range_in_years_page.age_range_from_field.set("19")
+        age_range_in_years_page.age_range_to_field.set("17")
+        age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page.error_flash).to have_content(
@@ -149,10 +147,10 @@ feature "Edit course age range in years", type: :feature do
       end
 
       scenario "To age is 4 years less than From age" do
-        choose("course_age_range_in_years_other")
-        fill_in("course_course_age_range_in_years_other_from", with: "16")
-        fill_in("course_course_age_range_in_years_other_to", with: "17")
-        click_on "Save"
+        age_range_in_years_page.age_range_other.click
+        age_range_in_years_page.age_range_from_field.set("17")
+        age_range_in_years_page.age_range_to_field.set("17")
+        age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page.error_flash).to have_content(
