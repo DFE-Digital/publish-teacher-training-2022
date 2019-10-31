@@ -12,8 +12,8 @@
   <div class="govuk-radios__divider">or</div>
   <div class="govuk-radios__item">
     <%= form.radio_button :age_range_in_years, 'other', class: 'govuk-radios__input', data: {"aria-controls" => "other-container" },
-      checked: course.other_age_range? && course.age_range_in_years.present?,
-      aria: { describedby: @errors && @errors[:age_range_in_years] ? "course_age_range_in_years-error" : '' } %>
+      checked: (course.other_age_range? && course.age_range_in_years.present?) || (@errors && (@errors[:age_range_in_years_to].present? || @errors[:age_range_in_years_from].present?)),
+      aria: { describedby: @errors && @errors[:age_range_in_years_other] ? "course_age_range_in_years-error" : '' } %>
     <%= form.label :age_range_in_years, t("edit_options.age_range_in_years.other.label"), value: 'other', class: 'govuk-label govuk-radios__label' %>
   </div>
   <div class="govuk-radios__conditional <%= 'govuk-radios__conditional--hidden' if !course.other_age_range? %>" id="other-container">

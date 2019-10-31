@@ -92,14 +92,8 @@ feature "Edit course age range in years", type: :feature do
       )
 
       choose("course_age_range_in_years_other")
-      click_on "Save"
 
-      expect(age_range_in_years_page).to be_displayed
-      expect(age_range_in_years_page.error_flash).to have_content(
-        "You’ll need to correct some information.\nEnter an age for both from and to Enter an age Enter an age",
-      )
-
-      fill_in("course_course_age_range_in_years_other_from", with: "16")
+      fill_in("course_course_age_range_in_years_other_from", with: "14")
       fill_in("course_course_age_range_in_years_other_to", with: "19")
 
       click_on "Save"
@@ -107,6 +101,64 @@ feature "Edit course age range in years", type: :feature do
       expect(course_details_page).to be_displayed
       expect(course_details_page.flash).to have_content("Your changes have been saved")
       expect(update_course_stub).to have_been_requested
+    end
+
+    context "displaying errors for custom age range selection" do
+      scenario "From and To ages is missing" do
+        choose("course_age_range_in_years_other")
+        click_on "Save"
+
+        expect(age_range_in_years_page).to be_displayed
+        expect(age_range_in_years_page.error_flash).to have_content(
+          "You’ll need to correct some information.\nEnter an age in both From and To",
+        )
+      end
+
+      scenario "From age is missing" do
+        choose("course_age_range_in_years_other")
+        fill_in("course_course_age_range_in_years_other_from", with: "16")
+        click_on "Save"
+
+        expect(age_range_in_years_page).to be_displayed
+        expect(age_range_in_years_page.error_flash).to have_content(
+          "You’ll need to correct some information.\nEnter an age in To",
+        )
+      end
+
+      scenario "To age is missing" do
+        choose("course_age_range_in_years_other")
+        fill_in("course_course_age_range_in_years_other_to", with: "19")
+        click_on "Save"
+
+        expect(age_range_in_years_page).to be_displayed
+        expect(age_range_in_years_page.error_flash).to have_content(
+          "You’ll need to correct some information.\nEnter an age in From",
+        )
+      end
+
+      scenario "From age is greater then To age" do
+        choose("course_age_range_in_years_other")
+        fill_in("course_course_age_range_in_years_other_from", with: "19")
+        fill_in("course_course_age_range_in_years_other_to", with: "17")
+        click_on "Save"
+
+        expect(age_range_in_years_page).to be_displayed
+        expect(age_range_in_years_page.error_flash).to have_content(
+          "You’ll need to correct some information.\nEnter a valid age in From",
+        )
+      end
+
+      scenario "To age is 4 years less than From age" do
+        choose("course_age_range_in_years_other")
+        fill_in("course_course_age_range_in_years_other_from", with: "16")
+        fill_in("course_course_age_range_in_years_other_to", with: "17")
+        click_on "Save"
+
+        expect(age_range_in_years_page).to be_displayed
+        expect(age_range_in_years_page.error_flash).to have_content(
+          "You’ll need to correct some information.\nEnter a valid age in To",
+         )
+      end
     end
   end
 
