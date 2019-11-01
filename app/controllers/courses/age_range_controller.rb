@@ -6,7 +6,10 @@ module Courses
 
     def update
       @errors = build_errors
-      return render :edit if @errors.present?
+      if @errors.present?
+        @course.age_range_in_years = "#{age_from_param}_to_#{age_to_param}"
+        return render :edit
+      end
 
       update_age_range_param
 
@@ -28,11 +31,7 @@ module Courses
   private
 
     def update_age_range_param
-      if valid_custom_age_range?
-        params[:course][:age_range_in_years] = "#{age_from_param}_to_#{age_to_param}"
-      elsif age_range_is_other?
-        params[:course][:age_range_in_years] = nil
-      end
+      params[:course][:age_range_in_years] = "#{age_from_param}_to_#{age_to_param}" if valid_custom_age_range?
     end
 
     def valid_custom_age_range?
@@ -40,13 +39,59 @@ module Courses
     end
 
     def build_errors
-      if age_range_is_other? && (age_from_param.blank? || age_to_param.blank?)
-        {
-          age_range_in_years: ["Enter an age for both from and to"],
-          age_range_in_years_from: ["Enter an age"],
-          age_range_in_years_to: ["Enter an age"],
+      if age_range_from_and_to_missing?
+        return {
+          age_range_in_years: [t("age_range.errors.from_and_to_error")],
+          age_range_in_years_from: [t("age_range.errors.from_missing_error")],
+          age_range_in_years_to: [t("age_range.errors.to_missing_error")],
         }
       end
+
+      if age_range_from_missing?
+        return {
+          age_range_in_years_from: [t("age_range.errors.from_missing_error")],
+        }
+      end
+
+      if age_range_to_missing?
+        return {
+          age_range_in_years_to: [t("age_range.errors.to_missing_error")],
+        }
+      end
+
+      if age_range_from_invalid?
+        return {
+          age_range_in_years: [t("age_range.errors.from_invalid_error")],
+          age_range_in_years_from: [t("age_range.errors.from_invalid_error")],
+        }
+      end
+
+      if age_range_less_than_4?
+        {
+          age_range_in_years: [t("age_range.errors.to_invalid_error")],
+          age_range_in_years_to: [t("age_range.errors.to_invalid_error")],
+        }
+      end
+    end
+
+    def age_range_less_than_4?
+      age_range_is_other? && ((age_to_param.to_i - age_from_param.to_i).abs < 4)
+    end
+
+    def age_range_from_invalid?
+      age_range_is_other? && (age_from_param.to_i > age_to_param.to_i)
+    end
+
+    def age_range_from_and_to_missing?
+      age_range_is_other? && (age_from_param.blank? && age_to_param.blank?)
+    end
+
+    def age_range_from_missing?
+      age_range_is_other? && (age_from_param.blank? && age_to_param.present?)
+    end
+
+    def age_range_to_missing?
+      age_range_is_other? && (age_from_param.present? && age_to_param.blank?)
     end
 
     def age_to_param

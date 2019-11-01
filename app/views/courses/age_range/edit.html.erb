@@ -3,14 +3,13 @@
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render 'errors' %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: course,
           url: age_range_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
           method: :put do |form| %>
-
       <div
         class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years]&.any?) %>"
         data-qa="course__age_range_in_years">
