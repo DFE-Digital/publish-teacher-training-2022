@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def render_unauthorized
     # Backend responds with 401 if there is no matching record in the users table.
-    # Show the "We don’t know which organisation you’re part of" page to give users a route
+    # Show the "We don't know which organisation you're part of" page to give users a route
     # to getting access
     render "providers/no_providers", status: :unauthorized
   end
@@ -30,8 +30,16 @@ class ApplicationController < ActionController::Base
     if session[:auth_user]
       @current_user ||= session[:auth_user]
     elsif development_mode_auth?
-      email = authenticate_with_http_basic { |u, p| p == development_mode_password(u) && u }
-      setup_development_mode_session(email) if email
+      email = authenticate_with_http_basic do |user, pass|
+        user if authorise_development_mode?(user, pass)
+      end
+      if email.present?
+        setup_development_mode_session(
+          email: Settings.authorised_user.email,
+          first_name: Settings.authorised_user.first_name,
+          last_name: Settings.authorised_user.last_name,
+        )
+      end
     end
   end
 
@@ -46,7 +54,7 @@ class ApplicationController < ActionController::Base
   end
 
   def development_mode_auth?
-    Settings.key?(:authorised_users)
+    !Rails.env.production? && Settings.key?(:authorised_user)
   end
 
   def authenticate
@@ -65,7 +73,7 @@ class ApplicationController < ActionController::Base
       end
 
     elsif development_mode_auth?
-      logger.debug("Develepmont mode authenticated " + log_safe_current_user.to_s)
+      logger.debug("Doing development mode authentication")
       request_http_basic_authentication("Development Mode")
     else
       logger.debug("Authenticated user session not found " + {
@@ -95,19 +103,18 @@ class ApplicationController < ActionController::Base
 
 private
 
-  def development_mode_password(email)
-    Rails.env.development? && Settings&.authorised_users&.[](email)
+  def authorise_development_mode?(email, password)
+    Settings.authorised_user.email == email &&
+      Settings.authorised_user.password == password
   end
 
-  def setup_development_mode_session(email)
+  def setup_development_mode_session(email:, first_name:, last_name:)
     session[:auth_user] = HashWithIndifferentAccess.new(
       uid: SecureRandom.uuid,
       info: HashWithIndifferentAccess.new(
         email: email,
-        # We don't have the user's name here, but it doesn't matter what we send
-        # to the backend since we're in development mode now anyway, right??!
-        first_name: "Development",
-        last_name: "User",
+        first_name: first_name,
+        last_name: last_name,
       ),
       credentials: HashWithIndifferentAccess.new(
         id_token: "id_token",

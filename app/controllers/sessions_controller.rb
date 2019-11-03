@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
   def signout
     if current_user.present?
       if development_mode_auth?
-        # Dissapointingly, with HTTP basic auth it's trick to really log
+        # Disappointingly, with HTTP basic auth it's trick to really log
         # someone out, since the browser just holds onto the user's username /
         # password and re-submits it until their session ends. So they'll just
         # create a new session after this "logout".
