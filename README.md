@@ -106,3 +106,20 @@ To track exceptions through Sentry, configure the `SENTRY_DSN` environment varia
 ```
 SENTRY_DSN=https://aaa:bbb@sentry.io/123 rails s
 ```
+
+
+## Using Basic Auth Instead of DFE Sign-In
+
+For local development, you can disable reliance on DFE Sign-In by creating a
+file `config/settings/development.local.yml` with the contents:
+
+```yaml
+authorised_user:
+  first_name: [your first name, this will be updated in the db]
+  last_name: [your last name, this will be updated in the db]
+  email: [the email address to login with]
+  password: [the password you wish to use]
+```
+
+The email address has to exist in the users table of manage-courses-backend, but
+the password can be any non-secure local password you care to use.

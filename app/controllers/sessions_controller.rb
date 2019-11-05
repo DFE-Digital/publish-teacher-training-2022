@@ -31,7 +31,21 @@ class SessionsController < ApplicationController
 
   def signout
     if current_user.present?
-      redirect_to "#{Settings.dfe_signin.issuer}/session/end?id_token_hint=#{current_user['credentials']['id_token']}&post_logout_redirect_uri=#{Settings.dfe_signin.base_url}/auth/dfe/signout"
+      if development_mode_auth?
+        # Disappointingly, with HTTP basic auth it's trick to really log
+        # someone out, since the browser just holds onto the user's username /
+        # password and re-submits it until their session ends. So they'll just
+        # create a new session after this "logout".
+        reset_session
+        redirect_to root_path
+      else
+        uri = URI("#{Settings.dfe_signin.issuer}/session/end")
+        uri.query = {
+          id_token_hint: current_user["credentials"]["id_token"],
+          post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
+        }.to_query
+        redirect_to uri.to_s
+      end
     else
       redirect_to root_path
     end

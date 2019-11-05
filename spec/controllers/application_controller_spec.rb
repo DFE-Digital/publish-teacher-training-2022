@@ -8,6 +8,10 @@ describe ApplicationController, type: :controller do
   describe "#authenticate" do
     subject { controller.authenticate }
 
+    before do
+      disable_authorised_development_user
+    end
+
     context "user is unauthenticated" do
       it { should redirect_to "/signin" }
     end

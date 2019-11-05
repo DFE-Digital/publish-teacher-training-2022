@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def render_unauthorized
     # Backend responds with 401 if there is no matching record in the users table.
-    # Show the "We don’t know which organisation you’re part of" page to give users a route
+    # Show the "We don't know which organisation you're part of" page to give users a route
     # to getting access
     render "providers/no_providers", status: :unauthorized
   end
@@ -27,7 +27,20 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    @current_user ||= session[:auth_user] if session[:auth_user]
+    if session[:auth_user]
+      @current_user ||= session[:auth_user]
+    elsif development_mode_auth?
+      email = authenticate_with_http_basic do |user, pass|
+        user if authorise_development_mode?(user, pass)
+      end
+      if email.present?
+        setup_development_mode_session(
+          email: Settings.authorised_user.email,
+          first_name: Settings.authorised_user.first_name,
+          last_name: Settings.authorised_user.last_name,
+        )
+      end
+    end
   end
 
   def log_safe_current_user(reload: false)
@@ -38,6 +51,10 @@ class ApplicationController < ActionController::Base
       @log_safe_current_user["email_md5"] = Digest::MD5.hexdigest(email)
     end
     @log_safe_current_user
+  end
+
+  def development_mode_auth?
+    !Rails.env.production? && Settings.key?(:authorised_user)
   end
 
   def authenticate
@@ -55,6 +72,9 @@ class ApplicationController < ActionController::Base
         logger.debug { "User session set. " + log_safe_current_user(reload: true).to_s }
       end
 
+    elsif development_mode_auth?
+      logger.debug("Doing development mode authentication")
+      request_http_basic_authentication("Development Mode")
     else
       logger.debug("Authenticated user session not found " + {
                      redirect_back_to: request.path,
@@ -82,6 +102,25 @@ class ApplicationController < ActionController::Base
   end
 
 private
+
+  def authorise_development_mode?(email, password)
+    Settings.authorised_user.email == email &&
+      Settings.authorised_user.password == password
+  end
+
+  def setup_development_mode_session(email:, first_name:, last_name:)
+    session[:auth_user] = HashWithIndifferentAccess.new(
+      uid: SecureRandom.uuid,
+      info: HashWithIndifferentAccess.new(
+        email: email,
+        first_name: first_name,
+        last_name: last_name,
+      ),
+      credentials: HashWithIndifferentAccess.new(
+        id_token: "id_token",
+      ),
+    )
+  end
 
   def user_has_not_accepted_terms(response_body)
     return false unless response_body.is_a?(Hash)

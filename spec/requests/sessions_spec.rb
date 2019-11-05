@@ -7,7 +7,11 @@ describe "Sessions", type: :request do
       get(auth_dfe_callback_path)
 
       get(signout_path)
-      expect(response).to redirect_to("#{Settings.dfe_signin.issuer}/session/end?id_token_hint=&post_logout_redirect_uri=https://localhost:3000/auth/dfe/signout")
+      expect(response).to(
+        redirect_to(
+          "#{Settings.dfe_signin.issuer}/session/end?id_token_hint=&post_logout_redirect_uri=https%3A%2F%2Flocalhost%3A3000%2Fauth%2Fdfe%2Fsignout",
+        ),
+      )
     end
 
     context "user session is not present" do
