@@ -35,8 +35,9 @@ Rails.application.routes.draw do
     get "/courses/:course_code/delete", to: redirect("/organisations/%{provider_code}/#{Settings.current_cycle}/courses/%{course_code}/delete")
     get "/courses/:course_code/preview", to: redirect("/organisations/%{provider_code}/#{Settings.current_cycle}/courses/%{course_code}/preview")
 
-    get "/request-access", on: :member, to: "access_requests#new"
-    post "/request-access", on: :member, to: "access_requests#create"
+
+    get "/request-access", on: :member, to: "providers/access_requests#new"
+    post "/request-access", on: :member, to: "providers/access_requests#create"
 
     resource :ucas_contacts, path: "ucas-contacts", on: :member, only: %i[show] do
       get "/alerts", on: :member, to: "ucas_contacts#alerts"
