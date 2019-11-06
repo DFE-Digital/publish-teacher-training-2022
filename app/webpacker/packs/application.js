@@ -1,3 +1,5 @@
+require.context("govuk-frontend/govuk/assets");
+
 import "../stylesheets/application.scss";
 import "accessible-autocomplete/dist/accessible-autocomplete.min.css";
 import { initAll } from "govuk-frontend";

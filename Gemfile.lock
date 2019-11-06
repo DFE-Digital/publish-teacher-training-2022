@@ -141,7 +141,6 @@ GEM
       dry-inflector (~> 0.1, >= 0.1.2)
       dry-logic (~> 1.0)
     erubi (1.9.0)
-    execjs (2.7.0)
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
     factory_bot_rails (5.1.1)
@@ -413,8 +412,6 @@ GEM
     trollop (1.16.2)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (1.6.0)
     validate_email (0.1.6)
       activemodel (>= 3.0)
@@ -499,7 +496,6 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   super_diff
   tzinfo-data
-  uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
   webdrivers (~> 4.1)
   webmock
