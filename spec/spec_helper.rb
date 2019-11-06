@@ -12,7 +12,7 @@ SimpleCov.start
 if ENV["PARALLEL_TEST_GROUPS"]
   SimpleCov.at_exit do
     result = SimpleCov.result
-    result.format! if ParallelTests.number_of_running_processes >= 1
+    result.format! if ParallelTests.number_of_running_processes <= 1
   end
 end
 
