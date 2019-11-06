@@ -43,16 +43,31 @@ docker-compose up --build
 
 _Warning_: Running docker seems to slow down local development significantly on macOS.
 
-## Running specs and linter (SCSS and Ruby)
-
-```
-bundle exec rake
-```
 
 ## Running specs
 
 ```
 bundle exec rspec
+```
+
+## Running specs in parallel
+
+```
+# This uses the max available cores
+bundle exec rails parallel:spec
+
+# Modify the number of cores
+bundle exec rails parallel:spec[number]
+```
+
+## Running specs and linter (SCSS and Ruby)
+
+NB: This will run specs in parallel using the maximum cores available. To change
+the number of cores set the following environment variable -
+`PARALLEL_CORES`.
+
+```
+bundle exec rake
 ```
 
 Or through guard (`--no-interactions` allows the use of `pry` inside tests):

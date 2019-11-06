@@ -75,6 +75,9 @@ group :development, :test do
   gem "pry-byebug"
   gem "pry-rails"
 
+  # Run specs locally in parallel
+  gem "parallel_tests"
+
   # Testing framework
   gem "rspec-rails", "~> 4.0.0.beta3"
 
@@ -117,6 +120,7 @@ group :test do
 
   # Show test coverage %
   gem "simplecov", require: false
+  gem "simplecov-console"
 
   # Make diffs of Ruby objects much more readable
   gem "super_diff"
