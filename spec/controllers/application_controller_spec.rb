@@ -109,7 +109,7 @@ describe ApplicationController, type: :controller do
           allow(Session).to receive(:create)
                               .with(first_name: user_info[:first_name],
                                     last_name: user_info[:last_name])
-                              .and_return(double(id: user_id, state: "new"))
+                              .and_return(double(id: user_id, state: "new", admin: true))
           allow(Provider).to receive_message_chain(:where, :all)
                                .and_return(%w[one two])
 
@@ -134,6 +134,11 @@ describe ApplicationController, type: :controller do
         it "has set user_id" do
           expect(controller.request.session[:auth_user]["user_id"])
             .to eq user_id
+        end
+
+        it "has set admin" do
+          expect(controller.request.session[:auth_user]["admin"])
+            .to eq true
         end
 
         it "has set provider_count" do

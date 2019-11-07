@@ -7,6 +7,7 @@ FactoryBot.define do
     last_name  { Faker::Name.last_name }
     email      { Faker::Internet.safe_email(name: "#{first_name} #{last_name}") }
     state      { "rolled_over" }
+    admin      { false }
     accept_terms_date_utc { Time.current }
 
     trait :new do
@@ -19,6 +20,10 @@ FactoryBot.define do
 
     trait :inactive do
       accept_terms_date_utc { nil }
+    end
+
+    trait :admin do
+      admin { true }
     end
   end
 end
