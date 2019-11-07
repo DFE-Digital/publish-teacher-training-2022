@@ -9,7 +9,7 @@ Rake::Task["default"].clear
 
 task :default do
   cores = ENV['PARALLEL_CORES']
-  Rake::Task["parallel"].invoke(cores)
+  Rake::Task["parallel:spec"].invoke(cores)
   Rake::Task["lint:ruby"].invoke
   Rake::Task["lint:scss"].invoke
 end
