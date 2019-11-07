@@ -1,5 +1,16 @@
+@function frontend-font-url($filename) {
+  @return url("~assets/fonts/" + $filename);
+}
+
+@function frontend-image-url($filename) {
+  @return url("~assets/images/" + $filename);
+}
+
+$govuk-font-url-function: frontend-font-url;
+$govuk-image-url-function: frontend-image-url;
 $success-green: #00823b;
-@import "../../../node_modules/govuk-frontend/govuk/all";
+
+@import "~govuk-frontend/govuk/all";
 
 // Not in design system:
 $button-colour: #00823b;
