@@ -150,6 +150,7 @@ private
                           last_name: current_user_info[:last_name])
     session[:auth_user]["user_id"] = user.id
     session[:auth_user]["state"] = user.state
+    session[:auth_user]["admin"] = user.admin
 
     add_provider_count_cookie
 

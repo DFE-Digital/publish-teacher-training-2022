@@ -13,6 +13,7 @@ module Helpers
         "email"      => user.email,
         "id"         => user.id,
         "state"      => user.state,
+        "admin"      => user.admin,
       },
       "credentials" => {
         "token_id" => "123",
