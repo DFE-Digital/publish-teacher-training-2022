@@ -1,0 +1,14 @@
+<tr class="govuk-table__row" data-qa="access-request">
+  <td class="govuk-table__cell"><%= access_request.id %></td>
+  <td class="govuk-table__cell"><%= access_request.request_date_utc&.to_date.to_s(:long) %></td>
+  <td class="govuk-table__cell"><%= user_details(access_request.requester) %></td>
+  <td class="govuk-table__cell">
+    <%= access_request.first_name %>
+    <%= access_request.first_name %>
+    &lt;<%= access_request.email_address %>&gt;
+  </td>
+  <td class="govuk-table__cell">
+    <%#= button_to "Approve", approve_access_request_path(access_request.id), :class => "govuk-button govuk-!-margin-bottom-0" %>
+  </td>
+  <td class="govuk-table__cell"><%= access_request.organisation %></td>
+</tr>

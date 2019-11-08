@@ -1,0 +1,55 @@
+<%= form_for @emailed_access_request, url: {action: "preview"}, method: "get" do |f| %>
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+      <h1 class="govuk-fieldset__heading">
+        Create access request
+      </h1>
+    </legend>
+
+    <p class="govuk-body">
+      Use this form to create an access request and approve it immediately.
+    </p>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if @emailed_access_request.errors[:requester_email].present? %>">
+      <%= f.label :requester_email, "Requester email", class: "govuk-label" %>
+      <% (@emailed_access_request.errors[:requester_email] || []).each.with_index do |error, n| %>
+        <span id="requester-email-error-<%= n %>" class="govuk-error-message">
+          <%= error %>
+        </span>
+      <% end %>
+      <%= f.email_field :requester_email, class: "govuk-input govuk-input--width-20", required: true %>
+    </div>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if @emailed_access_request.errors[:target_email].present? %>">
+      <%= f.label :target_email, "Target email", class: "govuk-label" %>
+      <% (@emailed_access_request.errors[:target_email] || []).each.with_index do |error, n| %>
+        <span id="target-email-error-<%= n %>" class="govuk-error-message">
+          <%= error %>
+        </span>
+      <% end %>
+      <%= f.email_field :target_email, class: "govuk-input govuk-input--width-20", required: true %>
+    </div>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if @emailed_access_request.errors[:first_name].present? %>">
+      <%= f.label :first_name, "First name", class: "govuk-label" %>
+      <% (@emailed_access_request.errors[:first_name] || []).each.with_index do |error, n| %>
+        <span id="first-name-error-<%= n %>" class="govuk-error-message">
+          <%= error %>
+        </span>
+      <% end %>
+      <%= f.text_field :first_name, class: "govuk-input govuk-input--width-20", required: true %>
+    </div>
+
+    <div class="govuk-form-group <%= "govuk-form-group--error" if @emailed_access_request.errors[:last_name].present? %>">
+      <%= f.label :last_name, "Last name", class: "govuk-label" %>
+      <% (@emailed_access_request.errors[:last_name] || []).each.with_index do |error, n| %>
+        <span id="last-name-error-<%= n %>" class="govuk-error-message">
+          <%= error %>
+        </span>
+      <% end %>
+      <%= f.text_field :last_name, class: "govuk-input govuk-input--width-20", required: true %>
+    </div>
+
+    <%= f.submit "Preview", class: 'govuk-button' %>
+  </fieldset>
+<% end %>

@@ -1,5 +1,11 @@
 module Providers
   class AccessRequestsController < ApplicationController
+    def index
+      @access_requests = AccessRequest
+                           .includes(:requester)
+                           .all
+    end
+
     def new
       @access_request = AccessRequest.new
     end

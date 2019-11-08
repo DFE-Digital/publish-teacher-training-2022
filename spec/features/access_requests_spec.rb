@@ -8,6 +8,26 @@ feature "Access Requests", type: :feature do
     stub_omniauth
   end
 
+  describe "index page" do
+    let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
+
+    before do
+      #stub_api_v2_request("/access_requests", [build(:access_request)], :get)
+      access_request = build(:access_request)
+      stub_api_v2_resource(access_request, include: "requester")
+      # stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
+      # stub_api_v2_request(
+      #   "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}",
+      #   provider.to_jsonapi,
+      # )
+    end
+
+    it "lists all access requests" do
+      visit access_requests_path
+      expect(list_access_requests_page.access_requests.count).to eq(1)
+    end
+  end
+
   context "without validation errors" do
     before do
       stub_api_v2_request("/access_requests", nil, :post)

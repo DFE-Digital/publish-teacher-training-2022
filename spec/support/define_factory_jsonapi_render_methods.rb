@@ -23,6 +23,7 @@ FactoryBot.define do
           User: UserSerializer,
           ProviderSuggestion: ProviderSuggestionSerializer,
           Subject: SubjectSerializer,
+          AccessRequest: AccessRequestSerializer,
         },
         include: opts[:include],
       )

@@ -163,6 +163,8 @@ private
       "#{base_url}/#{resource.provider_code}"
     elsif resource.is_a?(Course)
       "#{base_url}/#{resource.course_code}"
+    else
+      base_url
     end
   end
 
@@ -173,6 +175,8 @@ private
       url_for_resource(resource.recruitment_cycle) + "/providers"
     elsif resource.is_a? Course
       url_for_resource(resource.provider) + "/courses"
+    elsif resource.is_a? AccessRequest
+      "/access_requests"
     end
   end
 
