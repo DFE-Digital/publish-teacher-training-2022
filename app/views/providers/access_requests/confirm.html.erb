@@ -1,0 +1,22 @@
+<% content_for :heading do %>
+  Approve new access for <%= @access_request.recipient.decorate.full_name %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Recipient</th>
+          <td class="govuk-table__cell "><%= user_details(@access_request.recipient) if @access_request.recipient %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Will receive access to</th>
+          <td class="govuk-table__cell "><%= @access_request.organisation %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= button_to "Approve", approve_access_request_path(@access_request.id), :class => "govuk-button govuk-!-margin-bottom-0", data: { qa: "access-request__approve" } %>

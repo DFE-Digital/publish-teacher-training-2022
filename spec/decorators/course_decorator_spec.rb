@@ -9,7 +9,7 @@ describe CourseDecorator do
   let(:mathematics) { build(:subject, :mathematics) }
   let(:subjects) { [english, mathematics] }
 
-  let(:course) {
+  let(:course) do
     build :course,
           course_code: "A1",
           name: "Mathematics",
@@ -24,7 +24,8 @@ describe CourseDecorator do
           open_for_applications?: true,
           last_published_at: "2019-03-05T14:42:34Z",
           recruitment_cycle: current_recruitment_cycle
-  }
+  end
+
   let(:site) { build(:site) }
   let(:site_status) do
     build(:site_status, :full_time_and_part_time, site: site)

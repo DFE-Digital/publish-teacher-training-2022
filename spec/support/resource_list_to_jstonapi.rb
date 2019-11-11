@@ -15,7 +15,7 @@ def resource_list_to_jsonapi(resource_list, **opts)
       User: UserSerializer,
       ProviderSuggestion: ProviderSuggestionSerializer,
       Subject: SubjectSerializer,
-      AccessRequest: AccessRequest,
+      AccessRequest: AccessRequestSerializer,
     },
     include: opts[:include],
     meta: opts[:meta],

@@ -22,7 +22,6 @@ module Helpers
 
     # This is needed because we check the provider count on all pages
     # TODO: Move this to be returned with the user.
-    #AHHHHHHHHH
     stub_api_v2_request(
       "/recruitment_cycles/#{Settings.current_cycle}/providers",
       provider.to_jsonapi,
@@ -125,7 +124,7 @@ module Helpers
     url = url_for_resource_collection(resources.first)
     url += "?#{query_params.to_param}" if query_params.any?
 
-    jsonapi_response ||= resource_list_to_jsonapi(resources)
+    jsonapi_response ||= resource_list_to_jsonapi(resources, include: include)
     stub_api_v2_request(url, jsonapi_response)
   end
 
@@ -156,16 +155,8 @@ private
 
   def url_for_resource(resource)
     base_url = url_for_resource_collection(resource)
-
-    if resource.is_a?(RecruitmentCycle)
-      "#{base_url}/#{resource.year}"
-    elsif resource.is_a?(Provider)
-      "#{base_url}/#{resource.provider_code}"
-    elsif resource.is_a?(Course)
-      "#{base_url}/#{resource.course_code}"
-    else
-      base_url
-    end
+    id = resource[resource.class.primary_key]
+    "#{base_url}/#{id}"
   end
 
   def url_for_resource_collection(resource)

@@ -10,6 +10,17 @@ module Providers
       @access_request = AccessRequest.new
     end
 
+    def approve
+      new_access_request = AccessRequest.new(id: params[:id])
+      new_access_request.approve
+      flash[:success] = "Successfully approved request"
+      redirect_to access_requests_path
+    end
+
+    def confirm
+      @access_request = AccessRequest.includes(:requester).find(params[:id]).first
+    end
+
     def create
       @access_request = AccessRequest.new(access_request_params)
 
