@@ -83,6 +83,9 @@ group :development, :test do
 end
 
 group :development do
+  # static analysis
+  gem "brakeman"
+
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem "listen", ">= 3.0.5", "< 3.3"
   gem "web-console", ">= 3.3.0"

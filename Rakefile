@@ -12,4 +12,5 @@ task :default do
   Rake::Task["parallel:spec"].invoke(cores)
   Rake::Task["lint:ruby"].invoke
   Rake::Task["lint:scss"].invoke
+  Rake::Task["brakeman"].invoke
 end

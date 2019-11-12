@@ -1,0 +1,37 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "854e9d393b838c1507ba122af11f348bdc993f1e1cef50c55fbef648a79fd0b7",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/sites/index.html.erb",
+      "line": 38,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Provider.includes(:sites).where(:recruitment_cycle_year => params.fetch(:recruitment_cycle_year, Settings.current_cycle)).find(params[:provider_code]).first.sites.sort_by(&:location_name), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "SitesController",
+          "method": "index",
+          "line": 25,
+          "file": "app/controllers/sites_controller.rb",
+          "rendered": {
+            "name": "sites/index",
+            "file": "app/views/sites/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "sites/index"
+      },
+      "user_input": "params[:provider_code]",
+      "confidence": "Weak",
+      "note": "It is not possible for users to see the locations of organisations they do not have permission to see. Site responds with 403 page"
+    }
+  ],
+  "updated": "2019-11-12 09:57:32 +0000",
+  "brakeman_version": "4.7.1"
+}
