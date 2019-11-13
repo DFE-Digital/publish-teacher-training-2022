@@ -50,10 +50,5 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Logging
   config.log_level = Settings.log_level
 
-  if Settings.logstash.host && Settings.logstash.port
-    config.logger = LogStashLogger.new(Settings.logstash.to_h)
-  else
-    config.logger = ActiveSupport::Logger.new(STDOUT)
-    config.logger.warn("logstash not configured, falling back to standard Rails logging")
-  end
+  config.logger = ActiveSupport::Logger.new(STDOUT)
 end
