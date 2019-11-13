@@ -93,3 +93,6 @@ staging:
 
 qa:
   <<: *production
+
+pentest:
+  <<: *production
