@@ -190,4 +190,15 @@ private
     Thread.current[:logstash][:user_id] = current_user["user_id"]
     Thread.current[:logstash][:sign_in_user_id] = current_user["uid"]
   end
+
+  def append_info_to_payload(payload)
+    super
+
+    if current_user.present?
+      payload[:user] = {
+        id: current_user["user_id"],
+        sign_in_user_id: current_user.fetch("uid"),
+      }
+    end
+  end
 end

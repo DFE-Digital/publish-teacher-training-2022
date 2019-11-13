@@ -168,4 +168,31 @@ describe ApplicationController, type: :controller do
       end
     end
   end
+
+  describe "#append_info_to_payload" do
+    let(:current_user) do
+      {
+        user_id: 1,
+        uid: SecureRandom.uuid,
+      }.with_indifferent_access
+    end
+    let(:payload) { {} }
+
+    before :each do
+      allow(controller).to receive(:current_user)
+                             .and_return(current_user)
+    end
+
+    it "sets the user id in the payload" do
+      controller.__send__(:append_info_to_payload, payload)
+
+      expect(payload[:user][:id]).to eq 1
+    end
+
+    it "sets the id in the payload to the sign_in id" do
+      controller.__send__(:append_info_to_payload, payload)
+
+      expect(payload[:user][:sign_in_user_id]).to eq current_user[:uid]
+    end
+  end
 end
