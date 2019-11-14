@@ -1,5 +1,12 @@
-<%= form_for @emailed_access_request, url: {action: "preview"}, method: "get" do |f| %>
-  <fieldset class="govuk-fieldset">
+<%= content_for :page_title, "#{@errors && @errors.any? ? "Error: " : ""}Create an access request" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(access_requests_path) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
       <h1 class="govuk-fieldset__heading">
         Create access request
@@ -10,46 +17,31 @@
       Use this form to create an access request and approve it immediately.
     </p>
 
-    <div class="govuk-form-group <%= "govuk-form-group--error" if @emailed_access_request.errors[:requester_email].present? %>">
-      <%= f.label :requester_email, "Requester email", class: "govuk-label" %>
-      <% (@emailed_access_request.errors[:requester_email] || []).each.with_index do |error, n| %>
-        <span id="requester-email-error-<%= n %>" class="govuk-error-message">
-          <%= error %>
-        </span>
+    <%= form_with model: @access_request, url: access_requests_path, method: :post do |f| %>
+      <%= render "shared/form_field",
+        form: f, field: :first_name do |field, options| %>
+        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
       <% end %>
-      <%= f.email_field :requester_email, class: "govuk-input govuk-input--width-20", required: true %>
-    </div>
 
-    <div class="govuk-form-group <%= "govuk-form-group--error" if @emailed_access_request.errors[:target_email].present? %>">
-      <%= f.label :target_email, "Target email", class: "govuk-label" %>
-      <% (@emailed_access_request.errors[:target_email] || []).each.with_index do |error, n| %>
-        <span id="target-email-error-<%= n %>" class="govuk-error-message">
-          <%= error %>
-        </span>
+      <%= render "shared/form_field",
+        form: f, field: :last_name do |field, options| %>
+        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
       <% end %>
-      <%= f.email_field :target_email, class: "govuk-input govuk-input--width-20", required: true %>
-    </div>
 
-    <div class="govuk-form-group <%= "govuk-form-group--error" if @emailed_access_request.errors[:first_name].present? %>">
-      <%= f.label :first_name, "First name", class: "govuk-label" %>
-      <% (@emailed_access_request.errors[:first_name] || []).each.with_index do |error, n| %>
-        <span id="first-name-error-<%= n %>" class="govuk-error-message">
-          <%= error %>
-        </span>
+      <%= render "shared/form_field",
+        form: f, field: :requester_email, label: 'Requester email' do |field, options| %>
+        <%= f.email_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
       <% end %>
-      <%= f.text_field :first_name, class: "govuk-input govuk-input--width-20", required: true %>
-    </div>
 
-    <div class="govuk-form-group <%= "govuk-form-group--error" if @emailed_access_request.errors[:last_name].present? %>">
-      <%= f.label :last_name, "Last name", class: "govuk-label" %>
-      <% (@emailed_access_request.errors[:last_name] || []).each.with_index do |error, n| %>
-        <span id="last-name-error-<%= n %>" class="govuk-error-message">
-          <%= error %>
-        </span>
+      <%= render "shared/form_field",
+        form: f, field: :email_address, label: 'Target email' do |field, options| %>
+        <%= f.email_field field, options.merge(class: 'govuk-textarea govuk-!-width-two-thirds') %>
       <% end %>
-      <%= f.text_field :last_name, class: "govuk-input govuk-input--width-20", required: true %>
-    </div>
 
-    <%= f.submit "Preview", class: 'govuk-button' %>
-  </fieldset>
-<% end %>
+      <%= f.hidden_field :reason, value: "Manual creation by user support agent" %>
+      <%= f.hidden_field :organisation, value: "Department for Education" %>
+
+      <%= f.submit "Preview", class: "govuk-button", data: { qa: "preview"} %>
+    <% end %>
+  </div>
+</div>

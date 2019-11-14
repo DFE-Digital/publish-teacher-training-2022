@@ -6,6 +6,10 @@ module Providers
                            .all
     end
 
+    def new_manual
+      @access_request = AccessRequest.new
+    end
+
     def new
       @access_request = AccessRequest.new
     end
@@ -24,13 +28,23 @@ module Providers
     def create
       @access_request = AccessRequest.new(access_request_params)
 
-      if @access_request.save
-        redirect_to provider_path(params[:code]),
-                    flash: { success: "Your request for access has been submitted" }
-      else
-        @errors = @access_request.errors.messages
+      if params[:code]
+        if @access_request.save
+          redirect_to provider_path(params[:code]),
+                      flash: { success: "Your request for access has been submitted" }
+        else
+          @errors = @access_request.errors.messages
 
-        render :new
+          render :new
+        end
+      else
+        if @access_request.save
+          redirect_to confirm_access_request_path(@access_request.id)
+        else
+          @errors = @access_request.errors.messages
+
+          render :new_manual
+        end
       end
     end
 
@@ -43,6 +57,7 @@ module Providers
         :email_address,
         :organisation,
         :reason,
+        :requester_email,
       ).to_h
     end
   end

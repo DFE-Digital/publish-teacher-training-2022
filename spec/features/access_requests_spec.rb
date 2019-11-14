@@ -8,6 +8,50 @@ feature "Access Requests", type: :feature do
     stub_omniauth
   end
 
+  fdescribe "admin access request creation page" do
+    let(:new_manual_access_request_page) { PageObjects::Page::Organisations::NewManualAccessRequestPage.new }
+    let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
+    let(:access_request) do
+      build(:access_request,
+            requester_email: "v.vincent@pauli.edu",
+            first_name: "Howard",
+            last_name: "Kyoma",
+            email_address: "h.kyoma@pauli.edu",
+            reason: "Manual creation by user support agent")
+    end
+
+    before do
+      stub_api_v2_resource(access_request, include: "requester")
+      stub_api_v2_resource_collection([access_request], include: "requester")
+      stub_api_v2_request("/access_requests/#{access_request.id}/approve", nil, :post)
+    end
+
+    it "can create an access request" do
+      access_request_submission_stub = stub_api_v2_resource(access_request, method: :post) do |body|
+        expect(body["data"]["attributes"]).to eq({
+          "first_name" => "Howard",
+          "last_name" => "Kyoma",
+          "email_address" => "h.kyoma@pauli.edu",
+          "requester_email" => "v.vincent@pauli.edu",
+          "reason" => "Manual creation by user support agent",
+          #It seems like nothing actually uses this organisation thing, it's just use for display which makes it misleading
+          "organisation" => "Department for Education"
+        })
+      end
+      visit new_manual_access_requests_path
+
+      new_manual_access_request_page.requester_email.set("v.vincent@pauli.edu")
+      new_manual_access_request_page.email_address.set("h.kyoma@pauli.edu")
+      new_manual_access_request_page.first_name.set("Howard")
+      new_manual_access_request_page.last_name.set("Kyoma")
+      new_manual_access_request_page.preview.click
+      expect(confirm_access_requests_page).to be_displayed
+      confirm_access_requests_page.approve.click
+      expect(access_request_submission_stub).to have_been_requested
+      #Then check we land on the right page
+    end
+  end
+
   describe "index page" do
     let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
     let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
