@@ -32,16 +32,8 @@ steps:
     arguments: '--cache-from $(IMAGE_NAME):latest'
     addDefaultLabels: false
 
-- task: Docker@1
-  displayName: Run webpack
-  inputs:
-    command: Run an image
-    imageName: $(IMAGE_NAME)
-    containerCommand: rails webpacker:compile
-    runInBackground: false
-
 - bash: |
-    docker run --rm $(IMAGE_NAME) rails spec SPEC_OPTS='--format RspecJunitFormatter' >rspec-results.xml
+    docker run --rm $(IMAGE_NAME) rails parallel:spec SPEC_OPTS='--format RspecJunitFormatter' >rspec-results.xml
     test_result=$?
     cat rspec-results.xml
     sed -i '$d;1,5d' rspec-results.xml
