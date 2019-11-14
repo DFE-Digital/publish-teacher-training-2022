@@ -3,13 +3,12 @@ require "capybara"
 require "capybara/rspec"
 require "site_prism"
 require "simplecov"
-require "simplecov-console"
 
-SimpleCov.formatter = SimpleCov::Formatter::Console
+SimpleCov.minimum_coverage 95
 SimpleCov.start
 # If running specs in parallel this ensures SimpleCov results appears
 # upon completion of all specs
-if ENV["PARALLEL_TEST_GROUPS"]
+if ENV["TEST_ENV_NUMBER"]
   SimpleCov.at_exit do
     result = SimpleCov.result
     result.format! if ParallelTests.number_of_running_processes <= 1
@@ -32,6 +31,8 @@ end
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # Reduce noise in console when running specs in parallel
+  config.silence_filter_announcements = true if ENV["TEST_ENV_NUMBER"]
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
