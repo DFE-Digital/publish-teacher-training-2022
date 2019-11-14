@@ -5,7 +5,7 @@ feature "new course entry_requirements", type: :feature do
   let(:new_entry_requirements_page) do
     PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
   end
-  let(:provider) { build(:provider, sites: [build(:site)]) }
+  let(:provider) { build(:provider, accredited_body?: true, sites: [build(:site)]) }
   let(:level) { :further_education }
   let(:course)  do
     build(:course,
@@ -136,6 +136,41 @@ feature "new course entry_requirements", type: :feature do
     end
   end
 
+  context "Going back" do
+    let(:level) { :primary }
+    before { visit_new_entry_requirements }
+
+    context "With an accredited body" do
+      context "With a single site" do
+        let(:new_study_mode_page) { PageObjects::Page::Organisations::Courses::NewStudyModePage.new }
+
+        it "Returns to the study mode page" do
+          new_entry_requirements_page.back.click
+          expect(new_study_mode_page).to be_displayed
+        end
+      end
+
+      context "with multiple sites" do
+        let(:provider) { build(:provider, accredited_body?: true, sites: [build(:site), build(:site)]) }
+        let(:new_locations_page) { PageObjects::Page::Organisations::Courses::NewLocationsPage.new }
+
+        it "Returns to the locations page" do
+          new_entry_requirements_page.back.click
+          expect(new_locations_page).to be_displayed
+        end
+      end
+    end
+
+    context "With an non accredited body" do
+      let(:provider) { build(:provider, accredited_body?: false) }
+      let(:new_accredited_body_page) { PageObjects::Page::Organisations::Courses::NewAccreditedBodyPage.new }
+
+      it "Returns to the accredited body page" do
+        new_entry_requirements_page.back.click
+        expect(new_accredited_body_page).to be_displayed
+      end
+    end
+  end
 
   def visit_new_entry_requirements(**query_params)
     visit signin_path
