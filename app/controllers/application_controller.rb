@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if current_user.present?
-      logger.debug { "Authenticated user session found " + log_safe_current_user.to_s }
+      logger.info { "Authenticated user session found " + log_safe_current_user.to_s }
 
       assign_sentry_contexts
       assign_logstash_contexts
@@ -73,10 +73,10 @@ class ApplicationController < ActionController::Base
       end
 
     elsif development_mode_auth?
-      logger.debug("Doing development mode authentication")
+      logger.info("Doing development mode authentication")
       request_http_basic_authentication("Development Mode")
     else
-      logger.debug("Authenticated user session not found " + {
+      logger.info("Authenticated user session not found " + {
                      redirect_back_to: request.path,
                    }.to_s)
       session[:redirect_back_to] = request.path
@@ -189,5 +189,16 @@ private
     Thread.current[:logstash] ||= {}
     Thread.current[:logstash][:user_id] = current_user["user_id"]
     Thread.current[:logstash][:sign_in_user_id] = current_user["uid"]
+  end
+
+  def append_info_to_payload(payload)
+    super
+
+    if current_user.present?
+      payload[:user] = {
+        id: current_user["user_id"],
+        sign_in_user_id: current_user.fetch("uid"),
+      }
+    end
   end
 end
