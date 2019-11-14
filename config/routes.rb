@@ -17,6 +17,13 @@ Rails.application.routes.draw do
   root to: "providers#index"
   get "/organisations", to: redirect("/")
 
+  resources :access_requests, path: "/access-requests", controller: "providers/access_requests", only: :index do
+    member do
+      post :approve
+      get :confirm
+    end
+  end
+
   resources :providers, path: "organisations", param: :code do
     # Redirect year-less URLs to current recruitment cycle
     get "/locations", to: redirect("/organisations/%{provider_code}/#{Settings.current_cycle}/locations")

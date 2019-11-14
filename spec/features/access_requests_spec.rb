@@ -8,6 +8,45 @@ feature "Access Requests", type: :feature do
     stub_omniauth
   end
 
+  describe "index page" do
+    let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
+    let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
+
+    let(:access_request) do
+      build(:access_request,
+            request_date_utc: Date.new(2019, 11, 11),
+            first_name: "Allen",
+            last_name: "Swartz",
+            email_address: "aswartz@mymail.co",
+            organisation: "Aleph Null Academy")
+    end
+
+    before do
+      stub_api_v2_resource(access_request, include: "requester")
+      stub_api_v2_resource_collection([access_request], include: "requester")
+    end
+
+    it "lists all access requests" do
+      visit access_requests_path
+      expect(list_access_requests_page.access_requests.count).to eq(1)
+      expect(list_access_requests_page.access_requests.first.id).to have_content("2")
+      expect(list_access_requests_page.access_requests.first.request_date).to have_content("November 11, 2019")
+      expect(list_access_requests_page.access_requests.first.recipient).to have_content("Allen Swartz <aswartz@mymail.co>")
+      expect(list_access_requests_page.access_requests.first.organisation).to have_content("Aleph Null Academy")
+    end
+
+    it "can approve a request" do
+      submitted_access_request = stub_api_v2_request("/access_requests/#{access_request.id}/approve", nil, :post)
+
+      visit access_requests_path
+      list_access_requests_page.access_requests.first.approve.click
+      expect(confirm_access_requests_page).to be_displayed
+      confirm_access_requests_page.approve.click
+      expect(submitted_access_request).to have_been_requested
+      expect(list_access_requests_page).to be_displayed
+    end
+  end
+
   context "without validation errors" do
     before do
       stub_api_v2_request("/access_requests", nil, :post)
