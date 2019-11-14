@@ -54,6 +54,27 @@ feature "Edit accredited body" do
       include_examples "a course creation page"
     end
 
+    context "It allows the user to go back" do
+      context "With a single site" do
+        let(:new_study_mode_page) { PageObjects::Page::Organisations::Courses::NewStudyModePage.new }
+
+        it "Returns to the study mode page" do
+          new_accredited_body_page.back.click
+          expect(new_study_mode_page).to be_displayed
+        end
+      end
+
+      context "with multiple sites" do
+        let(:provider) { build(:provider, sites: [build(:site), build(:site)]) }
+        let(:new_locations_page) { PageObjects::Page::Organisations::Courses::NewLocationsPage.new }
+
+        it "Returns to the locations page" do
+          new_accredited_body_page.back.click
+          expect(new_locations_page).to be_displayed
+        end
+      end
+    end
+
     context "Searching for a new accredited body" do
       context "with some results" do
         before do
