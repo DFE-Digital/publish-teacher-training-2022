@@ -1,10 +1,12 @@
 <%= content_for :page_title, "Full time of part time" %>
 <% content_for :before_content do %>
-  <% if @provider.accredited_body? %>
-    <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_apprenticeship_path(course: @course_creation_params)) %>
-  <% else %>
-    <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_fee_or_salary_path(course: @course_creation_params)) %>
-  <%end %>
+  <% course_creation_back_button do %>
+    <% if @provider.accredited_body? %>
+      <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_apprenticeship_path(course: @course_creation_params)) %>
+    <% else %>
+      <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_fee_or_salary_path(course: @course_creation_params)) %>
+    <%end %>
+  <% end %>
 <% end %>
 
 <%= render 'shared/errors' %>

@@ -1,4 +1,9 @@
 <%= content_for :page_title, "Pick the training locations for this course" %>
+<% content_for :before_content do %>
+  <% course_creation_back_button do %>
+    <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_study_mode_path(course: @course_creation_params)) %>
+  <% end %>
+<% end %>
 
 <h1 class="govuk-heading-xl">Pick the training locations for this course</h1>
 

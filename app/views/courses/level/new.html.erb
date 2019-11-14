@@ -1,6 +1,8 @@
 <%= content_for :page_title, "Pick a course type" %>
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
+  <% course_creation_back_button do %>
+    <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
+  <% end %>
 <% end %>
 
 <%= render 'shared/errors' %>

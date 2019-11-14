@@ -1,6 +1,8 @@
 <%= content_for :page_title, "Pick a start date" %>
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_applications_open_path(course: @course_creation_params)) %>
+  <% course_creation_back_button do %>
+    <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_applications_open_path(course: @course_creation_params)) %>
+  <% end %>
 <% end %>
 
 <%= render 'shared/errors' %>
