@@ -24,6 +24,8 @@ FactoryBot.define do
           ProviderSuggestion: ProviderSuggestionSerializer,
           Subject: SubjectSerializer,
           AccessRequest: AccessRequestSerializer,
+          Organisation: OrganisationSerializer,
+          OrganisationUser: OrganisationUser,
         },
         include: opts[:include],
       )

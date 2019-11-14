@@ -101,8 +101,11 @@ module Helpers
     query_params = {}
     query_params[:include] = include if include.present?
 
-    url = url_for_resource(resource) if method == :get
-    url = url_for_resource_collection(resource) if method == :post
+    if method == :get || method == :patch
+      url = url_for_resource(resource)
+    elsif method == :post
+      url = url_for_resource_collection(resource)
+    end
 
     url += "?#{query_params.to_param}" if query_params.any?
 

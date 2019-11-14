@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   root to: "providers#index"
   get "/organisations", to: redirect("/")
 
-  resources :access_requests, path: "/access-requests", controller: "providers/access_requests", only: [:index, :create] do
+  resources :access_requests, path: "/access-requests", controller: "providers/access_requests", only: %i[index create] do
     member do
       post :approve
       get :confirm

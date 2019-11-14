@@ -22,7 +22,7 @@ module Providers
     end
 
     def confirm
-      @access_request = AccessRequest.includes(:requester).find(params[:id]).first
+      @access_request = AccessRequest.includes(:requester, requester: [:organisations]).find(params[:id]).first
     end
 
     def create

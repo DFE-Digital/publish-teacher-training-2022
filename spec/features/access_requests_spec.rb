@@ -8,11 +8,16 @@ feature "Access Requests", type: :feature do
     stub_omniauth
   end
 
-  fdescribe "admin access request creation page" do
+  describe "admin access request creation page" do
     let(:new_manual_access_request_page) { PageObjects::Page::Organisations::NewManualAccessRequestPage.new }
     let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
+    let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
+
+    let(:organisation) { build(:organisation) }
+    let(:user) { build(:user, organisations: [organisation]) }
     let(:access_request) do
       build(:access_request,
+            requester: user,
             requester_email: "v.vincent@pauli.edu",
             first_name: "Howard",
             last_name: "Kyoma",
@@ -21,22 +26,22 @@ feature "Access Requests", type: :feature do
     end
 
     before do
-      stub_api_v2_resource(access_request, include: "requester")
+      stub_api_v2_resource(access_request, include: "requester,requester.organisations")
       stub_api_v2_resource_collection([access_request], include: "requester")
       stub_api_v2_request("/access_requests/#{access_request.id}/approve", nil, :post)
     end
 
     it "can create an access request" do
       access_request_submission_stub = stub_api_v2_resource(access_request, method: :post) do |body|
-        expect(body["data"]["attributes"]).to eq({
+        expect(body["data"]["attributes"]).to eq(
           "first_name" => "Howard",
           "last_name" => "Kyoma",
           "email_address" => "h.kyoma@pauli.edu",
           "requester_email" => "v.vincent@pauli.edu",
           "reason" => "Manual creation by user support agent",
           #It seems like nothing actually uses this organisation thing, it's just use for display which makes it misleading
-          "organisation" => "Department for Education"
-        })
+          "organisation" => "Department for Education",
+        )
       end
       visit new_manual_access_requests_path
 
@@ -48,16 +53,18 @@ feature "Access Requests", type: :feature do
       expect(confirm_access_requests_page).to be_displayed
       confirm_access_requests_page.approve.click
       expect(access_request_submission_stub).to have_been_requested
-      #Then check we land on the right page
+      expect(list_access_requests_page).to be_displayed
     end
   end
 
   describe "index page" do
     let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
     let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
-
+    let(:organisation) { build(:organisation) }
+    let(:user) { build(:user, organisations: [organisation]) }
     let(:access_request) do
       build(:access_request,
+            requester: user,
             request_date_utc: Date.new(2019, 11, 11),
             first_name: "Allen",
             last_name: "Swartz",
@@ -66,14 +73,13 @@ feature "Access Requests", type: :feature do
     end
 
     before do
-      stub_api_v2_resource(access_request, include: "requester")
+      stub_api_v2_resource(access_request, include: "requester,requester.organisations")
       stub_api_v2_resource_collection([access_request], include: "requester")
     end
 
     it "lists all access requests" do
       visit access_requests_path
       expect(list_access_requests_page.access_requests.count).to eq(1)
-      expect(list_access_requests_page.access_requests.first.id).to have_content("2")
       expect(list_access_requests_page.access_requests.first.request_date).to have_content("November 11, 2019")
       expect(list_access_requests_page.access_requests.first.recipient).to have_content("Allen Swartz <aswartz@mymail.co>")
       expect(list_access_requests_page.access_requests.first.organisation).to have_content("Aleph Null Academy")
