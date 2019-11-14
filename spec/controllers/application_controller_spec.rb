@@ -176,11 +176,11 @@ describe ApplicationController, type: :controller do
         uid: SecureRandom.uuid,
       }.with_indifferent_access
     end
+
     let(:payload) { {} }
 
     before :each do
-      allow(controller).to receive(:current_user)
-                             .and_return(current_user)
+      allow(controller).to receive(:current_user).and_return(current_user)
     end
 
     it "sets the user id in the payload" do
@@ -193,6 +193,27 @@ describe ApplicationController, type: :controller do
       controller.__send__(:append_info_to_payload, payload)
 
       expect(payload[:user][:sign_in_user_id]).to eq current_user[:uid]
+    end
+
+    it "sets the request_id in the payload to the request uuid" do
+      request_uuid = SecureRandom.uuid
+      allow(request).to receive(:uuid).and_return(request_uuid)
+      controller.__send__(:append_info_to_payload, payload)
+
+      expect(payload[:request_id]).to eq request_uuid
+    end
+  end
+
+  describe "#store_request_id" do
+    it "stores the request id" do
+      request_uuid = SecureRandom.uuid
+
+      allow(request).to receive(:uuid).and_return(request_uuid)
+      allow(RequestStore).to receive(:store).and_return({})
+
+      controller.__send__(:store_request_id)
+
+      expect(RequestStore.store).to eq(request_id: request_uuid)
     end
   end
 end
