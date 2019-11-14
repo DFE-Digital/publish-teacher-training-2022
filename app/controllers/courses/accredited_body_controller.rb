@@ -66,6 +66,14 @@ module Courses
 
   private
 
+    def build_provider
+      @provider = Provider
+                    .includes(:sites)
+                    .where(recruitment_cycle_year: params[:recruitment_cycle_year])
+                    .find(params[:provider_code])
+                    .first
+    end
+
     def redirect_to_provider_search
       redirect_to(
         accredited_body_search_provider_recruitment_cycle_course_path(

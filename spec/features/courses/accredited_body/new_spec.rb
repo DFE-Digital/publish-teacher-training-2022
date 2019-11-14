@@ -2,7 +2,7 @@ require "rails_helper"
 
 feature "Edit accredited body" do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, sites: [build(:site)]) }
   let(:course) { build(:course, provider: provider) }
   let(:new_accredited_body_page) { PageObjects::Page::Organisations::Courses::NewAccreditedBodyPage.new }
   let(:new_accredited_body_search_page) { PageObjects::Page::Organisations::Courses::NewAccreditedBodySearchPage.new }
@@ -18,6 +18,7 @@ feature "Edit accredited body" do
   before do
     stub_omniauth(provider: provider)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_build_course
     stub_api_v2_build_course(level: "primary")

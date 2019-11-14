@@ -2,7 +2,11 @@
 <% content_for :before_content do %>
   <% course_creation_back_button do %>
     <% if @provider.accredited_body? %>
-      <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_locations_path(course: @course_creation_params)) %>
+      <% if @provider.sites.count > 1 %>
+        <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_locations_path(course: @course_creation_params)) %>
+      <% else %>
+        <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_study_mode_path(course: @course_creation_params)) %>
+      <% end %>
     <% else %>
       <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_accredited_body_path(course: @course_creation_params)) %>
     <% end %>

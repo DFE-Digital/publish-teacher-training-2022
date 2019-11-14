@@ -5,7 +5,7 @@ feature "new course entry_requirements", type: :feature do
   let(:new_entry_requirements_page) do
     PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
   end
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, sites: [build(:site)]) }
   let(:level) { :further_education }
   let(:course)  do
     build(:course,
@@ -21,6 +21,7 @@ feature "new course entry_requirements", type: :feature do
   before do
     stub_omniauth(provider: provider)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_new_resource(course)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
