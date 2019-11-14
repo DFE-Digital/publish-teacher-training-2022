@@ -58,6 +58,29 @@ feature "new course study mode", type: :feature do
     expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
+  context "It allows the user to go back" do
+    context "When they are an accredited body" do
+      let(:provider) { build(:provider, accredited_body?: true) }
+      let(:new_apprenticeship_page) { PageObjects::Page::Organisations::Courses::NewApprenticeshipPage.new }
+
+      it "Returns to the study mode page" do
+        visit_new_study_mode_page
+        new_study_mode_page.back.click
+        expect(new_apprenticeship_page).to be_displayed
+      end
+    end
+
+    context "when they are not an accredited body" do
+      let(:new_fee_or_salary_page) { PageObjects::Page::Organisations::Courses::NewFeeOrSalaryPage.new }
+
+      it "Returns to the locations page" do
+        visit_new_study_mode_page
+        new_study_mode_page.back.click
+        expect(new_fee_or_salary_page).to be_displayed
+      end
+    end
+  end
+
 private
 
   def visit_new_study_mode_page(**query_params)

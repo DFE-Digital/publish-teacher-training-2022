@@ -1,6 +1,7 @@
 module Courses
   class StudyModeController < ApplicationController
     include CourseBasicDetailConcern
+    before_action :build_back_link, only: :new
 
     def update
       if params[:course][:study_mode] == "full_time_or_part_time"
@@ -11,6 +12,14 @@ module Courses
     end
 
   private
+
+    def build_back_link
+      @back_link_path = if @provider.accredited_body?
+                          new_provider_recruitment_cycle_courses_apprenticeship_path(course: @course_creation_params)
+                        else
+                          new_provider_recruitment_cycle_courses_fee_or_salary_path(course: @course_creation_params)
+                        end
+    end
 
     def current_step
       :full_or_part_time
