@@ -1,9 +1,6 @@
 <%= content_for :page_title, "When will applications open?" %>
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(
-                           @provider.provider_code,
-                           @provider.recruitment_cycle_year
-                        )) %>
+  <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_entry_requirements_path(course: @course_creation_params)) %>
 <% end %>
 
 <%= render 'shared/errors' %>

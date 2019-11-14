@@ -1,4 +1,7 @@
 <%= content_for :page_title, "Select subject" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_level_path(course: @course_creation_params)) %>
+<% end %>
 
 <%= render 'shared/errors' %>
 

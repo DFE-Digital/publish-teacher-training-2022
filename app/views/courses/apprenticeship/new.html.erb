@@ -1,10 +1,7 @@
 <%= content_for :page_title, "Is this a teaching apprenticeship?" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(
-                           @provider.provider_code,
-                           @provider.recruitment_cycle_year
-                        )) %>
+  <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_outcome_path(course: @course_creation_params)) %>
 <% end %>
 
 <%= render 'shared/errors' %>

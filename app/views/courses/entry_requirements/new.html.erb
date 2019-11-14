@@ -1,9 +1,10 @@
 <%= content_for :page_title, "GCSE requirements for applicants" %>
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(
-    @provider.provider_code,
-    @provider.recruitment_cycle_year
- )) %>
+  <% if @provider.accredited_body? %>
+    <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_locations_path(course: @course_creation_params)) %>
+  <% else %>
+    <%= govuk_back_link_to(new_provider_recruitment_cycle_courses_accredited_body_path(course: @course_creation_params)) %>
+  <%end %>
 <% end %>
 
 <%= render 'shared/errors' %>
