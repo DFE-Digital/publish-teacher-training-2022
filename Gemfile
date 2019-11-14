@@ -120,7 +120,6 @@ group :test do
 
   # Show test coverage %
   gem "simplecov", require: false
-  gem "simplecov-console"
 
   # Make diffs of Ruby objects much more readable
   gem "super_diff"

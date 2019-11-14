@@ -63,7 +63,6 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     aes_key_wrap (1.0.1)
-    ansi (1.5.0)
     application_insights (0.5.6)
     ast (2.4.0)
     attr_extras (6.2.1)
@@ -374,10 +373,6 @@ GEM
       docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
-    simplecov-console (0.6.0)
-      ansi
-      simplecov
-      terminal-table
     simplecov-html (0.10.2)
     site_prism (3.4.1)
       addressable (~> 2.5)
@@ -406,8 +401,6 @@ GEM
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
-    terminal-table (1.8.0)
-      unicode-display_width (~> 1.1, >= 1.1.1)
     thor (0.20.3)
     thread_safe (0.3.6)
     trollop (1.16.2)
@@ -491,7 +484,6 @@ DEPENDENCIES
   selenium-webdriver
   sentry-raven
   simplecov
-  simplecov-console
   site_prism
   spring
   spring-commands-rspec
