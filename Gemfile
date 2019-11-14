@@ -78,6 +78,8 @@ group :development, :test do
   # Run specs locally in parallel
   gem "parallel_tests"
 
+  gem "request_store"
+
   # Testing framework
   gem "rspec-rails", "~> 4.0.0.beta3"
 
