@@ -2,7 +2,7 @@ module PageObjects
   module Page
     module Organisations
       class NewManualAccessRequestPage < PageObjects::Base
-        set_url "/access-requests/new_manual"
+        set_url "/access-requests/new"
 
         element :requester_email, "[data-qa=\"requester_email\"]"
         element :email_address, "[data-qa=\"email_address\"]"

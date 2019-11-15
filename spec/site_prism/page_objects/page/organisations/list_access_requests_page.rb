@@ -3,6 +3,7 @@ module PageObjects
     module Organisations
       class ListAccessRequestsPage < PageObjects::Base
         set_url "/access-requests"
+        element :create_access_request, "[data-qa=\"create-access-request\"]"
 
         sections :access_requests, "[data-qa=\"access-request\"]" do
           element :id, "[data-qa=\"access-request__id\"]"

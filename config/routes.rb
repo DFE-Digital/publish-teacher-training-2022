@@ -17,14 +17,10 @@ Rails.application.routes.draw do
   root to: "providers#index"
   get "/organisations", to: redirect("/")
 
-  resources :access_requests, path: "/access-requests", controller: "providers/access_requests", only: %i[index create] do
+  resources :access_requests, path: "/access-requests", controller: "access_requests", only: %i[new index create] do
     member do
       post :approve
       get :confirm
-    end
-
-    collection do
-      get :new_manual
     end
   end
 
