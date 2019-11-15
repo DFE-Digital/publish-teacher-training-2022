@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   rescue_from JsonApiClient::Errors::AccessDenied, with: :handle_access_denied
 
   before_action :authenticate
+  before_action :store_request_id
 
   def not_found
     respond_with_error(template: "errors/not_found", status: :not_found, error_text: "Resource not found")
@@ -183,6 +184,7 @@ private
   def assign_sentry_contexts
     Raven.user_context(id: current_user["user_id"])
     Raven.tags_context(sign_in_user_id: current_user.fetch("uid"))
+    Raven.extra_context(request_id: request.uuid)
   end
 
   def assign_logstash_contexts
@@ -199,6 +201,11 @@ private
         id: current_user["user_id"],
         sign_in_user_id: current_user.fetch("uid"),
       }
+      payload[:request_id] = request.uuid
     end
+  end
+
+  def store_request_id
+    RequestStore.store[:request_id] = request.uuid
   end
 end

@@ -485,6 +485,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_semantic_logger
   redcarpet
+  request_store
   rspec-rails (~> 4.0.0.beta3)
   rspec_junit_formatter
   rubocop
@@ -506,4 +507,4 @@ RUBY VERSION
    ruby 2.6.1p33
 
 BUNDLED WITH
-   1.17.2
+   1.17.3

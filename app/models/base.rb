@@ -9,7 +9,10 @@ class Base < JsonApiClient::Resource
         request_method,
         path,
         params: params,
-        headers: headers.update("Authorization" => authorization),
+        headers: headers.update(
+          "Authorization" => authorization,
+          "X-Request-Id" => RequestStore.store[:request_id],
+        ),
         body: body
       )
     end
