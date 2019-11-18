@@ -19,8 +19,6 @@ RSpec.feature "View pages", type: :feature do
   end
 
   scenario "Navigate to /terms-conditions" do
-    stub_omniauth
-
     visit "/terms-conditions"
     expect(find("h1")).to have_content("Terms and Conditions")
   end
