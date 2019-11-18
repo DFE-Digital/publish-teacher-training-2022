@@ -5,7 +5,7 @@ feature "Access Requests", type: :feature do
   let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
   let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
   let(:inform_publisher_page) { PageObjects::Page::Organisations::InformPublisherPage.new }
-
+  let(:organisations_page) { PageObjects::Page::Organisations::OrganisationPage.new }
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider) }
   let(:organisation) { build(:organisation) }
@@ -18,6 +18,54 @@ feature "Access Requests", type: :feature do
     stub_api_v2_resource(access_request, include: "requester,requester.organisations")
     stub_api_v2_resource_collection([access_request], include: "requester")
     submitted_access_request
+  end
+
+  describe "page header" do
+    let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
+
+    let(:organisation) { build(:organisation) }
+    let(:access_request) do
+      build(:access_request,
+            requester: user,
+            requester_email: "v.vincent@pauli.edu",
+            first_name: "Howard",
+            last_name: "Kyoma",
+            email_address: "h.kyoma@pauli.edu",
+            reason: "Manual creation by user support agent")
+    end
+
+    context "user is admin" do
+      let(:user) { build(:user, admin: true, organisations: [organisation]) }
+      before do
+        stub_omniauth(user: user)
+      end
+
+      it "links to the access requests page" do
+        stub_api_v2_resource(current_recruitment_cycle)
+        stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+        stub_api_v2_resource_collection([access_request], include: "requester")
+
+        visit provider_courses_path(provider.provider_code)
+        organisations_page.access_requests_link.click
+        expect(list_access_requests_page).to be_displayed
+      end
+    end
+
+    context "user is not admin" do
+      let(:user) { build(:user, admin: false, organisations: [organisation]) }
+      before do
+        stub_omniauth(user: user)
+      end
+
+      it "does not link to the access requests page" do
+        stub_api_v2_resource(current_recruitment_cycle)
+        stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+        stub_api_v2_resource_collection([access_request], include: "requester")
+
+        visit provider_courses_path(provider.provider_code)
+        expect { organisations_page.access_requests_link }.to raise_error(Capybara::ElementNotFound)
+      end
+    end
   end
 
   describe "admin access request creation page" do

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "View pages", type: :feature do
+feature "View pages", type: :feature do
   let(:new_features_page) { PageObjects::Page::NewFeaturesPage.new }
 
   scenario "Environment label and class are read from settings" do
