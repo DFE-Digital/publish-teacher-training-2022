@@ -13,7 +13,11 @@ class AccessRequestsController < ApplicationController
     new_access_request = AccessRequest.new(id: params[:id])
     new_access_request.approve
     flash[:success] = "Successfully approved request"
-    redirect_to access_requests_path
+    redirect_to inform_publisher_access_request_path
+  end
+
+  def inform_publisher
+    @access_request = AccessRequest.includes(:requester, requester: [:organisations]).find(params[:id]).first
   end
 
   def confirm

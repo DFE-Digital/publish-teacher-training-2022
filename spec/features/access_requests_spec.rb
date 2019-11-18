@@ -1,20 +1,26 @@
 require "rails_helper"
 
 feature "Access Requests", type: :feature do
+  let(:new_access_request_page) { PageObjects::Page::Organisations::NewManualAccessRequestPage.new }
+  let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
+  let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
+  let(:inform_publisher_page) { PageObjects::Page::Organisations::InformPublisherPage.new }
+
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider) }
+  let(:organisation) { build(:organisation) }
+  let(:user) { build(:user, organisations: [organisation]) }
 
+  let(:submitted_access_request) { stub_api_v2_request("/access_requests/#{access_request.id}/approve", nil, :post) }
   before do
     stub_omniauth
+
+    stub_api_v2_resource(access_request, include: "requester,requester.organisations")
+    stub_api_v2_resource_collection([access_request], include: "requester")
+    submitted_access_request
   end
 
   describe "admin access request creation page" do
-    let(:new_access_request_page) { PageObjects::Page::Organisations::NewManualAccessRequestPage.new }
-    let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
-    let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
-
-    let(:organisation) { build(:organisation) }
-    let(:user) { build(:user, organisations: [organisation]) }
     let(:access_request) do
       build(:access_request,
             requester: user,
@@ -24,13 +30,6 @@ feature "Access Requests", type: :feature do
             email_address: "h.kyoma@pauli.edu",
             reason: "Manual creation by user support agent")
     end
-
-    before do
-      stub_api_v2_resource(access_request, include: "requester,requester.organisations")
-      stub_api_v2_resource_collection([access_request], include: "requester")
-      stub_api_v2_request("/access_requests/#{access_request.id}/approve", nil, :post)
-    end
-
 
     it "can create an access request" do
       access_request_submission_stub = stub_api_v2_resource(access_request, method: :post) do |body|
@@ -56,15 +55,10 @@ feature "Access Requests", type: :feature do
       expect(confirm_access_requests_page).to be_displayed
       confirm_access_requests_page.approve.click
       expect(access_request_submission_stub).to have_been_requested
-      expect(list_access_requests_page).to be_displayed
     end
   end
 
   describe "index page" do
-    let(:list_access_requests_page) { PageObjects::Page::Organisations::ListAccessRequestsPage.new }
-    let(:confirm_access_requests_page) { PageObjects::Page::Organisations::ConfirmAccessRequestsPage.new }
-    let(:organisation) { build(:organisation) }
-    let(:user) { build(:user, organisations: [organisation]) }
     let(:access_request) do
       build(:access_request,
             requester: user,
@@ -73,11 +67,6 @@ feature "Access Requests", type: :feature do
             last_name: "Swartz",
             email_address: "aswartz@mymail.co",
             organisation: "Aleph Null Academy")
-    end
-
-    before do
-      stub_api_v2_resource(access_request, include: "requester,requester.organisations")
-      stub_api_v2_resource_collection([access_request], include: "requester")
     end
 
     it "lists all access requests" do
@@ -89,13 +78,41 @@ feature "Access Requests", type: :feature do
     end
 
     it "can approve a request" do
-      submitted_access_request = stub_api_v2_request("/access_requests/#{access_request.id}/approve", nil, :post)
-
       visit access_requests_path
       list_access_requests_page.access_requests.first.approve.click
       expect(confirm_access_requests_page).to be_displayed
       confirm_access_requests_page.approve.click
       expect(submitted_access_request).to have_been_requested
+    end
+  end
+
+  describe "inform publisher page" do
+    let(:access_request) do
+      build(:access_request,
+            requester: user,
+            request_date_utc: Date.new(2019, 11, 11),
+            first_name: "Allen",
+            last_name: "Swartz",
+            email_address: "aswartz@mymail.co",
+            organisation: "Aleph Null Academy")
+    end
+
+    it "displays the inform publisher page when a request is approved" do
+      visit access_requests_path
+      list_access_requests_page.access_requests.first.approve.click
+      confirm_access_requests_page.approve.click
+      expect(inform_publisher_page).to be_displayed
+    end
+
+    it "links to the correct pages" do
+      visit access_requests_path
+      list_access_requests_page.access_requests.first.approve.click
+      confirm_access_requests_page.approve.click
+      expect(inform_publisher_page.dfe_signin_search_link[:href]).to eq("https://support.signin.education.gov.uk/users?criteria=aswartz@mymail.co")
+      expect(inform_publisher_page.notify_service_link[:href]).to eq("https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534")
+      expect(inform_publisher_page.registered_user_link[:href]).to eq("https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/templates/4da327dd-907a-4619-abe6-45f348bb2fa3")
+      expect(inform_publisher_page.unregistered_user_link[:href]).to eq("https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/templates/9ecac443-8cfd-49ac-ac59-e7ffa0ab6278")
+      inform_publisher_page.done.click
       expect(list_access_requests_page).to be_displayed
     end
   end
