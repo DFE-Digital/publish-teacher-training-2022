@@ -1,0 +1,47 @@
+<%= content_for :page_title, "#{@errors && @errors.any? ? "Error: " : ""}Create an access request" %>
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(access_requests_path) %>
+<% end %>
+
+<%= render 'shared/errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+      <h1 class="govuk-fieldset__heading">
+        Create access request
+      </h1>
+    </legend>
+
+    <p class="govuk-body">
+      Use this form to create an access request and approve it immediately.
+    </p>
+
+    <%= form_with model: @access_request, url: access_requests_path, method: :post do |f| %>
+      <%= render "shared/form_field",
+        form: f, field: :first_name do |field, options| %>
+        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
+      <% end %>
+
+      <%= render "shared/form_field",
+        form: f, field: :last_name do |field, options| %>
+        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
+      <% end %>
+
+      <%= render "shared/form_field",
+        form: f, field: :requester_email, label: 'Requester email' do |field, options| %>
+        <%= f.email_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
+      <% end %>
+
+      <%= render "shared/form_field",
+        form: f, field: :email_address, label: 'Target email' do |field, options| %>
+        <%= f.email_field field, options.merge(class: 'govuk-textarea govuk-!-width-two-thirds') %>
+      <% end %>
+
+      <%= f.hidden_field :reason, value: "Manual creation by user support agent" %>
+      <%= f.hidden_field :organisation, value: "Department for Education" %>
+
+      <%= f.submit "Preview", class: "govuk-button", data: { qa: "preview"} %>
+    <% end %>
+  </div>
+</div>

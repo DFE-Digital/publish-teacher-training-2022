@@ -9,6 +9,7 @@ FactoryBot.define do
     state      { "rolled_over" }
     admin      { false }
     accept_terms_date_utc { Time.current }
+    organisation_users { [] }
 
     trait :new do
       state { "new" }

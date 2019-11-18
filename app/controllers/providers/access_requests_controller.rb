@@ -1,24 +1,7 @@
 module Providers
   class AccessRequestsController < ApplicationController
-    def index
-      @access_requests = AccessRequest
-                           .includes(:requester)
-                           .all
-    end
-
     def new
       @access_request = AccessRequest.new
-    end
-
-    def approve
-      new_access_request = AccessRequest.new(id: params[:id])
-      new_access_request.approve
-      flash[:success] = "Successfully approved request"
-      redirect_to access_requests_path
-    end
-
-    def confirm
-      @access_request = AccessRequest.includes(:requester).find(params[:id]).first
     end
 
     def create
