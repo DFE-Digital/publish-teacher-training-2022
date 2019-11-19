@@ -1,111 +1,116 @@
 describe NextCourseCreationStepService do
   let(:service) { described_class.new }
+  let(:course) { build(:course, level: level, provider: provider) }
 
-  shared_examples "next step" do
+  shared_examples "next step" do |current_step, expected_next_step|
     it "Returns the correct next step" do
       next_step = service.execute(
         current_step: current_step,
-        current_provider: provider,
+        course: course,
       )
       expect(next_step).to eq(expected_next_step)
     end
   end
 
   context "School Direct" do
+    let(:level) { "primary" }
     let(:provider) { build(:provider, accredited_body?: false) }
 
     context "Current step: Outcome" do
-      let(:current_step) { :outcome }
-      let(:expected_next_step) { :fee_or_salary }
-
-      include_examples "next step"
+      include_examples "next step", :outcome, :fee_or_salary
     end
 
     context "Current step: Fee or salary" do
-      let(:current_step) { :fee_or_salary }
-      let(:expected_next_step) { :full_or_part_time }
-
-      include_examples "next step"
+      include_examples "next step", :fee_or_salary, :full_or_part_time
     end
 
     context "Current step: Location" do
-      let(:current_step) { :location }
-      let(:expected_next_step) { :accredited_body }
+      include_examples "next step", :location, :accredited_body
+    end
 
-      include_examples "next step"
+    context "Current step: Accredited body" do
+      include_examples "next step", :accredited_body, :entry_requirements
+    end
+
+    context "Current step: Applications open" do
+      include_examples "next step", :applications_open, :start_date
+    end
+
+    context "Current step: Start date" do
+      include_examples "next step", :start_date, :confirmation
     end
   end
 
   context "SCITT Provider" do
+    let(:level) { "primary" }
     let(:provider) { build(:provider, accredited_body?: true) }
     context "Current step: Level" do
-      let(:current_step) { :level }
-      let(:expected_next_step) { :subjects }
-
-      include_examples "next step"
+      include_examples "next step", :level, :subjects
     end
 
     context "Current step: Subjects" do
-      let(:current_step) { :subjects }
-      let(:expected_next_step) { :age_range }
-
-      include_examples "next step"
+      include_examples "next step", :subjects, :age_range
     end
 
     context "Current step: Age range" do
-      let(:current_step) { :age_range }
-      let(:expected_next_step) { :outcome }
-
-      include_examples "next step"
+      include_examples "next step", :age_range, :outcome
     end
 
     context "Current step: Outcome" do
-      let(:current_step) { :outcome }
-      let(:expected_next_step) { :apprenticeship }
-
-      include_examples "next step"
+      include_examples "next step", :outcome, :apprenticeship
     end
 
     context "Current step: Apprenticeship" do
-      let(:current_step) { :apprenticeship }
-      let(:expected_next_step) { :full_or_part_time }
-
-      include_examples "next step"
+      include_examples "next step", :apprenticeship, :full_or_part_time
     end
 
     context "Current step: Full or part time" do
-      let(:current_step) { :full_or_part_time }
-      let(:expected_next_step) { :location }
-
-      include_examples "next step"
+      include_examples "next step", :full_or_part_time, :location
     end
 
     context "Current step: Locations" do
-      let(:current_step) { :location }
-      let(:expected_next_step) { :entry_requirements }
-
-      include_examples "next step"
+      include_examples "next step", :location, :entry_requirements
     end
 
     context "Current step: Entry requirements" do
-      let(:current_step) { :entry_requirements }
-      let(:expected_next_step) { :applications_open }
-
-      include_examples "next step"
+      include_examples "next step", :entry_requirements, :applications_open
     end
 
     context "Current step: Applications open" do
-      let(:current_step) { :applications_open }
-      let(:expected_next_step) { :start_date }
-
-      include_examples "next step"
+      include_examples "next step", :applications_open, :start_date
     end
 
     context "Current step: Start date" do
-      let(:current_step) { :start_date }
-      let(:expected_next_step) { :confirmation }
+      include_examples "next step", :start_date, :confirmation
+    end
+  end
 
-      include_examples "next step"
+  context "Further education" do
+    let(:provider) { build(:provider) }
+    let(:level) { "further_education" }
+
+    context "Current step: Level" do
+      include_examples "next step", :level, :outcome
+    end
+
+    context "Current step: Outcome" do
+      include_examples "next step", :outcome, :full_or_part_time
+    end
+
+    context "Current step: Full or part time" do
+      include_examples "next step", :full_or_part_time, :location
+    end
+
+    context "Current step: Location" do
+      include_examples "next step", :location, :applications_open
+    end
+
+    context "Current step: Applications open" do
+      include_examples "next step", :applications_open, :start_date
+    end
+
+    context "Current step: Start date" do
+      include_examples "next step", :start_date, :confirmation
     end
   end
 end

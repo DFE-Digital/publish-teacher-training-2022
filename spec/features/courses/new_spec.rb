@@ -44,7 +44,7 @@ feature "new course", type: :feature do
   let(:course) do
     model = build(:course,
                   :new,
-                  level: :primary,
+                  level: level,
                   provider: provider,
                   course_code: "A123",
                   content_status: "draft",
@@ -69,104 +69,159 @@ feature "new course", type: :feature do
     stub_api_v2_resource(provider)
     stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_new_resource(course)
+    stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     build_new_course_request
   end
 
-  context "given the provider has existing courses" do
-    before do
-      stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
-    end
-    context "Beginning the course creation flow" do
+  context "Beginning the course creation flow" do
+    context "SCITT with single location" do
+      let(:level) { :primary }
+
       scenario "builds the new course on the API" do
         go_to_new_course_page_for_provider(provider)
 
         expect(build_new_course_request).to have_been_made
       end
 
-      scenario "redirects and renders new course level page" do
-        go_to_new_course_page_for_provider(provider)
+      context "given the provider has no existing courses" do
+        let(:provider) { build(:provider) }
+        before do
+          stub_api_v2_resource_collection([], endpoint: "#{url_for_resource(provider)}/courses?include=subjects,sites,provider.sites,accrediting_provider")
+        end
 
-        expect(current_path).to eq new_provider_recruitment_cycle_courses_level_path(provider.provider_code, provider.recruitment_cycle_year)
-
-        expect(new_level_page).to(
-          be_displayed(
-            recruitment_cycle_year: recruitment_cycle.year,
-            provider_code: provider.provider_code,
-          ),
-        )
-      end
-    end
-
-    context "course creation flow" do
-      context "SCITT with single location" do
-        scenario "creates the correct course" do
-          # This is intended to be a test which will go through the entire flow
-          # and ensure that the correct page gets displayed at the end
-          # with the correct course being created
-          go_to_new_course_page_for_provider(provider)
-
-          expect(new_level_page).to be_displayed
-          course_creation_params = select_level({})
-          course_creation_params = select_subjects(course_creation_params)
-          course_creation_params = select_age_range(course_creation_params)
-          course_creation_params = select_outcome(course_creation_params)
-          course_creation_params = select_apprenticeship(course_creation_params)
-          course_creation_params = select_study_mode(course_creation_params)
-          course_creation_params = select_location(course_creation_params)
-          course_creation_params = select_entry_requirements(course_creation_params)
-          course_creation_params = select_applications_open_from(course_creation_params)
-
-          select_start_date(course_creation_params)
-
-          save_course
-
-          expect(
-            course_creation_request.with do |request|
-              request_attributes = JSON.parse(request.body)["data"]["attributes"]
-              expect(request_attributes.symbolize_keys).to eq(course_creation_params)
-            end,
-          ).to have_been_made
-
-          expect(
-            course_creation_request.with do |request|
-              request_relationships = JSON.parse(request.body)["data"]["relationships"]
-              expect(request_relationships).to eq(
-                "subjects" => {
-                  "data" => [
-                    {
-                      "type" => "subjects",
-                      "id" => english.id,
-                    },
-                  ],
-                },
-                "sites" => {
-                  "data" => [
-                    {
-                      "type" => "sites",
-                      "id" => site1.id,
-                    },
-                    {
-                      "type" => "sites",
-                      "id" => site2.id,
-                    },
-                  ],
-                },
-              )
-            end,
-          ).to have_been_made
+        it "displays the page" do
+          expect { go_to_new_course_page_for_provider(provider) }.not_to raise_error
         end
       end
-    end
-  end
 
-  context "given the provider has no existing courses" do
-    let(:provider) { build(:provider) }
-    before do
-      stub_api_v2_resource_collection([], endpoint: "#{url_for_resource(provider)}/courses?include=subjects,sites,provider.sites,accrediting_provider")
+      context "Beginning the course creation flow" do
+        scenario "builds the new course on the API" do
+          go_to_new_course_page_for_provider(provider)
+
+          expect(build_new_course_request).to have_been_made
+        end
+
+        scenario "redirects and renders new course level page" do
+          go_to_new_course_page_for_provider(provider)
+
+          expect(current_path).to eq new_provider_recruitment_cycle_courses_level_path(provider.provider_code, provider.recruitment_cycle_year)
+
+          expect(new_level_page).to(
+            be_displayed(
+              recruitment_cycle_year: recruitment_cycle.year,
+              provider_code: provider.provider_code,
+            ),
+          )
+        end
+      end
+
+      scenario "creates the correct course" do
+        # This is intended to be a test which will go through the entire flow
+        # and ensure that the correct page gets displayed at the end
+        # with the correct course being created
+        go_to_new_course_page_for_provider(provider)
+
+        expect(new_level_page).to be_displayed
+        course_creation_params = select_level({}, level: "primary", level_selection: new_level_page.level_fields.primary, next_page: new_subjects_page)
+        course_creation_params = select_subjects(course_creation_params, level: "primary", next_page: new_age_range_page)
+        course_creation_params = select_age_range(course_creation_params, next_page: new_outcome_page)
+        course_creation_params = select_outcome(course_creation_params, qualification: "qts", qualification_selection: new_outcome_page.qualification_fields.qts, next_page: new_apprenticeship_page)
+        course_creation_params = select_apprenticeship(course_creation_params, next_page: new_study_mode_page)
+        course_creation_params = select_study_mode(course_creation_params, next_page: new_locations_page)
+        course_creation_params = select_location(course_creation_params, next_page: new_entry_requirements_page)
+        course_creation_params = select_entry_requirements(course_creation_params, next_page: new_applications_open_page)
+        course_creation_params = select_applications_open_from(course_creation_params, next_page: new_start_date_page)
+
+        select_start_date(course_creation_params)
+
+        save_course
+
+        expect(
+          course_creation_request.with do |request|
+            request_attributes = JSON.parse(request.body)["data"]["attributes"]
+            expect(request_attributes.symbolize_keys).to eq(course_creation_params)
+          end,
+        ).to have_been_made
+
+        expect(
+          course_creation_request.with do |request|
+            request_relationships = JSON.parse(request.body)["data"]["relationships"]
+            expect(request_relationships).to eq(
+              "subjects" => {
+                "data" => [
+                  {
+                    "type" => "subjects",
+                    "id" => english.id,
+                  },
+                ],
+              },
+              "sites" => {
+                "data" => [
+                  {
+                    "type" => "sites",
+                    "id" => site1.id,
+                  },
+                  {
+                    "type" => "sites",
+                    "id" => site2.id,
+                  },
+                ],
+              },
+            )
+          end,
+        ).to have_been_made
+      end
     end
 
-    it "displays the page" do
-      expect { go_to_new_course_page_for_provider(provider) }.not_to raise_error
+    context "Further education provider with single location" do
+      let(:level) { :further_education }
+
+      scenario "creates the correct course" do
+        # This is intended to be a test which will go through the entire flow
+        # and ensure that the correct page gets displayed at the end
+        # with the correct course being created
+        go_to_new_course_page_for_provider(provider)
+
+        expect(new_level_page).to be_displayed
+        course_creation_params = select_level({}, level: "further_education", level_selection: new_level_page.level_fields.further_education, next_page: new_outcome_page)
+        course_creation_params = select_outcome(course_creation_params, qualification: "pgce", qualification_selection: new_outcome_page.qualification_fields.pgce, next_page: new_study_mode_page)
+        course_creation_params = select_study_mode(course_creation_params, next_page: new_locations_page)
+        course_creation_params = select_location(course_creation_params, next_page: new_applications_open_page)
+        course_creation_params = select_applications_open_from(course_creation_params, next_page: new_start_date_page)
+        select_start_date(course_creation_params)
+
+        save_course
+
+        expect(
+          course_creation_request.with do |request|
+            request_attributes = JSON.parse(request.body)["data"]["attributes"]
+            expect(request_attributes.symbolize_keys).to eq(course_creation_params)
+          end,
+        ).to have_been_made
+
+        expect(
+          course_creation_request.with do |request|
+            request_relationships = JSON.parse(request.body)["data"]["relationships"]
+            expect(request_relationships).to eq(
+              "subjects" => {
+                "data" => nil,
+              },
+              "sites" => {
+                "data" => [
+                  {
+                    "type" => "sites",
+                    "id" => site1.id,
+                  },
+                  {
+                    "type" => "sites",
+                    "id" => site2.id,
+                  },
+                ],
+              },
+            )
+          end,
+        ).to have_been_made
+      end
     end
   end
 
@@ -178,24 +233,24 @@ private
     confirmation_page.save.click
   end
 
-  def select_level(course_creation_params)
-    course_creation_params[:level] = "primary"
+  def select_level(course_creation_params, level:, level_selection:, next_page:)
+    course_creation_params[:level] = level
     course_creation_params[:is_send] = "0"
     stub_build_course_with_params(course_creation_params)
 
-    new_level_page.level_fields.primary.click
+    level_selection.click
     new_level_page.continue.click
 
     expect_page_to_be_displayed_with_query(
-      page: new_subjects_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 
     course_creation_params
   end
 
-  def select_subjects(course_creation_params)
-    course_creation_params[:level] = "primary"
+  def select_subjects(course_creation_params, level:, next_page:)
+    course_creation_params[:level] = level
     course_creation_params[:subjects_ids] = [english.id]
     stub_build_course_with_params(course_creation_params)
 
@@ -203,14 +258,14 @@ private
     new_subjects_page.continue.click
 
     expect_page_to_be_displayed_with_query(
-      page: new_age_range_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 
     course_creation_params
   end
 
-  def select_age_range(course_creation_params)
+  def select_age_range(course_creation_params, next_page:)
     course_creation_params[:age_range_in_years] = "5_to_11"
     stub_build_course_with_params(course_creation_params)
 
@@ -218,29 +273,29 @@ private
     click_on "Continue"
 
     expect_page_to_be_displayed_with_query(
-      page: new_outcome_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 
     course_creation_params
   end
 
-  def select_outcome(course_creation_params)
-    course_creation_params[:qualification] = "qts"
+  def select_outcome(course_creation_params, qualification:, qualification_selection:, next_page:)
+    course_creation_params[:qualification] = qualification
     stub_build_course_with_params(course_creation_params)
 
-    new_outcome_page.qualification_fields.qts.click
+    qualification_selection.click
     new_outcome_page.continue.click
 
     expect_page_to_be_displayed_with_query(
-      page: new_apprenticeship_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 
     course_creation_params
   end
 
-  def select_apprenticeship(course_creation_params)
+  def select_apprenticeship(course_creation_params, next_page:)
     course_creation_params[:funding_type] = "fee"
     stub_build_course_with_params(course_creation_params)
 
@@ -248,14 +303,14 @@ private
     new_apprenticeship_page.continue.click
 
     expect_page_to_be_displayed_with_query(
-      page: new_study_mode_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 
     course_creation_params
   end
 
-  def select_study_mode(course_creation_params)
+  def select_study_mode(course_creation_params, next_page:)
     course_creation_params[:study_mode] = "full_time"
     course.study_mode = "full_time"
     stub_build_course_with_params(course_creation_params)
@@ -264,14 +319,14 @@ private
     new_study_mode_page.continue.click
 
     expect_page_to_be_displayed_with_query(
-      page: new_locations_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 
     course_creation_params
   end
 
-  def select_location(course_creation_params)
+  def select_location(course_creation_params, next_page:)
     course_creation_params[:sites_ids] = [site1.id, site2.id]
     course.sites = [site1, site2]
     stub_build_course_with_params(course_creation_params)
@@ -281,14 +336,14 @@ private
     new_locations_page.continue.click
 
     expect_page_to_be_displayed_with_query(
-      page: new_entry_requirements_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 
     course_creation_params
   end
 
-  def select_applications_open_from(course_creation_params)
+  def select_applications_open_from(course_creation_params, next_page:)
     course_creation_params[:applications_open_from] = recruitment_cycle.application_start_date
     course.applications_open_from = DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601
     stub_build_course_with_params(course_creation_params)
@@ -297,7 +352,7 @@ private
     new_applications_open_page.continue.click
 
     expect_page_to_be_displayed_with_query(
-      page: new_start_date_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 
@@ -329,7 +384,7 @@ private
     course_creation_params
   end
 
-  def select_entry_requirements(course_creation_params)
+  def select_entry_requirements(course_creation_params, next_page:)
     course_creation_params[:english] = "must_have_qualification_at_application_time"
     course_creation_params[:maths] = "must_have_qualification_at_application_time"
     course_creation_params[:science] = "must_have_qualification_at_application_time"
@@ -341,7 +396,7 @@ private
     new_entry_requirements_page.continue.click
 
     expect_page_to_be_displayed_with_query(
-      page: new_applications_open_page,
+      page: next_page,
       expected_query_params: course_creation_params,
     )
 

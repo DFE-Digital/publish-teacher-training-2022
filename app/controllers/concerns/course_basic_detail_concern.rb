@@ -3,7 +3,7 @@ module CourseBasicDetailConcern
 
   included do
     decorates_assigned :course
-    before_action :build_provider, :build_new_course, only: %i[new continue]
+    before_action :build_new_course, :build_provider, only: %i[new continue]
     before_action :build_previous_course_creation_params, only: %i[new continue]
     before_action :build_meta_course_creation_params, only: %i[new continue]
     before_action :build_back_link, only: %i[new continue]
@@ -49,8 +49,8 @@ private
 
   def build_new_course
     @course = Course.build_new(
-      recruitment_cycle_year: @provider.recruitment_cycle_year,
-      provider_code: @provider.provider_code,
+      recruitment_cycle_year: params[:recruitment_cycle_year],
+      provider_code: params[:provider_code],
       course: course_params.to_unsafe_hash,
     )
   end
@@ -137,7 +137,7 @@ private
   end
 
   def next_step
-    next_step = NextCourseCreationStepService.new.execute(current_step: current_step, current_provider: @provider)
+    next_step = NextCourseCreationStepService.new.execute(current_step: current_step, course: @course)
     next_page = course_creation_path_for(next_step)
 
     if next_page.nil?

@@ -87,23 +87,23 @@ feature "New course level", type: :feature do
 
       it_behaves_like "a course creation page"
     end
-  end
 
-  context "Error handling" do
-    let(:level) { :primary }
-    let(:course) do
-      c = build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options)
-      c.errors.add(:subjects, "Invalid")
-      c
-    end
+    context "Error handling" do
+      let(:level) { :primary }
+      let(:course) do
+        c = build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options)
+        c.errors.add(:subjects, "Invalid")
+        c
+      end
 
-    before do
-      stub_api_v2_build_course(subjects_ids: [nil])
-    end
+      before do
+        stub_api_v2_build_course(subjects_ids: [nil])
+      end
 
-    scenario do
-      new_subjects_page.continue.click
-      expect(new_subjects_page.error_flash.text).to include("Subjects Invalid")
+      scenario do
+        new_subjects_page.continue.click
+        expect(new_subjects_page.error_flash.text).to include("Subjects Invalid")
+      end
     end
   end
 

@@ -24,6 +24,22 @@ feature "New course start date", type: :feature do
     expect(build_course_with_default_request).to have_been_made.times(2)
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course, provider: provider, start_date: nil)
+      c.errors.add(:start_date, "Invalid")
+      c
+    end
+
+    scenario do
+      stub_api_v2_build_course(start_date: "September #{Settings.current_cycle}")
+      visit_new_start_date_page
+      select "September #{Settings.current_cycle}"
+      new_start_date_page.continue.click
+      expect(new_start_date_page.error_flash.text).to include("Start date Invalid")
+    end
+  end
+
   scenario "choose course start date" do
     visit_new_start_date_page
 
