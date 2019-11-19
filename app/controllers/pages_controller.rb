@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate, only: %i[guidance accessibility]
+  skip_before_action :authenticate, only: %i[guidance accessibility terms]
 
   def accessibility; end
 
