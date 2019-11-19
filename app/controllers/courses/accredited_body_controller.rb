@@ -2,7 +2,6 @@ module Courses
   class AccreditedBodyController < ApplicationController
     before_action :build_course_params, only: :continue
     include CourseBasicDetailConcern
-    before_action :build_back_link, only: :new
 
     decorates_assigned :provider
 
@@ -106,14 +105,6 @@ module Courses
     def build_course_params
       @accredited_body = params[:course].delete(:accredited_body)
       @autocompleted_provider_code = params[:course].delete(:autocompleted_provider_code)
-    end
-
-    def build_back_link
-      @back_link_path = if @provider.sites.count > 1
-                          new_provider_recruitment_cycle_courses_locations_path(course: @course_creation_params)
-                        else
-                          new_provider_recruitment_cycle_courses_study_mode_path(course: @course_creation_params)
-                        end
     end
 
     def errors_for_search_query(code, query)
