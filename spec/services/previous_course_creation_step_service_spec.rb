@@ -189,7 +189,6 @@ private
     end
   end
 
-
   def handle_outcome(provider)
     if provider.accredited_body?
       :apprenticeship
