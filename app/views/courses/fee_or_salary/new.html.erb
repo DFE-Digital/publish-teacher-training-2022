@@ -1,8 +1,6 @@
 <%= content_for :page_title, "Edit Fee or Salary" %>
 <% content_for :before_content do %>
-  <% course_creation_back_button do %>
-    <%= govuk_back_link_to(@back_link_path) %>
-  <% end %>
+  <%= course_creation_back_button(@back_link_path) %>
 <% end %>
 
 <%= render 'shared/errors' %>
