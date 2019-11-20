@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     member do
       post :approve
       get :confirm
+      get "/inform-publisher", to: "access_requests#inform_publisher"
     end
   end
 

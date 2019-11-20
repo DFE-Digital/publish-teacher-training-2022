@@ -9,6 +9,8 @@ dfe_signin:
   secret: foobar
   # URL of this app for the callback after sigining in
   base_url: https://localhost:3000
+  # The URL support users are directed to in order to find a user by email
+  email_search_url: https://support.signin.education.gov.uk/users?criteria=%<email>s
 manage_backend:
   algorithm: HS256
   # Set this in the env! The below ensures that we are un-authenticatable if we
@@ -19,6 +21,10 @@ manage_backend:
 search_ui:
   # URL of the C# search ui app (search-and-compare-ui)
   base_url: https://localhost:5000
+notify:
+  service_url: https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534
+  unregistered_user_template_url: https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/templates/9ecac443-8cfd-49ac-ac59-e7ffa0ab6278
+  registered_user_template_url: https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/templates/4da327dd-907a-4619-abe6-45f348bb2fa3
 google_forms:
   next_cycle:
     new_course_for_accredited_bodies:
