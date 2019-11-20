@@ -7,7 +7,5 @@ module Courses
     def current_step
       :fee_or_salary
     end
-
-    def errors; end
   end
 end

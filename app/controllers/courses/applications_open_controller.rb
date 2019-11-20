@@ -11,8 +11,6 @@ module Courses
 
   private
 
-    def errors; end
-
     def actual_params
       params.require(:course)
         .except(

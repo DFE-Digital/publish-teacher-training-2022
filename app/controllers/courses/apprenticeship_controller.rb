@@ -7,7 +7,5 @@ module Courses
     def current_step
       :apprenticeship
     end
-
-    def errors; end
   end
 end

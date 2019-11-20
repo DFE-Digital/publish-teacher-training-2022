@@ -59,6 +59,10 @@ private
     @course.errors.messages.select { |key, _message| error_keys.include?(key) }
   end
 
+  def error_keys
+    []
+  end
+
   def build_provider
     @provider = Provider
                   .where(recruitment_cycle_year: params[:recruitment_cycle_year])

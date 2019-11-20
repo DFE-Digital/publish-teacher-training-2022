@@ -7,7 +7,5 @@ module Courses
     def current_step
       :start_date
     end
-
-    def errors; end
   end
 end

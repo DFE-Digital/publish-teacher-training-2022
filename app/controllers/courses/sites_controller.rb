@@ -41,8 +41,6 @@ module Courses
       :location
     end
 
-    def errors; end
-
     def set_default_site
       params["course"] ||= {}
       params["course"]["sites_ids"] = [@provider.sites.first.id]

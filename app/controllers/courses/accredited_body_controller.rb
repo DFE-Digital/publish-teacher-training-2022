@@ -74,6 +74,10 @@ module Courses
                     .first
     end
 
+    def error_keys
+      []
+    end
+
     def redirect_to_provider_search
       redirect_to(
         accredited_body_search_provider_recruitment_cycle_course_path(
@@ -99,8 +103,6 @@ module Courses
     def current_step
       :accredited_body
     end
-
-    def errors; end
 
     def build_course_params
       @accredited_body = params[:course].delete(:accredited_body)
