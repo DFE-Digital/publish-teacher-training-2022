@@ -36,7 +36,7 @@ module CourseBasicDetailConcern
   def continue
     @errors = errors
 
-    if @errors.present?
+    if @errors.any?
       render :new
     elsif params[:goto_confirmation].present?
       redirect_to confirmation_provider_recruitment_cycle_courses_path(path_params)
@@ -53,6 +53,10 @@ private
       provider_code: @provider.provider_code,
       course: course_params.to_unsafe_hash,
     )
+  end
+
+  def errors
+    @course.errors.messages.select { |key, _message| error_keys.include?(key) }
   end
 
   def build_provider
