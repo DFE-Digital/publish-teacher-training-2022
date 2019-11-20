@@ -29,12 +29,12 @@
       <% end %>
 
       <%= render "shared/form_field",
-        form: f, field: :requester_email, label: 'Requester email' do |field, options| %>
+        form: f, field: :requester_email, label: "Email with permissions to copy" do |field, options| %>
         <%= f.email_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
       <% end %>
 
       <%= render "shared/form_field",
-        form: f, field: :email_address, label: 'Target email' do |field, options| %>
+        form: f, field: :email_address, label: "Email that should have these permissions" do |field, options| %>
         <%= f.email_field field, options.merge(class: 'govuk-textarea govuk-!-width-two-thirds') %>
       <% end %>
 
