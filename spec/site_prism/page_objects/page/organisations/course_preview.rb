@@ -24,6 +24,8 @@ module PageObjects
         element :salary_details, "#section-salary"
         element :scholarship_amount, "[data-qa=course__scholarship_amount]"
         element :bursary_amount, "[data-qa=course__bursary_amount]"
+        element :early_career_payment_details, "[data-qa=course__early_career_payment_details]"
+        element :financial_support_details, "[data-qa=course__financial_support_details]"
         element :required_qualifications, "[data-qa=course__required_qualifications]"
         element :personal_qualities, "[data-qa=course__personal_qualities]"
         element :other_requirements, "[data-qa=course__other_requirements]"

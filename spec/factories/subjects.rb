@@ -4,6 +4,9 @@ FactoryBot.define do
     type { "subject" }
     subject_code { "00" }
     subject_name { "Primary with Mathematics" }
+    bursary_amount { nil }
+    scholarship { nil }
+    early_career_payments { nil }
 
     trait :english do
       subject_name { "English" }
