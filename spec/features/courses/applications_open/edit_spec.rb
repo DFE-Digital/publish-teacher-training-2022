@@ -4,22 +4,16 @@ feature "Edit course applications open", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:applications_open_page) { PageObjects::Page::Organisations::CourseApplicationsOpen.new }
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, recruitment_cycle: current_recruitment_cycle) }
 
   before do
     stub_omniauth
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.to_jsonapi,
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}?include=subjects,courses.accrediting_provider",
-      build(:provider).to_jsonapi(include: %i[subjects courses accrediting_provider]),
-    )
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "subjects,courses.accrediting_provider")
+    stub_api_v2_resource(course)
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
 
-    stub_course_request
-    stub_course_details_tab
     applications_open_page.load_with_course(course)
   end
 
@@ -163,24 +157,5 @@ feature "Edit course applications open", type: :feature do
       expect(applications_open_page.applications_open_field_month.value).to eq("12")
       expect(applications_open_page.applications_open_field_year.value).to eq("2018")
     end
-  end
-
-  def stub_course_request
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}/courses" \
-      "/#{course.course_code}",
-      course.to_jsonapi,
-    )
-  end
-
-  def stub_course_details_tab
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=subjects,sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:subjects, :sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
-    )
   end
 end

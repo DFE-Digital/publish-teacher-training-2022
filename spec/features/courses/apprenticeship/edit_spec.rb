@@ -8,18 +8,11 @@ feature "Edit course apprenticeship status", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.to_jsonapi,
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}?include=courses.accrediting_provider",
-      provider.to_jsonapi(include: %i[courses accrediting_provider]),
-    )
-
-    stub_course_request
-    stub_course_details_tab
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+    stub_api_v2_resource(provider)
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(course)
     apprenticeship_page.load_with_course(course)
   end
 
@@ -78,24 +71,5 @@ feature "Edit course apprenticeship status", type: :feature do
 
       expect(patch_stub).to have_been_requested
     end
-  end
-
-  def stub_course_request
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}/courses" \
-      "/#{course.course_code}",
-      course.to_jsonapi,
-    )
-  end
-
-  def stub_course_details_tab
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=subjects,sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:subjects, :sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
-    )
   end
 end

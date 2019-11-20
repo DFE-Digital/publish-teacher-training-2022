@@ -14,14 +14,9 @@ feature "Getting rid of a course", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{course.recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}/" \
-      "providers/#{provider.provider_code}/" \
-      "courses/#{course.course_code}" \
-      "?include=subjects,sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: %i[subjects provider sites]),
-    )
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(provider)
 
     course_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle.year, course_code: course.course_code)
   end

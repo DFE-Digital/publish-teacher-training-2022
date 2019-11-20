@@ -3,9 +3,9 @@ require "rails_helper"
 feature "Course details", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:next_recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
-  let(:provider) { build(:provider, provider_code: "A0", accredited_body?: false, sites: [site1, site2]) }
+  let(:provider) { build(:provider, provider_code: "A0", accredited_body?: false, sites: [site1, site2], recruitment_cycle: current_recruitment_cycle) }
   let(:course) do
-    build :course,
+    build(:course,
           study_mode: "full_time",
           start_date: Time.zone.local(2019),
           sites: [site1, site2],
@@ -13,7 +13,7 @@ feature "Course details", type: :feature do
           accrediting_provider: provider,
           open_for_applications?: true,
           age_range_in_years: "3_to_7",
-          recruitment_cycle: current_recruitment_cycle
+          recruitment_cycle: current_recruitment_cycle)
   end
   let(:site1) { build(:site, location_name: "London") }
   let(:site2) { build(:site, location_name: "Manchester") }
@@ -23,23 +23,13 @@ feature "Course details", type: :feature do
   let(:site_status2) do
     build(:site_status, :part_time, site: site2, status: "suspended")
   end
-  let(:course_response) do
-    course.to_jsonapi(
-      include: [:subjects, :sites, :accrediting_provider, :recruitment_cycle, provider: :sites],
-    )
-  end
 
   before do
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-    stub_api_v2_request("/recruitment_cycles/#{next_recruitment_cycle.year}", next_recruitment_cycle.to_jsonapi)
     stub_omniauth
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=subjects,sites,provider.sites,accrediting_provider",
-      course_response,
-    )
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(next_recruitment_cycle)
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(provider)
   end
 
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
@@ -201,12 +191,14 @@ feature "Course details", type: :feature do
 
   describe "allocations" do
     let(:course) do
-      build :course,
+      build(:course,
             provider: provider,
-            recruitment_cycle: next_recruitment_cycle
+            recruitment_cycle: next_recruitment_cycle)
     end
 
     context "when the course is in the next recruitment cycle" do
+      let(:current_recruitment_cycle) { next_recruitment_cycle }
+
       scenario "displays no restrictions" do
         course_details_page.load_with_course(course)
         expect(course_details_page.allocations_info).to have_content(
@@ -229,27 +221,29 @@ feature "Course details", type: :feature do
           )
         end
       end
+    end
 
-      context "when the course is in the current recruitment cycle" do
-        let(:course) do
-          build :course,
-                provider: provider,
-                recruitment_cycle: current_recruitment_cycle
-        end
+    context "when the course is in the current recruitment cycle" do
+      let(:course) do
+        build(:course,
+              provider: provider,
+              recruitment_cycle: current_recruitment_cycle)
+      end
 
-        scenario "displays no restrictions" do
-          course_details_page.load_with_course(course)
-          expect(course_details_page).to_not have_allocations_info
-        end
+      scenario "displays no restrictions" do
+        course_details_page.load_with_course(course)
+        expect(course_details_page).to_not have_allocations_info
       end
     end
   end
 
   context "displays allocation restrictions" do
+    let(:provider) { build(:provider, provider_code: "A0", accredited_body?: false, sites: [site1, site2], recruitment_cycle: next_recruitment_cycle) }
+
     let(:course) do
-      build :course,
+      build(:course,
             provider: provider,
-            recruitment_cycle: next_recruitment_cycle
+            recruitment_cycle: next_recruitment_cycle)
     end
 
     scenario "displays no restrictions" do

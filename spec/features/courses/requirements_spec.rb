@@ -22,14 +22,10 @@ feature "Course requirements", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-    stub_course_request(provider, course)
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-      "/providers/A0" \
-      "?include=courses.accrediting_provider",
-      provider.to_jsonapi(include: %i[courses accrediting_provider]),
-    )
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+    stub_api_v2_resource(provider)
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
   end
 
   let(:course_requirements_page) { PageObjects::Page::Organisations::CourseRequirements.new }
@@ -123,8 +119,9 @@ feature "Course requirements", type: :feature do
     end
 
     before do
-      stub_course_request(provider, course_2)
-      stub_course_request(provider, course_3)
+      stub_api_v2_resource(course_2, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(course_3, include: "subjects,sites,provider.sites,accrediting_provider")
+
       stub_api_v2_request(
         "/recruitment_cycles/#{course.recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
@@ -173,15 +170,5 @@ feature "Course requirements", type: :feature do
       expect(course_requirements_page.personal_qualities.value).to eq(course_2.personal_qualities)
       expect(course_requirements_page.other_requirements.value).to eq(course_2.other_requirements)
     end
-  end
-
-  def stub_course_request(provider, course)
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=subjects,sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: %i[subjects sites provider accrediting_provider]),
-    )
   end
 end

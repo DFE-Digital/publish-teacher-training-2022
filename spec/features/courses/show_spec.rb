@@ -4,15 +4,24 @@ require "rails_helper"
 
 feature "Course show", type: :feature do
   let(:provider) do
-    build :provider,
+    build(:provider,
           accredited_body?: false,
           provider_name: "ACME SCITT A0",
-          provider_code: "A0"
+          provider_code: "A0")
   end
+
+  let(:rolled_over_provider) do
+    build(:provider,
+          recruitment_cycle: next_recruitment_cycle,
+          accredited_body?: false,
+          provider_name: "ACME SCITT A0",
+          provider_code: "A0")
+  end
+
   let(:current_recruitment_cycle) { build :recruitment_cycle }
   let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
   let(:course) do
-    build :course,
+    build(:course,
           :with_fees,
           has_vacancies?: true,
           course_code: "C1",
@@ -30,13 +39,13 @@ feature "Course show", type: :feature do
           required_qualifications: "Foo",
           personal_qualities: "Foo",
           other_requirements: "Foo",
-          sites: [site]
+          sites: [site])
   end
   let(:site) { build :site, code: "Z" }
   let(:site_status) do
-    build :site_status,
+    build(:site_status,
           :full_time_and_part_time,
-          site: site
+          site: site)
   end
 
   let(:course_response) do
@@ -52,6 +61,8 @@ feature "Course show", type: :feature do
     stub_api_v2_resource next_recruitment_cycle
     stub_api_v2_resource course,
                          include: "subjects,sites,provider.sites,accrediting_provider"
+    stub_api_v2_resource(provider)
+    stub_api_v2_resource(rolled_over_provider)
 
     visit provider_recruitment_cycle_course_path(course.provider.provider_code,
                                                  course.recruitment_cycle.year,
@@ -172,7 +183,7 @@ feature "Course show", type: :feature do
   end
 
   context "when the course is running" do
-    let(:course) {
+    let(:course) do
       build :course,
             findable?: true,
             content_status: "published",
@@ -180,7 +191,7 @@ feature "Course show", type: :feature do
             has_vacancies?: true,
             open_for_applications?: true,
             provider: provider
-    }
+    end
 
     scenario "it displays a status panel" do
       expect(course_page).to have_status_panel
@@ -192,23 +203,16 @@ feature "Course show", type: :feature do
   end
 
   context "when the course has been rolled over" do
-    let(:rolled_over_provider) do
-      build :provider,
-            recruitment_cycle: next_recruitment_cycle,
-            accredited_body?: false,
-            provider_name: "ACME SCITT A0",
-            provider_code: "A0"
-    end
-    let(:course) {
-      build :course,
+    let(:course) do
+      build(:course,
             recruitment_cycle: next_recruitment_cycle,
             findable?: false,
             content_status: "rolled_over",
             ucas_status: "new",
             has_vacancies?: true,
             open_for_applications?: false,
-            provider: rolled_over_provider
-    }
+            provider: rolled_over_provider)
+    end
 
     scenario "it displays a status panel" do
       expect(course_page).to have_status_panel
@@ -219,13 +223,13 @@ feature "Course show", type: :feature do
   end
 
   context "when the course is withdrawn" do
-    let(:course) {
-      build :course,
+    let(:course) do
+      build(:course,
             findable?: false,
             content_status: "withdrawn",
             ucas_status: "not_running",
-            provider: provider
-    }
+            provider: provider)
+    end
 
     scenario "it displays a status panel" do
       expect(course_page).to have_status_panel

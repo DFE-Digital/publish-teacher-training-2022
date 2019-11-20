@@ -121,16 +121,20 @@ module Helpers
   end
 
   def stub_api_v2_resource_collection(resources,
+                                      endpoint: nil,
                                       jsonapi_response: nil,
                                       include: nil)
     query_params = {}
     query_params[:include] = include if include.present?
 
-    url = url_for_resource_collection(resources.first)
-    url += "?#{query_params.to_param}" if query_params.any?
+
+    if endpoint.nil?
+      endpoint = url_for_resource_collection(resources.first)
+      endpoint += "?#{query_params.to_param}" if query_params.any?
+    end
 
     jsonapi_response ||= resource_list_to_jsonapi(resources, include: include)
-    stub_api_v2_request(url, jsonapi_response)
+    stub_api_v2_request(endpoint, jsonapi_response)
   end
 
   def stub_api_v2_empty_resource_collection(resource,

@@ -13,18 +13,11 @@ feature "Edit course entry requirements", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.to_jsonapi,
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}?include=subjects,courses.accrediting_provider",
-      build(:provider).to_jsonapi(include: %i[subjects courses accrediting_provider]),
-    )
-
-    stub_course_request
-    stub_course_details_tab
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+    stub_api_v2_resource(provider)
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(course)
     entry_requirements_page.load_with_course(course)
   end
 

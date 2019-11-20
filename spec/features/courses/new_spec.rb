@@ -42,14 +42,14 @@ feature "new course", type: :feature do
   let(:english) { build(:subject, :english) }
 
   let(:course) do
-    model = build :course,
+    model = build(:course,
                   :new,
                   level: :primary,
                   provider: provider,
                   course_code: "A123",
                   content_status: "draft",
                   subjects: [build(:subject, subject_name: "Primary with Mathematics")],
-                  gcse_subjects_required: %w[maths science english]
+                  gcse_subjects_required: %w[maths science english])
     model.meta[:edit_options][:subjects] = [english]
     model
   end
@@ -68,90 +68,105 @@ feature "new course", type: :feature do
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(provider, include: "sites")
-    stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_new_resource(course)
     build_new_course_request
   end
 
-  context "Beginning the course creation flow" do
-    scenario "builds the new course on the API" do
-      go_to_new_course_page_for_provider(provider)
+  context "given the provider has existing courses" do
+    before do
+      stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
+    end
+    context "Beginning the course creation flow" do
+      scenario "builds the new course on the API" do
+        go_to_new_course_page_for_provider(provider)
 
-      expect(build_new_course_request).to have_been_made
+        expect(build_new_course_request).to have_been_made
+      end
+
+      scenario "redirects and renders new course level page" do
+        go_to_new_course_page_for_provider(provider)
+
+        expect(current_path).to eq new_provider_recruitment_cycle_courses_level_path(provider.provider_code, provider.recruitment_cycle_year)
+
+        expect(new_level_page).to(
+          be_displayed(
+            recruitment_cycle_year: recruitment_cycle.year,
+            provider_code: provider.provider_code,
+          ),
+        )
+      end
     end
 
-    scenario "redirects and renders new course level page" do
-      go_to_new_course_page_for_provider(provider)
+    context "course creation flow" do
+      context "SCITT with single location" do
+        scenario "creates the correct course" do
+          # This is intended to be a test which will go through the entire flow
+          # and ensure that the correct page gets displayed at the end
+          # with the correct course being created
+          go_to_new_course_page_for_provider(provider)
 
-      expect(current_path).to eq new_provider_recruitment_cycle_courses_level_path(provider.provider_code, provider.recruitment_cycle_year)
+          expect(new_level_page).to be_displayed
+          course_creation_params = select_level({})
+          course_creation_params = select_subjects(course_creation_params)
+          course_creation_params = select_age_range(course_creation_params)
+          course_creation_params = select_outcome(course_creation_params)
+          course_creation_params = select_apprenticeship(course_creation_params)
+          course_creation_params = select_study_mode(course_creation_params)
+          course_creation_params = select_location(course_creation_params)
+          course_creation_params = select_entry_requirements(course_creation_params)
+          course_creation_params = select_applications_open_from(course_creation_params)
 
-      expect(new_level_page).to(
-        be_displayed(
-          recruitment_cycle_year: recruitment_cycle.year,
-          provider_code: provider.provider_code,
-        ),
-      )
+          select_start_date(course_creation_params)
+
+          save_course
+
+          expect(
+            course_creation_request.with do |request|
+              request_attributes = JSON.parse(request.body)["data"]["attributes"]
+              expect(request_attributes.symbolize_keys).to eq(course_creation_params)
+            end,
+          ).to have_been_made
+
+          expect(
+            course_creation_request.with do |request|
+              request_relationships = JSON.parse(request.body)["data"]["relationships"]
+              expect(request_relationships).to eq(
+                "subjects" => {
+                  "data" => [
+                    {
+                      "type" => "subjects",
+                      "id" => english.id,
+                    },
+                  ],
+                },
+                "sites" => {
+                  "data" => [
+                    {
+                      "type" => "sites",
+                      "id" => site1.id,
+                    },
+                    {
+                      "type" => "sites",
+                      "id" => site2.id,
+                    },
+                  ],
+                },
+              )
+            end,
+          ).to have_been_made
+        end
+      end
     end
   end
 
-  context "course creation flow" do
-    context "SCITT with single location" do
-      scenario "creates the correct course" do
-        # This is intended to be a test which will go through the entire flow
-        # and ensure that the correct page gets displayed at the end
-        # with the correct course being created
-        go_to_new_course_page_for_provider(provider)
+  context "given the provider has no existing courses" do
+    let(:provider) { build(:provider) }
+    before do
+      stub_api_v2_resource_collection([], endpoint: "#{url_for_resource(provider)}/courses?include=subjects,sites,provider.sites,accrediting_provider")
+    end
 
-        expect(new_level_page).to be_displayed
-        course_creation_params = select_level({})
-        course_creation_params = select_subjects(course_creation_params)
-        course_creation_params = select_age_range(course_creation_params)
-        course_creation_params = select_outcome(course_creation_params)
-        course_creation_params = select_apprenticeship(course_creation_params)
-        course_creation_params = select_study_mode(course_creation_params)
-        course_creation_params = select_location(course_creation_params)
-        course_creation_params = select_entry_requirements(course_creation_params)
-        course_creation_params = select_applications_open_from(course_creation_params)
-
-        select_start_date(course_creation_params)
-
-        save_course
-
-        expect(
-          course_creation_request.with do |request|
-            request_attributes = JSON.parse(request.body)["data"]["attributes"]
-            expect(request_attributes.symbolize_keys).to eq(course_creation_params)
-          end,
-        ).to have_been_made
-
-        expect(
-          course_creation_request.with do |request|
-            request_relationships = JSON.parse(request.body)["data"]["relationships"]
-            expect(request_relationships).to eq(
-              "subjects" => {
-                "data" => [
-                  {
-                    "type" => "subjects",
-                    "id" => english.id,
-                  },
-                ],
-              },
-              "sites" => {
-                "data" => [
-                  {
-                    "type" => "sites",
-                    "id" => site1.id,
-                  },
-                  {
-                    "type" => "sites",
-                    "id" => site2.id,
-                  },
-                ],
-              },
-            )
-          end,
-        ).to have_been_made
-      end
+    it "displays the page" do
+      expect { go_to_new_course_page_for_provider(provider) }.not_to raise_error
     end
   end
 

@@ -5,7 +5,7 @@ require "rails_helper"
 feature "Preview course", type: :feature do
   let(:current_recruitment_cycle) { build :recruitment_cycle }
   let(:course) do
-    build :course,
+    build(:course,
           name: "English",
           provider: provider,
           accrediting_provider: accrediting_provider,
@@ -35,15 +35,15 @@ feature "Preview course", type: :feature do
             jsonapi_site_status("New site with no vacancies", :no_vacancies, "new_status"),
             jsonapi_site_status("Running site with no vacancies", :no_vacancies, "running"),
           ],
-          subjects: [subject]
+          subjects: [subject])
   end
 
   let(:subject) do
-    build :subject,
+    build(:subject,
           :english,
           scholarship: "2000",
           bursary_amount: "4000",
-          early_career_payments: "1000"
+          early_career_payments: "1000")
   end
 
   let(:provider) {
@@ -70,12 +70,9 @@ feature "Preview course", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{course.recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-    stub_api_v2_request("/recruitment_cycles/#{course.recruitment_cycle.year}/recruitment_cycles", current_recruitment_cycle.to_jsonapi)
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/A0/courses/#{course.course_code}?include=subjects,site_statuses.site,provider.sites,accrediting_provider",
-      course_response,
-    )
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(course, include: "subjects,site_statuses.site,provider.sites,accrediting_provider")
+    stub_api_v2_resource(provider)
   end
 
   let(:preview_course_page) { PageObjects::Page::Organisations::CoursePreview.new }
