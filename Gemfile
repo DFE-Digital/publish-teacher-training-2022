@@ -41,6 +41,9 @@ gem "sentry-raven"
 # Decorate logic to keep it of the views and helper methods
 gem "draper"
 
+# Threadsafe storage
+gem "request_store"
+
 # Render nice markdown
 gem "redcarpet"
 
@@ -77,8 +80,6 @@ group :development, :test do
 
   # Run specs locally in parallel
   gem "parallel_tests"
-
-  gem "request_store"
 
   # Testing framework
   gem "rspec-rails", "~> 4.0.0.beta3"
