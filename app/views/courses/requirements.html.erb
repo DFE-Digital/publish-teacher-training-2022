@@ -20,7 +20,7 @@
       <%= f.hidden_field :page, value: :requirements %>
       <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
 
-      <p class="govuk-body">State the minimum academic qualifications needed for this course.</p>
+      <p class="govuk-body">State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met.</p>
 
       <div id="required_qualifications_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
         <%= render "shared/form_field",
@@ -33,7 +33,8 @@
 
       <h3 class="govuk-heading-l remove-top-margin">Personal qualities</h3>
 
-      <p class="govuk-body">Tell applicants about the skills and motivation you’re looking for (eg experience with children, a genuine passion for teaching, or a talent for public speaking).</p>
+      <p class="govuk-body">Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
+      </p>
 
       <div id="personal_qualities_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
         <%= render "shared/form_field",
@@ -46,7 +47,8 @@
 
       <h3 class="govuk-heading-l remove-top-margin">Other requirements</h3>
 
-      <p class="govuk-body">If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience).</p>
+      <p class="govuk-body">If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience).
+      </p>
 
       <div id="other_requirements_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
         <%= render "shared/form_field",
