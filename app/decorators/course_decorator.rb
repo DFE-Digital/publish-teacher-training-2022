@@ -46,6 +46,68 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def subject_name
+    if object.subjects.count == 1
+      object.subjects.first.subject_name
+    else
+      object.name
+    end
+  end
+
+  def has_scholarship_and_bursary?
+    has_bursary? && has_scholarship?
+  end
+
+  def bursary_first_line_ending
+    if bursary_requirements.count > 1
+      ":"
+    else
+      "#{bursary_requirements.first}."
+    end
+  end
+
+  def bursary_requirements
+    requirements = ["a degree of 2:2 or above in any subject"]
+
+    if object.subjects.any? { |subject| subject.subject_name.downcase == "primary with mathematics" }
+      mathematics_requirement = "at least grade B in maths A-level (or an equivalent)"
+      requirements.push(mathematics_requirement)
+    end
+
+    requirements
+  end
+
+  def bursary_only?
+    has_bursary? && !has_scholarship?
+  end
+
+  def has_bursary?
+    object.subjects.present? &&
+      object.subjects.any? { |subject| subject.attributes["bursary_amount"].present? }
+  end
+
+  def has_scholarship?
+    object.subjects.present? &&
+      object.subjects.any? { |subject| subject.attributes["scholarship"].present? }
+  end
+
+  def has_early_career_payments?
+    object.subjects.present? &&
+      object.subjects.any? { |subject| subject.attributes["early_career_payments"].present? }
+  end
+
+  def bursary_amount
+    find_max("bursary_amount")
+  end
+
+  def scholarship_amount
+    find_max("scholarship")
+  end
+
+  def salaried?
+    object.funding_type == "salary"
+  end
+
   def apprenticeship?
     object.funding_type == "apprenticeship" ? "Yes" : "No"
   end
@@ -100,10 +162,10 @@ class CourseDecorator < ApplicationDecorator
   def funding_option
     if object.funding_type == "salary"
       "Salary"
-    elsif object.has_scholarship_and_bursary?
+    elsif has_scholarship_and_bursary?
       "Scholarship, bursary or student finance if you’re eligible"
-    elsif object.has_bursary?
-      "Bursary or student finance if you’re eligible";
+    elsif has_bursary?
+      "Bursary or student finance if you’re eligible"
     else
       "Student finance if you’re eligible"
     end
@@ -161,5 +223,15 @@ private
 
   def edit_vacancy_link
     h.link_to("Edit", h.vacancies_provider_recruitment_cycle_course_path(provider_code: object.provider_code, recruitment_cycle_year: object.recruitment_cycle_year, code: object.course_code), class: "govuk-link")
+  end
+
+  def find_max(attribute)
+    subject_attributes = object.subjects.map do |s|
+      if s.attributes[attribute].present?
+        s.__send__(attribute).to_i
+      end
+    end
+
+    subject_attributes.compact.max.to_s
   end
 end

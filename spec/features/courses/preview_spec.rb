@@ -16,6 +16,7 @@ feature "Preview course", type: :feature do
           fee_international: "9250.0",
           fee_details: "Optional fee details",
           has_scholarship_and_bursary?: true,
+          financial_support: "Some info about financial support",
           scholarship_amount: "20000",
           bursary_amount: "22000",
           personal_qualities: "We are looking for ambitious trainee teachers who are passionate and enthusiastic about their subject and have a desire to share that with young people of all abilities in this particular age range.",
@@ -33,7 +34,16 @@ feature "Preview course", type: :feature do
             jsonapi_site_status("New site with vacancies", :full_time, "new_status"),
             jsonapi_site_status("New site with no vacancies", :no_vacancies, "new_status"),
             jsonapi_site_status("Running site with no vacancies", :no_vacancies, "running"),
-          ]
+          ],
+          subjects: [subject]
+  end
+
+  let(:subject) do
+    build :subject,
+          :english,
+          scholarship: "2000",
+          bursary_amount: "4000",
+          early_career_payments: "1000"
   end
 
   let(:provider) {
@@ -44,13 +54,14 @@ feature "Preview course", type: :feature do
           postcode: "E1 ABC")
   }
   let(:accrediting_provider) { build(:provider) }
-  let(:course_response)      do
+  let(:course_response) do
     course.to_jsonapi(
       include: [
         :sites,
         :provider,
         :accrediting_provider,
         :recruitment_cycle,
+        :subjects,
         site_statuses: :site,
       ],
     )
@@ -69,7 +80,7 @@ feature "Preview course", type: :feature do
 
   let(:preview_course_page) { PageObjects::Page::Organisations::CoursePreview.new }
 
-  scenario "viewing the show courses page" do
+  scenario "viewing the preview course page" do
     visit preview_provider_recruitment_cycle_course_path(provider.provider_code, current_recruitment_cycle.year, course.course_code)
 
     expect(preview_course_page.title).to have_content(
@@ -147,6 +158,12 @@ feature "Preview course", type: :feature do
     )
 
     expect(preview_course_page).to_not have_salary_details
+
+    expect(preview_course_page.scholarship_amount).to have_content("a scholarship of £2,000")
+
+    expect(preview_course_page.bursary_amount).to have_content("a bursary of £4,000")
+
+    expect(preview_course_page.financial_support_details).to have_content("Financial support from the training provider")
 
     expect(preview_course_page.required_qualifications).to have_content(
       course.required_qualifications,
