@@ -2,7 +2,7 @@ require "rails_helper"
 
 feature "Edit accredited body" do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, sites: [build(:site)]) }
   let(:course) { build(:course, provider: provider) }
   let(:new_accredited_body_page) { PageObjects::Page::Organisations::Courses::NewAccreditedBodyPage.new }
   let(:new_accredited_body_search_page) { PageObjects::Page::Organisations::Courses::NewAccreditedBodySearchPage.new }
@@ -18,6 +18,7 @@ feature "Edit accredited body" do
   before do
     stub_omniauth(provider: provider)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_build_course
     stub_api_v2_build_course(level: "primary")
@@ -51,6 +52,27 @@ feature "Edit accredited body" do
       end
 
       include_examples "a course creation page"
+    end
+
+    context "It allows the user to go back" do
+      context "With a single site" do
+        let(:new_study_mode_page) { PageObjects::Page::Organisations::Courses::NewStudyModePage.new }
+
+        it "Returns to the study mode page" do
+          new_accredited_body_page.back.click
+          expect(new_study_mode_page).to be_displayed
+        end
+      end
+
+      context "with multiple sites" do
+        let(:provider) { build(:provider, sites: [build(:site), build(:site)]) }
+        let(:new_locations_page) { PageObjects::Page::Organisations::Courses::NewLocationsPage.new }
+
+        it "Returns to the locations page" do
+          new_accredited_body_page.back.click
+          expect(new_locations_page).to be_displayed
+        end
+      end
     end
 
     context "Searching for a new accredited body" do

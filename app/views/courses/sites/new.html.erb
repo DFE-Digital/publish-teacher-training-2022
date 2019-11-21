@@ -1,4 +1,7 @@
 <%= content_for :page_title, "Pick the training locations for this course" %>
+<% content_for :before_content do %>
+  <%= course_creation_back_button(@back_link_path) %>
+<% end %>
 
 <h1 class="govuk-heading-xl">Pick the training locations for this course</h1>
 

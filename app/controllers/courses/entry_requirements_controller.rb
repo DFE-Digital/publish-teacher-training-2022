@@ -1,10 +1,17 @@
 module Courses
   class EntryRequirementsController < ApplicationController
     include CourseBasicDetailConcern
-
     before_action :not_found_if_no_gcse_subjects_required, except: :continue
 
   private
+
+    def build_provider
+      @provider = Provider
+                    .includes(:sites)
+                    .where(recruitment_cycle_year: params[:recruitment_cycle_year])
+                    .find(params[:provider_code])
+                    .first
+    end
 
     def current_step
       :entry_requirements

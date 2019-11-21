@@ -6,6 +6,7 @@ module CourseBasicDetailConcern
     before_action :build_provider, :build_new_course, only: %i[new continue]
     before_action :build_previous_course_creation_params, only: %i[new continue]
     before_action :build_meta_course_creation_params, only: %i[new continue]
+    before_action :build_back_link, only: %i[new continue]
     before_action :build_course, only: %i[edit update]
   end
 
@@ -141,8 +142,23 @@ private
     { course: course_params }
   end
 
+  def build_back_link
+    previous_step = PreviousCourseCreationStepService.new.execute(current_step: current_step, current_provider: @provider)
+    previous_path = course_creation_path_for(previous_step)
+
+    if previous_path.nil?
+      raise "No path defined for next step: #{previous_step}"
+    end
+
+    @back_link_path = previous_path
+  end
+
   def course_creation_path_for(page)
     case page
+    when :courses_list
+      provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)
+    when :level
+      new_provider_recruitment_cycle_courses_level_path(path_params)
     when :apprenticeship
       new_provider_recruitment_cycle_courses_apprenticeship_path(path_params)
     when :location

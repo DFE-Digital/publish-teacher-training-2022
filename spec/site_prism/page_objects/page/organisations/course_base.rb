@@ -11,6 +11,7 @@ module PageObjects
         element :flash, ".govuk-success-summary"
         element :error_flash, ".govuk-error-summary"
         element :warning_message, "[data-copy-course=warning]"
+        element :back, ".govuk-back-link"
 
         section :copy_content, PageObjects::Section::CopyContentSection
       end
