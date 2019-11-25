@@ -12,7 +12,6 @@ feature "New course level", type: :feature do
   let(:biology) { build(:subject, :biology) }
   let(:subjects) { [english, biology] }
   let(:edit_options) { { subjects: subjects, age_range_in_years: [] } }
-  let(:level) { :secondary }
   let(:course) { build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options) }
 
   before do
@@ -26,21 +25,68 @@ feature "New course level", type: :feature do
     "/courses/subjects/new"
   end
 
-  context "Selecting primary" do
-    let(:selected_fields) { { subjects_ids: [english.id] } }
-    let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
+  context "with a secondary course" do
+    let(:level) { :secondary }
+    context "Selecting master subject" do
+      let(:selected_fields) { { subjects_ids: [english.id] } }
+      let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
-    before do
-      build_course_with_selected_value_request
-      new_subjects_page.subjects_fields.select(english.subject_name).click
-      new_subjects_page.continue.click
+      before do
+        build_course_with_selected_value_request
+        new_subjects_page.subjects_fields.select(english.subject_name).click
+        new_subjects_page.continue.click
+      end
+
+      scenario "sends user to new outcome page" do
+        expect(next_step_page).to be_displayed
+      end
+
+      it_behaves_like "a course creation page"
     end
 
-    scenario "sends user to new outcome page" do
-      expect(next_step_page).to be_displayed
+    context "Selecting master & subordinate subject" do
+      let(:selected_fields) { { subjects_ids: [english.id, biology.id] } }
+      let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
+
+      before do
+        build_course_with_selected_value_request
+        new_subjects_page.subjects_fields.select(english.subject_name).click
+        new_subjects_page.subordinate_subject_accordion.click
+        new_subjects_page.subordinate_subjects_fields.select(biology.subject_name).click
+        new_subjects_page.continue.click
+      end
+
+      scenario "sends user to new outcome page" do
+        expect(next_step_page).to be_displayed
+      end
+
+      it_behaves_like "a course creation page"
+    end
+  end
+
+  context "with a primary course" do
+    let(:level) { :primary }
+    scenario "Only displays the master subject field" do
+      expect(new_subjects_page).to have_subjects_fields
+      expect(new_subjects_page).not_to have_subordinate_subject_accordion
     end
 
-    it_behaves_like "a course creation page"
+    context "Selecting master subject" do
+      let(:selected_fields) { { subjects_ids: [english.id] } }
+      let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
+
+      before do
+        build_course_with_selected_value_request
+        new_subjects_page.subjects_fields.select(english.subject_name).click
+        new_subjects_page.continue.click
+      end
+
+      scenario "sends user to new outcome page" do
+        expect(next_step_page).to be_displayed
+      end
+
+      it_behaves_like "a course creation page"
+    end
   end
 
   context "Page title" do
