@@ -86,6 +86,13 @@ class CourseDecorator < ApplicationDecorator
       object.subjects.any? { |subject| subject.attributes["bursary_amount"].present? }
   end
 
+  def excluded_from_bursary?
+    object.subjects.present? &&
+      # incorrect bursary eligibility only shows up on courses with 2 subjects
+      object.subjects.count == 2 &&
+      has_excluded_course_name?
+  end
+
   def has_scholarship?
     object.subjects.present? &&
       object.subjects.any? { |subject| subject.attributes["scholarship"].present? }
@@ -162,6 +169,8 @@ class CourseDecorator < ApplicationDecorator
   def funding_option
     if object.funding_type == "salary"
       "Salary"
+    elsif excluded_from_bursary?
+      "Student finance if you’re eligible"
     elsif has_scholarship_and_bursary?
       "Scholarship, bursary or student finance if you’re eligible"
     elsif has_bursary?
@@ -233,5 +242,19 @@ private
     end
 
     subject_attributes.compact.max.to_s
+  end
+
+  def has_excluded_course_name?
+    exclusions = [
+      /^Drama/,
+      /^Media Studies/,
+      /^PE/,
+      /^Physical/,
+    ]
+    # We only care about course with a name matching the pattern 'Foo with bar'
+    # We don't care about courses matching the pattern 'Foo and bar'
+    return false unless /with/.match?(object.name)
+
+    exclusions.any? { |e| e.match?(object.name) }
   end
 end

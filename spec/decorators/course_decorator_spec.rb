@@ -243,6 +243,15 @@ describe CourseDecorator do
 
         it { is_expected.to eq("Student finance if you’re eligible") }
       end
+
+      context "Courses excluded from bursaries" do
+        let(:pe) { build(:subject) }
+        let(:english) { build(:subject, :english, bursary_amount: "3000") }
+
+        let(:course) { build :course, name: "Drama with English", subjects: [pe, english] }
+
+        it { is_expected.to eq("Student finance if you’re eligible") }
+      end
     end
 
     describe "#subject_name" do
@@ -313,7 +322,6 @@ describe CourseDecorator do
       end
     end
 
-
     describe "#bursary_only" do
       let(:subject) { decorated_course }
 
@@ -360,6 +368,108 @@ describe CourseDecorator do
 
         it "returns the maximum bursary amount" do
           expect(decorated_course.bursary_amount).to eq("4000")
+        end
+      end
+    end
+
+    describe "#excluded_from_bursary?" do
+      let(:subject) { decorated_course }
+
+      context "course name does not qualify for exclusion" do
+        let(:course) { build(:course, name: "Mathematics") }
+
+        it { is_expected.to_not be_excluded_from_bursary }
+      end
+
+      context "course name contains 'with'" do
+        context "Drama" do
+          let(:english) { build :subject, bursary_amount: "30000" }
+          let(:drama) { build :subject, subject_name: "Drama" }
+          let(:subjects) { [english, drama] }
+
+          context "Drama with English" do
+            let(:course) { build(:course, name: "Drama with English", subjects: subjects) }
+
+            it { is_expected.to be_excluded_from_bursary }
+          end
+
+          context "English with Drama" do
+            let(:course) { build(:course, name: "English with Drama", subjects: subjects) }
+
+            it { is_expected.to_not be_excluded_from_bursary }
+          end
+        end
+
+        context "PE" do
+          let(:english) { build :subject, bursary_amount: "30000" }
+          let(:pe) { build :subject, subject_name: "PE" }
+          let(:subjects) { [english, pe] }
+
+          context "PE with English" do
+            let(:course) { build(:course, name: "PE with English", subjects: subjects) }
+
+            it { is_expected.to be_excluded_from_bursary }
+          end
+
+          context "English with PE" do
+            let(:course) { build(:course, name: "English with PE", subjects: subjects) }
+
+            it { is_expected.to_not be_excluded_from_bursary }
+          end
+        end
+
+        context "Physical Education" do
+          let(:english) { build :subject, bursary_amount: "30000" }
+          let(:physical_education) { build :subject, subject_name: "Physical Education" }
+          let(:subjects) { [english, physical_education] }
+
+          context "Physical Education with English" do
+            let(:course) { build(:course, name: "Physical Education with English", subjects: subjects) }
+
+            it { is_expected.to be_excluded_from_bursary }
+          end
+
+          context "English with Physical Education" do
+            let(:course) { build(:course, name: "English with Physical Education", subjects: subjects) }
+
+            it { is_expected.to_not be_excluded_from_bursary }
+          end
+        end
+
+        context "Media Studies" do
+          let(:english) { build :subject, bursary_amount: "30000" }
+          let(:media_studies) { build :subject, subject_name: "Media Studies" }
+          let(:subjects) { [english, media_studies] }
+
+          context "Media Studies with English" do
+            let(:course) { build(:course, name: "Media Studies with English", subjects: subjects) }
+
+            it { is_expected.to be_excluded_from_bursary }
+          end
+
+          context "English with Media Studies" do
+            let(:course) { build(:course, name: "English with Media Studies", subjects: subjects) }
+
+            it { is_expected.to_not be_excluded_from_bursary }
+          end
+        end
+      end
+
+      context "course name contains 'and'" do
+        let(:english) { build :subject, bursary_amount: "30000" }
+        let(:drama) { build :subject, subject_name: "Drama" }
+        let(:subjects) { [english, drama] }
+
+        context "Drama and English" do
+          let(:course) { build(:course, name: "Drama and English", subjects: subjects) }
+
+          it { is_expected.to_not be_excluded_from_bursary }
+        end
+
+        context "English and Drama" do
+          let(:course) { build(:course, name: "English and Drama", subjects: subjects) }
+
+          it { is_expected.to_not be_excluded_from_bursary }
         end
       end
     end

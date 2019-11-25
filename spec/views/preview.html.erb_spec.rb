@@ -15,6 +15,20 @@ describe "Rendering financial support information" do
     end
   end
 
+  context "course is excluded from offering bursaries" do
+    it "renders the 'loan' partial" do
+      english = build(:subject, subject_name: "English", busary_amount: "3000")
+      pe = build(:subject, subject_name: "PE")
+      course = build(:course, name: "PE with English", subjects: [english, pe])
+
+      render "courses/preview/financial_support", course: course.decorate
+
+      preview_course_page.load(rendered)
+
+      expect(preview_course_page).to have_selector("[data-qa=course__loan_details]")
+    end
+  end
+
   context "course has a bursary" do
     it "renders the 'bursary' partial" do
       mathematics = build(:subject, :mathematics, bursary_amount: "3000")
