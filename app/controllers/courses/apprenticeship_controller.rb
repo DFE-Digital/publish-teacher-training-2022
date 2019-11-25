@@ -7,5 +7,9 @@ module Courses
     def current_step
       :apprenticeship
     end
+
+    def error_keys
+      [:funding_type]
+    end
   end
 end

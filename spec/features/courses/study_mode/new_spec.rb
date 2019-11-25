@@ -81,6 +81,20 @@ feature "new course study mode", type: :feature do
     end
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course, provider: provider, study_mode: nil)
+      c.errors.add(:study_mode, "Invalid")
+      c
+    end
+
+    scenario do
+      visit_new_study_mode_page
+      new_study_mode_page.continue.click
+      expect(new_study_mode_page.error_flash.text).to include("Pick full time, part time or full time and part time")
+    end
+  end
+
 private
 
   def visit_new_study_mode_page(**query_params)

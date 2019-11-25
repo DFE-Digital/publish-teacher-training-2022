@@ -53,6 +53,21 @@ feature "new course fee or salary", type: :feature do
     expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course, provider: provider)
+      c.errors.add(:funding_type, "Invalid")
+      c
+    end
+
+    scenario do
+      visit_fee_or_salary
+      new_fee_or_salary_page.funding_type_fields.fee.click
+      new_fee_or_salary_page.continue.click
+      expect(new_fee_or_salary_page.error_flash.text).to include("Funding type Invalid")
+    end
+  end
+
   def visit_fee_or_salary(**query_params)
     visit new_provider_recruitment_cycle_courses_fee_or_salary_path(
       provider.provider_code,

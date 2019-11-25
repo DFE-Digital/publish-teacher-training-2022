@@ -63,5 +63,9 @@ module Courses
     def current_step
       :applications_open
     end
+
+    def error_keys
+      [:applications_open_from]
+    end
   end
 end

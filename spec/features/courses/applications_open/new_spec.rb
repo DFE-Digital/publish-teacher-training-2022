@@ -69,6 +69,21 @@ feature "new course applications open", type: :feature do
     end
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course, provider: provider, start_date: nil)
+      c.errors.add(:applications_open_from, "Invalid")
+      c
+    end
+
+    scenario do
+      visit_new_applications_open_page
+      new_applications_open_page.applications_open_field.click
+      new_applications_open_page.continue.click
+      expect(new_applications_open_page.error_flash.text).to include("Applications open from Invalid")
+    end
+  end
+
   def visit_new_applications_open_page(**query_params)
     visit signin_path
     visit new_provider_recruitment_cycle_courses_applications_open_path(

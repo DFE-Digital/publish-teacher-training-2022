@@ -75,7 +75,7 @@ module Courses
     end
 
     def error_keys
-      []
+      [:accrediting_provider_code]
     end
 
     def redirect_to_provider_search

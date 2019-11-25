@@ -172,6 +172,30 @@ feature "new course entry_requirements", type: :feature do
     end
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course,
+                provider: provider,
+                level: :primary,
+                gcse_subjects_required_using_level: true,
+                maths: nil,
+                english: nil,
+                science: nil)
+      c.errors.add(:maths, "Invalid")
+      c.errors.add(:english, "Invalid")
+      c.errors.add(:science, "Invalid")
+      c
+    end
+
+    scenario do
+      visit_new_entry_requirements
+      new_entry_requirements_page.continue.click
+      expect(new_entry_requirements_page.error_flash.text).to include("Pick an option for Maths")
+      expect(new_entry_requirements_page.error_flash.text).to include("Pick an option for English")
+      expect(new_entry_requirements_page.error_flash.text).to include("Pick an option for Science")
+    end
+  end
+
   def visit_new_entry_requirements(**query_params)
     visit signin_path
     visit new_provider_recruitment_cycle_courses_entry_requirements_path(
