@@ -1,0 +1,10 @@
+{
+  "name": "find-markdown-issues",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^3.6.0",
+    "jsdom": "^15.2.1"
+  }
+}
