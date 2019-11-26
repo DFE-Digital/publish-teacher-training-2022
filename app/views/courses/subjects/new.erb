@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Select subject" %>
+<%= content_for :page_title, subject_page_title(@course) %>
 <% content_for :before_content do %>
   <%= course_creation_back_button(@back_link_path) %>
 <% end %>
@@ -6,7 +6,7 @@
 <%= render 'shared/errors' %>
 
 <h1 class="govuk-heading-xl">
-  Select subject
+  <%= subject_page_title(@course) %>
 </h1>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -16,14 +16,17 @@
                     @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
-      <h2 class="govuk-heading-m remove-top-margin">Subject</h2>
 
       <%= render 'shared/course_creation_hidden_fields',
         form: form,
         course_creation_params: @course_creation_params,
         except_keys: []
       %>
-      <%= render 'form_fields', form: form %>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label"><%= subject_input_label(@course) %></label>
+        <%= render 'form_fields', form: form %>
+      </div>
 
       <%= form.submit "Continue",
                       class: "govuk-button",

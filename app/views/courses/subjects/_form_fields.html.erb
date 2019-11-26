@@ -1,1 +1,1 @@
-<%= form.select :master_subject_id, options_for_select(course.selectable_master_subjects, @course.subjects.first&.id), {}, data: { qa: 'course__subjects' }, class: "govuk-select" %>
+<%= form.select :master_subject_id, options_for_select(course.selectable_master_subjects, @course.subjects.first&.id), { include_blank: true }, data: { qa: 'course__subjects' }, class: "govuk-select" %>

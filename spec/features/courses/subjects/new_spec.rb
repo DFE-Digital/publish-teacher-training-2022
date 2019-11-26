@@ -12,7 +12,8 @@ feature "New course level", type: :feature do
   let(:biology) { build(:subject, :biology) }
   let(:subjects) { [english, biology] }
   let(:edit_options) { { subjects: subjects, age_range_in_years: [] } }
-  let(:course) { build(:course, :new, provider: provider, level: :secondary, gcse_subjects_required_using_level: true, edit_options: edit_options) }
+  let(:level) { :secondary }
+  let(:course) { build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options) }
 
   before do
     stub_omniauth
@@ -40,5 +41,25 @@ feature "New course level", type: :feature do
     end
 
     it_behaves_like "a course creation page"
+  end
+
+  context "Page title" do
+    context "For a primary course" do
+      let(:level) { :primary }
+
+      scenario "It displays the correct title" do
+        expect(page.title).to start_with("Select a primary subject")
+        expect(new_subjects_page.title.text).to eq("Select a primary subject")
+      end
+    end
+
+    context "For a secondary course" do
+      let(:level) { :secondary }
+
+      scenario "It displays the correct title" do
+        expect(page.title).to start_with("Select a secondary subject")
+        expect(new_subjects_page.title.text).to eq("Select a secondary subject")
+      end
+    end
   end
 end
