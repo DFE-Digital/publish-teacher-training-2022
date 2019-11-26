@@ -16,14 +16,17 @@
                     @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
-      <h2 class="govuk-heading-m remove-top-margin">Subject</h2>
 
       <%= render 'shared/course_creation_hidden_fields',
         form: form,
         course_creation_params: @course_creation_params,
         except_keys: []
       %>
-      <%= render 'form_fields', form: form %>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label"><%= subject_input_label(@course) %></label>
+        <%= render 'form_fields', form: form %>
+      </div>
 
       <%= form.submit "Continue",
                       class: "govuk-button",
