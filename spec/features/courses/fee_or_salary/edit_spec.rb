@@ -8,17 +8,11 @@ feature "Edit course fee or salary status", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.to_jsonapi,
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}?include=subjects,courses.accrediting_provider",
-      provider.to_jsonapi(include: %i[subjects courses accrediting_provider]),
-    )
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "subjects,courses.accrediting_provider")
 
-    stub_course_request
+    stub_api_v2_resource(course)
     stub_course_details_tab
     fee_or_salary_page.load_with_course(course)
   end
@@ -81,15 +75,6 @@ feature "Edit course fee or salary status", type: :feature do
 
       expect(patch_stub).to have_been_requested
     end
-  end
-
-  def stub_course_request
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}/courses" \
-      "/#{course.course_code}",
-      course.to_jsonapi,
-    )
   end
 
   def stub_course_details_tab

@@ -17,11 +17,9 @@ describe "Courses", type: :request do
     before do
       stub_omniauth
       get(auth_dfe_callback_path)
-      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-      stub_api_v2_request(
-        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=subjects,sites,provider.sites,accrediting_provider",
-        course_response,
-      )
+      stub_api_v2_resource(current_recruitment_cycle)
+      stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(provider)
     end
 
     it "renders the course delete" do

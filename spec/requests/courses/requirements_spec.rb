@@ -14,35 +14,28 @@ describe "Courses", type: :request do
     let(:provider) { build(:provider, accredited_body?: true, provider_code: "A0") }
     let(:course_response) { course.to_jsonapi(include: %i[subjects sites provider accrediting_provider]) }
 
-    let(:course_1) { build :course, name: "English", course_code: "EN01", include_nulls: [:accrediting_provider] }
+    let(:course_1) { build :course, provider: provider, name: "English", course_code: "EN01", include_nulls: [:accrediting_provider] }
     let(:course_2) do
       build :course,
             name: "Biology",
+            provider: provider,
             include_nulls: [:accrediting_provider],
             required_qualifications: "Foo",
             personal_qualities: "Foobar",
             other_requirements: "Foobarbar"
     end
-    let(:courses)             { [course_1, course_2] }
-    let(:provider_2)          { build(:provider, courses: courses, accredited_body?: true, provider_code: "A0") }
+    let(:courses) { [course_1, course_2] }
+    let(:provider_2) { build(:provider, courses: courses, accredited_body?: true, provider_code: "A0") }
     let(:provider_2_response) { provider_2.to_jsonapi(include: %i[courses accrediting_provider]) }
 
     before do
       stub_omniauth
       get(auth_dfe_callback_path)
-      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-      stub_api_v2_request(
-        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}?include=subjects,sites,provider.sites,accrediting_provider",
-        course_response,
-      )
-      stub_api_v2_request(
-        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course_2.course_code}?include=subjects,sites,provider.sites,accrediting_provider",
-        course_2.to_jsonapi,
-      )
-      stub_api_v2_request(
-        "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}?include=courses.accrediting_provider",
-        provider_2_response,
-      )
+      stub_api_v2_resource(current_recruitment_cycle)
+      stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(course_2, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(provider_2, include: "courses.accrediting_provider")
+      stub_api_v2_resource(provider)
     end
 
     context "Default recruitment cycle" do

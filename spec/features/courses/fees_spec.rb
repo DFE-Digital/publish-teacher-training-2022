@@ -12,16 +12,11 @@ feature "Course fees", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request("/recruitment_cycles/#{course_1.recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-    stub_course_request(provider, course_1)
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
-      "/providers/A0" \
-      "?include=courses.accrediting_provider",
-      provider.to_jsonapi(
-        include: %i[courses accrediting_provider],
-      ),
-    )
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(course_1, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(course_1, include: "sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+    stub_api_v2_resource(provider)
   end
 
   let(:course_fees_page) { PageObjects::Page::Organisations::CourseFees.new }
@@ -163,14 +158,11 @@ feature "Course fees", type: :feature do
     end
 
     before do
-      stub_course_request(provider, course_2)
-      stub_course_request(provider, course_3)
-      stub_api_v2_request(
-        "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
-        "/providers/A0" \
-        "?include=courses.accrediting_provider",
-        provider_for_copy_from_list.to_jsonapi(include: %i[courses accrediting_provider]),
-      )
+      stub_api_v2_resource(course_2, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(course_2, include: "sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(course_3, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(course_3, include: "sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(provider_for_copy_from_list, include: "courses.accrediting_provider")
     end
 
     scenario "all fields get copied if all were present" do
@@ -227,36 +219,8 @@ feature "Course fees", type: :feature do
 
 private
 
-  def stub_course_request(provider, course)
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=subjects,sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(
-        include: %i[subjects sites provider accrediting_provider],
-      ),
-    )
-
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(
-        include: %i[sites provider accrediting_provider],
-      ),
-    )
-  end
-
   def set_fees_request_stub_expectation(&attribute_validator)
-    stub_api_v2_request(
-      "/recruitment_cycles/#{course_1.recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course_1.course_code}",
-      course_1.to_jsonapi,
-      :patch, 200
-    ) do |request_body_json|
+    stub_api_v2_resource(course_1, method: :patch) do |request_body_json|
       request_attributes = request_body_json["data"]["attributes"]
       attribute_validator.call(request_attributes)
     end

@@ -5,9 +5,9 @@ class CoursesController < ApplicationController
   before_action :build_courses, only: %i[index about requirements fees salary]
   before_action :build_course, except: %i[index preview]
   before_action :build_course_for_preview, only: :preview
-  before_action :build_provider, except: %i[index confirmation]
   before_action :filter_courses, only: %i[about requirements fees salary]
   before_action :build_copy_course, if: -> { params[:copy_from].present? }
+  before_action :build_provider_from_provider_code, except: %i[index]
 
   def index; end
 
@@ -16,15 +16,12 @@ class CoursesController < ApplicationController
   def request_change; end
 
   def confirmation
-    build_provider_from_provider_code
-
     @course_creation_params = course_params
 
     build_new_course
   end
 
   def create
-    build_provider_from_provider_code
     build_course_from_params
 
     if @course.save
@@ -63,7 +60,7 @@ class CoursesController < ApplicationController
   end
 
   def new
-    redirect_to new_provider_recruitment_cycle_courses_level_path(@course.provider_code, @course.recruitment_cycle_year)
+    redirect_to new_provider_recruitment_cycle_courses_level_path(params[:provider_code], @recruitment_cycle.year)
   end
 
   def update
@@ -245,14 +242,13 @@ private
       Settings.current_cycle,
     )
 
-    @provider_code = params[:provider_code]
     @course = Course
       .includes(:subjects)
       .includes(site_statuses: [:site])
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
       .where(recruitment_cycle_year: cycle_year)
-      .where(provider_code: @provider_code)
+      .where(provider_code: params[:provider_code])
       .find(params[:code])
       .first
   rescue JsonApiClient::Errors::NotFound
@@ -265,22 +261,17 @@ private
       Settings.current_cycle,
     )
 
-    @provider_code = params[:provider_code]
     @course = Course
       .includes(:subjects)
       .includes(:sites)
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
       .where(recruitment_cycle_year: cycle_year)
-      .where(provider_code: @provider_code)
+      .where(provider_code: params[:provider_code])
       .find(params[:code])
       .first
   rescue JsonApiClient::Errors::NotFound
     render template: "errors/not_found", status: :not_found
-  end
-
-  def build_provider
-    @provider = @course.provider
   end
 
   def build_courses
@@ -336,7 +327,7 @@ private
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
       .where(recruitment_cycle_year: cycle_year)
-      .where(provider_code: @provider_code)
+      .where(provider_code: params[:provider_code])
       .find(params[:copy_from])
       .first
   end

@@ -5,19 +5,19 @@ require "rails_helper"
 feature "About course", type: :feature do
   let(:current_recruitment_cycle) { build :recruitment_cycle }
   let(:provider) do
-    build :provider,
+    build(:provider,
           accredited_body?: false,
-          provider_code: "A0"
+          provider_code: "A0")
   end
 
   let(:course) do
-    build :course,
+    build(:course,
           name: "English",
           provider: provider,
           about_course: "About course",
           interview_process: "Interview process",
           how_school_placements_work: "How school placements work",
-          recruitment_cycle: current_recruitment_cycle
+          recruitment_cycle: current_recruitment_cycle)
   end
 
   let(:course_response) do
@@ -28,44 +28,17 @@ feature "About course", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      data: current_recruitment_cycle.as_json_api,
-    )
-
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=subjects,sites,provider.sites,courses.accrediting_provider",
-      course_response,
-    )
-
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "/courses/#{course.course_code}" \
-      "?include=subjects,sites,provider.sites,accrediting_provider",
-      course_response,
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}" \
-      "?include=courses.accrediting_provider",
-      provider.to_jsonapi(include: %i[courses accrediting_provider]),
-    )
+    stub_api_v2_resource(current_recruitment_cycle)
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,courses.accrediting_provider")
+    stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+    stub_api_v2_resource(provider)
   end
 
   let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
 
   scenario "viewing the about courses page" do
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers/#{provider.provider_code}/" \
-      "courses/#{course.course_code}",
-      course_response,
-      :patch, 200
-    )
+    stub_api_v2_resource(course, method: :patch)
 
     visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
     click_on "About this course"
@@ -133,21 +106,21 @@ feature "About course", type: :feature do
   end
 
   context "when copying course requirements from another course" do
-    let(:course_2) {
+    let(:course_2) do
       build :course,
             name: "Biology",
             provider: provider,
             about_course: "Course 2 - About course",
             interview_process: "Course 2 - Interview process",
             how_school_placements_work: "Course 2 - How school placements work"
-    }
+    end
 
-    let(:course_3) {
+    let(:course_3) do
       build :course,
             name: "Biology",
             provider: provider,
             about_course: "Course 3 - About course"
-    }
+    end
 
     let(:provider_for_copy_from_list) do
       build :provider,
@@ -156,39 +129,10 @@ feature "About course", type: :feature do
     end
 
     before do
-      stub_api_v2_request(
-        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-        "/providers/#{provider.provider_code}" \
-        "/courses/#{course_2.course_code}" \
-        "?include=sites,provider.sites,accrediting_provider",
-        course_2.to_jsonapi(
-          include: %i[provider sites recruitment_cycle],
-        ),
-      )
-
-      stub_api_v2_request(
-        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-        "/providers/#{provider.provider_code}" \
-        "/courses/#{course_2.course_code}" \
-        "?include=subjects,sites,provider.sites,accrediting_provider",
-        course_2.to_jsonapi(
-          include: %i[subjects provider sites recruitment_cycle],
-        ),
-      )
-
-      stub_api_v2_request(
-        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-        "/providers/#{provider.provider_code}" \
-        "/courses/#{course_3.course_code}" \
-        "?include=subjects,sites,provider.sites,accrediting_provider",
-        course_3.to_jsonapi,
-      )
-
-      stub_api_v2_request(
-        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-        "/providers/A0?include=courses.accrediting_provider",
-        provider_for_copy_from_list.to_jsonapi(include: %i[courses accrediting_provider]),
-      )
+      stub_api_v2_resource(course_2, include: "sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(course_2, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(course_3, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(provider_for_copy_from_list, include: "courses.accrediting_provider")
     end
 
     scenario "all fields get copied if all were present" do
