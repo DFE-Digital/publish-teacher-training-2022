@@ -529,7 +529,7 @@ describe CourseDecorator do
       end
     end
 
-    context 'when the course has no start date' do
+    context "when the course has no start date" do
       let(:start_date) { nil }
       it "should return the September of the current cycle" do
         expect(decorated_course.return_start_date).to eq("September #{Settings.current_cycle}")
