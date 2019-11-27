@@ -66,6 +66,10 @@ module Courses
       :subjects
     end
 
+    def error_keys
+      [:subjects]
+    end
+
     def build_course
       @course = Course
                   .includes(:subjects, :site_statuses)
