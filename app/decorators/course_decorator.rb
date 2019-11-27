@@ -218,6 +218,14 @@ class CourseDecorator < ApplicationDecorator
     subjects.map { |subject| subject["id"] }.include?(subject_to_find["id"])
   end
 
+  def return_start_date
+    if start_date.present?
+      start_date
+    else
+      "September #{Settings.current_cycle}"
+    end
+  end
+
 private
 
   def not_on_find
