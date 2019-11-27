@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Specify course start date – #{course.name_and_code}" %>
+<%= content_for :page_title, "When does the course start?}" %>
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
@@ -6,7 +6,7 @@
 <%= render 'shared/errors' %>
 
 <h1 class="govuk-heading-xl">
-  When does the course start
+  When does the course start?
 </h1>
 
 <div class="govuk-grid-row">
