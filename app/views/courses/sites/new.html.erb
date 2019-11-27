@@ -3,7 +3,7 @@
   <%= course_creation_back_button(@back_link_path) %>
 <% end %>
 
-<h1 class="govuk-heading-xl">Pick the training locations for this course</h1>
+<h1 class="govuk-heading-xl">Pick the locations for this course</h1>
 
 <%= form_for course,
   url: continue_provider_recruitment_cycle_courses_locations_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
@@ -31,5 +31,5 @@
     </div>
   </div>
 
-  <%= f.submit "Contine", class: "govuk-button", data: { qa: 'course__save' } %>
+  <%= f.submit "Continue", class: "govuk-button", data: { qa: 'course__save' } %>
 <% end %>
