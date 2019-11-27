@@ -7,21 +7,11 @@
       <h1 class="govuk-fieldset__heading">
         Is it fee paying or salaried?
       </h1>
+      <br>
     </legend>
 
     <%= render "shared/error_messages", field: :funding_type if @errors %>
     <div class="govuk-radios" data-module="govuk-radios">
-      <div class="govuk-radios__item">
-        <%= form.radio_button :funding_type,
-                'apprenticeship',
-                class: 'govuk-radios__input' %>
-        <%= form.label :funding_type,
-                'Teaching apprenticeship (with salary)',
-                value: 'apprenticeship',
-                class: 'govuk-label govuk-radios__label',
-                data: { qa: 'course__funding_type_apprenticeship' } %>
-      </div>
-
       <div class="govuk-radios__item">
         <%= form.radio_button :funding_type,
                 'fee',
@@ -43,6 +33,18 @@
                 value: 'salary',
                 class: 'govuk-label govuk-radios__label',
                 data: { qa: 'course__funding_type_salary' } %>
+      </div>
+
+
+      <div class="govuk-radios__item">
+        <%= form.radio_button :funding_type,
+                'apprenticeship',
+                class: 'govuk-radios__input' %>
+        <%= form.label :funding_type,
+                'Teaching apprenticeship (with salary)',
+                value: 'apprenticeship',
+                class: 'govuk-label govuk-radios__label',
+                data: { qa: 'course__funding_type_apprenticeship' } %>
       </div>
     </div>
   </fieldset>
