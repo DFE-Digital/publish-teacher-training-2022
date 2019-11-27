@@ -171,7 +171,7 @@ describe CourseDecorator do
     end
   end
 
-  describe "#selectable_master_subjects" do
+  describe "#selectable_subjects" do
     let(:course) do
       build(:course, edit_options: {
         subjects: subjects.map do |subject|
@@ -181,7 +181,7 @@ describe CourseDecorator do
     end
 
     it "gets the name and id" do
-      expect(decorated_course.selectable_master_subjects).to eq([
+      expect(decorated_course.selectable_subjects).to eq([
         [english.subject_name, english.id],
         [mathematics.subject_name, mathematics.id],
       ])

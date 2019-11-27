@@ -210,12 +210,8 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
-  def selectable_master_subjects
+  def selectable_subjects
     meta["edit_options"]["subjects"].map { |subject| [subject["attributes"]["subject_name"], subject["id"]] }
-  end
-
-  def selectable_subordinate_subjects
-    selectable_master_subjects + [%w[None None]]
   end
 
   def subject_present?(subject_to_find)
