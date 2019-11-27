@@ -44,6 +44,7 @@ feature "Access Requests", type: :feature do
         stub_api_v2_resource(current_recruitment_cycle)
         stub_api_v2_resource(provider, include: "courses.accrediting_provider")
         stub_api_v2_resource_collection([access_request], include: "requester")
+        stub_api_v2_resource_collection([access_request])
 
         visit provider_courses_path(provider.provider_code)
         organisations_page.access_requests_link.click

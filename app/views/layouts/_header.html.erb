@@ -28,7 +28,7 @@
           </li>
           <% if current_user.present? && current_user["admin"] %>
             <li class="govuk-header__navigation-item">
-              <%= link_to "Access Requests", access_requests_path, class: "govuk-header__link", data: { qa: "access_requests_link" } %>
+              <%= link_to "Access Requests (#{AccessRequest.return_count})", access_requests_path, class: "govuk-header__link", data: { qa: "access_requests_link" } %>
             </li>
           <% end %>
         </ul>
