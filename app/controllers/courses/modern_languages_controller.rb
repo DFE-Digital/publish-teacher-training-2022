@@ -1,8 +1,15 @@
 module Courses
   class ModernLanguagesController < ApplicationController
-    include CourseBasicDetailConcern
     decorates_assigned :course
     before_action :build_course, only: %i[edit update]
+    before_action :build_course_params, only: [:continue]
+    include CourseBasicDetailConcern
+
+    def new
+      return unless @course.meta[:edit_options][:modern_languages].nil?
+
+      redirect_to next_step
+    end
 
     def edit
       return unless @course.meta[:edit_options][:modern_languages].nil?
@@ -34,6 +41,10 @@ module Courses
       end
     end
 
+    def current_step
+      :modern_languages
+    end
+
   private
 
     def strip_non_language_subjects
@@ -63,6 +74,11 @@ module Courses
                   .where(provider_code: params[:provider_code])
                   .find(params[:code])
                   .first
+    end
+
+    def build_course_params
+      params[:course][:subjects_ids] += params[:course][:language_ids]
+      params[:course].delete :language_ids
     end
   end
 end

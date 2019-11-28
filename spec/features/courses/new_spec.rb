@@ -8,6 +8,9 @@ feature "new course", type: :feature do
   let(:new_subjects_page) do
     PageObjects::Page::Organisations::Courses::NewSubjectsPage.new
   end
+  let(:new_modern_languages) do
+    PageObjects::Page::Organisations::Courses::NewModernLanguagesPage.new
+  end
   let(:new_age_range_page) do
     PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
   end

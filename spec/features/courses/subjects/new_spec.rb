@@ -5,13 +5,19 @@ feature "New course level", type: :feature do
     PageObjects::Page::Organisations::Courses::NewSubjectsPage.new
   end
   let(:next_step_page) do
-    PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
+    PageObjects::Page::Organisations::Courses::NewModernLanguagesPage.new
   end
   let(:provider) { build(:provider) }
   let(:english) { build(:subject, :english) }
   let(:biology) { build(:subject, :biology) }
   let(:subjects) { [english, biology] }
-  let(:edit_options) { { subjects: subjects, age_range_in_years: [] } }
+  let(:edit_options) do
+    {
+      subjects: subjects,
+      age_range_in_years: [],
+      modern_languages: [build(:subject, :russian)],
+    }
+  end
   let(:course) do
     build(:course,
           :new,

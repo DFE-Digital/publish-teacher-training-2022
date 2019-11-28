@@ -32,6 +32,7 @@ class CourseCreationStepService
     %i[
       level
       subjects
+      modern_languages
       age_range
       outcome
       fee_or_salary
@@ -49,6 +50,7 @@ class CourseCreationStepService
     %i[
       level
       subjects
+      modern_languages
       age_range
       outcome
       apprenticeship
