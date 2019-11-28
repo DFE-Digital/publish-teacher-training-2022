@@ -1,4 +1,5 @@
 <% legend ||= false %>
+<% bold_labels ||= false %>
 <div
   class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[field]&.any?) %>"
   data-qa="course__<%= field %>">
@@ -20,7 +21,7 @@
         <%= form.label field,
               label,
               value: value,
-              class: 'govuk-label govuk-radios__label'
+              class: "govuk-label govuk-radios__label #{"govuk-!-font-weight-bold" if bold_labels}"
         %>
         <span id="<%= "#{field}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
           <%= help %>
