@@ -55,6 +55,20 @@ feature "new course age range", type: :feature do
     expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course, provider: provider, level: :secondary, age_range_in_years: nil)
+      c.errors.add(:age_range_in_years, "Invalid")
+      c
+    end
+
+    scenario do
+      visit_new_age_range_page
+      new_age_range_page.continue.click
+      expect(new_outcome_page.error_flash.text).to include("Age range in years Invalid")
+    end
+  end
+
   def visit_new_age_range_page(**query_params)
     visit signin_path
     visit new_provider_recruitment_cycle_courses_age_range_path(

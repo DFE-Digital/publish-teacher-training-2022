@@ -34,6 +34,21 @@ feature "New course start date", type: :feature do
     expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course, provider: provider, start_date: nil)
+      c.errors.add(:start_date, "Invalid")
+      c
+    end
+
+    scenario do
+      visit_new_start_date_page
+      select "September #{Settings.current_cycle}"
+      new_start_date_page.continue.click
+      expect(new_start_date_page.error_flash.text).to include("Start date Invalid")
+    end
+  end
+
 private
 
   def visit_new_start_date_page(**query_params)

@@ -4,7 +4,9 @@ module Courses
 
   private
 
-    def errors; end
+    def error_keys
+      [:level]
+    end
 
     def current_step
       :level

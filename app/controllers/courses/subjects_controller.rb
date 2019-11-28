@@ -66,7 +66,9 @@ module Courses
       :subjects
     end
 
-    def errors; end
+    def error_keys
+      [:subjects]
+    end
 
     def build_course
       @course = Course

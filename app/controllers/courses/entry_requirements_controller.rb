@@ -17,6 +17,10 @@ module Courses
       :entry_requirements
     end
 
+    def error_keys
+      course.gcse_subjects_required.map(&:to_sym)
+    end
+
     def errors
       course.gcse_subjects_required
         .reject { |subject| params.dig(:course, subject) }

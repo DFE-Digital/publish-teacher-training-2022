@@ -30,6 +30,10 @@ module Courses
 
   private
 
+    def error_keys
+      [:age_range_in_years]
+    end
+
     def update_age_range_param
       params[:course][:age_range_in_years] = "#{age_from_param}_to_#{age_to_param}" if valid_custom_age_range?
     end
@@ -117,8 +121,6 @@ module Courses
     def current_step
       :age_range
     end
-
-    def errors; end
 
     def build_course
       @course = Course

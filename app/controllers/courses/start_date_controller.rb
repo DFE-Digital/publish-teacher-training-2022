@@ -8,6 +8,8 @@ module Courses
       :start_date
     end
 
-    def errors; end
+    def error_keys
+      [:start_date]
+    end
   end
 end

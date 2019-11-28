@@ -149,7 +149,7 @@ module Helpers
   def stub_api_v2_build_course(params = {})
     jsonapi_response = course.to_jsonapi(include: %i[subjects sites])
     jsonapi_response[:data][:meta] = course.meta
-    jsonapi_response[:data][:errors] = []
+    jsonapi_response[:data][:errors] = course_errors_to_json_api(course)
     stub_api_v2_request(
       url_for_build_course_with_params(params),
       jsonapi_response,
@@ -161,6 +161,20 @@ module Helpers
   end
 
 private
+
+  def course_errors_to_json_api(course)
+    errors = []
+    course.errors.messages.each do |error_key, _|
+      course.errors.full_messages_for(error_key).each do |error_message|
+        errors << {
+          "title" => "Invalid #{error_key}",
+          "detail" => error_message,
+          "source" => { "pointer" => "/data/attributes/#{error_key}" },
+        }
+      end
+    end
+    errors
+  end
 
   def url_for_resource(resource)
     base_url = url_for_resource_collection(resource)

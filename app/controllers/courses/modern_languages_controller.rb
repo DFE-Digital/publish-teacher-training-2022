@@ -52,8 +52,6 @@ module Courses
       end
     end
 
-    def errors; end
-
     def build_course
       @course = Course
                   .includes(:subjects, :site_statuses)

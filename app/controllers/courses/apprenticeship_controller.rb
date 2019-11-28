@@ -8,6 +8,8 @@ module Courses
       :apprenticeship
     end
 
-    def errors; end
+    def error_keys
+      [:funding_type]
+    end
   end
 end

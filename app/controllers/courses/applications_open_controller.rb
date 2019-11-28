@@ -11,8 +11,6 @@ module Courses
 
   private
 
-    def errors; end
-
     def actual_params
       params.require(:course)
         .except(
@@ -64,6 +62,10 @@ module Courses
 
     def current_step
       :applications_open
+    end
+
+    def error_keys
+      [:applications_open_from]
     end
   end
 end

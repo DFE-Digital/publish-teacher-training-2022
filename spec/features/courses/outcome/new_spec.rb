@@ -61,6 +61,19 @@ feature "new course outcome", type: :feature do
     end
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course, provider: provider, qualification: nil)
+      c.errors.add(:qualification, "Invalid")
+      c
+    end
+
+    scenario do
+      new_outcome_page.continue.click
+      expect(new_outcome_page.error_flash.text).to include("Pick an outcome")
+    end
+  end
+
 private
 
   def visit_new_outcome_page(**query_params)
