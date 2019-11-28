@@ -117,6 +117,7 @@ private
           :start_date,
           :age_range_in_years,
           :master_subject_id,
+          :subordinate_subject_id,
           :funding_type,
           :accrediting_provider_code,
           sites_ids: [],

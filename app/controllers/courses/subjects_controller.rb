@@ -80,8 +80,11 @@ module Courses
     end
 
     def build_course_params
-      params[:course][:subjects_ids] = [params[:course][:master_subject_id]]
-      params[:course].delete :master_subject_id
+      params[:course][:subjects_ids] = []
+      params[:course][:subjects_ids] << params[:course][:master_subject_id]
+      params[:course][:subjects_ids] << params[:course][:subordinate_subject_id] if params[:course][:subordinate_subject_id].present?
+      params[:course].delete(:master_subject_id)
+      params[:course].delete(:subordinate_subject_id)
     end
   end
 end
