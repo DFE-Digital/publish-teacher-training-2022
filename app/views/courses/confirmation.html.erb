@@ -174,7 +174,9 @@
                 Course starts
               </dt>
               <dd class="govuk-summary-list__value" data-qa="course__start_date">
-                <%= l(course.start_date&.to_date, format: :short) %>
+                <% if course.start_date.present? %>
+                  <%= l(course.start_date&.to_date, format: :short) %>
+                <% end %>
               </dd>
               <dd class="govuk-summary-list__actions">
                 <%= course_creation_change_button(

@@ -15,7 +15,7 @@ describe CourseDecorator do
           name: "Mathematics",
           qualification: "pgce_with_qts",
           study_mode: "full_time",
-          start_date: Time.zone.local(2019),
+          start_date: start_date,
           site_statuses: [site_status],
           provider: provider,
           accrediting_provider: provider,
@@ -25,7 +25,7 @@ describe CourseDecorator do
           last_published_at: "2019-03-05T14:42:34Z",
           recruitment_cycle: current_recruitment_cycle
   end
-
+  let(:start_date) { Time.zone.local(2019) }
   let(:site) { build(:site) }
   let(:site_status) do
     build(:site_status, :full_time_and_part_time, site: site)
@@ -518,6 +518,21 @@ describe CourseDecorator do
         it "returns true" do
           expect(decorated_course.has_early_career_payments?).to eq(true)
         end
+      end
+    end
+  end
+
+  describe "return_start_date" do
+    context "when the course has a start date" do
+      it "should return the course's start date" do
+        expect(decorated_course.return_start_date).to eq(course.start_date)
+      end
+    end
+
+    context "when the course has no start date" do
+      let(:start_date) { nil }
+      it "should return the September of the current cycle" do
+        expect(decorated_course.return_start_date).to eq("September #{Settings.current_cycle}")
       end
     end
   end

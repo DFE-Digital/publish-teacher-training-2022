@@ -61,7 +61,7 @@ feature "Edit course start date", type: :feature do
         start_date: "October 2019",
         content_status: "draft",
         edit_options: {
-          start_dates: ["October 2019", "November 2019"],
+          start_dates: ["September 2019", "October 2019", "November 2019"],
           show_start_date: true,
         },
         provider: provider,
@@ -79,6 +79,10 @@ feature "Edit course start date", type: :feature do
       expect(start_date_page).to be_displayed
       click_on "Back"
       expect(course_details_page).to be_displayed
+    end
+
+    scenario "defaults to the current value" do
+      expect(start_date_page.start_date_field.value).to eq "October 2019"
     end
 
     scenario "presents a choice for each start date" do
