@@ -11,9 +11,5 @@ module Courses
     def errors
       params.dig(:course, :qualification) ? {} : { qualification: ["Pick an outcome"] }
     end
-
-    def error_keys
-      [:qualification]
-    end
   end
 end

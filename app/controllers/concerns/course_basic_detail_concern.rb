@@ -156,7 +156,7 @@ private
     previous_path = course_creation_path_for(previous_step)
 
     if previous_path.nil?
-      raise "No path defined for next step: #{previous_step}"
+      raise "No path defined for previous step: #{previous_step}"
     end
 
     @back_link_path = previous_path

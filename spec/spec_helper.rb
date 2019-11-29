@@ -4,7 +4,7 @@ require "capybara/rspec"
 require "site_prism"
 require "simplecov"
 
-SimpleCov.minimum_coverage 95
+SimpleCov.minimum_coverage 90
 SimpleCov.start do
   add_filter "spec"
 end
