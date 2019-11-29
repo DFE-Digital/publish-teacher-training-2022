@@ -1,130 +1,111 @@
+import { getTopFrame } from "jest-message-util";
 
-// const url = 'https://www.qa.publish-teacher-training-courses.service.gov.uk';
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-
-const urlBase = "https://localhost:3000";
-const _ = Cypress._;
+const urlBase = "https://localhost:3000/";
 
 describe("login", function () {
 
   Cypress.Commands.add('loginWithSignIn', (username, password) => {
     Cypress.Cookies.debug(true);
 
-    var step1_option = {
+    cy.clearCookies();
+
+    cy.wrap({
       method: 'GET',
-      url: `${urlBase}/auth/dfe`,
+      url: `${urlBase}auth/dfe`,
       followRedirect: false
-    };
-    console.log("1");
-    console.log(step1_option.url);
+    })
+      .as("step_1_option");
 
-    // var extractGuidFromUrl = (url) => {
-    //   var re = new RegExp("/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/");
-
-    //   return re.exec(url)[1];
-    // };
-
-    cy.clearCookies()
-
-    return cy.request(step1_option)
-      .then((resp) => {
-        console.log(`GET ${resp.redirectedToUrl}`);
-        return cy.request({
+    cy.get("@step_1_option")
+      .then(cy.request)
+      .then(resp => {
+        const step_2_option = {
           method: 'GET',
           url: resp.redirectedToUrl,
           followRedirect: true
-        });
-      })
+        };
+
+        cy.wrap(step_2_option).as("step_2_option")
+      });
+
+    cy.get("@step_2_option").then(cy.request)
       .then(response => {
-        var authURL = new URL(
-          response.allRequestResponses[response.allRequestResponses.length - 1]["Request URL"]
-        );
+        const skip = response.allRequestResponses.length === 5;
 
-        const html = Cypress.$(response.body);
-        // const csrfToken = $html.find("input[name=_csrf]").val();
-        // const clientId = $html.find("input[name=clientId]").val();
-        // const redirectUri = $html.find("input[name=redirectUri]").val();
-        var formInputs = getMapOfFormInputs(html.find('input'));
-        formInputs.username = username;
-        formInputs.password = password;
+        if (skip) {
+          cy.log("this is a pathetic joke, cy.clearCookies(), close `browser` and start again")
+        } else {
+          const lastResponse = response.allRequestResponses[response.allRequestResponses.length - 1];
 
-        const responses = response["allRequestResponses"];
-        const setCookiesHeaders = responses[responses.length - 1]["Response Headers"]["set-cookie"];
-        if(setCookiesHeaders != undefined) {
+          const authURL = lastResponse["Request URL"]
+
+          const setCookiesHeaders = lastResponse["Response Headers"]["set-cookie"];
+
           setCookiesFromHeaders(setCookiesHeaders, authURL.hostname);
+
+          // cy.log(`curl -b '${cookieHeaders.join("; ")}' -d username=${username} -d password='${password} -d _csrf='${csrfToken} -d cliendId='${clientId} -d redirectUri='${redirectUri}' '${authURL}'`);
+
+          const form = getForm(response.body);
+          const formInputs = arrayToObject(form.querySelectorAll('input'), {
+            username: username,
+            password: password,
+          });
+
+          const step_3_option = {
+            method: 'POST',
+            url: authURL,
+            failOnStatusCode: false,
+            form: true,
+            body: formInputs,
+          };
+          cy.wrap(step_3_option).as("step_3_option")
+
+          cy.get("@step_3_option")
+            .then(step_3_option => cy.request(step_3_option))
+            .then(response => {
+              const form = getForm(response.body);
+              const formInputs = arrayToObject(form.querySelectorAll('input'));
+
+              const step_4_option = {
+                method: 'POST',
+                url: form.action,
+                failOnStatusCode: true,
+                form: true,
+                body: formInputs,
+              };
+              cy.wrap(step_4_option).as("step_4_option")
+            });
+
+          cy.get("@step_4_option")
+            .then(cy.request)
+
+          cy.log("you are in");
         }
-
-        console.log("  get auth response:");
-        logger(response);
-        console.log("  login page formInputs:");
-        logger(formInputs);
-        debugger;
-        // console.log(`curl -b '${cookieHeaders.join("; ")}' -d username=${username} -d password='${password} -d _csrf='${csrfToken} -d cliendId='${clientId} -d redirectUri='${redirectUri}' '${authURL}'`);
-
-        console.log(`POST ${authURL.toString()}`);
-        return cy.request({
-          method: 'POST',
-          url: authURL.toString(),
-          failOnStatusCode: false,
-          form: true,
-          body: formInputs,
-          //   username: username,
-          //   password: password,
-          //   _csrf: csrfToken,
-          //   clientId: clientId,
-          //   redirectUri: redirectUri,
-          // },
-        });
-      }).then((response) => {
-        console.log("login post response:");
-        logger(response);
-        var continueParams = {};
-        const html = Cypress.$(response.body);
-
-        var formInputs = getMapOfFormInputs(html.find('input'));
-        // $html.find("input").map((idx, input) => {
-        //   continueParams[input.name] = input.value;
-        //   console.log(`${input.name}: ${input.value}`);
-        // });
-        var continueURL = html.find("form")[0].action;
-        debugger;
-
-        console.log(`POST ${continueURL.toString()}`);
-        return cy.request({
-          method: 'POST',
-          url: continueURL.toString(),
-          failOnStatusCode: true,
-          form: true,
-          body: formInputs,
-        });
-      }).then((response => { console.log; }));
+      });
   });
 
   it("logging in ", function () {
-    cy.loginWithSignIn("tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88');
-    //   .then((resp) => {
-    //     debugger;
-    //     expect(resp.status).to.eq(200);
-    //     expect(resp.url).to.eq('https://localhost:3000/');
-    // });
-    cy.visit(urlBase);
+    cy.loginWithSignIn("tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88')
+      .visit(urlBase);
+
+    cy.url().should('eq', urlBase);
+    cy.get('footer').scrollIntoView({ duration: 2000 });
+    cy.get('h1').contains('Organisations');
   });
-});
+})
 
-
-function logger(thing) {
-  console.log(JSON.parse(JSON.stringify(thing)));
+function getForm(body) {
+  return Cypress.$(body).find('form')[0];
 }
 
-// Convert inputs into a mapping of input name to value for convenience.
-//
-// The "inputs" param is the input nodes from the HTML dom, e.g.
-// $html.find('input')
-function getMapOfFormInputs(inputs) {
-  return Object.fromEntries(inputs.map((idx, input) => {
-    return [[input.name, input.value]];
-  }));
+
+function arrayToObject(inputs, overrides) {
+  inputs = Array.from(inputs);
+  const reducer = (obj, item) => {
+    obj[item.name] = item.value
+    return obj
+  };
+  return Object.assign(inputs.reduce(reducer, {}), overrides)
 }
 
 function setCookiesFromHeaders(setCookiesHeaders, domain) {
@@ -136,15 +117,21 @@ function setCookiesFromHeaders(setCookiesHeaders, domain) {
   // const cookieWholeRE = new RegExp("^([^;]+);");
   // const cookieSettings = setCookiesHeader.map((cookie) => { return cookieWholeRE.exec(cookie)[1]; });
 
-  const cookiePartsRE = new RegExp("^(.+?)=(.+?);");
-  setCookiesHeaders.forEach((setCookieHeader) => {
-    var matches = cookiePartsRE.exec(setCookieHeader);
-    console.log("Setting cookie: " + matches[1]);
-    cy.setCookie(
-      matches[1],
-      matches[2],
-      { domain: domain }
-    );
-  });
+
+  if (setCookiesHeaders === undefined || setCookiesHeaders === null) {
+    cy.log("Header has no cookies");
+    ['_csrf', 'session', 'session.sig'].forEach(cookieName => cy.getCookie(cookieName))
+  } else {
+    const cookiePartsRE = new RegExp("^(.+?)=(.+?);");
+    setCookiesHeaders.forEach((setCookieHeader) => {
+      var matches = cookiePartsRE.exec(setCookieHeader);
+      cy.log("Setting cookie: " + matches[1]);
+      cy.setCookie(
+        matches[1],
+        matches[2],
+        { domain: domain }
+      );
+    });
+  }
 }
 
