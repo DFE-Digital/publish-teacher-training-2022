@@ -4,8 +4,10 @@ require "capybara/rspec"
 require "site_prism"
 require "simplecov"
 
-SimpleCov.minimum_coverage 95
-SimpleCov.start
+SimpleCov.minimum_coverage 90
+SimpleCov.start do
+  add_filter "spec"
+end
 # If running specs in parallel this ensures SimpleCov results appears
 # upon completion of all specs
 if ENV["TEST_ENV_NUMBER"]

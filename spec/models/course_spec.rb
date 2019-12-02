@@ -3,6 +3,7 @@ require "rails_helper"
 describe Course do
   let(:provider)          { build :provider }
   let(:course)            { build :course, :new, provider: provider }
+
   describe "#build_new" do
     let(:recruitment_cycle) { course.recruitment_cycle }
     let(:build_course_stub) { stub_api_v2_build_course }
@@ -85,6 +86,71 @@ describe Course do
     it "does not have a physical education subject" do
       course = build(:course, subjects: [build(:subject, subject_name: "Biology")])
       expect(course.has_physical_education_subject?).to eq(false)
+    end
+  end
+
+  describe "#is_school_direct?" do
+    context "is an accredited body" do
+      let(:provider) { build(:provider, accredited_body?: true) }
+      let(:course) { build(:course, :new, provider: provider) }
+
+      it "is not a school direct" do
+        expect(course.is_school_direct?).to eq(false)
+      end
+    end
+
+    context "is further education" do
+      let(:provider) { build(:provider, accredited_body?: false) }
+      let(:course) { build(:course, :new, level: "further_education", provider: provider) }
+
+      it "is not a school direct" do
+        expect(course.is_school_direct?).to eq(false)
+      end
+    end
+
+    context "is not an accredited body or further education" do
+      let(:provider) { build(:provider, accredited_body?: false) }
+      let(:course) { build(:course, :new, level: "primary", provider: provider) }
+
+      it "is a school direct" do
+        expect(course.is_school_direct?).to eq(true)
+      end
+    end
+  end
+
+  describe "#is_uni_or_scitt?" do
+    context "is an accredited body" do
+      let(:provider) { build(:provider, accredited_body?: true) }
+
+      it "is a uni or SCITT" do
+        expect(course.is_uni_or_scitt?).to eq(true)
+      end
+    end
+
+    context "is not an accredited body" do
+      let(:provider) { build(:provider, accredited_body?: false) }
+
+      it "is not a uni or SCITT" do
+        expect(course.is_uni_or_scitt?).to eq(false)
+      end
+    end
+  end
+
+  describe "#is_further_education?" do
+    context "has the level further education" do
+      let(:course) { build(:course, :new, level: "further_education", provider: provider) }
+
+      it "is a further education course" do
+        expect(course.is_further_education?).to eq(true)
+      end
+    end
+
+    context "has the level primary" do
+      let(:course) { build(:course, :new, level: "primary", provider: provider) }
+
+      it "is not a further education course" do
+        expect(course.is_further_education?).to eq(false)
+      end
     end
   end
 end

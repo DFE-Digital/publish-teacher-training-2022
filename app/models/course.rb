@@ -105,6 +105,18 @@ class Course < Base
     applications_open_from.split("-").third if applications_open_from.present?
   end
 
+  def is_school_direct?
+    !(is_uni_or_scitt? || is_further_education?)
+  end
+
+  def is_uni_or_scitt?
+    provider.accredited_body?
+  end
+
+  def is_further_education?
+    level == "further_education"
+  end
+
 private
 
   def post_base_url

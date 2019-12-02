@@ -123,6 +123,33 @@ feature "Edit course modern languages", type: :feature do
     end
   end
 
+  context "the course has an error" do
+    let(:course) do
+      build(:course,
+            provider: provider,
+            edit_options: edit_options,
+            languages: [],
+            subjects: subjects,
+            sites: [site],
+            site_statuses: [site_status],
+            errors: [
+              {
+                "source": { "pointer": "/data/attributes/subjects" },
+                "title":  "Modern language subjects error",
+                "detail": "Modern language subjects error",
+              },
+            ])
+    end
+
+    it "displays the errors" do
+      stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}", build(:error), :patch, 422)
+
+      languages_page.load_with_course(course)
+      languages_page.save.click
+      expect { languages_page.error_flash }.not_to raise_error
+    end
+  end
+
 private
 
   def set_patch_course_expectation(&attribute_validator)

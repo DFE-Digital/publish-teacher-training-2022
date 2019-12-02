@@ -16,7 +16,7 @@ feature "New course sites" do
       recruitment_cycle: current_recruitment_cycle,
     )
   end
-  let(:course) { build(:course) }
+  let(:course) { build(:course, provider: provider) }
   let(:build_course_with_sites_request) { stub_api_v2_build_course(sites_ids: [site2.id]) }
   let(:build_course_with_two_sites_request) { stub_api_v2_build_course(sites_ids: [site1.id, site2.id]) }
 

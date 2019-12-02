@@ -1,48 +1,65 @@
 class NextCourseCreationStepService
-  def execute(current_step:, current_provider:)
-    case current_step
-    when :level
-      :subjects
-    when :subjects
-      :age_range
-    when :age_range
-      :outcome
-    when :outcome
-      handle_outcome(current_provider)
-    when :fee_or_salary
-      :full_or_part_time
-    when :apprenticeship
-      :full_or_part_time
-    when :full_or_part_time
-      :location
-    when :location
-      handle_location(current_provider)
-    when :accredited_body
-      :entry_requirements
-    when :entry_requirements
-      :applications_open
-    when :applications_open
-      :start_date
-    when :start_date
-      :confirmation
+  def execute(current_step:, course:)
+    workflow_steps = get_workflow_steps(course)
+    get_next_step(workflow_steps, current_step)
+  end
+
+  def get_next_step(steps, current_step)
+    steps[steps.find_index(current_step).next]
+  end
+
+  def get_workflow_steps(course)
+    if course.is_further_education?
+      further_education_steps
+    elsif course.is_uni_or_scitt?
+      uni_or_scitt_workflow_steps
+    elsif course.is_school_direct?
+      school_direct_workflow_steps
     end
   end
 
-private
-
-  def handle_outcome(provider)
-    if provider.accredited_body?
-      :apprenticeship
-    else
-      :fee_or_salary
-    end
+  def school_direct_workflow_steps
+    %i[
+      level
+      subjects
+      age_range
+      outcome
+      fee_or_salary
+      full_or_part_time
+      location
+      accredited_body
+      entry_requirements
+      applications_open
+      start_date
+      confirmation
+    ]
   end
 
-  def handle_location(provider)
-    if provider.accredited_body?
-      :entry_requirements
-    else
-      :accredited_body
-    end
+  def uni_or_scitt_workflow_steps
+    %i[
+      level
+      subjects
+      age_range
+      outcome
+      apprenticeship
+      full_or_part_time
+      location
+      entry_requirements
+      applications_open
+      start_date
+      confirmation
+    ]
+  end
+
+  def further_education_steps
+    %i[
+      level
+      outcome
+      full_or_part_time
+      location
+      applications_open
+      start_date
+      confirmation
+    ]
   end
 end

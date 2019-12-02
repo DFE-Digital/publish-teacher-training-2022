@@ -42,8 +42,12 @@ module Courses
 
     def selected_language_subjects
       language_ids = params.dig(:course, :language_ids)
-      found_languages_ids = available_languages_ids & language_ids
-      found_languages_ids.map { |id| Subject.new(id: id) }
+      if language_ids.present?
+        found_languages_ids = available_languages_ids & language_ids
+        found_languages_ids.map { |id| Subject.new(id: id) }
+      else
+        []
+      end
     end
 
     def available_languages_ids

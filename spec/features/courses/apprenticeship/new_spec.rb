@@ -14,7 +14,7 @@ feature "new course apprenticeship", type: :feature do
           applications_open_from: "2019-10-09",
           start_date: "2019-10-09")
   end
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, accredited_body?: true) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do
