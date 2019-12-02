@@ -220,6 +220,8 @@ feature "Preview course", type: :feature do
         .to have_selector("tbody tr:nth-child(#{index + 1}) td", text: has_vacancies_string)
     end
 
+    expect(preview_course_page).to have_locations_map
+
     expect(preview_course_page).to have_course_advice
   end
 

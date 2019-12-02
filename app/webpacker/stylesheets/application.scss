@@ -23,6 +23,7 @@ $button-colour: #00823b;
 @import "warning-summary";
 @import "definition-list";
 @import "environments";
+@import "map";
 
 .app-text-decoration-underline-dotted {
   text-decoration: underline dotted;
@@ -131,4 +132,15 @@ wbr:after {
 .app-table--vertical-align-middle .govuk-table__header,
 .app-table--vertical-align-middle .govuk-table__cell {
   vertical-align: middle;
+}
+
+.app-google-map {
+  display: none;
+
+  .js-enabled & {
+    display: block;
+    margin-bottom: govuk-spacing(6);
+    padding-bottom: 66.6%;
+    width: 100%;
+  }
 }

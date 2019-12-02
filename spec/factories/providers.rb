@@ -23,6 +23,8 @@ FactoryBot.define do
     address3 { nil }
     address4 { nil }
     postcode { nil }
+    latitude { nil }
+    longitude { nil }
     recruitment_cycle_year { "2019" }
     last_published_at { DateTime.new(2019).utc.iso8601 }
     content_status { "Published" }

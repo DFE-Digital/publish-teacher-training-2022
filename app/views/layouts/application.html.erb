@@ -33,6 +33,7 @@
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','GTM-WCZDP65');
     </script>
+    <%= yield(:head) %>
   </head>
 
   <body class="govuk-template__body <%= content_for(:body_classes) %>">
