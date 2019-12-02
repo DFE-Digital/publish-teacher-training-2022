@@ -90,6 +90,7 @@ feature "New course level", type: :feature do
   end
 
   context "Error handling" do
+    let(:level) { :primary }
     let(:course) do
       c = build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options)
       c.errors.add(:subjects, "Invalid")
