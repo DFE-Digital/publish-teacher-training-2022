@@ -25,7 +25,7 @@ describe("login", function () {
           followRedirect: true
         };
 
-        cy.wrap(step_2_option).as("step_2_option")
+        cy.wrap(step_2_option).as("step_2_option");
       });
 
     cy.get("@step_2_option").then(cy.request)
@@ -37,7 +37,7 @@ describe("login", function () {
         } else {
           const lastResponse = response.allRequestResponses[response.allRequestResponses.length - 1];
 
-          const authURL = lastResponse["Request URL"]
+          const authURL = lastResponse["Request URL"];
 
           const setCookiesHeaders = lastResponse["Response Headers"]["set-cookie"];
 
@@ -58,7 +58,7 @@ describe("login", function () {
             form: true,
             body: formInputs,
           };
-          cy.wrap(step_3_option).as("step_3_option")
+          cy.wrap(step_3_option).as("step_3_option");
 
           cy.get("@step_3_option")
             .then(step_3_option => cy.request(step_3_option))
@@ -80,7 +80,7 @@ describe("login", function () {
             });
 
           cy.get("@step_4_option")
-            .then(cy.request)
+            .then(cy.request);
 
           cy.log("you are in");
         }
@@ -95,7 +95,7 @@ describe("login", function () {
     cy.get('footer').scrollIntoView({ duration: 2000 });
     cy.get('h1').contains('Organisations');
   });
-})
+});
 
 function getForm(body) {
   return Cypress.$(body).find('form')[0];
@@ -105,10 +105,10 @@ function getForm(body) {
 function arrayToObject(inputs, overrides) {
   inputs = Array.from(inputs);
   const reducer = (obj, item) => {
-    obj[item.name] = item.value
-    return obj
+    obj[item.name] = item.value;
+    return obj;
   };
-  return Object.assign(inputs.reduce(reducer, {}), overrides)
+  return Object.assign(inputs.reduce(reducer, {}), overrides);
 }
 
 function setCookiesFromHeaders(setCookiesHeaders, domain) {
@@ -123,7 +123,7 @@ function setCookiesFromHeaders(setCookiesHeaders, domain) {
 
   if (setCookiesHeaders === undefined || setCookiesHeaders === null) {
     cy.log("Header has no cookies");
-    ['_csrf', 'session', 'session.sig'].forEach(cookieName => cy.getCookie(cookieName))
+    ['_csrf', 'session', 'session.sig'].forEach(cookieName => cy.getCookie(cookieName));
   } else {
     const cookiePartsRE = new RegExp("^(.+?)=(.+?);");
     setCookiesHeaders.forEach((setCookieHeader) => {
