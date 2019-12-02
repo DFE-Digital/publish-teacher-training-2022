@@ -1,10 +1,9 @@
 {
-  "name": "find-markdown-issues",
+  "name": "smoke-tests",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^3.6.0",
-    "jsdom": "^15.2.1"
+    "cypress": "3.7.0"
   }
 }

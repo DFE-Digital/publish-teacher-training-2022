@@ -32,6 +32,7 @@ yarn run cypress run --browser ~/repos/dfe/manage-courses-frontend/cypress/brows
 version 3.6.1 of cypress is broken, so use version 3.6.0 or 3.7.0
 
 ## Noticable issues
+- make sure that the user used exists
 - is that it fails to properly have an isolated environment, therefore download chromuim
 - opening cypress with snap chromuim on linux is not possible
 - opening cypress with electron using snap chromuim, leads to the cypress failure to properly isolate enviroment
