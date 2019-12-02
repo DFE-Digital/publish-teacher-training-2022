@@ -30,10 +30,10 @@ describe("login", function () {
 
     cy.get("@step_2_option").then(cy.request)
       .then(response => {
-        const skip = response.allRequestResponses.length === 5;
+        const authResponses = response.allRequestResponses.length;
 
-        if (skip) {
-          cy.log("this is a pathetic joke, cy.clearCookies(), close `browser` and start again")
+        if (authResponses === 5) {
+          cy.log("already logged in, skipping login sequence");
         } else {
           const lastResponse = response.allRequestResponses[response.allRequestResponses.length - 1];
 
@@ -63,6 +63,9 @@ describe("login", function () {
           cy.get("@step_3_option")
             .then(step_3_option => cy.request(step_3_option))
             .then(response => {
+              const loginResponses = response.allRequestResponses.length;
+              expect(loginResponses).to.eq(1);
+
               const form = getForm(response.body);
               const formInputs = arrayToObject(form.querySelectorAll('input'));
 
