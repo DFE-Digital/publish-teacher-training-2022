@@ -51,7 +51,7 @@ feature "New course start date", type: :feature do
 
     scenario do
       visit_new_start_date_page
-      select "September #{Settings.current_cycle}"
+      select "October #{Settings.current_cycle}"
       new_start_date_page.continue.click
       expect(new_start_date_page.error_flash.text).to include("Start date Invalid")
     end
