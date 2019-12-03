@@ -39,3 +39,4 @@ coverage
 cypress/videos
 cypress/screenshots
 cypress/browsers
+cypress/config/local.json

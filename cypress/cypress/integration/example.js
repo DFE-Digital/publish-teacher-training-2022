@@ -3,8 +3,7 @@ import { getTopFrame } from "jest-message-util";
 const baseUrl = Cypress.config().baseUrl;
 
 describe("login", function () {
-
-  Cypress.Commands.add('signIn', (username, password) => {
+  Cypress.Commands.add('signIn', (username = Cypress.env('email'), password = Cypress.env('password')) => {
     Cypress.Cookies.debug(true);
 
     cy.clearCookies();
@@ -31,7 +30,7 @@ describe("login", function () {
   });
 
   it("viewing organisation list ", function () {
-    cy.signIn("tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88')
+    cy.signIn()
       .visit(baseUrl);
 
     cy.url().should('eq', baseUrl);
@@ -41,7 +40,7 @@ describe("login", function () {
 
   it("viewing provider page ", function () {
     const url = `${baseUrl}/organisations/T92`;
-    cy.signIn("tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88')
+    cy.signIn()
       .visit(url);
 
     cy.url().should('eq', url);
