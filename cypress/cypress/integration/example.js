@@ -4,103 +4,151 @@ const urlBase = "https://localhost:3000/";
 
 describe("login", function () {
 
-  Cypress.Commands.add('loginWithSignIn', (username, password) => {
+  Cypress.Commands.add('visitWithSignIn', (urlString, username, password) => {
     Cypress.Cookies.debug(true);
 
     cy.clearCookies();
 
-    cy.wrap({
+    const initialRequest = {
       method: 'GET',
-      url: `${urlBase}auth/dfe`,
-      followRedirect: false
-    })
-      .as("step_1_option");
+      url: urlString,
+      followRedirect: false,
+    };
 
-    cy.get("@step_1_option")
-      .then(cy.request)
-      .then(resp => {
-        const step_2_option = {
-          method: 'GET',
-          url: resp.redirectedToUrl,
-          followRedirect: true
-        };
+    const url = new URL(urlString);
 
-        cy.wrap(step_2_option).as("step_2_option");
-      });
+    cy.log(initialRequest);
+    cy.log(urlString);
 
-    cy.get("@step_2_option").then(cy.request)
+    cy.request(initialRequest)
       .then(response => {
-        const authResponses = response.allRequestResponses.length;
-
-        if (authResponses === 5) {
-          cy.log("already logged in, skipping login sequence");
+        if (response.status == 302 && response.headers.location == `${url.origin}/signin`) {
+          return authenticateWithDFESignIn(url.origin, username, password);
         } else {
-          const lastResponse = response.allRequestResponses[response.allRequestResponses.length - 1];
-
-          const authURL = lastResponse["Request URL"];
-
-          const setCookiesHeaders = lastResponse["Response Headers"]["set-cookie"];
-
-          setCookiesFromHeaders(setCookiesHeaders, authURL.hostname);
-
-          // cy.log(`curl -b '${cookieHeaders.join("; ")}' -d username=${username} -d password='${password} -d _csrf='${csrfToken} -d cliendId='${clientId} -d redirectUri='${redirectUri}' '${authURL}'`);
-
-          const form = getForm(response.body);
-          const formInputs = arrayToObject(form.querySelectorAll('input'), {
-            username: username,
-            password: password,
-          });
-
-          const step_3_option = {
-            method: 'POST',
-            url: authURL,
-            failOnStatusCode: false,
-            form: true,
-            body: formInputs,
-          };
-          cy.wrap(step_3_option).as("step_3_option");
-
-          cy.get("@step_3_option")
-            .then(step_3_option => cy.request(step_3_option))
-            .then(response => {
-              const loginResponses = response.allRequestResponses.length;
-              expect(loginResponses).to.eq(1);
-
-              const form = getForm(response.body);
-              const formInputs = arrayToObject(form.querySelectorAll('input'));
-
-              const step_4_option = {
-                method: 'POST',
-                url: form.action,
-                failOnStatusCode: true,
-                form: true,
-                body: formInputs,
-              };
-              cy.wrap(step_4_option).as("step_4_option")
-            });
-
-          cy.get("@step_4_option")
-            .then(cy.request);
-
-          cy.log("you are in");
-        }
+          return response;
+        };
+      })
+      .then(response => {
+        return cy.visit(urlString);
       });
   });
 
-  it("logging in ", function () {
-    cy.loginWithSignIn("tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88')
-      .visit(urlBase);
+
+  it("viewing organisation list ", function () {
+    cy.visitWithSignIn(urlBase, "tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88');
 
     cy.url().should('eq', urlBase);
     cy.get('footer').scrollIntoView({ duration: 2000 });
     cy.get('h1').contains('Organisations');
   });
+
+  it("viewing provider page ", function () {
+    const url = `${urlBase}organisations/T92`;
+    cy.visitWithSignIn(url, "tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88');
+
+    cy.url().should('eq', url);
+    cy.get('footer').scrollIntoView({ duration: 2000 });
+    // cy.get('h1').contains('provider name');
+  });
 });
+
+// step 1
+function appAuthRequest(url) {
+  const params = {
+    method: 'GET',
+    url: url,
+    followRedirect: false,
+  };
+
+  cy.log("appAuthRequest", params);
+
+  return cy.request(params);
+};
+
+function loginGetRequest(response) {
+  const params = {
+    method: 'GET',
+    url: response.redirectedToUrl,
+    followRedirect: true,
+  };
+
+  cy.log(params);
+
+  return cy.request(params);
+};
+
+function loginPostRequest(username, password) {
+  return (response) => {
+    const authResponses = response.allRequestResponses.length;
+
+    if (authResponses === 5) {
+      return cy.log("already logged in, skipping login sequence");
+    }
+
+    const lastResponse = response.allRequestResponses[response.allRequestResponses.length - 1];
+    const authURL = lastResponse["Request URL"];
+    const setCookiesHeaders = lastResponse["Response Headers"]["set-cookie"];
+
+    setCookiesFromHeaders(setCookiesHeaders, authURL.hostname);
+
+    // cy.log(`curl -b '${cookieHeaders.join("; ")}' -d username=${username} -d password='${password} -d _csrf='${csrfToken} -d cliendId='${clientId} -d redirectUri='${redirectUri}' '${authURL}'`);
+
+    const form = getForm(response.body);
+    const formInputs = arrayToObject(form.querySelectorAll('input'), {
+      username: username,
+      password: password,
+    });
+
+    const params = {
+      method: 'POST',
+      url: authURL,
+      failOnStatusCode: false,
+      form: true,
+      body: formInputs,
+    };
+
+    cy.log(params);
+
+    return cy.request(params);
+  };
+};
+
+function continuePostRequest(response) {
+  const loginResponses = response.allRequestResponses.length;
+  expect(loginResponses).to.eq(1);
+
+  const form = getForm(response.body);
+  const formInputs = arrayToObject(form.querySelectorAll('input'));
+
+  const params = {
+    method: 'POST',
+    url: form.action,
+    failOnStatusCode: true,
+    form: true,
+    body: formInputs,
+  };
+
+  cy.log(params);
+
+  return cy.request(params);
+};
+
+function authenticateWithDFESignIn(origin, username, password) {
+  return appAuthRequest(`${origin}/auth/dfe`)  // authentication request to our app
+    .then(loginGetRequest) // initial sign-in request, since we can't follow cross-site redirects
+    .then(loginPostRequest(username, password)) // POST login
+    .then(response => {
+      if (response == undefined) {
+        return response;
+      } else {
+        return continuePostRequest(response); // POST continue
+      }
+    });
+};
 
 function getForm(body) {
   return Cypress.$(body).find('form')[0];
-}
-
+};
 
 function arrayToObject(inputs, overrides) {
   inputs = Array.from(inputs);
@@ -109,7 +157,7 @@ function arrayToObject(inputs, overrides) {
     return obj;
   };
   return Object.assign(inputs.reduce(reducer, {}), overrides);
-}
+};
 
 function setCookiesFromHeaders(setCookiesHeaders, domain) {
   // setCookiesHeaders is a list of the set-cookie headers in the response:
@@ -136,5 +184,5 @@ function setCookiesFromHeaders(setCookiesHeaders, domain) {
       );
     });
   }
-}
+};
 
