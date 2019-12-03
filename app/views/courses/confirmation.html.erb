@@ -162,7 +162,11 @@
                 Applications open
               </dt>
               <dd class="govuk-summary-list__value" data-qa="course__application_open_from">
+              <% if course.applications_open_from == @recruitment_cycle.application_start_date %>
+                As soon as the course is on Find (recommended)
+              <% else %>
                 <%= l(course.applications_open_from&.to_date) %>
+              <% end %>
               </dd>
               <dd class="govuk-summary-list__actions">
                 <%= course_creation_change_button(

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Course confirmation", type: :feature do
-  let(:recruitment_cycle) { build(:recruitment_cycle) }
+  let(:recruitment_cycle) { build(:recruitment_cycle, application_start_date: "2019-08-08") }
   let(:course_confirmation_page) do
     PageObjects::Page::Organisations::CourseConfirmation.new
   end
@@ -55,26 +55,36 @@ feature "Course confirmation", type: :feature do
     stub_api_v2_build_course
   end
 
-  scenario "viewing the course details page" do
-    expect(course_confirmation_page.title).to have_content(
-      "Check your answers before confirming",
-    )
+  context "Viewing the course details page" do
+    context "When the application open from date is the recruitment cycle start date" do
+      let(:course) { build(:course, applications_open_from: recruitment_cycle.application_start_date) }
 
-    expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
-    expect(course_confirmation_page.details.is_send.text).to eq("No")
-    expect(course_confirmation_page.details.subjects.text).to include("English")
-    expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
-    expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
-    expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
-    expect(course_confirmation_page.details.locations.text).to eq("Site one Site two")
-    expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
-    expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
-    expect(course_confirmation_page.details.name.text).to eq("English")
-    expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
-    expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
-    expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
-    expect(course_confirmation_page.preview.name.text).to include("English")
-    expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
+      scenario "It displays the 'as soon as its open on find' message" do
+        expect(course_confirmation_page.details.application_open_from.text).to eq("As soon as the course is on Find (recommended)")
+      end
+    end
+
+    scenario "it displays the correct information" do
+      expect(course_confirmation_page.title).to have_content(
+        "Check your answers before confirming",
+      )
+
+      expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
+      expect(course_confirmation_page.details.is_send.text).to eq("No")
+      expect(course_confirmation_page.details.subjects.text).to include("English")
+      expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
+      expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
+      expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
+      expect(course_confirmation_page.details.locations.text).to eq("Site one Site two")
+      expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
+      expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
+      expect(course_confirmation_page.details.name.text).to eq("English")
+      expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
+      expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
+      expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
+      expect(course_confirmation_page.preview.name.text).to include("English")
+      expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
+    end
   end
 
   context "Saving the course" do
