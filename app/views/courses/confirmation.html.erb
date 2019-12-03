@@ -97,21 +97,39 @@
               </dd>
             </div>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Apprenticeship
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
-                <%= course.apprenticeship? %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "apprenticeship",
-                  "apprenticeship",
-                  :new_provider_recruitment_cycle_courses_apprenticeship_path
-                ) %>
-              </dd>
-            </div>
+            <% if @provider.accredited_body? %>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Apprenticeship
+                </dt>
+                <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
+                  <%= course.apprenticeship? %>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <%= course_creation_change_button(
+                    "apprenticeship",
+                    "apprenticeship",
+                    :new_provider_recruitment_cycle_courses_apprenticeship_path
+                  ) %>
+                </dd>
+              </div>
+            <% else %>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Fee or Salary
+                </dt>
+                <dd class="govuk-summary-list__value" data-qa="course__fee_or_salary">
+                  <%= course.funding %>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <%= course_creation_change_button(
+                    "fee or salary",
+                    "fee_or_salary",
+                    :new_provider_recruitment_cycle_courses_fee_or_salary_path
+                  ) %>
+                </dd>
+              </div>
+            <% end %>
 
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">

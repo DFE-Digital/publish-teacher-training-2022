@@ -27,7 +27,7 @@ feature "Course confirmation", type: :feature do
             subjects: [],
           })
   end
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, accredited_body?: true) }
 
   before do
     stub_omniauth(provider: provider)
@@ -61,6 +61,24 @@ feature "Course confirmation", type: :feature do
 
       scenario "It displays the 'as soon as its open on find' message" do
         expect(course_confirmation_page.details.application_open_from.text).to eq("As soon as the course is on Find (recommended)")
+      end
+    end
+
+    context "When the provider is accredited" do
+      let(:provider) { build(:provider, accredited_body?: true) }
+
+      scenario "It shows the apprenticeship details" do
+        expect(course_confirmation_page.details).to have_apprenticeship
+        expect(course_confirmation_page.details).not_to have_fee_or_salary
+      end
+    end
+
+    context "When the provider is not accredited" do
+      let(:provider) { build(:provider, accredited_body?: false) }
+
+      scenario "It shows the fee or salary details" do
+        expect(course_confirmation_page.details).not_to have_apprenticeship
+        expect(course_confirmation_page.details).to have_fee_or_salary
       end
     end
 
