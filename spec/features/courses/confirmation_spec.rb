@@ -24,6 +24,7 @@ feature "Course confirmation", type: :feature do
             start_dates: [],
             entry_requirements: [],
             qualifications: [],
+            subjects: [],
           })
   end
   let(:provider) { build(:provider) }
@@ -163,6 +164,16 @@ feature "Course confirmation", type: :feature do
 
       before do
         course_confirmation_page.details.edit_is_send.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "subjects" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewSubjectsPage.new }
+
+      before do
+        course_confirmation_page.details.edit_subjects.click
       end
 
       include_examples "goes to the edit page"

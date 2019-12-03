@@ -57,7 +57,11 @@
                 <%= course.sorted_subjects %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                  Change<span class="govuk-visually-hidden"> Subject</span>
+                <%= course_creation_change_button(
+                  "subjects",
+                  "subjects",
+                  :new_provider_recruitment_cycle_courses_subjects_path
+                ) %>
               </dd>
             </div>
 
