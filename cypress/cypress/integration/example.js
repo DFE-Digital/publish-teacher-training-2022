@@ -1,24 +1,24 @@
 import { getTopFrame } from "jest-message-util";
 
-const urlBase = "https://localhost:3000/";
+const baseUrl = Cypress.config().baseUrl;
 
 describe("login", function () {
 
-  Cypress.Commands.add('visitWithSignIn', (urlString, username, password) => {
+  Cypress.Commands.add('signIn', (username, password) => {
     Cypress.Cookies.debug(true);
 
     cy.clearCookies();
 
     const initialRequest = {
       method: 'GET',
-      url: urlString,
+      url: baseUrl,
       followRedirect: false,
     };
 
-    const url = new URL(urlString);
+    const url = new URL(baseUrl);
 
     cy.log(initialRequest);
-    cy.log(urlString);
+    cy.log(baseUrl);
 
     cy.request(initialRequest)
       .then(response => {
@@ -28,23 +28,21 @@ describe("login", function () {
           return response;
         };
       })
-      .then(response => {
-        return cy.visit(urlString);
-      });
   });
 
-
   it("viewing organisation list ", function () {
-    cy.visitWithSignIn(urlBase, "tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88');
+    cy.signIn("tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88')
+      .visit(baseUrl);
 
-    cy.url().should('eq', urlBase);
+    cy.url().should('eq', baseUrl);
     cy.get('footer').scrollIntoView({ duration: 2000 });
     cy.get('h1').contains('Organisations');
   });
 
   it("viewing provider page ", function () {
-    const url = `${urlBase}organisations/T92`;
-    cy.visitWithSignIn(url, "tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88');
+    const url = `${baseUrl}/organisations/T92`;
+    cy.signIn("tim.abell+4@digital.education.gov.uk", 'omgsquirrel!88')
+      .visit(url);
 
     cy.url().should('eq', url);
     cy.get('footer').scrollIntoView({ duration: 2000 });

@@ -1,4 +1,4 @@
 {
-    "baseUrl": "https://localhost:3000",
+    "baseUrl": "https://localhost:3000/",
     "chromeWebSecurity": false
 }
