@@ -22,6 +22,7 @@ module PageObjects
           element :study_mode, '[data-qa="course__study_mode"]'
           element :edit_locations, '[data-qa="course__edit_locations_link"]'
           element :locations, '[data-qa="course__locations"]'
+          element :accredited_body, '[data-qa="course__accredited_body"]'
           element :edit_application_open_from, '[data-qa="course__edit_application_open_from_link"]'
           element :application_open_from, '[data-qa="course__application_open_from"]'
           element :edit_start_date, '[data-qa="course__edit_start_date_link"]'

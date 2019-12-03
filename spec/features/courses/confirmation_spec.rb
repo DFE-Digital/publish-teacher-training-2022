@@ -75,10 +75,16 @@ feature "Course confirmation", type: :feature do
 
     context "When the provider is not accredited" do
       let(:provider) { build(:provider, accredited_body?: false) }
+      let(:accredited_body) { build(:provider) }
+      let(:course) { build(:course, provider: provider, accrediting_provider: accredited_body) }
 
       scenario "It shows the fee or salary details" do
         expect(course_confirmation_page.details).not_to have_apprenticeship
         expect(course_confirmation_page.details).to have_fee_or_salary
+      end
+
+      scenario "It shows the accrediting body" do
+        expect(course_confirmation_page.details.accredited_body.text).to eq(accredited_body.provider_name)
       end
     end
 
