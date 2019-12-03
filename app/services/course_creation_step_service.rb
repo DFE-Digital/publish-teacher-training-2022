@@ -1,16 +1,26 @@
-class NextCourseCreationStepService
+class CourseCreationStepService
   def execute(current_step:, course:)
     workflow_steps = get_workflow_steps(course)
-    get_next_step(workflow_steps, current_step)
+
+    {
+      next: get_next_step(workflow_steps, current_step),
+      previous: get_previous_step(workflow_steps, current_step),
+    }
   end
 
   def get_next_step(steps, current_step)
-    steps[steps.find_index(current_step).next]
+    next_step_index = steps.find_index(current_step).next
+    steps[next_step_index]
+  end
+
+  def get_previous_step(steps, current_step)
+    previous_step_index = steps.find_index(current_step).pred
+    steps[previous_step_index]
   end
 
   def get_workflow_steps(course)
     if course.is_further_education?
-      further_education_steps
+      further_education_workflow_steps
     elsif course.is_uni_or_scitt?
       uni_or_scitt_workflow_steps
     elsif course.is_school_direct?
@@ -51,7 +61,7 @@ class NextCourseCreationStepService
     ]
   end
 
-  def further_education_steps
+  def further_education_workflow_steps
     %i[
       level
       outcome

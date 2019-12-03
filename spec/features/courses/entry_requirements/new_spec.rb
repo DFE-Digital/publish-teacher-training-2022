@@ -28,16 +28,6 @@ feature "new course entry_requirements", type: :feature do
     stub_api_v2_build_course
   end
 
-  context "level further_education" do
-    scenario "creating a new course" do
-      visit new_provider_recruitment_cycle_courses_entry_requirements_path(
-        provider.provider_code,
-        recruitment_cycle.year,
-      )
-      expect(page.status_code).to eq(404)
-    end
-  end
-
   context "level primary" do
     let(:level) { :primary }
     before do

@@ -67,30 +67,10 @@ feature "New course sites" do
   end
 
   context "with site ids already selected" do
-    let(:course) { build(:course, sites: [site3]) }
+    let(:course) { build(:course, provider: provider, sites: [site3]) }
 
     scenario "It pre-checks the site" do
       expect(new_locations_page).to have_checked_field(site3.location_name)
-    end
-  end
-
-  context "With a provider with a single site" do
-    let(:provider) { build(:provider, sites: [site2], accredited_body?: true) }
-
-    scenario "It transitions to the entry requirements page" do
-      expect(new_entry_requirements_page).to be_displayed
-    end
-
-    scenario "It builds a new course with the providers site id to the query" do
-      expect(build_course_with_sites_request).to have_been_made.at_least_once
-    end
-  end
-
-  context "With a accredited provider" do
-    let(:provider) { build(:provider, sites: [site2], accredited_body?: false) }
-
-    scenario "It transitions to the accredited body page" do
-      expect(new_accredited_body_page).to be_displayed
     end
   end
 end

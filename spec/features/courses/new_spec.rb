@@ -38,7 +38,8 @@ feature "new course", type: :feature do
   let(:build_new_course_request) { stub_api_v2_build_course }
   let(:site1) { build(:site, location_name: "Site one") }
   let(:site2) { build(:site, location_name: "Site two") }
-  let(:provider) { build(:provider, accredited_body?: true, sites: [site1, site2]) }
+  let(:sites) { [site1, site2] }
+  let(:provider) { build(:provider, accredited_body?: true, sites: sites) }
   let(:english) { build(:subject, :english) }
 
   let(:course) do

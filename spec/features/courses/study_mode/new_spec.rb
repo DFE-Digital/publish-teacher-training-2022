@@ -20,7 +20,7 @@ feature "new course study mode", type: :feature do
       accrediting_provider: build(:provider),
     )
   end
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, sites: [build(:site), build(:site)]) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do
