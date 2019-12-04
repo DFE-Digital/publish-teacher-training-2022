@@ -83,9 +83,6 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @published = flash[:success]
-    flash.delete(:success)
-
     @errors = flash[:error_summary]
     flash.delete(:error_summary)
   end
