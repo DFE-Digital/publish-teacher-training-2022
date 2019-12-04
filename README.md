@@ -138,3 +138,45 @@ authorised_user:
 
 The email address has to exist in the users table of manage-courses-backend, but
 the password can be any non-secure local password you care to use.
+
+## Cypress
+
+1. Configurations file
+   1. A `./e2e/config/example.json` is available as a basis to create `./e2e/config/local.json`
+   1. Change the values where appropriate
+
+### Custom browser
+1. Download the appropriate version browser from [Chromium Downloads Tool](https://chromium.cypress.io/).
+    1. Extract content to `./e2e/browsers`
+
+### Executing tests
+
+1. To open cypress
+    ``` bash
+    # using ~/repos/dfe/manage-courses-frontend/e2e/config/local.json
+    yarn run cy:open --browser $PWD/e2e/browsers/chrome-linux/chrome
+    ```
+
+    ``` bash
+    # native
+    yarn run cy:open --env 'email=someone@test.com,password=change me' --browser $PWD/e2e/browsers/chrome-linux/chrome
+    ```
+
+2. To run cypress
+    ``` bash
+    # using $PWD/e2e/config/local.json
+    yarn run cy:run --browser $PWD/e2e/browsers/chrome-linux/chrome
+    ```
+
+    ``` bash
+    # native
+    yarn run cy:run --env 'email=someone@test.com,password=change me' --browser $PWD/e2e/browsers/chrome-linux/chrome
+    ```
+
+### Noticable issues
+1. Make sure that the user used actually exists
+1. Fails to properly have an isolated environment, therefore download chromuim
+1. Opening cypress with snap chromuim on linux is not possible
+1. Opening cypress with electron using snap chromuim, leads to the cypress failure to improper isolates environment
+1. Between executing tests, make sure you close the browser that was spawned, in order for you to start from scratch, due to state retentations.
+1. To ensure cookie expectation, ie clearing cookies means close the spawned browser
