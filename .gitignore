@@ -36,7 +36,7 @@ coverage
 /.vscode/*
 /.devcontainer/*
 
-e2e/cypress/videos
-e2e/cypress/screenshots
-e2e/browsers
-e2e/config/local.json
+end-to-end-tests/cypress/videos
+end-to-end-tests/cypress/screenshots
+end-to-end-tests/browsers
+end-to-end-tests/config/local.json

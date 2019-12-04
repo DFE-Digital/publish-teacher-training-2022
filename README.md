@@ -142,35 +142,35 @@ the password can be any non-secure local password you care to use.
 ## Cypress
 
 1. Configurations file
-   1. A `./e2e/config/example.json` is available as a basis to create `./e2e/config/local.json`
+   1. A `./end-to-end-tests/config/example.json` is available as a basis to create `./end-to-end-tests/config/local.json`
    1. Change the values where appropriate
 
 ### Custom browser
 1. Download the appropriate version browser from [Chromium Downloads Tool](https://chromium.cypress.io/).
-    1. Extract content to `./e2e/browsers`
+    1. Extract content to `./end-to-end-tests/browsers`
 
 ### Executing tests
 
 1. To open cypress
     ``` bash
-    # using ~/repos/dfe/manage-courses-frontend/e2e/config/local.json
-    yarn run cy:open --browser $PWD/e2e/browsers/chrome-linux/chrome
+    # using ~/repos/dfe/manage-courses-frontend/end-to-end-tests/config/local.json
+    yarn run cy:open --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
     ```
 
     ``` bash
     # native
-    yarn run cy:open --env 'email=someone@test.com,password=change me' --browser $PWD/e2e/browsers/chrome-linux/chrome
+    yarn run cy:open --env 'email=someone@test.com,password=change me' --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
     ```
 
 2. To run cypress
     ``` bash
-    # using $PWD/e2e/config/local.json
-    yarn run cy:run --browser $PWD/e2e/browsers/chrome-linux/chrome
+    # using $PWD/end-to-end-tests/config/local.json
+    yarn run cy:run --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
     ```
 
     ``` bash
     # native
-    yarn run cy:run --env 'email=someone@test.com,password=change me' --browser $PWD/e2e/browsers/chrome-linux/chrome
+    yarn run cy:run --env 'email=someone@test.com,password=change me' --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
     ```
 
 ### Noticable issues

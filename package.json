@@ -16,7 +16,7 @@
     ]
   },
   "scripts": {
-    "cy:run": "cypress run --project ./e2e",
-    "cy:open": "cypress open --project ./e2e"
+    "cy:run": "cypress run --project ./end-to-end-tests",
+    "cy:open": "cypress open --project ./end-to-end-tests"
   }
 }
