@@ -11,6 +11,9 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+// NOTE;  Probably uses `cypress` `bundled` nodejs NOT local machine copy
+//        Therefore needs to be strict vanilla nodejs.
+
 // promisified fs module
 const fs = require('fs-extra');
 const path = require('path');
