@@ -5,7 +5,12 @@
         <% if key == "error" %>
           <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading" data-error-message="<%= value %>"><%= value %></h3>
         <% else %>
-          <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading"><%= value %></h3>
+          <% if value.is_a?(Hash) %>
+            <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading" data-qa="flash__<%= key %>__title"><%= value["title"] %></h3>
+            <p class="govuk-body" id="<%= key %>-summary-body"data-qa="flash__<%= key %>__body"><%= value["body"] %></h3>
+          <% else %>
+            <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading"><%= value %></h3>
+          <% end %>
         <% end %>
       </div>
     <% end %>
