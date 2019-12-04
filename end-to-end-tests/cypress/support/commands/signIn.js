@@ -1,4 +1,3 @@
-
 Cypress.Commands.add('signIn', (username = Cypress.env('email'), password = Cypress.env('password')) => {
   Cypress.Cookies.debug(true);
 
@@ -26,7 +25,6 @@ Cypress.Commands.add('signIn', (username = Cypress.env('email'), password = Cypr
     })
 });
 
-// step 1
 function appAuthRequest(url) {
   const params = {
     method: 'GET',
@@ -64,8 +62,6 @@ function loginPostRequest(username, password) {
     const setCookiesHeaders = lastResponse["Response Headers"]["set-cookie"];
 
     setCookiesFromHeaders(setCookiesHeaders, authURL.hostname);
-
-    // cy.log(`curl -b '${cookieHeaders.join("; ")}' -d username=${username} -d password='${password} -d _csrf='${csrfToken} -d cliendId='${clientId} -d redirectUri='${redirectUri}' '${authURL}'`);
 
     const form = getForm(response.body);
     const formInputs = arrayToObject(form.querySelectorAll('input'), {
@@ -134,14 +130,7 @@ function arrayToObject(inputs, overrides) {
 };
 
 function setCookiesFromHeaders(setCookiesHeaders, domain) {
-  // setCookiesHeaders is a list of the set-cookie headers in the response:
-  // 0: "_csrf=KDonEKj24XFEwGcOE8ndYfRr; Path=/; HttpOnly; Secure"
-  // 1: "session=eyJyZWRpcmVjdFVyaSI6bnVsbH0=; path=/; secure; httponly"
-  // 2: "session.sig=SaZR0Tt8DIt3oKMJyJ8qA58_iBw; path=/; secure; httponly"
-
-  // const cookieWholeRE = new RegExp("^([^;]+);");
-  // const cookieSettings = setCookiesHeader.map((cookie) => { return cookieWholeRE.exec(cookie)[1]; });
-
+  // These '_csrf', 'session', 'session.sig' cookies should be set.
   if (setCookiesHeaders === undefined || setCookiesHeaders === null) {
     cy.log("Header has no cookies");
     ['_csrf', 'session', 'session.sig'].forEach(cookieName => cy.getCookie(cookieName));
