@@ -1,46 +1,51 @@
-# Cypress setup
+# Cypress
+
+## Local setup
 On linux do not trust it to be effortless, who knows on mac?
 
-go to
-https://chromium.cypress.io/
-and download
+1. go to [Chromium Downloads Tool](https://chromium.cypress.io/) and download the appropriate version
 
-extract content to
+    1. extract content to `./cypress/browsers`
 
-```bash
-./cypress/browsers
-```
+2. install node dependencies
 
-then yarn install
-```
-yarn install
-```
+    ```
+    yarn install
+    ```
 
-an ./config/example.json is available as a basis to create ./config/local.json
+3. configurations file
+   1. a `./config/example.json` is available as a basis to create `./config/local.json`
+   1. change the values where appropriate
 
-to open cypress
-```
-yarn run cy:open --env 'email=someone@test.com,password=change me' --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
 
-# or using /config/local.json
-yarn run cy:open --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
-```
+## Executing tests
+1. to open cypress
+    ``` bash
+    # using /config/local.json
+    yarn run cy:open --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
+    ```
 
-to run cypress
-```
-yarn run cy:run --env 'email=someone@test.com,password=change me' --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
+    ``` bash
+    # native
+    yarn run cy:open --env 'email=someone@test.com,password=change me' --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
+    ```
 
-# or using ./config/local.json
-yarn run cy:run --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
-```
+2. to run cypress
 
-## upgrading cypress
-version 3.6.1 of cypress is broken, so use version 3.6.0 or 3.7.0
+    ``` bash
+    # using ./config/local.json
+    yarn run cy:run --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
+    ```
+    ``` bash
+    # native
+    yarn run cy:run --env 'email=someone@test.com,password=change me' --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
+    ```
+
 
 ## Noticable issues
-- make sure that the user used exists
-- is that it fails to properly have an isolated environment, therefore download chromuim
-- opening cypress with snap chromuim on linux is not possible
-- opening cypress with electron using snap chromuim, leads to the cypress failure to properly isolate enviroment
-- between fails make sure you close the browser that was spawned, inorder for you to start from scratch
-- to ensure cookie expectation, ie clearing cookies means clearing cookie, close the spawn browser
+1. make sure that the user used actually exists
+1. fails to properly have an isolated environment, therefore download chromuim
+1. opening cypress with snap chromuim on linux is not possible
+1. opening cypress with electron using snap chromuim, leads to the cypress failure to improper isolates environment
+1. between fails/runs make sure you close the browser that was spawned, in order for you to start from scratch
+1. to ensure cookie expectation, ie clearing cookies means close the spawned browser
