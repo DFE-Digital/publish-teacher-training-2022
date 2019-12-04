@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<!-- app_offline.htm -->
+<html lang="en" class="govuk-template">
+  <head>
+    <meta charset="utf-8" />
+    <title>Publish teacher training courses - GOV.UK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0c0c" />
+
+    <link rel="shortcut icon" href="https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/images/favicon.ico" type="image/x-icon" asp-append-version="true" />
+    <link rel="mask-icon" href="https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/images/govuk-mask-icon.svg" color="#0b0c0c" asp-append-version="true" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/images/govuk-apple-touch-icon-180x180.png"
+      asp-append-version="true"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="167x167"
+      href="https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/images/govuk-apple-touch-icon-167x167.png"
+      asp-append-version="true"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/images/govuk-apple-touch-icon-152x152.png"
+      asp-append-version="true"
+    />
+    <link rel="apple-touch-icon" href="https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/images/govuk-apple-touch-icon.png" asp-append-version="true" />
+
+    <!-- [if !IE 8]><! -->
+    <style>
+      /*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
+      @font-face {
+        font-family: "nta";
+        src: url("https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/fonts/light-94a07e06a1-v2.woff2") format("woff2"),
+          url("https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/fonts/light-f591b13f7d-v2.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+        font-display: fallback;
+      }
+      @font-face {
+        font-family: "nta";
+        src: url("https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/fonts/bold-b542beb274-v2.woff2") format("woff2"),
+          url("https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/fonts/bold-affa96571d-v2.woff") format("woff");
+        font-weight: bold;
+        font-style: normal;
+        font-display: fallback;
+      }
+      .govuk-link,
+      a {
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .govuk-link:link,
+      a:link {
+        color: #005ea5;
+      }
+      .govuk-link:visited,
+      a:visited {
+        color: #4c2c92;
+      }
+      .govuk-template {
+        background-color: #dee0e2;
+      }
+      .govuk-template__body {
+        margin: 0;
+        background-color: #fff;
+      }
+      .govuk-heading-xl {
+        color: #0b0c0c;
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 700;
+        font-size: 32px;
+        font-size: 2rem;
+        line-height: 1.09375;
+        display: block;
+        margin-top: 0;
+        margin-bottom: 30px;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-heading-xl {
+          font-size: 48px;
+          font-size: 3rem;
+          line-height: 1.04167;
+        }
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-heading-xl {
+          margin-bottom: 50px;
+        }
+      }
+      .govuk-body,
+      p {
+        color: #0b0c0c;
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 400;
+        font-size: 16px;
+        font-size: 1rem;
+        line-height: 1.25;
+        margin-top: 0;
+        margin-bottom: 15px;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-body,
+        p {
+          font-size: 19px;
+          font-size: 1.1875rem;
+          line-height: 1.31579;
+        }
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-body,
+        p {
+          margin-bottom: 20px;
+        }
+      }
+      .govuk-grid-row {
+        margin-right: -15px;
+        margin-left: -15px;
+      }
+      .govuk-grid-row:after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+      .govuk-grid-column-two-thirds {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0 15px;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-grid-column-two-thirds {
+          width: 66.6666%;
+          float: left;
+        }
+      }
+      .govuk-grid-column-full {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0 15px;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-grid-column-full {
+          width: 100%;
+          float: left;
+        }
+      }
+      .govuk-main-wrapper {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        display: block;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-main-wrapper {
+          padding-top: 30px;
+        }
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-main-wrapper {
+          padding-bottom: 30px;
+        }
+      }
+      .govuk-width-container {
+        max-width: 960px;
+        margin: 0 15px;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-width-container {
+          margin: 0 30px;
+        }
+      }
+      @media (min-width: 1020px) {
+        .govuk-width-container {
+          margin: 0 auto;
+        }
+      }
+      .govuk-footer {
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 400;
+        font-size: 14px;
+        font-size: 0.875rem;
+        line-height: 1.14286;
+        padding-top: 25px;
+        padding-bottom: 15px;
+        border-top: 1px solid #a1acb2;
+        color: #454a4c;
+        background: #dee0e2;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-footer {
+          font-size: 16px;
+          font-size: 1rem;
+          line-height: 1.25;
+        }
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-footer {
+          padding-top: 40px;
+        }
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-footer {
+          padding-bottom: 25px;
+        }
+      }
+      .govuk-footer__link:link,
+      .govuk-footer__link:visited {
+        color: #454a4c;
+      }
+      .govuk-footer__meta {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        margin-right: -15px;
+        margin-left: -15px;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: end;
+        -ms-flex-align: end;
+        align-items: flex-end;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+      }
+      .govuk-footer__meta-item {
+        margin-right: 15px;
+        margin-bottom: 25px;
+        margin-left: 15px;
+      }
+      .govuk-footer__meta-item--grow {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+      }
+      @media (max-width: 40.0525em) {
+        .govuk-footer__meta-item--grow {
+          -ms-flex-preferred-size: 320px;
+          flex-basis: 320px;
+        }
+      }
+      .govuk-footer__copyright-logo {
+        display: inline-block;
+        min-width: 125px;
+        padding-top: 112px;
+        background-image: url("https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/images/govuk-crest.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0%;
+        background-size: 125px 102px;
+        text-align: center;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      @media only screen and (-webkit-min-device-pixel-ratio: 2),
+        only screen and (min--moz-device-pixel-ratio: 2),
+        only screen and (min-device-pixel-ratio: 2),
+        only screen and (min-resolution: 192dpi),
+        only screen and (min-resolution: 2dppx) {
+        .govuk-footer__copyright-logo {
+          background-image: url("https://unpkg.com/govuk-frontend@3.4.0/govuk/assets/images/govuk-crest-2x.png");
+        }
+      }
+      .govuk-footer__inline-list {
+        margin-top: 0;
+        margin-bottom: 15px;
+        padding: 0;
+      }
+      .govuk-footer__inline-list-item {
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 5px;
+      }
+      .govuk-header {
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 400;
+        font-size: 14px;
+        font-size: 0.875rem;
+        line-height: 1.14286;
+        border-bottom: 10px solid #fff;
+        color: #fff;
+        background: #0b0c0c;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-header {
+          font-size: 16px;
+          font-size: 1rem;
+          line-height: 1.25;
+        }
+      }
+      .govuk-header__container {
+        position: relative;
+        margin-bottom: -10px;
+        padding-top: 10px;
+        border-bottom: 10px solid #005ea5;
+      }
+      .govuk-header__container:after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+      .govuk-header__logotype {
+        margin-right: 5px;
+      }
+      .govuk-header__logotype-crown {
+        margin-right: 1px;
+        fill: currentColor;
+        vertical-align: middle;
+      }
+      .govuk-header__logotype-crown-fallback-image {
+        width: 36px;
+        height: 32px;
+        border: 0;
+        vertical-align: middle;
+      }
+      .govuk-header__link {
+        text-decoration: none;
+      }
+      .govuk-header__link:link,
+      .govuk-header__link:visited {
+        color: #fff;
+      }
+      .govuk-header__link--homepage {
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 700;
+        display: inline-block;
+        font-size: 30px;
+        line-height: 30px;
+      }
+      .govuk-header__link--homepage:link,
+      .govuk-header__link--homepage:visited {
+        text-decoration: none;
+      }
+      .govuk-header__link--service-name {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 700;
+        font-size: 18px;
+        font-size: 1.125rem;
+        line-height: 1.11111;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-header__link--service-name {
+          font-size: 24px;
+          font-size: 1.5rem;
+          line-height: 1.25;
+        }
+      }
+      .govuk-header__logo {
+        margin-bottom: 10px;
+        padding-right: 50px;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-header__logo {
+          margin-bottom: 10px;
+        }
+      }
+      @media (min-width: 48.0625em) {
+        .govuk-header__logo {
+          width: 33.33%;
+          padding-right: 0;
+          float: left;
+          vertical-align: top;
+        }
+      }
+      @media (min-width: 48.0625em) {
+        .govuk-header__content {
+          width: 66.66%;
+          float: left;
+        }
+      }
+      .govuk-header__logotype-crown,
+      .govuk-header__logotype-crown-fallback-image {
+        position: relative;
+        top: -4px;
+      }
+      .govuk-header {
+        padding-top: 3px;
+      }
+      .govuk-tag {
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 700;
+        font-size: 14px;
+        font-size: 0.875rem;
+        line-height: 1.25;
+        display: inline-block;
+        padding: 4px 8px;
+        padding-bottom: 1px;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        color: #fff;
+        background-color: #005ea5;
+        letter-spacing: 1px;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-tag {
+          font-size: 16px;
+          font-size: 1rem;
+          line-height: 1.25;
+        }
+      }
+      .govuk-phase-banner {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #bfc1c3;
+      }
+      .govuk-phase-banner__content {
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 400;
+        font-size: 14px;
+        font-size: 0.875rem;
+        line-height: 1.14286;
+        color: #0b0c0c;
+        display: table;
+        margin: 0;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-phase-banner__content {
+          font-size: 16px;
+          font-size: 1rem;
+          line-height: 1.25;
+        }
+      }
+      .govuk-phase-banner__content__tag {
+        margin-right: 10px;
+      }
+      .govuk-phase-banner__text {
+        display: table-cell;
+        vertical-align: baseline;
+      }
+      .govuk-skip-link {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        -webkit-clip-path: inset(50%);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 14px;
+        font-size: 0.875rem;
+        line-height: 1.14286;
+        display: block;
+        padding: 10px 15px;
+      }
+      .govuk-skip-link:link,
+      .govuk-skip-link:visited {
+        color: #0b0c0c;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-skip-link {
+          font-size: 16px;
+          font-size: 1rem;
+          line-height: 1.25;
+        }
+      }
+      .govuk-visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        -webkit-clip-path: inset(50%);
+        clip-path: inset(50%);
+        border: 0;
+        white-space: nowrap;
+      }
+      .app-cookie-banner {
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 400;
+        font-size: 14px;
+        font-size: 0.875rem;
+        line-height: 1.14286;
+        color: #0b0c0c;
+        box-sizing: border-box;
+        display: none;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        background-color: #d5e8f3;
+        width: 100%;
+      }
+      @media (min-width: 40.0625em) {
+        .app-cookie-banner {
+          font-size: 16px;
+          font-size: 1rem;
+          line-height: 1.25;
+        }
+      }
+      .app-cookie-banner__message {
+        margin: 0;
+        max-width: 960px;
+        margin: 0 15px;
+      }
+      @media (min-width: 40.0625em) {
+        .app-cookie-banner__message {
+          margin: 0 30px;
+        }
+      }
+      @media (min-width: 1020px) {
+        .app-cookie-banner__message {
+          margin: 0 auto;
+        }
+      }
+      .govuk-footer__inline-list {
+        margin-bottom: 0;
+      }
+      .govuk-footer__content {
+        font-family: "nta", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 400;
+        font-size: 14px;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: #0b0c0c;
+      }
+      @media (min-width: 40.0625em) {
+        .govuk-footer__content {
+          font-size: 16px;
+          font-size: 1rem;
+          line-height: 1.5;
+        }
+      }
+    </style>
+    <!-- <![endif] -->
+
+    <!--[if IE 8]>
+      <link href="https://unpkg.com/govuk-frontend@3.4.0/govuk/vendor/govuk-frontend-ie8.min.css" rel="stylesheet" asp-append-version="true" />
+    <![endif]-->
+
+    <!--[if lt IE 9]> <script src="https://unpkg.com/govuk-frontend@3.4.0/govuk/vendor/html5shiv.min.js" asp-append-version="true"></script> <![endif]-->
+
+    <meta property="og:image" content="https://unpkg.com/govuk-frontend@3.4.0/govuk/images/govuk-opengraph-image.png" />
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-112932657-2', 'auto');
+      ga('set', 'transport', 'beacon');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview')
+    </script>
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-WCZDP65');
+    </script>
+  </head>
+
+  <body class="govuk-template__body">
+    <script>
+      document.body.className = document.body.className ? document.body.className + " js-enabled" : "js-enabled";
+    </script>
+    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+
+    <div class="app-cookie-banner" data-module="cookie-message">
+      <p class="app-cookie-banner__message">
+        GOV.UK uses cookies to make the site simpler.
+        <a href="https://www.gov.uk/help/cookies">Find out more about cookies</a>
+      </p>
+    </div>
+
+    <header class="govuk-header" role="banner" data-module="header">
+      <div class="govuk-header__container govuk-width-container">
+        <div class="govuk-header__logo">
+          <a href="/" class="govuk-header__link govuk-header__link--homepage">
+            <span class="govuk-header__logotype">
+              <svg
+                role="presentation"
+                focusable="false"
+                class="govuk-header__logotype-crown"
+                xmlns="http://www.w3.org/2000/svg"
+                viewbox="0 0 132 97"
+                height="32"
+                width="36"
+              >
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zM9 39.5c3.6 1.5 7.8-.2 9.2-3.7 1.5-3.6-.2-7.8-3.9-9.1-3.6-1.5-7.6.2-9.1 3.8-1.4 3.5.3 7.5 3.8 9zM4.4 57.2c3.5 1.5 7.7-.2 9.1-3.8 1.5-3.6-.2-7.7-3.9-9.1-3.5-1.5-7.6.3-9.1 3.8-1.4 3.5.3 7.6 3.9 9.1zm38.3-21.4c3.5 1.5 7.7-.2 9.1-3.8 1.5-3.6-.2-7.7-3.9-9.1-3.6-1.5-7.6.3-9.1 3.8-1.3 3.6.4 7.7 3.9 9.1zm64.4-5.6c-3.6 1.5-7.8-.2-9.1-3.7-1.5-3.6.2-7.8 3.8-9.2 3.6-1.4 7.7.3 9.2 3.9 1.3 3.5-.4 7.5-3.9 9zm15.9 9.3c-3.6 1.5-7.7-.2-9.1-3.7-1.5-3.6.2-7.8 3.7-9.1 3.6-1.5 7.7.2 9.2 3.8 1.5 3.5-.3 7.5-3.8 9zm4.7 17.7c-3.6 1.5-7.8-.2-9.2-3.8-1.5-3.6.2-7.7 3.9-9.1 3.6-1.5 7.7.3 9.2 3.8 1.3 3.5-.4 7.6-3.9 9.1zM89.3 35.8c-3.6 1.5-7.8-.2-9.2-3.8-1.4-3.6.2-7.7 3.9-9.1 3.6-1.5 7.7.3 9.2 3.8 1.4 3.6-.3 7.7-3.9 9.1zM69.7 17.7l8.9 4.7V9.3l-8.9 2.8c-.2-.3-.5-.6-.9-.9L72.4 0H59.6l3.5 11.2c-.3.3-.6.5-.9.9l-8.8-2.8v13.1l8.8-4.7c.3.3.6.7.9.9l-5 15.4v.1c-.2.8-.4 1.6-.4 2.4 0 4.1 3.1 7.5 7 8.1h.2c.3 0 .7.1 1 .1.4 0 .7 0 1-.1h.2c4-.6 7.1-4.1 7.1-8.1 0-.8-.1-1.7-.4-2.4V34l-5.1-15.4c.4-.2.7-.6 1-.9zM66 92.8c16.9 0 32.8 1.1 47.1 3.2 4-16.9 8.9-26.7 14-33.5l-9.6-3.4c1 4.9 1.1 7.2 0 10.2-1.5-1.4-3-4.3-4.2-8.7L108.6 76c2.8-2 5-3.2 7.5-3.3-4.4 9.4-10 11.9-13.6 11.2-4.3-.8-6.3-4.6-5.6-7.9 1-4.7 5.7-5.9 8-.5 4.3-8.7-3-11.4-7.6-8.8 7.1-7.2 7.9-13.5 2.1-21.1-8 6.1-8.1 12.3-4.5 20.8-4.7-5.4-12.1-2.5-9.5 6.2 3.4-5.2 7.9-2 7.2 3.1-.6 4.3-6.4 7.8-13.5 7.2-10.3-.9-10.9-8-11.2-13.8 2.5-.5 7.1 1.8 11 7.3L80.2 60c-4.1 4.4-8 5.3-12.3 5.4 1.4-4.4 8-11.6 8-11.6H55.5s6.4 7.2 7.9 11.6c-4.2-.1-8-1-12.3-5.4l1.4 16.4c3.9-5.5 8.5-7.7 10.9-7.3-.3 5.8-.9 12.8-11.1 13.8-7.2.6-12.9-2.9-13.5-7.2-.7-5 3.8-8.3 7.1-3.1 2.7-8.7-4.6-11.6-9.4-6.2 3.7-8.5 3.6-14.7-4.6-20.8-5.8 7.6-5 13.9 2.2 21.1-4.7-2.6-11.9.1-7.7 8.8 2.3-5.5 7.1-4.2 8.1.5.7 3.3-1.3 7.1-5.7 7.9-3.5.7-9-1.8-13.5-11.2 2.5.1 4.7 1.3 7.5 3.3l-4.7-15.4c-1.2 4.4-2.7 7.2-4.3 8.7-1.1-3-.9-5.3 0-10.2l-9.5 3.4c5 6.9 9.9 16.7 14 33.5 14.8-2.1 30.8-3.2 47.7-3.2z"
+                ></path>
+                <image
+                  src="/images/govuk-logotype-crown.png"
+                  class="govuk-header__logotype-crown-fallback-image"
+                  asp-append-version="true"
+                ></image>
+              </svg>
+              <span class="govuk-header__logotype-text"> GOV.UK </span>
+            </span>
+          </a>
+        </div>
+        <div class="govuk-header__content">
+          <a href="/" class="govuk-header__link govuk-header__link--service-name">
+            Publish teacher training courses
+          </a>
+        </div>
+      </div>
+    </header>
+    <div class="govuk-width-container">
+      <div class="govuk-phase-banner">
+        <p class="govuk-phase-banner__content">
+          <strong class="govuk-tag govuk-phase-banner__content__tag">BETA</strong>
+          <span class="govuk-phase-banner__text">
+            This is a new service – your
+            <a
+              href="mailto:becomingateacher@digital.education.gov.uk?subject=Search%20beta%20feedback"
+              class="govuk-link"
+              >feedback</a
+            >
+            will help us to improve it.
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <main role="main" class="govuk-main-wrapper" id="main-content">
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+          </div>
+          <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body">
+              For advice about teaching or teacher training you can call Get into Teaching on Freephone 0800 389 2500 or
+              chat to an adviser using their online chat service between 8am and 8pm, Monday to Friday.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="govuk-footer" role="contentinfo">
+      <div class="govuk-width-container ">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds govuk-footer__content-container">
+            <p class="govuk-footer__content">
+              For advice about teaching or teacher training you can call
+              <a href="https://getintoteaching.education.gov.uk/" class="govuk-footer__link">Get into Teaching</a> on
+              Freephone 0800 389 2500 or chat to an adviser using their
+              <a
+                href="https://ta-chat.education.gov.uk/chat/chatstart.aspx?domain=www.education.gov.uk&department=GetIntoTeaching%27,%27new_win%27,%27width=0,height=0%27);return%20false;%22&SID=1"
+                class="govuk-footer__link"
+                >online chat service</a
+              >
+              between 8am and 8pm, Monday to Friday.
+            </p>
+          </div>
+        </div>
+        <div class="govuk-footer__meta">
+          <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+            <h2 class="govuk-visually-hidden">Support links</h2>
+            <ul class="govuk-footer__inline-list">
+              <li class="govuk-footer__inline-list-item">
+                <a
+                  class="govuk-footer__link"
+                  href="mailto:becomingateacher@digital.education.gov.uk?subject=Search%20beta%20feedback"
+                  >Give feedback or report a problem</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="govuk-footer__meta-item govuk-footer__meta_item--logo">
+            <a
+              class="govuk-footer__link govuk-footer__copyright-logo"
+              href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+              >© Crown copyright</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
