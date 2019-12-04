@@ -20,7 +20,7 @@ an ./config/example.json is available as a basis to create ./config/local.json
 
 to open cypress
 ```
-yarn run cy:open -- --env 'email=someone@test.com,password=change me' --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
+yarn run cy:open --env 'email=someone@test.com,password=change me' --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome
 
 # or using /config/local.json
 yarn run cy:open --browser ~/repos/dfe/manage-courses-frontend/cypress/browsers/chrome-linux/chrome

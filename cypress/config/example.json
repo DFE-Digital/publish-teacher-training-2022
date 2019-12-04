@@ -1,6 +1,6 @@
 {
-    "env": {
-        "email": "some_email@example.com",
-        "password": "change me"
-    }
+  "env": {
+    "email": "some_email@example.com",
+    "password": "change me"
+  }
 }
