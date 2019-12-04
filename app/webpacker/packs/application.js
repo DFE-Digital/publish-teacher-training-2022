@@ -7,8 +7,11 @@ import CookieMessage from "scripts/cookie-banner";
 import FormCheckLeave from "scripts/form-check-leave";
 import { triggerFormAnalytics } from "scripts/form-error-tracking";
 import initAutocomplete from "scripts/autocomplete";
+import initLocationsMap from "scripts/locations-map";
 
 initAll();
+
+window.initLocationsMap = initLocationsMap;
 
 var $cookieMessage = document.querySelector('[data-module="cookie-message"]');
 new CookieMessage($cookieMessage).init();

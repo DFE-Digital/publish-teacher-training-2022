@@ -4,7 +4,7 @@ class Site < Base
   has_one :site_status
 
   properties :code, :location_name, :address1, :address2, :address3
-  properties :address4, :postcode
+  properties :address4, :postcode, :latitude, :longitude
 
   REGIONS = [
     ["London", :london],

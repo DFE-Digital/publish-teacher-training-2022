@@ -12,6 +12,8 @@ FactoryBot.define do
     address3 { nil }
     address4 { nil }
     postcode { nil }
+    latitude { nil }
+    longitude { nil }
     recruitment_cycle_year { Settings.current_cycle }
 
     after :build do |course, evaluator|

@@ -59,3 +59,5 @@ logstash:
   port: # Our port here
   ssl_enable: true
 log_level: info
+google:
+  maps_api_key: replace_me

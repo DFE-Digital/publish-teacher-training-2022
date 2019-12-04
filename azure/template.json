@@ -100,6 +100,12 @@
         "description": "Auth secret for manage backend."
       }
     },
+    "settingsGoogleMapsAPIKey": {
+      "type": "string",
+      "metadata": {
+        "description": "API Key for Google Maps"
+      }
+    },
     "sentryDSN": {
       "type": "string",
       "metadata": {
@@ -247,6 +253,10 @@
               {
                 "name": "SETTINGS__MANAGE_BACKEND__SECRET",
                 "value": "[parameters('settingsManageBackendSecret')]"
+              },
+              {
+                "name": "SETTINGS__GOOGLE_MAPS_API_KEY",
+                "value": "[parameters('settingsGoogleMapsAPIKey')]"
               },
               {
                 "name": "SENTRY_DSN",
