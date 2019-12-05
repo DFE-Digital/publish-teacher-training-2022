@@ -1,0 +1,30 @@
+<tr id="organisation<%= organisation.id %>" class="govuk-table__row" data-qa="organisations-table-row">
+  <td class="govuk-table__cell" data-qa="organisation-table-row__name">
+    <%= organisation.name %><br>
+    <span class="govuk-hint govuk-!-font-size-14">NCTL IDs: <%= organisation.nctl_ids.sort.join(", ") %></span>
+  </td>
+  <td class="govuk-table__cell" data-qa="organisation-table-row__users">
+    <% users = organisation.users %>
+    <% if users.size == 1 %>
+      <%= user_details(users.first, dfe_signin_deeplink: true) %>
+    <% else %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% users.map do |user| %>
+          <li><%= user_details(user, dfe_signin_deeplink: true) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </td>
+  <td class="govuk-table__cell" data-qa="organisation-table-row__providers">
+    <% providers = organisation.providers %>
+    <% if providers.size == 1 %>
+      <%= provider_details(providers.first) %>
+    <% else %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% providers.map do |provider| %>
+          <li><%= provider_details(provider) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </td>
+</tr>

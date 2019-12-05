@@ -191,6 +191,8 @@ private
       url_for_resource(resource.provider) + "/courses"
     elsif resource.is_a? AccessRequest
       "/access_requests"
+    elsif resource.is_a? Organisation
+      "/organisations"
     end
   end
 

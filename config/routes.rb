@@ -25,6 +25,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get "organisations-support-page", to: "organisations#index"
+  get "organisations-support-page/without-active-users", to: "organisations#index_without_active_users"
+
   resources :providers, path: "organisations", param: :code do
     # Redirect year-less URLs to current recruitment cycle
     get "/locations", to: redirect("/organisations/%{provider_code}/#{Settings.current_cycle}/locations")

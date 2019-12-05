@@ -30,6 +30,9 @@
             <li class="govuk-header__navigation-item">
               <%= link_to "Access Requests (#{AccessRequest.return_count})", access_requests_path, class: "govuk-header__link", data: { qa: "access_requests_link" } %>
             </li>
+            <li class="govuk-header__navigation-item">
+              <%= link_to "Organisations", organisations_support_page_path, class: "govuk-header__link", data: { qa: "organisations_link" } %>
+            </li>
           <% end %>
         </ul>
       </nav>
