@@ -33,7 +33,6 @@
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','GTM-WCZDP65');
     </script>
-    <%= yield(:head) %>
   </head>
 
   <body class="govuk-template__body <%= content_for(:body_classes) %>">
@@ -65,5 +64,6 @@
     <%= render partial: 'layouts/footer' %>
 
     <%= javascript_pack_tag 'application' %>
+    <%= yield(:before_body_close) %>
   </body>
 </html>
