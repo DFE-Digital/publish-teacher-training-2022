@@ -145,38 +145,39 @@ the password can be any non-secure local password you care to use.
    1. A `./end-to-end-tests/config/example.json` is available as a basis to create `./end-to-end-tests/config/local.json`
    1. Change the values where appropriate
 
-### Custom browser
-1. Download the appropriate version browser from [Chromium Downloads Tool](https://chromium.cypress.io/).
-    1. Extract content to `./end-to-end-tests/browsers`
-
 ### Executing tests
 
 1. To open cypress
     ``` bash
     # using ~/repos/dfe/manage-courses-frontend/end-to-end-tests/config/local.json
-    yarn run cy:open --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
+    yarn run cy:open
     ```
 
     ``` bash
     # native
-    yarn run cy:open --env 'email=someone@test.com,password=change me' --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
+    yarn run cy:open --env 'email=someone@test.com,password=change me'
     ```
 
 2. To run cypress
     ``` bash
     # using $PWD/end-to-end-tests/config/local.json
-    yarn run cy:run --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
+    yarn run cy:run
     ```
 
     ``` bash
     # native
-    yarn run cy:run --env 'email=someone@test.com,password=change me' --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
+    yarn run cy:run --env 'email=someone@test.com,password=change me'
     ```
 
+### Optional custom browser
+1. Download the appropriate version browser from [Chromium Downloads Tool](https://chromium.cypress.io/).
+    1. Extract content to `./end-to-end-tests/browsers`
+    2. Then open like so
+      ``` bash
+        yarn run cy:run --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
+      ```
 ### Noticable issues
 1. Make sure that the user used actually exists
-1. Fails to properly have an isolated environment, therefore download chromuim
-1. Opening cypress with snap chromuim on linux is not possible
-1. Opening cypress with electron using snap chromuim, leads to the cypress failure to improper isolates environment
+1. It does not work with snap chromuim so either install chromuim via package manager or setup optional custom browser
 1. Between executing tests, make sure you close the browser that was spawned, in order for you to start from scratch, due to state retentations.
 1. To ensure cookie expectation, ie clearing cookies means close the spawned browser
