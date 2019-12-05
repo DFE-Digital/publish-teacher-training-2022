@@ -255,7 +255,7 @@
                 "value": "[parameters('settingsManageBackendSecret')]"
               },
               {
-                "name": "SETTINGS__GOOGLE_MAPS_API_KEY",
+                "name": "SETTINGS__GOOGLE__MAPS_API_KEY",
                 "value": "[parameters('settingsGoogleMapsAPIKey')]"
               },
               {
