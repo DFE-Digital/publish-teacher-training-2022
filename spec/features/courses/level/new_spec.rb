@@ -79,6 +79,16 @@ feature "New course level", type: :feature do
     end
   end
 
+  context "Page title" do
+    before do
+      visit_new_level_page
+    end
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("What type of course?")
+      expect(new_level_page.title.text).to eq("What type of course?")
+    end
+  end
+
 private
 
   def visit_new_level_page(**query_params)
