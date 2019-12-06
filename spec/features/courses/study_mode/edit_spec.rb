@@ -70,6 +70,10 @@ feature "Edit course study mode", type: :feature do
       expect(course_details_page.flash).to have_content("Your changes have been saved")
       expect(update_course_stub).to have_been_requested
     end
+
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Full time or part time")
+    end
   end
 
   context "a full time course" do
@@ -96,6 +100,10 @@ feature "Edit course study mode", type: :feature do
       expect(course_request_change_page).to be_displayed
       expect(course_request_change_page.title).to have_content("Request a change to this course")
       expect(update_course_stub).not_to have_been_requested
+    end
+
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Full time or part time")
     end
   end
 end
