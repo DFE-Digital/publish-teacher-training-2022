@@ -134,8 +134,8 @@ feature "New course level", type: :feature do
       let(:level) { :primary }
 
       scenario "It displays the correct title" do
-        expect(page.title).to start_with("Select a primary subject")
-        expect(new_subjects_page.title.text).to eq("Select a primary subject")
+        expect(page.title).to start_with("Pick a primary subject")
+        expect(new_subjects_page.title.text).to eq("Pick a primary subject")
       end
     end
 
@@ -143,8 +143,8 @@ feature "New course level", type: :feature do
       let(:level) { :secondary }
 
       scenario "It displays the correct title" do
-        expect(page.title).to start_with("Select a secondary subject")
-        expect(new_subjects_page.title.text).to eq("Select a secondary subject")
+        expect(page.title).to start_with("Pick a secondary subject")
+        expect(new_subjects_page.title.text).to eq("Pick a secondary subject")
       end
     end
   end

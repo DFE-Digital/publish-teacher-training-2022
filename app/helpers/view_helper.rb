@@ -15,9 +15,9 @@ module ViewHelper
 
   def subject_page_title(course)
     if course.level == "primary"
-      "Select a primary subject"
+      "Pick a primary subject"
     elsif course.level == "secondary"
-      "Select a secondary subject"
+      "Pick a secondary subject"
     else
       "Select a subject"
     end
