@@ -1,0 +1,9 @@
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+output.logstash:
+  hosts: ["${SETTINGS__LOGSTASH__HOST}:${SETTINGS__LOGSTASH__PORT}"]
+  loadbalance: true
+  ssl.enabled: true
+
