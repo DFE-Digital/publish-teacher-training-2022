@@ -1,18 +1,20 @@
 <div class="grid-row">
   <div class="column-two-thirds">
     <% flash.each do |key, value| %>
-      <div class="govuk-<%= key %>-summary" role="alert" aria-labelledby="<%= key %>-summary-heading" tabindex="-1" data-module="govuk-error-summary" data-ga-event-form="<%= key %>">
         <% if key == "error" %>
-          <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading" data-error-message="<%= value %>"><%= value %></h3>
+          <div class="govuk-<%= key %>-summary" role="alert" aria-labelledby="<%= key %>-summary-heading" tabindex="-1" data-module="govuk-error-summary" data-ga-event-form="<%= key %>">
+            <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading" data-error-message="<%= value %>"><%= value %></h3>
+          </div>
+        <% elsif key == "success_with_body" %>
+          <div class="govuk-success-summary" role="alert" aria-labelledby="success-summary-heading" tabindex="-1" data-module="govuk-error-summary" data-ga-event-form="<%= key %>">
+            <h3 class="govuk-success-summary__title" id="success-summary-heading" data-qa="flash__success__title"><%= value["title"] %></h3>
+            <p class="govuk-body" id="success-summary-body"data-qa="flash__success__body"><%= value["body"] %></h3>
+          </div>
         <% else %>
-          <% if value.is_a?(Hash) %>
-            <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading" data-qa="flash__<%= key %>__title"><%= value["title"] %></h3>
-            <p class="govuk-body" id="<%= key %>-summary-body"data-qa="flash__<%= key %>__body"><%= value["body"] %></h3>
-          <% else %>
+          <div class="govuk-<%= key %>-summary" role="alert" aria-labelledby="<%= key %>-summary-heading" tabindex="-1" data-module="govuk-error-summary" data-ga-event-form="<%= key %>">
             <h3 class="govuk-<%= key %>-summary__title" id="<%= key %>-summary-heading"><%= value %></h3>
-          <% end %>
+          </div>
         <% end %>
-      </div>
     <% end %>
   </div>
 </div>
