@@ -10,26 +10,15 @@
 </h1>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course,
-                  url: continue_provider_recruitment_cycle_courses_subjects_path(
+    <%= form_with url: continue_provider_recruitment_cycle_courses_subjects_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
-      <%= render 'shared/course_creation_hidden_fields',
-        form: form,
-        course_creation_params: @course_creation_params,
-        except_keys: []
-      %>
 
-      <div class="govuk-form-group">
-        <label class="govuk-label"><%= subject_input_label(@course) %></label>
-        <%= render 'form_fields', form: form %>
-      </div>
-
-      <%= form.submit "Continue",
-                      class: "govuk-button",
-                      data: { qa: 'course__save' } %>
+      <%= render "courses/new_fields_holder", form: form, except_keys: [] do |fields| %>
+        <%= render 'form_fields', form: fields %>
+      <% end %>
     <% end %>
   </div>
 </div>

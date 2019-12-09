@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}New course" %>
+<%= content_for :page_title, "Check your answers before confirming" %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
@@ -57,7 +57,11 @@
                 <%= course.sorted_subjects %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                  Change<span class="govuk-visually-hidden"> Subject</span>
+                <%= course_creation_change_button(
+                  "subjects",
+                  "subjects",
+                  :new_provider_recruitment_cycle_courses_subjects_path
+                ) %>
               </dd>
             </div>
 
@@ -93,21 +97,39 @@
               </dd>
             </div>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Apprenticeship
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
-                <%= course.apprenticeship? %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "apprenticeship",
-                  "apprenticeship",
-                  :new_provider_recruitment_cycle_courses_apprenticeship_path
-                ) %>
-              </dd>
-            </div>
+            <% if @provider.accredited_body? %>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Apprenticeship
+                </dt>
+                <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
+                  <%= course.apprenticeship? %>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <%= course_creation_change_button(
+                    "apprenticeship",
+                    "apprenticeship",
+                    :new_provider_recruitment_cycle_courses_apprenticeship_path
+                  ) %>
+                </dd>
+              </div>
+            <% else %>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Fee or Salary
+                </dt>
+                <dd class="govuk-summary-list__value" data-qa="course__fee_or_salary">
+                  <%= course.funding %>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <%= course_creation_change_button(
+                    "fee or salary",
+                    "fee_or_salary",
+                    :new_provider_recruitment_cycle_courses_fee_or_salary_path
+                  ) %>
+                </dd>
+              </div>
+            <% end %>
 
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">
@@ -153,12 +175,34 @@
               </dd>
             </div>
 
+            <% unless @provider.accredited_body? %>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Accredited body
+                </dt>
+                <dd class="govuk-summary-list__value" data-qa="course__accredited_body">
+                  <%= course.accrediting_provider.provider_name %>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <%= course_creation_change_button(
+                    "accredited body",
+                    "accredited_body",
+                    :new_provider_recruitment_cycle_courses_accredited_body_path
+                  ) %>
+                </dd>
+              </div>
+            <% end %>
+
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">
                 Applications open
               </dt>
               <dd class="govuk-summary-list__value" data-qa="course__application_open_from">
+              <% if course.applications_open_from == @recruitment_cycle.application_start_date %>
+                As soon as the course is on Find (recommended)
+              <% else %>
                 <%= l(course.applications_open_from&.to_date) %>
+              <% end %>
               </dd>
               <dd class="govuk-summary-list__actions">
                 <%= course_creation_change_button(

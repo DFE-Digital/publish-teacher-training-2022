@@ -17,6 +17,7 @@ feature "new course study mode", type: :feature do
       study_mode: "full_time",
       applications_open_from: "2019-10-09",
       start_date: "2019-10-09",
+      accrediting_provider: build(:provider),
     )
   end
   let(:provider) { build(:provider) }

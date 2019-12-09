@@ -25,6 +25,7 @@ class CoursesController < ApplicationController
     build_course_from_params
 
     if @course.save
+      flash[:success_with_body] = { title: "Your course has been created", body: "Add the rest of your details and publish the course, so that candidates can find and apply to it." }
       redirect_to(
         provider_recruitment_cycle_course_path(
           @course.provider_code,
@@ -83,9 +84,6 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @published = flash[:success]
-    flash.delete(:success)
-
     @errors = flash[:error_summary]
     flash.delete(:error_summary)
   end

@@ -17,7 +17,8 @@ feature "new course age range", type: :feature do
           study_mode: "full_time_or_part_time",
           gcse_subjects_required_using_level: true,
           applications_open_from: "2019-10-09",
-          start_date: "2019-10-09")
+          start_date: "2019-10-09",
+          accrediting_provider: build(:provider))
   end
 
   before do

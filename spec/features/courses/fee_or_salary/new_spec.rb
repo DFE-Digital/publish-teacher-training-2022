@@ -7,7 +7,7 @@ feature "new course fee or salary", type: :feature do
 
   let(:course) { build(:course, :new, provider: provider) }
   let(:provider) { build(:provider) }
-  let(:course) { build(:course, provider: provider) }
+  let(:course) { build(:course, provider: provider, accrediting_provider: build(:provider)) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do

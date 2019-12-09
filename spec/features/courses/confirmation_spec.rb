@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Course confirmation", type: :feature do
-  let(:recruitment_cycle) { build(:recruitment_cycle) }
+  let(:recruitment_cycle) { build(:recruitment_cycle, application_start_date: "2019-08-08") }
   let(:course_confirmation_page) do
     PageObjects::Page::Organisations::CourseConfirmation.new
   end
@@ -24,9 +24,10 @@ feature "Course confirmation", type: :feature do
             start_dates: [],
             entry_requirements: [],
             qualifications: [],
+            subjects: [],
           })
   end
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, accredited_body?: true) }
 
   before do
     stub_omniauth(provider: provider)
@@ -54,49 +55,65 @@ feature "Course confirmation", type: :feature do
     stub_api_v2_build_course
   end
 
-  scenario "viewing the course details page" do
-    expect(course_confirmation_page.title).to have_content(
-      "Check your answers before confirming",
-    )
+  context "Viewing the course details page" do
+    context "When the application open from date is the recruitment cycle start date" do
+      let(:course) { build(:course, applications_open_from: recruitment_cycle.application_start_date) }
 
-    expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
-    expect(course_confirmation_page.details.is_send.text).to eq("No")
-    expect(course_confirmation_page.details.subjects.text).to include("English")
-    expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
-    expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
-    expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
-    expect(course_confirmation_page.details.locations.text).to eq("Site one Site two")
-    expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
-    expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
-    expect(course_confirmation_page.details.name.text).to eq("English")
-    expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
-    expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
-    expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
-    expect(course_confirmation_page.preview.name.text).to include("English")
-    expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
+      scenario "It displays the 'as soon as its open on find' message" do
+        expect(course_confirmation_page.details.application_open_from.text).to eq("As soon as the course is on Find (recommended)")
+      end
+    end
+
+    context "When the provider is accredited" do
+      let(:provider) { build(:provider, accredited_body?: true) }
+
+      scenario "It shows the apprenticeship details" do
+        expect(course_confirmation_page.details).to have_apprenticeship
+        expect(course_confirmation_page.details).not_to have_fee_or_salary
+      end
+    end
+
+    context "When the provider is not accredited" do
+      let(:provider) { build(:provider, accredited_body?: false) }
+      let(:accredited_body) { build(:provider) }
+      let(:course) { build(:course, provider: provider, accrediting_provider: accredited_body) }
+
+      scenario "It shows the fee or salary details" do
+        expect(course_confirmation_page.details).not_to have_apprenticeship
+        expect(course_confirmation_page.details).to have_fee_or_salary
+      end
+
+      scenario "It shows the accrediting body" do
+        expect(course_confirmation_page.details.accredited_body.text).to eq(accredited_body.provider_name)
+      end
+    end
+
+    scenario "it displays the correct information" do
+      expect(course_confirmation_page.title).to have_content(
+        "Check your answers before confirming",
+      )
+
+      expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
+      expect(course_confirmation_page.details.is_send.text).to eq("No")
+      expect(course_confirmation_page.details.subjects.text).to include("English")
+      expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
+      expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
+      expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
+      expect(course_confirmation_page.details.locations.text).to eq("Site one Site two")
+      expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
+      expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
+      expect(course_confirmation_page.details.name.text).to eq("English")
+      expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
+      expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
+      expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
+      expect(course_confirmation_page.preview.name.text).to include("English")
+      expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
+    end
   end
 
   context "Saving the course" do
     context "Successfully" do
-      scenario "It creates the course on the API" do
-        course.course_code = "A123"
-        stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
-        course_create_request = stub_api_v2_request(
-          "/recruitment_cycles/#{course.recruitment_cycle.year}" \
-          "/providers/#{provider.provider_code}" \
-          "/courses",
-          course.to_jsonapi,
-          :post, 200
-        )
-
-        course_confirmation_page.save.click
-
-        expect(course_create_request).to have_been_made
-      end
-
-      scenario "It displays the course page when created" do
-        course.course_code = "A123"
-        stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+      let(:course_create_request) do
         stub_api_v2_request(
           "/recruitment_cycles/#{course.recruitment_cycle.year}" \
           "/providers/#{provider.provider_code}" \
@@ -104,10 +121,28 @@ feature "Course confirmation", type: :feature do
           course.to_jsonapi,
           :post, 200
         )
+      end
+
+      before do
+        course.course_code = "A123"
+        stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+        course_create_request
 
         course_confirmation_page.save.click
+      end
 
+      scenario "It creates the course on the API" do
+        expect(course_create_request).to have_been_made
+      end
+
+      scenario "It displays the course page when created" do
         expect(course_page).to be_displayed
+      end
+
+      scenario "It displays the success message on the course page" do
+        expect(course_page).to have_success_summary
+        expect(course_page.success_summary).to have_content("Your course has been created")
+        expect(course_page.success_summary).to have_content("Add the rest of your details and publish the course, so that candidates can find and apply to it.")
       end
     end
 
@@ -163,6 +198,16 @@ feature "Course confirmation", type: :feature do
 
       before do
         course_confirmation_page.details.edit_is_send.click
+      end
+
+      include_examples "goes to the edit page"
+    end
+
+    context "subjects" do
+      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewSubjectsPage.new }
+
+      before do
+        course_confirmation_page.details.edit_subjects.click
       end
 
       include_examples "goes to the edit page"
