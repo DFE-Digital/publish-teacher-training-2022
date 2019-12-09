@@ -7,7 +7,7 @@ feature "new course age range", type: :feature do
   let(:new_outcome_page) do
     PageObjects::Page::Organisations::Courses::NewOutcomePage.new
   end
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, sites: [build(:site), build(:site)]) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:course) do
     build(:course,

@@ -57,10 +57,18 @@ feature "Course confirmation", type: :feature do
 
   context "Viewing the course details page" do
     context "When the application open from date is the recruitment cycle start date" do
-      let(:course) { build(:course, applications_open_from: recruitment_cycle.application_start_date) }
+      let(:course) { build(:course, applications_open_from: recruitment_cycle.application_start_date, provider: provider) }
 
       scenario "It displays the 'as soon as its open on find' message" do
         expect(course_confirmation_page.details.application_open_from.text).to eq("As soon as the course is on Find (recommended)")
+      end
+    end
+
+    context "When the provider has a single site" do
+      let(:provider) { build(:provider, accredited_body?: true, sites: [build(:site)]) }
+
+      scenario "It displays the help text" do
+        expect(course_confirmation_page.details).to have_single_location_help_text
       end
     end
 
