@@ -39,6 +39,13 @@ feature "New course sites" do
     expect(new_locations_page).to be_displayed
   end
 
+  context "Page title" do
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Pick the locations for this course")
+      expect(new_locations_page.title.text).to eq("Pick the locations for this course")
+    end
+  end
+
   scenario "It displays the providers sites" do
     displayed_site_names = new_locations_page.site_names.collect(&:text)
     expect(displayed_site_names).to eq(["Another site", "Site one", "Site two"])
