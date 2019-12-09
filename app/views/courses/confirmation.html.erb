@@ -175,13 +175,13 @@
               </dd>
             </div>
 
-            <% if !@provider.accredited_body? %>
+            <% unless @provider.accredited_body? %>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Accredited body
                 </dt>
                 <dd class="govuk-summary-list__value" data-qa="course__accredited_body">
-                  <%= course.accrediting_provider&.provider_name %>
+                  <%= course.accrediting_provider.provider_name %>
                 </dd>
                 <dd class="govuk-summary-list__actions">
                   <%= course_creation_change_button(
