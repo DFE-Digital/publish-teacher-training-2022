@@ -62,8 +62,8 @@ feature "new course entry_requirements", type: :feature do
         english_requirements
         science_requirements
       ].each do |subject|
-        expect(new_entry_requirements_page.send(subject)).to have_field("1. Must have (least flexible)")
-        expect(new_entry_requirements_page.send(subject)).to have_field("2: Taking")
+        expect(new_entry_requirements_page.send(subject)).to have_field("1. Must have the GCSE (least flexible)")
+        expect(new_entry_requirements_page.send(subject)).to have_field("2: Taking the GCSE")
         expect(new_entry_requirements_page.send(subject)).to have_field("3: Equivalence test")
       end
 
@@ -103,8 +103,8 @@ feature "new course entry_requirements", type: :feature do
         maths_requirements
         english_requirements
       ].each do |subject|
-        expect(new_entry_requirements_page.send(subject)).to have_field("1. Must have (least flexible)")
-        expect(new_entry_requirements_page.send(subject)).to have_field("2: Taking")
+        expect(new_entry_requirements_page.send(subject)).to have_field("1. Must have the GCSE (least flexible)")
+        expect(new_entry_requirements_page.send(subject)).to have_field("2: Taking the GCSE")
         expect(new_entry_requirements_page.send(subject)).to have_field("3: Equivalence test")
       end
 
