@@ -21,6 +21,3 @@ ADD run.sh .
 ADD maintenance.html /usr/share/nginx/html/
 
 CMD ./run.sh
-
-
-

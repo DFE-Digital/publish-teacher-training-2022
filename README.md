@@ -181,3 +181,28 @@ the password can be any non-secure local password you care to use.
 1. It does not work with snap chromuim so either install chromuim via package manager or setup optional custom browser
 1. Between executing tests, make sure you close the browser that was spawned, in order for you to start from scratch, due to state retentations.
 1. To ensure cookie expectation, ie clearing cookies means close the spawned browser
+
+## Maintenance Page
+
+This project includes a self-serving [maintenance page](maintenance/maintenance.html)
+that can be built into a Docker image and deployed out as it's own service. See
+the [maintenance folder](maintenance) in the project for more details.
+
+This page should be served out when the app is down, either as an automatic or
+manual fail-over.
+
+### Building Maintenance Image
+
+```
+docker build maintenance -t dfedigital/manage-courses-maintenance
+```
+
+### Running the Maintenance Image
+
+This launches the docker image on port http://localhost:7000, and if you use the
+correct values for `$LOGSTASH_HOST` and `$LOGSTASH_PORT` it will log requests
+there.
+
+```
+docker run --env 'SETTINGS__LOGSTASH__HOST=$LOGSTASH_HOST' --env 'SETTINGS__LOGSTASH__PORT=$LOGSTASH_PORT' -p7000:80 -ti dfedigital/manage-courses-maintenance
+```
