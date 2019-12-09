@@ -4,7 +4,7 @@ feature "New course start date", type: :feature do
   let(:new_start_date_page) { PageObjects::Page::Organisations::CourseStartDate.new }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider) }
-  let(:course) { build(:course, provider: provider, start_date: nil) }
+  let(:course) { build(:course, provider: provider, start_date: nil, accrediting_provider: build(:provider)) }
 
   before do
     stub_omniauth

@@ -20,7 +20,8 @@ feature "New course level", type: :feature do
           gcse_subjects_required_using_level: true,
           edit_options: edit_options,
           applications_open_from: DateTime.new(2019).utc.iso8601,
-          study_mode: "full_time")
+          study_mode: "full_time",
+          accrediting_provider: build(:provider))
   end
 
   before do

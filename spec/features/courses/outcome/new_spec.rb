@@ -5,7 +5,7 @@ feature "new course outcome", type: :feature do
     PageObjects::Page::Organisations::Courses::NewOutcomePage.new
   end
   let(:provider) { build(:provider) }
-  let(:course) { build(:course, provider: provider) }
+  let(:course) { build(:course, provider: provider, accrediting_provider: build(:provider)) }
   let(:empty_build_course_request) { stub_api_v2_build_course }
 
   before do
