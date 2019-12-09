@@ -1,12 +1,10 @@
-<%= content_for :page_title, "Edit Fee or Salary – #{course.name_and_code}" %>
+<%= content_for :page_title, "Is it fee paying or salaried? – #{course.name_and_code}" %>
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
 <%= render 'shared/errors' %>
 
-<h1 class="govuk-heading-xl">
-</h1>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= form_with model: course, url: fee_or_salary_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>

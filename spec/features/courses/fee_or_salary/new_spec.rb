@@ -68,6 +68,15 @@ feature "new course fee or salary", type: :feature do
     end
   end
 
+  context "Page title" do
+    before do
+      visit_fee_or_salary
+    end
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Is it fee paying or salaried? ")
+    end
+  end
+
   def visit_fee_or_salary(**query_params)
     visit new_provider_recruitment_cycle_courses_fee_or_salary_path(
       provider.provider_code,

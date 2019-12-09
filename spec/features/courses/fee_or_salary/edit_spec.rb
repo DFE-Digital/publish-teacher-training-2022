@@ -75,6 +75,10 @@ feature "Edit course fee or salary status", type: :feature do
 
       expect(patch_stub).to have_been_requested
     end
+
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Is it fee paying or salaried? ")
+    end
   end
 
   def stub_course_details_tab
