@@ -121,7 +121,7 @@ feature "new course", type: :feature do
         end
       end
 
-      scenario "creates the correct course", :focus do
+      scenario "creates the correct course" do
         # This is intended to be a test which will go through the entire flow
         # and ensure that the correct page gets displayed at the end
         # with the correct course being created
@@ -243,7 +243,7 @@ feature "new course", type: :feature do
           study_mode: "full_time",
           funding_type: "fee",
           sites_ids: [site1.id],
-          applications_open_from: "2018-10-09"
+          applications_open_from: "2018-10-09",
         }
       end
 
@@ -269,7 +269,7 @@ feature "new course", type: :feature do
         visit new_provider_recruitment_cycle_courses_start_date_path(
           provider.provider_code,
           provider.recruitment_cycle_year,
-          course: course_creation_params
+          course: course_creation_params,
         )
 
         new_start_date_page.back.click
@@ -302,7 +302,7 @@ feature "new course", type: :feature do
           study_mode: "full_time",
           funding_type: "fee",
           sites_ids: [site1.id, site2.id],
-          applications_open_from: "2018-10-09"
+          applications_open_from: "2018-10-09",
         }
       end
 
@@ -329,7 +329,7 @@ feature "new course", type: :feature do
         visit new_provider_recruitment_cycle_courses_start_date_path(
           provider.provider_code,
           provider.recruitment_cycle_year,
-          course: course_creation_params
+          course: course_creation_params,
         )
 
         new_start_date_page.back.click

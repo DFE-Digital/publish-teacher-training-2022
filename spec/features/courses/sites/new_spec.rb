@@ -88,7 +88,7 @@ feature "New course sites" do
       back_new_locations_page.load(
         provider_code: provider.provider_code,
         recruitment_cycle_year: current_recruitment_cycle.year,
-        course: {}
+        course: {},
       )
       expect(new_locations_page).to be_displayed
     end
@@ -102,7 +102,7 @@ feature "New course sites" do
       back_new_locations_page.load(
         provider_code: provider.provider_code,
         recruitment_cycle_year: current_recruitment_cycle.year,
-        course: {}
+        course: {},
       )
       expect(full_or_part_time).to be_displayed
     end
