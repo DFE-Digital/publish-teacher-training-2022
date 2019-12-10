@@ -97,10 +97,11 @@ feature "Course confirmation", type: :feature do
     end
 
     scenario "it displays the correct information" do
+      expect(page.title).to start_with("Check your answers before confirming")
+
       expect(course_confirmation_page.title).to have_content(
         "Check your answers before confirming",
       )
-
       expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
       expect(course_confirmation_page.details.is_send.text).to eq("No")
       expect(course_confirmation_page.details.subjects.text).to include("English")
