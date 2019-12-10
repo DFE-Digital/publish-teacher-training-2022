@@ -45,7 +45,7 @@ en:
     entry_requirements:
       must_have_qualification_at_application_time:
         label: "1. Must have the GCSE (least flexible)"
-        help: "You won’t receive applications from anyone without the GCSE, or from anyone who needs to take an equivalency test - UCAS will block these applications. "
+        help: "You won’t receive applications from anyone without the GCSE, or from anyone who needs to take an equivalency test - UCAS will block these applications."
         details_label: "Must have the GCSE (least flexible)"
       expect_to_achieve_before_training_begins:
         label: "2: Taking the GCSE"
