@@ -78,7 +78,6 @@ feature "new course fee or salary", type: :feature do
       stub_api_v2_build_course(subjects_ids: [other_subject.id])
       build_course_with_selected_value_request
       visit_modern_languages(course: { subjects_ids: [other_subject.id] })
-      # Executes an additional time when rendering the next step
       expect(next_step_page).to be_displayed
     end
 
