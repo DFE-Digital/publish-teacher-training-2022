@@ -27,7 +27,7 @@ feature "Course confirmation", type: :feature do
             subjects: [],
           })
   end
-  let(:provider) { build(:provider, accredited_body?: true) }
+  let(:provider) { build(:provider, accredited_body?: true, sites: [site1, site2]) }
 
   before do
     stub_omniauth(provider: provider)
@@ -218,16 +218,6 @@ feature "Course confirmation", type: :feature do
 
       before do
         course_confirmation_page.details.edit_age_range.click
-      end
-
-      include_examples "goes to the edit page"
-    end
-
-    context "apprenticeship" do
-      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewApprenticeshipPage.new }
-
-      before do
-        course_confirmation_page.details.edit_apprenticeship.click
       end
 
       include_examples "goes to the edit page"

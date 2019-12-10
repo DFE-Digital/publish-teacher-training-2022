@@ -3,10 +3,10 @@ module CourseBasicDetailConcern
 
   included do
     decorates_assigned :course
-    before_action :build_new_course, :build_provider, only: %i[new continue]
+    before_action :build_new_course, :build_provider, only: %i[back new continue]
     before_action :build_previous_course_creation_params, only: %i[new continue]
     before_action :build_meta_course_creation_params, only: %i[new continue]
-    before_action :build_back_link, only: %i[new continue]
+    before_action :build_back_link, only: %i[new back continue]
     before_action :build_course, only: %i[edit update]
   end
 
@@ -137,7 +137,7 @@ private
   end
 
   def next_step
-    next_step = NextCourseCreationStepService.new.execute(current_step: current_step, course: @course)
+    next_step = CourseCreationStepService.new.execute(current_step: current_step, course: @course)[:next]
     next_page = course_creation_path_for(next_step)
 
     if next_page.nil?
@@ -152,14 +152,22 @@ private
   end
 
   def build_back_link
-    previous_step = PreviousCourseCreationStepService.new.execute(current_step: current_step, current_provider: @provider)
-    previous_path = course_creation_path_for(previous_step)
+    previous_step = CourseCreationStepService.new.execute(current_step: current_step, course: @course)[:previous]
+    previous_path = course_back_path_for(previous_step)
 
     if previous_path.nil?
       raise "No path defined for previous step: #{previous_step}"
     end
 
     @back_link_path = previous_path
+  end
+
+  def course_back_path_for(page)
+    if page == :location
+      back_provider_recruitment_cycle_courses_locations_path(path_params)
+    else
+      course_creation_path_for(page)
+    end
   end
 
   def course_creation_path_for(page)

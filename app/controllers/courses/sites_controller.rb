@@ -35,6 +35,14 @@ module Courses
       end
     end
 
+    def back
+      if @provider.sites.count > 1
+        redirect_to new_provider_recruitment_cycle_courses_locations_path(path_params)
+      else
+        redirect_to @back_link_path
+      end
+    end
+
   private
 
     def current_step

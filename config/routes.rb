@@ -75,6 +75,7 @@ Rails.application.routes.draw do
           get "continue"
         end
         resource :locations, on: :member, only: %i[new], controller: "courses/sites" do
+          get "back"
           get "continue"
         end
         resource :start_date, on: :member, only: %i[new], controller: "courses/start_date", path: "start-date" do

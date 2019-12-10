@@ -80,7 +80,7 @@ test:
   # Azure pre-compiles packs prior to running the tests.
   # Also avoids race conditions in parallel_tests.
   compile: false
-  
+
   public_output_path: packs-test
 
 production: &production
