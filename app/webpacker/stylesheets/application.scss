@@ -38,6 +38,10 @@ $button-colour: #00823b;
   }
 }
 
+.app-courses-locations-list__help-text {
+  color: govuk-colour("dark-grey");
+}
+
 .app-courses-locations-list li:last-child {
   margin-bottom: 0;
 }

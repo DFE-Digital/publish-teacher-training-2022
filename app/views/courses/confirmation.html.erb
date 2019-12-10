@@ -165,13 +165,24 @@
                     <% end %>
                   </ul>
                 <% end %>
+
+                <% if course.provider.sites.count < 2 %>
+                  <p data-qa="course__locations__help" class="govuk-!-margin-top-1 app-courses-locations-list__help-text">
+                    You can’t change this because you only have 1 location
+                  </p>
+                  <p class="govuk-!-margin-top-1">
+                  <a class="govuk-link" target="_blank" rel="noopener noreferrer" href="<%= provider_locations_path %>">Manage your locations</a>
+                  </p>
+                <% end %>
               </dd>
               <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "locations",
-                  "locations",
-                  :new_provider_recruitment_cycle_courses_locations_path
-                ) %>
+                <% if @course.provider.sites.count > 1 %>
+                  <%= course_creation_change_button(
+                    "locations",
+                    "locations",
+                    :new_provider_recruitment_cycle_courses_locations_path
+                  ) %>
+                <% end %>
               </dd>
             </div>
 

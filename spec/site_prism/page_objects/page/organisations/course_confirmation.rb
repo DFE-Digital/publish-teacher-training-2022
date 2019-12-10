@@ -33,6 +33,7 @@ module PageObjects
           element :entry_requirements, '[data-qa="course__entry_requirements"]'
           element :edit_qualifications, '[data-qa="course__edit_qualifications_link"]'
           element :qualifications, '[data-qa="course__qualifications"]'
+          element :single_location_help_text, '[data-qa="course__locations__help"]'
         end
 
         section :preview, '[data-qa="course__preview"]' do
