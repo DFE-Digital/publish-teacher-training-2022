@@ -1,16 +1,16 @@
-<%= content_for :page_title, "Pick an accredited body" %>
+<%= content_for :page_title, "Who is the accredited body?" %>
 <% content_for :before_content do %>
   <%= course_creation_back_button(@back_link_path) %>
 <% end %>
 
 <%= render 'shared/errors' %>
 
+<h1 class="govuk-heading-xl">
+  Who is the accredited body?
+</h1>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl">
-      Who is the accredited body?
-    </h1>
-
     <%= form_with url: continue_provider_recruitment_cycle_courses_accredited_body_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year

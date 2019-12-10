@@ -96,6 +96,15 @@ feature "new course study mode", type: :feature do
     end
   end
 
+  context "Page title" do
+    before do
+      visit_new_study_mode_page
+    end
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Full time or part time?")
+    end
+  end
+
 private
 
   def visit_new_study_mode_page(**query_params)

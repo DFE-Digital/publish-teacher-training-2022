@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Locations - #{course.name_and_code}" %>
+<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Pick the locations for this course – #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>

@@ -51,6 +51,13 @@ feature "Edit course sites", type: :feature do
     expect(page).to_not have_checked_field(site3.location_name)
   end
 
+  context "Page title" do
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Pick the locations for this course")
+      expect(locations_page.title.text).to have_content("Pick the locations for this course")
+    end
+  end
+
   context "adding locations" do
     before do
       stub_api_v2_request(
