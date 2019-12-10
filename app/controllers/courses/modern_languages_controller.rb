@@ -41,6 +41,14 @@ module Courses
       end
     end
 
+    def back
+      if @course.meta[:edit_options][:modern_languages].nil?
+        redirect_to @back_link_path
+      else
+        redirect_to new_provider_recruitment_cycle_courses_modern_languages_path(path_params)
+      end
+    end
+
     def current_step
       :modern_languages
     end

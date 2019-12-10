@@ -84,7 +84,7 @@ feature "New course sites", :focus do
       end
     end
 
-    it "does not go back to the previosu step" do
+    scenario "does not go back to the previous step" do
       back_new_locations_page.load(
         provider_code: provider.provider_code,
         recruitment_cycle_year: current_recruitment_cycle.year,

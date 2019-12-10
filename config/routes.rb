@@ -91,6 +91,7 @@ Rails.application.routes.draw do
           get "continue"
         end
         resource :modern_languages, on: :member, only: %i[new], controller: "courses/modern_languages", path: "modern-languages" do
+          get "back"
           get "continue"
         end
         resource :apprenticeship, on: :member, only: %i[new], controller: "courses/apprenticeship" do
