@@ -101,7 +101,7 @@ feature "new course study mode", type: :feature do
       visit_new_study_mode_page
     end
     scenario "It displays the correct title" do
-      expect(page.title).to start_with("Full time or part time")
+      expect(page.title).to start_with("Full time or part time?")
     end
   end
 private
