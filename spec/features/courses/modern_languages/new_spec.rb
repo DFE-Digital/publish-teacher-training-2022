@@ -4,9 +4,6 @@ feature "new course fee or salary", type: :feature do
   let(:new_modern_languages_page) do
     PageObjects::Page::Organisations::Courses::NewModernLanguagesPage.new
   end
-  let(:previous_step_page) do
-    PageObjects::Page::Organisations::Courses::NewSubjectsPage.new
-  end
   let(:next_step_page) do
     PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
   end
@@ -44,6 +41,15 @@ feature "new course fee or salary", type: :feature do
     visit signin_path
   end
 
+  context "Page title" do
+    scenario "It displays the correct title" do
+      visit_modern_languages
+
+      expect(page.title).to start_with("Pick modern languages")
+      expect(new_modern_languages_page.title.text).to eq("Pick modern languages")
+    end
+  end
+
   context "with modern language selected" do
     let(:build_course_with_selected_value_request) { stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id, russian.id]) }
 
@@ -61,13 +67,6 @@ feature "new course fee or salary", type: :feature do
       # Executes an additional time when rendering the next step
       expect(build_course_with_selected_value_request).to have_been_requested.twice
     end
-
-    scenario "does not send the user back to the previous page" do
-      stub_api_v2_build_course(subjects_ids: [other_subject.id])
-      visit_back_modern_languages(course: { subjects_ids: [other_subject.id] })
-
-      expect(new_modern_languages_page).to be_displayed
-    end
   end
 
   context "without modern language selected" do
@@ -78,27 +77,13 @@ feature "new course fee or salary", type: :feature do
       stub_api_v2_build_course(subjects_ids: [other_subject.id])
       build_course_with_selected_value_request
       visit_modern_languages(course: { subjects_ids: [other_subject.id] })
+      # Executes an additional time when rendering the next step
       expect(next_step_page).to be_displayed
-    end
-
-    scenario "sends user back to the previous page" do
-      stub_api_v2_build_course(subjects_ids: [other_subject.id])
-      visit_back_modern_languages(course: { subjects_ids: [other_subject.id] })
-
-      expect(previous_step_page).to be_displayed
     end
   end
 
   def visit_modern_languages(**query_params)
     visit new_provider_recruitment_cycle_courses_modern_languages_path(
-      provider.provider_code,
-      provider.recruitment_cycle_year,
-      query_params,
-    )
-  end
-
-  def visit_back_modern_languages(**query_params)
-    visit back_provider_recruitment_cycle_courses_modern_languages_path(
       provider.provider_code,
       provider.recruitment_cycle_year,
       query_params,
