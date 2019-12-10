@@ -52,6 +52,11 @@ feature "Edit accredited body", type: :feature do
       click_on "Save and publish changes"
       expect(accredited_body_search).to be_displayed
     end
+
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Who is the accredited body?")
+      expect(accredited_body_page.title.text).to eq("Who is the accredited body?")
+    end
   end
 
   context "a course with accredited bodies" do
@@ -187,6 +192,11 @@ feature "Edit accredited body", type: :feature do
           expect(accredited_body_page).to have_content("search too short")
         end
       end
+    end
+
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Who is the accredited body?")
+      expect(accredited_body_page.title.text).to eq("Who is the accredited body?")
     end
   end
 

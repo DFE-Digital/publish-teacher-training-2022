@@ -106,6 +106,13 @@ feature "Edit accredited body" do
     end
   end
 
+  context "Page title" do
+    scenario "It displays the correct title" do
+      expect(page.title).to start_with("Who is the accredited body?")
+      expect(new_accredited_body_search_page.title.text).to eq("Who is the accredited body?")
+    end
+  end
+
 private
 
   def searching_returns_some_results
