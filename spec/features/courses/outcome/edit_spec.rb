@@ -20,9 +20,6 @@ feature "Edit course outcome", type: :feature do
     let(:course) do
       build(
         :course,
-        edit_options: {
-          qualifications: %w[qts pgce_with_qts pgde_with_qts],
-        },
         provider: provider,
       )
     end
@@ -77,9 +74,7 @@ feature "Edit course outcome", type: :feature do
     let(:course) do
       build(
         :course,
-        edit_options: {
-          qualifications: %w[pgce pgde],
-        },
+        level: :further_education,
         qualification: "pgde",
         provider: provider,
       )
@@ -103,9 +98,6 @@ feature "Edit course outcome", type: :feature do
     let(:course) do
       build(
         :course,
-        edit_options: {
-          qualifications: %w[qts],
-        },
         provider: provider,
         qualification: "something_else",
       )

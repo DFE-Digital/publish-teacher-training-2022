@@ -17,15 +17,7 @@ feature "Course confirmation", type: :feature do
           subjects: [
             build(:subject, :english),
             build(:subject, :mathematics),
-          ],
-          edit_options: {
-            age_range_in_years: [],
-            study_modes: [],
-            start_dates: [],
-            entry_requirements: [],
-            qualifications: [],
-            subjects: [],
-          })
+          ])
   end
   let(:provider) { build(:provider, accredited_body?: true, sites: [site1, site2]) }
 
@@ -102,7 +94,7 @@ feature "Course confirmation", type: :feature do
       expect(course_confirmation_page.title).to have_content(
         "Check your answers before confirming",
       )
-      expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
+      expect(course_confirmation_page.details.level.text).to eq(course.level.to_s.capitalize)
       expect(course_confirmation_page.details.is_send.text).to eq("No")
       expect(course_confirmation_page.details.subjects.text).to include("English")
       expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
@@ -300,7 +292,7 @@ private
       "Check your answers before confirming",
     )
 
-    expect(course_confirmation_page.details.level.text).to eq(course.level.capitalize)
+    expect(course_confirmation_page.details.level.text).to eq(course.level.to_s.capitalize)
     expect(course_confirmation_page.details.is_send.text).to eq("No")
     expect(course_confirmation_page.details.subjects.text).to include("English")
     expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
