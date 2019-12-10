@@ -38,7 +38,7 @@ module ViewHelper
   end
 
   def govuk_back_link_to(url)
-    govuk_link_to("Back", url, class: "govuk-back-link")
+    govuk_link_to("Back", url, class: "govuk-back-link", data: {qa: "page-back"})
   end
 
   def search_ui_url(relative_path)

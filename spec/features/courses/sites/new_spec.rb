@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "New course sites", :focus do
+feature "New course sites" do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:back_new_locations_page) { PageObjects::Page::Organisations::Courses::BackNewLocationsPage.new }
   let(:new_locations_page) { PageObjects::Page::Organisations::Courses::NewLocationsPage.new }

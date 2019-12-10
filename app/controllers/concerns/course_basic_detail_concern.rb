@@ -166,6 +166,8 @@ private
   def course_back_path_for(page)
     if page == :location
       back_provider_recruitment_cycle_courses_locations_path(path_params)
+    elsif page == :modern_languages
+      back_provider_recruitment_cycle_courses_modern_languages_path(path_params)
     else
       course_creation_path_for(page)
     end

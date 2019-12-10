@@ -8,7 +8,7 @@ feature "new course", type: :feature do
   let(:new_subjects_page) do
     PageObjects::Page::Organisations::Courses::NewSubjectsPage.new
   end
-  let(:new_modern_languages) do
+  let(:new_modern_languages_page) do
     PageObjects::Page::Organisations::Courses::NewModernLanguagesPage.new
   end
   let(:new_age_range_page) do
@@ -44,6 +44,8 @@ feature "new course", type: :feature do
   let(:sites) { [site1, site2] }
   let(:provider) { build(:provider, accredited_body?: true, sites: sites) }
   let(:english) { build(:subject, :english) }
+  let(:modern_languages) { build(:subject, :modern_languages) }
+  let(:russian) { build(:subject, :russian) }
 
   let(:course) do
     model = build(:course,
@@ -68,7 +70,7 @@ feature "new course", type: :feature do
   end
 
   before do
-    stub_omniauth
+    stub_omniauth(provider: provider)
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(provider, include: "sites")
@@ -119,7 +121,7 @@ feature "new course", type: :feature do
         end
       end
 
-      scenario "creates the correct course" do
+      scenario "creates the correct course", :focus do
         # This is intended to be a test which will go through the entire flow
         # and ensure that the correct page gets displayed at the end
         # with the correct course being created
@@ -137,7 +139,6 @@ feature "new course", type: :feature do
         course_creation_params = select_applications_open_from(course_creation_params, next_page: new_start_date_page)
 
         select_start_date(course_creation_params)
-
         save_course
 
         expect(
@@ -192,6 +193,7 @@ feature "new course", type: :feature do
         course_creation_params = select_study_mode(course_creation_params, next_page: new_locations_page)
         course_creation_params = select_location(course_creation_params, next_page: new_applications_open_page)
         course_creation_params = select_applications_open_from(course_creation_params, next_page: new_start_date_page)
+
         select_start_date(course_creation_params)
 
         save_course
@@ -229,6 +231,131 @@ feature "new course", type: :feature do
     end
   end
 
+  context "going backwards through the course creation flow" do
+    context "with one site and no modern language subjects" do
+      let(:level) { :primary }
+      let(:sites) { [site1] }
+      let(:course_creation_params) do
+        {
+          level: "primary",
+          is_send: "0",
+          qualification: "pgce",
+          study_mode: "full_time",
+          funding_type: "fee",
+          sites_ids: [site1.id],
+          applications_open_from: "2018-10-09"
+        }
+      end
+
+      let(:course) do
+        model = build(:course,
+                      :new,
+                      level: level,
+                      provider: provider,
+                      study_mode: "fee",
+                      course_code: "A123",
+                      content_status: "draft",
+                      applications_open_from: DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601,
+                      subjects: [build(:subject, subject_name: "Primary with Mathematics")],
+                      gcse_subjects_required: %w[maths science english])
+        model.meta[:edit_options][:subjects] = [english]
+        model
+      end
+
+      it "can skip steps that are not relevant" do
+        stub_api_v2_build_course(course_creation_params)
+        visit signin_path
+
+        visit new_provider_recruitment_cycle_courses_start_date_path(
+          provider.provider_code,
+          provider.recruitment_cycle_year,
+          course: course_creation_params
+        )
+
+        new_start_date_page.back.click
+        expect(new_applications_open_page).to be_displayed
+        new_start_date_page.back.click
+        expect(new_entry_requirements_page).to be_displayed
+        new_entry_requirements_page.back.click
+        expect(new_study_mode_page).to be_displayed
+        new_study_mode_page.back.click
+        expect(new_apprenticeship_page).to be_displayed
+        new_apprenticeship_page.back.click
+        expect(new_outcome_page).to be_displayed
+        new_outcome_page.back.click
+        expect(new_age_range_page).to be_displayed
+        new_age_range_page.back.click
+        expect(new_subjects_page).to be_displayed
+        new_subjects_page.back.click
+        expect(new_level_page).to be_displayed
+      end
+    end
+
+    context "with multiple sites and modern language subjects" do
+      let(:level) { :secondary }
+      let(:sites) { [site1, site2] }
+      let(:course_creation_params) do
+        {
+          level: "secondary",
+          is_send: "0",
+          qualification: "pgce",
+          study_mode: "full_time",
+          funding_type: "fee",
+          sites_ids: [site1.id, site2.id],
+          applications_open_from: "2018-10-09"
+        }
+      end
+
+      let(:course) do
+        model = build(:course,
+                      :new,
+                      level: level,
+                      provider: provider,
+                      study_mode: "fee",
+                      course_code: "A123",
+                      content_status: "draft",
+                      applications_open_from: DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601,
+                      subjects: [modern_languages, russian],
+                      gcse_subjects_required: %w[maths science english])
+        model.meta[:edit_options][:subjects] = [modern_languages]
+        model.meta[:edit_options][:modern_languages] = [russian]
+        model
+      end
+
+      it "can skip steps that are not relevant" do
+        stub_api_v2_build_course(course_creation_params)
+        visit signin_path
+
+        visit new_provider_recruitment_cycle_courses_start_date_path(
+          provider.provider_code,
+          provider.recruitment_cycle_year,
+          course: course_creation_params
+        )
+
+        new_start_date_page.back.click
+        expect(new_applications_open_page).to be_displayed
+        new_start_date_page.back.click
+        expect(new_entry_requirements_page).to be_displayed
+        new_entry_requirements_page.back.click
+        expect(new_locations_page).to be_displayed
+        new_locations_page.back.click
+        expect(new_study_mode_page).to be_displayed
+        new_study_mode_page.back.click
+        expect(new_apprenticeship_page).to be_displayed
+        new_apprenticeship_page.back.click
+        expect(new_outcome_page).to be_displayed
+        new_outcome_page.back.click
+        expect(new_age_range_page).to be_displayed
+        new_age_range_page.back.click
+        expect(new_modern_languages_page).to be_displayed
+        new_modern_languages_page.back.click
+        expect(new_subjects_page).to be_displayed
+        new_subjects_page.back.click
+        expect(new_level_page).to be_displayed
+      end
+    end
+  end
+
 private
 
   def save_course
@@ -240,7 +367,7 @@ private
   def select_level(course_creation_params, level:, level_selection:, next_page:)
     course_creation_params[:level] = level
     course_creation_params[:is_send] = "0"
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     level_selection.click
     new_level_page.continue.click
@@ -256,7 +383,7 @@ private
   def select_subjects(course_creation_params, level:, next_page:)
     course_creation_params[:level] = level
     course_creation_params[:subjects_ids] = [english.id]
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     new_subjects_page.subjects_fields.select(english.subject_name)
     new_subjects_page.continue.click
@@ -271,7 +398,7 @@ private
 
   def select_age_range(course_creation_params, next_page:)
     course_creation_params[:age_range_in_years] = "5_to_11"
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     choose("course_age_range_in_years_5_to_11")
     click_on "Continue"
@@ -286,7 +413,7 @@ private
 
   def select_outcome(course_creation_params, qualification:, qualification_selection:, next_page:)
     course_creation_params[:qualification] = qualification
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     qualification_selection.click
     new_outcome_page.continue.click
@@ -301,7 +428,7 @@ private
 
   def select_apprenticeship(course_creation_params, next_page:)
     course_creation_params[:funding_type] = "fee"
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     new_apprenticeship_page.funding_type_fields.fee.click
     new_apprenticeship_page.continue.click
@@ -317,7 +444,7 @@ private
   def select_study_mode(course_creation_params, next_page:)
     course_creation_params[:study_mode] = "full_time"
     course.study_mode = "full_time"
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     new_study_mode_page.study_mode_fields.full_time.click
     new_study_mode_page.continue.click
@@ -333,7 +460,7 @@ private
   def select_location(course_creation_params, next_page:)
     course_creation_params[:sites_ids] = [site1.id, site2.id]
     course.sites = [site1, site2]
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     new_locations_page.check(site1.location_name)
     new_locations_page.check(site2.location_name)
@@ -350,7 +477,7 @@ private
   def select_applications_open_from(course_creation_params, next_page:)
     course_creation_params[:applications_open_from] = recruitment_cycle.application_start_date
     course.applications_open_from = DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     new_applications_open_page.applications_open_field.click
     new_applications_open_page.continue.click
@@ -366,7 +493,7 @@ private
   def select_start_date(course_creation_params)
     course_creation_params[:start_date] = "September 2020"
     course.start_date = Time.zone.local(2019, 9)
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     new_start_date_page.select "September 2020"
     new_start_date_page.continue.click
@@ -392,7 +519,7 @@ private
     course_creation_params[:english] = "must_have_qualification_at_application_time"
     course_creation_params[:maths] = "must_have_qualification_at_application_time"
     course_creation_params[:science] = "must_have_qualification_at_application_time"
-    stub_build_course_with_params(course_creation_params)
+    stub_api_v2_build_course(course_creation_params)
 
     new_entry_requirements_page.maths_requirements.choose("course_maths_must_have_qualification_at_application_time")
     new_entry_requirements_page.english_requirements.choose("course_english_must_have_qualification_at_application_time")
@@ -405,10 +532,6 @@ private
     )
 
     course_creation_params
-  end
-
-  def stub_build_course_with_params(params)
-    stub_api_v2_build_course(params)
   end
 
   def go_to_new_course_page_for_provider(provider)
