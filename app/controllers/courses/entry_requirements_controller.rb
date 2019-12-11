@@ -3,6 +3,10 @@ module Courses
     include CourseBasicDetailConcern
     before_action :not_found_if_no_gcse_subjects_required, except: :continue
 
+    def continue
+      super
+    end
+
   private
 
     def build_provider

@@ -17,15 +17,15 @@ module OmniAuth
       def callback_phase
         error = request.params["error_reason"] || request.params["error"]
         if error == "sessionexpired"
-          return redirect("/signin")
+          redirect("/signin")
         elsif error
           raise CallbackError.new(request.params["error"], request.params["error_description"] || request.params["error_reason"], request.params["error_uri"])
         elsif request.params["state"].to_s.empty? || request.params["state"] != stored_state
           # Monkey patch: Ensure a basic 401 rack response with no body or header isn't served
           # return Rack::Response.new(['401 Unauthorized'], 401).finish
-          return redirect("/auth/failure")
+          redirect("/auth/failure")
         elsif !request.params["code"]
-          return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params["error"]))
+          fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params["error"]))
         else
           options.issuer = issuer if options.issuer.blank?
           discover! if options.discovery

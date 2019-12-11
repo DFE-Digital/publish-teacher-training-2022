@@ -11,6 +11,10 @@ module Courses
       redirect_to next_step
     end
 
+    def continue
+      super
+    end
+
     def edit
       return unless @course.meta[:edit_options][:modern_languages].nil?
 

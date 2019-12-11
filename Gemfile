@@ -64,7 +64,8 @@ group :development, :test do
   gem "faker"
 
   # GOV.UK interpretation of rubocop for linting Ruby
-  gem "govuk-lint"
+  gem "rubocop-govuk"
+  gem "scss_lint-govuk"
 
   # Ability to render JSONAPI
   gem "jsonapi-deserializable"

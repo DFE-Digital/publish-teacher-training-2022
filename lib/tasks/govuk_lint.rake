@@ -1,12 +1,12 @@
 desc "Lint ruby code"
 namespace :lint do
-  task :ruby do
+  task ruby: :environment do
     puts "Linting ruby..."
     system "bundle exec rubocop app config db lib spec Gemfile --format clang -a"
   end
 
-  task :scss do
+  task scss: :environment do
     puts "Linting scss..."
-    system "bundle exec govuk-lint-sass app/webpacker/stylesheets"
+    system "bundle exec scss-lint app/webpacker/stylesheets"
   end
 end

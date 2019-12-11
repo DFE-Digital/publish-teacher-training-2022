@@ -4,6 +4,8 @@ module Courses
     decorates_assigned :course
     before_action :build_course, only: %i[edit update]
 
+    def edit; end
+
     def update
       @errors = build_errors
       if @errors.present?
