@@ -6,11 +6,11 @@ module Courses
   private
 
     def order_edit_options
-      ensure_edit_options_are_equal
+      qualification_options = @course.meta["edit_options"]["qualifications"]
       @course.meta["edit_options"]["qualifications"] = if @course.level == "further_education"
-                                                         non_qts_qualifications
+                                                         non_qts_qualifications(qualification_options)
                                                        else
-                                                         qts_qualifications
+                                                         qts_qualifications(qualification_options)
                                                        end
     end
 
@@ -18,24 +18,24 @@ module Courses
       :outcome
     end
 
-    def ensure_edit_options_are_equal
-      qualification_options = @course.meta["edit_options"]["qualifications"]
+    def qts_qualifications(edit_options)
+      options = %w[pgce_with_qts qts pgde_with_qts]
 
-      if @course.level == "further_education"
-        if qualification_options.sort != non_qts_qualifications.sort
-          raise "Non QTS qualification options do not match"
-        end
-      elsif qualification_options.sort != qts_qualifications.sort
+      if edit_options.sort != options.sort
+        raise "Non QTS qualification options do not match"
+      end
+
+      options
+    end
+
+    def non_qts_qualifications(edit_options)
+      options = %w[pgce pgde]
+
+      if edit_options.sort != options.sort
         raise "QTS qualification options do not match"
       end
-    end
 
-    def qts_qualifications
-      %w[pgce_with_qts qts pgde_with_qts]
-    end
-
-    def non_qts_qualifications
-      %w[pgce pgde]
+      options
     end
 
     def errors

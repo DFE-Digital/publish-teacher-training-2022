@@ -17,11 +17,10 @@ feature "new course outcome", type: :feature do
     new_course = build(:course, :new, provider: provider, gcse_subjects_required_using_level: true)
     stub_api_v2_new_resource(new_course)
     empty_build_course_request
-
-    visit_new_outcome_page
   end
 
   scenario "sends user back to course confirmation" do
+    visit_new_outcome_page
     visit_new_outcome_page(goto_confirmation: true)
 
     new_outcome_page.qualification_fields.qts.choose
@@ -32,6 +31,8 @@ feature "new course outcome", type: :feature do
 
   context "Loading the page" do
     scenario "It builds the course on the backend" do
+      visit_new_outcome_page
+
       expect(empty_build_course_request).to have_been_made
     end
   end
@@ -44,6 +45,7 @@ feature "new course outcome", type: :feature do
     let(:build_course_with_selected_value_request) { stub_api_v2_build_course(qualification: "qts") }
 
     before do
+      visit_new_outcome_page
       build_course_with_selected_value_request
       choose("course_qualification_qts")
       click_on "Continue"
@@ -69,8 +71,43 @@ feature "new course outcome", type: :feature do
     end
 
     scenario do
+      visit_new_outcome_page
       new_outcome_page.continue.click
       expect(new_outcome_page.error_flash.text).to include("Pick an outcome")
+    end
+  end
+
+  context "Being provided unexpected edit options" do
+    let(:course) do
+      build(
+        :course, :new,
+        provider: provider,
+        study_mode: "full_time_or_part_time",
+        gcse_subjects_required_using_level: true,
+        applications_open_from: "2019-10-09",
+        start_date: "2019-10-09",
+        accrediting_provider: build(:provider),
+        level: level,
+        edit_options: {
+          qualifications: %w[not_a_real_qualification],
+        }
+      )
+    end
+
+    context "With a further education course" do
+      let(:level) { :further_education }
+
+      scenario "It raises an exception" do
+        expect { visit_new_outcome_page }.to raise_error("QTS qualification options do not match")
+      end
+    end
+
+    context "With a non further education course" do
+      let(:level) { :secondary }
+
+      scenario "It raises an exception" do
+        expect { visit_new_outcome_page }.to raise_error("Non QTS qualification options do not match")
+      end
     end
   end
 
