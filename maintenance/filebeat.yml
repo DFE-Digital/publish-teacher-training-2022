@@ -1,0 +1,21 @@
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+output.logstash:
+  hosts: ["${SETTINGS__LOGSTASH__HOST}:${SETTINGS__LOGSTASH__PORT}"]
+  loadbalance: true
+  ssl.enabled: true
+
+# We use "application" to filter out the applications we want to pay attention
+# to in Kibana
+fields:
+  application: manage-courses-maintenance
+
+# The "fields" directive above sets "fields.application", but we want
+# "application" in the root to be set, so do some creative renaming here.
+processors:
+- rename:
+    fields:
+       - from: "fields.application"
+         to: "application"
