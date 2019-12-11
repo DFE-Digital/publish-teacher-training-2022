@@ -61,7 +61,7 @@ feature "new modern language", type: :feature do
 
     scenario "presents the languages" do
       visit_modern_languages
-      expect { new_modern_languages_page.language_checkbox("Russian") }.not_to raise_error
+      expect(new_modern_languages_page).to have_no_language_checkbox("Russian")
     end
 
     scenario "selecting a language" do

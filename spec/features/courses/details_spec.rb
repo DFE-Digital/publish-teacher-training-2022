@@ -83,8 +83,8 @@ feature "Course details", type: :feature do
     expect(course_details_page.edit_locations_link).to have_content(
       "Change location",
     )
-    expect(course_details_page).not_to have_manage_provider_locations_link
-    expect { course_details_page.apprenticeship }.to raise_error(Capybara::ElementNotFound)
+    expect(course_details_page).to have_no_manage_provider_locations_link
+    expect(course_details_page).to have_no_apprenticeship
     expect(course_details_page.funding).to have_content(
       "Fee paying (no salary)",
     )

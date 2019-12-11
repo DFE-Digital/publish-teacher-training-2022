@@ -10,6 +10,10 @@ module PageObjects
           def language_checkbox(name)
             languages_fields.find("[data-qa=\"checkbox_language_#{name}\"]")
           end
+
+          def has_no_language_checkbox?(name)
+            languages_fields.has_css?("[data-qa=\"checkbox_language_#{name}\"]")
+          end
         end
       end
     end

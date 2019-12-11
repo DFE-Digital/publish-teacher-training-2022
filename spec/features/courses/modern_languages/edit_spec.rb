@@ -146,7 +146,7 @@ feature "Edit course modern languages", type: :feature do
 
       languages_page.load_with_course(course)
       languages_page.save.click
-      expect { languages_page.error_flash }.not_to raise_error
+      expect(languages_page).to have_error_flash
     end
   end
 
