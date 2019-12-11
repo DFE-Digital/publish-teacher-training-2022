@@ -1,6 +1,12 @@
 require "rails_helper"
 
-feature "new course fee or salary", type: :feature do
+feature "new modern language", type: :feature do
+  let(:back_new_modern_languages_page) do
+    PageObjects::Page::Organisations::Courses::BackNewModernLanguagesPage.new
+  end
+  let(:previous_step_page) do
+    PageObjects::Page::Organisations::Courses::NewSubjectsPage.new
+  end
   let(:new_modern_languages_page) do
     PageObjects::Page::Organisations::Courses::NewModernLanguagesPage.new
   end
@@ -64,8 +70,20 @@ feature "new course fee or salary", type: :feature do
       visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id] })
       new_modern_languages_page.language_checkbox("Russian").click
       new_modern_languages_page.continue.click
-      # Executes an additional time when rendering the next step
+      # When rendering the next step an additional bulid course request will
+      # fire off, so it will have been requested twice in total
       expect(build_course_with_selected_value_request).to have_been_requested.twice
+    end
+
+    scenario "does not redirect to the previous step" do
+      stub_api_v2_build_course(subjects_ids: [other_subject.id])
+      build_course_with_selected_value_request
+      back_new_modern_languages_page.load(
+        provider_code: provider.provider_code,
+        recruitment_cycle_year: recruitment_cycle.year,
+        course: {},
+      )
+      expect(new_modern_languages_page).to be_displayed
     end
   end
 
@@ -77,8 +95,18 @@ feature "new course fee or salary", type: :feature do
       stub_api_v2_build_course(subjects_ids: [other_subject.id])
       build_course_with_selected_value_request
       visit_modern_languages(course: { subjects_ids: [other_subject.id] })
-      # Executes an additional time when rendering the next step
       expect(next_step_page).to be_displayed
+    end
+
+    scenario "redirects to the previous step" do
+      stub_api_v2_build_course(subjects_ids: [other_subject.id])
+      build_course_with_selected_value_request
+      back_new_modern_languages_page.load(
+        provider_code: provider.provider_code,
+        recruitment_cycle_year: recruitment_cycle.year,
+        course: {},
+      )
+      expect(previous_step_page).to be_displayed
     end
   end
 
