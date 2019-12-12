@@ -39,6 +39,18 @@
     "appServicePlanInstances": {
       "type": "int",
       "defaultValue": 1
+    },
+    "logstashHost": {
+      "type": "string",
+      "metadata": {
+        "description": "The host name of the logstash server."
+      }
+    },
+    "logstashPort": {
+      "type": "string",
+      "metadata": {
+        "description": "The port number for the logstash server connection."
+      }
     }
   },
   "variables": {
@@ -103,6 +115,18 @@
           },
           "deploymentUsingSlots": {
             "value": false
+          },
+          "appServiceAppSettings": {
+            "value": [
+              {
+                "name": "SETTINGS__LOGSTASH__HOST",
+                "value": "[parameters('logstashHost')]"
+              },
+              {
+                "name": "SETTINGS__LOGSTASH__PORT",
+                "value": "[parameters('logstashPort')]"
+              }
+            ]
           }
         }
       },
