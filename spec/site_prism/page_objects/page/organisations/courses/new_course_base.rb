@@ -6,6 +6,7 @@ module PageObjects
           element :success_summary, ".govuk-success-summary"
           element :error_flash, ".govuk-error-summary"
           element :continue, '[data-qa="course__save"]'
+          element :back, '[data-qa="page-back"]'
         end
       end
     end

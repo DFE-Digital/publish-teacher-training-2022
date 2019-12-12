@@ -88,6 +88,7 @@ private
           :course_age_range_in_years_other_from,
           :course_age_range_in_years_other_to,
           :goto_confirmation,
+          :language_ids,
         )
         .permit(
           :page,
@@ -165,6 +166,8 @@ private
   def course_back_path_for(page)
     if page == :location
       back_provider_recruitment_cycle_courses_locations_path(path_params)
+    elsif page == :modern_languages
+      back_provider_recruitment_cycle_courses_modern_languages_path(path_params)
     else
       course_creation_path_for(page)
     end
@@ -176,6 +179,8 @@ private
       provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)
     when :level
       new_provider_recruitment_cycle_courses_level_path(path_params)
+    when :modern_languages
+      new_provider_recruitment_cycle_courses_modern_languages_path(path_params)
     when :apprenticeship
       new_provider_recruitment_cycle_courses_apprenticeship_path(path_params)
     when :location

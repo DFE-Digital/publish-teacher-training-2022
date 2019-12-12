@@ -64,7 +64,7 @@ feature "Access Requests", type: :feature do
         stub_api_v2_resource_collection([access_request], include: "requester")
 
         visit provider_courses_path(provider.provider_code)
-        expect { organisations_page.access_requests_link }.to raise_error(Capybara::ElementNotFound)
+        expect(organisations_page).to have_no_access_requests_link
       end
     end
   end

@@ -1,21 +1,22 @@
-<%= content_for :page_title, subject_page_title(@course) %>
+<%= content_for :page_title, "Pick modern languages" %>
 <% content_for :before_content do %>
-  <%= course_creation_back_button(@back_link_path) %>
+  <% course_creation_back_button(@back_link_path) %>
 <% end %>
+
 <%= render 'shared/errors' %>
 
 <h1 class="govuk-heading-xl">
-  <%= subject_page_title(@course) %>
+  Pick modern languages
 </h1>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: continue_provider_recruitment_cycle_courses_subjects_path(
+    <%= form_with url: continue_provider_recruitment_cycle_courses_modern_languages_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
 
-      <%= render "courses/new_fields_holder", form: form, except_keys: [] do |fields| %>
+      <%= render "courses/new_fields_holder", form: form, except_keys: [:modern_languages] do |fields| %>
         <%= render 'form_fields', form: fields %>
       <% end %>
     <% end %>

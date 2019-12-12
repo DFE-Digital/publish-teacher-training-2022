@@ -28,6 +28,14 @@ describe CourseCreationStepService do
       let(:sites) { [build(:site), build(:site)] }
       let(:provider) { build(:provider, accredited_body?: false, sites: sites) }
 
+      context "Current step: Subjects" do
+        include_examples "next step", :subjects, :modern_languages
+      end
+
+      context "Current step: Modern languages" do
+        include_examples "next step", :modern_languages, :age_range
+      end
+
       context "Current step: Outcome" do
         include_examples "next step", :outcome, :fee_or_salary
       end
@@ -61,12 +69,17 @@ describe CourseCreationStepService do
       let(:level) { "primary" }
       let(:sites) { [build(:site), build(:site)] }
       let(:provider) { build(:provider, accredited_body?: true, sites: sites) }
-      context "Current step: Level" do
-        include_examples "next step", :level, :subjects
-      end
 
       context "Current step: Subjects" do
-        include_examples "next step", :subjects, :age_range
+        include_examples "next step", :subjects, :modern_languages
+      end
+
+      context "Current step: Modern languages" do
+        include_examples "next step", :modern_languages, :age_range
+      end
+
+      context "Current step: Level" do
+        include_examples "next step", :level, :subjects
       end
 
       context "Current step: Age range" do
@@ -138,6 +151,14 @@ describe CourseCreationStepService do
       let(:level) { "primary" }
       let(:provider) { build(:provider, accredited_body?: false) }
 
+      context "Current step: Modern languages" do
+        include_examples "previous step", :modern_languages, :subjects
+      end
+
+      context "Current step: Age range" do
+        include_examples "previous step", :age_range, :modern_languages
+      end
+
       context "Current step: Fee or salary" do
         include_examples "previous step", :fee_or_salary, :outcome
       end
@@ -171,8 +192,12 @@ describe CourseCreationStepService do
         include_examples "previous step", :subjects, :level
       end
 
+      context "Current step: Modern languages" do
+        include_examples "previous step", :modern_languages, :subjects
+      end
+
       context "Current step: Age range" do
-        include_examples "previous step", :age_range, :subjects
+        include_examples "previous step", :age_range, :modern_languages
       end
 
       context "Current step: Outcome" do
