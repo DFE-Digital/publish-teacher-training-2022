@@ -193,6 +193,8 @@ private
       "/access_requests"
     elsif resource.is_a? Organisation
       "/organisations"
+    else
+      raise "Resource '#{resource.class}' was not found. Add to 'url_for_resource_collection' helper."
     end
   end
 
