@@ -176,6 +176,7 @@ the password can be any non-secure local password you care to use.
       ``` bash
         yarn run cy:run --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
       ```
+   
 ### Noticable issues
 1. Make sure that the user used actually exists
 2. It does not work with snap chromuim so either install chromuim via package manager or setup optional custom browser
