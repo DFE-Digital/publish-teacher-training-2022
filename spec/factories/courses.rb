@@ -28,9 +28,9 @@ FactoryBot.define do
 
         qualifications = case level
                          when :further_education
-                           %w[pgce pdge]
+                           %w[pgce pgde]
                          else
-                           %w[qts pgce_with_qts pgde_with_qts]
+                           %w[pgce_with_qts qts pgde_with_qts]
                          end
 
         {
@@ -65,6 +65,7 @@ FactoryBot.define do
                         "July #{recruitment_cycle.year.to_i + 1}"],
           study_modes: %w[full_time part_time full_time_or_part_time],
           funding_type: %w[fee apprenticeship salary],
+          subjects: [],
         }
       end
       gcse_subjects_required_using_level { false }
@@ -90,7 +91,7 @@ FactoryBot.define do
     funding_type { "fee" }
     applications_open_from { DateTime.new(2019).utc.iso8601 }
     is_send? { false }
-    level { "secondary" }
+    level { :secondary }
     about_course { nil }
     interview_process { nil }
     how_school_placements_work { nil }
