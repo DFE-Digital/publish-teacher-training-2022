@@ -3,6 +3,14 @@ module Courses
     include CourseBasicDetailConcern
     before_action :order_edit_options, only: %i[edit new]
 
+    def edit
+      super
+    end
+
+    def new
+      super
+    end
+
   private
 
     def order_edit_options
