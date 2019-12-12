@@ -1,0 +1,73 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+
+pr: none
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+variables:
+  IMAGE_NAME: '$(dockerHubUserName)/manage-courses-maintenance'
+
+steps:
+- script: |
+    GIT_SHORT_SHA=$(echo $(Build.SourceVersion) | cut -c 1-7)
+    IMAGE_NAME_WITH_TAG=$(IMAGE_NAME):$GIT_SHORT_SHA
+    echo "##vso[build.updatebuildnumber]$GIT_SHORT_SHA"
+    echo "##vso[task.setvariable variable=IMAGE_NAME_WITH_TAG;]$IMAGE_NAME_WITH_TAG"
+  displayName: 'Set version number'
+
+- script: docker pull $(IMAGE_NAME):latest || true
+  displayName: "Pull latest docker image to cache"
+
+- task: Docker@1
+  displayName: Build image
+  inputs:
+    command: Build an image
+    imageName: $(IMAGE_NAME)
+    dockerFile: maintenance/Dockerfile
+    arguments: '--cache-from $(IMAGE_NAME):latest'
+    addDefaultLabels: false
+
+- task: Docker@1
+  displayName: Tag image with current build number $(Build.BuildNumber)
+  inputs:
+    command: Tag image
+    imageName: $(IMAGE_NAME)
+    arguments: $(IMAGE_NAME_WITH_TAG)
+
+- task: Docker@1
+  displayName: Docker Hub login
+  inputs:
+    command: login
+    containerregistrytype: Container Registry
+    dockerRegistryEndpoint: DfE Docker Hub
+
+- task: Docker@1
+  displayName: Push tagged image
+  inputs:
+    command: Push an image
+    imageName: $(IMAGE_NAME_WITH_TAG)
+
+- task: Docker@1
+  displayName: Push tagged image (latest) if master
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  inputs:
+    command: Push an image
+    imageName: '$(IMAGE_NAME):latest'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    Contents: |
+     maintenance/template.json
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    OverWrite: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
