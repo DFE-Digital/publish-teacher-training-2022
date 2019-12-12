@@ -10,6 +10,8 @@ module CourseBasicDetailConcern
     before_action :build_course, only: %i[edit update]
   end
 
+  def back; end
+
   def new; end
 
   def edit; end

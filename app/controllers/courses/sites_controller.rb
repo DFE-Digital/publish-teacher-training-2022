@@ -7,6 +7,10 @@ module Courses
     before_action :build_course, only: %i[edit update]
     before_action :build_provider_with_sites
 
+    def continue
+      super
+    end
+
     def new
       if @provider.sites.count == 1
         set_default_site

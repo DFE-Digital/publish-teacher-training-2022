@@ -4,6 +4,10 @@ module Courses
     before_action :build_course_params, only: :update
     include CourseBasicDetailConcern
 
+    def update
+      super
+    end
+
     def continue
       build_course_params
       super

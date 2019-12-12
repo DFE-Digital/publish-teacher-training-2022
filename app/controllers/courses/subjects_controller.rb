@@ -5,6 +5,12 @@ module Courses
     before_action :build_course_params, only: [:continue]
     include CourseBasicDetailConcern
 
+    def edit; end
+
+    def continue
+      super
+    end
+
     def update
       if subjects_have_not_been_changed?
         flash[:success] = "Your subject hasn't been changed"

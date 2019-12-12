@@ -143,10 +143,7 @@ module Courses
       code = update_course_params[:accrediting_provider_code]
 
       {
-        accrediting_provider_code: if autocompleted_code.blank?
-                                   then code
-                                   else autocompleted_code
-                                   end,
+        accrediting_provider_code: autocompleted_code.presence || code,
       }
     end
   end

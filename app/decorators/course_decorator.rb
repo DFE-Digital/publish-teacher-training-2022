@@ -219,11 +219,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def return_start_date
-    if start_date.present?
-      start_date
-    else
-      "September #{Settings.current_cycle}"
-    end
+    start_date.presence || "September #{Settings.current_cycle}"
   end
 
 private
