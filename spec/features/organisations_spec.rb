@@ -9,7 +9,8 @@ feature "View organisations", type: :feature do
           admin: true,
           first_name: "Adam",
           last_name: "Smith",
-          email: "adam.smith@bigscitt.org"
+          email: "adam.smith@bigscitt.org",
+          sign_in_user_id: "123456"
   end
   let(:provider) { build :provider }
   let(:organisation) { build :organisation, name: "Big Scitt", providers: [provider], users: [user] }
@@ -53,7 +54,7 @@ feature "View organisations", type: :feature do
       expect(organisation_page.organisations.first.name).to have_content(organisation.name)
       expect(organisation_page.organisations.first.users).to have_link(
         "Adam Smith <adam.smith@bigscitt.org>",
-        href: "https://support.signin.education.gov.uk/users/123456/audit",
+        href: "#{Settings.dfe_signin.user_search_url}/123456/audit",
       )
 
       expect(organisation_page.organisations.first.providers).to have_content(provider.provider_name)

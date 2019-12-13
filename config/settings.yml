@@ -10,7 +10,7 @@ dfe_signin:
   # URL of this app for the callback after sigining in
   base_url: https://localhost:3000
   # The URL support users are directed to in order to find a user by email
-  user_search_url: https://support.signin.education.gov.uk/users
+  user_search_url: https://signin-test-sup-as.azurewebsites.net/users
 manage_backend:
   algorithm: HS256
   # Set this in the env! The below ensures that we are un-authenticatable if we
