@@ -40,6 +40,13 @@ steps:
     docker rm test-run-image
   displayName: 'Run tests'
 
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: 'rspec-output/*.xml'
+    failedTaskOnFailedTest: true
+
 - task: Docker@1
   displayName: Run ruby linter
   inputs:
@@ -105,10 +112,3 @@ steps:
   displayName: 'Publish Artifact'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
-
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: JUnit
-    testResultsFiles: 'rspec-output/*.xml'
-    failedTaskOnFailedTest: true
