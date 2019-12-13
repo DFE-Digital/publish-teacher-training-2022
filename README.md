@@ -15,6 +15,8 @@
 3. Create new file `config/settings/development.local.yml` with the below contents.
 4. Run `bundle exec rails s` to launch the app on https://localhost:3000.
 
+Note: the rspec tests will fail until the site has been run for the first time.
+
 ### Sign-in config
 
 ```
