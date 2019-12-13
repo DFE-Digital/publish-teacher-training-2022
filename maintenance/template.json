@@ -1,0 +1,187 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceEnvironmentName": {
+      "type": "string",
+      "metadata": {
+        "description": "The prefix and environment of the resource."
+      }
+    },
+    "serviceName": {
+      "type": "string",
+      "metadata": {
+        "description": "The abbreviation of the service name to be used when naming a resource."
+      }
+    },
+
+    "dockerHubUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "the username associated with the dockerhub account"
+      }
+    },
+    "containerImageReference": {
+      "type": "string",
+      "metadata": {
+        "description": "The container image to pull from the server. Should be in image:tag format."
+      }
+    },
+    "appServicePlanSize": {
+      "type": "string",
+      "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ],
+      "defaultValue": "1"
+    },
+    "appServicePlanInstances": {
+      "type": "int",
+      "defaultValue": 1
+    },
+    "logstashHost": {
+      "type": "string",
+      "metadata": {
+        "description": "The host name of the logstash server."
+      }
+    },
+    "logstashPort": {
+      "type": "string",
+      "metadata": {
+        "description": "The port number for the logstash server connection."
+      }
+    }
+  },
+  "variables": {
+    "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
+    "resourceNamePrefix": "[toLower(concat(parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
+    "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
+    "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
+    "appServiceRuntimeStack": "[concat('DOCKER|', parameters('dockerHubUsername'), '/', parameters('containerImageReference'))]"
+  },
+  "resources": [
+    {
+      "name": "app-service-plan",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-plan.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServicePlanName": {
+            "value": "[variables('appServicePlanName')]"
+          },
+          "appServicePlanSize": {
+            "value": "[parameters('appServicePlanSize')]"
+          },
+          "appServicePlanInstances": {
+            "value": "[parameters('appServicePlanInstances')]"
+          },
+          "appServicePlanTier": {
+            "value": "Basic"
+          }
+        }
+      }
+    },
+    {
+      "name": "app-service",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-linux.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServiceName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "appServicePlanResourceGroup": {
+            "value": "[resourceGroup().name]"
+          },
+          "appServicePlanName": {
+            "value": "[variables('appServicePlanName')]"
+          },
+          "runtimeStack": {
+            "value": "[variables('appServiceRuntimeStack')]"
+          },
+          "http20Enabled": {
+            "value": true
+          },
+          "deploymentUsingSlots": {
+            "value": false
+          },
+          "appServiceAppSettings": {
+            "value": [
+              {
+                "name": "SETTINGS__LOGSTASH__HOST",
+                "value": "[parameters('logstashHost')]"
+              },
+              {
+                "name": "SETTINGS__LOGSTASH__PORT",
+                "value": "[parameters('logstashPort')]"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "app-service-plan"
+      ]
+    },
+    {
+      "name": "app-service-logs",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-logs.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServiceName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "httpLoggingEnabled": {
+            "value": true
+          }
+        }
+      },
+      "dependsOn": [
+        "app-service"
+      ]
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "app-insights",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'application-insights.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appInsightsName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "attachedService": {
+            "value": "[variables('appServiceName')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "AppServiceName": {
+      "type": "string",
+      "value": "[variables('appServiceName')]"
+    }
+  }
+}
