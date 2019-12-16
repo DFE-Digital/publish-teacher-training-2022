@@ -1,0 +1,27 @@
+<%= content_for :page_title, "Organisations" %>
+
+<% content_for :heading do %>
+  <%= current_page?(action: "index") ? "Organisations" : "Organisations without active users" %>
+<% end %>
+
+<h1 class="govuk-heading-xl">
+  Organisations with active users
+</h1>
+
+<p class="govuk-body">
+  <%= link_to "View organisations with active users", { action: "index" }, class: 'govuk-link' unless current_page?(action: "index") %>
+  <%= link_to "View organisations without active users", { action: "index_without_active_users" }, class: 'govuk-link' unless current_page?(action: "index_without_active_users") %>
+</p>
+
+<table class="govuk-table" data-qa="organisation__table-section">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Organisation</th>
+      <th class="govuk-table__header" scope="col">Users</th>
+      <th class="govuk-table__header" scope="col">UCAS providers</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <%= render partial: "organisation", collection: @organisations %>
+  </tbody>
+</table>

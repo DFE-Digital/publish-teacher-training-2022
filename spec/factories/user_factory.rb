@@ -10,6 +10,7 @@ FactoryBot.define do
     admin      { false }
     accept_terms_date_utc { Time.current }
     organisation_users { [] }
+    sign_in_user_id { Faker::Number.number(digits: 10) }
 
     trait :new do
       state { "new" }

@@ -191,6 +191,10 @@ private
       url_for_resource(resource.provider) + "/courses"
     elsif resource.is_a? AccessRequest
       "/access_requests"
+    elsif resource.is_a? Organisation
+      "/organisations"
+    else
+      raise "Resource '#{resource.class}' was not found. Add to 'url_for_resource_collection' helper."
     end
   end
 
