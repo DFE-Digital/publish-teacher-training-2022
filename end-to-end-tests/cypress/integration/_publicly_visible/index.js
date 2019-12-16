@@ -1,3 +1,11 @@
+// NOTE: This tests needs to proceed before any other tests, as these
+// tests demostrates the ability of what can be accessiblity by the
+// user with out logging in.
+// SEE:
+// https://github.com/cypress-io/cypress/issues/5723
+// https://github.com/cypress-io/cypress/issues/781
+
+
 import publicly_visble_pages from "../../fixtures/publicly_visible/pages.json";
 
 const baseUrl = Cypress.config().baseUrl;
