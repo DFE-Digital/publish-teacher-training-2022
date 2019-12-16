@@ -9,7 +9,6 @@
     "set-value": "^3.0.1"
   },
   "devDependencies": {
-    "cypress": "3.8.0",
     "jest": "^24.9.0",
     "webpack-dev-server": "^3.9.0"
   },
@@ -17,9 +16,5 @@
     "roots": [
       "app"
     ]
-  },
-  "scripts": {
-    "cy:run": "cypress run --project ./end-to-end-tests",
-    "cy:open": "cypress open --project ./end-to-end-tests"
   }
 }

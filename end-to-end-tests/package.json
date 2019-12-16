@@ -1,0 +1,12 @@
+{
+  "engines": {
+    "node": "10.14.2"
+  },
+  "devDependencies": {
+    "cypress": "3.8.0"
+  },
+  "scripts": {
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
+  }
+}
