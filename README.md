@@ -149,7 +149,16 @@ the password can be any non-secure local password you care to use.
 
 ### Executing tests
 
-1. To open cypress
+1. From project root change directory to `end-to-end-tests`
+    ``` bash
+    cd end-to-end-tests
+    ```
+2. install dependancies
+    ``` bash
+    yarn install
+    ```
+
+3. To open cypress
     ``` bash
     # using ~/repos/dfe/manage-courses-frontend/end-to-end-tests/config/local.json
     yarn run cy:open
@@ -160,7 +169,7 @@ the password can be any non-secure local password you care to use.
     yarn run cy:open --env 'email=someone@test.com,password=change me'
     ```
 
-2. To run cypress
+4. To run cypress
     ``` bash
     # using $PWD/end-to-end-tests/config/local.json
     yarn run cy:run
@@ -178,7 +187,7 @@ the password can be any non-secure local password you care to use.
       ``` bash
         yarn run cy:run --browser $PWD/end-to-end-tests/browsers/chrome-linux/chrome
       ```
-   
+
 ### Noticable issues
 1. Make sure that the user used actually exists
 2. It does not work with snap chromuim so either install chromuim via package manager or setup optional custom browser
