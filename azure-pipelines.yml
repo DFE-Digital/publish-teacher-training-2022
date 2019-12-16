@@ -104,7 +104,6 @@ steps:
     Contents: |
      azure/**
      end-to-end-tests/**
-     package.json
     TargetFolder: '$(build.artifactstagingdirectory)'
     OverWrite: true
 
