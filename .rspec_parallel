@@ -1,0 +1,4 @@
+--no-profile
+--format progress
+--format RspecJunitFormatter
+--out rspec-output/rspec-output<%= ENV['TEST_ENV_NUMBER'] %>.xml
