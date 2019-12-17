@@ -3,6 +3,8 @@
   <%= course_creation_back_button(@back_link_path) %>
 <% end %>
 
+<%= render 'shared/errors' %>
+
 <h1 class="govuk-heading-xl">Pick the locations for this course</h1>
 
 <%= form_for course,

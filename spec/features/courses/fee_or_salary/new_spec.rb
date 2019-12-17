@@ -57,6 +57,7 @@ feature "new course fee or salary", type: :feature do
     let(:course) do
       c = build(:course, provider: provider)
       c.errors.add(:funding_type, "Invalid")
+      c.errors.add(:program_type, "Invalid")
       c
     end
 
@@ -65,6 +66,7 @@ feature "new course fee or salary", type: :feature do
       new_fee_or_salary_page.funding_type_fields.fee.click
       new_fee_or_salary_page.continue.click
       expect(new_fee_or_salary_page.error_flash.text).to include("Funding type Invalid")
+      expect(new_fee_or_salary_page.error_flash.text).to include("Program type Invalid")
     end
   end
 

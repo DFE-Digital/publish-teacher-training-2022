@@ -1,7 +1,7 @@
 module Courses
   class ApplicationsOpenController < ApplicationController
     before_action :build_recruitment_cycle
-    before_action :build_course_params, only: :update
+    before_action :build_course_params, only: %i[update continue]
     include CourseBasicDetailConcern
 
     def update
@@ -9,7 +9,6 @@ module Courses
     end
 
     def continue
-      build_course_params
       super
     end
 

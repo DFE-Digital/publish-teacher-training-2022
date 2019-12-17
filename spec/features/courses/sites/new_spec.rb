@@ -94,6 +94,19 @@ feature "New course sites" do
     end
   end
 
+  context "Error handling" do
+    let(:course) do
+      c = build(:course, provider: provider, site_ids: [])
+      c.errors.add(:sites, "Invalid")
+      c
+    end
+
+    scenario do
+      new_locations_page.continue.click
+      expect(new_locations_page.error_flash.text).to include("Sites Invalid")
+    end
+  end
+
   context "with only one site" do
     let(:full_or_part_time) { PageObjects::Page::Organisations::Courses::NewStudyModePage.new }
     let(:sites) { [site2] }

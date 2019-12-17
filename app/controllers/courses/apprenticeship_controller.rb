@@ -9,7 +9,7 @@ module Courses
     end
 
     def error_keys
-      [:funding_type]
+      %i[funding_type program_type]
     end
   end
 end

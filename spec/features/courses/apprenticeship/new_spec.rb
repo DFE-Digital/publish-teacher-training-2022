@@ -68,6 +68,7 @@ feature "new course apprenticeship", type: :feature do
     let(:course) do
       c = build(:course, provider: provider)
       c.errors.add(:funding_type, "Invalid")
+      c.errors.add(:program_type, "Invalid")
       c
     end
 
@@ -76,6 +77,7 @@ feature "new course apprenticeship", type: :feature do
       new_apprenticeship_page.funding_type_fields.apprenticeship.click
       new_apprenticeship_page.continue.click
       expect(new_apprenticeship_page.error_flash.text).to include("Funding type Invalid")
+      expect(new_apprenticeship_page.error_flash.text).to include("Program type Invalid")
     end
   end
 
