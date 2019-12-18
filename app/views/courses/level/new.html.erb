@@ -18,7 +18,7 @@
 
       <%= render "courses/new_fields_holder", form: form, except_keys: [:level] do |fields| %>
         <div
-          class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors.any?) %>"
+          class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors.any?) %>"
           data-qa="course__level"
         >
           <fieldset class="govuk-fieldset">

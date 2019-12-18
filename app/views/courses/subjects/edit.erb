@@ -11,20 +11,7 @@
           url: subjects_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
           method: :put do |form| %>
 
-      <div
-        class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:subjects]&.any?) %>"
-        data-qa="course__subjects_section">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading">
-              <span class="govuk-caption-xl"><%= course.name_and_code %></span>
-              Change subjects
-            </h1>
-          </legend>
-          <%= render "shared/error_messages", field: :subjects if @errors %>
-          <%= render 'form_fields', form: form %>
-        </fieldset>
-      </div>
+      <%= render 'form_fields', form: form %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
         class: "govuk-button", data: { qa: 'course__save' }

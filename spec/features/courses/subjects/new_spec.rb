@@ -122,6 +122,11 @@ feature "New course level", type: :feature do
         new_subjects_page.continue.click
         expect(new_subjects_page.error_flash.text).to include("Subjects Invalid")
       end
+
+      scenario "inline error messages" do
+        new_subjects_page.continue.click
+        expect(new_subjects_page.error_messages.text).to include("Error: Subjects Invalid")
+      end
     end
 
     scenario "sends user back to course confirmation" do

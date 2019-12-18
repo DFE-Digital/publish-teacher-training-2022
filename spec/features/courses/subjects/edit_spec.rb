@@ -44,7 +44,7 @@ feature "Edit course subjects", type: :feature do
       subjects_page.load_with_course(course)
       edit_subject_stub = stub_api_v2_resource(course, method: :patch)
 
-      subjects_page.subjects_fields.select(subjects.first.subject_name)
+      subjects_page.master_subject_fields.select(subjects.first.subject_name)
       subjects_page.save.click
       expect(languages_page).to be_displayed
 
@@ -78,7 +78,7 @@ feature "Edit course subjects", type: :feature do
       subjects_page.load_with_course(course)
       edit_subject_stub = stub_api_v2_resource(course, method: :patch)
 
-      subjects_page.subjects_fields.select(subjects.first.subject_name)
+      subjects_page.master_subject_fields.select(subjects.first.subject_name)
       subjects_page.save.click
       expect(course_details_page).to be_displayed
       expect(edit_subject_stub).not_to have_been_made
