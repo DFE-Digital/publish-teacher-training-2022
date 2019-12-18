@@ -1,5 +1,5 @@
 <div
-  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:subjects]&.any?) %>"
+  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors&.[](:subjects)&.any?) %>"
   data-qa="course__subjects">
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">

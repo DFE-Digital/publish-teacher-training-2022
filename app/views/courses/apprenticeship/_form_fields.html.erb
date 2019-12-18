@@ -1,5 +1,5 @@
 <div
-  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:funding_type]&.any?) %>"
+  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors&.[](:funding_type)&.any? || @errors&.[](:program_type)&.any?) %>"
   data-qa="course__funding_type">
 
   <fieldset class="govuk-fieldset">
@@ -9,7 +9,9 @@
       </h1>
     </legend>
 
-    <%= render "shared/error_messages", field: :funding_type if @errors %>
+    <%= render "shared/error_messages", field: :funding_type if @errors&.[](:funding_type) %>
+    <%= render "shared/error_messages", field: :program_type if @errors&.[](:program_type) %>
+
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
         <%= form.radio_button :funding_type,

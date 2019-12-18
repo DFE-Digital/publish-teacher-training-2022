@@ -1,5 +1,5 @@
 <% if @errors&.[](field)&.any? %>
-  <span id="<%= field.to_s %>-error" class="govuk-error-message">
+  <span id="<%= field.to_s %>-error" class="govuk-error-message" data-qa="inline-error-<%= field.to_s %>">
     <% @errors[field].each do |error| %>
       <div><span class="govuk-visually-hidden">Error:</span> <%= error %></div>
     <% end %>
