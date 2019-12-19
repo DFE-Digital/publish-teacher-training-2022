@@ -5,33 +5,37 @@
 
 <%= render 'shared/errors' %>
 
-<h1 class="govuk-heading-xl">Pick the locations for this course</h1>
-
 <%= form_for course,
   url: continue_provider_recruitment_cycle_courses_locations_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-  method: :get do |f| %>
-  <%= render 'shared/course_creation_hidden_fields',
-    form: f,
-    course_creation_params: @course_creation_params,
-    except_keys: [:sites_ids]
-  %>
-
-  <div class="govuk-form-group">
-    <div class="govuk-checkboxes">
-      <%= f.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sf| %>
-        <% site = sf.object %>
-        <div class="govuk-checkboxes__item">
-          <%= sf.check_box 'selected', checked: course.has_site?(site), class: 'govuk-checkboxes__input' %>
-          <%= sf.label 'selected', class: 'govuk-label govuk-checkboxes__label'  do %>
-            <strong data-qa="site__name"><%= site.location_name %></strong>
-          <% end %>
-          <span class="govuk-hint govuk-checkboxes__hint">
-            <%= site.full_address %>
-          </span>
+  method: :get do |form| %>
+  <%= render "courses/new_fields_holder", form: form, except_keys: [:sites_ids] do |fields| %>
+    <div
+      class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors&.[](:sites)&.any?) %>"
+      data-qa="course__sites">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+          <h1 class="govuk-fieldset__heading" data-qa="page-heading">
+            Pick the locations for this course
+          </h1>
+        </legend>
+        <%= render "shared/error_messages", field: :sites if @errors %>
+        <div class="govuk-form-group">
+          <div class="govuk-checkboxes">
+            <%= fields.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sfields| %>
+              <% site = sfields.object %>
+              <div class="govuk-checkboxes__item">
+                <%= sfields.check_box 'selected', checked: course.has_site?(site), class: 'govuk-checkboxes__input' %>
+                <%= sfields.label 'selected', class: 'govuk-label govuk-checkboxes__label'  do %>
+                  <strong data-qa="site__name"><%= site.location_name %></strong>
+                <% end %>
+                <span class="govuk-hint govuk-checkboxes__hint">
+                  <%= site.full_address %>
+                </span>
+              </div>
+            <% end %>
+          </div>
         </div>
-      <% end %>
+      </fieldset>
     </div>
-  </div>
-
-  <%= f.submit "Continue", class: "govuk-button", data: { qa: 'course__save' } %>
+  <% end %>
 <% end %>

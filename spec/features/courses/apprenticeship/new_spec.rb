@@ -64,7 +64,7 @@ feature "new course apprenticeship", type: :feature do
     it_behaves_like "a course creation page"
   end
 
-  fcontext "Error handling" do
+  context "Error handling" do
     let(:course) do
       c = build(:course, provider: provider)
       c.errors.add(:funding_type, "Invalid")
