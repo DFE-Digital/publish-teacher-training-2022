@@ -53,6 +53,10 @@ module Courses
       :location
     end
 
+    def error_keys
+      [:sites]
+    end
+
     def set_default_site
       params["course"] ||= {}
       params["course"]["sites_ids"] = [@provider.sites.first.id]
