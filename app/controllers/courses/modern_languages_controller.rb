@@ -59,6 +59,10 @@ module Courses
 
   private
 
+    def error_keys
+      [:subjects]
+    end
+
     def strip_non_language_subjects
       @course.subjects.reject { |s| available_languages_ids.include?(s.id) }
     end
@@ -89,7 +93,7 @@ module Courses
     end
 
     def build_course_params
-      params[:course][:subjects_ids] += params[:course][:language_ids]
+      params[:course][:subjects_ids] += params[:course][:language_ids] if params[:course][:language_ids]
       params[:course].delete :language_ids
     end
   end
