@@ -11,7 +11,7 @@
         <%= subject_page_title(@course) %>
       </h1>
     </legend>
-    <%= render "shared/error_messages", field: :subjects if @errors %>
+    <%= render "shared/error_messages", error_keys: [:subjects] %>
     <div class="govuk-form-group">
       <%= form.label :master_subject_id, subject_input_label(@course), class: 'govuk-label' %>
       <%= form.select :master_subject_id, options_for_select(course.selectable_subjects, @course.subjects.first&.id), { include_blank: true }, data: { qa: 'course__master_subject' }, class: "govuk-select" %>

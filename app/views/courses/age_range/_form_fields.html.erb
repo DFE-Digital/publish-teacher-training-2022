@@ -18,7 +18,7 @@
   </div>
   <div class="govuk-radios__conditional <%= 'govuk-radios__conditional--hidden' if !course.other_age_range? %>" id="other-container">
     <p class="govuk-body">Enter an age range in years, for example: 5 to 11. The course must cover 4 or more school years.</p>
-    <%= render "shared/error_messages", field: :age_range_in_years_from if @errors %>
+    <%= render "shared/error_messages", error_keys: [:age_range_in_years_from] %>
     <div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years_from].present?) %>">
       <label class="govuk-label" for="course_course_age_range_in_years_other_from">From</label>
       <%= form.number_field 'course_age_range_in_years_other_from',
@@ -29,7 +29,7 @@
           data: { qa: "course__age_range_in_years_other_from_input"}
       %>
     </div>
-    <%= render "shared/error_messages", field: :age_range_in_years_to if @errors %>
+    <%= render "shared/error_messages", error_keys: [:age_range_in_years_to] %>
     <div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years_to].present?) %>">
       <label class="govuk-label" for="course_course_age_range_in_years_other_to">To</label>
       <%= form.number_field 'course_age_range_in_years_other_to',

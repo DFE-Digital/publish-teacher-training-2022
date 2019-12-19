@@ -9,8 +9,7 @@
       </h1>
     </legend>
 
-    <%= render "shared/error_messages", field: :funding_type if @errors&.[](:funding_type) %>
-    <%= render "shared/error_messages", field: :program_type if @errors&.[](:program_type) %>
+    <%= render "shared/error_messages", error_keys: [:funding_type, :program_type] %>
 
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">

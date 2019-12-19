@@ -18,7 +18,7 @@
             Pick the locations for this course
           </h1>
         </legend>
-        <%= render "shared/error_messages", field: :sites if @errors %>
+        <%= render "shared/error_messages", error_keys: [:sites] %>
         <div class="govuk-form-group">
           <div class="govuk-checkboxes">
             <%= fields.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sfields| %>

@@ -25,7 +25,7 @@
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
               <h2 class="govuk-fieldset__heading">Level</h2>
             </legend>
-            <%= render "shared/error_messages", field: :level if @errors %>
+            <%= render "shared/error_messages", error_keys: [:level] %>
             <%= render 'form_fields', form: fields %>
           </fieldset>
         </div>

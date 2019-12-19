@@ -20,7 +20,7 @@
               Specify an age range
             </h1>
           </legend>
-          <%= render "shared/error_messages", field: :age_range_in_years if @errors %>
+          <%= render "shared/error_messages", error_keys: [:age_range_in_years] %>
           <%= render 'form_fields', form: form %>
         </fieldset>
       </div>

@@ -9,7 +9,7 @@
       </h1>
     </legend>
 
-    <%= render "shared/error_messages", field: :study_modes if @errors %>
+    <%= render "shared/error_messages", error_keys: [:study_modes] %>
     <div class="govuk-radios" data-module="govuk-radios">
       <% @course.meta['edit_options']['study_modes'].each do |value| %>
         <div class="govuk-radios__item">

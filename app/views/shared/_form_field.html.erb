@@ -15,7 +15,7 @@
     }.merge(defined?(id) ? { for: id } : {})
   %>
 
-  <%= render "shared/error_messages", field: field %>
+  <%= render "shared/error_messages", error_keys: [field] %>
 
   <%= yield([field, options]) %>
 </div>

@@ -54,7 +54,7 @@
 
         <div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:share_with_ucas_permission]&.any?) %>">
         <div class="govuk-checkboxes" data-module="checkboxes">
-          <%= render 'shared/error_messages', field: :share_with_ucas_permission %>
+          <%= render 'shared/error_messages', error_keys: [:share_with_ucas_permission] %>
           <div class="govuk-checkboxes__item">
             <%= form.check_box :share_with_ucas_permission,
                                   checked: false,

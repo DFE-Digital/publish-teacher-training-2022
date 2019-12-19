@@ -10,7 +10,7 @@
       <br>
     </legend>
 
-    <%= render "shared/error_messages", field: :funding_type if @errors %>
+    <%= render "shared/error_messages", error_keys: [:funding_type] %>
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
         <%= form.radio_button :funding_type,
