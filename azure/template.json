@@ -152,7 +152,7 @@
     "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
     "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
     "appServiceRuntimeStack": "[concat('DOCKER|', parameters('dockerHubUsername'), '/', parameters('containerImageReference'))]",
-    "defaultAvailabilityCheckHosts": "[if(greater(length(parameters('customHostName')), 0), createArray(concat('azcheck:', variables('appServiceName'), '.azurewebsites.net/check'), concat('check:', parameters('customHostName'), '/check')), createArray(concat('azcheck:', variables('appServiceName'), '.azurewebsites.net/check')))]",
+    "defaultAvailabilityCheckHosts": "[if(greater(length(parameters('customHostName')), 0), createArray(concat('azcheck:', variables('appServiceName'), '.azurewebsites.net/ping'), concat('check:', parameters('customHostName'), '/ping')), createArray(concat('azcheck:', variables('appServiceName'), '.azurewebsites.net/ping')))]",
     "availabilityCheckHosts": "[if(greater(length(parameters('customAvailabilityMonitors')), 0), concat(variables('defaultAvailabilityCheckHosts'), parameters('customAvailabilityMonitors')), variables('defaultAvailabilityCheckHosts'))]",
     "copy": [
       {
