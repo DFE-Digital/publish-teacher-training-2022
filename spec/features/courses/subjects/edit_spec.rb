@@ -8,7 +8,14 @@ feature "Edit course subjects", type: :feature do
   let(:course_request_change_page) { PageObjects::Page::Organisations::CourseRequestChange.new }
   let(:provider) { build(:provider, site: site) }
   let(:site) { build(:site) }
+
   let(:site_status) { build(:site_status, site: site) }
+  let(:english_subject) { build(:subject, :english) }
+  let(:biology_subject) { build(:subject, :biology) }
+  let(:modern_languages_subject) { build(:subject, :modern_languages) }
+  let(:russian_subject) { build(:subject, :russian) }
+  let(:french_subject) { build(:subject, :french) }
+
   let(:edit_options) { { subjects: [], modern_languages: [] } }
   let(:course) do
     build(:course,
@@ -31,8 +38,7 @@ feature "Edit course subjects", type: :feature do
   end
 
   context "with a given set of available subjects" do
-    let(:english_subject) { build(:subject, :english) }
-    let(:subjects) { [english_subject, build(:subject, :biology)] }
+    let(:subjects) { [english_subject, biology_subject] }
     let(:edit_options) do
       {
         subjects: subjects,
@@ -53,12 +59,113 @@ feature "Edit course subjects", type: :feature do
         expect(subjects).to match_array([{ "type" => "subject", "id" => english_subject.id.to_s }])
       end).to have_been_made
     end
+
+    context "with a subordinate subject" do
+      let(:course) do
+        build(:course,
+              level: "secondary",
+              provider: provider,
+              edit_options: edit_options,
+              subjects: [],
+              sites: [site],
+              site_statuses: [site_status])
+      end
+
+      scenario "can select a master subject and subordinate subject based on the level" do
+        subjects_page.load_with_course(course)
+        edit_subject_stub = stub_api_v2_resource(course, method: :patch)
+
+        subjects_page.subjects_fields.select(subjects.first.subject_name)
+
+        subjects_page.subordinate_subject_accordion.click
+        subjects_page.subordinate_subject_fields.select(subjects.second.subject_name)
+        subjects_page.save.click
+        expect(languages_page).to be_displayed
+
+        expect(edit_subject_stub.with do |request|
+          subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
+          expect(subjects).to match_array([
+            { "type" => "subject", "id" => english_subject.id.to_s },
+            { "type" => "subject", "id" => biology_subject.id.to_s },
+          ])
+        end).to have_been_made
+      end
+
+      context "removing a subordinate subject" do
+        let(:subjects) { [english_subject, biology_subject] }
+        let(:edit_options) do
+          {
+            subjects: subjects,
+            modern_languages: nil,
+          }
+        end
+        let(:course) do
+          build(:course,
+                level: "secondary",
+                provider: provider,
+                edit_options: edit_options,
+                subjects: subjects,
+                sites: [site],
+                site_statuses: [site_status])
+        end
+
+        scenario "it updates the course" do
+          subjects_page.load_with_course(course)
+          edit_subject_stub = stub_api_v2_resource(course, method: :patch)
+
+          subjects_page.subjects_fields.select(subjects.first.subject_name)
+          subjects_page.subordinate_subject_accordion.click
+          subjects_page.subordinate_subject_fields.select("")
+          subjects_page.save.click
+
+          expect(course_details_page).to be_displayed
+          expect(edit_subject_stub.with do |request|
+            subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
+            expect(subjects).to match_array([
+              { "type" => "subject", "id" => english_subject.id.to_s },
+            ])
+          end).to have_been_made
+        end
+      end
+
+      context "removing all subjects" do
+        let(:subjects) { [english_subject, biology_subject] }
+        let(:edit_options) do
+          {
+            subjects: subjects,
+            modern_languages: nil,
+          }
+        end
+        let(:course) do
+          build(:course,
+                level: "secondary",
+                provider: provider,
+                edit_options: edit_options,
+                subjects: subjects,
+                sites: [site],
+                site_statuses: [site_status])
+        end
+
+        scenario "it updates the course" do
+          subjects_page.load_with_course(course)
+          edit_subject_stub = stub_api_v2_resource(course, method: :patch)
+
+          subjects_page.subjects_fields.select("")
+          subjects_page.subordinate_subject_accordion.click
+          subjects_page.subordinate_subject_fields.select("")
+          subjects_page.save.click
+
+          expect(course_details_page).to be_displayed
+          expect(edit_subject_stub.with do |request|
+            subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
+            expect(subjects).to match_array([])
+          end).to have_been_made
+        end
+      end
+    end
   end
 
   context "if subjects have not been changed" do
-    let(:modern_languages_subject) { build(:subject, :modern_languages) }
-    let(:russian_subject) { build(:subject, :russian) }
-    let(:french_subject) { build(:subject, :french) }
     let(:subjects) { [modern_languages_subject, russian_subject, french_subject] }
     let(:course) do
       build(:course,
@@ -108,5 +215,16 @@ feature "Edit course subjects", type: :feature do
       subjects_page.load_with_course(course)
       expect(subjects_page).to have_select("course_master_subject_id", selected: english_subject.subject_name)
     end
+
+    scenario "it should automatically select the current subject" do
+      subjects_page.load_with_course(course)
+      subjects_page.subordinate_subject_accordion.click
+      expect(subjects_page).to have_select("course_subordinate_subject_id", selected: biology_subject.subject_name)
+    end
+  end
+
+  scenario "should show the edit link" do
+    course_details_page.load_with_course(course)
+    expect(course_details_page).to have_edit_subjects_link
   end
 end
