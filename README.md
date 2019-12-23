@@ -105,7 +105,7 @@ file
 ```
 
 ```bash
-export SETTINGS__FILE__BASED__SETTINGS__ENV1="bar"
+export PTT__FILE__BASED__PTT__ENV1="bar"
 ```
 
 ```ruby

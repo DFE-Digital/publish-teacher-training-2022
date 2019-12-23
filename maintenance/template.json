@@ -119,11 +119,11 @@
           "appServiceAppSettings": {
             "value": [
               {
-                "name": "SETTINGS__LOGSTASH__HOST",
+                "name": "PTT__LOGSTASH__HOST",
                 "value": "[parameters('logstashHost')]"
               },
               {
-                "name": "SETTINGS__LOGSTASH__PORT",
+                "name": "PTT__LOGSTASH__PORT",
                 "value": "[parameters('logstashPort')]"
               }
             ]

@@ -3,7 +3,7 @@ filebeat.config.modules:
   reload.enabled: false
 
 output.logstash:
-  hosts: ["${SETTINGS__LOGSTASH__HOST}:${SETTINGS__LOGSTASH__PORT}"]
+  hosts: ["${PTT__LOGSTASH__HOST}:${PTT__LOGSTASH__PORT}"]
   loadbalance: true
   ssl.enabled: true
 
