@@ -43,6 +43,8 @@ module Courses
     end
 
     def subjects_match?(subject_array_a, subject_array_b)
+      return false if subject_array_a.length != subject_array_b.length
+
       subject_array_a.zip(subject_array_b).all? do |subject_a, subject_b|
         subject_a.present? && subject_b.present? && subject_a.id == subject_b.id
       end
@@ -55,11 +57,23 @@ module Courses
     end
 
     def selected_subjects
-      master_subject_id = params.dig(:course, :master_subject_id)
-      master_subject_hash = @course.meta[:edit_options][:subjects].find do |subject|
-        subject[:id] == master_subject_id
+      selected_subject_ids = params
+        .dig(:course)
+        .slice(:master_subject_id, :subordinate_subject_id)
+        .to_unsafe_h
+        .values
+        .select(&:present?)
+
+      selected_subject_ids.map do |subject_id|
+        subject_hash = find_subject(subject_id)
+        Subject.new(subject_hash.to_h)
       end
-      [Subject.new(master_subject_hash.to_h)]
+    end
+
+    def find_subject(subject_id)
+      @course.meta[:edit_options][:subjects].find do |subject|
+        subject[:id] == subject_id
+      end
     end
 
     def is_a_non_language_subject?(subject_to_find)
