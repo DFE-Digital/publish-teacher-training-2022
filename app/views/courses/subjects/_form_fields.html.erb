@@ -1,6 +1,5 @@
-<div
-  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors&.[](:subjects)&.any?) %>"
-  data-qa="course__subjects">
+<%= render "shared/error_wrapper", error_keys: [:subjects], data_qa: "course__subjects" do %>
+
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
       <h1 class="govuk-fieldset__heading" data-qa="page-heading">
@@ -38,4 +37,4 @@
       </div>
     <% end %>
   </fieldset>
-</div>
+<% end %>

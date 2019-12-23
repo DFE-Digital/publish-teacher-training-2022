@@ -1,4 +1,4 @@
-<div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:change_vacancies_confirmation]&.any?) %>">
+<%= render "shared/error_wrapper", error_keys: [:change_vacancies_confirmation], data_qa: "course__change_vacancies_confirmation" do %>
   <% if @errors && @errors[:change_vacancies_confirmation]&.any? %>
     <span id="change_vacancies_confirmation-error" class="govuk-error-message">
       <% @errors[:change_vacancies_confirmation].each do |error| %>
@@ -19,4 +19,4 @@
       <% end %>
     </div>
   </div>
-</div>
+<% end %>

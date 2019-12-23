@@ -1,4 +1,4 @@
-<div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:accredited_body]&.any?) %>">
+<%= render "shared/error_wrapper", error_keys: [:accredited_body], data_qa: "course__provider_search" do %>
   <%= form.label :accredited_body,
     for: 'course_accredited_body',
     class: 'govuk-label' do %>
@@ -10,4 +10,4 @@
     autocomplete: 'off',
     class: 'govuk-input govuk-!-width-two-thirds' %>
   <div id="provider-autocomplete" class="govuk-body govuk-!-width-two-thirds"></div>
-</div>
+<% end %>

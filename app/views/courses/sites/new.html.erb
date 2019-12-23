@@ -9,9 +9,7 @@
   url: continue_provider_recruitment_cycle_courses_locations_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
   method: :get do |form| %>
   <%= render "courses/new_fields_holder", form: form, except_keys: [:sites_ids] do |fields| %>
-    <div
-      class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors&.[](:sites)&.any?) %>"
-      data-qa="course__sites">
+    <%= render "shared/error_wrapper", error_keys: [:sites], data_qa: "course__sites" do %>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h1 class="govuk-fieldset__heading" data-qa="page-heading">
@@ -36,6 +34,6 @@
           </div>
         </div>
       </fieldset>
-    </div>
+    <% end %>
   <% end %>
 <% end %>
