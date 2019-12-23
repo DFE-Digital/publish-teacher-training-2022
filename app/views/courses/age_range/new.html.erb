@@ -14,19 +14,17 @@
                   method: :get do |form| %>
 
       <%= render "courses/new_fields_holder", form: form, except_keys: [:age_range_in_years] do |fields| %>
-        <div
-          class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years]&.any?) %>"
-          data-qa="course__age_range_in_years">
+        <%= render "shared/error_wrapper", error_keys: [:age_range_in_years], data_qa: "course__age_range_in_years" do %>
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
               <h1 class="govuk-fieldset__heading">
                 Specify an age range
               </h1>
             </legend>
-            <%= render "shared/error_messages", field: :age_range_in_years if @errors %>
+            <%= render "shared/error_messages", error_keys: [:age_range_in_years] %>
             <%= render 'form_fields', form: fields %>
           </fieldset>
-        </div>
+        <% end %>
       <% end %>
     <% end %>
   </div>

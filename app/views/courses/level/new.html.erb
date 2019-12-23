@@ -17,8 +17,15 @@
                   method: :get do |form| %>
 
       <%= render "courses/new_fields_holder", form: form, except_keys: [:level] do |fields| %>
-        <h2 class="govuk-heading-m remove-top-margin">Level</h2>
-        <%= render 'form_fields', form: fields %>
+        <%= render "shared/error_wrapper", error_keys: [:level], data_qa: "course__level" do %>
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h2 class="govuk-fieldset__heading">Level</h2>
+            </legend>
+            <%= render "shared/error_messages", error_keys: [:level] %>
+            <%= render 'form_fields', form: fields %>
+          </fieldset>
+        <% end %>
 
         <h2 class="govuk-heading-m remove-top-margin">
           Special educational needs and disability (SEND)

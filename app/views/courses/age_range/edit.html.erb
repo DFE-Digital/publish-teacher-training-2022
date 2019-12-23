@@ -10,9 +10,8 @@
     <%= form_with model: course,
           url: age_range_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
           method: :put do |form| %>
-      <div
-        class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:age_range_in_years]&.any?) %>"
-        data-qa="course__age_range_in_years">
+
+      <%= render "shared/error_wrapper", error_keys: [:age_range_in_years], data_qa: "course__age_range_in_years" do %>
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-fieldset__heading">
@@ -20,10 +19,10 @@
               Specify an age range
             </h1>
           </legend>
-          <%= render "shared/error_messages", field: :age_range_in_years if @errors %>
+          <%= render "shared/error_messages", error_keys: [:age_range_in_years] %>
           <%= render 'form_fields', form: form %>
         </fieldset>
-      </div>
+      <% end %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
         class: "govuk-button", data: { qa: 'course__save' }

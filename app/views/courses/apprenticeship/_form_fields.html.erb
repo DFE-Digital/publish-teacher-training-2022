@@ -1,7 +1,4 @@
-<div
-  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:funding_type]&.any?) %>"
-  data-qa="course__funding_type">
-
+<%= render "shared/error_wrapper", error_keys: [:funding_type, :program_type], data_qa: "course__funding_type" do %>
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
       <h1 class="govuk-fieldset__heading">
@@ -9,7 +6,8 @@
       </h1>
     </legend>
 
-    <%= render "shared/error_messages", field: :funding_type if @errors %>
+    <%= render "shared/error_messages", error_keys: [:funding_type, :program_type] %>
+
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
         <%= form.radio_button :funding_type,
@@ -19,7 +17,7 @@
                 'Yes',
                 value: 'apprenticeship',
                 class: 'govuk-label govuk-radios__label',
-                data: { qa: 'course__funding_type_apprenticeship' }%>
+                data: { qa: 'course__funding_type_apprenticeship' } %>
       </div>
 
       <div class="govuk-radios__item">
@@ -34,4 +32,4 @@
       </div>
     </div>
   </fieldset>
-</div>
+<% end %>

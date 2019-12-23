@@ -1,11 +1,10 @@
 <% legend ||= false %>
 <% bold_labels ||= false %>
-<div
-  class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[field]&.any?) %>"
-  data-qa="course__<%= field %>">
+
+<%= render "shared/error_wrapper", error_keys: [field], data_qa: "course__#{field}" do %>
   <fieldset class="govuk-fieldset">
     <%= legend %>
-    <%= render "shared/error_messages", field: field if @errors %>
+    <%= render "shared/error_messages", error_keys: [field] %>
     <% @course.meta['edit_options'][key].each_with_index do |value| %>
       <% help = t("edit_options.#{key}.#{value}.help") %>
       <% label = t("edit_options.#{key}.#{value}.label") %>
@@ -29,4 +28,4 @@
       </div>
     <% end %>
   </fieldset>
-</div>
+<% end %>

@@ -118,9 +118,14 @@ feature "New course level", type: :feature do
         stub_api_v2_build_course(subjects_ids: [nil])
       end
 
-      scenario do
+      scenario "error flash" do
         new_subjects_page.continue.click
         expect(new_subjects_page.error_flash.text).to include("Subjects Invalid")
+      end
+
+      scenario "inline error messages" do
+        new_subjects_page.continue.click
+        expect(new_subjects_page.error_messages.text).to include("Error: Subjects Invalid")
       end
     end
 

@@ -1,10 +1,10 @@
-<div id="course_length_wrapper" class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors[:course_length]&.any?) %>">
+<%= render "shared/error_wrapper", error_keys: [:course_length], data_qa: "course__length" do %>
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
       <h2 class="govuk-fieldset__heading">Course length</h2>
     </legend>
 
-    <%= render "shared/error_messages", field: :course_length %>
+    <%= render "shared/error_messages", error_keys: [:course_length] %>
 
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
@@ -36,4 +36,4 @@
       </div>
     </div>
   </fieldset>
-</div>
+<% end %>

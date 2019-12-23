@@ -101,9 +101,14 @@ feature "New course sites" do
       c
     end
 
-    scenario do
+    scenario "error flash" do
       new_locations_page.continue.click
       expect(new_locations_page.error_flash.text).to include("Sites Invalid")
+    end
+
+    scenario "inline error messages" do
+      new_locations_page.continue.click
+      expect(new_locations_page.error_messages.text).to include("Error: Sites Invalid")
     end
   end
 

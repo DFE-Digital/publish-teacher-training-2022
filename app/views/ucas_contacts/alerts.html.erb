@@ -52,9 +52,9 @@
                              data: { qa: 'ucas_contacts__application_alert_contact' }%>
       </div>
 
-        <div class="<%= cns("govuk-form-group", "govuk-form-group--error": @errors && @errors[:share_with_ucas_permission]&.any?) %>">
+      <%= render "shared/error_wrapper", error_keys: [:share_with_ucas_permission], data_qa: "course__share_with_ucas_permission" do %>
         <div class="govuk-checkboxes" data-module="checkboxes">
-          <%= render 'shared/error_messages', field: :share_with_ucas_permission %>
+          <%= render 'shared/error_messages', error_keys: [:share_with_ucas_permission] %>
           <div class="govuk-checkboxes__item">
             <%= form.check_box :share_with_ucas_permission,
                                   checked: false,
@@ -67,7 +67,7 @@
             <% end %>
           </div>
         </div>
-      </div>
+      <% end %>
 
       <hr class="govuk-section-break govuk-section-break--l">
 

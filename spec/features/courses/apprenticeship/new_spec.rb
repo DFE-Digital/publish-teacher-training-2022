@@ -72,12 +72,20 @@ feature "new course apprenticeship", type: :feature do
       c
     end
 
-    scenario do
+    scenario "error flash" do
       visit_new_apprenticeship_page
       new_apprenticeship_page.funding_type_fields.apprenticeship.click
       new_apprenticeship_page.continue.click
       expect(new_apprenticeship_page.error_flash.text).to include("Funding type Invalid")
       expect(new_apprenticeship_page.error_flash.text).to include("Program type Invalid")
+    end
+
+    scenario "inline error messages" do
+      visit_new_apprenticeship_page
+      new_apprenticeship_page.funding_type_fields.apprenticeship.click
+      new_apprenticeship_page.continue.click
+      expect(new_apprenticeship_page.funding_type_error.text).to include("Error: Funding type Invalid")
+      expect(new_apprenticeship_page.program_type_error.text).to include("Error: Program type Invalid")
     end
   end
 

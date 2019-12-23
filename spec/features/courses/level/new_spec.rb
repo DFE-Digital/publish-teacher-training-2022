@@ -73,9 +73,14 @@ feature "New course level", type: :feature do
       c
     end
 
-    scenario do
+    scenario "error flash" do
       new_level_page.continue.click
       expect(new_level_page.error_flash.text).to include("Level Invalid")
+    end
+
+    scenario "inline error messages" do
+      new_level_page.continue.click
+      expect(new_level_page.error_messages.text).to include("Error: Level Invalid")
     end
   end
 
