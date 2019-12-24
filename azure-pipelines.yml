@@ -34,7 +34,7 @@ steps:
 
 - script: |
     docker run --name test-run-image -d $(IMAGE_NAME)
-    docker exec test-run-image rake parallel:spec
+    docker exec test-run-image rake "parallel:spec[,, -O .azure_parallel]"
     docker cp test-run-image:/app/rspec-output .
     docker stop test-run-image
     docker rm test-run-image
