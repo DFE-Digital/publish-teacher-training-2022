@@ -11,6 +11,7 @@ module PageObjects
           element :subordinate_subject_accordion, '[data-qa="course__subordinate_subject_accordion"]'
           element :subordinate_subjects_fields, '[data-qa="course__subordinate_subjects"]'
           element :continue, '[data-qa="course__save"]'
+          element :google_form_link, '[data-qa="course__google_form_link"]'
         end
       end
     end

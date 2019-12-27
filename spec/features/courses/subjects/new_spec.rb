@@ -18,6 +18,7 @@ feature "New course level", type: :feature do
       modern_languages: [build(:subject, :russian)],
     }
   end
+  let(:user) { build(:user) }
   let(:course) do
     build(:course,
           :new,
@@ -30,14 +31,17 @@ feature "New course level", type: :feature do
           accrediting_provider: build(:provider))
   end
 
+  let(:access_request) { create(:access_request) }
+
   before do
-    stub_omniauth
+    stub_omniauth(user: user)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_new_resource(course)
     stub_api_v2_build_course
     stub_api_v2_build_course
+    stub_api_v2_resource_collection([access_request])
 
     visit "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}" \
     "/courses/subjects/new"
@@ -79,6 +83,24 @@ feature "New course level", type: :feature do
       end
 
       it_behaves_like "a course creation page"
+    end
+
+    context "PE subject" do
+      context "as an admin user" do
+        let(:user) { create(:user, :admin) }
+
+        it "should not have guidance on adding pe via a google form" do
+          expect(new_subjects_page.google_form_link.text).to eq("")
+        end
+      end
+    end
+
+    context "subjects field" do
+      context "as a non-admin user" do
+        it "should have guidance on adding pe via a google form" do
+          expect(new_subjects_page.google_form_link.text).to start_with("Adding a Physical education course?")
+        end
+      end
     end
   end
 
