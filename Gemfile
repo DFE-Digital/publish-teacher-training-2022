@@ -118,7 +118,7 @@ group :test do
 
   gem "selenium-webdriver"
 
-  gem "webdrivers", "~> 4.1"
+  gem "webdrivers", "~> 4.2"
 
   # Add Junit formatter for rspec
   gem "rspec_junit_formatter"
