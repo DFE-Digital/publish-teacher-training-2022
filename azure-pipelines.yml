@@ -14,7 +14,6 @@ variables:
 
 steps:
 - script: |
-    set -x
     GIT_SHORT_SHA=$(echo $(Build.SourceVersion) | cut -c 1-7)
     IMAGE_NAME_WITH_TAG=$(IMAGE_NAME):$GIT_SHORT_SHA
     echo "##vso[build.updatebuildnumber]$GIT_SHORT_SHA"
