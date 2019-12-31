@@ -14,6 +14,7 @@ variables:
 
 steps:
 - script: |
+    set -x
     GIT_SHORT_SHA=$(echo $(Build.SourceVersion) | cut -c 1-7)
     IMAGE_NAME_WITH_TAG=$(IMAGE_NAME):$GIT_SHORT_SHA
     echo "##vso[build.updatebuildnumber]$GIT_SHORT_SHA"
@@ -33,6 +34,7 @@ steps:
     addDefaultLabels: false
 
 - script: |
+    set -x
     docker run --name test-run-image -d $(IMAGE_NAME)
     docker exec test-run-image rake "parallel:spec[,, -O .azure_parallel]"
     docker cp test-run-image:/app/rspec-output .
