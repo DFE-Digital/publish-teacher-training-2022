@@ -50,11 +50,17 @@ module CourseBasicDetailConcern
 private
 
   def build_new_course
+    add_custom_age_range_into_params if params.dig("course", "age_range_in_years") == "other"
+
     @course = Course.build_new(
       recruitment_cycle_year: params[:recruitment_cycle_year],
       provider_code: params[:provider_code],
       course: course_params.to_unsafe_hash,
     )
+  end
+
+  def add_custom_age_range_into_params
+    params["course"]["age_range_in_years"] = "#{age_from_param}_to_#{age_to_param}"
   end
 
   def errors
