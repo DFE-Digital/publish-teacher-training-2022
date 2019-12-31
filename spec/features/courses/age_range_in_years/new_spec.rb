@@ -36,15 +36,29 @@ feature "new course age range", type: :feature do
     stub_api_v2_resource_collection([new_course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
     stub_api_v2_build_course(age_range_in_years: "3_to_7")
+    stub_api_v2_build_course(age_range_in_years: "14_to_19")
   end
 
-  scenario "sends user to entry requirements" do
-    visit_new_age_range_page
+  context "with a set age range" do
+    scenario "sends user to entry requirements" do
+      visit_new_age_range_page
 
-    choose("course_age_range_in_years_3_to_7")
-    new_age_range_page.continue.click
+      choose("course_age_range_in_years_3_to_7")
+      new_age_range_page.continue.click
 
-    expect(new_outcome_page).to be_displayed
+      expect(new_outcome_page).to be_displayed
+    end
+  end
+
+  context "with a custom age range" do
+    scenario "sends user to entry requirements" do
+      visit_new_age_range_page
+      new_age_range_page.age_range_other.click
+      new_age_range_page.age_range_from_field.set("14")
+      new_age_range_page.age_range_to_field.set("19")
+      new_age_range_page.continue.click
+      expect(new_outcome_page).to be_displayed
+    end
   end
 
   scenario "sends user back to course confirmation" do
