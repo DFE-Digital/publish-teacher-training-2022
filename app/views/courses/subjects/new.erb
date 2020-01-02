@@ -13,16 +13,17 @@
                   method: :get do |form| %>
       <%= render "courses/new_fields_holder", form: form, except_keys: [] do |fields| %>
         <%= render 'form_fields', form: fields %>
+
+        <div class="govuk-grid-row", data-qa="course__google_form_link" >
+          <% if !current_user["admin"] && @course.level == "secondary" %>
+            <h2 class="govuk-heading-m"> Adding a Physical education course?<h2/>
+            <p class="govuk-body-s">You’ll need to fill in a
+              <%= link_to "separate google form", add_course_url(current_user['info']['email'], @provider, is_current_cycle: true), link_class: "govuk-link", rel: "noopener noreferrer", target: "_blank" %>
+              as places are limited.</p>
+          <% end %>
+        </div>
+        
       <% end %>
     <% end %>
   </div>
-</div>
-
-<div class="govuk-grid-row", data-qa="course__google_form_link" >
-  <% if !current_user["admin"] && @course.level == "secondary" %>
-    <h2 class="govuk-heading-m"> Adding a Physical education course?<h2/>
-    <p class="govuk-body-s">You’ll need to fill in a
-      <%= link_to "separate google form", add_course_url(current_user['info']['email'], @provider, is_current_cycle: true), link_class: "govuk-link", rel: "noopener noreferrer", target: "_blank" %>
-      as places are limited.</p>
-  <% end %>
 </div>
