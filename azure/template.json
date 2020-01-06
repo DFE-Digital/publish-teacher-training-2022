@@ -137,11 +137,16 @@
         "description": "The port number for the logstash server connection."
       }
     },
-    "customAvailabilityMonitors": {
-      "type": "array",
-      "defaultValue": [],
+    "alertEmailRecipientName": {
+      "type": "string",
       "metadata": {
-          "description": "Array of paths to perform monitoring on. In form TEST_NAME:HOST where HOST is the complete URL minus the http(s):// prefix."
+        "description": "The name of the alert email recipient."
+      }
+    },
+    "alertEmailRecipientAddress": {
+      "type": "string",
+      "metadata": {
+        "description": "The email address of the alert email recipient."
       }
     },
     "resourceTags": {
@@ -159,17 +164,17 @@
     "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
     "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
     "appServiceRuntimeStack": "[concat('DOCKER|', parameters('dockerHubUsername'), '/', parameters('containerImageReference'))]",
-    "defaultAvailabilityCheckHosts": "[if(greater(length(parameters('customHostName')), 0), createArray(concat('azcheck:', variables('appServiceName'), '.azurewebsites.net/ping'), concat('check:', parameters('customHostName'), '/ping')), createArray(concat('azcheck:', variables('appServiceName'), '.azurewebsites.net/ping')))]",
-    "availabilityCheckHosts": "[if(greater(length(parameters('customAvailabilityMonitors')), 0), concat(variables('defaultAvailabilityCheckHosts'), parameters('customAvailabilityMonitors')), variables('defaultAvailabilityCheckHosts'))]",
-    "copy": [
+    "availabilityTests": [
       {
-          "name": "availabilityTests",
-          "count": "[length(variables('availabilityCheckHosts'))]",
-          "input": {
-              "nameSuffix": "[split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[0]]",
-              "url": "[concat('https://', split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[1])]",
-              "guid": "[guid(variables('availabilityCheckHosts')[copyIndex('availabilityTests')])]"
-          }
+        "nameSuffix": "root",
+        "url": "[concat('https://', variables('appServiceName'), '.azurewebsites.net')]",
+        "guid": "[guid(variables('appServiceName'))]"
+      }
+    ],
+    "alertRecipientEmails": [
+      {
+        "displayName": "[parameters('alertEmailRecipientName')]",
+        "emailAddress": "[parameters('alertEmailRecipientAddress')]"
       }
     ]
   },
@@ -367,14 +372,57 @@
           "attachedService": {
             "value": "[variables('appServiceName')]"
           },
-          "availabilityTests": {
-              "value": "[variables('availabilityTests')]"
-          },
           "resourceTags":{
             "value": "[parameters('resourceTags')]"
           }
         }
       }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "availability-test",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'availability-tests.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appInsightsName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "availabilityTests": {
+            "value": "[variables('availabilityTests')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "app-insights"
+      ]
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "action-group",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'action-group.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appInsightsName": {
+            "value": "[variables('appServiceName')]"
+          },
+          "alertRecipientEmails": {
+            "value": "[variables('alertRecipientEmails')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "app-insights"
+      ]
     }
   ],
   "outputs": {
