@@ -170,13 +170,13 @@
     "availabilityCheckHosts": "[if(greater(length(parameters('customAvailabilityMonitors')), 0), concat(variables('defaultAvailabilityCheckHosts'), parameters('customAvailabilityMonitors')), variables('defaultAvailabilityCheckHosts'))]",
     "copy": [
       {
-        "name": "availabilityTests",
-        "count": "[length(variables('availabilityCheckHosts'))]",
-        "input": {
-            "nameSuffix": "[split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[0]]",
-            "url": "[concat('https://', split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[1])]",
-            "guid": "[guid(variables('availabilityCheckHosts')[copyIndex('availabilityTests')])]"
-        }
+          "name": "availabilityTests",
+          "count": "[length(variables('availabilityCheckHosts'))]",
+          "input": {
+              "nameSuffix": "[split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[0]]",
+              "url": "[concat('https://', split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[1])]",
+              "guid": "[guid(variables('availabilityCheckHosts')[copyIndex('availabilityTests')])]"
+          }
       },
       {
         "name": "alertRecipientEmails",
@@ -442,12 +442,12 @@
     },
     {
       "apiVersion": "2017-05-10",
-      "name": "availability-test-alerts",
-      "condition": "[and(greater(length(parameters('customAvailabilityMonitors')), 0), greater(length(parameters('alertRecipientEmails')), 0))]",
+      "name": "[concat('availability-test-alert',copyIndex('customAlerts'))]",
+      "condition": "[greater(length(parameters('alertRecipientEmails')), 0)]",
       "type": "Microsoft.Resources/deployments",
       "copy": {
           "name": "customAlerts",
-          "count": "[if(greater(length(parameters('customAvailabilityMonitors')), 0), length(parameters('customAvailabilityMonitors')), 1)]"
+          "count": "[length(variables('availabilityCheckHosts'))]"
       },
       "properties": {
         "mode": "Incremental",
@@ -466,25 +466,25 @@
               "value": "[reference('app-insights').outputs.AppInsightsResourceId.value]"
           },
           "alertName": {
-              "value": "[concat(variables('appServiceName'), '-at-alert-', split(parameters('customAvailabilityMonitors')[copyIndex('customAlerts')], ':')[0])]"
+              "value": "[concat(variables('appServiceName'), '-at-alert-', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0])]"
           },
           "actionGroupId": {
-              "value": "[if(greater(length(parameters('alertRecipientEmails')), 0), reference('action-groups', '2019-03-01').outputs.actionGroupResourceId.value, '')]"
+              "value": "[if(greater(length(parameters('alertRecipientEmails')), 0), reference('action-group', '2019-03-01').outputs.actionGroupResourceId.value, '')]"
           },
           "alertDescriptionText": {
-              "value": "[concat('Custom URL availability monitor alert for \"', split(parameters('customAvailabilityMonitors')[copyIndex('customAlerts')], ':')[0], '\".')]"
+              "value": "[concat('Custom URL availability monitor alert for \"', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0], '\".')]"
           },
           "alertSeverity": {
               "value": 1
           },
           "webTestId": {
-              "value": "[resourceId('microsoft.insights/webtests', concat(variables('appServiceName'), '-at-', split(parameters('customAvailabilityMonitors')[copyIndex('customAlerts')], ':')[0]))]"
+              "value": "[resourceId('microsoft.insights/webtests', concat(variables('appServiceName'), '-at-', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0]))]"
           }
         }
       },
       "dependsOn": [
-          "availability-tests",
-          "action-groups"
+          "availability-test",
+          "action-group"
       ]
     }
   ],
