@@ -5,8 +5,8 @@ describe("login", function () {
     cy.signIn()
       .visit(baseUrl);
 
-    cy.url().should('eq', baseUrl);
-    cy.get('h1').contains('Organisations');
+    cy.url().should('eq', `${baseUrl}organisations/B1T`);
+    cy.get('h1').contains('bat 1');
     cy.get('footer').scrollIntoView({ duration: 2000 });
   });
 });
