@@ -1,0 +1,26 @@
+<%= content_for :page_title, "Courses as an accredited body" %>
+<%= content_for :before_content, render_breadcrumbs(:training_providers) %>
+
+<h1 class="govuk-heading-xl">
+  Courses as an accredited body
+</h1>
+
+<p class="govuk-body">Use this section to:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>see who lists you as their accredited body</li>
+  <li>see which courses you’re the accredited body for</li>
+</ul>
+
+<h2 class="govuk-heading-l govuk-!-margin-top-6">Training providers</h2>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <ul class="govuk-list" data-qa="provider__training_providers_list">
+      <% @providers.each do |provider| %>
+      <h3 class="govuk-heading-m">
+        <%= link_to provider.provider_name, "#", class: "govuk-link" %>
+        <span class="govuk-body govuk-!-font-weight-regular govuk-!-display-block"> count of courses the accredited body certifies to be added</span>
+      </h3>
+      <% end %>
+    </ul>
+  </div>
+</div>

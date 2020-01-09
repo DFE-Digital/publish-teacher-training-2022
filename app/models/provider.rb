@@ -5,6 +5,8 @@ class Provider < Base
 
   self.primary_key = :provider_code
 
+  custom_endpoint :training_providers, on: :member, request_method: :get
+
   def publish
     post_request("/publish")
   end
