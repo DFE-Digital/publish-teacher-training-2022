@@ -18,7 +18,7 @@ class Provider < Base
   end
 
   def full_address
-    [address1, address2, address3, address4, postcode].select(&:present?).join("<br> ").html_safe
+    [address1, address2, address3, address4, postcode].map { |line| ERB::Util.html_escape(line) }.select(&:present?).join("<br> ").html_safe
   end
 
   def rolled_over?
