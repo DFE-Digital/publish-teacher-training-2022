@@ -22,6 +22,6 @@ class Site < Base
   ].freeze
 
   def full_address
-    [address1, address2, address3, address4, postcode].select(&:present?).join(", ").html_safe
+    [address1, address2, address3, address4, postcode].select(&:present?).join(", ")
   end
 end
