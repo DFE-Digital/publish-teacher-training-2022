@@ -1,4 +1,4 @@
-<% if @provider.accredited_body? %>
+<% if @provider.accredited_body? && current_user["admin"]%>
   <div class="govuk-!-margin-bottom-8">
     <h2 class="govuk-heading-m"><%= link_to "Courses as an accredited body","#", class: "govuk-link", data: { qa: 'courses_as_accredited_body_link' } %></h2>
       <p class="govuk-body">Use this section to:</p>
