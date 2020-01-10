@@ -180,6 +180,32 @@ the password can be any non-secure local password you care to use.
     yarn run cy:run --env 'email=someone@test.com,password=change me'
     ```
 
+### Additional required setup
+1. User needs to be setup in dfe sigin
+2. User needs to have the a single provider/organisation setup in the database
+
+```bash
+# creates the test `user` if missing
+psql -d "your_db" -c "INSERT INTO \"user\" (email, first_name, last_name, state, accept_terms_date_utc) VALUES ('someone@test.com', 'integration', 'tests', 'transitioned', current_timestamp) ON CONFLICT (email) DO nothing;"
+
+# creates the `provider` `bat 1 (B1T)` if missing
+psql -d "your_db" -c "INSERT INTO \"provider\" (provider_code, provider_name, recruitment_cycle_id, scheme_member, provider_type, accrediting_provider) VALUES ('B1T', 'bat 1', (SELECT id FROM \"recruitment_cycle\" ORDER BY year DESC limit 1), 'N', 'O', 'Y') ON CONFLICT (provider_code, recruitment_cycle_id) DO nothing;"
+
+# creates the `organisation` `Borg` if missing
+psql -d "your_db" -c "INSERT INTO \"organisation\" (name) (SELECT 'Borg' WHERE NOT EXISTS (SELECT id FROM \"organisation\" WHERE name = 'Borg'));"
+
+# creates the `organisation_provider` association if missing
+psql -d "your_db" -c "INSERT INTO \"organisation_provider\" (provider_id, organisation_id) (SELECT (SELECT id FROM \"provider\" WHERE provider_code = 'B1T' AND recruitment_cycle_id = (SELECT id FROM \"recruitment_cycle\" ORDER BY year DESC limit 1)), (SELECT id FROM organisation WHERE name = 'Borg') WHERE NOT EXISTS (SELECT * FROM \"organisation_provider\" WHERE provider_id=(SELECT id FROM \"provider\" WHERE provider_code = 'B1T' AND recruitment_cycle_id = (SELECT id FROM \"recruitment_cycle\" ORDER BY year DESC limit 1)) AND organisation_id = (SELECT id FROM \"organisation\" WHERE name = 'Borg')));"
+
+# creates `organisation_user` association for test `user` if missing
+psql -d "your_db" -c "INSERT INTO \"organisation_user\" (user_id, organisation_id) SELECT ( SELECT id FROM \"user\" WHERE email = 'someone@test.com'), (SELECT id FROM \"organisation\" WHERE name = 'Borg') ON CONFLICT (user_id, organisation_id) DO nothing;"
+
+# creates `organisation_user` association for admin `user` if missing
+psql -d "your_db" -c "INSERT INTO \"organisation_user\" (user_id, organisation_id) SELECT id, (SELECT id FROM \"organisation\" WHERE name = 'Borg') FROM \"user\" WHERE admin = TRUE ON CONFLICT (user_id, organisation_id) DO nothing;"
+
+```
+
+
 ### Optional custom browser
 1. Download the appropriate version browser from [Chromium Downloads Tool](https://chromium.cypress.io/).
     1. Extract content to `./end-to-end-tests/browsers`
