@@ -1,7 +1,9 @@
 const baseUrl = Cypress.config().baseUrl;
 
 describe("login", function () {
-  it("viewing organisation list ", function () {
+  // NOTE: user only has one organisation associated so,
+  //       it can not view a list of organisations
+  it("viewing B1T organisation details ", function () {
     cy.signIn()
       .visit(baseUrl);
 
