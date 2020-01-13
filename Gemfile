@@ -83,7 +83,7 @@ group :development, :test do
   gem "parallel_tests"
 
   # Testing framework
-  gem "rspec-rails", "~> 4.0.0.beta3"
+  gem "rspec-rails", "~> 4.0.0.beta4"
 
   # A Ruby static code analyzer and formatter
   gem "rubocop", require: false
