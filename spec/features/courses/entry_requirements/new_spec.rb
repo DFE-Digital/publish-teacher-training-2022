@@ -64,7 +64,7 @@ feature "new course entry_requirements", type: :feature do
       ].each do |subject|
         expect(new_entry_requirements_page.send(subject)).to have_field("1. Must have the GCSE (least flexible)")
         expect(new_entry_requirements_page.send(subject)).to have_field("2: Taking the GCSE")
-        expect(new_entry_requirements_page.send(subject)).to have_field("3: Equivalence test")
+        expect(new_entry_requirements_page.send(subject)).to have_field("3: Equivalency test")
       end
 
       choose("course_maths_expect_to_achieve_before_training_begins")
@@ -105,7 +105,7 @@ feature "new course entry_requirements", type: :feature do
       ].each do |subject|
         expect(new_entry_requirements_page.send(subject)).to have_field("1. Must have the GCSE (least flexible)")
         expect(new_entry_requirements_page.send(subject)).to have_field("2: Taking the GCSE")
-        expect(new_entry_requirements_page.send(subject)).to have_field("3: Equivalence test")
+        expect(new_entry_requirements_page.send(subject)).to have_field("3: Equivalency test")
       end
 
       choose("course_english_expect_to_achieve_before_training_begins")

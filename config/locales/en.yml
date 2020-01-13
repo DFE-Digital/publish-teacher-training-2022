@@ -51,10 +51,10 @@ en:
         label: "2: Taking the GCSE"
         help: "You will consider applicants with a pending GCSE. But UCAS will block applications from anyone who needs to take an equivalency test."
         details_label: "Taking the GCSE"
-      equivalence_test:
-        label: "3: Equivalence test"
+      equivalency_test:
+        label: "3: Equivalency test"
         help: "You will consider applicants who need to take an equivalency test, as well as those with a pending GCSE."
-        details_label: "Equivalence test"
+        details_label: "Equivalency test"
       not_required:
         details_label: "No requirement"
         help: "You will receive applications from candidates who will not have a grade C (or 4) or above."
