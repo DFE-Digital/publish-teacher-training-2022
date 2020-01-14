@@ -10,10 +10,14 @@ feature "Course confirmation", type: :feature do
   end
   let(:site1) { build(:site, location_name: "Site one") }
   let(:site2) { build(:site, location_name: "Site two") }
+  let(:study_mode) { "full_time" }
+  let(:level) { :secondary }
   let(:course) do
     build(:course,
           provider: provider,
           sites: [site1, site2],
+          study_mode: study_mode,
+          level: level,
           subjects: [
             build(:subject, :english),
             build(:subject, :mathematics),
@@ -88,13 +92,23 @@ feature "Course confirmation", type: :feature do
       end
     end
 
+    context "When the course has nil fields" do
+      let(:study_mode) { nil }
+      let(:level) { nil }
+
+      scenario "It shows blank for nil fields" do
+        expect(course_confirmation_page.details.study_mode.text).to be_blank
+        expect(course_confirmation_page.details.level.text).to be_blank
+      end
+    end
+
     scenario "it displays the correct information" do
       expect(page.title).to start_with("Check your answers before confirming")
 
       expect(course_confirmation_page.title).to have_content(
         "Check your answers before confirming",
       )
-      expect(course_confirmation_page.details.level.text).to eq(course.level.to_s.capitalize)
+      expect(course_confirmation_page.details.level.text).to eq("Secondary")
       expect(course_confirmation_page.details.is_send.text).to eq("No")
       expect(course_confirmation_page.details.subjects.text).to include("English")
       expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
