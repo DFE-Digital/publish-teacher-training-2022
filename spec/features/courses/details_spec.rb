@@ -122,7 +122,7 @@ feature "Course details", type: :feature do
         provider: provider,
         gcse_subjects_required: %w[maths science],
         english: "expect_to_achieve_before_training_begins",
-        science: "equivalency_test",
+        science: "equivalence_test",
         age_range_in_years: nil,
       )
     end

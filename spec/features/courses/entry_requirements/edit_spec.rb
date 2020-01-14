@@ -7,7 +7,7 @@ feature "Edit course entry requirements", type: :feature do
   let(:provider) { build(:provider) }
   let(:edit_options) {
     {
-      entry_requirements: %w[must_have_qualification_at_application_time expect_to_achieve_before_training_begins equivalency_test],
+      entry_requirements: %w[must_have_qualification_at_application_time expect_to_achieve_before_training_begins equivalence_test],
     }
   }
 
@@ -44,7 +44,7 @@ feature "Edit course entry requirements", type: :feature do
         provider: provider,
         maths: "must_have_qualification_at_application_time",
         english: "expect_to_achieve_before_training_begins",
-        science: "equivalency_test",
+        science: "equivalence_test",
         gcse_subjects_required: %w[maths english science],
       )
     end

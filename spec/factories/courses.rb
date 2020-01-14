@@ -37,7 +37,7 @@ FactoryBot.define do
           entry_requirements: %i[
             must_have_qualification_at_application_time
             expect_to_achieve_before_training_begins
-            equivalency_test
+            equivalence_test
           ],
           qualifications: qualifications,
           age_range_in_years: age_range_in_years,
