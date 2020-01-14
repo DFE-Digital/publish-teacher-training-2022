@@ -7,7 +7,7 @@ feature "Edit course entry requirements", type: :feature do
   let(:provider) { build(:provider) }
   let(:edit_options) {
     {
-      entry_requirements: %w[must_have_qualification_at_application_time expect_to_achieve_before_training_begins equivalence_test],
+      entry_requirements: %w[must_have_qualification_at_application_time expect_to_achieve_before_training_begins equivalency_test],
     }
   }
 
@@ -44,7 +44,7 @@ feature "Edit course entry requirements", type: :feature do
         provider: provider,
         maths: "must_have_qualification_at_application_time",
         english: "expect_to_achieve_before_training_begins",
-        science: "equivalence_test",
+        science: "equivalency_test",
         gcse_subjects_required: %w[maths english science],
       )
     end
@@ -74,7 +74,7 @@ feature "Edit course entry requirements", type: :feature do
       ].each do |subject|
         expect(entry_requirements_page.send(subject)).to have_field("1. Must have the GCSE (least flexible)")
         expect(entry_requirements_page.send(subject)).to have_field("2: Taking the GCSE")
-        expect(entry_requirements_page.send(subject)).to have_field("3: Equivalence test")
+        expect(entry_requirements_page.send(subject)).to have_field("3: Equivalency test")
       end
     end
 
@@ -86,7 +86,7 @@ feature "Edit course entry requirements", type: :feature do
       [
         ["maths_requirements", "1. Must have the GCSE (least flexible)"],
         ["english_requirements", "2: Taking the GCSE"],
-        ["science_requirements", "3: Equivalence test"],
+        ["science_requirements", "3: Equivalency test"],
       ].each do |subject, field_name|
         expect(entry_requirements_page.send(subject)).to have_field(field_name, checked: true)
       end
@@ -136,7 +136,7 @@ feature "Edit course entry requirements", type: :feature do
       ].each do |subject|
         expect(entry_requirements_page.send(subject)).to have_field("1. Must have the GCSE (least flexible)")
         expect(entry_requirements_page.send(subject)).to have_field("2: Taking the GCSE")
-        expect(entry_requirements_page.send(subject)).to have_field("3: Equivalence test")
+        expect(entry_requirements_page.send(subject)).to have_field("3: Equivalency test")
       end
     end
 

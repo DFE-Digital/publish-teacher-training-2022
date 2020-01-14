@@ -122,7 +122,7 @@ feature "Course details", type: :feature do
         provider: provider,
         gcse_subjects_required: %w[maths science],
         english: "expect_to_achieve_before_training_begins",
-        science: "equivalence_test",
+        science: "equivalency_test",
         age_range_in_years: nil,
       )
     end
@@ -131,7 +131,7 @@ feature "Course details", type: :feature do
       course_details_page.load_with_course(course)
       expect(course_details_page).to have_entry_requirements
       expect(course_details_page.entry_requirements).to have_content("Maths GCSE: Taking")
-      expect(course_details_page.entry_requirements).to have_content("Science GCSE: Equivalence test")
+      expect(course_details_page.entry_requirements).to have_content("Science GCSE: Equivalency test")
       expect(course_details_page.entry_requirements).not_to have_content("English GCSE")
       expect(course_details_page.age_range).to have_content("Unknown")
     end
