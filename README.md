@@ -1,6 +1,6 @@
-[![Build Status](https://dfe-ssp.visualstudio.com/Become-A-Teacher/_apis/build/status/Find/manage-courses-frontend?branchName=master)](https://dfe-ssp.visualstudio.com/Become-A-Teacher/_build/latest?definitionId=29&branchName=master)
+[![Build Status](https://dfe-ssp.visualstudio.com/Become-A-Teacher/_apis/build/status/Find/publish-teacher-training?branchName=master)](https://dfe-ssp.visualstudio.com/Become-A-Teacher/_build/latest?definitionId=29&branchName=master)
 
-# Manage Courses Frontend
+# Publish Teacher Training
 
 ## Prerequisites
 
@@ -138,7 +138,7 @@ authorised_user:
   password: [the password you wish to use]
 ```
 
-The email address has to exist in the users table of manage-courses-backend, but
+The email address has to exist in the users table of teacher-training-api, but
 the password can be any non-secure local password you care to use.
 
 ## Cypress
@@ -160,7 +160,7 @@ the password can be any non-secure local password you care to use.
 
 3. To open cypress
     ``` bash
-    # using ~/repos/dfe/manage-courses-frontend/end-to-end-tests/config/local.json
+    # using ~/repos/dfe/publish-teacher-training/end-to-end-tests/config/local.json
     yarn run cy:open
     ```
 
