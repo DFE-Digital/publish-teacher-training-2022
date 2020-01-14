@@ -4,9 +4,12 @@ feature "Course details", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:next_recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
   let(:provider) { build(:provider, provider_code: "A0", accredited_body?: false, sites: [site1, site2], recruitment_cycle: current_recruitment_cycle) }
+  let(:study_mode) { "full_time" }
+  let(:level) { :secondary }
   let(:course) do
     build(:course,
-          study_mode: "full_time",
+          study_mode: study_mode,
+          level: level,
           start_date: Time.zone.local(2019),
           sites: [site1, site2],
           provider: provider,
@@ -98,6 +101,18 @@ feature "Course details", type: :feature do
       "Secondary",
     )
     expect(course_details_page).to have_entry_requirements
+  end
+
+  context "When the course has nil fields" do
+    let(:study_mode) { nil }
+    let(:level) { nil }
+
+    scenario "It shows blank for nil fields" do
+      visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
+
+      expect(course_details_page.study_mode.text).to be_blank
+      expect(course_details_page.level.text).to be_blank
+    end
   end
 
   context "a course without required GCSE subjects" do
