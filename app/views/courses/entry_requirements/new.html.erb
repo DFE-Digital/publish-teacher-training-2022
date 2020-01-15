@@ -7,23 +7,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">UCAS Apply</span>
-      GCSE requirements for&nbsp;applicants
-    </h1>
+    <%= render "course/entry_requirements/page_intro" %>
 
-    <p class="govuk-body">
-      By law, all applicants need GCSE grade C/grade 4, or an equivalent, in English and maths - plus science for primary courses.
-    </p>
-
-    <p class="govuk-body">However, they may still apply if:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>they’re currently taking the GCSE</li>
-      <li>they need to take an equivalency test (this will show they have the skills to start training)</li>
-    </ul>
-    <p class="govuk-body govuk-!-margin-bottom-8">
-      The options below determine how flexible you are towards these applicants.
-    </p>
     <%= form_with url: continue_provider_recruitment_cycle_courses_entry_requirements_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year
