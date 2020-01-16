@@ -17,7 +17,7 @@
     <ul class="govuk-list" data-qa="provider__training_providers_list">
       <% @providers.each do |provider| %>
       <h3 class="govuk-heading-m">
-        <%= link_to provider.provider_name, "#", class: "govuk-link" %>
+        <%= provider.provider_name %>
         <span class="govuk-body govuk-!-font-weight-regular govuk-!-display-block"> count of courses the accredited body certifies to be added</span>
       </h3>
       <% end %>
