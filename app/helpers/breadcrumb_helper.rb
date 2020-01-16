@@ -59,4 +59,9 @@ module BreadcrumbHelper
     path = provider_ucas_contacts_path(@provider.provider_code)
     provider_breadcrumb << ["UCAS contacts", path]
   end
+
+  def training_providers_breadcrumb
+    path = provider_ucas_contacts_path(@provider.provider_code)
+    provider_breadcrumb << ["Training providers", path]
+  end
 end

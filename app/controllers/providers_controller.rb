@@ -59,6 +59,14 @@ class ProvidersController < ApplicationController
     redirect_to details_provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year)
   end
 
+  def training_providers
+    if @current_user["admin"]
+      @providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
+    else
+      redirect_to provider_path(@provider.provider_code)
+    end
+  end
+
 private
 
   def provider_params
