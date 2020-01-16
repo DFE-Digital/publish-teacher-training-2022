@@ -62,7 +62,7 @@ Rails.application.routes.draw do
       get "/about", on: :member, to: "providers#about"
       put "/about", on: :member, to: "providers#update"
       post "/publish", on: :member, to: "providers#publish"
-      get "/training_providers", on: :member, to: "providers#training_providers"
+      get "/training-providers", on: :member, to: "providers#training_providers"
 
       resource :courses, only: %i[create] do
         resource :outcome, on: :member, only: %i[new], controller: "courses/outcome" do
