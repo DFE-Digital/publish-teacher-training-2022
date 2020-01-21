@@ -10,7 +10,7 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  IMAGE_NAME: '$(dockerHubUserName)/manage-courses-frontend-poc'
+  IMAGE_NAME: '$(dockerHubUserName)/publish-teacher-training'
 
 steps:
 - script: |

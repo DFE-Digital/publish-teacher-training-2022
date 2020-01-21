@@ -4,6 +4,6 @@ set -e
 # source this file to set up environment for use by other scripts
 
 DOCKER_REGISTRY_HOST="batdevcontainerregistry.azurecr.io"
-DOCKER_REGISTRY_IMAGE="manage-courses-frontend"
+DOCKER_REGISTRY_IMAGE="publish-teacher-training"
 
 export DOCKER_PATH="$DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_IMAGE"
