@@ -16,7 +16,7 @@ manage_backend:
   # Set this in the env! The below ensures that we are un-authenticatable if we
   # forget to do this in production.
   secret: <%= SecureRandom.base64 %>
-  # URL of the API app (manage-courses-backend)
+  # URL of the API app (teacher-training-api)
   base_url: http://localhost:3001
 search_ui:
   # URL of the C# search ui app (search-and-compare-ui)
@@ -52,7 +52,7 @@ environment:
 rollover: false
 current_cycle: 2020
 current_cycle_open: true
-application_name: manage-courses-frontend
+application_name: publish-teacher-training
 logstash:
   type: tcp
   host: # Our hostname here
