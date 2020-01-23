@@ -2,10 +2,17 @@ module PageObjects
   module Page
     module Organisations
       class CoursesPage < PageObjects::Base
+        def load_with_provider(provider)
+          self.load(provider_code: provider.provider_code, recruitment_cycle_year: provider.recruitment_cycle_year)
+        end
+
         set_url "/organisations/{provider_code}/{recruitment_cycle_year}/courses"
 
         element :flash, ".govuk-success-summary"
         element :caption, ".govuk-caption-xl"
+
+        element :course_create, '[data-qa="course-create"]'
+        element :course_create_additional, '[data-qa="course-create-additional"]'
 
         sections :courses_tables, '[data-qa="courses__table-section"]' do
           element :subheading, "h2"
