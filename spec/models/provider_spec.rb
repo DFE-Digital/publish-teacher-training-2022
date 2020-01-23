@@ -4,7 +4,7 @@ describe Provider do
 
     it "publishes" do
       publish_endpoint = stub_api_v2_request("/recruitment_cycles/#{provider.recruitment_cycle.year}/providers/#{provider.provider_code}/publish", {}, :post)
-      Thread.current[:manage_courses_backend_token] = ""
+      RequestStore.store[:manage_courses_backend_token] = ""
       provider.publish
       expect(publish_endpoint).to have_been_requested
     end

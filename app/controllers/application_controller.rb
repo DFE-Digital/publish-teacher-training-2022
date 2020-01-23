@@ -178,7 +178,7 @@ private
                        Settings.manage_backend.secret,
                        Settings.manage_backend.algorithm)
 
-    Thread.current[:manage_courses_backend_token] = token
+   RequestStore.store[:manage_courses_backend_token] = token
   end
 
   def assign_sentry_contexts

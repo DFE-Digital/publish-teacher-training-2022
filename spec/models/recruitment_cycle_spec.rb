@@ -5,7 +5,8 @@ describe RecruitmentCycle do
 
     it "returns the appropriate providers" do
       stub_api_v2_resource(recruitment_cycle, include: "providers")
-      Thread.current[:manage_courses_backend_token] = ""
+      RequestStore.store[:manage_courses_backend_token] = ""
+
       expect(RecruitmentCycle.current.id).to eq(recruitment_cycle.id)
     end
   end
