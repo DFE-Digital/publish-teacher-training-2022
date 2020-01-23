@@ -15,8 +15,12 @@
 </ul>
 
 <% if @provider.courses.count > 10 %>
-  <%= add_course_link(current_user['info']['email'], @provider, is_current_cycle: @recruitment_cycle.current?) %>
-  <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your course details.</p>
+  <% if @provider.accredited_body? %>
+    <%= create_course_link(@provider, data: {qa: "course-create"} ) %>
+  <% else %>
+    <%= add_course_link(current_user['info']['email'], @provider, is_current_cycle: @recruitment_cycle.current?, data: {qa: "course-create-additional"}) %>
+    <p class="govuk-body-s govuk-!-margin-bottom-6">You’ll be taken to a Google Form to fill in your course details.</p>
+  <% end %>
 <% end %>
 
 <% if @self_accredited_courses %>
@@ -36,5 +40,9 @@
   </section>
 <% end %>
 
-<%= add_course_link(current_user['info']['email'], @provider, is_current_cycle: @recruitment_cycle.current?) %>
-<p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>
+<% if @provider.accredited_body? %>
+  <%= create_course_link(@provider, data: {qa: "course-create"} ) %>
+<% else %>
+  <%= add_course_link(current_user['info']['email'], @provider, is_current_cycle: @recruitment_cycle.current?, data: {qa: "course-create"}) %>
+  <p class="govuk-body-s">You’ll be taken to a Google Form to fill in your course details.</p>
+<% end %>
