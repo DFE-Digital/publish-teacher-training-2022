@@ -5,15 +5,19 @@ describe ApplicationController, type: :controller do
     controller.response = response
   end
 
+  describe "#request_login" do
+    subject { controller.request_login }
+
+    context "user is unauthenticated" do
+      it { should redirect_to "/signin" }
+    end
+  end
+
   describe "#authenticate" do
     subject { controller.authenticate }
 
     before do
       disable_authorised_development_user
-    end
-
-    context "user is unauthenticated" do
-      it { should redirect_to "/signin" }
     end
 
     context "user is authenticated" do
