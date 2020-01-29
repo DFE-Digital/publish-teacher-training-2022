@@ -37,12 +37,9 @@ feature "new course study mode", type: :feature do
     visit_new_study_mode_page
 
     expect(new_study_mode_page).to have_study_mode_fields
-    expect(new_study_mode_page.study_mode_fields)
-      .to have_selector('[for="course_study_mode_full_time"]', text: "Full time")
-    expect(new_study_mode_page.study_mode_fields)
-      .to have_selector('[for="course_study_mode_part_time"]', text: "Part time")
-    expect(new_study_mode_page.study_mode_fields)
-      .to have_selector('[for="course_study_mode_full_time_or_part_time"]', text: "Full time or part time")
+    expect(new_study_mode_page.study_mode_fields.full_time_label.text).to eq("Full time")
+    expect(new_study_mode_page.study_mode_fields.part_time_label.text).to eq("Part time")
+    expect(new_study_mode_page.study_mode_fields.full_time_or_part_time_label.text).to eq("Full time or part time")
 
     new_study_mode_page.study_mode_fields.full_time_or_part_time.click
 

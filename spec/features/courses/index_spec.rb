@@ -58,7 +58,7 @@ feature "View locations", type: :feature do
     expect(locations_page).to be_displayed(provider_code: provider_code)
     expect(locations_page.title).to have_content("Locations")
     expect(locations_page.locations.size).to eq(3)
-    expect(locations_page.locations.first).to have_link
+    expect(locations_page.locations.first).to have_hyperlink
     expect(locations_page.locations.first.cell.text).to eq("Main site 1")
     expect(locations_page).to have_add_a_location_link
   end
@@ -66,8 +66,8 @@ feature "View locations", type: :feature do
   scenario "it shows one location" do
     stub_api_v2_request("/providers/#{provider_code}/sites/#{sites.first.id}", site_response)
 
-    expect(locations_page.locations.first).to have_link
-    locations_page.locations.first.link.click
+    expect(locations_page.locations.first).to have_hyperlink
+    locations_page.locations.first.hyperlink.click
 
     expect(location_page).to be_displayed(provider_code: provider_code, site_id: sites[0].id)
     expect(location_page.title).to have_content("Main site 1")
