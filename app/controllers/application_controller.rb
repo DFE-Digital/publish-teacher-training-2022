@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate
   before_action :store_request_id
+  before_action :request_login
 
   def not_found
     respond_with_error(template: "errors/not_found", status: :not_found, error_text: "Resource not found")
@@ -72,8 +73,13 @@ class ApplicationController < ActionController::Base
         Raven.user_context(id: current_user["user_id"])
         logger.debug { "User session set. " + log_safe_current_user(reload: true).to_s }
       end
+    end
+  end
 
-    elsif development_mode_auth?
+  def request_login
+    return if current_user.present?
+
+    if development_mode_auth?
       logger.info("Doing development mode authentication")
       request_http_basic_authentication("Development Mode")
     else
@@ -178,7 +184,7 @@ private
                        Settings.manage_backend.secret,
                        Settings.manage_backend.algorithm)
 
-    Thread.current[:manage_courses_backend_token] = token
+    RequestStore.store[:manage_courses_backend_token] = token
   end
 
   def assign_sentry_contexts

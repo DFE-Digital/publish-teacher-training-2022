@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "not found pages", type: :request do
+describe "not found pages", type: :request do
   it "returns a 404 for html" do
     get "/foo"
     expect(response).to have_http_status(404)

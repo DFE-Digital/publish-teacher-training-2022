@@ -1,6 +1,6 @@
 class ErrorsController < ApplicationController
   skip_before_action :verify_authenticity_token,
-                     :authenticate
+                     :request_login
 
   def not_found
     respond_to do |format|
