@@ -38,6 +38,11 @@ steps:
     set -x
     docker run --name test-run-image -d $(IMAGE_NAME)
     docker exec test-run-image rake "parallel:spec[,, -O .azure_parallel]"
+    test_result=$?
+      if [ "$test_result" != "0" ]
+          echo "##vso[task.logissue type=error]Cucumber test task exited abnormally."
+        exit 1
+      fi
     docker cp test-run-image:/app/rspec-output .
     docker stop test-run-image
     docker rm test-run-image
