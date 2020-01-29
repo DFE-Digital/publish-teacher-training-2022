@@ -151,6 +151,10 @@ describe CourseCreationStepService do
       let(:level) { "primary" }
       let(:provider) { build(:provider, accredited_body?: false) }
 
+      context "Current step: Level" do
+        include_examples "previous step", :level, :courses_list
+      end
+
       context "Current step: Modern languages" do
         include_examples "previous step", :modern_languages, :subjects
       end
@@ -187,6 +191,10 @@ describe CourseCreationStepService do
     context "SCITT Provider" do
       let(:level) { "primary" }
       let(:provider) { build(:provider, accredited_body?: true) }
+
+      context "Current step: Level" do
+        include_examples "previous step", :level, :courses_list
+      end
 
       context "Current step: Subjects" do
         include_examples "previous step", :subjects, :level
@@ -236,6 +244,10 @@ describe CourseCreationStepService do
     context "Further education" do
       let(:provider) { build(:provider) }
       let(:level) { "further_education" }
+
+      context "Current step: Level" do
+        include_examples "previous step", :level, :courses_list
+      end
 
       context "Current step: Outcome" do
         include_examples "previous step", :outcome, :level
