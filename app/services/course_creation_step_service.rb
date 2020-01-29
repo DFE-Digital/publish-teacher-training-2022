@@ -30,6 +30,7 @@ class CourseCreationStepService
 
   def school_direct_workflow_steps
     %i[
+      courses_list
       level
       subjects
       modern_languages
@@ -48,6 +49,7 @@ class CourseCreationStepService
 
   def uni_or_scitt_workflow_steps
     %i[
+      courses_list
       level
       subjects
       modern_languages
@@ -65,6 +67,7 @@ class CourseCreationStepService
 
   def further_education_workflow_steps
     %i[
+      courses_list
       level
       outcome
       full_or_part_time

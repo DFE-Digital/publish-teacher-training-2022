@@ -61,6 +61,22 @@ feature "New course level", type: :feature do
     end
   end
 
+  context "Navigating backwards" do
+    let(:course_list_page) { PageObjects::Page::Organisations::CoursesPage.new }
+
+    before do
+      stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+    end
+
+    it "Returns to the course list page" do
+      visit_new_level_page
+
+      new_level_page.back.click
+
+      expect(course_list_page).to be_displayed
+    end
+  end
+
   context "Error handling" do
     before do
       stub_api_v2_build_course(is_send: 0)
