@@ -11,7 +11,7 @@ describe "Rendering financial support information" do
 
       preview_course_page.load(rendered)
 
-      expect(preview_course_page).to have_selector("[data-qa=course__loan_details]")
+      expect(preview_course_page).to have_loan_details
     end
   end
 
@@ -25,7 +25,7 @@ describe "Rendering financial support information" do
 
       preview_course_page.load(rendered)
 
-      expect(preview_course_page).to have_selector("[data-qa=course__loan_details]")
+      expect(preview_course_page).to have_loan_details
     end
   end
 
@@ -38,7 +38,7 @@ describe "Rendering financial support information" do
 
       preview_course_page.load(rendered)
 
-      expect(preview_course_page).to have_selector("[data-qa=course__bursary_details]")
+      expect(preview_course_page).to have_bursary_details
     end
   end
 
@@ -51,7 +51,7 @@ describe "Rendering financial support information" do
 
       preview_course_page.load(rendered)
 
-      expect(preview_course_page).to have_selector("[data-qa=course__scholarship_and_bursary_details]")
+      expect(preview_course_page).to have_scholarship_and_bursary_details
     end
   end
 
@@ -63,7 +63,7 @@ describe "Rendering financial support information" do
 
       preview_course_page.load(rendered)
 
-      expect(preview_course_page).to have_selector("[data-qa=course__salary_details]")
+      expect(preview_course_page).to have_salary_details
     end
   end
 end

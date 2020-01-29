@@ -21,8 +21,10 @@ module PageObjects
         element :eu_fees, "[data-qa=course__eu_fees]"
         element :fee_details, "[data-qa=course__fee_details]"
         element :international_fees, "[data-qa=course__international_fees]"
-        element :salary_details, "#section-salary"
+        element :loan_details, "[data-qa=course__loan_details]"
+        element :scholarship_and_bursary_details, "[data-qa=course__scholarship_and_bursary_details]"
         element :scholarship_amount, "[data-qa=course__scholarship_amount]"
+        element :bursary_details, "[data-qa=course__bursary_details]"
         element :bursary_amount, "[data-qa=course__bursary_amount]"
         element :early_career_payment_details, "[data-qa=course__early_career_payment_details]"
         element :financial_support_details, "[data-qa=course__financial_support_details]"
@@ -40,6 +42,7 @@ module PageObjects
         element :course_apply, "#section-apply"
         element :choose_a_training_location_table, "[data-qa=course__choose_a_training_location]"
         element :locations_map, "[data-qa=course__locations_map]"
+        element :salary_details, "[data-qa=course__salary_details]"
       end
     end
   end
