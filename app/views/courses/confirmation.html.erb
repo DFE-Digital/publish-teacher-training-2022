@@ -319,7 +319,10 @@
 
       <%= f.submit "Save new course",
         class: "govuk-button",
-        data: { qa: 'course__save' } %>
+        "data-prevent-double-click" => true,
+        "data-module" => "govuk-button",
+        data: { qa: 'course__save' }
+      %>
        <p class="govuk-body">Saving this course will not publish it.</p>
     <% end %>
   </div>
