@@ -60,7 +60,7 @@ module Courses
   private
 
     def error_keys
-      [:subjects]
+      [:modern_languages_subjects]
     end
 
     def strip_non_language_subjects

@@ -88,11 +88,11 @@ feature "new modern language", type: :feature do
 
     context "Error handling" do
       scenario do
-        course.errors.add(:subjects, "Invalid")
+        course.errors.add(:modern_languages_subjects, "Invalid")
         stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id])
         visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id] })
         new_modern_languages_page.continue.click
-        expect(new_modern_languages_page.error_flash.text).to include("Subjects Invalid")
+        expect(new_modern_languages_page.error_flash.text).to include("Modern languages subjects Invalid")
       end
     end
   end
