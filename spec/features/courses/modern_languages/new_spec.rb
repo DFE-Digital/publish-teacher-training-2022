@@ -14,7 +14,6 @@ feature "new modern language", type: :feature do
     PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
   end
 
-  let(:course) { build(:course, :new, provider: provider) }
   let(:provider) { build(:provider) }
   let(:modern_languages_subject) { build(:subject, :modern_languages) }
   let(:other_subject) { build(:subject, :mathematics) }
@@ -23,6 +22,7 @@ feature "new modern language", type: :feature do
   let(:subjects) { [modern_languages_subject] }
   let(:course) do
     build(:course,
+          course_code: nil,
           provider: provider,
           edit_options: {
             subjects: subjects,
