@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "jest": "^25.1.0",
-    "webpack-dev-server": "^3.10.2"
+    "webpack-dev-server": "^3.10.3"
   },
   "jest": {
     "roots": [
