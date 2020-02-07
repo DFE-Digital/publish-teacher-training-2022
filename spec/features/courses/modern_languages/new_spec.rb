@@ -14,7 +14,6 @@ feature "new modern language", type: :feature do
     PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
   end
 
-  let(:course) { build(:course, :new, provider: provider) }
   let(:provider) { build(:provider) }
   let(:modern_languages_subject) { build(:subject, :modern_languages) }
   let(:other_subject) { build(:subject, :mathematics) }
@@ -23,6 +22,7 @@ feature "new modern language", type: :feature do
   let(:subjects) { [modern_languages_subject] }
   let(:course) do
     build(:course,
+          course_code: nil,
           provider: provider,
           edit_options: {
             subjects: subjects,
@@ -88,11 +88,11 @@ feature "new modern language", type: :feature do
 
     context "Error handling" do
       scenario do
-        course.errors.add(:subjects, "Invalid")
+        course.errors.add(:modern_languages_subjects, "Invalid")
         stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id])
         visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id] })
         new_modern_languages_page.continue.click
-        expect(new_modern_languages_page.error_flash.text).to include("Subjects Invalid")
+        expect(new_modern_languages_page.error_flash.text).to include("Modern languages subjects Invalid")
       end
     end
   end

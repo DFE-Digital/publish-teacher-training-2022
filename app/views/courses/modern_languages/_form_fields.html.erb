@@ -1,17 +1,31 @@
-<div class="govuk-form-group" data-qa="course__languages">
-  <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-    <% course.meta["edit_options"]["modern_languages"].each do |language| %>
-      <div class="govuk-checkboxes__item">
-        <%= form.check_box :language_ids,
-          { checked: course.subject_present?(language),
-            class: 'govuk-checkboxes__input',
-            multiple: true,
-            data: { qa: "checkbox_language_#{language["attributes"]["subject_name"]}" }
-          }, language["id"], nil %>
-        <%= form.label "language_ids_#{language["id"]}",
-          language["attributes"]["subject_name"],
-          class: 'govuk-label govuk-checkboxes__label' %>
+<%= render "shared/error_wrapper", error_keys: [:modern_languages_subjects], data_qa: "course__modern_languages_subjects" do %>
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+      <h1 class="govuk-fieldset__heading" data-qa="page-heading">
+        <% if course.course_code %>
+          <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+        <% end %>
+        Pick modern languages
+      </h1>
+    </legend>
+    <%= render "shared/error_messages", error_keys: [:modern_languages_subjects] %>
+
+    <div class="govuk-form-group" data-qa="course__languages">
+      <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+        <% course.meta["edit_options"]["modern_languages"].each do |language| %>
+          <div class="govuk-checkboxes__item">
+            <%= form.check_box :language_ids,
+              { checked: course.subject_present?(language),
+                class: 'govuk-checkboxes__input',
+                multiple: true,
+                data: { qa: "checkbox_language_#{language["attributes"]["subject_name"]}" }
+              }, language["id"], nil %>
+            <%= form.label "language_ids_#{language["id"]}",
+              language["attributes"]["subject_name"],
+              class: 'govuk-label govuk-checkboxes__label' %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-  </div>
-</div>
+    </div>
+  </fieldset>
+<% end %>

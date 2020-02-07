@@ -10,20 +10,8 @@
     <%= form_with model: course,
           url: modern_languages_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
           method: :put do |form| %>
-      <div
-        class="<%= classnames("govuk-form-group", "govuk-form-group--error": @errors && @errors[:subjects]&.any?) %>"
-        data-qa="course__modern_languages_section">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading">
-              <span class="govuk-caption-xl"><%= course.name_and_code %></span>
-              Change modern languages
-            </h1>
-          </legend>
-          <%= render "shared/error_messages", error_keys: [:subjects] %>
-          <%= render 'courses/modern_languages/form_fields', form: form %>
-        </fieldset>
-      </div>
+      <%= render "shared/error_messages", error_keys: [:modern_languages_subjects] %>
+      <%= render 'courses/modern_languages/form_fields', form: form %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
         class: "govuk-button", data: { qa: 'course__save' }
