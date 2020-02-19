@@ -36,8 +36,10 @@ feature "Edit accredited body" do
 
     scenario "It displays the accredited bodies" do
       suggested_providers = new_accredited_body_page.suggested_accredited_bodies.map(&:text)
-      expect(suggested_providers[0]). to eq("#{accrediting_provider_1.provider_name} (#{accrediting_provider_1.provider_code})")
-      expect(suggested_providers[1]). to eq("#{accrediting_provider_2.provider_name} (#{accrediting_provider_2.provider_code})")
+      expect(suggested_providers).to include(
+        "#{accrediting_provider_1.provider_name} (#{accrediting_provider_1.provider_code})",
+        "#{accrediting_provider_2.provider_name} (#{accrediting_provider_2.provider_code})",
+      )
     end
 
     context "when selecting an accredited body" do
