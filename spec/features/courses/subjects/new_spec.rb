@@ -151,14 +151,21 @@ feature "New course level", type: :feature do
       end
     end
 
-    scenario "sends user back to course confirmation" do
+    # NOTE: modern langauges will send users to confirmation page
+    scenario "sends user to modern langauges" do
       stub_api_v2_build_course(subjects_ids: [english.id])
       visit_new_subjects_page(goto_confirmation: true)
 
       new_subjects_page.subjects_fields.select(english.subject_name).click
       new_subjects_page.continue.click
 
-      expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
+      expect(page).to have_current_path(
+        new_provider_recruitment_cycle_courses_modern_languages_path(
+          provider.provider_code,
+          provider.recruitment_cycle.year,
+          course: { subjects_ids: [english.id] }, goto_confirmation: true,
+        ),
+      )
     end
   end
 
