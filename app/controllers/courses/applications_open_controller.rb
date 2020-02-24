@@ -29,6 +29,7 @@ module Courses
           :sites_ids,
           :subjects_ids,
           :goto_confirmation,
+          :accrediting_provider_code,
         )
         .permit(
           :applications_open_from,
