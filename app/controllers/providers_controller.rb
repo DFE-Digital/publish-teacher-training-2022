@@ -60,7 +60,7 @@ class ProvidersController < ApplicationController
   end
 
   def training_providers
-    if @current_user["admin"]
+    if user_is_admin?
       @providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
     else
       redirect_to provider_path(@provider.provider_code)

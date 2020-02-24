@@ -29,8 +29,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    if session[:auth_user]
-      @current_user ||= session[:auth_user]
+    if is_authenticated?
+      session[:auth_user]
     elsif development_mode_auth?
       email = authenticate_with_http_basic do |user, pass|
         user if authorise_development_mode?(user, pass)
@@ -43,6 +43,18 @@ class ApplicationController < ActionController::Base
         )
       end
     end
+  end
+
+  def is_authenticated?
+    session[:auth_user].present?
+  end
+
+  def user_is_admin?
+    current_user["admin"]
+  end
+
+  def user_state
+    current_user["state"]
   end
 
   def log_safe_current_user(reload: false)
@@ -180,6 +192,21 @@ private
       last_name:       current_user_info["last_name"].to_s,
       sign_in_user_id: current_user_dfe_signin_id,
     }
+
+    # Attempting to debug blanking of name information
+    if payload[:first_name].blank?
+      logger.warn "first_name missing for sign in user id: #{payload[:sign_in_user_id]}"
+    end
+
+    if payload[:last_name].blank?
+      logger.warn "last_name missing for sign in user id: #{payload[:sign_in_user_id]}"
+    end
+
+    if payload[:email].blank?
+      logger.warn "email missing for sign in user id: #{payload[:sign_in_user_id]}"
+    end
+    # end of debugging
+
     token = JWT.encode(payload,
                        Settings.manage_backend.secret,
                        Settings.manage_backend.algorithm)
