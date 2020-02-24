@@ -24,11 +24,6 @@
               collection: provider.accredited_bodies,
               locals: { form: fields }
             %>
-            <%= render 'shared/course_creation_hidden_fields',
-              form: fields,
-              course_creation_params: @course_creation_params,
-              except_keys: [:accrediting_provider_code]
-            %>
 
             <div class="govuk-radios__divider">or</div>
 
