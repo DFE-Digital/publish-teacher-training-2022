@@ -144,7 +144,11 @@ private
   end
 
   def continue_step
-    params[:goto_confirmation] && !%i[subjects].include?(current_step) ? :confirmation : CourseCreationStepService.new.execute(current_step: current_step, course: @course)[:next]
+    if params[:goto_confirmation] && current_step != :subjects
+      :confirmation
+    else
+      CourseCreationStepService.new.execute(current_step: current_step, course: @course)[:next]
+    end
   end
 
   def next_step
