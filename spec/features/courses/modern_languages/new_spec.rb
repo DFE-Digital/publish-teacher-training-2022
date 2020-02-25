@@ -14,7 +14,7 @@ feature "new modern language", type: :feature do
     PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
   end
 
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, sites: [build(:site), build(:site)]) }
   let(:modern_languages_subject) { build(:subject, :modern_languages) }
   let(:other_subject) { build(:subject, :mathematics) }
   let(:russian) { build(:subject, :russian) }
@@ -22,7 +22,7 @@ feature "new modern language", type: :feature do
   let(:subjects) { [modern_languages_subject] }
   let(:course) do
     build(:course,
-          course_code: nil,
+          :new,
           provider: provider,
           edit_options: {
             subjects: subjects,
@@ -32,7 +32,11 @@ feature "new modern language", type: :feature do
                 11_to_18
                 14_to_19
               ],
-          })
+          },
+          accrediting_provider: build(:provider),
+          applications_open_from: "2019-10-09",
+          gcse_subjects_required: %w[maths science english],
+          start_date: "2019-10-09")
   end
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
@@ -91,6 +95,13 @@ feature "new modern language", type: :feature do
           course: { subjects_ids: [modern_languages_subject.id, russian.id] },
         ),
       )
+    end
+
+    scenario "sends user back to course confirmation" do
+      build_course_with_selected_value_request
+      visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id, russian.id] }, goto_confirmation: true)
+      new_modern_languages_page.continue.click
+      expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
     end
 
     scenario "does not redirect to the previous step" do
