@@ -34,7 +34,7 @@ private
   end
 
   def page_after_accept_terms
-    case session[:auth_user]["state"]
+    case user_state
     when "new"
       transition_info_path
     when "transitioned"
