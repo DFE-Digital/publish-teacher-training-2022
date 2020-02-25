@@ -93,8 +93,8 @@ module Courses
     end
 
     def build_course_params
-      params[:course][:subjects_ids] += params[:course][:language_ids] if params[:course][:language_ids]
-      params[:course][:subjects_ids].uniq!
+      first_level_subject = params[:course][:subjects_ids].first
+      params[:course][:subjects_ids] = [first_level_subject, params[:course][:language_ids]].flatten if params[:course][:language_ids]
       params[:course].delete :language_ids
     end
   end

@@ -18,7 +18,8 @@ feature "new modern language", type: :feature do
   let(:modern_languages_subject) { build(:subject, :modern_languages) }
   let(:other_subject) { build(:subject, :mathematics) }
   let(:russian) { build(:subject, :russian) }
-  let(:modern_languages) { [russian] }
+  let(:french) { build(:subject, :french) }
+  let(:modern_languages) { [russian, french] }
   let(:subjects) { [modern_languages_subject] }
   let(:course) do
     build(:course,
@@ -89,6 +90,26 @@ feature "new modern language", type: :feature do
           provider_code: provider.provider_code,
           recruitment_cycle_year: recruitment_cycle.year,
           course: { subjects_ids: [modern_languages_subject.id, russian.id] },
+        ),
+      )
+    end
+
+    scenario "changing language selection" do
+      stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id])
+      build_course_with_selected_value_request
+      stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id, french.id])
+      visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id] })
+      new_modern_languages_page.language_checkbox("Russian").click
+      new_modern_languages_page.continue.click
+      next_step_page.back.click
+      new_modern_languages_page.language_checkbox("French").click
+      new_modern_languages_page.continue.click
+
+      expect(page).to have_current_path(
+        new_provider_recruitment_cycle_courses_age_range_path(
+          provider_code: provider.provider_code,
+          recruitment_cycle_year: recruitment_cycle.year,
+          course: { subjects_ids: [modern_languages_subject.id, french.id] },
         ),
       )
     end
