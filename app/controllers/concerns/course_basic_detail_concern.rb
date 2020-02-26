@@ -49,12 +49,19 @@ private
 
   def build_new_course
     add_custom_age_range_into_params if params.dig("course", "age_range_in_years") == "other"
+    add_subjects_ids if params.dig("previous", "subjects_ids").is_a?(Array) && current_step == :subjects
 
     @course = Course.build_new(
       recruitment_cycle_year: params[:recruitment_cycle_year],
       provider_code: params[:provider_code],
       course: course_params.to_unsafe_hash,
     )
+  end
+
+  def add_subjects_ids
+    if params["previous"]["modern_language_subject_id"].in?(params["course"]["subjects_ids"])
+      params["course"]["subjects_ids"] = params["previous"]["subjects_ids"]
+    end
   end
 
   def add_custom_age_range_into_params

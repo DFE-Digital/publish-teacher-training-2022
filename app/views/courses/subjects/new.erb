@@ -11,10 +11,9 @@
                     @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
-
-      <%= params.dig("course", "subjects_ids")%>
-      <% if params.dig("course", "subjects_ids").is_a?(Array) %>
-        <% params.dig("course", "subjects_ids").each do |array_value| %>
+      <% if @course[:meta][:edit_options][:modern_language_subject][:id].to_s.in?(params.dig("course", "subjects_ids") || [])%>
+          <%= hidden_field(:previous, :modern_language_subject_id, value: @course[:meta][:edit_options][:modern_language_subject][:id]) %>
+        <% params["course"]["subjects_ids"].each do |array_value| %>
           <%= hidden_field(:previous, :subjects_ids, multiple: true, value: array_value) %>
         <% end %>
       <% end %>
