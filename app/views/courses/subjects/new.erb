@@ -11,6 +11,13 @@
                     @provider.recruitment_cycle_year
                   ),
                   method: :get do |form| %>
+
+      <%= params.dig("course", "subjects_ids")%>
+      <% if params.dig("course", "subjects_ids").is_a?(Array) %>
+        <% params.dig("course", "subjects_ids").each do |array_value| %>
+          <%= hidden_field(:previous, :subjects_ids, multiple: true, value: array_value) %>
+        <% end %>
+      <% end %>
       <%= render "courses/new_fields_holder", form: form, except_keys: [] do |fields| %>
         <%= render 'form_fields', form: fields %>
 
