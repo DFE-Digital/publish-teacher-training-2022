@@ -3,7 +3,6 @@ require.context("govuk-frontend/govuk/assets");
 import "../stylesheets/application.scss";
 import "accessible-autocomplete/dist/accessible-autocomplete.min.css";
 import { initAll } from "govuk-frontend";
-import CookieMessage from "scripts/cookie-banner";
 import FormCheckLeave from "scripts/form-check-leave";
 import { triggerFormAnalytics } from "scripts/form-error-tracking";
 import initAutocomplete from "scripts/autocomplete";
@@ -12,9 +11,6 @@ import initLocationsMap from "scripts/locations-map";
 initAll();
 
 window.initLocationsMap = initLocationsMap;
-
-var $cookieMessage = document.querySelector('[data-module="cookie-message"]');
-new CookieMessage($cookieMessage).init();
 
 const $form = document.querySelector('[data-module="form-check-leave"]');
 new FormCheckLeave($form).init();
