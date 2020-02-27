@@ -1,4 +1,4 @@
-class HealthChecksController < ActionController::API
+class HeartbeatController < ActionController::API
   include HTTParty
 
   def ping

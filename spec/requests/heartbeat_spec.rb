@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "health check requests" do
+describe "heart beat requests" do
   describe "GET /ping" do
     it "returns PONG" do
       get "/ping"
