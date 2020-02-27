@@ -1,7 +1,7 @@
 <%= content_for :page_title, "Is this a teaching apprenticeship?" %>
 
 <% content_for :before_content do %>
-  <%= course_creation_back_button(@back_link_path) %>
+  <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
 <%= render 'shared/errors' %>

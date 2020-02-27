@@ -40,8 +40,6 @@ module CourseBasicDetailConcern
 
     if @errors.any?
       render :new
-    elsif params[:goto_confirmation].present?
-      redirect_to confirmation_provider_recruitment_cycle_courses_path(path_params)
     else
       redirect_to next_step
     end
@@ -145,27 +143,47 @@ private
     @meta_course_creation_params = params.slice(:goto_confirmation)
   end
 
-  def next_step
-    next_step = CourseCreationStepService.new.execute(current_step: current_step, course: @course)[:next]
-    next_page = course_creation_path_for(next_step)
+  def continue_step
+    if params[:goto_confirmation] && current_step != :subjects
+      :confirmation
+    else
+      CourseCreationStepService.new.execute(current_step: current_step, course: @course)[:next]
+    end
+  end
 
-    if next_page.nil?
-      raise "No path defined for next step: #{next_step}"
+  def next_step
+    continue_path = course_creation_path_for(continue_step)
+
+    if continue_path.nil?
+      raise "No path defined for continue step: #{continue_path}"
     end
 
-    next_page
+    continue_path
   end
 
   def path_params
-    { course: course_params }
+    path_params = { course: course_params }
+    path_params[:goto_confirmation] = params[:goto_confirmation] if params[:goto_confirmation]
+    path_params
+  end
+
+  def back_step
+    if params[:goto_confirmation]
+      if current_step == :modern_languages
+        :subjects
+      else
+        :confirmation
+      end
+    else
+      CourseCreationStepService.new.execute(current_step: current_step, course: @course)[:previous]
+    end
   end
 
   def build_back_link
-    previous_step = CourseCreationStepService.new.execute(current_step: current_step, course: @course)[:previous]
-    previous_path = course_back_path_for(previous_step)
+    previous_path = course_back_path_for(back_step)
 
     if previous_path.nil?
-      raise "No path defined for previous step: #{previous_step}"
+      raise "No path defined for back step: #{back_step}"
     end
 
     @back_link_path = previous_path

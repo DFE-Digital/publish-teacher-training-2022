@@ -5,14 +5,6 @@ module ViewHelper
     end
   end
 
-  def course_creation_back_button(back_path)
-    if params[:goto_confirmation]
-      govuk_back_link_to confirmation_provider_recruitment_cycle_courses_path(course: @course_creation_params)
-    else
-      govuk_back_link_to back_path
-    end
-  end
-
   def subject_page_title(course)
     if course.level == "primary"
       "Pick a primary subject"
