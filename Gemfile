@@ -136,6 +136,8 @@ group :test do
 
   # Allows assert_template in request specs
   gem "rails-controller-testing"
+
+  gem "httparty"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
