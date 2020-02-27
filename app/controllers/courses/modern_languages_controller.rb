@@ -28,8 +28,9 @@ module Courses
     end
 
     def update
-      updated_subject_list = strip_non_language_subjects
-      updated_subject_list += selected_language_subjects
+      updated_subject_list = selected_language_subjects
+      updated_subject_list += selected_non_language_subjects
+
       if @course.update(subjects: updated_subject_list)
         flash[:success] = "Your changes have been saved"
         redirect_to(
@@ -63,15 +64,23 @@ module Courses
       [:modern_languages_subjects]
     end
 
-    def strip_non_language_subjects
-      @course.subjects.reject { |s| available_languages_ids.include?(s.id) }
-    end
-
     def selected_language_subjects
       language_ids = params.dig(:course, :language_ids)
       if language_ids.present?
         found_languages_ids = available_languages_ids & language_ids
         found_languages_ids.map { |id| Subject.new(id: id) }
+      else
+        []
+      end
+    end
+
+    def selected_non_language_subjects
+      ids = params.fetch(:course, {})[:subjects_ids]
+
+      if ids.present?
+        ids.map do |id|
+          Subject.new(id: id)
+        end
       else
         []
       end

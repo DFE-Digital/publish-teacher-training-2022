@@ -10,6 +10,11 @@ feature "Edit course modern languages", type: :feature do
   let(:site_status) { build(:site_status, site: site) }
   let(:edit_options) { { subjects: [], modern_languages: [] } }
   let(:subjects) { [build(:subject, :modern_languages)] }
+  let(:modern_languages_subject) { build(:subject, :modern_languages) }
+  let(:french_subject) { build(:subject, :french) }
+  let(:russian_subject) { build(:subject, :russian) }
+  let(:japanese_subject) { build(:subject, :japanese) }
+  let(:modern_languages) { [japanese_subject, russian_subject, french_subject] }
   let(:course) do
     build(:course,
           provider: provider,
@@ -21,7 +26,7 @@ feature "Edit course modern languages", type: :feature do
   end
 
   before do
-    stub_omniauth
+    stub_omniauth(provider: provider)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(provider, include: "courses,accrediting_provider")
@@ -39,10 +44,9 @@ feature "Edit course modern languages", type: :feature do
       {
         modern_languages: modern_languages,
         subjects: subjects,
+        modern_languages_subject: modern_languages_subject,
       }
     end
-
-    let(:modern_languages_subject) { build(:subject, :modern_languages) }
 
     let(:subjects) do
       [
@@ -51,7 +55,9 @@ feature "Edit course modern languages", type: :feature do
     end
 
     scenario "can select multiple modern language subjects" do
-      languages_page.load_with_course(course)
+      visit signin_path
+
+      visit(modern_languages_provider_recruitment_cycle_course_path(provider_code: provider.provider_code, recruitment_cycle_year: current_recruitment_cycle.year, code: course.course_code, course: { subjects_ids: [modern_languages_subject.id] }))
 
       patch_course_stub = set_patch_course_expectation do |subjects|
         expect(subjects).to match_array([
@@ -72,20 +78,17 @@ feature "Edit course modern languages", type: :feature do
 
   context "when a course already has a different language assigned" do
     let(:modern_languages_subject) { build(:subject, :modern_languages) }
-    let(:french_subject) { build(:subject, :french) }
     let(:subjects) do
       [
         modern_languages_subject,
         french_subject,
       ]
     end
-    let(:modern_languages) { [japanese_subject, russian_subject, french_subject] }
-    let(:russian_subject) { build(:subject, :russian) }
-    let(:japanese_subject) { build(:subject, :japanese) }
     let(:edit_options) do
       {
         modern_languages: modern_languages,
-        subjects: [modern_languages_subject],
+        subjects: subjects,
+        modern_languages_subject: modern_languages_subject,
       }
     end
 
@@ -94,7 +97,6 @@ feature "Edit course modern languages", type: :feature do
       expect(page).to have_field("course_language_ids_#{french_subject.id}", checked: true)
       patch_course_stub = set_patch_course_expectation do |subjects|
         expect(subjects).to match_array([
-                                          include("id" => modern_languages_subject.id.to_s),
                                           include("id" => russian_subject.id.to_s),
                                           include("id" => japanese_subject.id.to_s),
                                         ])
@@ -107,19 +109,6 @@ feature "Edit course modern languages", type: :feature do
 
       expect(course_details_page).to be_displayed
       expect(patch_course_stub).to have_been_made
-    end
-  end
-
-  context "if no modern languages are available for the course" do
-    let(:edit_options) do
-      {
-        modern_languages: nil,
-      }
-    end
-
-    scenario "redirects to course details page" do
-      languages_page.load_with_course(course)
-      expect(course_details_page).to be_displayed
     end
   end
 
@@ -147,6 +136,51 @@ feature "Edit course modern languages", type: :feature do
       languages_page.load_with_course(course)
       languages_page.save.click
       expect(languages_page).to have_error_flash
+    end
+  end
+
+  context "when course is not a modern language course" do
+    let(:edit_modern_languages_page) do
+      PageObjects::Page::Organisations::Courses::EditModernLanguagesPage.new
+    end
+    let(:subjects) { [build(:subject, :mathematics)] }
+    let(:subjects_page) { PageObjects::Page::Organisations::CourseSubjects.new }
+    let(:modern_languages) { [japanese_subject, russian_subject, french_subject] }
+    let(:edit_options) do
+      {
+        subjects: [modern_languages_subject],
+        modern_languages: modern_languages,
+        modern_languages_subject: modern_languages_subject,
+      }
+    end
+
+    before do
+      subjects_page.load_with_course(course)
+    end
+
+    context "but is changed to a modern language course" do
+      before do
+        subjects_page.master_subject_fields.select("Modern Languages")
+        subjects_page.save.click
+      end
+
+      it "takes user through wizard and saves subjects" do
+        expect(CGI.unescape(current_url)).to eql("http://www.example.com/organisations/#{provider.provider_code}/2020/courses/#{course.course_code}/modern-languages?course[subjects_ids][]=#{modern_languages_subject.id}")
+
+        patch_course_stub = set_patch_course_expectation do |subjects|
+          expect(subjects).to match_array([
+                                            include("id" => modern_languages_subject.id.to_s),
+                                            include("id" => russian_subject.id.to_s),
+                                            include("id" => japanese_subject.id.to_s),
+                                          ])
+        end
+
+        languages_page.languages_fields.find('[data-qa="checkbox_language_Russian"]').click
+        languages_page.languages_fields.find('[data-qa="checkbox_language_Japanese"]').click
+        languages_page.save.click
+
+        expect(patch_course_stub).to have_been_made
+      end
     end
   end
 
