@@ -88,5 +88,4 @@ describe "heart beat requests" do
       end
     end
   end
-
 end
