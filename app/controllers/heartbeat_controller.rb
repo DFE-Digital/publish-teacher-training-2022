@@ -20,7 +20,7 @@ class HeartbeatController < ActionController::API
 private
 
   def api_alive?
-    response = HeartbeatController.get("#{Settings.teacher_training_api.base_url}/healthcheck")
+    response = HeartbeatController.get("#{Settings.manage_backend.base_url}/healthcheck")
     response.success?
   rescue StandardError
     false
