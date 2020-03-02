@@ -501,7 +501,6 @@ DEPENDENCIES
   rubocop
   rubocop-govuk
   scss_lint-govuk
-  selenium-webdriver
   sentry-raven
   simplecov
   site_prism
@@ -511,7 +510,7 @@ DEPENDENCIES
   super_diff
   tzinfo-data
   web-console (>= 3.3.0)
-  webdrivers (~> 4.2)
+  webdrivers (~> 4.0)
   webmock
   webpacker
 
