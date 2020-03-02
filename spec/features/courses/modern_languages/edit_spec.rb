@@ -57,7 +57,16 @@ feature "Edit course modern languages", type: :feature do
     scenario "can select multiple modern language subjects" do
       visit signin_path
 
-      visit(modern_languages_provider_recruitment_cycle_course_path(provider_code: provider.provider_code, recruitment_cycle_year: current_recruitment_cycle.year, code: course.course_code, course: { subjects_ids: [modern_languages_subject.id] }))
+      visit(
+        modern_languages_provider_recruitment_cycle_course_path(
+          provider_code: provider.provider_code,
+          recruitment_cycle_year: current_recruitment_cycle.year,
+          code: course.course_code,
+          course: {
+            subjects_ids: [modern_languages_subject.id],
+          },
+        ),
+      )
 
       patch_course_stub = set_patch_course_expectation do |subjects|
         expect(subjects).to match_array([
@@ -165,7 +174,9 @@ feature "Edit course modern languages", type: :feature do
       end
 
       it "takes user through wizard and saves subjects" do
-        expect(CGI.unescape(current_url)).to eql("http://www.example.com/organisations/#{provider.provider_code}/2020/courses/#{course.course_code}/modern-languages?course[subjects_ids][]=#{modern_languages_subject.id}")
+        modern_languages_uri = URI(current_url)
+        expect(modern_languages_uri.path).to eq("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}/courses/#{course.course_code}/modern-languages")
+        expect(CGI.unescape(modern_languages_uri.query)).to eq("course[subjects_ids][]=#{modern_languages_subject.id}")
 
         patch_course_stub = set_patch_course_expectation do |subjects|
           expect(subjects).to match_array([

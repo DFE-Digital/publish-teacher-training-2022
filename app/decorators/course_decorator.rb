@@ -214,6 +214,13 @@ class CourseDecorator < ApplicationDecorator
     meta["edit_options"]["subjects"].map { |subject| [subject["attributes"]["subject_name"], subject["id"]] }
   end
 
+  def selected_subject_ids
+    selectable_subject_ids = meta["edit_options"]["subjects"].map { |subject| subject["id"] }
+    selected_subject_ids = subjects.map(&:id)
+
+    selectable_subject_ids & selected_subject_ids
+  end
+
   def subject_present?(subject_to_find)
     subjects.map { |subject| subject["id"] }.include?(subject_to_find["id"])
   end

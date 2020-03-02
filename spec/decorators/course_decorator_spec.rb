@@ -10,7 +10,7 @@ describe CourseDecorator do
   let(:subjects) { [english, mathematics] }
 
   let(:course) do
-    build :course,
+    build(:course,
           course_code: "A1",
           name: "Mathematics",
           qualification: "pgce_with_qts",
@@ -23,7 +23,7 @@ describe CourseDecorator do
           subjects: subjects,
           open_for_applications?: true,
           last_published_at: "2019-03-05T14:42:34Z",
-          recruitment_cycle: current_recruitment_cycle
+          recruitment_cycle: current_recruitment_cycle)
   end
   let(:start_date) { Time.zone.local(2019) }
   let(:site) { build(:site) }
@@ -31,11 +31,11 @@ describe CourseDecorator do
     build(:site_status, :full_time_and_part_time, site: site)
   end
 
-  let(:course_response) {
+  let(:course_response) do
     course.to_jsonapi(
       include: %i[sites provider accrediting_provider recruitment_cycle subjects],
     )
-  }
+  end
 
   let(:decorated_course) { course.decorate }
 
@@ -185,6 +185,25 @@ describe CourseDecorator do
         [english.subject_name, english.id],
         [mathematics.subject_name, mathematics.id],
       ])
+    end
+  end
+
+  describe "#selected_subject_ids" do
+    let(:selectable_subjects) { [english, mathematics] }
+    let(:subjects) { [biology, mathematics] }
+
+    let(:course) do
+      build(:course,
+            subjects: subjects,
+            edit_options: {
+            subjects: subjects.map do |subject|
+              subject.to_jsonapi[:data]
+            end,
+          })
+    end
+
+    it "returns ids for only subjects that are selectable" do
+      expect(decorated_course.selected_subject_ids).to match_array([biology.id, mathematics.id])
     end
   end
 

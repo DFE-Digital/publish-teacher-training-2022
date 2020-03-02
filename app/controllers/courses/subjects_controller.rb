@@ -51,24 +51,6 @@ module Courses
       @modern_languages_subject = Subject.new(hash)
     end
 
-    def subjects_have_not_been_changed?
-      subjects_match?(selected_subjects, existing_non_language_subjects)
-    end
-
-    def subjects_match?(subject_array_a, subject_array_b)
-      return false if subject_array_a.length != subject_array_b.length
-
-      subject_array_a.zip(subject_array_b).all? do |subject_a, subject_b|
-        subject_a.present? && subject_b.present? && subject_a.id == subject_b.id
-      end
-    end
-
-    def existing_non_language_subjects
-      @course.subjects.select do |course_subject|
-        is_a_non_language_subject?(course_subject)
-      end
-    end
-
     def selected_subject_ids
       params
         .dig(:course)
@@ -88,12 +70,6 @@ module Courses
     def find_subject(subject_id)
       @course.meta[:edit_options][:subjects].find do |subject|
         subject[:id] == subject_id
-      end
-    end
-
-    def is_a_non_language_subject?(subject_to_find)
-      @course.meta[:edit_options][:subjects].any? do |subject|
-        subject[:id] == subject_to_find.id
       end
     end
 

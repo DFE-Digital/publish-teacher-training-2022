@@ -75,14 +75,10 @@ module Courses
     end
 
     def selected_non_language_subjects
-      ids = params.fetch(:course, {})[:subjects_ids]
+      ids = params.dig(:course, :subjects_ids) || []
 
-      if ids.present?
-        ids.map do |id|
-          Subject.new(id: id)
-        end
-      else
-        []
+      ids.map do |id|
+        Subject.new(id: id)
       end
     end
 
