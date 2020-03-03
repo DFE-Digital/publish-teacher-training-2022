@@ -19,7 +19,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 gem "canonical-rails"
 
 # DfE Sign-In
-gem "omniauth", "~> 1.8"
+gem "omniauth", "~> 1.9"
 gem "omniauth_openid_connect", "~> 0.3"
 
 # App Insights for Azure
