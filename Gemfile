@@ -87,9 +87,6 @@ group :development, :test do
 
   # Testing framework
   gem "rspec-rails", "~> 4.0.0.beta4"
-
-  # A Ruby static code analyzer and formatter
-  gem "rubocop", require: false
 end
 
 group :development do

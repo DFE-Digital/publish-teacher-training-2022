@@ -498,7 +498,6 @@ DEPENDENCIES
   request_store
   rspec-rails (~> 4.0.0.beta4)
   rspec_junit_formatter
-  rubocop
   rubocop-govuk
   scss_lint-govuk
   sentry-raven
