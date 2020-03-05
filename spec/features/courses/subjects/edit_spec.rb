@@ -15,13 +15,21 @@ feature "Edit course subjects", type: :feature do
   let(:modern_languages_subject) { build(:subject, :modern_languages) }
   let(:russian_subject) { build(:subject, :russian) }
   let(:french_subject) { build(:subject, :french) }
-
-  let(:edit_options) { { subjects: [], modern_languages: [] } }
+  let(:modern_languages) { [russian_subject, french_subject] }
+  let(:subjects) { [] }
+  let(:edit_options) do
+    {
+      subjects: subjects,
+      modern_languages: modern_languages,
+      modern_languages_subject: modern_languages_subject,
+    }
+  end
+  let(:course_subjects) { [] }
   let(:course) do
     build(:course,
           provider: provider,
           edit_options: edit_options,
-          subjects: [],
+          subjects: course_subjects,
           sites: [site],
           site_statuses: [site_status])
   end
@@ -42,7 +50,8 @@ feature "Edit course subjects", type: :feature do
     let(:edit_options) do
       {
         subjects: subjects,
-        modern_languages: [],
+        modern_languages: modern_languages,
+        modern_languages_subject: modern_languages_subject,
       }
     end
 
@@ -52,7 +61,9 @@ feature "Edit course subjects", type: :feature do
 
       subjects_page.master_subject_fields.select(subjects.first.subject_name)
       subjects_page.save.click
-      expect(languages_page).to be_displayed
+
+      subject_uri = URI(current_url)
+      expect(subject_uri.path).to eq("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}/courses/#{course.course_code}/details")
 
       expect(edit_subject_stub.with do |request|
         subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
@@ -80,7 +91,8 @@ feature "Edit course subjects", type: :feature do
         subjects_page.subordinate_subject_accordion.click
         subjects_page.subordinate_subject_fields.select(subjects.second.subject_name)
         subjects_page.save.click
-        expect(languages_page).to be_displayed
+        subjects_uri = URI(current_url)
+        expect(subjects_uri.path).to eq("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}/courses/#{course.course_code}/details")
 
         expect(edit_subject_stub.with do |request|
           subjects = JSON.parse(request.body)["data"]["relationships"]["subjects"]["data"]
@@ -96,7 +108,8 @@ feature "Edit course subjects", type: :feature do
         let(:edit_options) do
           {
             subjects: subjects,
-            modern_languages: nil,
+            modern_languages: modern_languages,
+            modern_languages_subject: modern_languages_subject,
           }
         end
         let(:course) do
@@ -165,40 +178,14 @@ feature "Edit course subjects", type: :feature do
     end
   end
 
-  context "if subjects have not been changed" do
-    let(:subjects) { [modern_languages_subject, russian_subject, french_subject] }
-    let(:course) do
-      build(:course,
-            provider: provider,
-            edit_options: edit_options,
-            subjects: subjects,
-            sites: [site],
-            site_statuses: [site_status])
-    end
+  context "with modern_languages already set with other languages" do
+    let(:french) { build(:subject, :french) }
+    let(:japanese) { build(:subject, :japanese) }
+    let(:modern_languages) { build(:subject, :modern_languages) }
+    let(:subjects) { [french, japanese, modern_languages] }
     let(:edit_options) do
       {
-        subjects: [modern_languages_subject],
-      }
-    end
-
-    scenario "it does not update the course" do
-      subjects_page.load_with_course(course)
-      edit_subject_stub = stub_api_v2_resource(course, method: :patch)
-
-      subjects_page.master_subject_fields.select(subjects.first.subject_name)
-      subjects_page.save.click
-      expect(course_details_page).to be_displayed
-      expect(edit_subject_stub).not_to have_been_made
-    end
-  end
-
-  context "with a subject already set" do
-    let(:english_subject) { build(:subject, :english) }
-    let(:biology_subject) { build(:subject, :biology) }
-    let(:subjects) { [english_subject, biology_subject] }
-    let(:edit_options) do
-      {
-        subjects: subjects,
+        subjects: [modern_languages],
         modern_languages: [],
       }
     end
@@ -207,6 +194,26 @@ feature "Edit course subjects", type: :feature do
             provider: provider,
             edit_options: edit_options,
             subjects: subjects,
+            sites: [site],
+            site_statuses: [site_status])
+    end
+
+    scenario "it should automatically select modern_languages" do
+      subjects_page.load_with_course(course)
+      expect(subjects_page.master_subject_fields.find("option[selected]").text).to eql(modern_languages.subject_name)
+    end
+  end
+
+  context "with a subject already set" do
+    let(:english_subject) { build(:subject, :english) }
+    let(:biology_subject) { build(:subject, :biology) }
+    let(:subjects) { [english_subject, biology_subject] }
+    let(:course_subjects) { [english_subject, biology_subject] }
+    let(:course) do
+      build(:course,
+            provider: provider,
+            edit_options: edit_options,
+            subjects: course_subjects,
             sites: [site],
             site_statuses: [site_status])
     end
@@ -220,6 +227,19 @@ feature "Edit course subjects", type: :feature do
       subjects_page.load_with_course(course)
       subjects_page.subordinate_subject_accordion.click
       expect(subjects_page).to have_select("course_subordinate_subject_id", selected: biology_subject.subject_name)
+    end
+
+    context "when a modern language subject is selected" do
+      let(:subjects) { [modern_languages_subject] }
+      let(:course_subjects) { [russian_subject, modern_languages_subject] }
+
+      scenario "selects the correct subjects when a modern language subject is selected" do
+        subjects_page.load_with_course(course)
+
+        expect(subjects_page).to have_select("course_master_subject_id", selected: modern_languages_subject.subject_name)
+        subjects_page.subordinate_subject_accordion.click
+        expect(subjects_page).to have_select("course_subordinate_subject_id", selected: nil)
+      end
     end
   end
 
