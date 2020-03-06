@@ -162,7 +162,7 @@
       "type": "object",
       "defaultValue": {},
       "metadata": {
-          "description": "List of resource tags as a JSON object"
+          "description": "List of resource tags as a JSON object."
       }
     }
   },
