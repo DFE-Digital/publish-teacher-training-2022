@@ -61,8 +61,6 @@ feature "new modern language", type: :feature do
   end
 
   context "with modern language selected" do
-    let(:build_course_with_selected_value_request) { stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id, russian.id]) }
-
     scenario "presents the languages" do
       visit_modern_languages
       expect(new_modern_languages_page).to have_no_language_checkbox("Russian")
@@ -70,18 +68,18 @@ feature "new modern language", type: :feature do
 
     scenario "selecting a language" do
       stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id])
-      build_course_with_selected_value_request
+      stub = stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id, russian.id])
       visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id] })
       new_modern_languages_page.language_checkbox("Russian").click
       new_modern_languages_page.continue.click
       # When rendering the next step an additional bulid course request will
       # fire off, so it will have been requested twice in total
-      expect(build_course_with_selected_value_request).to have_been_requested.twice
+      expect(stub).to have_been_requested.twice
     end
 
     scenario "going back to Pick modern languages page" do
       stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id])
-      build_course_with_selected_value_request
+      stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id, russian.id])
       visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id] })
       new_modern_languages_page.language_checkbox("Russian").click
       new_modern_languages_page.continue.click
@@ -98,7 +96,7 @@ feature "new modern language", type: :feature do
     end
 
     scenario "sends user back to course confirmation" do
-      build_course_with_selected_value_request
+      stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id, russian.id])
       visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id, russian.id] }, goto_confirmation: true)
       new_modern_languages_page.continue.click
       expect(current_path).to eq confirmation_provider_recruitment_cycle_courses_path(provider.provider_code, provider.recruitment_cycle_year)
@@ -106,7 +104,6 @@ feature "new modern language", type: :feature do
 
     scenario "does not redirect to the previous step" do
       stub_api_v2_build_course(subjects_ids: [other_subject.id])
-      build_course_with_selected_value_request
       back_new_modern_languages_page.load(
         provider_code: provider.provider_code,
         recruitment_cycle_year: recruitment_cycle.year,
@@ -128,18 +125,15 @@ feature "new modern language", type: :feature do
 
   context "without modern language selected" do
     let(:modern_languages) { nil }
-    let(:build_course_with_selected_value_request) { stub_api_v2_build_course(subjects_ids: [other_subject.id, russian.id]) }
 
     scenario "redirects to the next step" do
       stub_api_v2_build_course(subjects_ids: [other_subject.id])
-      build_course_with_selected_value_request
       visit_modern_languages(course: { subjects_ids: [other_subject.id] })
       expect(next_step_page).to be_displayed
     end
 
     scenario "redirects to the previous step" do
       stub_api_v2_build_course(subjects_ids: [other_subject.id])
-      build_course_with_selected_value_request
       back_new_modern_languages_page.load(
         provider_code: provider.provider_code,
         recruitment_cycle_year: recruitment_cycle.year,
