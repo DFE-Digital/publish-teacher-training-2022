@@ -91,11 +91,39 @@ module Courses
     end
 
     def build_course_params
+      selected_master = params[:course][:master_subject_id]
+      selected_subordinate = nil
+      selected_subordinate = params[:course][:subordinate_subject_id] if params[:course][:subordinate_subject_id].present?
+      previous_subject_selections = params[:course][:subjects_ids]
+
       params[:course][:subjects_ids] = []
-      params[:course][:subjects_ids] << params[:course][:master_subject_id]
-      params[:course][:subjects_ids] << params[:course][:subordinate_subject_id] if params[:course][:subordinate_subject_id].present?
+      params[:course][:subjects_ids] << selected_master
+      params[:course][:subjects_ids] << selected_subordinate if selected_subordinate
       params[:course].delete(:master_subject_id)
       params[:course].delete(:subordinate_subject_id)
+
+      build_new_course # to get languages edit_options
+
+      if modern_language_selected?
+        previous_language_selections = strip_non_language_subject_ids(previous_subject_selections)
+        params[:course][:subjects_ids].concat(previous_language_selections)
+      end
+    end
+
+    def modern_language_selected?
+      @course.meta[:edit_options][:modern_languages].present?
+    end
+
+    def strip_non_language_subject_ids(subject_ids)
+      return [] unless subject_ids
+
+      subject_ids.filter { |id| available_languages_ids.include?(id) }
+    end
+
+    def available_languages_ids
+      @course.meta[:edit_options][:modern_languages].map do |language|
+        language["id"]
+      end
     end
   end
 end

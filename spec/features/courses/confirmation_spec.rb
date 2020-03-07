@@ -228,6 +228,40 @@ feature "Course confirmation", type: :feature do
       include_examples "goes to the edit page"
     end
 
+    context "modern languages" do
+      let(:subjects_page) { PageObjects::Page::Organisations::Courses::NewSubjectsPage.new }
+      let(:languages_page) { PageObjects::Page::Organisations::Courses::NewModernLanguagesPage.new }
+      let(:modern_languages_subject) { build(:subject, :modern_languages) }
+      let(:russian) { build(:subject, :russian) }
+      let(:edit_options) do
+        {
+            subjects: [modern_languages_subject],
+            age_range_in_years: [],
+            modern_languages: [russian],
+        }
+      end
+      let(:course) do
+        build(:course,
+              provider: provider,
+              sites: [site1, site2],
+              study_mode: study_mode,
+              level: level,
+              edit_options: edit_options,
+              subjects: [modern_languages_subject, russian])
+      end
+
+      before do
+        stub_api_v2_build_course(level: course.level,
+                                 subjects_ids: [modern_languages_subject.id])
+      end
+
+      it "keeps languages checked" do
+        course_confirmation_page.details.edit_subjects.click
+        subjects_page.continue.click
+        expect(languages_page.language_checkbox("Russian")).to be_checked
+      end
+    end
+
     context "age range" do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewAgeRangePage.new }
 
