@@ -2,7 +2,7 @@ inherit_gem:
   rubocop-govuk:
     - config/default.yml
     - config/rails.yml
-          
+
 AllCops:
   Exclude:
     - 'bin/rails'
@@ -20,4 +20,10 @@ Rails/HasManyOrHasOneDependent:
 Rails/OutputSafety:
   Enabled: false
 Rails/HelperInstanceVariable:
+  Enabled: false
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
   Enabled: false
