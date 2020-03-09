@@ -51,8 +51,8 @@ module ViewHelper
     bat_contact_email_address.gsub("@", "<wbr>@").html_safe
   end
 
-  def bat_contact_mail_to(name = nil, subject: nil, link_class: "govuk-link")
-    mail_to bat_contact_email_address, name || bat_contact_email_address, subject: subject, class: link_class
+  def bat_contact_mail_to(name = nil, subject: nil, link_class: "govuk-link", data: nil)
+    mail_to bat_contact_email_address, name || bat_contact_email_address, subject: subject, class: link_class, data: data
   end
 
   def enrichment_error_url(provider_code:, course:, field:)

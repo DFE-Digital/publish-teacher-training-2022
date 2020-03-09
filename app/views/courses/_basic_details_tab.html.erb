@@ -278,7 +278,13 @@
           <li>GCSE requirements</li>
         </ul>
 
-        <p class="govuk-body">To request other changes to your basic details contact the Becoming a Teacher team:<br /><%= bat_contact_mail_to bat_contact_email_address_with_wrap, subject: "Edit #{course.name} (#{@provider_code}/#{course.course_code})" %></p>
+        <p class="govuk-body">
+          To request other changes to your basic details contact the Becoming a Teacher team:<br />
+          <%= bat_contact_mail_to bat_contact_email_address_with_wrap,
+            subject: "Edit #{course.name} (#{@provider.provider_code}/#{course.course_code})",
+            data: { qa: "course__contact_support" }
+          %>
+        </p>
       </div>
     </aside>
   <% end %>
