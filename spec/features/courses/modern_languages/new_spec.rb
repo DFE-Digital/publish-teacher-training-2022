@@ -19,9 +19,10 @@ feature "new modern language", type: :feature do
   let(:other_subject) { build(:subject, :mathematics) }
   let(:japanese) { build(:subject, :japanese) }
   let(:russian) { build(:subject, :russian) }
-  let(:modern_languages) { [russian, japanese] }
+  let(:modern_languages) { [russian] }
   let(:subjects) { [modern_languages_subject, other_subject] }
-  let(:selected_subjects) { [] }
+  let(:selected_subjects) { [modern_languages_subject] }
+
   let(:course) do
     build(:course,
           :new,
@@ -30,6 +31,7 @@ feature "new modern language", type: :feature do
           edit_options: {
             subjects: subjects,
             modern_languages: modern_languages,
+            modern_languages_subject: modern_languages_subject,
             age_range_in_years: %w[
                 11_to_16
                 11_to_18
@@ -136,7 +138,8 @@ feature "new modern language", type: :feature do
   end
 
   context "without modern language selected" do
-    let(:modern_languages) { nil }
+    let(:selected_subjects) { [other_subject, russian] }
+    let(:build_course_with_selected_value_request) { stub_api_v2_build_course(subjects_ids: [other_subject.id, russian.id]) }
 
     scenario "redirects to the next step" do
       stub_api_v2_build_course(subjects_ids: [other_subject.id])
