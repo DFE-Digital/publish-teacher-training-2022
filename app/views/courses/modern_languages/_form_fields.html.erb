@@ -10,12 +10,6 @@
     </legend>
     <%= render "shared/error_messages", error_keys: [:modern_languages_subjects] %>
 
-    <%= render 'shared/course_creation_hidden_fields',
-      form: form,
-      course_creation_params: params.fetch(:course, {}).slice(:subjects_ids),
-      except_keys: []
-    %>
-
     <div class="govuk-form-group" data-qa="course__languages">
       <div class="govuk-checkboxes" data-module="govuk-checkboxes">
         <% course.meta["edit_options"]["modern_languages"].each do |language| %>

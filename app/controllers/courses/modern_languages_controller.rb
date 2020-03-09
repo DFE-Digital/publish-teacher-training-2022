@@ -98,9 +98,20 @@ module Courses
     end
 
     def build_course_params
+      build_new_course # to get languages edit_options
+      params[:course][:subjects_ids] = selected_non_language_subject_ids
       params[:course][:subjects_ids] += params[:course][:language_ids] if params[:course][:language_ids]
-      params[:course][:subjects_ids].uniq!
       params[:course].delete :language_ids
+    end
+
+    def non_language_subject_ids
+      @course.meta[:edit_options][:subjects].map do |subject|
+        subject["id"]
+      end
+    end
+
+    def selected_non_language_subject_ids
+      non_language_subject_ids & params[:course][:subjects_ids]
     end
   end
 end

@@ -11,6 +11,13 @@
           url: modern_languages_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
           method: :put do |form| %>
       <%= render "shared/error_messages", error_keys: [:modern_languages_subjects] %>
+
+      <%= render 'shared/course_creation_hidden_fields',
+        form: form,
+        course_creation_params: params.fetch(:course, {}).slice(:subjects_ids),
+        except_keys: []
+      %>
+
       <%= render 'courses/modern_languages/form_fields', form: form %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
