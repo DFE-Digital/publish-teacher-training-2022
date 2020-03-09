@@ -53,9 +53,6 @@ gem "logstash-logger", "~> 0.26.1"
 # Semantic Logger makes logs pretty
 gem "rails_semantic_logger"
 
-# Make HTTP requests fun again
-gem "httparty"
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
