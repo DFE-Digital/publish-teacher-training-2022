@@ -5,8 +5,7 @@ Rails.application.routes.draw do
       via: %i[get post put]
   end
 
-  get :ping, controller: :heartbeat
-  get :healthcheck, controller: :heartbeat
+  get :ping, controller: :health_checks
 
   # DfE Sign In
   get "/signin", to: "sessions#new", as: "signin"
