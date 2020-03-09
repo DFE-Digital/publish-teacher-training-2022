@@ -26,17 +26,13 @@
               <%= link_to "Sign in", signin_path, class: "govuk-header__link" %>
             <% end %>
           </li>
-          <% if current_user.present? %>
-            <% admin_block do %>
+          <% if current_user.present? && current_user["admin"] %>
             <li class="govuk-header__navigation-item">
-              <%= link_to "Access Requests (#{AccessRequest.return_count})", access_requests_path, class: "govuk-header__link", data: { qa: "access_requests_link" } %>
+              <%= link_to "Access Requests (#{AccessRequest.return_count})", access_requests_path, class: "govuk-header__link app-admin-only", data: { qa: "access_requests_link" } %>
             </li>
-            <% end %>
-            <% admin_block do %>
             <li class="govuk-header__navigation-item">
-              <%= link_to "Organisations", organisations_support_page_path, class: "govuk-header__link", data: { qa: "organisations_link" } %>
+              <%= link_to "Organisations", organisations_support_page_path, class: "govuk-header__link app-admin-only", data: { qa: "organisations_link" } %>
             </li>
-            <% end %>
           <% end %>
         </ul>
       </nav>
