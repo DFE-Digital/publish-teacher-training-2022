@@ -104,24 +104,6 @@ feature "new modern language", type: :feature do
       expect(stub).to have_been_requested.twice
     end
 
-    scenario "going back to Pick modern languages page" do
-      stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id])
-      stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id, russian.id])
-      visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id] })
-      new_modern_languages_page.language_checkbox("Russian").click
-      new_modern_languages_page.continue.click
-      next_step_page.back.click
-      new_modern_languages_page.continue.click
-
-      expect(page).to have_current_path(
-        new_provider_recruitment_cycle_courses_age_range_path(
-          provider_code: provider.provider_code,
-          recruitment_cycle_year: recruitment_cycle.year,
-          course: { subjects_ids: [modern_languages_subject.id] }, # russian is missing because there's no real api to remember the choice
-        ),
-      )
-    end
-
     scenario "sends user back to course confirmation" do
       stub_api_v2_build_course(subjects_ids: [modern_languages_subject.id, russian.id])
       visit_modern_languages(course: { subjects_ids: [modern_languages_subject.id, russian.id] }, goto_confirmation: true)
