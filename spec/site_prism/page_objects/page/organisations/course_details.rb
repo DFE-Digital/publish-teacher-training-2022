@@ -32,6 +32,7 @@ module PageObjects
         element :level, "[data-qa=course__level]"
         element :entry_requirements, "[data-qa=course__entry_requirements]"
         element :allocations_info, "[data-qa=course__allocations_info]"
+        element :contact_support, "[data-qa=course__contact_support]"
       end
     end
   end

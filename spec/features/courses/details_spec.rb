@@ -103,6 +103,11 @@ feature "Course details", type: :feature do
     expect(course_details_page).to have_entry_requirements
   end
 
+  scenario "with the correct support email link" do
+    visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
+    expect(course_details_page.contact_support.native.attributes["href"].value).to eq("mailto:becomingateacher@digital.education.gov.uk?subject=Edit%20#{course.name}%20%28A0%2F#{course.course_code}%29")
+  end
+
   context "When the course has nil fields" do
     let(:study_mode) { nil }
     let(:level) { nil }

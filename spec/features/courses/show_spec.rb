@@ -131,8 +131,8 @@ feature "Course show", type: :feature do
   end
 
   describe "with a salaried course" do
-    let(:course) {
-      build :course,
+    let(:course) do
+      build(:course,
             :with_fees,
             funding_type: "salary",
             sites: [site],
@@ -144,8 +144,8 @@ feature "Course show", type: :feature do
             required_qualifications: "Foo",
             personal_qualities: "Foo",
             salary_details: "Foo",
-            other_requirements: "Foo"
-    }
+            other_requirements: "Foo")
+    end
 
     scenario "it shows the course show page" do
       expect(course_page.caption).to have_content(
