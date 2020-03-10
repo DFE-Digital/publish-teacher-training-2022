@@ -1,0 +1,10 @@
+<%= content_for :page_title, provider.provider_name %>
+
+<h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl">Training provider</span>
+  <%= @training_provider.provider_name %>
+</h1>
+
+<section data-qa="courses__table-section">
+  <%= render partial: 'courses/course_table', locals: { courses: @courses } %>
+</section>
