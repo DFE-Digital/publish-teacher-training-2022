@@ -5,23 +5,27 @@ feature "New course level", type: :feature do
     PageObjects::Page::Organisations::Courses::NewSubjectsPage.new
   end
   let(:next_step_page) do
-    PageObjects::Page::Organisations::Courses::NewModernLanguagesPage.new
+    PageObjects::Page::Organisations::Courses::NewAgeRangePage.new
   end
   let(:provider) { build(:provider) }
   let(:english) { build(:subject, :english) }
   let(:biology) { build(:subject, :biology) }
-  let(:subjects) { [english, biology] }
+  let(:modern_languages) { build(:subject, :modern_languages) }
+  let(:subjects) { [english, biology, modern_languages] }
+  let(:selected_subjects) { [] }
   let(:edit_options) do
     {
       subjects: subjects,
       age_range_in_years: [],
       modern_languages: [build(:subject, :russian)],
+      modern_languages_subject: modern_languages,
     }
   end
   let(:user) { build(:user) }
   let(:course) do
     build(:course,
           :new,
+          subjects: selected_subjects,
           provider: provider,
           level: level,
           gcse_subjects_required_using_level: true,
@@ -102,6 +106,26 @@ feature "New course level", type: :feature do
         end
       end
     end
+
+    context "selecting the modern language subject" do
+      let(:selected_subjects) { [modern_languages] }
+
+      scenario "sends user to modern languages" do
+        stub_api_v2_build_course(subjects_ids: [modern_languages.id])
+        visit_new_subjects_page(goto_confirmation: true)
+
+        new_subjects_page.subjects_fields.select(modern_languages.subject_name).click
+        new_subjects_page.continue.click
+
+        expect(page).to have_current_path(
+          new_provider_recruitment_cycle_courses_modern_languages_path(
+            provider.provider_code,
+            provider.recruitment_cycle.year,
+            course: { subjects_ids: [modern_languages.id] }, goto_confirmation: true,
+          ),
+        )
+      end
+    end
   end
 
   context "with a primary course" do
@@ -149,23 +173,6 @@ feature "New course level", type: :feature do
         new_subjects_page.continue.click
         expect(new_subjects_page.error_messages.text).to include("Error: Subjects Invalid")
       end
-    end
-
-    # NOTE: modern langauges will send users to confirmation page
-    scenario "sends user to modern langauges" do
-      stub_api_v2_build_course(subjects_ids: [english.id])
-      visit_new_subjects_page(goto_confirmation: true)
-
-      new_subjects_page.subjects_fields.select(english.subject_name).click
-      new_subjects_page.continue.click
-
-      expect(page).to have_current_path(
-        new_provider_recruitment_cycle_courses_modern_languages_path(
-          provider.provider_code,
-          provider.recruitment_cycle.year,
-          course: { subjects_ids: [english.id] }, goto_confirmation: true,
-        ),
-      )
     end
   end
 

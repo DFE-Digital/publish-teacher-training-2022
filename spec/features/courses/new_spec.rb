@@ -57,6 +57,7 @@ feature "new course", type: :feature do
                   subjects: [build(:subject, subject_name: "Primary with Mathematics")],
                   gcse_subjects_required: %w[maths science english])
     model.meta[:edit_options][:subjects] = [english]
+    model.meta[:edit_options][:modern_languages_subject] = modern_languages
     model
   end
   let(:course_creation_request) do
@@ -259,6 +260,8 @@ feature "new course", type: :feature do
                       subjects: [build(:subject, subject_name: "Primary with Mathematics")],
                       gcse_subjects_required: %w[maths science english])
         model.meta[:edit_options][:subjects] = [english]
+        model.meta[:edit_options][:modern_languages_subject] = modern_languages
+
         model
       end
 
@@ -319,6 +322,8 @@ feature "new course", type: :feature do
                       gcse_subjects_required: %w[maths science english])
         model.meta[:edit_options][:subjects] = [modern_languages]
         model.meta[:edit_options][:modern_languages] = [russian]
+        model.meta[:edit_options][:modern_languages_subject] = modern_languages
+
         model
       end
 

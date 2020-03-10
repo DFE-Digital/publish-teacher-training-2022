@@ -6,7 +6,7 @@ module Courses
     include CourseBasicDetailConcern
 
     def new
-      return unless @course.meta[:edit_options][:modern_languages].nil?
+      return if has_modern_languages_subject?
 
       redirect_to next_step
     end
@@ -47,10 +47,10 @@ module Courses
     end
 
     def back
-      if @course.meta[:edit_options][:modern_languages].nil?
-        redirect_to @back_link_path
-      else
+      if has_modern_languages_subject?
         redirect_to new_provider_recruitment_cycle_courses_modern_languages_path(path_params)
+      else
+        redirect_to @back_link_path
       end
     end
 
@@ -95,6 +95,11 @@ module Courses
                   .where(provider_code: params[:provider_code])
                   .find(params[:code])
                   .first
+    end
+
+    def has_modern_languages_subject?
+      modern_languages_subject_id = @course.meta[:edit_options][:modern_languages_subject][:id]
+      @course.subjects.any? { |subject| subject[:id] == modern_languages_subject_id }
     end
 
     def build_course_params
