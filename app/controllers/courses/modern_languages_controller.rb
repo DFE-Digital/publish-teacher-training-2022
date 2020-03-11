@@ -98,7 +98,7 @@ module Courses
     end
 
     def has_modern_languages_subject?
-      modern_languages_subject_id = @course.meta[:edit_options][:modern_languages_subject][:id]
+      modern_languages_subject_id = @course.meta[:edit_options][:modern_languages_subject][:id].to_s
       @course.subjects.any? { |subject| subject[:id] == modern_languages_subject_id }
     end
 
