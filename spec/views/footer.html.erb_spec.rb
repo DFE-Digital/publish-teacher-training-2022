@@ -1,11 +1,11 @@
 require "rails_helper"
 
-describe "header partial" do
+describe "footer partial" do
   scenario "shows access request link with count to admin users" do
     access_requests = mock_access_requests
     user = get_admin_user
 
-    page = render_header_for user
+    page = render_footer_for user
 
     expect(page.access_requests_link).to have_text("Access Requests (#{access_requests})")
     expect(page).to have_organisations_link
@@ -14,7 +14,7 @@ describe "header partial" do
   scenario "doesn't show access request link to non-admin users" do
     user = get_user
 
-    page = render_header_for user
+    page = render_footer_for user
 
     expect(page).not_to have_access_requests_link
     expect(page).not_to have_organisations_link
@@ -41,9 +41,9 @@ def get_user(admin: false)
   }
 end
 
-def render_header_for(user)
-  render "layouts/header", current_user: user
-  page = PageObjects::Partials::Header.new
+def render_footer_for(user)
+  render "layouts/footer", current_user: user
+  page = PageObjects::Partials::Footer.new
   page.load(rendered)
   page
 end
