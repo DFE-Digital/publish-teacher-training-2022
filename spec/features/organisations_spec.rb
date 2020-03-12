@@ -50,7 +50,7 @@ feature "View organisations", type: :feature do
   describe "organisations with active users" do
     it "lists all users by organisation" do
       visit "/organisations-support-page"
-      expect(find("h1")).to have_content("Organisations with active users")
+      expect(find("h1")).to have_content("Active users by organisation")
       expect(organisation_page.organisations.first.name).to have_content(organisation.name)
       expect(organisation_page.organisations.first.users).to have_link(
         "Adam Smith <adam.smith@bigscitt.org>",

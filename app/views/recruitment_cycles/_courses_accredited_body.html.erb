@@ -1,5 +1,8 @@
 <% if @provider.accredited_body? && current_user["admin"]%>
-  <div class="govuk-!-margin-bottom-8">
+  <div class="app-admin-only__section">
+    <div class="app-admin-only__section-header">
+      <strong class="govuk-tag govuk-tag--purple">Admin Feature</strong>
+    </div>
     <h2 class="govuk-heading-m">
       <%= link_to "Courses as an accredited body",
                   training_providers_provider_recruitment_cycle_path(@provider.provider_code, year),
@@ -8,7 +11,7 @@
     </h2>
 
     <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+    <ul class="govuk-list govuk-list--bullet">
       <li>see who lists you as their accredited body</li>
       <li>see which courses you’re the accredited body for</li>
     </ul>
