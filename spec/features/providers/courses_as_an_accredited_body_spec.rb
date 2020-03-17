@@ -54,6 +54,9 @@ feature "Get courses as an accredited body", type: :feature do
 
         expect(courses_as_an_accredited_body_page).to have_content("Training provider")
         expect(courses_as_an_accredited_body_page).to have_content(training_provider2.provider_name)
+        expect(courses_as_an_accredited_body_page.courses_tables.first.rows.first.course_name.text).to eq("#{name_and_course_code} PGCE with QTS full time")
+        expect(courses_as_an_accredited_body_page).not_to have_link(name_and_course_code)
+        expect(courses_as_an_accredited_body_page.courses_tables.first.rows.first.vacancies.text).to eq("Yes")
       end
 
       it "doesn't show courses accredited by different accredited bodies" do
