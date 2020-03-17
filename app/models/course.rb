@@ -5,8 +5,6 @@ class Course < Base
   has_many :sites, through: :site_statuses, source: :site
   has_many :subjects
 
-  custom_endpoint :sync_with_search_and_compare, on: :member, request_method: :post
-
   property :fee_international, type: :string
   property :fee_uk_eu, type: :string
   property :maths, type: :string

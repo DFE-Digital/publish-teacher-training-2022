@@ -9,14 +9,6 @@ feature "Edit course vacancies", type: :feature do
   let(:course_code) { "X104" }
   let(:provider) { build(:provider) }
 
-  let!(:sync_courses_request_stub) do
-    stub_request(
-      :post,
-      "http://localhost:3001/api/v2/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/" \
-        "#{course_code}/sync_with_search_and_compare",
-    ).to_return(status: 201, body: "")
-  end
-
   before do
     stub_omniauth
     stub_api_v2_request(
@@ -286,7 +278,6 @@ feature "Edit course vacancies", type: :feature do
     click_on button_text
     expect(courses_page).to be_displayed
     expect(courses_page.flash).to have_content("Course vacancies published")
-    expect(sync_courses_request_stub).to have_been_requested
   end
 
   def jsonapi_site_status(name, study_mode, status)
