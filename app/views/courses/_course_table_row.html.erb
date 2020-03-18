@@ -1,9 +1,16 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell app-course-table__course-name" data-qa="courses-table__course">
-    <%= govuk_link_to "#{course.name_and_code}",
-      provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-      class: "govuk-link govuk-heading-s govuk-!-margin-bottom-0"
-    %>
+
+    <% if current_page?(provider_recruitment_cycle_courses_path(@provider.provider_code, course.recruitment_cycle_year)) %>
+      <%= govuk_link_to "#{course.name_and_code}",
+        provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+        class: "govuk-link govuk-heading-s govuk-!-margin-bottom-0"
+      %>
+    <% else %>
+    <span class="govuk-heading-s govuk-!-margin-0" data-qa="courses-table__course-name">
+      <%= course.name_and_code %><br>
+    </span>
+    <% end %>
     <span class="govuk-body-s"><%= course.description %></span>
   </td>
   <% if show_legacy_courses_table? %>
@@ -25,7 +32,11 @@
   <% if @recruitment_cycle.current_and_open? %>
     <td class="govuk-table__cell" data-qa="courses-table__vacancies">
       <% if course.is_running? || course.is_withdrawn? %>
-        <%= course.vacancies %>
+        <% if current_page?(provider_recruitment_cycle_courses_path(@provider.provider_code, course.recruitment_cycle_year)) %>
+          <%= course.vacancies %>
+        <% else %>
+          <%= course.has_vacancies? ? "Yes" : "No" %>
+        <% end %>
       <% end %>
     </td>
   <% end %>

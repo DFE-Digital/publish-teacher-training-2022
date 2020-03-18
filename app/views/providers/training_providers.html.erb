@@ -15,11 +15,19 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <ul class="govuk-list" data-qa="provider__training_providers_list">
-      <% @providers.each do |provider| %>
-      <h3 class="govuk-heading-m">
-        <%= provider.provider_name %>
-        <span class="govuk-body govuk-!-font-weight-regular govuk-!-display-block">Courses will be added here shortly</span>
-      </h3>
+      <% @training_providers.each do |training_provider| %>
+        <li data-qa="training_provider">
+          <h3 class="govuk-heading-m">
+            <%= link_to training_provider.provider_name,
+                        training_provider_courses_provider_recruitment_cycle_path(
+                          provider.provider_code,
+                          provider.recruitment_cycle_year,
+                          training_provider.provider_code,
+                        ),
+                        class: "govuk-link govuk-!-font-weight-bold",
+                        data: { qa: "link" } %>
+          </h3>
+        </li>
       <% end %>
     </ul>
   </div>

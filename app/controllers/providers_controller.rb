@@ -1,8 +1,10 @@
 class ProvidersController < ApplicationController
   decorates_assigned :provider
+  decorates_assigned :training_provider
   before_action :build_recruitment_cycle
   rescue_from JsonApiClient::Errors::NotFound, with: :not_found
   before_action :build_provider, except: %i[index show]
+  before_action :build_training_provider, only: %i[training_provider_courses]
 
   def index
     @providers = Provider
@@ -61,9 +63,20 @@ class ProvidersController < ApplicationController
 
   def training_providers
     if user_is_admin?
-      @providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
+      @training_providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
     else
       redirect_to provider_path(@provider.provider_code)
+    end
+  end
+
+  def training_provider_courses
+    if user_is_admin?
+      @courses = @training_provider.courses
+        .filter { |course| course[:accrediting_provider].present? }
+        .select { |course| course[:accrediting_provider][:provider_code] == @provider.provider_code }
+        .map(&:decorate)
+    else
+      redirect_to provider_path(@training_provider.provider_code)
     end
   end
 
@@ -93,6 +106,14 @@ private
     @provider = Provider
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:provider_code])
+      .first
+  end
+
+  def build_training_provider
+    @training_provider = Provider
+      .includes(courses: [:accrediting_provider])
+      .where(recruitment_cycle_year: @recruitment_cycle.year)
+      .find(params[:training_provider_code])
       .first
   end
 
