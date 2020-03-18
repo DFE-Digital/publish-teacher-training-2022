@@ -64,4 +64,9 @@ module BreadcrumbHelper
     path = training_providers_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)
     provider_breadcrumb << ["Courses as an accredited body", path]
   end
+
+  def training_provider_courses_breadcrumb
+    path = training_provider_courses_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year, @training_provider.provider_code)
+    training_providers_breadcrumb << ["#{@training_provider.provider_name}’s courses", path]
+  end
 end
