@@ -65,6 +65,16 @@ feature "Get courses as an accredited body", type: :feature do
 
         expect(courses_as_an_accredited_body_page).not_to have_content(course_accreredited_by_a_different_body)
       end
+
+      it "should have the correct breadcrumbs" do
+        visit training_provider_courses_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year, training_provider2.provider_code)
+
+        within(".govuk-breadcrumbs") do
+          expect(page).to have_link(accrediting_body1.provider_name.to_s, href: "/organisations/#{accrediting_body1.provider_code}")
+          expect(page).to have_link("Courses as an accredited body", href: "/organisations/#{accrediting_body1.provider_code}/#{accrediting_body1.recruitment_cycle.year}/training-providers")
+          expect(page).to have_content("#{training_provider2.provider_name}’s courses")
+        end
+      end
     end
 
     context "as a non-admin user" do

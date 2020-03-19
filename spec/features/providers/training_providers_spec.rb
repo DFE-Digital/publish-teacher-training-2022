@@ -37,6 +37,15 @@ feature "Get training_providers", type: :feature do
         expect(organisation_training_providers_page.training_providers_list).to have_content(provider2.provider_name)
         expect(organisation_training_providers_page.training_providers_list).to have_content(provider3.provider_name)
       end
+
+      it "should have the correct breadcrumbs" do
+        visit training_providers_provider_recruitment_cycle_path(provider1.provider_code, provider1.recruitment_cycle.year)
+
+        within(".govuk-breadcrumbs") do
+          expect(page).to have_link(provider1.provider_name.to_s, href: "/organisations/#{provider1.provider_code}")
+          expect(page).to have_content("Courses as an accredited body")
+        end
+      end
     end
 
     context "as a non-admin user" do
