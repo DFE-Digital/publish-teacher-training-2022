@@ -63,6 +63,21 @@ class ProvidersController < ApplicationController
   def training_providers
     if user_is_admin?
       @training_providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
+
+      @course_counts = @training_providers.map { |training_provider|
+        training_provider_with_courses = Provider
+         .includes(courses: [:accrediting_provider])
+         .where(recruitment_cycle_year: @recruitment_cycle.year)
+         .find(training_provider.provider_code)
+         .first
+
+        course_count = training_provider_with_courses.courses
+          .filter { |course| course[:accrediting_provider].present? }
+          .select { |course| course[:accrediting_provider][:provider_code] == @provider.provider_code }
+          .count
+        [training_provider.provider_name, course_count]
+      }.to_h
+
     else
       redirect_to provider_path(@provider.provider_code)
     end

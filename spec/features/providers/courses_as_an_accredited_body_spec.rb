@@ -19,13 +19,21 @@ feature "Get courses as an accredited body", type: :feature do
     course1.accrediting_provider = accrediting_body1
     stub_omniauth(user: user)
     stub_api_v2_resource(accrediting_body1)
-    stub_api_v2_resource(accrediting_body2)
-    stub_api_v2_resource(training_provider2)
     stub_api_v2_resource(accrediting_body1.recruitment_cycle)
     stub_api_v2_request(
       "/recruitment_cycles/#{training_provider2.recruitment_cycle.year}/providers/" \
       "#{training_provider2.provider_code}?include=courses.accrediting_provider",
       training_provider2.to_jsonapi(include: :courses),
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
+      "#{accrediting_body1.provider_code}?include=courses.accrediting_provider",
+      accrediting_body1.to_jsonapi(include: :courses),
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{accrediting_body2.recruitment_cycle.year}/providers/" \
+      "#{accrediting_body2.provider_code}?include=courses.accrediting_provider",
+      accrediting_body2.to_jsonapi(include: :courses),
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
