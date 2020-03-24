@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-- Ruby 2.6.1
+- Ruby 2.6.5
 - NodeJS 10.14.x
 - Yarn 1.12.x
 
