@@ -9,6 +9,7 @@ class ProviderSerializer < JSONAPI::Serializable::Resource
     end
   end
   has_many :sites
+  has_many :current_accredited_courses
 
   attributes(*FactoryBot.attributes_for("provider").keys -
              %i[courses sites])

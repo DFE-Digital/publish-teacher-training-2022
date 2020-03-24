@@ -4,6 +4,7 @@ FactoryBot.define do
       sites { [] }
       recruitment_cycle { build :recruitment_cycle }
       include_counts { [] }
+      current_accredited_courses { [] }
     end
 
     sequence(:id)
@@ -72,6 +73,11 @@ FactoryBot.define do
       provider.sites = []
       evaluator.sites.each do |site|
         provider.sites << site
+      end
+
+      provider.current_accredited_courses = []
+      evaluator.current_accredited_courses.each do |course|
+        provider.current_accredited_courses << course
       end
 
       provider.courses = []

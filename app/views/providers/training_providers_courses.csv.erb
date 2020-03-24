@@ -1,0 +1,9 @@
+<%
+require "csv"
+csv_string = CSV.generate(headers: @courses.first.keys, write_headers: true) do |csv|
+  @courses.each do |course|
+    csv << course
+  end
+end
+%>
+<%=csv_string.html_safe%>

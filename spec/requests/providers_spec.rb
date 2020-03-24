@@ -66,12 +66,51 @@ describe "Providers", type: :request do
         end
       end
     end
+
+    describe "GET courses-as-an-accredited-body csv" do
+      it "returns training provider courses" do
+        training_provider = build(:provider)
+        course = build(:course, provider: training_provider)
+        accredited_provider = build(:provider, current_accredited_courses: [course])
+        stub_api_v2_request("/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}", accredited_provider.recruitment_cycle.to_jsonapi)
+        stub_api_v2_resource(accredited_provider, include: "current_accredited_courses.provider,current_accredited_courses.site_statuses.site")
+
+        path = training_providers_courses_provider_recruitment_cycle_path(
+          accredited_provider.provider_code,
+          accredited_provider.recruitment_cycle.year,
+        )
+        get(path + ".csv")
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to eq(
+          <<~HEREDOC,
+            provider_code,course_code
+            #{training_provider.provider_code},#{course.course_code}
+
+          HEREDOC
+        )
+      end
+    end
   end
 
   context "when the user is not authenticated" do
     describe "GET suggest" do
       it "redirects to signin" do
         get "/providers/suggest"
+
+        expect(response).to redirect_to("http://www.example.com/signin")
+      end
+    end
+
+    describe "GET courses-as-an-accredited-body" do
+      it "redirects to signin" do
+        accredited_provider = build(:provider)
+
+        path = training_providers_courses_provider_recruitment_cycle_path(
+          accredited_provider.provider_code,
+          accredited_provider.recruitment_cycle.year,
+        )
+        get(path + ".csv")
 
         expect(response).to redirect_to("http://www.example.com/signin")
       end
