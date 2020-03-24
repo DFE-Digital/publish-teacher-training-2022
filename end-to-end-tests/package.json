@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "10.14.2"
+    "node": "12.15.0"
   },
   "devDependencies": {
     "cypress": "4.2.0"
