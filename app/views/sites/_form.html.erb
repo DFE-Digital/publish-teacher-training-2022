@@ -37,7 +37,3 @@
   <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
 <% end %>
 
-<%= render "shared/form_field",
-  form: f, field: :region_code, label: "Region of UK" do |field, options| %>
-  <%= f.select field, Site::REGIONS, {}, options.merge(class: 'govuk-select') %>
-<% end %>
