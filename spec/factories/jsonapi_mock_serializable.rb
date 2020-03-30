@@ -1,12 +1,12 @@
 FactoryBot.define do
   factory :jsonapi_mock_serializable, class: Hash do
     initialize_with do |_evaluator|
-      data_attributes = attributes.except(:id, *jsonapi_relationships)
-      relationships_map = Hash[
-        jsonapi_relationships.map do |relationship|
-          [relationship, __send__(relationship)]
+      data_attributes = attributes.except(:id, *jsonapi_relatnships)
+      relationships_map =
+        jsonapi_relationships.index_with do |relationship|
+          __send__(relationship)
         end
-      ]
+
 
       JSONAPIMockSerializable.new(
         id,
