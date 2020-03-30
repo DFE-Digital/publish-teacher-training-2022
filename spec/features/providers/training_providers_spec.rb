@@ -5,12 +5,12 @@ feature "Get training_providers", type: :feature do
   let(:organisation_training_providers_page) { PageObjects::Page::Organisations::TrainingProviders.new }
   let(:accrediting_body1) { build :provider, accredited_body?: true }
   let(:accrediting_body2) { build :provider, accredited_body?: true }
-  let(:course1) { build :course, accrediting_provider: accrediting_body1 }
-  let(:course2) { build :course, accrediting_provider: accrediting_body2 }
-  let(:training_provider1) { build :provider, accredited_bodies: [accrediting_body1, accrediting_body2], courses: [course1, course2] }
-  let(:course3) { build :course, accrediting_provider: accrediting_body1 }
-  let(:course4) { build :course, accrediting_provider: accrediting_body1 }
-  let(:training_provider2) { build :provider, accredited_bodies: [accrediting_body1], courses: [course3, course4] }
+  let(:training_provider1) { build :provider, accredited_bodies: [accrediting_body1, accrediting_body2] }
+  let(:course1) { build :course, accrediting_provider: accrediting_body1, provider: training_provider1 }
+  let(:course2) { build :course, accrediting_provider: accrediting_body2, provider: training_provider1 }
+  let(:training_provider2) { build :provider, accredited_bodies: [accrediting_body1] }
+  let(:course3) { build :course, accrediting_provider: accrediting_body1, provider: training_provider2 }
+  let(:course4) { build :course, accrediting_provider: accrediting_body1, provider: training_provider2 }
   let(:user) { build :user, :admin }
   let(:access_request) { build :access_request }
 
@@ -19,31 +19,16 @@ feature "Get training_providers", type: :feature do
     stub_api_v2_resource(accrediting_body1)
     stub_api_v2_resource(accrediting_body1.recruitment_cycle)
     stub_api_v2_request(
+      "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/courses" \
+      "?filter[accrediting_provider_code]=#{accrediting_body1.provider_code}",
+      resource_list_to_jsonapi([course1, course3, course4]),
+     )
+    stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
       "#{accrediting_body1.provider_code}/training_providers?recruitment_cycle_year=#{accrediting_body1.recruitment_cycle.year}",
       resource_list_to_jsonapi([training_provider1, training_provider2]),
     )
     stub_api_v2_resource_collection([access_request])
-    stub_api_v2_request(
-      "/recruitment_cycles/#{training_provider1.recruitment_cycle.year}/providers/" \
-      "#{training_provider1.provider_code}?include=courses.accrediting_provider",
-      training_provider1.to_jsonapi(include: :courses),
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{training_provider2.recruitment_cycle.year}/providers/" \
-      "#{training_provider2.provider_code}?include=courses.accrediting_provider",
-      training_provider2.to_jsonapi(include: :courses),
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
-      "#{accrediting_body1.provider_code}?include=courses.accrediting_provider",
-      accrediting_body1.to_jsonapi(include: :courses),
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{accrediting_body2.recruitment_cycle.year}/providers/" \
-      "#{accrediting_body2.provider_code}?include=courses.accrediting_provider",
-      accrediting_body2.to_jsonapi(include: :courses),
-    )
   end
 
   context "When the provider has training providers" do

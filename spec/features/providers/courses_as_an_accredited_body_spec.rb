@@ -21,24 +21,14 @@ feature "Get courses as an accredited body", type: :feature do
     stub_api_v2_resource(accrediting_body1)
     stub_api_v2_resource(accrediting_body1.recruitment_cycle)
     stub_api_v2_request(
+      "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/courses" \
+      "?filter[accrediting_provider_code]=#{accrediting_body1.provider_code}",
+      resource_list_to_jsonapi([course1]),
+     )
+    stub_api_v2_request(
       "/recruitment_cycles/#{training_provider2.recruitment_cycle.year}/providers/" \
       "#{training_provider2.provider_code}?include=courses.accrediting_provider",
       training_provider2.to_jsonapi(include: :courses),
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
-      "#{accrediting_body1.provider_code}?include=courses.accrediting_provider",
-      accrediting_body1.to_jsonapi(include: :courses),
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{accrediting_body2.recruitment_cycle.year}/providers/" \
-      "#{accrediting_body2.provider_code}?include=courses.accrediting_provider",
-      accrediting_body2.to_jsonapi(include: :courses),
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
-      "#{accrediting_body1.provider_code}/courses?filter%5Baccrediting_provider%5D=#{accrediting_body1.provider_code}",
-      resource_list_to_jsonapi([course1]),
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \

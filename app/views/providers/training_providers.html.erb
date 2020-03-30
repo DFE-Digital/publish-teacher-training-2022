@@ -27,7 +27,7 @@
                         class: "govuk-link govuk-!-font-weight-bold",
                         data: { qa: "link" } %>
             <span class="govuk-body govuk-!-font-weight-regular govuk-!-display-block" data-qa="course_count">
-              <%= "#{@course_counts[training_provider.provider_name]} course#{@course_counts[training_provider.provider_name] == 1 ? "" : "s"}" %>
+              <%= pluralize(@course_counts[training_provider.provider_code], "course") %>
             </span>
           </h3>
         </li>
