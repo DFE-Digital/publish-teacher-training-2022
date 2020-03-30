@@ -4,9 +4,19 @@
 
 ## Prerequisites
 
-- Ruby 2.6.5
-- NodeJS 12.15.x
-- Yarn 1.12.x
+Install [asdf-vm](https://asdf-vm.com/).
+
+Install the plugins and versions specified in `.tool-versions`
+
+```
+asdf plugin add ruby
+asdf plugin add nodejs
+asdf plugin add yarn
+asdf install
+```
+
+When the versions are updated in master run `asdf install` again to update your
+installation.
 
 ## Setting up the app in development
 
