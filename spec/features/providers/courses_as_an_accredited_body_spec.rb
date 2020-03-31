@@ -56,6 +56,7 @@ feature "Get courses as an accredited body", type: :feature do
         expect(courses_as_an_accredited_body_page).to have_content(training_provider2.provider_name)
         expect(courses_as_an_accredited_body_page.courses_tables.first.rows.first.course_name.text).to eq("#{name_and_course_code} PGCE with QTS full time")
         expect(courses_as_an_accredited_body_page).not_to have_link(name_and_course_code)
+        expect(courses_as_an_accredited_body_page.courses_tables.first.rows.first.find_link["href"]).to eq("#{Settings.search_ui.base_url}/course/#{training_provider2.provider_code}/#{course1.course_code}")
         expect(courses_as_an_accredited_body_page.courses_tables.first.rows.first.vacancies.text).to eq("Yes")
       end
 
