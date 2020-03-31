@@ -2,7 +2,9 @@
 
 # Publish Teacher Training
 
-## Prerequisites
+## Development setup
+
+### 1. Install build dependencies
 
 Install [asdf-vm](https://asdf-vm.com/).
 
@@ -18,16 +20,21 @@ asdf install
 When the versions are updated in master run `asdf install` again to update your
 installation.
 
-## Setting up the app in development
+(We don't mandate asdf, you can use other tools if you prefer.)
 
-1. Run `yarn` to install node dependencies
-2. Run `bundle install` to install the gem dependencies
-3. Create new file `config/settings/development.local.yml` with the below contents.
-4. Run `bundle exec rails s` to launch the app on https://localhost:3000.
+### 2. Run the builds
 
-Note: the rspec tests will fail until the site has been run for the first time.
+Run the following commands:
 
-### Sign-in config
+```bash
+yarn
+bundle
+bundle exec rake webpacker:compile
+```
+
+### 3. Configure DfE Sign-In
+
+Create the following file and ask the team for the secret.
 
 ```
 # config/settings/development.local.yml
@@ -35,15 +42,27 @@ dfe_signin:
     secret: dfe_sign_in_test_server_client_secret_here
 ```
 
-### Trust the TLS certificate
+*If you don't have a sign-in account on test you can bypass sign-in by
+configuring basic auth instead.*
 
-You will also need to add the automatically generated SSL certificate to your OS keychain to make the browser trust the local site.
+
+### 4. Trust the TLS certificate
+
+Depending on your browser you may need to add the automatically generated SSL
+certificate to your OS keychain to make the browser trust the local site.
 
 On macOS:
 
 ```bash
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain config/localhost/https/localhost.crt
 ```
+
+### 5. Run the server
+
+1. Run `bundle exec rails s` to launch the app on https://localhost:3000.
+
+You'll need a running
+[teacher-training-api](https://github.com/DFE-Digital/teacher-training-api).
 
 ## Docker
 
@@ -55,8 +74,9 @@ docker-compose up --build
 
 _Warning_: Running docker seems to slow down local development significantly on macOS.
 
-
 ## Running specs
+
+Note: the rspec tests will fail until the site has been run for the first time.
 
 ```
 bundle exec rspec
