@@ -1,6 +1,6 @@
 class ApplicationDecorator < Draper::Decorator
   def status_tag
-    tag = h.content_tag(:div, status_tag_content.html_safe, class: "govuk-tag phase-tag--small #{status_tag_css_class}")
+    tag = h.content_tag(:div, status_tag_content.html_safe, class: "govuk-tag #{status_tag_css_class}")
     tag += unpublished_status_hint if object.has_unpublished_changes?
     tag.html_safe
   end
@@ -21,12 +21,12 @@ private
 
   def status_tags
     {
-      published: { css_class: "phase-tag--published", content: "Published" },
-      withdrawn: { css_class: "phase-tag--withdrawn", content: "Withdrawn" },
-      empty: { css_class: "phase-tag--no-content", content: "Empty" },
-      draft: { css_class: "phase-tag--draft", content: "Draft" },
-      published_with_unpublished_changes: { css_class: "phase-tag--published",  content: "Published&nbsp;*" },
-      rolled_over: { css_class: "phase-tag--no-content", content: "Rolled over" },
+      published: { css_class: "govuk-tag--green app-phase-tag--published", content: "Published" },
+      withdrawn: { css_class: "govuk-tag--red app-phase-tag--withdrawn", content: "Withdrawn" },
+      empty: { css_class: "govuk-tag--grey app-phase-tag--no-content", content: "Empty" },
+      draft: { css_class: "govuk-tag--yellow app-phase-tag--draft", content: "Draft" },
+      published_with_unpublished_changes: { css_class: "govuk-tag--green app-phase-tag--published", content: "Published&nbsp;*" },
+      rolled_over: { css_class: "govuk-tag--grey app-phase-tag--no-content", content: "Rolled over" },
     }
   end
 
