@@ -68,6 +68,28 @@ feature "View providers", type: :feature do
     end
   end
 
+  context "with more than ten providers" do
+    let(:provider_2) { build :provider, provider_code: "A1", include_counts: [:courses] }
+
+    it "displays pagination navigation" do
+      providers = []
+
+      11.times do
+        providers << build(:provider, provider_code: "A1", include_counts: [:courses])
+      end
+
+      stub_api_v2_request(
+        "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+        "/providers",
+        resource_list_to_jsonapi(providers),
+        )
+
+      visit providers_path
+
+      expect(organisation_page.pagination).to have_next_page
+    end
+  end
+
   context "with no providers" do
     let(:no_providers_page) { PageObjects::Page::Organisations::NoProviders.new }
     let(:forbidden_page) { PageObjects::Page::Forbidden.new }
