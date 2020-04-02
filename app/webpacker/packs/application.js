@@ -1,3 +1,5 @@
+import {initAutocomplete, initProviderSearchAutocomplete} from "../scripts/autocomplete";
+
 require.context("govuk-frontend/govuk/assets");
 
 import "../stylesheets/application.scss";
@@ -5,7 +7,6 @@ import "accessible-autocomplete/dist/accessible-autocomplete.min.css";
 import { initAll } from "govuk-frontend";
 import FormCheckLeave from "scripts/form-check-leave";
 import { triggerFormAnalytics } from "scripts/form-error-tracking";
-import initAutocomplete from "scripts/autocomplete";
 import initLocationsMap from "scripts/locations-map";
 
 initAll();
@@ -61,9 +62,16 @@ if (typeof ga === "function") {
 
 try {
   const $autocomplete = document.getElementById("provider-autocomplete");
-  const $input = document.getElementById("course_accredited_body");
+  const $accredited_body_input = document.getElementById("course_accredited_body");
+  const $provider_input = document.getElementById("provider");
+
   if ($autocomplete) {
-    initAutocomplete($autocomplete, $input);
+    if($accredited_body_input) {
+      initAutocomplete($autocomplete, $accredited_body_input);
+    }
+    if($provider_input) {
+      initProviderSearchAutocomplete($autocomplete, $provider_input);
+    }
   }
 } catch (err) {
   console.error("Failed to initialise provider autocomplete:", err);

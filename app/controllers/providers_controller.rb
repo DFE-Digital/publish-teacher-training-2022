@@ -79,6 +79,22 @@ class ProvidersController < ApplicationController
     end
   end
 
+  def search
+    provider_query = params[:query]
+
+    if provider_query.blank?
+      flash[:error] = "Training provider"
+      return redirect_to organisations_path
+    end
+
+    provider_code = provider_query
+                      .split(" ")
+                      .last
+                      .gsub(/[()]/, "")
+
+    redirect_to provider_path(provider_code)
+  end
+
 private
 
   def provider_params
