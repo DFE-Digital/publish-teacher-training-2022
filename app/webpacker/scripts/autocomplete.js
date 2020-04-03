@@ -27,7 +27,7 @@ export const request = endpoint => {
   };
 };
 
-export const initAutocomplete = ($el, $input) => {
+export const initAutocomplete = ($el, $input, inputValueTemplate) => {
   accessibleAutocomplete({
     element: $el,
     id: $input.id,
@@ -37,30 +37,7 @@ export const initAutocomplete = ($el, $input) => {
     minLength: 3,
     source: request("/providers/suggest"),
     templates: {
-      inputValue: result => result && result.name,
-      suggestion: result => result && `${result.name} (${result.code})`
-    },
-    onConfirm: option => ($input.value = option ? option.code : ""),
-    autoselect: true
-  });
-
-  // Hijack the original input to submit the selected provider_code.
-  $input.id = `old-${$input.id}`;
-  $input.name = "course[autocompleted_provider_code]";
-  $input.type = "hidden";
-};
-
-export const initProviderSearchAutocomplete = ($el, $input) => {
-  accessibleAutocomplete({
-    element: $el,
-    id: $input.id,
-    showNoOptionsFound: true,
-    name: $input.name,
-    defaultValue: $input.value,
-    minLength: 3,
-    source: request("/providers/suggest"),
-    templates: {
-      inputValue: result => result && `${result.name} (${result.code})`,
+      inputValue: inputValueTemplate,
       suggestion: result => result && `${result.name} (${result.code})`
     },
     onConfirm: option => ($input.value = option ? option.code : ""),
