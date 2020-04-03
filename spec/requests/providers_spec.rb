@@ -75,7 +75,7 @@ describe "Providers", type: :request do
         stub_api_v2_request("/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}", accredited_provider.recruitment_cycle.to_jsonapi)
         stub_api_v2_resource(accredited_provider, include: "current_accredited_courses.provider,current_accredited_courses.site_statuses.site")
 
-        path = training_providers_courses_provider_recruitment_cycle_path(
+        path = download_training_providers_courses_provider_recruitment_cycle_path(
           accredited_provider.provider_code,
           accredited_provider.recruitment_cycle.year,
         )
@@ -106,7 +106,7 @@ describe "Providers", type: :request do
       it "redirects to signin" do
         accredited_provider = build(:provider)
 
-        path = training_providers_courses_provider_recruitment_cycle_path(
+        path = download_training_providers_courses_provider_recruitment_cycle_path(
           accredited_provider.provider_code,
           accredited_provider.recruitment_cycle.year,
         )
