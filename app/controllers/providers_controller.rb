@@ -7,8 +7,8 @@ class ProvidersController < ApplicationController
   before_action :build_training_provider, only: %i[training_provider_courses]
 
   def index
-    @providers = Kaminari.paginate_array(Provider.where(recruitment_cycle_year: Settings.current_cycle).all)
-                          .page(params[:page] || 1).per(params[:per_page] || 10)
+    @providers = Provider.where(recruitment_cycle_year: Settings.current_cycle)
+                   .page(params[:page] || 1).per(params[:per_page] || 10)
 
     render "providers/no_providers", status: :forbidden if @providers.empty?
     redirect_to provider_path(@providers.first.provider_code) if @providers.size == 1
