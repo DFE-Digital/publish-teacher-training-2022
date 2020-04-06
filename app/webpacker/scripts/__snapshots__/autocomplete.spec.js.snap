@@ -8,7 +8,7 @@ exports[`Autocomplete initAutocomplete should instantiate an autocomplete 1`] = 
           
   <input
     id="old-input"
-    name="course[accrediting_provider_code]"
+    name="course[autocompleted_provider_code]"
     type="hidden"
   />
   
@@ -17,30 +17,40 @@ exports[`Autocomplete initAutocomplete should instantiate an autocomplete 1`] = 
     id="autocomplete-container"
   >
     <div
-      aria-expanded="false"
       class="autocomplete__wrapper"
-      role="combobox"
     >
       <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
         style="border: 0px; height: 1px; margin-bottom: -1px; margin-right: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
       >
-        Type in 3 or more characters for results.
-        <span>
-          ,,
-        </span>
+        <div
+          aria-atomic="true"
+          aria-live="polite"
+          id="input__status--A"
+          role="status"
+        >
+          
+        </div>
+        <div
+          aria-atomic="true"
+          aria-live="polite"
+          id="input__status--B"
+          role="status"
+        >
+          
+        </div>
       </div>
       
       <input
+        aria-autocomplete="both"
+        aria-describedby="input__assistiveHint"
+        aria-expanded="false"
         aria-owns="input__listbox"
         autocomplete="off"
         class="autocomplete__input autocomplete__input--default"
         id="input"
         name=""
         placeholder=""
-        role="textbox"
+        role="combobox"
         type="text"
       />
       
@@ -51,6 +61,12 @@ exports[`Autocomplete initAutocomplete should instantiate an autocomplete 1`] = 
       >
         
       </ul>
+      <span
+        id="input__assistiveHint"
+        style="display: none;"
+      >
+        When autocomplete results are available use up and down arrows to review and enter to select.  Touch device users, explore by touch or with swipe gestures.
+      </span>
     </div>
   </div>
   

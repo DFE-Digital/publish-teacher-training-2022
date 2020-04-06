@@ -27,7 +27,7 @@ export const request = endpoint => {
   };
 };
 
-const initAutocomplete = ($el, $input) => {
+export const initAutocomplete = ($el, $input, inputValueTemplate) => {
   accessibleAutocomplete({
     element: $el,
     id: $input.id,
@@ -37,7 +37,7 @@ const initAutocomplete = ($el, $input) => {
     minLength: 3,
     source: request("/providers/suggest"),
     templates: {
-      inputValue: result => result && result.name,
+      inputValue: inputValueTemplate,
       suggestion: result => result && `${result.name} (${result.code})`
     },
     onConfirm: option => ($input.value = option ? option.code : ""),
@@ -49,5 +49,3 @@ const initAutocomplete = ($el, $input) => {
   $input.name = "course[autocompleted_provider_code]";
   $input.type = "hidden";
 };
-
-export default initAutocomplete;
