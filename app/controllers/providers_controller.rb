@@ -61,17 +61,13 @@ class ProvidersController < ApplicationController
   end
 
   def training_providers
-    if user_is_admin?
-      @training_providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
+    @training_providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
 
-      courses = Course.where(
-        recruitment_cycle_year: @recruitment_cycle.year,
-        accrediting_provider_code: @provider.provider_code,
-      )
-      @course_counts = courses.group_by(&:provider_code).transform_values(&:size)
-    else
-      redirect_to provider_path(@provider.provider_code)
-    end
+    courses = Course.where(
+      recruitment_cycle_year: @recruitment_cycle.year,
+      accrediting_provider_code: @provider.provider_code,
+    )
+    @course_counts = courses.group_by(&:provider_code).transform_values(&:size)
   end
 
   def training_provider_courses

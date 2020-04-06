@@ -32,38 +32,27 @@ feature "Get training_providers", type: :feature do
   end
 
   context "When the provider has training providers" do
-    context "as an admin user" do
-      it "can be reached from the provider show page" do
-        visit provider_path(accrediting_body1.provider_code)
-        organisation_show_page.courses_as_accredited_body_link.click
-        expect(current_path).to eq training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
-      end
-
-      it "should have the correct content" do
-        visit training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
-        expect(organisation_training_providers_page.title).to have_content("Courses as an accredited body")
-        expect(organisation_training_providers_page.training_providers_list).to have_content(training_provider1.provider_name)
-        expect(organisation_training_providers_page.training_providers.first.course_count.text).to have_content("1 course")
-        expect(organisation_training_providers_page.training_providers_list).to have_content(training_provider2.provider_name)
-        expect(organisation_training_providers_page.training_providers.second.course_count.text).to have_content("2 courses")
-      end
-
-      it "should have the correct breadcrumbs" do
-        visit training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
-
-        within(".govuk-breadcrumbs") do
-          expect(page).to have_link(accrediting_body1.provider_name.to_s, href: "/organisations/#{accrediting_body1.provider_code}")
-          expect(page).to have_content("Courses as an accredited body")
-        end
-      end
+    it "can be reached from the provider show page" do
+      visit provider_path(accrediting_body1.provider_code)
+      organisation_show_page.courses_as_accredited_body_link.click
+      expect(current_path).to eq training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
     end
 
-    context "as a non-admin user" do
-      let(:user) { build(:user) }
+    it "should have the correct content" do
+      visit training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
+      expect(organisation_training_providers_page.title).to have_content("Courses as an accredited body")
+      expect(organisation_training_providers_page.training_providers_list).to have_content(training_provider1.provider_name)
+      expect(organisation_training_providers_page.training_providers.first.course_count.text).to have_content("1 course")
+      expect(organisation_training_providers_page.training_providers_list).to have_content(training_provider2.provider_name)
+      expect(organisation_training_providers_page.training_providers.second.course_count.text).to have_content("2 courses")
+    end
 
-      it "redirects to to the organisation show page" do
-        visit training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
-        expect(current_path).to eq provider_path(accrediting_body1.provider_code)
+    it "should have the correct breadcrumbs" do
+      visit training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
+
+      within(".govuk-breadcrumbs") do
+        expect(page).to have_link(accrediting_body1.provider_name.to_s, href: "/organisations/#{accrediting_body1.provider_code}")
+        expect(page).to have_content("Courses as an accredited body")
       end
     end
   end
