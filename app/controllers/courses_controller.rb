@@ -146,7 +146,7 @@ class CoursesController < ApplicationController
         redirect_to provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)
         flash[:success] = "#{@course.name} (#{@course.course_code}) has been withdrawn"
       else
-        flash[:error] = "Enter the course code (#{@course.course_code}) to withdraw this course"
+        flash[:error] = { id: "withdraw-error", message: "Enter the course code (#{@course.course_code}) to withdraw this course" }
         redirect_to withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
       end
     else
@@ -164,7 +164,7 @@ class CoursesController < ApplicationController
       redirect_to provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)
       flash[:success] = "#{@course.name} (#{@course.course_code}) has been deleted"
     else
-      flash[:error] = "Enter the course code (#{@course.course_code}) to delete this course"
+      flash[:error] = { id: "delete-error", message: "Enter the course code (#{@course.course_code}) to delete this course" }
       redirect_to delete_provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
     end
   end
