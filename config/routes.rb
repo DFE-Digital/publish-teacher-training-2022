@@ -181,6 +181,8 @@ Rails.application.routes.draw do
       end
 
       resources :sites, path: "locations", on: :member, except: %i[destroy show]
+
+      get "/pe-allocations", on: :member, to: "pe_allocations#index"
     end
   end
 
