@@ -83,8 +83,9 @@ describe "Providers", type: :request do
         path = download_training_providers_courses_provider_recruitment_cycle_path(
           accredited_provider.provider_code,
           accredited_provider.recruitment_cycle.year,
+          format: :csv,
         )
-        get(path + ".csv")
+        get(path)
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(
@@ -114,8 +115,9 @@ describe "Providers", type: :request do
         path = download_training_providers_courses_provider_recruitment_cycle_path(
           accredited_provider.provider_code,
           accredited_provider.recruitment_cycle.year,
+          format: :csv,
         )
-        get(path + ".csv")
+        get(path)
 
         expect(response).to redirect_to("http://www.example.com/signin")
       end
