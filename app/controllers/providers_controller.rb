@@ -99,12 +99,15 @@ class ProvidersController < ApplicationController
   end
 
   def training_providers_courses
-    @courses = @provider.current_accredited_courses.map do |c|
+    @courses = Course.includes(:provider)
+      .where(recruitment_cycle_year: @recruitment_cycle.year, accrediting_provider_code: @provider.provider_code)
+      .map do |c|
       {
           provider_code: c.provider.provider_code,
           course_code: c.course_code,
       }
     end
+
     respond_to do |format|
       format.csv
     end
