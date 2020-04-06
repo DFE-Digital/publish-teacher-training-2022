@@ -51,7 +51,13 @@ feature "Search providers", type: :feature do
     it "displays an error" do
       root_page.find_providers.click
 
-      expect(root_page).to have_provider_error
+      expect(root_page.error_summary).to have_content(
+        "You’ll need to correct some information.",
+      )
+
+      expect(root_page.provider_error).to have_content(
+        "Please enter the name or provider code",
+      )
       expect(current_path).to eq("/")
     end
   end

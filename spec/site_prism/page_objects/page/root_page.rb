@@ -5,6 +5,7 @@ module PageObjects
 
       element :provider_search, '[data-qa="provider-search"]'
       element :find_providers, '[data-qa="find-providers"]'
+      element :error_summary, ".govuk-error-summary"
       element :provider_error, '[data-qa="provider-error"]'
     end
   end
