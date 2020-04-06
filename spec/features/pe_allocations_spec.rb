@@ -8,6 +8,8 @@ RSpec.feature "PE allocations" do
     when_i_visit_my_organisations_page
     and_i_click_request_pe_courses
     then_i_see_the_pe_alloacations_page
+
+    and_i_see_correct_breadcrumbs
   end
 
   scenario "There is no PE allocations page for non accredited body" do
@@ -42,6 +44,16 @@ RSpec.feature "PE allocations" do
 
   def then_i_see_the_pe_alloacations_page
     expect(find("h1")).to have_content("Request PE courses for 2021/22")
+  end
+
+  def and_i_see_correct_breadcrumbs
+    within(".govuk-breadcrumbs") do
+      expect(page).to have_link(
+        @accrediting_body.provider_name.to_s,
+        href: "/organisations/#{@accrediting_body.provider_code}",
+      )
+      expect(page).to have_content("Request PE courses for 2021/22")
+    end
   end
 
   def given_training_provider_exists
