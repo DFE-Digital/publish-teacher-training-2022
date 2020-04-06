@@ -13,30 +13,19 @@ feature "Show providers", type: :feature do
     stub_api_v2_resource_collection([access_request])
   end
 
-  context "When the provider is not accredited" do
-    it "does not have show the courses as an accredited body link" do
+  context "When the provider is not an accredited body" do
+    it "does not have the courses as an accredited body link" do
       visit provider_path(provider.provider_code)
       expect { organisation_show_page.courses_as_accredited_body_link }.to raise_error(Capybara::ElementNotFound)
     end
   end
 
-  context "When the provider is accredited" do
+  context "When the provider is an accredited body" do
     let(:provider) { build :provider, accredited_body?: true }
 
-    context "and the user is not an admin"  do
-      it "does not have show the courses as an accredited body link" do
-        visit provider_path(provider.provider_code)
-        expect { organisation_show_page.courses_as_accredited_body_link }.to raise_error(Capybara::ElementNotFound)
-      end
-    end
-
-    context "and the user is an admin" do
-      let(:user) { build :user, :admin }
-
-      it "does shows the courses as an accredited body link" do
-        visit provider_path(provider.provider_code)
-        expect(organisation_show_page.courses_as_accredited_body_link.text).to eq("Courses as an accredited body")
-      end
+    it "does have the courses as an accredited body link" do
+      visit provider_path(provider.provider_code)
+      expect(organisation_show_page.courses_as_accredited_body_link.text).to eq("Courses as an accredited body")
     end
   end
 end
