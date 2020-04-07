@@ -18,6 +18,11 @@ feature "Show providers", type: :feature do
       visit provider_path(provider.provider_code)
       expect(organisation_show_page).not_to have_courses_as_accredited_body_link
     end
+
+    it "does not have the request PE courses for 2021/22 link" do
+      visit provider_path(provider.provider_code)
+      expect(organisation_show_page).not_to have_request_pe_allocations_link
+    end
   end
 
   context "When the provider is an accredited body" do
@@ -26,6 +31,11 @@ feature "Show providers", type: :feature do
     it "does have the courses as an accredited body link" do
       visit provider_path(provider.provider_code)
       expect(organisation_show_page.courses_as_accredited_body_link.text).to eq("Courses as an accredited body")
+    end
+
+    it "does have the request PE courses for 2021/22 link" do
+      visit provider_path(provider.provider_code)
+      expect(organisation_show_page.request_pe_allocations_link.text).to eq("Request PE courses for 2021/22")
     end
   end
 end

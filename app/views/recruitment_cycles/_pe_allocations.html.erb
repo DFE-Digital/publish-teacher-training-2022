@@ -1,3 +1,4 @@
+<% if @provider.accredited_body? %>
   <h2 class="govuk-heading-m">
     <%= link_to "Request PE courses for 2021/22",
                 pe_allocations_provider_recruitment_cycle_path(@provider.provider_code, year),
@@ -15,3 +16,4 @@
   on behalf of any organisations you’re the accredited body for, as well as
   courses you’re offering yourselves.
   </p>
+<% end %>
