@@ -62,7 +62,11 @@ feature "Withdraw course", type: :feature do
       fill_in "Type in the course code to confirm", with: "Z"
       click_on "Yes I’m sure – withdraw this course"
 
-      expect(find(".govuk-error-summary")).to have_content(
+      expect(course_page.error_summary).to have_content(
+        "You’ll need to correct some information.",
+      )
+
+      expect(course_page.withdraw_error).to have_content(
         "Enter the course code (#{course.course_code}) to withdraw this course",
       )
     end

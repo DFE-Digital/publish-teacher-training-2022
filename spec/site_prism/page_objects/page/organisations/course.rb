@@ -25,6 +25,8 @@ module PageObjects
         element :publish, "[data-qa=course__publish]"
         element :success_summary, ".govuk-success-summary"
         element :error_summary, ".govuk-error-summary"
+        element :delete_error, "#delete-error"
+        element :withdraw_error, "#withdraw-error"
         element :status_panel, "[data-qa=course__status_panel]"
         element :withdraw_link, '[data-qa="course__withdraw-link"]'
         element :delete_link, '[data-qa="course__delete-link"]'

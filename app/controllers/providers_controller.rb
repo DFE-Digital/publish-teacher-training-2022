@@ -85,7 +85,7 @@ class ProvidersController < ApplicationController
     provider_query = params[:query]
 
     if provider_query.blank?
-      flash[:error] = "Training provider"
+      flash[:error] = { id: "provider-error", message: "Name or provider code" }
       return redirect_to organisations_path
     end
 
