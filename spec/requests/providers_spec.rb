@@ -90,9 +90,8 @@ describe "Providers", type: :request do
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(
           <<~HEREDOC,
-            provider_code,course_code
-            #{training_provider.provider_code},#{course.course_code}
-
+            provider_code,provider_name,course_code,course_name,study_mode,qualification,content_status,applications_open_from,has_vacancies
+            #{course.provider.provider_code},#{course.provider.provider_name},#{course.course_code},#{course.name},#{course.study_mode},#{course.qualification},#{course.content_status},#{course.applications_open_from},#{course.has_vacancies?}
           HEREDOC
         )
       end
