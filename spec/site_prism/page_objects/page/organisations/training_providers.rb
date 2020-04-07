@@ -11,6 +11,7 @@ module PageObjects
 
         element :training_providers_list, '[data-qa="provider__training_providers_list"]'
         sections :training_providers, TrainingProviderSection, '[data-qa="training_provider"]'
+        element :download_section, '[data-qa="download-section"]'
       end
     end
   end

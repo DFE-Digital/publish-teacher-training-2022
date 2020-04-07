@@ -34,4 +34,18 @@
       <% end %>
     </ul>
   </div>
+
+  <aside class="govuk-grid-column-one-third">
+      <div class="app-related" data-qa="download-section" >
+        <h2 class="govuk-heading-m">Download</h2>
+        <p class="govuk-body">Export all the courses you’re the accredited body for.</p>
+        <%= link_to "Download as a CSV file",
+                    download_training_providers_courses_provider_recruitment_cycle_path(
+                      provider.provider_code,
+                      provider.recruitment_cycle_year,
+                      format: :csv
+                    ),
+                    class: "govuk-link govuk-!-font-weight-bold" %>
+      </div>
+  </aside>
 </div>

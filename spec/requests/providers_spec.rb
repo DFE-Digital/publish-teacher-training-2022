@@ -66,12 +66,57 @@ describe "Providers", type: :request do
         end
       end
     end
+
+    describe "GET courses-as-an-accredited-body csv" do
+      it "returns training provider courses" do
+        training_provider = build(:provider)
+        course = build(:course, provider: training_provider)
+        accredited_provider = build(:provider, current_accredited_courses: [course])
+        stub_api_v2_request("/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}", accredited_provider.recruitment_cycle.to_jsonapi)
+        stub_api_v2_resource(accredited_provider)
+        stub_api_v2_request(
+          "/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}/courses" \
+          "?filter[accrediting_provider_code]=#{accredited_provider.provider_code}&include=provider",
+          resource_list_to_jsonapi([course], include: :provider),
+         )
+
+        path = download_training_providers_courses_provider_recruitment_cycle_path(
+          accredited_provider.provider_code,
+          accredited_provider.recruitment_cycle.year,
+          format: :csv,
+        )
+        get(path)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to eq(
+          <<~HEREDOC,
+            provider_code,provider_name,course_code,course_name,study_mode,qualification,content_status,applications_open_from,has_vacancies
+            #{course.provider.provider_code},#{course.provider.provider_name},#{course.course_code},#{course.name},#{course.study_mode},#{course.qualification},#{course.content_status},#{course.applications_open_from},#{course.has_vacancies?}
+          HEREDOC
+        )
+      end
+    end
   end
 
   context "when the user is not authenticated" do
     describe "GET suggest" do
       it "redirects to signin" do
         get "/providers/suggest"
+
+        expect(response).to redirect_to("http://www.example.com/signin")
+      end
+    end
+
+    describe "GET courses-as-an-accredited-body" do
+      it "redirects to signin" do
+        accredited_provider = build(:provider)
+
+        path = download_training_providers_courses_provider_recruitment_cycle_path(
+          accredited_provider.provider_code,
+          accredited_provider.recruitment_cycle.year,
+          format: :csv,
+        )
+        get(path)
 
         expect(response).to redirect_to("http://www.example.com/signin")
       end
