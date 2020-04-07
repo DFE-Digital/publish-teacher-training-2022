@@ -1,4 +1,4 @@
-class PeAllocationsController < ApplicationController
+class AllocationsController < ApplicationController
   before_action :build_recruitment_cycle
   before_action :build_provider
   before_action :require_provider_to_be_accredited_body!

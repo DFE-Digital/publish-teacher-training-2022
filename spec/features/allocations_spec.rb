@@ -87,12 +87,12 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_cannot_access_pe_alloacations_page
-    visit pe_allocations_provider_recruitment_cycle_path(@training_provider.provider_code, @training_provider.recruitment_cycle.year)
+    visit allocations_provider_recruitment_cycle_path(@training_provider.provider_code, @training_provider.recruitment_cycle.year)
     expect(page).to have_content("Page not found")
   end
 
   def and_i_cannot_access_accredited_body_pe_alloacations_page
-    visit pe_allocations_provider_recruitment_cycle_path(@accrediting_body.provider_code, @accrediting_body.recruitment_cycle.year)
+    visit allocations_provider_recruitment_cycle_path(@accrediting_body.provider_code, @accrediting_body.recruitment_cycle.year)
     expect(page).to have_content("You are not permitted to see this page")
   end
 end

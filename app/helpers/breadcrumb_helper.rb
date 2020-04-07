@@ -70,8 +70,8 @@ module BreadcrumbHelper
     training_providers_breadcrumb << ["#{@training_provider.provider_name}’s courses", path]
   end
 
-  def pe_allocations_breadcrumb
-    path = pe_allocations_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)
+  def allocations_breadcrumb
+    path = allocations_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)
     provider_breadcrumb << ["Request PE courses for 2021/22", path]
   end
 end

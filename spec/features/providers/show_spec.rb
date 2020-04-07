@@ -21,7 +21,7 @@ feature "Show providers", type: :feature do
 
     it "does not have the request PE courses for 2021/22 link" do
       visit provider_path(provider.provider_code)
-      expect(organisation_show_page).not_to have_request_pe_allocations_link
+      expect(organisation_show_page).not_to have_request_allocations_link
     end
   end
 
@@ -40,14 +40,14 @@ feature "Show providers", type: :feature do
 
       it "does have the request PE courses for 2021/22 link" do
         visit provider_path(provider.provider_code)
-        expect(organisation_show_page.request_pe_allocations_link.text).to eq("Request PE courses for 2021/22")
+        expect(organisation_show_page.request_allocations_link.text).to eq("Request PE courses for 2021/22")
       end
     end
 
     context "When the user is not an admin" do
       it "does not have the request PE courses for 2021/22 link" do
         visit provider_path(provider.provider_code)
-        expect(organisation_show_page).not_to have_request_pe_allocations_link
+        expect(organisation_show_page).not_to have_request_allocations_link
       end
     end
   end
