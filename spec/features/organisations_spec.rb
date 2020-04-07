@@ -42,7 +42,7 @@ feature "View organisations", type: :feature do
 
       it "does not link to the organisations page" do
         visit provider_courses_path(provider.provider_code)
-        expect { home_page.organisations_link }.to raise_error(Capybara::ElementNotFound)
+        expect(home_page).not_to have_organisations_link
       end
     end
   end

@@ -16,7 +16,7 @@ feature "Show providers", type: :feature do
   context "When the provider is not an accredited body" do
     it "does not have the courses as an accredited body link" do
       visit provider_path(provider.provider_code)
-      expect { organisation_show_page.courses_as_accredited_body_link }.to raise_error(Capybara::ElementNotFound)
+      expect(organisation_show_page).not_to have_courses_as_accredited_body_link
     end
   end
 
