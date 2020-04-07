@@ -73,7 +73,7 @@ describe "Providers", type: :request do
         course = build(:course, provider: training_provider)
         accredited_provider = build(:provider, current_accredited_courses: [course])
         stub_api_v2_request("/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}", accredited_provider.recruitment_cycle.to_jsonapi)
-        stub_api_v2_resource(accredited_provider, include: "current_accredited_courses.provider,current_accredited_courses.site_statuses.site")
+        stub_api_v2_resource(accredited_provider)
         stub_api_v2_request(
           "/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}/courses" \
           "?filter[accrediting_provider_code]=#{accredited_provider.provider_code}&include=provider",
