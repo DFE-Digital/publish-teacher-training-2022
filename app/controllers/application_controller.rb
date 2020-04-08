@@ -32,14 +32,14 @@ class ApplicationController < ActionController::Base
     if is_authenticated?
       session[:auth_user]
     elsif development_mode_auth?
-      email = authenticate_with_http_basic do |user, pass|
-        user if authorise_development_mode?(user, pass)
+      user = authenticate_with_http_basic do |email, pass|
+        authorise_development_mode?(email, pass)
       end
-      if email.present?
+      if user.present?
         setup_development_mode_session(
-          email: Settings.authorised_user.email,
-          first_name: Settings.authorised_user.first_name,
-          last_name: Settings.authorised_user.last_name,
+          email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
         )
       end
     end
@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def development_mode_auth?
-    !Rails.env.production? && Settings.key?(:authorised_user)
+    !Rails.env.production? && Settings.key?(:authorised_users)
   end
 
   def authenticate
@@ -123,8 +123,11 @@ class ApplicationController < ActionController::Base
 private
 
   def authorise_development_mode?(email, password)
-    Settings.authorised_user.email == email &&
-      Settings.authorised_user.password == password
+    _, user = Settings.authorised_users.find do |_index, user|
+      user.email == email && user.password == password
+    end
+
+    user
   end
 
   def setup_development_mode_session(email:, first_name:, last_name:)
