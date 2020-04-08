@@ -182,7 +182,9 @@ Rails.application.routes.draw do
 
       resources :sites, path: "locations", on: :member, except: %i[destroy show]
 
-      get "/allocations", on: :member, to: "allocations#index"
+      scope module: "providers" do
+        resources :allocations, only: [:index]
+      end
     end
   end
 
