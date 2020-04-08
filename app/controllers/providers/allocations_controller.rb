@@ -7,6 +7,7 @@ module Providers
     before_action :require_admin_permissions!
 
     def index; end
+    def requests; end
 
   private
 
