@@ -29,11 +29,8 @@
         <%= legend %>
         <% field = "requested"%>
 
-        <%= render "shared/error_messages", error_keys: [field] %>
-
-
+        <%= render "shared/error_wrapper", error_keys: [field], data_qa: "allocations__#{field}" do %>
         <% ["Yes", "No"].each_with_index do |value| %>
-          <% help = "#{value} means #{value.upcase}" %>
           <% label = value %>
 
           <div class="govuk-radios__item">
@@ -49,14 +46,12 @@
                   value: value,
                   class: "govuk-label govuk-radios__label"
             %>
-            <span id="<%= "#{field}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
-              <%= help %>
-            </span>
           </div>
         <% end %>
       </fieldset>
 
       <%= form.submit "Continue", class: "govuk-button", data: { qa: 'request_continue' } %>
+    <% end %>
     <% end %>
   </div>
 </div>
