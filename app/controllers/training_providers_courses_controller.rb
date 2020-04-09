@@ -1,4 +1,5 @@
 class TrainingProvidersCoursesController < ApplicationController
+  decorates_assigned :course
   decorates_assigned :provider
   before_action :build_recruitment_cycle
   rescue_from JsonApiClient::Errors::NotFound, with: :not_found
@@ -7,17 +8,19 @@ class TrainingProvidersCoursesController < ApplicationController
   def index
     course_csv_rows = Course.includes(:provider)
       .where(recruitment_cycle_year: @recruitment_cycle.year, accrediting_provider_code: @provider.provider_code)
+      .map(&:decorate)
       .map do |c|
       {
         "Provider code" => c.provider.provider_code,
         "Provider" => c.provider.provider_name,
         "Course code" => c.course_code,
         "Course" => c.name,
-        "Study mode" => c.study_mode,
-        "Qualification" => c.qualification,
-        "Status" => c.content_status,
-        "Is it on Find?" => c.applications_open_from,
-        "Vacancies" => c.has_vacancies?,
+        "Study mode" => c.study_mode&.humanize,
+        "Qualification" => c.outcome,
+        "Status" => c.content_status&.humanize,
+        "View on Find" => c.find_url,
+        "Applications open from" => l(c.applications_open_from&.to_date),
+        "Vacancies" => c.has_vacancies? ? "Yes" : "No",
       }
     end
 

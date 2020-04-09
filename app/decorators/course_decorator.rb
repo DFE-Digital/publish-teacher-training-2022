@@ -11,6 +11,10 @@ class CourseDecorator < ApplicationDecorator
     content.html_safe
   end
 
+  def find_url(provider = object.provider)
+    h.search_ui_course_page_url(provider_code: provider.provider_code, course_code: object.course_code)
+  end
+
   def on_find(provider = object.provider)
     if object.findable?
       if current_cycle_and_open?

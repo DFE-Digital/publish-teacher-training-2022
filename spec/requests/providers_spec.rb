@@ -72,6 +72,7 @@ describe "Providers", type: :request do
         training_provider = build(:provider)
         course = build(:course, provider: training_provider)
         accredited_provider = build(:provider, current_accredited_courses: [course])
+        decorated_course = course.decorate
         stub_api_v2_request("/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}", accredited_provider.recruitment_cycle.to_jsonapi)
         stub_api_v2_resource(accredited_provider)
         stub_api_v2_request(
@@ -90,8 +91,8 @@ describe "Providers", type: :request do
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(
           <<~HEREDOC,
-            Provider code,Provider,Course code,Course,Study mode,Qualification,Status,Is it on Find?,Vacancies
-            #{course.provider.provider_code},#{course.provider.provider_name},#{course.course_code},#{course.name},#{course.study_mode},#{course.qualification},#{course.content_status},#{course.applications_open_from},#{course.has_vacancies?}
+            Provider code,Provider,Course code,Course,Study mode,Qualification,Status,View on Find,Applications open from,Vacancies
+            #{course.provider.provider_code},#{course.provider.provider_name},#{course.course_code},#{course.name},#{decorated_course.study_mode.humanize},#{decorated_course.outcome},#{course.content_status.humanize},#{decorated_course.find_url},#{I18n.l(course.applications_open_from.to_date)},No
           HEREDOC
         )
       end
