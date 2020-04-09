@@ -51,10 +51,10 @@ module Helpers
     stub_api_v2_request("/sessions", user.to_jsonapi, :post)
 
     begin
-      Settings[:authorised_user] = authorised_user
+      Settings[:authorised_users] = [[0, authorised_user]]
       yield
     ensure
-      Settings.delete_field(:authorised_user)
+      Settings.delete_field(:authorised_users)
     end
   end
 
@@ -157,7 +157,7 @@ module Helpers
   end
 
   def disable_authorised_development_user
-    allow(Settings).to receive(:key?).with(:authorised_user).and_return(false)
+    allow(Settings).to receive(:key?).with(:authorised_users).and_return(false)
   end
 
 private

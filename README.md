@@ -161,11 +161,12 @@ For local development, you can disable reliance on DFE Sign-In by creating a
 file `config/settings/development.local.yml` with the contents:
 
 ```yaml
-authorised_user:
-  first_name: [your first name, this will be updated in the db]
-  last_name: [your last name, this will be updated in the db]
-  email: [the email address to login with]
-  password: [the password you wish to use]
+authorised_users:
+  0:
+    first_name: [your first name, this will be updated in the db]
+    last_name: [your last name, this will be updated in the db]
+    email: [the email address to login with]
+    password: [the password you wish to use]
 ```
 
 The email address has to exist in the users table of teacher-training-api, but
