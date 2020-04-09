@@ -9,15 +9,15 @@ class TrainingProvidersCoursesController < ApplicationController
       .where(recruitment_cycle_year: @recruitment_cycle.year, accrediting_provider_code: @provider.provider_code)
       .map do |c|
       {
-        provider_code: c.provider.provider_code,
-        provider_name: c.provider.provider_name,
-        course_code: c.course_code,
-        course_name: c.name,
-        study_mode: c.study_mode,
-        qualification: c.qualification,
-        content_status: c.content_status,
-        applications_open_from: c.applications_open_from,
-        has_vacancies: c.has_vacancies?,
+        "Provider code" => c.provider.provider_code,
+        "Provider" => c.provider.provider_name,
+        "Course code" => c.course_code,
+        "Course" => c.name,
+        "Study mode" => c.study_mode,
+        "Qualification" => c.qualification,
+        "Status" => c.content_status,
+        "Is it on Find?" => c.applications_open_from,
+        "Vacancies" => c.has_vacancies?,
       }
     end
 
