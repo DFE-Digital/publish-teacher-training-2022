@@ -28,7 +28,7 @@
         <%= legend %>
         <% field = "requested"%>
 
-        <%= render "shared/error_wrapper", error_keys: [field], data_qa: "allocations__#{field}" do %>
+        <%= render "shared/error_wrapper", error_keys: [field], data_qa: "allocation__#{field}" do %>
         <% ["Yes", "No"].each_with_index do |value| %>
           <% label = value %>
 

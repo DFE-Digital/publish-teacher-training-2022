@@ -8,6 +8,7 @@ module Providers
     before_action :require_admin_permissions!
 
     def index; end
+
     def requests; end
 
   private
@@ -20,12 +21,12 @@ module Providers
     end
 
     def build_training_provider
-       twip = Provider
-        .where(recruitment_cycle_year: @recruitment_cycle.year)
-        .find(params[:training_provider_code])
-        .first
+      twip = Provider
+       .where(recruitment_cycle_year: @recruitment_cycle.year)
+       .find(params[:training_provider_code])
+       .first
 
-        @training_provider = twip
+      @training_provider = twip
     end
 
     def build_provider
