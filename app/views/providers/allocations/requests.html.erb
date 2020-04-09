@@ -6,12 +6,11 @@
   <%= govuk_back_link_to(provider_recruitment_cycle_allocations_path) %>
 <% end %>
 
-
 <% legend = capture do %>
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
         <h1 class="govuk-fieldset__heading">
-            <span class="govuk-caption-xl">Enfield County School for Girls</span>
-            <%= page_title%>
+            <span class="govuk-caption-xl"><%= @training_provider.provider_name %></span>
+            <%= page_title %>
         </h1>
     </legend>
 <% end %>
@@ -51,7 +50,7 @@
       </fieldset>
 
       <%= form.submit "Continue", class: "govuk-button", data: { qa: 'request_continue' } %>
-    <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>
