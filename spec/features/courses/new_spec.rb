@@ -267,7 +267,6 @@ feature "new course", type: :feature do
 
       it "can skip steps that are not relevant" do
         stub_api_v2_build_course(course_creation_params)
-        visit signin_path
 
         visit new_provider_recruitment_cycle_courses_start_date_path(
           provider.provider_code,
@@ -329,7 +328,6 @@ feature "new course", type: :feature do
 
       it "can skip steps that are not relevant" do
         stub_api_v2_build_course(course_creation_params)
-        visit signin_path
 
         visit new_provider_recruitment_cycle_courses_start_date_path(
           provider.provider_code,

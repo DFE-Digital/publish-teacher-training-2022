@@ -187,6 +187,11 @@ feature "new course entry_requirements", type: :feature do
   end
 
   def visit_new_entry_requirements(**query_params)
+    stub_api_v2_request(
+      "/recruitment_cycles/2020/providers?page[page]=1",
+      resource_list_to_jsonapi([provider], meta: { count: 1 }),
+    )
+
     visit signin_path
     visit new_provider_recruitment_cycle_courses_entry_requirements_path(
       provider.provider_code,

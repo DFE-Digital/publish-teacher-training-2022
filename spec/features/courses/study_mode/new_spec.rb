@@ -31,6 +31,10 @@ feature "new course study mode", type: :feature do
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
     stub_api_v2_build_course(study_mode: "full_time_or_part_time")
+    stub_api_v2_request(
+      "/recruitment_cycles/2020/providers?page[page]=1",
+      resource_list_to_jsonapi([provider], meta: { count: 1 }),
+    )
   end
 
   scenario "sends user to confirmation page" do

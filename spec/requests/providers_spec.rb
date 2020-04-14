@@ -2,8 +2,10 @@ require "rails_helper"
 
 describe "Providers", type: :request do
   context "when the user is authenticated" do
+    let(:provider) { build(:provider) }
+
     before do
-      stub_omniauth
+      stub_omniauth(provider: provider)
       get(auth_dfe_callback_path)
     end
 
@@ -12,9 +14,11 @@ describe "Providers", type: :request do
       context "with 1 provider" do
         it "redirects to providers show" do
           current_recruitment_cycle = build(:recruitment_cycle)
-          provider = build(:provider)
           stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-          stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", provider.to_jsonapi)
+          stub_api_v2_request(
+            "/recruitment_cycles/2020/providers?page[page]=1",
+            resource_list_to_jsonapi([provider], meta: { count: 1 }),
+          )
           get(path)
           expect(response).to redirect_to provider_path(provider.provider_code)
         end
@@ -27,7 +31,10 @@ describe "Providers", type: :request do
           provider2 = build(:provider, include_counts: [:courses])
           providers = [provider1, provider2]
           stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-          stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", resource_list_to_jsonapi(providers))
+          stub_api_v2_request(
+            "/recruitment_cycles/2020/providers?page[page]=1",
+            resource_list_to_jsonapi(providers, meta: { count: 2 }),
+          )
           get(path)
           expect(response.body).to include("Organisations")
           expect(response.body).to include(provider1.provider_name)
@@ -38,7 +45,10 @@ describe "Providers", type: :request do
         it "shows no-providers page" do
           current_recruitment_cycle = build(:recruitment_cycle)
           stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-          stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", jsonapi(:providers_response, data: []))
+          stub_api_v2_request(
+            "/recruitment_cycles/2020/providers?page[page]=1",
+            resource_list_to_jsonapi([], meta: { count: 0 }),
+          )
           get(path)
           expect(response).to have_http_status(:forbidden)
           expect(response.body).to include("We don’t know which organisation you’re part of")

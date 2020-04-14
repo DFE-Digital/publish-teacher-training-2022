@@ -24,6 +24,10 @@ module Helpers
     # TODO: Move this to be returned with the user.
     stub_api_v2_request(
       "/recruitment_cycles/#{Settings.current_cycle}/providers",
+      resource_list_to_jsonapi([provider], meta: { count: 1 }),
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{Settings.current_cycle}/providers?page[page]=1&page[per_page]=1",
       provider.to_jsonapi,
     )
     Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:dfe]

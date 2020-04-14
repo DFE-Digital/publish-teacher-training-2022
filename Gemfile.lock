@@ -201,18 +201,6 @@ GEM
     jsonapi-serializable (0.3.1)
       jsonapi-renderer (~> 0.2.0)
     jwt (2.2.1)
-    kaminari (1.2.0)
-      activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.2.0)
-      kaminari-activerecord (= 1.2.0)
-      kaminari-core (= 1.2.0)
-    kaminari-actionview (1.2.0)
-      actionview
-      kaminari-core (= 1.2.0)
-    kaminari-activerecord (1.2.0)
-      activerecord
-      kaminari-core (= 1.2.0)
-    kaminari-core (1.2.0)
     launchy (2.5.0)
       addressable (~> 2.7)
     listen (3.2.1)
@@ -260,6 +248,7 @@ GEM
       validate_email
       validate_url
       webfinger (>= 1.0.1)
+    pagy (3.7.5)
     parallel (1.19.1)
     parallel_tests (2.32.0)
       parallel
@@ -490,12 +479,12 @@ DEPENDENCIES
   jsonapi-renderer
   jsonapi-serializable
   jwt
-  kaminari
   launchy
   listen (>= 3.0.5, < 3.3)
   logstash-logger (~> 0.26.1)
   omniauth (~> 1.9)
   omniauth_openid_connect (~> 0.3)
+  pagy
   parallel_tests
   pkg-config (~> 1.4.1)
   pry-byebug

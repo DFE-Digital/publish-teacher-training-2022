@@ -34,6 +34,11 @@ feature "Edit course modern languages", type: :feature do
     stub_api_v2_resource(course, include: "subjects,site_statuses")
     stub_api_v2_resource(course, include: "sites,accrediting_provider,provider.sites")
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers?page[page]=1",
+      resource_list_to_jsonapi([provider], meta: { count: 1 }),
+    )
   end
 
   context "with a given set of modern languages" do

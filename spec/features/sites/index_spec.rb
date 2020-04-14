@@ -23,7 +23,7 @@ feature "View locations", type: :feature do
   before do
     allow(Settings).to receive(:rollover).and_return(false)
     user = build(:user)
-    stub_omniauth(user: user)
+    stub_omniauth(user: user, provider: provider)
 
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
@@ -32,8 +32,8 @@ feature "View locations", type: :feature do
 
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-      "/providers",
-      resource_list_to_jsonapi(provider, include: :sites),
+      "/providers?page[page]=1",
+      resource_list_to_jsonapi([provider], include: :sites, meta: { count: 1 }),
     )
 
     stub_api_v2_request(
@@ -49,6 +49,7 @@ feature "View locations", type: :feature do
     )
 
     root_page.load
+
     expect(organisation_page).to be_displayed(provider_code: provider_code)
 
     organisation_page.locations.click

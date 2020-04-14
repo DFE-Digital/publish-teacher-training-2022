@@ -10,4 +10,4 @@
   <%= render partial: "providers/provider", collection: @providers %>
 </ul>
 
-<%= paginate @providers %>
+<%= pagy_govuk_nav(@pagy).html_safe %>

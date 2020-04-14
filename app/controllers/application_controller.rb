@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_unauthorized
   rescue_from JsonApiClient::Errors::AccessDenied, with: :handle_access_denied
 
+  include Pagy::Backend
+
   before_action :authenticate
   before_action :store_request_id
   before_action :request_login
