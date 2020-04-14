@@ -3,7 +3,7 @@ module Providers
     before_action :build_allocations
     before_action :build_recruitment_cycle
     before_action :build_provider
-    before_action :build_training_provider
+    before_action :build_training_provider, except: %i[index]
     before_action :require_provider_to_be_accredited_body!
     before_action :require_admin_permissions!
 
@@ -21,12 +21,10 @@ module Providers
     end
 
     def build_training_provider
-      twip = Provider
+      @training_provider = Provider
        .where(recruitment_cycle_year: @recruitment_cycle.year)
        .find(params[:training_provider_code])
        .first
-
-      @training_provider = twip
     end
 
     def build_provider
