@@ -1,0 +1,56 @@
+
+<% page_title = "Do you want to request PE for this organisation?"%>
+<%= content_for :page_title, page_title%>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(provider_recruitment_cycle_allocations_path) %>
+<% end %>
+
+<% legend = capture do %>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading">
+            <span class="govuk-caption-xl"><%= @training_provider.provider_name %></span>
+            <%= page_title %>
+        </h1>
+    </legend>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+  <%= form_with url: requests_provider_recruitment_cycle_allocation_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year,
+                    params[:training_provider_code]
+                  ),
+                  method: :get do |form| %>
+      <fieldset class="govuk-fieldset">
+        <%= legend %>
+        <% field = "requested"%>
+
+        <%= render "shared/error_wrapper", error_keys: [field], data_qa: "allocation__#{field}" do %>
+        <% ["Yes", "No"].each_with_index do |value| %>
+          <% label = value %>
+
+          <div class="govuk-radios__item">
+            <%= form.radio_button field,
+                  value,
+                  class: 'govuk-radios__input',
+                  data: {
+                    'aria-describedby': "#{field}-#{value}-help"
+                  }
+            %>
+            <%= form.label field,
+                  label,
+                  value: value,
+                  class: "govuk-label govuk-radios__label"
+            %>
+          </div>
+        <% end %>
+      </fieldset>
+
+      <%= form.submit "Continue", class: "govuk-button", data: { qa: 'request_continue' } %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
