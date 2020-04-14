@@ -5,13 +5,16 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited provider views PE allocations page" do
     given_accredited_body_exists
+    given_training_provider_with_pe_fee_founded_course_exists
     given_i_am_signed_in_as_an_admin
 
     when_i_visit_my_organisations_page
     and_i_click_request_pe_courses
     then_i_see_the_pe_alloacations_page
 
+    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
     and_i_see_allocations_with_status_and_actions
+
     and_i_see_correct_breadcrumbs
   end
 
@@ -46,33 +49,36 @@ RSpec.feature "PE allocations" do
     stub_omniauth(user: build(:user, :admin))
   end
 
+  def given_training_provider_with_pe_fee_founded_course_exists
+    @training_provider1 = build(:provider)
+  end
+
   def when_i_visit_my_organisations_page
     stub_api_v2_resource(@accrediting_body)
     stub_api_v2_resource_collection([build(:access_request)])
-
-    @allocations = [{
-         provider_name: " Test 1",
-         status: "Good",
-         status_colour: "green",
-         action: "",
-       },
-                    {
-                      provider_name: " Test 2",
-                      status: "Good",
-                      status_colour: "red",
-                      action: "Change",
-                    }]
 
     visit provider_path(@accrediting_body.provider_code)
     expect(find("h1")).to have_content(@accrediting_body.provider_name.to_s)
   end
 
   def and_i_click_request_pe_courses
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accrediting_body.recruitment_cycle.year}/providers/" \
+      "#{@accrediting_body.provider_code}/training_providers" \
+      "?filter[funding_type]=fee" \
+      "&filter[subjects]=C6" \
+      "&recruitment_cycle_year=#{@accrediting_body.recruitment_cycle.year}",
+      resource_list_to_jsonapi([@training_provider1]),
+    )
     click_on "Request PE courses for 2021/22"
   end
 
   def then_i_see_the_pe_alloacations_page
     expect(find("h1")).to have_content("Request PE courses for 2021/22")
+  end
+
+  def and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
+    expect(allocations_page.rows.first.provider_name.text).to eq(@training_provider1.provider_name)
   end
 
   def and_i_see_allocations_with_status_and_actions
