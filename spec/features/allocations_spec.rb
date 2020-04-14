@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "PE allocations" do
+  let(:allocations_page) { PageObjects::Page::Providers::Allocations::IndexPage.new }
+
   scenario "Accredited provider views PE allocations page" do
     given_accredited_body_exists
     given_i_am_signed_in_as_an_admin
@@ -9,6 +11,7 @@ RSpec.feature "PE allocations" do
     and_i_click_request_pe_courses
     then_i_see_the_pe_alloacations_page
 
+    and_i_see_allocations_with_status_and_actions
     and_i_see_correct_breadcrumbs
   end
 
@@ -47,6 +50,19 @@ RSpec.feature "PE allocations" do
     stub_api_v2_resource(@accrediting_body)
     stub_api_v2_resource_collection([build(:access_request)])
 
+    @allocations = [{
+         provider_name: " Test 1",
+         status: "Good",
+         status_colour: "green",
+         action: "",
+       },
+                    {
+                      provider_name: " Test 2",
+                      status: "Good",
+                      status_colour: "red",
+                      action: "Change",
+                    }]
+
     visit provider_path(@accrediting_body.provider_code)
     expect(find("h1")).to have_content(@accrediting_body.provider_name.to_s)
   end
@@ -57,6 +73,10 @@ RSpec.feature "PE allocations" do
 
   def then_i_see_the_pe_alloacations_page
     expect(find("h1")).to have_content("Request PE courses for 2021/22")
+  end
+
+  def and_i_see_allocations_with_status_and_actions
+    expect(allocations_page).to have_rows
   end
 
   def and_i_see_correct_breadcrumbs
@@ -87,7 +107,8 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_cannot_access_pe_alloacations_page
-    visit provider_recruitment_cycle_allocations_path(@training_provider.provider_code, @training_provider.recruitment_cycle.year)
+    allocations_page.load(provider_code: @training_provider.provider_code,
+                          recruitment_cycle_year: @training_provider.recruitment_cycle.year)
     expect(page).to have_content("Page not found")
   end
 

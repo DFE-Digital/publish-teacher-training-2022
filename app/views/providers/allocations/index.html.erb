@@ -1,11 +1,40 @@
 <%= content_for :page_title, "Request PE courses for 2021/22" %>
 <%= content_for :before_content, render_breadcrumbs("allocations") %>
 
-<h1 class="govuk-heading-xl">Request PE courses for 2021/22</h1>
 
-<div class="govuk-grid-row add-top-margin">
+
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body">You need to request any fee-funded PE courses for 2021/22 by 10 July 2020. You do not need to request salaried PE courses.</p>
-    <p class="govuk-body">Once you’ve made a request, you can change it before 10 July.</p>
+    <h1 class="govuk-heading-xl">Request PE courses for 2021/22</h1>
+    <p class="govuk-body">
+      You need to request any fee-funded PE courses for 2021/22 by 10 July 2020.
+      You do not need to request salaried PE courses.
+    </p>
+    <p class="govuk-body">
+      Once you’ve made a request, you can change it before 10 July.
+    </p>
+
+    <h2 class="govuk-heading-m">Request PE again in 2021/22</h2>
+    <p class="govuk-body">
+      These are the organisations currently offering fee-funded PE that you’re
+      listed as the accredited body for. Your own organisation will be included
+      if it’s offering its own courses.
+    </p>
+
+    <p class="govuk-body">
+      Tell us if you’d like to request PE again. You won’t need to give recruitment
+      figures - these will be allocated based on the current year’s figures.
+      In September, you’ll receive confirmation of courses and numbers.
+    </p>
+
+    <%= render partial: "providers/allocations/request_status", locals: {allocations: @allocations} %>
+
+    <h2 class="govuk-heading-m">Request new PE courses</h2>
+    <p class="govuk-body">
+      Request any PE courses for 2021/22 not offered in the current cycle.
+      Select the name of the organisation offering the course.
+      You’ll be asked to give recruitment figures.
+    </p>
+
   </div>
 </div>
