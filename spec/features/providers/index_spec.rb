@@ -22,8 +22,8 @@ feature "View providers", type: :feature do
     scenario "Navigate to /organisations" do
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-        "/providers",
-        resource_list_to_jsonapi([provider_1, provider_2]),
+        "/providers?page[page]=1",
+        resource_list_to_jsonapi([provider_1, provider_2], meta: { count: 2 }),
       )
 
       visit providers_path
@@ -80,8 +80,8 @@ feature "View providers", type: :feature do
 
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-        "/providers",
-        resource_list_to_jsonapi(providers),
+        "/providers?page[page]=1",
+        resource_list_to_jsonapi(providers, meta: { count: 11 }),
         )
 
       visit providers_path
@@ -97,8 +97,8 @@ feature "View providers", type: :feature do
     scenario "Navigate to /organisations" do
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-        "/providers",
-        resource_list_to_jsonapi([]),
+        "/providers?page[page]=1",
+        resource_list_to_jsonapi([], meta: { count: 0 }),
       )
 
       visit providers_path

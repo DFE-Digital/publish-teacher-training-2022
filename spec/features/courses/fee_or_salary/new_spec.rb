@@ -4,6 +4,7 @@ feature "new course fee or salary", type: :feature do
   let(:new_fee_or_salary_page) do
     PageObjects::Page::Organisations::Courses::NewFeeOrSalaryPage.new
   end
+  let(:root_page) { PageObjects::Page::RootPage.new }
 
   let(:course) { build(:course, :new, provider: provider) }
   let(:provider) { build(:provider) }
@@ -18,8 +19,10 @@ feature "new course fee or salary", type: :feature do
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
-
-    visit signin_path
+    stub_api_v2_request(
+      "/recruitment_cycles/2020/providers?page[page]=1",
+      resource_list_to_jsonapi([provider], meta: { count: 1 }),
+    )
   end
 
   scenario "presents the correct choices" do
@@ -47,6 +50,7 @@ feature "new course fee or salary", type: :feature do
   end
 
   scenario "sends user to confirmation page" do
+    visit_fee_or_salary
     visit_fee_or_salary(goto_confirmation: true)
     new_fee_or_salary_page.funding_type_fields.fee.click
     new_fee_or_salary_page.continue.click

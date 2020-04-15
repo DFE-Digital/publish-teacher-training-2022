@@ -23,7 +23,10 @@ feature "new course age range", type: :feature do
 
   before do
     stub_omniauth(provider: provider)
-    resource_list_to_jsonapi([provider])
+    stub_api_v2_request(
+      "/recruitment_cycles/2020/providers?page[page]=1",
+      resource_list_to_jsonapi([provider], meta: { count: 1 }),
+    )
     stub_api_v2_resource(provider)
     stub_api_v2_resource(build(:provider, provider_code: "A2"))
     stub_api_v2_resource(build(:provider, provider_code: "A4"))

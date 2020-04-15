@@ -1,4 +1,10 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
+  def pagy_govuk_nav(pagy)
+    render "pagy/paginator", pagy: pagy
+  end
+
   def markdown(source)
     render = Govuk::MarkdownRenderer
     # Options: https://github.com/vmg/redcarpet#and-its-like-really-simple-to-use

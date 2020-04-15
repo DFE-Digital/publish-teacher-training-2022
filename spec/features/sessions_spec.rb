@@ -12,7 +12,7 @@ describe "sessions" do
   end
 
   let(:providers_response) do
-    resource_list_to_jsonapi(providers)
+    resource_list_to_jsonapi(providers, meta: { count: 3 })
   end
 
   let(:provider_page) { PageObjects::Page::Organisations::OrganisationPage.new }
@@ -32,7 +32,7 @@ describe "sessions" do
   it "redirects users to root when they go straight to the signin page" do
     stub_omniauth
     stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
+    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers?page[page]=1", providers_response)
 
     visit "/signin"
 

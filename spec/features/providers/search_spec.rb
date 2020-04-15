@@ -21,8 +21,8 @@ feature "Search providers", type: :feature do
 
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
-        "/providers",
-      resource_list_to_jsonapi([provider1, provider2]),
+        "/providers?page[page]=1",
+      resource_list_to_jsonapi([provider1, provider2], meta: { count: 2 }),
     )
 
     allow(Settings).to receive(:rollover).and_return(rollover)

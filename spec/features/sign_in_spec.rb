@@ -17,13 +17,18 @@ feature "Sign in", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
 
   let(:providers_response) do
-    resource_list_to_jsonapi(providers)
+    resource_list_to_jsonapi(providers, meta: { count: 3 })
   end
 
   before do
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
       current_recruitment_cycle.to_jsonapi,
+    )
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers?page[page]=1",
+      providers_response,
     )
   end
 
@@ -32,8 +37,6 @@ feature "Sign in", type: :feature do
     user = build :user
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
-                        providers_response)
 
     visit root_path
 
@@ -47,7 +50,6 @@ feature "Sign in", type: :feature do
     user = build :user, :new
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
     request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
     visit "/signin"
@@ -66,7 +68,6 @@ feature "Sign in", type: :feature do
     user = build :user, :new
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
     request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
 
     visit "/signin"
@@ -85,7 +86,6 @@ feature "Sign in", type: :feature do
     user = build :user, :transitioned
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
     request = stub_api_v2_request "/users/#{user.id}/accept_rollover_screen", user.to_jsonapi, :patch
 
     visit "/signin"
@@ -114,15 +114,9 @@ feature "Sign in", type: :feature do
     )
 
     stub_omniauth(user: user)
-    stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers", providers_response)
     request = stub_api_v2_request "/users/#{user.id}/accept_terms", user.to_jsonapi, :patch
 
     visit "/signin"
-
-    stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}",
-      current_recruitment_cycle.to_jsonapi,
-    )
 
     expect(accept_terms_page).to be_displayed
 

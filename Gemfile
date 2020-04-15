@@ -54,7 +54,7 @@ gem "logstash-logger", "~> 0.26.1"
 gem "rails_semantic_logger"
 
 # Kaminari, pagination templating
-gem "kaminari"
+gem "pagy"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
