@@ -14,7 +14,7 @@ module Providers
         "filter[subjects]": PE_SUBJECT_CODE,
         "filter[funding_type]": "fee",
         )
-      # temporary placeholders
+
       @allocation_statuses = [
         { status: "YET TO REQUEST", status_colour: "grey" },
         { status: "NOT REQUESTED", status_colour: "red" },
@@ -22,7 +22,25 @@ module Providers
       ]
     end
 
-    def requests; end
+    def new; end
+
+    def create
+      if params.require(:requested) == "Yes"
+        redirect_to provider_recruitment_cycle_allocation_path(requested: "yes")
+      else
+        redirect_to provider_recruitment_cycle_allocation_path(requested: "no")
+      end
+    end
+
+    def show
+      if params[:requested] == "yes"
+        @allocation = Allocation.new(number_of_places: 42)
+      end
+
+      if params[:requested] == "no"
+        @allocation = Allocation.new(number_of_places: 0)
+      end
+    end
 
   private
 

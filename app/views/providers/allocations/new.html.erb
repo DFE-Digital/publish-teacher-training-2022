@@ -18,12 +18,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-  <%= form_with url: requests_provider_recruitment_cycle_allocation_path(
+  <%= form_with url: provider_recruitment_cycle_allocation_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year,
                     params[:training_provider_code]
-                  ),
-                  method: :get do |form| %>
+                  ) do |form| %>
       <fieldset class="govuk-fieldset">
         <%= legend %>
         <% field = "requested"%>
