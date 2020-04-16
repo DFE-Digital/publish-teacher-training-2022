@@ -1,3 +1,5 @@
+desc "Run brakeman to check for any potential vulnerabilities"
+
 task brakeman: :environment do
   sh <<~EOSHELL
     mkdir -p tmp && \
@@ -8,5 +10,5 @@ task brakeman: :environment do
 end
 
 if %w[development test].include? Rails.env
-  task(:default).prerequisites << task(brakeman: :environment)
+  task(:default).prerequisites << :brakeman
 end
