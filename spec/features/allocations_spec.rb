@@ -3,14 +3,16 @@ require "rails_helper"
 RSpec.feature "PE allocations" do
   let(:allocations_page) { PageObjects::Page::Providers::Allocations::IndexPage.new }
 
-  scenario "Accredited provider views PE allocations page" do
+  scenario "Accredited body views PE allocations page" do
     given_accredited_body_exists
     given_training_provider_with_pe_fee_founded_course_exists
+    # once the feature is released it should be changed to
+    # given_i_am_signed_in_as_a_user_from_the_accredited_body
     given_i_am_signed_in_as_an_admin
 
     when_i_visit_my_organisations_page
     and_i_click_request_pe_courses
-    then_i_see_the_pe_alloacations_page
+    then_i_see_the_pe_allocations_page
 
     and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
     and_i_see_allocations_with_status_and_actions
@@ -73,7 +75,7 @@ RSpec.feature "PE allocations" do
     click_on "Request PE courses for 2021/22"
   end
 
-  def then_i_see_the_pe_alloacations_page
+  def then_i_see_the_pe_allocations_page
     expect(find("h1")).to have_content("Request PE courses for 2021/22")
   end
 
