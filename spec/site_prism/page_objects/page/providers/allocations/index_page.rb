@@ -6,6 +6,7 @@ module PageObjects
           set_url "/organisations/{provider_code}/{recruitment_cycle_year}/allocations"
 
           sections :rows, "tbody tr" do
+            element :provider_name, '[data-qa="provider_name"]'
             element :status, "td[:nth-child(1)"
             element :actions, "td[:nth-child(2)"
           end

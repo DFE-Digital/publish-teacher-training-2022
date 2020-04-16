@@ -1,24 +1,30 @@
 module Providers
   class AllocationsController < ApplicationController
-    before_action :build_allocations
     before_action :build_recruitment_cycle
     before_action :build_provider
     before_action :build_training_provider, except: %i[index]
     before_action :require_provider_to_be_accredited_body!
     before_action :require_admin_permissions!
 
-    def index; end
+    PE_SUBJECT_CODE = "C6".freeze
+
+    def index
+      @training_providers = @provider.training_providers(
+        recruitment_cycle_year: @recruitment_cycle.year,
+        "filter[subjects]": PE_SUBJECT_CODE,
+        "filter[funding_type]": "fee",
+        )
+      # temporary placeholders
+      @allocation_statuses = [
+        { status: "NOT YET REQUESTED", status_colour: "grey" },
+        { status: "NOT REQUESTED", status_colour: "red" },
+        { status: "REQUESTED", status_colour: "green" },
+      ]
+    end
 
     def requests; end
 
   private
-
-    def build_allocations
-      @allocations = []
-      @allocations <<  { provider_name: "Enfield County School for Girls", status: "Confirm your choice", status_colour: "grey", action: "" }
-      @allocations <<  { provider_name: "London Academy", status: "NOT REQUESTED", status_colour: "red", action: "Change" }
-      @allocations <<  { provider_name: "University of East Anglia", status: "REQUESTED", status_colour: "green", action: "Change" }
-    end
 
     def build_training_provider
       @training_provider = Provider

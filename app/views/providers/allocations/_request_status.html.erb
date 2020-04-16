@@ -11,18 +11,28 @@
   </tr>
   </thead>
   <tbody class="govuk-table__body">
-  <% allocations.each do | allocation | %>
+  <% @training_providers.each do |training_provider| %>
     <tr class="govuk-table__row">
-      <th class="govuk-table__header">
-        <a class="govuk-link" href="#"><%= allocation[:provider_name] %></a>
+      <th class="govuk-table__header" data-qa="provider_name">
+        <%= training_provider.provider_name %>
       </th>
+      <% allocation = @allocation_statuses.sample %>
       <td class="govuk-table__cell">
         <span class="govuk-tag govuk-tag--<%= allocation[:status_colour] %>">
           <%= allocation[:status] %>
         </span>
       </td>
       <td class="govuk-table__cell">
-        <a class="govuk-link" href="#"><%= allocation[:action] %></a>
+        <% if allocation[:status] == "NOT YET REQUESTED" %>
+          <%= link_to "Confirm choice",
+          requests_provider_recruitment_cycle_allocation_path(
+            @provider.provider_code,
+            @provider.recruitment_cycle_year,
+            training_provider.provider_code),
+          class: "govuk-link" %>
+        <% else %>
+          <a class="govuk-link" href="#">Change</a>
+        <% end %>
       </td>
     </tr>
   <% end %>
