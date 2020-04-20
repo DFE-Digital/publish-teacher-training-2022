@@ -9,7 +9,7 @@
     "set-value": "^3.0.2"
   },
   "devDependencies": {
-    "jest": "^25.3.0",
+    "jest": "^25.4.0",
     "webpack-dev-server": "^3.10.3"
   },
   "jest": {
