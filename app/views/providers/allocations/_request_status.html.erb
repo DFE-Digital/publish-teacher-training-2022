@@ -7,7 +7,9 @@
     <th class="govuk-table__header status-col">
       Status
     </th>
-    <th class="govuk-table__header status-col"></th>
+    <th class="govuk-table__header status-col">
+      <span class="govuk-visually-hidden">Actions</span>
+    </th>
   </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -23,7 +25,7 @@
         </span>
       </td>
       <td class="govuk-table__cell">
-        <% if allocation[:status] == "NOT YET REQUESTED" %>
+        <% if allocation[:status] == "YET TO REQUEST" %>
           <%= link_to "Confirm choice",
           requests_provider_recruitment_cycle_allocation_path(
             @provider.provider_code,
@@ -31,7 +33,18 @@
             training_provider.provider_code),
           class: "govuk-link" %>
         <% else %>
-          <a class="govuk-link" href="#">Change</a>
+          <ul class="govuk-summary-list__actions-list">
+            <li class="govuk-summary-list__actions-list-item">
+              <a class="govuk-link" href="#">
+                Change<span class="govuk-visually-hidden"> request for <%= training_provider.provider_name %></span>
+              </a>
+            </li>
+            <li class="govuk-summary-list__actions-list-item">
+              <a class="govuk-link" href="#">
+                View&nbsp;confirmation<span class="govuk-visually-hidden"> for <%= training_provider.provider_name %></span>
+              </a>
+            </li>
+          </ul>
         <% end %>
       </td>
     </tr>
