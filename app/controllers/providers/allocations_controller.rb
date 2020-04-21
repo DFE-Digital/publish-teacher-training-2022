@@ -16,7 +16,7 @@ module Providers
         )
       # temporary placeholders
       @allocation_statuses = [
-        { status: "YET TO REQUESTED", status_colour: "grey" },
+        { status: "YET TO REQUEST", status_colour: "grey" },
         { status: "NOT REQUESTED", status_colour: "red" },
         { status: "REQUESTED", status_colour: "green" },
       ]

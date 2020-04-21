@@ -25,7 +25,7 @@
         </span>
       </td>
       <td class="govuk-table__cell">
-        <% if allocation[:status] == "YET TO REQUESTED" %>
+        <% if allocation[:status] == "YET TO REQUEST" %>
           <%= link_to "Confirm choice",
           requests_provider_recruitment_cycle_allocation_path(
             @provider.provider_code,
