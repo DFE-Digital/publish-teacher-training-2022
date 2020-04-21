@@ -20,6 +20,22 @@ RSpec.feature "PE allocations" do
     and_i_see_correct_breadcrumbs
   end
 
+  scenario "Accredited body views PE allocations page when training provider has no PE fee-founded course" do
+    given_accredited_body_exists
+    given_there_is_no_training_providers_with_pe_fee_founded_course
+    # once the feature is released it should be changed to
+    # given_i_am_signed_in_as_a_user_from_the_accredited_body
+    given_i_am_signed_in_as_an_admin
+
+    when_i_visit_my_organisations_page
+    and_i_click_request_pe_courses
+    then_i_see_the_pe_allocations_page
+
+    and_i_do_not_see_request_pe_again_section
+
+    and_i_see_correct_breadcrumbs
+  end
+
   scenario "There is no PE allocations page for non accredited body" do
     given_a_provider_exists
     given_i_am_signed_in_as_an_admin
@@ -62,6 +78,16 @@ RSpec.feature "PE allocations" do
       resource_list_to_jsonapi([@training_provider]),
     )
   end
+
+  def given_there_is_no_training_providers_with_pe_fee_founded_course
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accrediting_body.recruitment_cycle.year}/providers/" \
+      "#{@accrediting_body.provider_code}/training_providers" \
+      "?filter[funding_type]=fee" \
+      "&filter[subjects]=C6" \
+      "&recruitment_cycle_year=#{@accrediting_body.recruitment_cycle.year}",
+      resource_list_to_jsonapi([]),
+    )
   end
 
   def when_i_visit_my_organisations_page
@@ -86,6 +112,10 @@ RSpec.feature "PE allocations" do
 
   def and_i_see_allocations_with_status_and_actions
     expect(allocations_page).to have_rows
+  end
+
+  def and_i_do_not_see_request_pe_again_section
+    expect(allocations_page).not_to have_request_again_header
   end
 
   def and_i_see_correct_breadcrumbs
