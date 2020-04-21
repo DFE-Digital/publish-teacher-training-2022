@@ -1,5 +1,5 @@
 <% if @allocation.has_places? %>
   <%= render partial: "providers/allocations/requests/yes_requested" %>
 <% else %>
-  no path
+  <%= render partial: "providers/allocations/requests/not_requested" %>
 <% end %>

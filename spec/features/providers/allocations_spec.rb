@@ -39,7 +39,7 @@ RSpec.feature "PE allocations" do
     and_i_see_correct_breadcrumbs
   end
 
-  scenario "Accredited body updates PE allocations" do
+  scenario "Accredited body decides to request PE allocations" do
     given_accredited_body_exists
     given_training_provider_with_pe_fee_founded_course_exists
 
@@ -58,7 +58,31 @@ RSpec.feature "PE allocations" do
     then_i_click_yes
     then_i_click_continue
 
-    and_i_see_the_success_page
+    and_i_see_the_confirmation_page
+    and_i_see_the_corresponding_page_title("Request sent")
+  end
+
+  scenario "Accredited body decides not to request PE allocations" do
+    given_accredited_body_exists
+    given_training_provider_with_pe_fee_founded_course_exists
+
+    given_i_am_signed_in_as_an_admin
+
+    when_i_visit_my_organisations_page
+    and_i_click_request_pe_courses
+    then_i_see_the_pe_allocations_page
+
+    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
+    and_i_see_allocations_with_status_and_actions
+
+    and_i_click_confirm_choice
+    then_i_see_request_pe_allocations_page
+
+    then_i_click_no
+    then_i_click_continue
+
+    and_i_see_the_confirmation_page
+    and_i_see_the_corresponding_page_title("Thank you")
   end
 
   scenario "There is no PE allocations page for non accredited body" do
@@ -270,7 +294,11 @@ RSpec.feature "PE allocations" do
     allocations_new_page.continue_button.click
   end
 
-  def and_i_see_the_success_page
-    expect(allocations_show_page.confirmation_panel).to have_content("Request sent")
+  def and_i_see_the_confirmation_page
+    expect(allocations_show_page).to be_displayed
+  end
+
+  def and_i_see_the_corresponding_page_title(title)
+    expect(allocations_show_page.page_heading).to have_content(title)
   end
 end
