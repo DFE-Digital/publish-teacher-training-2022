@@ -5,10 +5,10 @@ module PageObjects
         class IndexPage < PageObjects::Base
           set_url "/organisations/{provider_code}/{recruitment_cycle_year}/allocations"
 
-          element :request_again_header, '[data-qa="request_again_header"]'
+          element :request_again_header, '[data-qa="request-again-header"]'
 
           sections :rows, "tbody tr" do
-            element :provider_name, '[data-qa="provider_name"]'
+            element :provider_name, '[data-qa="provider-name"]'
             element :status, "td[:nth-child(1)"
             element :actions, "td[:nth-child(2)"
           end
