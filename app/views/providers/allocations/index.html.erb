@@ -13,28 +13,36 @@
       Once you’ve made a request, you can change it before 10 July.
     </p>
 
-    <h2 class="govuk-heading-m">Request PE again in 2021/22</h2>
-    <p class="govuk-body">
-      These are the organisations currently offering fee-funded PE that you’re
-      listed as the accredited body for. Your own organisation will be included
-      if it’s offering its own courses.
-    </p>
+    <% unless @training_providers.empty? %>
+      <h2 class="govuk-heading-m" data-qa="request-again-header">Request PE again in 2021/22</h2>
+      <p class="govuk-body">
+        These are the organisations currently offering fee-funded PE that you’re
+        listed as the accredited body for. Your own organisation will be included
+        if it’s offering its own courses.
+      </p>
 
-    <p class="govuk-body">
-      Tell us if you’d like to run PE again. You won’t need to say how many places
-      you'd like to request - we'll allocate these based on current numbers. You'll
-      get confirmation of courses and numbers in September.
-    </p>
+      <p class="govuk-body">
+        Tell us if you’d like to run PE again. You won’t need to say how many places
+        you'd like to request - we'll allocate these based on current numbers. You'll
+        get confirmation of courses and numbers in September.
+      </p>
+    <% end %>
   </div>
 
-  <div class="govuk-grid-column-full">
-    <%= render partial: "providers/allocations/request_status", locals: {allocations: @allocations} %>
-  </div>
+    <% unless @training_providers.empty? %>
+      <div class="govuk-grid-column-full">
+        <%= render partial: "providers/allocations/request_status", locals: {allocations: @allocations} %>
+      </div>
+    <% end %>
 
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-m">Request new PE courses</h2>
+    <% unless @training_providers.empty? %>
+      <h2 class="govuk-heading-m">Request new PE courses</h2>
+    <% end %>
     <p class="govuk-body">
-      Request any PE courses for 2021/22 not offered in the current cycle.
+      <% unless @training_providers.empty? %>
+        Request any PE courses for 2021/22 not offered in the current cycle.
+      <% end %>
       Select the name of the organisation offering the course.
       You’ll be asked to give recruitment figures.
     </p>
