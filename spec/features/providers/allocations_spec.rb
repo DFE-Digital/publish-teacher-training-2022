@@ -85,6 +85,44 @@ RSpec.feature "PE allocations" do
     and_i_see_the_corresponding_page_title("Thank you")
   end
 
+  scenario "Accredited body decides to view request PE allocations confirmation" do
+    given_accredited_body_exists
+    given_training_provider_with_pe_fee_founded_course_exists
+
+    given_i_am_signed_in_as_an_admin
+
+    when_i_visit_my_organisations_page
+    and_i_click_request_pe_courses
+    then_i_see_the_pe_allocations_page
+
+    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
+    and_i_see_allocations_with_status_and_actions
+
+    and_i_click_on_first_view_requested_confirmation
+
+    and_i_see_the_confirmation_page
+    and_i_see_the_corresponding_page_title("Request sent")
+  end
+
+  scenario "Accredited body decides to view request no PE allocations confirmation" do
+    given_accredited_body_exists
+    given_training_provider_with_pe_fee_founded_course_exists
+
+    given_i_am_signed_in_as_an_admin
+
+    when_i_visit_my_organisations_page
+    and_i_click_request_pe_courses
+    then_i_see_the_pe_allocations_page
+
+    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
+    and_i_see_allocations_with_status_and_actions
+
+    and_i_click_on_first_view_not_requested_confirmation
+
+    and_i_see_the_confirmation_page
+    and_i_see_the_corresponding_page_title("Thank you")
+  end
+
   scenario "There is no PE allocations page for non accredited body" do
     given_a_provider_exists
     given_i_am_signed_in_as_an_admin
@@ -300,5 +338,15 @@ RSpec.feature "PE allocations" do
 
   def and_i_see_the_corresponding_page_title(title)
     expect(allocations_show_page.page_heading).to have_content(title)
+  end
+
+  def and_i_click_on_first_view_requested_confirmation
+    stub_api_v2_resource(@training_provider)
+    allocations_page.view_requested_confirmation_links.first.click
+  end
+
+  def and_i_click_on_first_view_not_requested_confirmation
+    stub_api_v2_resource(@training_provider)
+    allocations_page.view_not_requested_confirmation_links.first.click
   end
 end

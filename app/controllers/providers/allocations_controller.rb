@@ -17,8 +17,8 @@ module Providers
 
       @allocation_statuses = [
         { status: "YET TO REQUEST", status_colour: "grey" },
-        { status: "NOT REQUESTED", status_colour: "red" },
-        { status: "REQUESTED", status_colour: "green" },
+        { status: "NOT REQUESTED", status_colour: "red", requested: "no" },
+        { status: "REQUESTED", status_colour: "green", requested: "yes" },
       ]
     end
 
