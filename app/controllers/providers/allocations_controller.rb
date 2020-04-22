@@ -26,8 +26,15 @@ module Providers
 
     def create
       if params.require(:requested) == "Yes"
+        Allocation.create(provider_code: @provider.provider_code,
+                                    provider_id: @training_provider.id)
+
         redirect_to provider_recruitment_cycle_allocation_path(requested: "yes")
       else
+        Allocation.create(provider_code: @provider.provider_code,
+                                    provider_id: @training_provider.id,
+                                    number_of_places: 0)
+
         redirect_to provider_recruitment_cycle_allocation_path(requested: "no")
       end
     end
