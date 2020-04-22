@@ -1,0 +1,28 @@
+<%= content_for :page_title, "Request Sent" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7" data-qa="confirmation_panel">
+      <h1 class="govuk-panel__title">Request sent</h1>
+      <div class="govuk-panel__body">You’ve confirmed that Enfield School would like to offer PE in 2021/22</div>
+    </div>
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      An email has been sent to
+      <%= mail_to 'admissions@uea.ac.uk', 'admissions@uea.ac.uk', class: 'govuk-link' %>
+      confirming this choice and setting out next steps.
+    </p>
+    <p class="govuk-body">
+      In September we’ll let you know how many places we’ve allocated for this course.
+      This will be based on the current year’s recruitment figure of (INSERT FIGURE).
+      If you have any questions, contact <%= bat_contact_mail_to %>
+    </p>
+    <p class="govuk-body">You have until 10 July to change this request.</p>
+
+    <p class="govuk-body">
+      <%= link_to 'Return to Request PE courses for 2021/22',
+                  provider_recruitment_cycle_allocations_path(@provider.provider_code, Settings.current_cycle),
+                  class: "govuk-link govuk-!-font-weight-bold" %>
+    </p>
+  </div>
+</div>

@@ -13,41 +13,42 @@
   </tr>
   </thead>
   <tbody class="govuk-table__body">
-  <% @training_providers.each do |training_provider| %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" data-qa="provider-name">
-        <%= training_provider.provider_name %>
-      </th>
-      <% allocation = @allocation_statuses.sample %>
-      <td class="govuk-table__cell">
-        <span class="govuk-tag govuk-tag--<%= allocation[:status_colour] %>">
-          <%= allocation[:status] %>
-        </span>
-      </td>
-      <td class="govuk-table__cell">
-        <% if allocation[:status] == "YET TO REQUEST" %>
-          <%= link_to "Confirm choice",
-          requests_provider_recruitment_cycle_allocation_path(
-            @provider.provider_code,
-            @provider.recruitment_cycle_year,
-            training_provider.provider_code),
-          class: "govuk-link" %>
-        <% else %>
-          <ul class="govuk-summary-list__actions-list">
-            <li class="govuk-summary-list__actions-list-item">
-              <a class="govuk-link" href="#">
-                Change<span class="govuk-visually-hidden"> request for <%= training_provider.provider_name %></span>
-              </a>
-            </li>
-            <li class="govuk-summary-list__actions-list-item">
-              <a class="govuk-link" href="#">
-                View&nbsp;confirmation<span class="govuk-visually-hidden"> for <%= training_provider.provider_name %></span>
-              </a>
-            </li>
-          </ul>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
+    <% @training_providers.each do |training_provider| %>
+      <% @allocation_statuses.each do |allocation| %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" data-qa="provider-name">
+            <%= training_provider.provider_name %>
+          </th>
+          <td class="govuk-table__cell">
+            <span class="govuk-tag govuk-tag--<%= allocation[:status_colour] %>">
+              <%= allocation[:status] %>
+            </span>
+          </td>
+          <td class="govuk-table__cell">
+            <% if allocation[:status] == "YET TO REQUEST" %>
+              <%= link_to "Confirm choice",
+              new_provider_recruitment_cycle_allocation_path(
+                @provider.provider_code,
+                @provider.recruitment_cycle_year,
+                training_provider.provider_code),
+              class: "govuk-link" %>
+            <% else %>
+              <ul class="govuk-summary-list__actions-list">
+                <li class="govuk-summary-list__actions-list-item">
+                  <a class="govuk-link" href="#">
+                    Change<span class="govuk-visually-hidden"> request for <%= training_provider.provider_name %></span>
+                  </a>
+                </li>
+                <li class="govuk-summary-list__actions-list-item">
+                  <a class="govuk-link" href="#">
+                    View&nbsp;confirmation<span class="govuk-visually-hidden"> for <%= training_provider.provider_name %></span>
+                  </a>
+                </li>
+              </ul>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
   </tbody>
 </table>

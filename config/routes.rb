@@ -184,10 +184,11 @@ Rails.application.routes.draw do
       resources :sites, path: "locations", on: :member, except: %i[destroy show]
 
       scope module: "providers" do
-        resources :allocations, only: [:index], on: :member, param: :training_provider_code do
+        resources :allocations, only: %i{index}, on: :member, param: :training_provider_code do
           member do
-            post :requests
-            get :requests
+            get "/new", action: :new
+            post :create
+            get :show
           end
         end
       end
