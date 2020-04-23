@@ -4,8 +4,8 @@ describe AllocationsView do
   describe "#allocations" do
     describe "status calculation" do
       let(:training_provider) { build(:provider) }
-      let(:training_providers) { [ training_provider ] }
-      let(:allocations) { [ allocation ] }
+      let(:training_providers) { [training_provider] }
+      let(:allocations) { [allocation] }
 
       subject { AllocationsView.new(training_providers: training_providers, allocations: allocations).allocation_statuses }
 
