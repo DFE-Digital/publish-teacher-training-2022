@@ -16,7 +16,6 @@ RSpec.feature "PE allocations" do
     when_i_visit_my_organisations_page
     and_i_click_request_pe_courses
     then_i_see_the_pe_allocations_page
-
     and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
     and_i_see_allocations_with_status_and_actions
 
@@ -48,17 +47,14 @@ RSpec.feature "PE allocations" do
     when_i_visit_my_organisations_page
     and_i_click_request_pe_courses
     then_i_see_the_pe_allocations_page
-
     and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
     and_i_see_allocations_with_status_and_actions
 
-    and_i_click_confirm_choice
+    when_i_click_confirm_choice
     then_i_see_request_pe_allocations_page
 
-    then_i_click_yes
-    then_i_click_continue
-
-    and_i_see_the_confirmation_page
+    when_i_click_yes
+    and_i_click_continue
     and_i_see_the_corresponding_page_title("Request sent")
   end
 
@@ -71,15 +67,14 @@ RSpec.feature "PE allocations" do
     when_i_visit_my_organisations_page
     and_i_click_request_pe_courses
     then_i_see_the_pe_allocations_page
-
     and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
     and_i_see_allocations_with_status_and_actions
 
-    and_i_click_confirm_choice
+    when_i_click_confirm_choice
     then_i_see_request_pe_allocations_page
 
-    then_i_click_no
-    then_i_click_continue
+    when_i_click_no
+    and_i_click_continue
 
     and_i_see_the_confirmation_page
     and_i_see_the_corresponding_page_title("Thank you")
@@ -311,7 +306,7 @@ RSpec.feature "PE allocations" do
     expect(page).to have_content("You are not permitted to see this page")
   end
 
-  def and_i_click_confirm_choice
+  def when_i_click_confirm_choice
     stub_api_v2_resource(@training_provider)
     click_on "Confirm choice"
   end
@@ -320,15 +315,35 @@ RSpec.feature "PE allocations" do
     expect(find("h1")).to have_content("Do you want to request PE for this organisation?")
   end
 
-  def then_i_click_yes
+  def when_i_click_yes
+    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accrediting_body.provider_code}/allocations")
+      .with(
+        body: {
+          data: {
+            type: "allocations",
+            attributes: { provider_id: @training_provider.id },
+          },
+        }.to_json,
+      )
+
     allocations_new_page.yes.click
   end
 
-  def then_i_click_no
+  def when_i_click_no
+    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accrediting_body.provider_code}/allocations")
+      .with(
+        body: {
+          data: {
+            type: "allocations",
+            attributes: { provider_id: @training_provider.id, number_of_places: 0 },
+          },
+        }.to_json,
+      )
+
     allocations_new_page.no.click
   end
 
-  def then_i_click_continue
+  def and_i_click_continue
     allocations_new_page.continue_button.click
   end
 
