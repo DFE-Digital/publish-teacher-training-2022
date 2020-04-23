@@ -249,6 +249,11 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_click_request_pe_courses
+    stub_request(:get, "http://localhost:3001/api/v2/providers/#{@accrediting_body.provider_code}/allocations").
+      to_return(
+        body: []
+      )
+
     click_on "Request PE courses for 2021/22"
   end
 
