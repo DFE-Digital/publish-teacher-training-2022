@@ -1,0 +1,28 @@
+<%= content_for :page_title, "Request Sent" %>
+
+<% training_provider_name = "Enfield County School for Girls" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl" data-qa="page-heading">
+      <span class="govuk-caption-xl"><%= training_provider_name %></span>
+      Thank you
+    </h1>
+    <p class="govuk-body">
+      You've confirmed that <%= training_provider_name %> will not be offering fee-funded
+      PE in 2021/22.
+    </p>
+
+    <h2 class="govuk-heading-m">What happens now?</h2>
+    <p class="govuk-body">
+      You don't need to do anything else. If you want to change this choice, you
+      have until 10 July to do so. If you have any questions, contact <%= bat_contact_mail_to %>.
+    </p>
+
+    <p class="govuk-body">
+      <%= link_to 'Return to Request PE courses for 2021/22',
+                  provider_recruitment_cycle_allocations_path(@provider.provider_code, Settings.current_cycle),
+                  class: "govuk-link govuk-!-font-weight-bold" %>
+    </p>
+  </div>
+</div>

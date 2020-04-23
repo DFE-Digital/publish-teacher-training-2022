@@ -3,9 +3,9 @@ module PageObjects
     module Providers
       module Allocations
         class ShowPage < PageObjects::Base
-          set_url "/organisations/{provider_code}/{recruitment_cycle_year}/allocations/show"
+          set_url "/organisations/{provider_code}/{recruitment_cycle_year}/allocations/{provider_code}"
 
-          element :confirmation_panel, ".govuk-panel--confirmation"
+          element :page_heading, '[data-qa="page-heading"]'
         end
       end
     end

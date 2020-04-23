@@ -12,6 +12,9 @@ module PageObjects
             element :status, "td[:nth-child(1)"
             element :actions, "td[:nth-child(2)"
           end
+
+          elements :view_requested_confirmation_links, '[data-qa="view-yes-confirmation"]'
+          elements :view_not_requested_confirmation_links, '[data-qa="view-no-confirmation"]'
         end
       end
     end
