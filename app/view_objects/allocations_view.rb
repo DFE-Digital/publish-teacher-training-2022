@@ -27,14 +27,14 @@ private
 
   def find_matching_allocation(training_provider)
     @allocations.find do |allocation|
-      allocation.provider_id == training_provider.id
+      allocation.provider_id == training_provider.id.to_i
     end
   end
 
   def build_allocation_status(matching_allocation, training_provider)
     allocation_status = {
-      provider_name: training_provider.provider_name,
-      provider_code: training_provider.provider_code,
+      training_provider_name: training_provider.provider_name,
+      training_provider_code: training_provider.provider_code,
     }
 
     if matching_allocation.nil?

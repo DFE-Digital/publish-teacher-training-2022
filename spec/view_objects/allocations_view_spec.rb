@@ -17,8 +17,8 @@ describe AllocationsView do
         it {
           is_expected.to eq([
             {
-              provider_name: training_provider.provider_name,
-              provider_code: training_provider.provider_code,
+              training_provider_name: training_provider.provider_name,
+              training_provider_code: training_provider.provider_code,
               status: AllocationsView::Status::REQUESTED,
               status_colour: AllocationsView::Colour::GREEN,
             },
@@ -32,8 +32,8 @@ describe AllocationsView do
         it {
           is_expected.to eq([
             {
-              provider_name: training_provider.provider_name,
-              provider_code: training_provider.provider_code,
+              training_provider_name: training_provider.provider_name,
+              training_provider_code: training_provider.provider_code,
               status: AllocationsView::Status::NOT_REQUESTED,
               status_colour: AllocationsView::Colour::RED,
             },
@@ -48,8 +48,8 @@ describe AllocationsView do
         it {
           is_expected.to eq([
             {
-              provider_name: training_provider.provider_name,
-              provider_code: training_provider.provider_code,
+              training_provider_name: training_provider.provider_name,
+              training_provider_code: training_provider.provider_code,
               status: AllocationsView::Status::YET_TO_REQUEST,
               status_colour: AllocationsView::Colour::GREY,
             },
