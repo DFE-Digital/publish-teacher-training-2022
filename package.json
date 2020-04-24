@@ -2,6 +2,9 @@
   "engines": {
     "node": "12.15.0"
   },
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "@rails/webpacker": "^5.1.1",
     "accessible-autocomplete": "^2.0.2",
