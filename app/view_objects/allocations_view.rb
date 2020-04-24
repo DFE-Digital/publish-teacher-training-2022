@@ -11,6 +11,11 @@ class AllocationsView
     GREY = "grey".freeze
   end
 
+  module Requested
+    YES = "yes".freeze
+    NO = "no".freeze
+  end
+
   def initialize(training_providers:, allocations:)
     @training_providers = training_providers
     @allocations = allocations
@@ -45,11 +50,13 @@ private
     if matching_allocation && matching_allocation[:number_of_places] >= 1
       allocation_status[:status] = Status::REQUESTED
       allocation_status[:status_colour] = Colour::GREEN
+      allocation_status[:requested] = Requested::YES
     end
 
     if matching_allocation && matching_allocation[:number_of_places].zero?
       allocation_status[:status] = Status::NOT_REQUESTED
       allocation_status[:status_colour] = Colour::RED
+      allocation_status[:requested] = Requested::NO
     end
 
     allocation_status

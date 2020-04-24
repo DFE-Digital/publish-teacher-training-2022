@@ -21,6 +21,7 @@ describe AllocationsView do
               training_provider_code: training_provider.provider_code,
               status: AllocationsView::Status::REQUESTED,
               status_colour: AllocationsView::Colour::GREEN,
+              requested: AllocationsView::Requested::YES,
             },
           ])
         }
@@ -36,6 +37,7 @@ describe AllocationsView do
               training_provider_code: training_provider.provider_code,
               status: AllocationsView::Status::NOT_REQUESTED,
               status_colour: AllocationsView::Colour::RED,
+              requested: AllocationsView::Requested::NO,
             },
           ])
         }

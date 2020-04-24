@@ -17,6 +17,7 @@ def resource_list_to_jsonapi(resource_list, **opts)
       Subject: SubjectSerializer,
       AccessRequest: AccessRequestSerializer,
       Organisation: OrganisationSerializer,
+      Allocation: AllocationSerializer,
     },
     include: opts[:include],
     meta: opts[:meta],

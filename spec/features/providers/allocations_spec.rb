@@ -7,7 +7,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body views PE allocations page" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accrediting_body_has_requested_an_allocation
 
     given_i_am_signed_in_as_an_admin
     # once the feature is released it should be changed to
@@ -24,7 +25,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body views PE allocations page when training provider has no PE fee-founded course" do
     given_accredited_body_exists
-    given_there_is_no_training_providers_with_pe_fee_founded_course
+    given_there_is_no_training_providers_with_pe_fee_funded_course
+    given_the_accrediting_body_has_not_requested_an_allocation
     # once the feature is released it should be changed to
     # given_i_am_signed_in_as_a_user_from_the_accredited_body
     given_i_am_signed_in_as_an_admin
@@ -40,7 +42,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body decides to request PE allocations" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accrediting_body_has_not_requested_an_allocation
 
     given_i_am_signed_in_as_an_admin
 
@@ -60,7 +63,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body decides not to request PE allocations" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accrediting_body_has_not_requested_an_allocation
 
     given_i_am_signed_in_as_an_admin
 
@@ -82,7 +86,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body decides to view request PE allocations confirmation" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accrediting_body_has_requested_an_allocation
 
     given_i_am_signed_in_as_an_admin
 
@@ -101,7 +106,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body decides to view request no PE allocations confirmation" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accrediting_body_has_declined_an_allocation
 
     given_i_am_signed_in_as_an_admin
 
@@ -217,7 +223,7 @@ RSpec.feature "PE allocations" do
     stub_omniauth(user: build(:user, :admin))
   end
 
-  def given_training_provider_with_pe_fee_founded_course_exists
+  def given_training_provider_with_pe_fee_funded_course_exists
     @training_provider = build(:provider)
     stub_api_v2_request(
       "/recruitment_cycles/#{@accrediting_body.recruitment_cycle.year}/providers/" \
@@ -229,7 +235,7 @@ RSpec.feature "PE allocations" do
     )
   end
 
-  def given_there_is_no_training_providers_with_pe_fee_founded_course
+  def given_there_is_no_training_providers_with_pe_fee_funded_course
     stub_api_v2_request(
       "/recruitment_cycles/#{@accrediting_body.recruitment_cycle.year}/providers/" \
       "#{@accrediting_body.provider_code}/training_providers" \
@@ -237,6 +243,29 @@ RSpec.feature "PE allocations" do
       "&filter[subjects]=C6" \
       "&recruitment_cycle_year=#{@accrediting_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([]),
+      )
+  end
+
+  def given_the_accrediting_body_has_not_requested_an_allocation
+    stub_api_v2_request(
+      "/providers/#{@accrediting_body.provider_code}/allocations",
+      resource_list_to_jsonapi([]),
+    )
+  end
+
+  def given_the_accrediting_body_has_declined_an_allocation
+    allocation = build(:allocation, provider_id: @training_provider.id, number_of_places: 0)
+    stub_api_v2_request(
+      "/providers/#{@accrediting_body.provider_code}/allocations",
+      resource_list_to_jsonapi([allocation]),
+    )
+  end
+
+  def given_the_accrediting_body_has_requested_an_allocation
+    allocation = build(:allocation, provider_id: @training_provider.id, number_of_places: 1)
+    stub_api_v2_request(
+      "/providers/#{@accrediting_body.provider_code}/allocations",
+      resource_list_to_jsonapi([allocation]),
     )
   end
 
@@ -249,11 +278,6 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_click_request_pe_courses
-    stub_request(:get, "http://localhost:3001/api/v2/providers/#{@accrediting_body.provider_code}/allocations").
-      to_return(
-        body: [],
-      )
-
     click_on "Request PE courses for 2021/22"
   end
 
