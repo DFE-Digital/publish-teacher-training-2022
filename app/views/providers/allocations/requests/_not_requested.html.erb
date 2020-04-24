@@ -1,15 +1,13 @@
 <%= content_for :page_title, "Request Sent" %>
 
-<% training_provider_name = "Enfield County School for Girls" %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl" data-qa="page-heading">
-      <span class="govuk-caption-xl"><%= training_provider_name %></span>
+      <span class="govuk-caption-xl"><%= @training_provider.provider_name %> </span>
       Thank you
     </h1>
     <p class="govuk-body">
-      You've confirmed that <%= training_provider_name %> will not be offering fee-funded
+      You've confirmed that <%= @training_provider.provider_name %> will not be offering fee-funded
       PE in 2021/22.
     </p>
 

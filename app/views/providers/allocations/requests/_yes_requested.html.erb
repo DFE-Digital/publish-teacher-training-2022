@@ -4,12 +4,14 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7" data-qa="page-heading">
       <h1 class="govuk-panel__title">Request sent</h1>
-      <div class="govuk-panel__body">You’ve confirmed that Enfield School would like to offer PE in 2021/22</div>
+      <p class="govuk-panel__body govuk-!-margin-bottom-0">
+        You’ve confirmed that <%= @training_provider.provider_name %> would like to offer PE in 2021/22
+      </p>
     </div>
     <h2 class="govuk-heading-m">What happens now?</h2>
     <p class="govuk-body">
       An email has been sent to
-      <%= mail_to 'admissions@uea.ac.uk', 'admissions@uea.ac.uk', class: 'govuk-link' %>
+      <%= mail_to @provider.email, @provider.email, class: 'govuk-link' %>
       confirming this choice and setting out next steps.
     </p>
     <p class="govuk-body">
