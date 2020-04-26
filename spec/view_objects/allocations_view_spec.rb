@@ -4,6 +4,7 @@ describe AllocationsView do
   describe "#allocations" do
     describe "status calculation" do
       let(:training_provider) { build(:provider) }
+      let(:accredited_body) { build(:provider) }
       let(:training_providers) { [training_provider] }
       let(:allocations) { [allocation] }
 
@@ -11,7 +12,7 @@ describe AllocationsView do
 
       context "Accrediting provider has requested an allocation for a training provider" do
         let(:allocation) {
-          build(:allocation, provider_id: training_provider.id, number_of_places: 1)
+          build(:allocation, accredited_body: accredited_body, provider: training_provider, number_of_places: 1)
         }
 
         it {
@@ -28,7 +29,7 @@ describe AllocationsView do
       end
 
       context "Accrediting provider has not requested an allocation for a training provider" do
-        let(:allocation) { build(:allocation, provider_id: training_provider.id, number_of_places: 0) }
+        let(:allocation) { build(:allocation, accredited_body: accredited_body, provider: training_provider, number_of_places: 0) }
 
         it {
           is_expected.to eq([
@@ -45,7 +46,7 @@ describe AllocationsView do
 
       context "Accrediting provider is yet to request an allocation for a training provider" do
         let(:another_training_provider) { build(:provider) }
-        let(:allocation) { build(:allocation, provider_id: another_training_provider.id, number_of_places: 2) }
+        let(:allocation) { build(:allocation, accredited_body: accredited_body, provider: another_training_provider, number_of_places: 2) }
 
         it {
           is_expected.to eq([

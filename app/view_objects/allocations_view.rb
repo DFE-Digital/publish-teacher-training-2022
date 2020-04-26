@@ -32,7 +32,7 @@ private
 
   def find_matching_allocation(training_provider)
     @allocations.find do |allocation|
-      allocation.provider_id == training_provider.id.to_i
+      allocation.provider.id == training_provider.id.to_s
     end
   end
 

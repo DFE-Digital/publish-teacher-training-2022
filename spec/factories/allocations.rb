@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :allocation do
-    sequence(:id, &:to_s)
-    provider_id { nil }
-    accreditted_body_id { nil }
+    sequence(:id)
+    association :provider
+    association :accredited_body, factory: %i(provider accredited_body)
     number_of_places { nil }
   end
 end

@@ -15,7 +15,10 @@ module Providers
         "filter[funding_type]": "fee",
         )
 
-      allocations = Allocation.where(provider_code: params[:provider_code]).all
+      allocations = Allocation
+                      .includes(:provider, :accredited_body)
+                      .where(provider_code: params[:provider_code])
+                      .all
 
       @allocation_statuses = AllocationsView.new(
         allocations: allocations, training_providers: @training_providers,
