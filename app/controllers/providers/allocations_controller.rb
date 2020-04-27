@@ -57,6 +57,10 @@ module Providers
         recruitment_cycle_year: @recruitment_cycle.year,
       )
       @training_providers_without_previous_allocations = all_training_providers
+
+      if params[:training_provider_code]
+        render "providers/allocations/places"
+      end
     end
 
   private

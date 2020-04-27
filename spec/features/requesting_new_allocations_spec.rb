@@ -19,6 +19,8 @@ RSpec.feature "PE allocations" do
     then_i_see_the_request_new_pe_allocations_page
 
     and_i_choose_a_training_provider
+    and_i_click_continue
+    then_i_see_number_of_places_page
   end
 
   def given_accredited_body_exists
@@ -91,5 +93,13 @@ RSpec.feature "PE allocations" do
 
   def and_i_choose_a_training_provider
     page.choose(@training_provider.provider_name)
+  end
+
+  def and_i_click_continue
+    click_on "Continue"
+  end
+
+  def then_i_see_number_of_places_page
+    expect(find("h1")).to have_content("How many places would you like to request?")
   end
 end

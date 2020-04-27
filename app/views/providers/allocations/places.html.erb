@@ -1,0 +1,48 @@
+
+<% page_title = "How many places would you like to request?"%>
+<%= content_for :page_title, page_title%>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path) %>
+<% end %>
+
+<% legend = capture do %>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading">
+            <span class="govuk-caption-xl"><%= @training_provider.provider_name %></span>
+            <%= page_title %>
+        </h1>
+    </legend>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+  <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year,
+                  ),
+                   method: :get do |form| %>
+
+      <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
+
+      <fieldset class="govuk-fieldset">
+        <%= legend %>
+        <% field = "places"%>
+
+        <%= render "shared/error_wrapper", error_keys: [field], data_qa: "allocation__#{field}" do %>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="places">
+            Say how many trainees the organisation would like to recruit -
+            make sure this number is as accurate as possible.
+          </label>
+          <input class="govuk-input" id="places" name="places" type="text" pattern="[0-9]*" inputmode="numeric" spellcheck="false">
+        </div>
+      </fieldset>
+
+      <%= form.submit "Continue", class: "govuk-button", data: { qa: 'request_continue' } %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
