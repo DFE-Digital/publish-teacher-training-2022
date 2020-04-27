@@ -1,4 +1,4 @@
-import {initAutocomplete, request} from "./autocomplete";
+import {initAutocomplete, getPath, request} from "./autocomplete";
 
 const abortMock = jest.fn();
 global.XMLHttpRequest = jest.fn(() => ({
@@ -29,6 +29,13 @@ describe("Autocomplete", () => {
     it("should instantiate an autocomplete", () => {
       expect(document.querySelector("#outer-container")).toMatchSnapshot();
     });
+  });
+
+  describe("getPath", () => {
+    it("should return a path", () => {
+      const path = getPath("/endpoint", "queryString");
+      expect(path).toBe("/endpoint?query=queryString")
+    })
   });
 
   describe("request", () => {
