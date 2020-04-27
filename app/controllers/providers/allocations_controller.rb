@@ -52,7 +52,12 @@ module Providers
       end
     end
 
-    def initial_request; end
+    def initial_request
+      all_training_providers = @provider.training_providers(
+        recruitment_cycle_year: @recruitment_cycle.year,
+      )
+      @training_providers_without_previous_allocations = all_training_providers
+    end
 
   private
 
