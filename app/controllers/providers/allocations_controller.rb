@@ -25,7 +25,7 @@ module Providers
       ).allocation_statuses
     end
 
-    def new; end
+    def repeat_request; end
 
     def create
       if params.require(:requested) == "Yes"

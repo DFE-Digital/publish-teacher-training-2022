@@ -185,7 +185,7 @@ Rails.application.routes.draw do
       scope module: "providers" do
         resources :allocations, only: %i[index], on: :member, param: :training_provider_code do
           member do
-            get "/new", action: :new
+            get :repeat_request, path: "repeat-request"
             post :create
             get :show
           end

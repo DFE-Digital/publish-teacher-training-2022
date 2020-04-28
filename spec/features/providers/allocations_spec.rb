@@ -179,7 +179,7 @@ RSpec.feature "PE allocations" do
 
     footer_stub_for_access_request_count
 
-    visit new_provider_recruitment_cycle_allocation_path(@accredited_body.provider_code, @accredited_body.recruitment_cycle.year, @training_provider.provider_code)
+    visit repeat_request_provider_recruitment_cycle_allocation_path(@accredited_body.provider_code, @accredited_body.recruitment_cycle.year, @training_provider.provider_code)
   end
 
   def footer_stub_for_access_request_count
