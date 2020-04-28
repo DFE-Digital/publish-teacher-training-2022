@@ -12,6 +12,9 @@ gem "puma", "~> 4.3"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker"
 
+# Used to build our forms and style them using govuk-frontend class names
+gem 'govuk_design_system_formbuilder'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
 
