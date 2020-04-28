@@ -13,11 +13,10 @@
   </tr>
   </thead>
   <tbody class="govuk-table__body">
-    <% @training_providers.each do |training_provider| %>
-      <% @allocation_statuses.each do |allocation| %>
+    <% @allocation_statuses.each do |allocation| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header" data-qa="provider-name">
-            <%= training_provider.provider_name %>
+            <%= allocation[:training_provider_name] %>
           </th>
           <td class="govuk-table__cell">
             <span class="govuk-tag govuk-tag--<%= allocation[:status_colour] %>">
@@ -25,28 +24,28 @@
             </span>
           </td>
           <td class="govuk-table__cell">
-            <% if allocation[:status] == "YET TO REQUEST" %>
+            <% if allocation[:status] == AllocationsView::Status::YET_TO_REQUEST %>
               <%= link_to "Confirm choice",
               new_provider_recruitment_cycle_allocation_path(
                 @provider.provider_code,
                 @provider.recruitment_cycle_year,
-                training_provider.provider_code),
+                allocation[:training_provider_code]),
               class: "govuk-link" %>
             <% else %>
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
                   <a class="govuk-link" href="#">
-                    Change<span class="govuk-visually-hidden"> request for <%= training_provider.provider_name %></span>
+                    Change<span class="govuk-visually-hidden"> request for <%= allocation[:training_provider_name] %></span>
                   </a>
                 </li>
                 <li class="govuk-summary-list__actions-list-item">
                   <a class="govuk-link" data-qa="view-<%= allocation[:requested] %>-confirmation"
                      href="<%= provider_recruitment_cycle_allocation_path(@provider.provider_code,
                                                                           @provider.recruitment_cycle_year,
-                                                                          training_provider.provider_code,
+                                                                          allocation[:training_provider_code],
                                                                           requested: allocation[:requested])
                   %>">
-                    View&nbsp;confirmation<span class="govuk-visually-hidden"> for <%= training_provider.provider_name %></span>
+                    View&nbsp;confirmation<span class="govuk-visually-hidden"> for <%= allocation[:training_provider_name] %></span>
                   </a>
                 </li>
               </ul>
@@ -54,6 +53,5 @@
           </td>
         </tr>
       <% end %>
-    <% end %>
   </tbody>
 </table>

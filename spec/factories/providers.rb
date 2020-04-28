@@ -6,7 +6,7 @@ FactoryBot.define do
       include_counts { [] }
     end
 
-    sequence(:id)
+    sequence(:id, &:to_s)
     sequence(:provider_code) { |n| "A#{n}" }
     provider_name { "ACME SCITT #{provider_code}" }
     accredited_body? { false }

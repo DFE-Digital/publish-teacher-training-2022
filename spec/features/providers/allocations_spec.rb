@@ -7,7 +7,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body views PE allocations page" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accredited_body_has_requested_an_allocation
 
     given_i_am_signed_in_as_an_admin
     # once the feature is released it should be changed to
@@ -24,7 +25,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body views PE allocations page when training provider has no PE fee-founded course" do
     given_accredited_body_exists
-    given_there_is_no_training_providers_with_pe_fee_founded_course
+    given_there_are_no_training_providers_with_pe_fee_funded_course
+    given_the_accredited_body_has_not_requested_an_allocation
     # once the feature is released it should be changed to
     # given_i_am_signed_in_as_a_user_from_the_accredited_body
     given_i_am_signed_in_as_an_admin
@@ -40,7 +42,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body decides to request PE allocations" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accredited_body_has_not_requested_an_allocation
 
     given_i_am_signed_in_as_an_admin
 
@@ -60,7 +63,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body decides not to request PE allocations" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accredited_body_has_not_requested_an_allocation
 
     given_i_am_signed_in_as_an_admin
 
@@ -82,7 +86,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body decides to view request PE allocations confirmation" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accredited_body_has_requested_an_allocation
 
     given_i_am_signed_in_as_an_admin
 
@@ -101,7 +106,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body decides to view request no PE allocations confirmation" do
     given_accredited_body_exists
-    given_training_provider_with_pe_fee_founded_course_exists
+    given_training_provider_with_pe_fee_funded_course_exists
+    given_the_accredited_body_has_declined_an_allocation
 
     given_i_am_signed_in_as_an_admin
 
@@ -141,9 +147,9 @@ RSpec.feature "PE allocations" do
     given_training_provider_exists
     given_i_am_signed_in_as_an_admin
 
-    when_i_visit_pe_alloacations_request_page
+    when_i_visit_pe_allocations_request_page
 
-    then_i_see_the_pe_alloacations_request_page
+    then_i_see_the_pe_allocations_request_page
 
     and_i_see_back_link
     and_i_see_training_provider_name
@@ -161,19 +167,19 @@ RSpec.feature "PE allocations" do
     expect(find("h1")).to have_content(@training_provider.provider_name)
   end
 
-  def then_i_see_the_pe_alloacations_request_page
+  def then_i_see_the_pe_allocations_request_page
     expect(page.title).to have_content("Do you want to request PE for this organisation?")
     expect(find("h1")).to have_content("Do you want to request PE for this organisation?")
   end
 
-  def when_i_visit_pe_alloacations_request_page
-    stub_api_v2_resource(@accrediting_body)
-    stub_api_v2_resource(@accrediting_body.recruitment_cycle)
+  def when_i_visit_pe_allocations_request_page
+    stub_api_v2_resource(@accredited_body)
+    stub_api_v2_resource(@accredited_body.recruitment_cycle)
     stub_api_v2_resource(@training_provider)
 
     footer_stub_for_access_request_count
 
-    visit new_provider_recruitment_cycle_allocation_path(@accrediting_body.provider_code, @accrediting_body.recruitment_cycle.year, @training_provider.provider_code)
+    visit new_provider_recruitment_cycle_allocation_path(@accredited_body.provider_code, @accredited_body.recruitment_cycle.year, @training_provider.provider_code)
   end
 
   def footer_stub_for_access_request_count
@@ -181,7 +187,7 @@ RSpec.feature "PE allocations" do
   end
 
   def given_accredited_body_exists
-    @accrediting_body = build(:provider, accredited_body?: true)
+    @accredited_body = build(:provider, accredited_body?: true)
   end
 
   def given_i_am_signed_in_as_an_admin
@@ -189,14 +195,14 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_visit_my_organisations_page
-    visit provider_path(@accrediting_body.provider_code)
-    expect(find("h1")).to have_content(@accrediting_body.provider_name.to_s)
+    visit provider_path(@accredited_body.provider_code)
+    expect(find("h1")).to have_content(@accredited_body.provider_name.to_s)
   end
 
   def and_i_see_back_link
     expect(page).to have_link(
       "Back",
-      href: "/organisations/#{@accrediting_body.provider_code}/2020/allocations",
+      href: "/organisations/#{@accredited_body.provider_code}/2020/allocations",
     )
   end
 
@@ -205,8 +211,8 @@ RSpec.feature "PE allocations" do
   end
 
   def given_accredited_body_exists
-    @accrediting_body = build(:provider, accredited_body?: true)
-    stub_api_v2_resource(@accrediting_body.recruitment_cycle)
+    @accredited_body = build(:provider, accredited_body?: true)
+    stub_api_v2_resource(@accredited_body.recruitment_cycle)
   end
 
   def given_i_am_signed_in
@@ -217,35 +223,58 @@ RSpec.feature "PE allocations" do
     stub_omniauth(user: build(:user, :admin))
   end
 
-  def given_training_provider_with_pe_fee_founded_course_exists
+  def given_training_provider_with_pe_fee_funded_course_exists
     @training_provider = build(:provider)
     stub_api_v2_request(
-      "/recruitment_cycles/#{@accrediting_body.recruitment_cycle.year}/providers/" \
-      "#{@accrediting_body.provider_code}/training_providers" \
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@accredited_body.provider_code}/training_providers" \
       "?filter[funding_type]=fee" \
       "&filter[subjects]=C6" \
-      "&recruitment_cycle_year=#{@accrediting_body.recruitment_cycle.year}",
+      "&recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider]),
     )
   end
 
-  def given_there_is_no_training_providers_with_pe_fee_founded_course
+  def given_there_are_no_training_providers_with_pe_fee_funded_course
     stub_api_v2_request(
-      "/recruitment_cycles/#{@accrediting_body.recruitment_cycle.year}/providers/" \
-      "#{@accrediting_body.provider_code}/training_providers" \
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@accredited_body.provider_code}/training_providers" \
       "?filter[funding_type]=fee" \
       "&filter[subjects]=C6" \
-      "&recruitment_cycle_year=#{@accrediting_body.recruitment_cycle.year}",
+      "&recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([]),
+      )
+  end
+
+  def given_the_accredited_body_has_not_requested_an_allocation
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([], include: "provider,accredited_body"),
+    )
+  end
+
+  def given_the_accredited_body_has_declined_an_allocation
+    allocation = build(:allocation, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 0)
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([allocation], include: "provider,accredited_body"),
+    )
+  end
+
+  def given_the_accredited_body_has_requested_an_allocation
+    allocation = build(:allocation, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 1)
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([allocation], include: "provider,accredited_body"),
     )
   end
 
   def when_i_visit_my_organisations_page
-    stub_api_v2_resource(@accrediting_body)
+    stub_api_v2_resource(@accredited_body)
     stub_api_v2_resource_collection([build(:access_request)])
 
-    visit provider_path(@accrediting_body.provider_code)
-    expect(find("h1")).to have_content(@accrediting_body.provider_name.to_s)
+    visit provider_path(@accredited_body.provider_code)
+    expect(find("h1")).to have_content(@accredited_body.provider_name.to_s)
   end
 
   def and_i_click_request_pe_courses
@@ -271,8 +300,8 @@ RSpec.feature "PE allocations" do
   def and_i_see_correct_breadcrumbs
     within(".govuk-breadcrumbs") do
       expect(page).to have_link(
-        @accrediting_body.provider_name.to_s,
-        href: "/organisations/#{@accrediting_body.provider_code}",
+        @accredited_body.provider_name.to_s,
+        href: "/organisations/#{@accredited_body.provider_code}",
       )
       expect(page).to have_content("Request PE courses for 2021/22")
     end
@@ -302,7 +331,7 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_cannot_access_accredited_body_pe_alloacations_page
-    visit provider_recruitment_cycle_allocations_path(@accrediting_body.provider_code, @accrediting_body.recruitment_cycle.year)
+    visit provider_recruitment_cycle_allocations_path(@accredited_body.provider_code, @accredited_body.recruitment_cycle.year)
     expect(page).to have_content("You are not permitted to see this page")
   end
 
@@ -316,7 +345,7 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_click_yes
-    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accrediting_body.provider_code}/allocations")
+    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accredited_body.provider_code}/allocations")
       .with(
         body: {
           data: {
@@ -330,7 +359,7 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_click_no
-    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accrediting_body.provider_code}/allocations")
+    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accredited_body.provider_code}/allocations")
       .with(
         body: {
           data: {

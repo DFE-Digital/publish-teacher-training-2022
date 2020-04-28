@@ -15,11 +15,14 @@ module Providers
         "filter[funding_type]": "fee",
         )
 
-      @allocation_statuses = [
-        { status: "YET TO REQUEST", status_colour: "grey" },
-        { status: "NOT REQUESTED", status_colour: "red", requested: "no" },
-        { status: "REQUESTED", status_colour: "green", requested: "yes" },
-      ]
+      allocations = Allocation
+                      .includes(:provider, :accredited_body)
+                      .where(provider_code: params[:provider_code])
+                      .all
+
+      @allocation_statuses = AllocationsView.new(
+        allocations: allocations, training_providers: @training_providers,
+      ).allocation_statuses
     end
 
     def new; end
