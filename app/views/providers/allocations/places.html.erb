@@ -1,6 +1,4 @@
-
-<% page_title = "How many places would you like to request?"%>
-<%= content_for :page_title, page_title%>
+<%= content_for :page_title, "How many places would you like to request?"%>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path) %>
@@ -10,7 +8,7 @@
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
         <h1 class="govuk-fieldset__heading">
             <span class="govuk-caption-xl"><%= @training_provider.provider_name %></span>
-            <%= page_title %>
+            How many places would you like to request?
         </h1>
     </legend>
 <% end %>
@@ -28,16 +26,14 @@
 
       <fieldset class="govuk-fieldset">
         <%= legend %>
-        <% field = "places"%>
 
-        <%= render "shared/error_wrapper", error_keys: [field], data_qa: "allocation__#{field}" do %>
+        <%= render "shared/error_wrapper", error_keys: [:places], data_qa: "allocation__places" do %>
 
         <div class="govuk-form-group">
-          <label class="govuk-label" for="places">
-            Say how many trainees the organisation would like to recruit -
-            make sure this number is as accurate as possible.
-          </label>
-          <input class="govuk-input" id="places" name="places" type="text" pattern="[0-9]*" inputmode="numeric" spellcheck="false">
+          <%= label_tag :places, "Say how many trainees the organisation would like to recruit -
+            make sure this number is as accurate as possible.",
+            class: "govuk-label" %>
+          <%= number_field_tag :places, nil, min: 1, maxlength: 3, class: "govuk-input govuk-input--width-10" %>
         </div>
       </fieldset>
 

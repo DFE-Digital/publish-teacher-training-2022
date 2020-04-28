@@ -1,6 +1,4 @@
-
-<% page_title = "Who are you requesting a course for?"%>
-<%= content_for :page_title, page_title%>
+<%= content_for :page_title, "Who are you requesting a course for?"%>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_allocations_path) %>
@@ -9,7 +7,7 @@
 <% legend = capture do %>
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
         <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-6">
-            <%= page_title %>
+            Who are you requesting a course for?
         </h1>
         <p class="govuk-body">
           This should be the name of the organisation offering the course - eg
@@ -29,21 +27,20 @@
                    method: :get do |form| %>
       <fieldset class="govuk-fieldset">
         <%= legend %>
-        <% field = "training_provider_code"%>
 
-        <%= render "shared/error_wrapper", error_keys: [field], data_qa: "allocation__#{field}" do %>
+        <%= render "shared/error_wrapper", error_keys: [:training_provider], data_qa: "allocation__training_provider" do %>
         <% @training_providers_without_previous_allocations.each_with_index do |training_provider| %>
           <% label = training_provider.provider_name %>
 
           <div class="govuk-radios__item">
-            <%= form.radio_button field,
+            <%= form.radio_button :training_provider_code,
                   training_provider.provider_code,
                   class: 'govuk-radios__input',
                   data: {
-                    'aria-describedby': "#{field}-#{training_provider.provider_name}-help"
+                    'aria-describedby': "training_provider_code-#{training_provider.provider_name}-help"
                   }
             %>
-            <%= form.label field,
+            <%= form.label :training_provider_code,
                   label,
                   value:  training_provider.provider_code,
                   class: "govuk-label govuk-radios__label"
