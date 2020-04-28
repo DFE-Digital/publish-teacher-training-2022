@@ -42,23 +42,35 @@ private
       training_provider_code: training_provider.provider_code,
     }
 
-    if matching_allocation.nil?
+    if yet_to_request?(matching_allocation)
       allocation_status[:status] = Status::YET_TO_REQUEST
       allocation_status[:status_colour] = Colour::GREY
     end
 
-    if matching_allocation && matching_allocation[:number_of_places] >= 1
+    if requested?(matching_allocation)
       allocation_status[:status] = Status::REQUESTED
       allocation_status[:status_colour] = Colour::GREEN
       allocation_status[:requested] = Requested::YES
     end
 
-    if matching_allocation && matching_allocation[:number_of_places].zero?
+    if not_requested?(matching_allocation)
       allocation_status[:status] = Status::NOT_REQUESTED
       allocation_status[:status_colour] = Colour::RED
       allocation_status[:requested] = Requested::NO
     end
 
     allocation_status
+  end
+
+  def not_requested?(matching_allocation)
+    matching_allocation && matching_allocation[:number_of_places].zero?
+  end
+
+  def requested?(matching_allocation)
+    matching_allocation && matching_allocation[:number_of_places] >= 1
+  end
+
+  def yet_to_request?(matching_allocation)
+    matching_allocation.nil?
   end
 end
