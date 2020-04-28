@@ -25,7 +25,7 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body views PE allocations page when training provider has no PE fee-founded course" do
     given_accredited_body_exists
-    given_there_is_no_training_providers_with_pe_fee_funded_course
+    given_there_are_no_training_providers_with_pe_fee_funded_course
     given_the_accredited_body_has_not_requested_an_allocation
     # once the feature is released it should be changed to
     # given_i_am_signed_in_as_a_user_from_the_accredited_body
@@ -235,7 +235,7 @@ RSpec.feature "PE allocations" do
     )
   end
 
-  def given_there_is_no_training_providers_with_pe_fee_funded_course
+  def given_there_are_no_training_providers_with_pe_fee_funded_course
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@accredited_body.provider_code}/training_providers" \
