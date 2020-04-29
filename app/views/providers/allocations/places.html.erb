@@ -20,7 +20,8 @@
                     @provider.provider_code,
                     @provider.recruitment_cycle_year,
                   ),
-                   method: :get do |form| %>
+                skip_enforcing_utf8: true,
+                method: :get do |form| %>
 
       <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
 

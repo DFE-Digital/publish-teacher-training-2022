@@ -24,6 +24,7 @@
                     @provider.recruitment_cycle_year,
                     params[:training_provider_code]
                   ),
+                   skip_enforcing_utf8: true,
                    method: :get do |form| %>
       <fieldset class="govuk-fieldset">
         <%= legend %>
@@ -53,7 +54,7 @@
           <%= label_tag "Find an organisation not listed above", nil, class: "govuk-label govuk-radios__label" %>
         </div>
       </fieldset>
-      <%= form.submit "Continue", class: "govuk-button", data: { qa: 'request_continue' } %>
+      <%= form.submit "Continue", class: "govuk-button", data: { qa: 'request_continue' }, name: nil %>
       <% end %>
     <% end %>
     <div class="govuk-grid-column-two-thirds">
