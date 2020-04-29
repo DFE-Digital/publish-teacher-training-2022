@@ -6,6 +6,7 @@ module PageObjects
 
         element :courses_as_accredited_body_link, "[data-qa=courses_as_accredited_body_link]"
         element :request_allocations_link, "[data-qa=request_allocations_link]"
+        element :notifications_preference_link, "[data-qa='notifications-link']"
       end
     end
   end

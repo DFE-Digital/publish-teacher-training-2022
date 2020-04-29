@@ -1,0 +1,11 @@
+<% if @provider.accredited_body? && current_user["admin"]%>
+  <div class="app-admin-only__section">
+    <div class="app-admin-only__section-header">
+      <strong class="govuk-tag govuk-tag--purple">Admin Feature</strong>
+    </div>
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
+      <%= govuk_link_to "Notifications", notifications_path(provider_code: @provider.provider_code), class: "govuk-link", data:{qa: "notifications-link"} %>
+    </h2>
+    <p class="govuk-body">Receive notifications about courses that you’re the accredited body for.</p>
+  </div>
+<% end %>
