@@ -261,7 +261,6 @@ describe CourseCreationStepService do
         include_examples "previous step", :location, :full_or_part_time
       end
 
-
       context "Current step: Applications open" do
         include_examples "previous step", :applications_open, :location
       end

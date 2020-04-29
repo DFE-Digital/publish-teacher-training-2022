@@ -13,7 +13,6 @@ feature "Handling Unauthorized responses from the backend", type: :feature do
     expect(page.current_path).to eq("/organisations/A0")
   end
 
-
   it "renders the no-providers page" do
     visit "/organisations/A0/"
     expect(no_providers_page.no_providers_text).to be_visible

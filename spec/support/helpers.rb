@@ -131,7 +131,6 @@ module Helpers
     query_params = {}
     query_params[:include] = include if include.present?
 
-
     if endpoint.nil?
       endpoint = url_for_resource_collection(resources.first)
       endpoint += "?#{query_params.to_param}" if query_params.any?

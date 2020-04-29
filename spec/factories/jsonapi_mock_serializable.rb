@@ -7,7 +7,6 @@ FactoryBot.define do
           __send__(relationship)
         end
 
-
       JSONAPIMockSerializable.new(
         id,
         jsonapi_type,
