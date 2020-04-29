@@ -10,3 +10,7 @@
 .app-admin-only__section-header {
   @include govuk-responsive-padding(3, "bottom");
 }
+
+.app-admin-only__section .autocomplete__input, .app-admin-only__section .govuk-input {
+  background-color: govuk-colour("white");
+}
