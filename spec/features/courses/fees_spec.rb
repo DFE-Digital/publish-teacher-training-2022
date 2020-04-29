@@ -62,7 +62,6 @@ feature "Course fees", type: :feature do
       with: "Test financial support",
     )
 
-
     set_fees_request_stub_expectation do |request_attributes|
       expect(request_attributes["course_length"]).to eq("OneYear")
       expect(request_attributes["fee_uk_eu"]).to eq("8000")

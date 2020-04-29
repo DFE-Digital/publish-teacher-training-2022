@@ -51,7 +51,6 @@ feature "Locations", type: :feature do
       fill_in "County", with: "New county"
       fill_in "Postcode", with: "SW1A 1AA"
 
-
       click_on "Save"
 
       expect(page).to have_content("Your location has been created")

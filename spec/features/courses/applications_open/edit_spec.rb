@@ -53,7 +53,6 @@ feature "Edit course applications open", type: :feature do
     end
   end
 
-
   context "a course with an applications open from value of 2018-10-09" do
     let(:course) do
       build(
@@ -115,7 +114,6 @@ feature "Edit course applications open", type: :feature do
       fill_in "course_day", with: "11"
       fill_in "course_month", with: "11"
       fill_in "course_year", with: "2018"
-
 
       click_on "Save"
       expect(course_details_page).to be_displayed

@@ -28,7 +28,6 @@ describe ProviderSuggestion do
       expect(query_stub).to have_been_requested
     end
 
-
     it "returns the result" do
       provider_suggestion1 = build(:provider_suggestion)
       provider_suggestion2 = build(:provider_suggestion)
