@@ -41,6 +41,7 @@
   </div>
   <aside class="govuk-grid-column-one-third">
     <div class="app-related">
+      <%= render partial: "providers/notifications_sign_up_link" %>
       <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= govuk_link_to "Request access", request_access_provider_path(code: @provider.provider_code) %></h2>
       <p class="govuk-body">Request a DfE Sign-in account for others who manage your courses.</p>
 
