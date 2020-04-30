@@ -7,6 +7,15 @@
   @include govuk-responsive-margin(8, "bottom");
 }
 
+.app-admin-only__section :last-child {
+  margin-bottom: 0;
+}
+
 .app-admin-only__section-header {
   @include govuk-responsive-padding(3, "bottom");
+}
+
+.app-admin-only__section .autocomplete__input,
+.app-admin-only__section .govuk-input {
+  background-color: govuk-colour("white");
 }
