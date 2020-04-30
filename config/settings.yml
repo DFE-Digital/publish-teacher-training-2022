@@ -61,3 +61,4 @@ logstash:
 log_level: info
 google:
   maps_api_key: replace_me
+use_ssl: true
