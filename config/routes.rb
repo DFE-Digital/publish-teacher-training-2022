@@ -184,6 +184,10 @@ Rails.application.routes.draw do
 
       scope module: "providers" do
         resources :allocations, only: %i[index], on: :member, param: :training_provider_code do
+          collection do
+            get :initial_request, path: "request"
+          end
+
           member do
             get :repeat_request, path: "repeat-request"
             post :create

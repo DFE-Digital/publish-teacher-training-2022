@@ -52,6 +52,8 @@ module Providers
       end
     end
 
+    def initial_request; end
+
   private
 
     def build_training_provider
