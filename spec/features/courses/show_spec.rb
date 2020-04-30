@@ -254,7 +254,7 @@ feature "Course show", type: :feature do
             content_status: "draft",
             ucas_status: "new",
             provider: provider
-            # recruitment_cycle: current_recruitment_cycle
+      # recruitment_cycle: current_recruitment_cycle
     }
 
     scenario "it displays a status panel" do

@@ -182,19 +182,17 @@ private
   end
 
   def add_provider_count_cookie
-    begin
-      session[:auth_user][:provider_count] =
-        Provider.where(recruitment_cycle_year: Settings.current_cycle).all.size
-    rescue StandardError => e
-      logger.error "Error setting the provider_count cookie: #{e.class.name}, #{e.message}"
-    end
+    session[:auth_user][:provider_count] =
+      Provider.where(recruitment_cycle_year: Settings.current_cycle).all.size
+  rescue StandardError => e
+    logger.error "Error setting the provider_count cookie: #{e.class.name}, #{e.message}"
   end
 
   def add_token_to_connection
     payload = {
-      email:           current_user_info["email"].to_s,
-      first_name:      current_user_info["first_name"].to_s,
-      last_name:       current_user_info["last_name"].to_s,
+      email: current_user_info["email"].to_s,
+      first_name: current_user_info["first_name"].to_s,
+      last_name: current_user_info["last_name"].to_s,
       sign_in_user_id: current_user_dfe_signin_id,
     }
 

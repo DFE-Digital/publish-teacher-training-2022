@@ -2,7 +2,7 @@
 Rails.application.routes.draw do
   constraints(host: /www2\.|\.education\./) do
     match "/(*path)" => redirect { |_, req| "#{Settings.dfe_signin.base_url}#{req.fullpath}" },
-      via: %i[get post put]
+          via: %i[get post put]
   end
 
   get :ping, controller: :health_checks
@@ -183,7 +183,7 @@ Rails.application.routes.draw do
       resources :sites, path: "locations", on: :member, except: %i[destroy show]
 
       scope module: "providers" do
-        resources :allocations, only: %i{index}, on: :member, param: :training_provider_code do
+        resources :allocations, only: %i[index], on: :member, param: :training_provider_code do
           member do
             get "/new", action: :new
             post :create

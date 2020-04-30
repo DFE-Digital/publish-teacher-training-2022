@@ -7,7 +7,7 @@ shared_examples_for "a course creation page" do
   end
 
   scenario "stores the selected field" do
-    expect(URI::parse(next_step_page.current_url).query).to eq(
+    expect(URI.parse(next_step_page.current_url).query).to eq(
       selected_fields.to_query(:course),
     )
   end

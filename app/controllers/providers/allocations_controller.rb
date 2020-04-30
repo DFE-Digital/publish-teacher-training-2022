@@ -13,7 +13,7 @@ module Providers
         recruitment_cycle_year: @recruitment_cycle.year,
         "filter[subjects]": PE_SUBJECT_CODE,
         "filter[funding_type]": "fee",
-        )
+      )
 
       allocations = Allocation
                       .includes(:provider, :accredited_body)
@@ -30,13 +30,13 @@ module Providers
     def create
       if params.require(:requested) == "Yes"
         Allocation.create(provider_code: @provider.provider_code,
-                                    provider_id: @training_provider.id)
+                          provider_id: @training_provider.id)
 
         redirect_to provider_recruitment_cycle_allocation_path(requested: "yes")
       else
         Allocation.create(provider_code: @provider.provider_code,
-                                    provider_id: @training_provider.id,
-                                    number_of_places: 0)
+                          provider_id: @training_provider.id,
+                          number_of_places: 0)
 
         redirect_to provider_recruitment_cycle_allocation_path(requested: "no")
       end

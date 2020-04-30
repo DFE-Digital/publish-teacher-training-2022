@@ -88,7 +88,7 @@ feature "Access Requests", type: :feature do
           "email_address" => "h.kyoma@pauli.edu",
           "requester_email" => "v.vincent@pauli.edu",
           "reason" => "Manual creation by user support agent",
-          #It seems like nothing actually uses this organisation thing, it's just use for display which makes it misleading
+          # It seems like nothing actually uses this organisation thing, it's just use for display which makes it misleading
           "organisation" => "Department for Education",
         )
       end

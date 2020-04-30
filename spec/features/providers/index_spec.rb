@@ -82,7 +82,7 @@ feature "View providers", type: :feature do
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
         "/providers?page[page]=1",
         resource_list_to_jsonapi(providers, meta: { count: 11 }),
-        )
+      )
 
       visit providers_path
 

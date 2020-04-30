@@ -138,7 +138,7 @@ feature "Edit course modern languages", type: :feature do
             errors: [
               {
                 "source": { "pointer": "/data/attributes/subjects" },
-                "title":  "Modern language subjects error",
+                "title": "Modern language subjects error",
                 "detail": "Modern language subjects error",
               },
             ])

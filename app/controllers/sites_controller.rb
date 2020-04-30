@@ -56,7 +56,7 @@ private
     cycle_year = params.fetch(
       :recruitment_cycle_year,
       Settings.current_cycle,
-                 )
+    )
 
     @provider = Provider
       .includes(:sites)

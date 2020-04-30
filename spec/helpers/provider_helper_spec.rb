@@ -7,7 +7,7 @@ feature "View helpers", type: :helper do
 
   describe "#add_course_link" do
     it "builds a link" do
-      expect(helper.add_course_link(email, provider, is_current_cycle: true)).to eq("<a class=\"govuk-button govuk-!-margin-bottom-2\" rel=\"noopener noreferrer\" target=\"_blank\" href=\"#{CGI::escapeHTML(helper.add_course_url(email, provider, is_current_cycle: true))}\">Add a new course</a>")
+      expect(helper.add_course_link(email, provider, is_current_cycle: true)).to eq("<a class=\"govuk-button govuk-!-margin-bottom-2\" rel=\"noopener noreferrer\" target=\"_blank\" href=\"#{CGI.escapeHTML(helper.add_course_url(email, provider, is_current_cycle: true))}\">Add a new course</a>")
     end
   end
 

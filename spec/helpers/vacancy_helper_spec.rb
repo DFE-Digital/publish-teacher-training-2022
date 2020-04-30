@@ -23,8 +23,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: true,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: false,
+              part_time_vacancies?: false,
             )
           end
 
@@ -36,8 +36,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               true,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: true,
+              part_time_vacancies?: false,
             )
           end
 
@@ -49,8 +49,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               true,
+              full_time_vacancies?: false,
+              part_time_vacancies?: true,
             )
           end
 
@@ -62,8 +62,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: false,
+              part_time_vacancies?: false,
             )
           end
 
@@ -79,8 +79,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: true,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: false,
+              part_time_vacancies?: false,
             )
           end
 
@@ -92,8 +92,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               true,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: true,
+              part_time_vacancies?: false,
             )
           end
 
@@ -105,8 +105,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               true,
+              full_time_vacancies?: false,
+              part_time_vacancies?: true,
             )
           end
 
@@ -118,8 +118,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: false,
+              part_time_vacancies?: false,
             )
           end
 
@@ -133,8 +133,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: true,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: false,
+              part_time_vacancies?: false,
             )
           end
 
@@ -146,8 +146,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               true,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: true,
+              part_time_vacancies?: false,
             )
           end
 
@@ -159,8 +159,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               true,
+              full_time_vacancies?: false,
+              part_time_vacancies?: true,
             )
           end
 
@@ -172,8 +172,8 @@ feature "Vacancy helpers", type: :helper do
             double(
               :site_status,
               full_time_and_part_time_vacancies?: false,
-              full_time_vacancies?:               false,
-              part_time_vacancies?:               false,
+              full_time_vacancies?: false,
+              part_time_vacancies?: false,
             )
           end
 
@@ -190,8 +190,8 @@ feature "Vacancy helpers", type: :helper do
           double(
             :site_status,
             full_time_and_part_time_vacancies?: false,
-            full_time_vacancies?:               true,
-            part_time_vacancies?:               false,
+            full_time_vacancies?: true,
+            part_time_vacancies?: false,
           )
         end
 
@@ -203,8 +203,8 @@ feature "Vacancy helpers", type: :helper do
           double(
             :site_status,
             full_time_and_part_time_vacancies?: false,
-            full_time_vacancies?:               false,
-            part_time_vacancies?:               false,
+            full_time_vacancies?: false,
+            part_time_vacancies?: false,
           )
         end
 
@@ -220,8 +220,8 @@ feature "Vacancy helpers", type: :helper do
           double(
             :site_status,
             full_time_and_part_time_vacancies?: false,
-            full_time_vacancies?:               false,
-            part_time_vacancies?:               true,
+            full_time_vacancies?: false,
+            part_time_vacancies?: true,
           )
         end
 
@@ -233,8 +233,8 @@ feature "Vacancy helpers", type: :helper do
           double(
             :site_status,
             full_time_and_part_time_vacancies?: false,
-            full_time_vacancies?:               false,
-            part_time_vacancies?:               false,
+            full_time_vacancies?: false,
+            part_time_vacancies?: false,
           )
         end
 

@@ -6,14 +6,14 @@ module Helpers
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:dfe] = {
       "provider" => "dfe",
-      "uid"      => SecureRandom.uuid,
-      "info"     => {
+      "uid" => SecureRandom.uuid,
+      "info" => {
         "first_name" => user.first_name,
-        "last_name"  => user.last_name,
-        "email"      => user.email,
-        "id"         => user.id,
-        "state"      => user.state,
-        "admin"      => user.admin,
+        "last_name" => user.last_name,
+        "email" => user.email,
+        "id" => user.id,
+        "state" => user.state,
+        "admin" => user.admin,
       },
       "credentials" => {
         "token_id" => "123",
@@ -78,11 +78,11 @@ module Helpers
     if token
       stubbed_request.with(
         headers: {
-          "Accept"          => "application/vnd.api+json",
+          "Accept" => "application/vnd.api+json",
           "Accept-Encoding" => "gzip,deflate",
-          "Authorization"   => "Bearer #{token}",
-          "Content-Type"    => "application/vnd.api+json",
-          "User-Agent"      => "Faraday v#{Faraday::VERSION}",
+          "Authorization" => "Bearer #{token}",
+          "Content-Type" => "application/vnd.api+json",
+          "User-Agent" => "Faraday v#{Faraday::VERSION}",
         },
       )
     end

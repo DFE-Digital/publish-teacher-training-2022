@@ -51,7 +51,7 @@ describe "/providers/suggest", type: :request do
               "name" => "Acme SCITT",
             },
           ],
-         )
+        )
       end
     end
   end

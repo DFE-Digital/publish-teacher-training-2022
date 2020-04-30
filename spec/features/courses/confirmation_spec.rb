@@ -176,7 +176,7 @@ feature "Course confirmation", type: :feature do
             errors: [
               {
                 "source": { "pointer": "/data/attributes/cats" },
-                "title":  "You need more cats",
+                "title": "You need more cats",
                 "detail": "Cats are important",
               },
             ],

@@ -22,7 +22,7 @@ feature "Get training_providers", type: :feature do
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/courses" \
       "?filter[accrediting_provider_code]=#{accrediting_body1.provider_code}",
       resource_list_to_jsonapi([course1, course3, course4]),
-     )
+    )
     stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
       "#{accrediting_body1.provider_code}/training_providers?recruitment_cycle_year=#{accrediting_body1.recruitment_cycle.year}",
@@ -49,7 +49,7 @@ feature "Get training_providers", type: :feature do
         accrediting_body1.provider_code,
         accrediting_body1.recruitment_cycle.year,
         format: :csv,
-        ))
+      ))
     end
 
     it "should have the correct breadcrumbs" do

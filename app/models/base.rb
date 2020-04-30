@@ -37,10 +37,10 @@ private
     )
 
     if last_result_set.has_errors?
-      self.fill_errors # Inherited from JsonApiClient::Resource
+      fill_errors # Inherited from JsonApiClient::Resource
       false
     else
-      self.errors.clear if self.errors
+      errors.clear if errors
       true
     end
   end
