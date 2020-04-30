@@ -20,7 +20,7 @@ class UcasContactsController < ApplicationController
     email = nil if email.blank?
     email_changed = @provider.application_alert_contact != email
     permission_given = provider_params["share_with_ucas_permission"] == "1"
-    require_permission = email != nil && email_changed
+    require_permission = !email.nil? && email_changed
 
     if require_permission && !permission_given
       @errors = { share_with_ucas_permission: ["Please give permission to share this email address with UCAS"] }
@@ -29,7 +29,7 @@ class UcasContactsController < ApplicationController
       render :alerts
     else
       @provider.update(send_application_alerts: provider_params["send_application_alerts"],
-                                  application_alert_contact: email)
+                       application_alert_contact: email)
       redirect_to provider_ucas_contacts_path(@provider.provider_code),
                   flash: { success: "Your changes have been saved" }
     end

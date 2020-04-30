@@ -36,10 +36,10 @@ describe ApplicationController, type: :controller do
 
       let(:payload) do
         {
-          email:           user_email.to_s,
+          email: user_email.to_s,
           sign_in_user_id: sign_in_user_id,
-          first_name:      user_first_name,
-          last_name:       user_last_name,
+          first_name: user_first_name,
+          last_name: user_last_name,
         }
       end
 
@@ -61,9 +61,9 @@ describe ApplicationController, type: :controller do
 
           controller.request.session = {
             auth_user: {
-              "info"    => user_info,
+              "info" => user_info,
               "user_id" => user_id,
-              "uid"     => sign_in_user_id,
+              "uid" => sign_in_user_id,
             },
           }
           controller.authenticate
@@ -119,8 +119,8 @@ describe ApplicationController, type: :controller do
 
           controller.request.session = {
             auth_user: {
-              "info"    => user_info,
-              "uid"     => sign_in_user_id,
+              "info" => user_info,
+              "uid" => sign_in_user_id,
             },
           }
 

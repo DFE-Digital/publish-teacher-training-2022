@@ -56,7 +56,7 @@ module Courses
                                      VacancyStatusDeterminationService.call(
                                        vacancy_status_full_time: vacancy_status[:full_time],
                                        vacancy_status_part_time: vacancy_status[:part_time],
-                                       course:                   @course,
+                                       course: @course,
                                      )
                                    end
           site_status.save

@@ -243,7 +243,7 @@ RSpec.feature "PE allocations" do
       "&filter[subjects]=C6" \
       "&recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([]),
-      )
+    )
   end
 
   def given_the_accredited_body_has_not_requested_an_allocation

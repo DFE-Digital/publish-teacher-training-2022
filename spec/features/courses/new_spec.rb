@@ -501,8 +501,8 @@ private
     new_start_date_page.select "September 2020"
     new_start_date_page.continue.click
 
-    #Addressable, the gem site-prism relies on, cannot match parameters containing a +
-    #https://github.com/sporkmonger/addressable/issues/142
+    # Addressable, the gem site-prism relies on, cannot match parameters containing a +
+    # https://github.com/sporkmonger/addressable/issues/142
     # Addressable::Template.new('/a{?query*}').match(Addressable::URI.parse('/a?a=b+b')) == false
     # Addressable::Template.new('/a{?query*}').match(Addressable::URI.parse('/a?a=b')) == true
     # To work around this - we need to manually match the URL and query params for this request

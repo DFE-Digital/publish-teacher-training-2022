@@ -24,7 +24,7 @@ feature "Get courses as an accredited body", type: :feature do
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/courses" \
       "?filter[accrediting_provider_code]=#{accrediting_body1.provider_code}",
       resource_list_to_jsonapi([course1]),
-     )
+    )
     stub_api_v2_request(
       "/recruitment_cycles/#{training_provider2.recruitment_cycle.year}/providers/" \
       "#{training_provider2.provider_code}?include=courses.accrediting_provider",

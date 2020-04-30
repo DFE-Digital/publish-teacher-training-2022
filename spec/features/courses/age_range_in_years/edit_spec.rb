@@ -65,7 +65,7 @@ feature "Edit course age range in years", type: :feature do
         "/courses/#{course.course_code}",
         course.to_jsonapi,
         :patch, 200
-        )
+      )
 
       age_range_in_years_page.age_range_14_to_19.click
       age_range_in_years_page.save.click
@@ -148,7 +148,7 @@ feature "Edit course age range in years", type: :feature do
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page.error_flash).to have_content(
           "You’ll need to correct some information.\nEnter a valid age in To",
-         )
+        )
       end
     end
   end

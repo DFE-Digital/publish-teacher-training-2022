@@ -89,7 +89,7 @@ describe "Providers", type: :request do
           "/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}/courses" \
           "?filter[accrediting_provider_code]=#{accredited_provider.provider_code}&include=provider",
           resource_list_to_jsonapi([course], include: :provider),
-         )
+        )
 
         path = download_training_providers_courses_provider_recruitment_cycle_path(
           accredited_provider.provider_code,

@@ -28,7 +28,7 @@ module ManageCoursesFrontend
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    config.exceptions_app = self.routes
+    config.exceptions_app = routes
 
     config.session_store :cookie_store,
                          key: "_publish_teacher_training_courses_session",
