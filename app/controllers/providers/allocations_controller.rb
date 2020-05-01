@@ -25,7 +25,7 @@ module Providers
       ).allocation_statuses
     end
 
-    def new; end
+    def repeat_request; end
 
     def create
       if params.require(:requested) == "Yes"
@@ -49,6 +49,17 @@ module Providers
 
       if params[:requested] == "no"
         @allocation = Allocation.new(number_of_places: 0)
+      end
+    end
+
+    def initial_request
+      all_training_providers = @provider.training_providers(
+        recruitment_cycle_year: @recruitment_cycle.year,
+      )
+      @training_providers_without_previous_allocations = all_training_providers
+
+      if params[:training_provider_code]
+        render "providers/allocations/places"
       end
     end
 
