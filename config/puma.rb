@@ -32,7 +32,7 @@ plugin :tmp_restart
 
 listen_port = ENV.fetch("PORT", 3000)
 
-if env == "development"
+if env == "development" && Settings.use_ssl
   cert = "#{Dir.pwd}/#{File.join('config', 'localhost', 'https', 'localhost.crt')}"
   key = "#{Dir.pwd}/#{File.join('config', 'localhost', 'https', 'localhost.key')}"
 

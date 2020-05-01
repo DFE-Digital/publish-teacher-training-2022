@@ -10,3 +10,4 @@ environment:
   label: "Development"
   selector_name: "development"
 log_level: debug
+use_ssl: false
