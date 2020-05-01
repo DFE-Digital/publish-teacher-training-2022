@@ -48,7 +48,9 @@
             %>
           </div>
         <% end %>
-        <div class="govuk-radios__divider">or</div>
+        <% if @training_providers_without_previous_allocations.present? %>
+          <div class="govuk-radios__divider">or</div>
+        <% end %>
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="find-organisation-not-listed-above" name="training_provider_code" type="radio" value="find-organisation">
           <%= label_tag "Find an organisation not listed above", nil, class: "govuk-label govuk-radios__label" %>

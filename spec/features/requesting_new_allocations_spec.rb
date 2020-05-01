@@ -39,19 +39,10 @@ RSpec.feature "PE allocations" do
     )
     @training_provider = build(:provider)
     stub_api_v2_resource(@training_provider)
-    # to delete leter (all training providers)
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@accredited_body.provider_code}/training_providers" \
       "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
-      resource_list_to_jsonapi([@training_provider]),
-    )
-    stub_api_v2_request(
-      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
-      "#{@accredited_body.provider_code}/training_providers" \
-      "?filter[funding_type]=-fee" \
-      "&filter[subjects]=-C6" \
-      "&recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider]),
     )
   end
