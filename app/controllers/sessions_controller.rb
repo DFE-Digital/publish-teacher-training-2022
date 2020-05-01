@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :request_login
 
   def new
-    redirect_to "/auth/dfe"
+    redirect_to start_path
   end
 
   def create

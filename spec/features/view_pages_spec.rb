@@ -3,6 +3,11 @@ require "rails_helper"
 feature "View pages", type: :feature do
   let(:new_features_page) { PageObjects::Page::NewFeaturesPage.new }
 
+  scenario "Navigate to /start" do
+    visit "/start"
+    expect(find("h1")).to have_content("Sign in")
+  end
+
   scenario "Environment label and class are read from settings" do
     visit "/cookies"
     expect(find(".app-tag--#{Settings.environment.selector_name}")).to have_content(Settings.environment.label)
