@@ -53,10 +53,7 @@ module Providers
     end
 
     def initial_request
-      all_training_providers = @provider.training_providers(
-        recruitment_cycle_year: @recruitment_cycle.year,
-      )
-      @training_providers_without_previous_allocations = all_training_providers
+      get_training_providers_without_previous_allocations
 
       if params[:training_provider_code]
         render "providers/allocations/places"
@@ -64,6 +61,22 @@ module Providers
     end
 
   private
+
+    def get_training_providers_without_previous_allocations
+      training_providers_with_previous_allocations = @provider.training_providers(
+        recruitment_cycle_year: @recruitment_cycle.year,
+        "filter[subjects]": PE_SUBJECT_CODE,
+        "filter[funding_type]": "fee",
+      )
+
+      @training_providers_without_previous_allocations =
+        @provider.training_providers(
+          recruitment_cycle_year: @recruitment_cycle.year,
+        ).reject do |provider|
+          training_providers_with_previous_allocations
+           .map(&:provider_code).include?(provider.provider_code)
+        end
+    end
 
     def build_training_provider
       @training_provider = Provider
