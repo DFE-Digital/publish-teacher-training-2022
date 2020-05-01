@@ -35,8 +35,23 @@ bundle exec rake webpacker:compile
 ### 3. Setup Basic Auth Login
 
 For local development, we rely on Basic Auth instead of DFE Sign-In, which can
-be enabled if required. Create the file `config/settings/development.local.yml`
-with the contents:
+be enabled if required. This will require that you have a login in the database,
+this will be there if you have an account in production but if you don't yet, or
+don't want to use it, you can create a user locally with:
+
+```ruby
+# Optional, use if you don't already have an account.
+User.create(admin: true,
+            email: "john.smith@digital.education.gov.uk",
+            first_name: "John",
+            last_name: "Smith",
+            welcome_email_date_utc: Time.now,
+            accept_terms_date_utc: Time.now,
+            invite_date_utc: Time.now,
+            state: "transitioned")
+```
+
+Then create the file `config/settings/development.local.yml` with the contents:
 
 ```yaml
 authorised_users:
@@ -47,10 +62,6 @@ authorised_users:
     password: [the password you wish to use]
 ```
 
-The email address has to exist in the users table of teacher-training-api, which
-means that you'll need to have an account on the production system (or add
-yourself by hand), but the password can be any non-secure local password you
-care to use.
 
 ### 4. Run the server
 
