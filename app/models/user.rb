@@ -9,4 +9,8 @@ class User < Base
   def self.member(id)
     new(id: id)
   end
+
+  def self.generate_and_send_magic_link(email)
+    MagicLink::GenerateAndSendService.call(email: email, site: site)
+  end
 end

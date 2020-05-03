@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 
   # DfE Sign In
   get "/signin", to: "sessions#new", as: "signin"
+  post "/send_magic_link", to: "sessions#send_magic_link"
+  get "/magic_link_sent", to: "sessions#magic_link_sent"
+  get "/signin_with_magic_link", to: "sessions#create_by_magic", as: "signin_with_magic_link"
   get "/signout", to: "sessions#signout", as: "signout"
   get "/auth/dfe/callback", to: "sessions#create"
   get "/auth/dfe/signout", to: "sessions#destroy"
