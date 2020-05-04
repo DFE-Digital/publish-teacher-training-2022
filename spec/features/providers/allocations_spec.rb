@@ -350,7 +350,7 @@ RSpec.feature "PE allocations" do
         body: {
           data: {
             type: "allocations",
-            attributes: { provider_id: @training_provider.id },
+            attributes: { provider_id: @training_provider.id, request_type: "repeat" },
           },
         }.to_json,
       )
@@ -364,7 +364,7 @@ RSpec.feature "PE allocations" do
         body: {
           data: {
             type: "allocations",
-            attributes: { provider_id: @training_provider.id, number_of_places: 0 },
+            attributes: { provider_id: @training_provider.id, request_type: "declined" },
           },
         }.to_json,
       )
