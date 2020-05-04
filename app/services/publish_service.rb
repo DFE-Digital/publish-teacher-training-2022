@@ -18,4 +18,3 @@ module PublishService
     end
   end
 end
-
