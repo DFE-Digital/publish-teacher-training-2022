@@ -200,6 +200,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/start", to: "pages#start", as: :start
   get "/accessibility", to: "pages#accessibility", as: :accessibility
   get "/cookies", to: "pages#cookies", as: :cookies
   get "/terms-conditions", to: "pages#terms", as: :terms

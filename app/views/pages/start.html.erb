@@ -1,0 +1,26 @@
+<%= content_for :page_title, "Sign in" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <div class="app-banner app-banner--warning govuk-!-margin-bottom-7">
+      <div class="app-banner__message">
+        <h2 class="govuk-heading-m">You might have problems signing in</h2>
+        <p>Some of our users are having trouble signing in. We’re working on the problem now. If you can’t sign in, try again soon.</p>
+      </div>
+    </div>
+
+    <h1 class="govuk-heading-xl">
+      Sign in
+    </h1>
+
+    <p class="govuk-body-l">You must sign in to your account to manage your teacher training courses.</p>
+
+    <%= link_to "Sign in using DfE Sign-in", "/auth/dfe", class: "govuk-button" %>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">Ask for an account</h2>
+    <p class="govuk-body">Don’t have an account? You can get one by emailing <%= bat_contact_mail_to %>. Please include the full names and email addresses of anyone who needs access.</p>
+  </div>
+</div>

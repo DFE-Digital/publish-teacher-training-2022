@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :request_login, only: %i[guidance accessibility terms cookies privacy new_features]
+  skip_before_action :request_login, only: %i[guidance accessibility terms cookies privacy new_features start]
 
   def accessibility; end
 
@@ -18,4 +18,6 @@ class PagesController < ApplicationController
   def rollover; end
 
   def accept_terms; end
+
+  def start; end
 end
