@@ -18,4 +18,3 @@ module ServicePattern
     end
   end
 end
-

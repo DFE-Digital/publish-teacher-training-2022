@@ -28,28 +28,20 @@ module Providers
     def repeat_request; end
 
     def create
-      if params.require(:requested) == "Yes"
-        Allocation.create(provider_code: @provider.provider_code,
-                          provider_id: @training_provider.id)
+      # TODO: we need to add error handling here
+      AllocationServices::Create.call(
+        accredited_body_code: @provider.provider_code,
+        provider_id: @training_provider.id,
+        requested: requested?,
+      )
 
-        redirect_to provider_recruitment_cycle_allocation_path(requested: "yes")
-      else
-        Allocation.create(provider_code: @provider.provider_code,
-                          provider_id: @training_provider.id,
-                          number_of_places: 0)
-
-        redirect_to provider_recruitment_cycle_allocation_path(requested: "no")
-      end
+      redirect_to provider_recruitment_cycle_allocation_path(requested: params[:requested].downcase)
     end
 
     def show
-      if params[:requested] == "yes"
-        @allocation = Allocation.new(number_of_places: 42)
-      end
-
-      if params[:requested] == "no"
-        @allocation = Allocation.new(number_of_places: 0)
-      end
+      # TODO: temp until we retrieve the Allocation from the API
+      number_of_places = requested? ? 42 : 0
+      @allocation = Allocation.new(number_of_places: number_of_places)
     end
 
     def initial_request
@@ -104,6 +96,10 @@ module Providers
 
     def require_admin_permissions!
       render "errors/forbidden", status: :forbidden unless user_is_admin?
+    end
+
+    def requested?
+      params[:requested].downcase == "yes"
     end
   end
 end
