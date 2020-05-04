@@ -114,6 +114,7 @@ steps:
     Contents: |
      azure/**
      end-to-end-tests/**
+     terraform/**
     TargetFolder: '$(build.artifactstagingdirectory)'
     OverWrite: true
 
