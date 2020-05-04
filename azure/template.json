@@ -164,6 +164,13 @@
       "metadata": {
           "description": "List of resource tags as a JSON object"
       }
+    },
+    "settingsFeaturesStartPage": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "true to automatically redirect unauthenticated users to DfE signin. false to display start page"
+      }
     }
   },
   "variables": {

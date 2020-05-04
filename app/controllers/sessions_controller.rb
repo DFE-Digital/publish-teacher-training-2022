@@ -2,6 +2,11 @@ class SessionsController < ApplicationController
   skip_before_action :request_login
 
   def new
+    if Settings.features.start_page
+      render "pages/start"
+      return
+    end
+
     redirect_to "/auth/dfe"
   end
 
