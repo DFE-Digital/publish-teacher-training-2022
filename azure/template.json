@@ -164,6 +164,13 @@
       "metadata": {
           "description": "List of resource tags as a JSON object"
       }
+    },
+    "settingsFeaturesSigninIntercept": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "when true, intercept the signin flow with an explanatory page; used when there are issues with DfE Sign-In"
+      }
     }
   },
   "variables": {
