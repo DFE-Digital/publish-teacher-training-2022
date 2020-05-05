@@ -8,4 +8,5 @@ class AllocationSerializer < JSONAPI::Serializable::Resource
 
   attribute :number_of_places
   attribute :request_type
+  attribute :provider_id
 end

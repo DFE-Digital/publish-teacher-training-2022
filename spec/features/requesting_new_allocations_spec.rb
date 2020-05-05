@@ -5,8 +5,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body requests new PE allocations" do
     given_accredited_body_exists
-    given_there_is_a_training_provider_without_previous_allocations
-    given_the_accredited_body_has_not_requested_renewal_of_an_allocation
+    given_the_accredited_body_has_an_allocation
+    given_there_is_a_training_provider_with_previous_allocations
     # once the feature is released it should be changed to
     # given_i_am_signed_in_as_a_user_from_the_accredited_body
     given_i_am_signed_in_as_an_admin
@@ -17,6 +17,8 @@ RSpec.feature "PE allocations" do
 
     when_i_click_choose_an_organisation_button
     then_i_see_the_request_new_pe_allocations_page
+    and_i_should_not_see_training_provider_with_allocations
+    and_i_should_not_see_training_provider_with_fee_funded_pe
 
     and_i_choose_a_training_provider
     and_i_click_continue
@@ -25,8 +27,8 @@ RSpec.feature "PE allocations" do
 
   scenario "Accredited body requests new PE allocations for new training provider" do
     given_accredited_body_exists
-    given_there_is_a_training_provider_without_previous_allocations
-    given_the_accredited_body_has_not_requested_renewal_of_an_allocation
+    given_the_accredited_body_has_an_allocation
+    given_there_is_a_training_provider_with_previous_allocations
     # once the feature is released it should be changed to
     # given_i_am_signed_in_as_a_user_from_the_accredited_body
     given_i_am_signed_in_as_an_admin
@@ -53,29 +55,39 @@ RSpec.feature "PE allocations" do
     stub_api_v2_resource(@accredited_body.recruitment_cycle)
   end
 
-  def given_there_is_a_training_provider_without_previous_allocations
+  def given_there_is_a_training_provider_with_previous_allocations
+    @training_provider = build(:provider)
+    stub_api_v2_resource(@training_provider)
+
+    @training_provider_with_fee_funded_pe = build(:provider)
+
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@accredited_body.provider_code}/training_providers" \
       "?filter[funding_type]=fee" \
       "&filter[subjects]=C6" \
       "&recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
-      resource_list_to_jsonapi([]),
+      resource_list_to_jsonapi([@training_provider_with_fee_funded_pe]),
     )
-    @training_provider = build(:provider)
-    stub_api_v2_resource(@training_provider)
+
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@accredited_body.provider_code}/training_providers" \
       "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
-      resource_list_to_jsonapi([@training_provider]),
+      resource_list_to_jsonapi([@training_provider, @training_provider_with_fee_funded_pe, @training_provider_with_allocation]),
     )
   end
 
-  def given_the_accredited_body_has_not_requested_renewal_of_an_allocation
+  def given_the_accredited_body_has_an_allocation
+    @training_provider_with_allocation = build(:provider)
+
+    @allocation = build(:allocation,
+                        accredited_body: @accredited_body,
+                        provider: @training_provider_with_allocation)
+
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
-      resource_list_to_jsonapi([], include: "provider,accredited_body"),
+      resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
   end
 
@@ -143,5 +155,13 @@ RSpec.feature "PE allocations" do
 
   def then_i_see_pick_a_provider_page
     expect(find("h1")).to have_content("Pick a provider")
+  end
+
+  def and_i_should_not_see_training_provider_with_allocations
+    expect(page).to_not have_content(@training_provider_with_allocation.provider_name)
+  end
+
+  def and_i_should_not_see_training_provider_with_fee_funded_pe
+    expect(page).to_not have_content(@training_provider_with_fee_funded_pe.provider_name)
   end
 end

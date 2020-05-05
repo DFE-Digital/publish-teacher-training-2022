@@ -9,6 +9,7 @@ class Allocation < Base
 
   property :number_of_places
   property :request_type
+  property :provider_id
 
   def has_places?
     number_of_places.positive?

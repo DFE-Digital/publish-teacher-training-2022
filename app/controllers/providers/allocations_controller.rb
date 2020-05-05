@@ -126,50 +126,71 @@ class InitialRequestFlow
   def locals
     if associated_training_providers_page?
       {
-        training_providers: training_providers_from_query_without_previous_allocations(query: params[:training_provider_query])
+        training_providers: training_providers_from_query_without_associated(query: params[:training_provider_query]),
       }
     elsif select_training_providers_from_search_page?
-      { }
+      {}
     else
       {
-        training_providers: training_providers_without_previous_allocations
+        training_providers: training_providers_without_associated,
       }
     end
   end
 
 private
 
-  def training_providers_with_previous_allocations
-    @training_providers_with_previous_allocations ||= provider.training_providers(
+  def allocations
+    @allocations ||= Allocation.includes(:provider, :accredited_body)
+                               .where(provider_code: provider.provider_code)
+                               .all
+  end
+
+  def training_providers_with_fee_paying_pe_course
+    @training_providers_with_fee_paying_pe_course ||= provider.training_providers(
       recruitment_cycle_year: recruitment_cycle.year,
       "filter[subjects]": PE_SUBJECT_CODE,
       "filter[funding_type]": "fee",
     )
   end
 
-  def training_providers_without_previous_allocations
-    @training_providers_without_previous_allocations ||=
+  def all_training_providers
+    @all_training_providers ||=
       provider.training_providers(
         recruitment_cycle_year: recruitment_cycle.year,
-      ).reject do |provider|
-        training_providers_with_previous_allocations
-        .map(&:provider_code).include?(provider.provider_code)
-      end
+      )
+  end
+
+  def training_providers_with_previous_allocations
+    @training_providers_with_previous_allocations ||= allocations.map do |allocation|
+      Provider.new(id: allocation.provider_id.to_s)
+    end
+  end
+
+  def associated_training_providers
+    training_providers_with_previous_allocations + training_providers_with_fee_paying_pe_course
+  end
+
+  def training_providers_without_associated
+    return @training_providers_without_associated if @training_providers_without_associated
+
+    ids_to_reject = associated_training_providers.map(&:id)
+
+    @training_providers_without_associated = all_training_providers.reject do |provider|
+      ids_to_reject.include?(provider.id)
+    end
   end
 
   def training_providers_from_query(query:)
     ProviderSuggestion.suggest(query)
   end
 
-  def training_providers_from_query_without_previous_allocations(query:)
+  def training_providers_from_query_without_associated(query:)
     results = training_providers_from_query(query: query)
-    provider_codes_to_reject = training_providers_with_previous_allocations.map(&:provider_code)
+    ids_to_reject = associated_training_providers.map(&:id)
 
-    results.reject! do |r|
-      provider_codes_to_reject.include?(r.provider_code)
+    results.reject do |r|
+      ids_to_reject.include?(r.id)
     end
-
-    results
   end
 
   def recruitment_cycle
