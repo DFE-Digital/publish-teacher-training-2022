@@ -13,6 +13,8 @@ class PagesController < ApplicationController
 
   def new_features; end
 
+  def accredited_body_new_features; end
+
   def transition_info; end
 
   def rollover; end
