@@ -1,7 +1,7 @@
-<%= content_for :page_title, "Who are you requesting a course for?"%>
+<%= content_for :page_title, "Pick a provider"%>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_recruitment_cycle_allocations_path) %>
+  <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path(@provider.provider_code, @recruitment_cycle.year)) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -15,10 +15,9 @@
                      method: :get,
                      builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
 
-      <%= form.govuk_radio_buttons_fieldset(:training_provider, legend: { size: 'xl', text: 'Who are you requesting a course for?' }) do %>
+      <%= form.govuk_radio_buttons_fieldset(:training_provider, legend: { size: 'xl', text: 'Pick a provider' }) do %>
         <p class="govuk-body">
-          This should be the name of the organisation offering the course - eg
-          a lead school, or your own organisation if you’re offering it yourselves.
+          You searched for "<%= params[:training_provider_query] %>". We found these providers that matched your search:
         </p>
 
         <% training_providers.each_with_index do |training_provider| %>
@@ -29,12 +28,17 @@
 
         <%= form.govuk_radio_divider %>
 
-        <%= form.govuk_radio_button :training_provider_code, "", label: { text: 'Find an organisation not listed above' } do %>
+        <%= form.govuk_radio_button :training_provider_code, "", label: { text: 'Try searching for another provider' } do %>
           <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } %>
         <% end %>
       <% end %>
 
       <%= form.govuk_submit %>
     <% end %>
+
+    <p class="govuk-body">
+      To add a new provider to Publish, you should contact
+      <%= bat_contact_mail_to %>
+    </p>
   </div>
 </div>

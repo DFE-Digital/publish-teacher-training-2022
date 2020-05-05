@@ -45,11 +45,9 @@ module Providers
     end
 
     def initial_request
-      get_training_providers_without_previous_allocations
+      flow = InitialRequestFlow.new(params: params)
 
-      if params[:training_provider_code]
-        render "providers/allocations/places"
-      end
+      render flow.template, locals: flow.locals
     end
 
   private
@@ -71,6 +69,8 @@ module Providers
     end
 
     def build_training_provider
+      return if params[:training_provider_code].blank?
+
       @training_provider = Provider
        .where(recruitment_cycle_year: @recruitment_cycle.year)
        .find(params[:training_provider_code])
@@ -101,5 +101,97 @@ module Providers
     def requested?
       params[:requested].downcase == "yes"
     end
+  end
+end
+
+class InitialRequestFlow
+  PE_SUBJECT_CODE = "C6".freeze
+
+  attr_reader :params
+
+  def initialize(params:)
+    @params = params
+  end
+
+  def template
+    if associated_training_providers_page?
+      "providers/allocations/pick_a_provider"
+    elsif select_training_providers_from_search_page?
+      "providers/allocations/places"
+    else
+      "initial_request"
+    end
+  end
+
+  def locals
+    if associated_training_providers_page?
+      {
+        training_providers: training_providers_from_query_without_previous_allocations(query: params[:training_provider_query])
+      }
+    elsif select_training_providers_from_search_page?
+      { }
+    else
+      {
+        training_providers: training_providers_without_previous_allocations
+      }
+    end
+  end
+
+private
+
+  def training_providers_with_previous_allocations
+    @training_providers_with_previous_allocations ||= provider.training_providers(
+      recruitment_cycle_year: recruitment_cycle.year,
+      "filter[subjects]": PE_SUBJECT_CODE,
+      "filter[funding_type]": "fee",
+    )
+  end
+
+  def training_providers_without_previous_allocations
+    @training_providers_without_previous_allocations ||=
+      provider.training_providers(
+        recruitment_cycle_year: recruitment_cycle.year,
+      ).reject do |provider|
+        training_providers_with_previous_allocations
+        .map(&:provider_code).include?(provider.provider_code)
+      end
+  end
+
+  def training_providers_from_query(query:)
+    ProviderSuggestion.suggest(query)
+  end
+
+  def training_providers_from_query_without_previous_allocations(query:)
+    results = training_providers_from_query(query: query)
+    provider_codes_to_reject = training_providers_with_previous_allocations.map(&:provider_code)
+
+    results.reject! do |r|
+      provider_codes_to_reject.include?(r.provider_code)
+    end
+
+    results
+  end
+
+  def recruitment_cycle
+    return @recruitment_cycle if @recruitment_cycle
+
+    cycle_year = params.fetch(:year, Settings.current_cycle)
+
+    @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
+  end
+
+  def provider
+    @provider ||= Provider
+      .where(recruitment_cycle_year: recruitment_cycle.year)
+      .find(params[:provider_code])
+      .first
+  end
+
+  def associated_training_providers_page?
+    params[:training_provider_code].blank? && params[:training_provider_query].present?
+  end
+
+  def select_training_providers_from_search_page?
+    params[:training_provider_code]
   end
 end
