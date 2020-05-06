@@ -6,6 +6,8 @@ module PageObjects
           set_url "/organisations/{provider_code}/{recruitment_cycle_year}/allocations"
 
           element :request_again_header, '[data-qa="request-again-header"]'
+          element :repeat_allocations_table, '[data-qa="repeat-allocations-table"]'
+          element :initial_allocations_table, '[data-qa="initial-allocations-table"]'
 
           sections :rows, "tbody tr" do
             element :provider_name, '[data-qa="provider-name"]'
