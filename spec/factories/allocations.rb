@@ -16,9 +16,5 @@ FactoryBot.define do
     trait :initial do
       request_type { "initial" }
     end
-
-    after :build do |allocation, evaluator|
-      allocation.provider_id = evaluator.provider&.id
-    end
   end
 end

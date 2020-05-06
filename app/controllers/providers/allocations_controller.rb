@@ -161,9 +161,7 @@ private
   end
 
   def training_providers_with_previous_allocations
-    @training_providers_with_previous_allocations ||= allocations.map do |allocation|
-      Provider.new(id: allocation.provider_id.to_s)
-    end
+    @training_providers_with_previous_allocations ||= allocations.map(&:provider)
   end
 
   def associated_training_providers
