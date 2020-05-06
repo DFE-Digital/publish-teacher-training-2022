@@ -2,7 +2,7 @@ module Providers
   class AllocationsController < ApplicationController
     before_action :build_recruitment_cycle
     before_action :build_provider
-    before_action :build_training_provider, except: %i[index]
+    before_action :build_training_provider, except: %i[index initial_request]
     before_action :require_provider_to_be_accredited_body!
     before_action :require_admin_permissions!
 
@@ -127,7 +127,9 @@ class InitialRequestFlow
 
   def locals
     if number_of_places_page?
-      {}
+      {
+        training_provider: training_provider,
+      }
     elsif empty_search_results?
       {
         training_providers: training_providers_without_associated,
@@ -148,7 +150,10 @@ class InitialRequestFlow
 private
 
   def form_object
-    @form_object ||= InitialRequestForm.new
+    permitted_params = params.slice(:training_provider_code, :training_provider_query)
+                             .permit(:training_provider_code, :training_provider_query)
+
+    @form_object ||= InitialRequestForm.new(permitted_params)
   end
 
   def allocations
@@ -223,7 +228,7 @@ private
   def empty_search_results?
     return @empty_search_results if @empty_search_results
 
-    @empty_search_results = params[:training_provider_code].blank? && params[:training_provider_query].present? && training_providers_from_query_without_associated.empty?
+    @empty_search_results = params[:training_provider_code] == "-1" && params[:training_provider_query].present? && training_providers_from_query_without_associated.empty?
 
     form_object.add_no_results_error if @empty_search_results
 
@@ -231,10 +236,17 @@ private
   end
 
   def pick_a_provider_page?
-    params[:training_provider_code].blank? && params[:training_provider_query].present?
+    params[:training_provider_code] == "-1" && params[:training_provider_query].present?
   end
 
   def number_of_places_page?
-    params[:training_provider_code].present?
+    params[:training_provider_code].present? && params[:training_provider_code] != "-1"
+  end
+
+  def training_provider
+    @training_provider ||= Provider
+      .where(recruitment_cycle_year: recruitment_cycle.year)
+      .find(params[:training_provider_code])
+      .first
   end
 end

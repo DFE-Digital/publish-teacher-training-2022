@@ -35,11 +35,13 @@
           <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
                           @provider.provider_code,
                           @provider.recruitment_cycle_year,
-                          params[:training_provider_code]
+                          training_provider_code: params[:training_provider_code]
                         ),
                         skip_enforcing_utf8: true,
                         method: :get,
                         builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+            <%= form.hidden_field :training_provider_code, value: "-1" %>
+
             <fieldset class="govuk-fieldset">
               <div class="govuk-form-group">
                 <%= form.label :training_provider_query, class: "govuk-label" do %>

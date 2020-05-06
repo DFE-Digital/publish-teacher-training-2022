@@ -9,7 +9,7 @@
     <%= form_with model: form_object, scope: "", url: initial_request_provider_recruitment_cycle_allocations_path(
                       @provider.provider_code,
                       @provider.recruitment_cycle_year,
-                      params[:training_provider_code]
+                      training_provider_code: params[:training_provider_code]
                     ),
                      skip_enforcing_utf8: true,
                      method: :get,
@@ -31,7 +31,7 @@
 
         <%= form.govuk_radio_divider %>
 
-        <%= form.govuk_radio_button :training_provider_code, "", label: { text: 'Find an organisation not listed above' } do %>
+        <%= form.govuk_radio_button :training_provider_code, "-1", label: { text: 'Find an organisation not listed above' } do %>
           <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } %>
         <% end %>
       <% end %>
