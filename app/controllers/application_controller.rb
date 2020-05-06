@@ -98,8 +98,8 @@ class ApplicationController < ActionController::Base
       request_http_basic_authentication("Development Mode")
     else
       logger.info("Authenticated user session not found " + {
-                     redirect_back_to: request.path,
-                   }.to_s)
+        redirect_back_to: request.path,
+      }.to_s)
       session[:redirect_back_to] = request.path
       redirect_to "/signin"
     end

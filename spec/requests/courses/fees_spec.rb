@@ -109,15 +109,15 @@ describe "Courses", type: :request do
         )
 
         original_course_details = [
-                                    course_2.course_length,
-                                    course_2.fee_uk_eu.to_s,
-                                    course_2.fee_international.to_s,
-                                  ]
+          course_2.course_length,
+          course_2.fee_uk_eu.to_s,
+          course_2.fee_international.to_s,
+        ]
 
         copied_course_details = [
-                                  course_3.fee_details,
-                                  course_3.financial_support,
-                                ]
+          course_3.fee_details,
+          course_3.financial_support,
+        ]
 
         (original_course_details + copied_course_details).each do |value|
           expect(response.body).to include(value)
