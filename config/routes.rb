@@ -206,6 +206,7 @@ Rails.application.routes.draw do
   get "/privacy-policy", to: "pages#privacy", as: :privacy
   get "/guidance", to: "pages#guidance", as: :guidance
   get "/new-features", to: "pages#new_features", as: :new_features
+  get "/accredited-body-new-features", to: "pages#accredited_body_new_features", as: :accredited_body_new_features
   get "/transition-info", to: "pages#transition_info", as: :transition_info
   patch "/accept-transition-info", to: "users#accept_transition_info"
   get "/rollover", to: "pages#rollover", as: :rollover
