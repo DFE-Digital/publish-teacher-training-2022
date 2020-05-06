@@ -16,27 +16,55 @@ class AllocationsView
     NO = "no".freeze
   end
 
+  module RequestType
+    INITIAL = "initial".freeze
+  end
+
   def initialize(training_providers:, allocations:)
     @training_providers = training_providers
     @allocations = allocations
   end
 
-  def allocation_statuses
-    @training_providers.map do |training_provider|
-      matching_allocation = find_matching_allocation(training_provider)
-      build_allocation_status(matching_allocation, training_provider)
+  def repeat_allocation_statuses
+    filtered_training_providers.map do |training_provider|
+      matching_allocation = find_matching_allocation(training_provider, repeat_allocations)
+      build_repeat_allocations(matching_allocation, training_provider)
     end
+  end
+
+  def initial_allocation_statuses
+    statuses = @training_providers.map do |training_provider|
+      matching_allocation = find_matching_allocation(training_provider, initial_allocations)
+      build_initial_allocations(matching_allocation, training_provider)
+    end
+
+    statuses.compact
   end
 
 private
 
-  def find_matching_allocation(training_provider)
-    @allocations.find do |allocation|
-      allocation.provider.id == training_provider.id
-    end
+  def filtered_training_providers
+    # When displaying 'repeat allocation statuses'
+    # we need to first filter out those training providers
+    # who will be allocated places for the first time (i.e. where the accredited provider)
+    # has made initial allocation requests on their behalf)
+    training_provider_ids = initial_allocations.map { |allocation| allocation.provider.id }
+    @training_providers.reject { |tp| training_provider_ids.include?(tp.id) }
   end
 
-  def build_allocation_status(matching_allocation, training_provider)
+  def repeat_allocations
+    @allocations.reject { |allocation| allocation.request_type == RequestType::INITIAL }
+  end
+
+  def initial_allocations
+    @allocations.select { |allocation| allocation.request_type == RequestType::INITIAL }
+  end
+
+  def find_matching_allocation(training_provider, allocations)
+    allocations.find { |allocation| allocation.provider.id == training_provider.id }
+  end
+
+  def build_repeat_allocations(matching_allocation, training_provider)
     allocation_status = {
       training_provider_name: training_provider.provider_name,
       training_provider_code: training_provider.provider_code,
@@ -60,6 +88,18 @@ private
     end
 
     allocation_status
+  end
+
+  def build_initial_allocations(matching_allocation, training_provider)
+    return if matching_allocation.nil?
+
+    {
+      training_provider_name: training_provider.provider_name,
+      training_provider_code: training_provider.provider_code,
+      status_colour: Colour::GREEN,
+      requested: Requested::YES,
+      status: "#{matching_allocation.number_of_places} PLACES REQUESTED",
+    }
   end
 
   def not_requested?(matching_allocation)

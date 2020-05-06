@@ -20,9 +20,9 @@ module Providers
                       .where(provider_code: params[:provider_code])
                       .all
 
-      @allocation_statuses = AllocationsView.new(
+      @allocations_view = AllocationsView.new(
         allocations: allocations, training_providers: @training_providers,
-      ).allocation_statuses
+      )
     end
 
     def repeat_request; end

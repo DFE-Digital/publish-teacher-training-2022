@@ -5,155 +5,158 @@ RSpec.feature "PE allocations" do
   let(:allocations_new_page) { PageObjects::Page::Providers::Allocations::NewPage.new }
   let(:allocations_show_page) { PageObjects::Page::Providers::Allocations::ShowPage.new }
 
-  scenario "Accredited body views PE allocations page" do
-    given_accredited_body_exists
-    given_training_provider_with_pe_fee_funded_course_exists
-    given_the_accredited_body_has_requested_an_allocation
+  context "Repeat allocations" do
+    context "Accredited body has previously requested a repeat allocation for a training provider" do
+      scenario "Accredited body views PE allocations page" do
+        given_accredited_body_exists
+        given_training_provider_with_pe_fee_funded_course_exists
+        given_the_accredited_body_has_requested_a_repeat_allocation
 
-    given_i_am_signed_in_as_an_admin
-    # once the feature is released it should be changed to
-    # given_i_am_signed_in_as_a_user_from_the_accredited_body
+        given_i_am_signed_in_as_an_admin
+        # once the feature is released it should be changed to
+        # given_i_am_signed_in_as_a_user_from_the_accredited_body
 
-    when_i_visit_my_organisations_page
-    and_i_click_request_pe_courses
-    then_i_see_the_pe_allocations_page
-    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
-    and_i_see_allocations_with_status_and_actions
+        when_i_visit_my_organisations_page
+        and_i_click_request_pe_courses
 
-    and_i_see_correct_breadcrumbs
+        then_i_see_the_pe_allocations_page
+        and_i_see_only_repeat_allocation_statuses
+        and_i_see_correct_breadcrumbs
+      end
+    end
+
+    scenario "Accredited body requests PE allocations" do
+      given_accredited_body_exists
+      given_training_provider_with_pe_fee_funded_course_exists
+      given_the_accredited_body_has_not_requested_an_allocation
+
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+      then_i_see_the_pe_allocations_page
+      and_i_see_only_repeat_allocation_statuses
+
+      when_i_click_confirm_choice
+      then_i_see_request_pe_allocations_page
+
+      when_i_click_yes
+      and_i_click_continue
+      and_i_see_the_corresponding_page_title("Request sent")
+    end
+
+    scenario "Accredited body decides not to request PE allocations" do
+      given_accredited_body_exists
+      given_training_provider_with_pe_fee_funded_course_exists
+      given_the_accredited_body_has_not_requested_an_allocation
+
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+      then_i_see_the_pe_allocations_page
+      and_i_see_only_repeat_allocation_statuses
+
+      when_i_click_confirm_choice
+      then_i_see_request_pe_allocations_page
+
+      when_i_click_no
+      and_i_click_continue
+
+      and_i_see_the_confirmation_page
+      and_i_see_the_corresponding_page_title("Thank you")
+    end
+
+    scenario "Accredited body decides to view request PE allocations confirmation" do
+      given_accredited_body_exists
+      given_training_provider_with_pe_fee_funded_course_exists
+      given_the_accredited_body_has_requested_a_repeat_allocation
+
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+
+      then_i_see_the_pe_allocations_page
+      and_i_see_only_repeat_allocation_statuses
+
+      and_i_click_on_first_view_requested_confirmation
+
+      and_i_see_the_confirmation_page
+      and_i_see_the_corresponding_page_title("Request sent")
+    end
+
+    scenario "Accredited body decides to view request no PE allocations confirmation" do
+      given_accredited_body_exists
+      given_training_provider_with_pe_fee_funded_course_exists
+      given_the_accredited_body_has_declined_an_allocation
+
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+
+      then_i_see_the_pe_allocations_page
+      and_i_see_only_repeat_allocation_statuses
+
+      and_i_click_on_first_view_not_requested_confirmation
+
+      and_i_see_the_confirmation_page
+      and_i_see_the_corresponding_page_title("Thank you")
+    end
+
+    scenario "There is no PE allocations page for non accredited body" do
+      given_a_provider_exists
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_training_providers_page
+      there_is_no_request_pe_courses_link
+      and_i_cannot_access_pe_alloacations_page
+    end
+
+    scenario "Non-admin user cannot views PE allocations page" do
+      given_accredited_body_exists
+      given_i_am_signed_in
+
+      when_i_visit_my_organisations_page
+      there_is_no_request_pe_courses_link
+      and_i_cannot_access_accredited_body_pe_allocations_page
+    end
+
+    scenario "Accredited body views PE allocations request page for training provider" do
+      given_accredited_body_exists
+      given_training_provider_exists
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_pe_allocations_request_page
+
+      then_i_see_the_pe_allocations_request_page
+
+      and_i_see_back_link
+      and_i_see_training_provider_name
+      and_i_see_request_form
+    end
   end
 
-  scenario "Accredited body views PE allocations page when training provider has no PE fee-founded course" do
-    given_accredited_body_exists
-    given_there_are_no_training_providers_with_pe_fee_funded_course
-    given_the_accredited_body_has_not_requested_an_allocation
-    # once the feature is released it should be changed to
-    # given_i_am_signed_in_as_a_user_from_the_accredited_body
-    given_i_am_signed_in_as_an_admin
+  context "Initial allocations" do
+    context "Accredited body has previously requested an initial allocations for a training provider" do
+      scenario "Accredited body views PE allocation page" do
+        given_accredited_body_exists
+        given_training_provider_with_pe_fee_funded_course_exists
+        given_the_accredited_body_has_requested_an_initial_allocation
 
-    when_i_visit_my_organisations_page
-    and_i_click_request_pe_courses
-    then_i_see_the_pe_allocations_page
+        given_i_am_signed_in_as_an_admin
+        # once the feature is released it should be changed to
+        # given_i_am_signed_in_as_a_user_from_the_accredited_body
 
-    and_i_do_not_see_request_pe_again_section
+        when_i_visit_my_organisations_page
+        and_i_click_request_pe_courses
 
-    and_i_see_correct_breadcrumbs
-  end
-
-  scenario "Accredited body decides to request PE allocations" do
-    given_accredited_body_exists
-    given_training_provider_with_pe_fee_funded_course_exists
-    given_the_accredited_body_has_not_requested_an_allocation
-
-    given_i_am_signed_in_as_an_admin
-
-    when_i_visit_my_organisations_page
-    and_i_click_request_pe_courses
-    then_i_see_the_pe_allocations_page
-    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
-    and_i_see_allocations_with_status_and_actions
-
-    when_i_click_confirm_choice
-    then_i_see_request_pe_allocations_page
-
-    when_i_click_yes
-    and_i_click_continue
-    and_i_see_the_corresponding_page_title("Request sent")
-  end
-
-  scenario "Accredited body decides not to request PE allocations" do
-    given_accredited_body_exists
-    given_training_provider_with_pe_fee_funded_course_exists
-    given_the_accredited_body_has_not_requested_an_allocation
-
-    given_i_am_signed_in_as_an_admin
-
-    when_i_visit_my_organisations_page
-    and_i_click_request_pe_courses
-    then_i_see_the_pe_allocations_page
-    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
-    and_i_see_allocations_with_status_and_actions
-
-    when_i_click_confirm_choice
-    then_i_see_request_pe_allocations_page
-
-    when_i_click_no
-    and_i_click_continue
-
-    and_i_see_the_confirmation_page
-    and_i_see_the_corresponding_page_title("Thank you")
-  end
-
-  scenario "Accredited body decides to view request PE allocations confirmation" do
-    given_accredited_body_exists
-    given_training_provider_with_pe_fee_funded_course_exists
-    given_the_accredited_body_has_requested_an_allocation
-
-    given_i_am_signed_in_as_an_admin
-
-    when_i_visit_my_organisations_page
-    and_i_click_request_pe_courses
-    then_i_see_the_pe_allocations_page
-
-    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
-    and_i_see_allocations_with_status_and_actions
-
-    and_i_click_on_first_view_requested_confirmation
-
-    and_i_see_the_confirmation_page
-    and_i_see_the_corresponding_page_title("Request sent")
-  end
-
-  scenario "Accredited body decides to view request no PE allocations confirmation" do
-    given_accredited_body_exists
-    given_training_provider_with_pe_fee_funded_course_exists
-    given_the_accredited_body_has_declined_an_allocation
-
-    given_i_am_signed_in_as_an_admin
-
-    when_i_visit_my_organisations_page
-    and_i_click_request_pe_courses
-    then_i_see_the_pe_allocations_page
-
-    and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
-    and_i_see_allocations_with_status_and_actions
-
-    and_i_click_on_first_view_not_requested_confirmation
-
-    and_i_see_the_confirmation_page
-    and_i_see_the_corresponding_page_title("Thank you")
-  end
-
-  scenario "There is no PE allocations page for non accredited body" do
-    given_a_provider_exists
-    given_i_am_signed_in_as_an_admin
-
-    when_i_visit_training_providers_page
-    there_is_no_request_pe_courses_link
-    and_i_cannot_access_pe_alloacations_page
-  end
-
-  scenario "Non-admin user cannot views PE allocations page" do
-    given_accredited_body_exists
-    given_i_am_signed_in
-
-    when_i_visit_my_organisations_page
-    there_is_no_request_pe_courses_link
-    and_i_cannot_access_accredited_body_pe_alloacations_page
-  end
-
-  scenario "Accredited body views PE allocations request page for training provider" do
-    given_accredited_body_exists
-    given_training_provider_exists
-    given_i_am_signed_in_as_an_admin
-
-    when_i_visit_pe_allocations_request_page
-
-    then_i_see_the_pe_allocations_request_page
-
-    and_i_see_back_link
-    and_i_see_training_provider_name
-    and_i_see_request_form
+        then_i_see_the_pe_allocations_page
+        and_i_see_only_initial_allocation_statuses
+        and_i_see_correct_breadcrumbs
+      end
+    end
   end
 
   def and_i_see_request_form
@@ -261,11 +264,19 @@ RSpec.feature "PE allocations" do
     )
   end
 
-  def given_the_accredited_body_has_requested_an_allocation
-    allocation = build(:allocation, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 1)
+  def given_the_accredited_body_has_requested_a_repeat_allocation
+    repeat_allocation = build(:allocation, :repeat, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 1)
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
-      resource_list_to_jsonapi([allocation], include: "provider,accredited_body"),
+      resource_list_to_jsonapi([repeat_allocation], include: "provider,accredited_body"),
+    )
+  end
+
+  def given_the_accredited_body_has_requested_an_initial_allocation
+    initial_allocation = build(:allocation, :initial, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 1)
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([initial_allocation], include: "provider,accredited_body"),
     )
   end
 
@@ -285,12 +296,16 @@ RSpec.feature "PE allocations" do
     expect(find("h1")).to have_content("Request PE courses for 2021/22")
   end
 
-  def and_i_see_only_see_training_providers_offering_pe_fee_founded_courses
+  def and_i_see_only_repeat_allocation_statuses
+    expect(allocations_page).to have_repeat_allocations_table
+    expect(allocations_page).to_not have_initial_allocations_table
     expect(allocations_page.rows.first.provider_name.text).to eq(@training_provider.provider_name)
   end
 
-  def and_i_see_allocations_with_status_and_actions
-    expect(allocations_page).to have_rows
+  def and_i_see_only_initial_allocation_statuses
+    expect(allocations_page).to have_initial_allocations_table
+    expect(allocations_page).to_not have_repeat_allocations_table
+    expect(allocations_page.rows.first.provider_name.text).to eq(@training_provider.provider_name)
   end
 
   def and_i_do_not_see_request_pe_again_section
@@ -330,7 +345,7 @@ RSpec.feature "PE allocations" do
     expect(page).to have_content("Page not found")
   end
 
-  def and_i_cannot_access_accredited_body_pe_alloacations_page
+  def and_i_cannot_access_accredited_body_pe_allocations_page
     visit provider_recruitment_cycle_allocations_path(@accredited_body.provider_code, @accredited_body.recruitment_cycle.year)
     expect(page).to have_content("You are not permitted to see this page")
   end

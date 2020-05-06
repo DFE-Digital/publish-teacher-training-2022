@@ -30,7 +30,15 @@
 
     <% unless @training_providers.empty? %>
       <div class="govuk-grid-column-full">
-        <%= render partial: "providers/allocations/request_status", locals: {allocations: @allocations} %>
+        <%= render partial: "providers/allocations/request_status", locals: {
+          allocations: @allocations_view.repeat_allocation_statuses,
+          request_type: "repeat"
+        } %>
+        <h3 class="govuk-heading-m">New PE courses 2020/21</h3>
+        <%= render partial: "providers/allocations/request_status", locals: {
+          allocations: @allocations_view.initial_allocation_statuses,
+          request_type: "initial"
+        } %>
       </div>
     <% end %>
 

@@ -7,4 +7,5 @@ class AllocationSerializer < JSONAPI::Serializable::Resource
   attributes(*FactoryBot.attributes_for("allocation").keys)
 
   attribute :number_of_places
+  attribute :request_type
 end
