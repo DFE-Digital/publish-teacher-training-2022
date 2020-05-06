@@ -76,14 +76,10 @@ class ProvidersController < ApplicationController
   end
 
   def training_provider_courses
-    if user_is_admin?
-      @courses = @training_provider.courses
-        .filter { |course| course[:accrediting_provider].present? }
-        .select { |course| course[:accrediting_provider][:provider_code] == @provider.provider_code }
-        .map(&:decorate)
-    else
-      redirect_to provider_path(@training_provider.provider_code)
-    end
+    @courses = @training_provider.courses
+      .filter { |course| course[:accrediting_provider].present? }
+      .select { |course| course[:accrediting_provider][:provider_code] == @provider.provider_code }
+      .map(&:decorate)
   end
 
   def search

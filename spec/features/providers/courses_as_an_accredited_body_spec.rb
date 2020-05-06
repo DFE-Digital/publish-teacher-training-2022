@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Get courses as an accredited body", type: :feature do
+feature "get courses as an accredited body", type: :feature do
   let(:organisation_training_providers_page) { PageObjects::Page::Organisations::TrainingProviders.new }
   let(:courses_as_an_accredited_body_page) { PageObjects::Page::Organisations::OrganisationCoursesAsAnAccreditedBody.new }
 
@@ -12,7 +12,7 @@ feature "Get courses as an accredited body", type: :feature do
 
   let(:training_provider2) { build :provider, accredited_bodies: [accrediting_body1, accrediting_body2], courses: [course1, course2] }
 
-  let(:user) { build :user, :admin }
+  let(:user) { build :user }
   let(:access_request) { build :access_request }
 
   before do
@@ -38,7 +38,7 @@ feature "Get courses as an accredited body", type: :feature do
     stub_api_v2_resource_collection([access_request])
   end
 
-  context "When the training provider has courses" do
+  context "when the training provider has courses" do
     it "can be reached from the provider show page" do
       visit training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
       organisation_training_providers_page.training_providers.first.link.click
