@@ -50,6 +50,52 @@ RSpec.feature "PE allocations" do
     and_i_see_provider_name("Acme SCITT")
   end
 
+  scenario "Accredited body requests new PE allocations for training provider they can't find on first page" do
+    given_accredited_body_exists
+    given_the_accredited_body_has_an_allocation
+    given_there_is_a_training_provider_with_previous_allocations
+    # once the feature is released it should be changed to
+    # given_i_am_signed_in_as_a_user_from_the_accredited_body
+    given_i_am_signed_in_as_an_admin
+
+    when_i_visit_my_organisations_page
+    and_i_click_request_pe_courses
+    then_i_see_the_pe_allocations_page
+
+    when_i_click_choose_an_organisation_button
+    then_i_see_the_request_new_pe_allocations_page
+
+    when_i_search_for_a_training_provider_that_does_not_exist
+    and_i_click_continue
+    then_i_see_the_request_new_pe_allocations_page
+    and_i_see_error_message_that_no_providers_exist_for_search
+  end
+
+  scenario "Accredited body requests new PE allocations for training provider they can't find on pick a provider page" do
+    given_accredited_body_exists
+    given_the_accredited_body_has_an_allocation
+    given_there_is_a_training_provider_with_previous_allocations
+    # once the feature is released it should be changed to
+    # given_i_am_signed_in_as_a_user_from_the_accredited_body
+    given_i_am_signed_in_as_an_admin
+
+    when_i_visit_my_organisations_page
+    and_i_click_request_pe_courses
+    then_i_see_the_pe_allocations_page
+
+    when_i_click_choose_an_organisation_button
+    then_i_see_the_request_new_pe_allocations_page
+
+    when_i_search_for_a_training_provider
+    and_i_click_continue
+    then_i_see_pick_a_provider_page
+
+    when_i_search_again_for_a_training_provider_that_does_not_exist
+    and_i_click_search_again
+    then_i_see_the_request_new_pe_allocations_page
+    and_i_see_error_message_that_no_providers_exist_for_search
+  end
+
   def given_accredited_body_exists
     @accredited_body = build(:provider, accredited_body?: true)
     stub_api_v2_resource(@accredited_body.recruitment_cycle)
@@ -163,5 +209,35 @@ RSpec.feature "PE allocations" do
 
   def and_i_should_not_see_training_provider_with_fee_funded_pe
     expect(page).to_not have_content(@training_provider_with_fee_funded_pe.provider_name)
+  end
+
+  def when_i_search_for_a_training_provider_that_does_not_exist
+    stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/providers/suggest?query=donotexist")
+                .to_return(
+                  headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
+                  body: File.new("spec/fixtures/api_responses/empty-provider-suggestions.json"),
+                )
+
+    page.choose("Find an organisation not listed above")
+    page.fill_in("training_provider_query", with: "donotexist")
+  end
+
+  def and_i_see_error_message_that_no_providers_exist_for_search
+    expect(page).to have_content("We couldn't find this provider, please check your input and try again")
+  end
+
+  def when_i_search_again_for_a_training_provider_that_does_not_exist
+    stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/providers/suggest?query=donotexist")
+                .to_return(
+                  headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
+                  body: File.new("spec/fixtures/api_responses/empty-provider-suggestions.json"),
+                )
+
+    page.find("span", text: "Try another provider").click
+    page.fill_in("training_provider_query", with: "donotexist")
+  end
+
+  def and_i_click_search_again
+    page.click_on("Search again")
   end
 end

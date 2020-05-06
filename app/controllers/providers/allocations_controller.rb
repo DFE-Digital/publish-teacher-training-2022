@@ -114,30 +114,42 @@ class InitialRequestFlow
   end
 
   def template
-    if associated_training_providers_page?
-      "providers/allocations/pick_a_provider"
-    elsif select_training_providers_from_search_page?
+    if number_of_places_page?
       "providers/allocations/places"
+    elsif empty_search_results?
+      "initial_request"
+    elsif pick_a_provider_page?
+      "providers/allocations/pick_a_provider"
     else
       "initial_request"
     end
   end
 
   def locals
-    if associated_training_providers_page?
-      {
-        training_providers: training_providers_from_query_without_associated(query: params[:training_provider_query]),
-      }
-    elsif select_training_providers_from_search_page?
+    if number_of_places_page?
       {}
+    elsif empty_search_results?
+      {
+        training_providers: training_providers_without_associated,
+        form_object: form_object,
+      }
+    elsif pick_a_provider_page?
+      {
+        training_providers: training_providers_from_query_without_associated,
+      }
     else
       {
         training_providers: training_providers_without_associated,
+        form_object: form_object,
       }
     end
   end
 
 private
+
+  def form_object
+    @form_object ||= InitialRequestForm.new
+  end
 
   def allocations
     @allocations ||= Allocation.includes(:provider, :accredited_body)
@@ -178,15 +190,17 @@ private
     end
   end
 
-  def training_providers_from_query(query:)
-    ProviderSuggestion.suggest(query)
+  def training_providers_from_query
+    return @training_providers_from_query if @training_providers_from_query
+
+    query = params[:training_provider_query]
+    @training_providers_from_query ||= ProviderSuggestion.suggest(query)
   end
 
-  def training_providers_from_query_without_associated(query:)
-    results = training_providers_from_query(query: query)
+  def training_providers_from_query_without_associated
     ids_to_reject = associated_training_providers.map(&:id)
 
-    results.reject do |r|
+    training_providers_from_query.reject do |r|
       ids_to_reject.include?(r.id)
     end
   end
@@ -206,11 +220,21 @@ private
       .first
   end
 
-  def associated_training_providers_page?
+  def empty_search_results?
+    return @empty_search_results if @empty_search_results
+
+    @empty_search_results = params[:training_provider_code].blank? && params[:training_provider_query].present? && training_providers_from_query_without_associated.empty?
+
+    form_object.add_no_results_error if @empty_search_results
+
+    @empty_search_results
+  end
+
+  def pick_a_provider_page?
     params[:training_provider_code].blank? && params[:training_provider_query].present?
   end
 
-  def select_training_providers_from_search_page?
-    params[:training_provider_code]
+  def number_of_places_page?
+    params[:training_provider_code].present?
   end
 end
