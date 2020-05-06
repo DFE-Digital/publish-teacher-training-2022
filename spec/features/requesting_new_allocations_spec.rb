@@ -138,7 +138,7 @@ RSpec.feature "PE allocations" do
     training_provider = build(:provider, provider_code: "A01", provider_name: "Acme SCITT")
     stub_api_v2_resource(training_provider)
 
-    page.choose("Acme SCITT")
+    page.click_on("Acme SCITT")
   end
 
   def and_i_see_provider_name(provider_name)

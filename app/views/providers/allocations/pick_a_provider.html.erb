@@ -6,35 +6,56 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
-                      @provider.provider_code,
-                      @provider.recruitment_cycle_year,
-                      params[:training_provider_code]
-                    ),
-                     skip_enforcing_utf8: true,
-                     method: :get,
-                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+      <h1 class="govuk-heading-xl" data-qa="heading">Pick a provider</h1>
+    </legend>
 
-      <%= form.govuk_radio_buttons_fieldset(:training_provider, legend: { size: 'xl', text: 'Pick a provider' }) do %>
-        <p class="govuk-body">
-          You searched for "<%= params[:training_provider_query] %>". We found these providers that matched your search:
-        </p>
+    <p class="govuk-body">You searched for ‘<%= params[:training_provider_query] %>’</p>
+    <p class="govuk-body">We found these providers which matched your search:</p>
 
-        <% training_providers.each_with_index do |training_provider| %>
-          <%= form.govuk_radio_button :training_provider_code,
-            training_provider.provider_code,
-            label: { text: training_provider.provider_name } %>
-        <% end %>
-
-        <%= form.govuk_radio_divider %>
-
-        <%= form.govuk_radio_button :training_provider_code, "", label: { text: 'Try searching for another provider' } do %>
-          <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } %>
-        <% end %>
+    <ul class="govuk-list govuk-list--bullet">
+      <% training_providers.each do |training_provider| %>
+        <li data-qa="provider_suggestion">
+          <%= govuk_link_to "#{training_provider.provider_name} (#{training_provider.provider_code})",
+            initial_request_provider_recruitment_cycle_allocations_path(training_provider_code: training_provider.provider_code), { class: "govuk-link" }
+          %>
+        </li>
       <% end %>
+    </ul>
 
-      <%= form.govuk_submit %>
-    <% end %>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div data-qa="search">
+      <details class="govuk-details" role="group" data-qa="search__expand">
+        <summary class="govuk-details__summary" role="button">
+          <span class="govuk-details__summary-text">Try another provider</span>
+        </summary>
+
+        <div class="govuk-details__text">
+          <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
+                          @provider.provider_code,
+                          @provider.recruitment_cycle_year,
+                          params[:training_provider_code]
+                        ),
+                        skip_enforcing_utf8: true,
+                        method: :get,
+                        builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+            <fieldset class="govuk-fieldset">
+              <div class="govuk-form-group">
+                <%= form.label :training_provider_query, class: "govuk-label" do %>
+                  <strong>School, university or other training provider</strong>
+                  <span class="govuk-hint govuk-!-margin-bottom-0">Enter the name or provider code</span>
+                <% end %>
+
+                <%= form.text_field :training_provider_query, class: "govuk-input" %>
+              </div>
+
+              <%= form.submit "Search again", name: nil, class: "govuk-button" %>
+            </fieldset>
+          <% end %>
+        </div>
+      </details>
+    </div>
 
     <p class="govuk-body">
       To add a new provider to Publish, you should contact
