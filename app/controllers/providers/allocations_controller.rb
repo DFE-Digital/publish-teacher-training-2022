@@ -116,7 +116,7 @@ class InitialRequestFlow
   def template
     if number_of_places_page?
       "providers/allocations/places"
-    elsif empty_search_results?
+    elsif blank_search_query? || empty_search_results?
       "initial_request"
     elsif pick_a_provider_page?
       "providers/allocations/pick_a_provider"
@@ -130,7 +130,7 @@ class InitialRequestFlow
       {
         training_provider: training_provider,
       }
-    elsif empty_search_results?
+    elsif blank_search_query? || empty_search_results?
       {
         training_providers: training_providers_without_associated,
         form_object: form_object,
@@ -248,5 +248,15 @@ private
       .where(recruitment_cycle_year: recruitment_cycle.year)
       .find(params[:training_provider_code])
       .first
+  end
+
+  def blank_search_query?
+    return @blank_search_query if @blank_search_query
+
+    @blank_search_query = params[:training_provider_code] == "-1" && params[:training_provider_query].blank?
+
+    form_object.add_no_search_query_error if @blank_search_query
+
+    @blank_search_query
   end
 end
