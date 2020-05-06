@@ -33,10 +33,10 @@ feature "new modern language", type: :feature do
             modern_languages: modern_languages,
             modern_languages_subject: modern_languages_subject,
             age_range_in_years: %w[
-                11_to_16
-                11_to_18
-                14_to_19
-              ],
+              11_to_16
+              11_to_18
+              14_to_19
+            ],
           },
           accrediting_provider: build(:provider),
           applications_open_from: "2019-10-09",

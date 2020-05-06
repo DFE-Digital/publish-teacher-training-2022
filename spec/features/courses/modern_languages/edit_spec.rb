@@ -75,10 +75,10 @@ feature "Edit course modern languages", type: :feature do
 
       patch_course_stub = set_patch_course_expectation do |subjects|
         expect(subjects).to match_array([
-                                          include("id" => modern_languages_subject.id.to_s),
-                                          include("id" => french_subject.id.to_s),
-                                          include("id" => japanese_subject.id.to_s),
-                                        ])
+          include("id" => modern_languages_subject.id.to_s),
+          include("id" => french_subject.id.to_s),
+          include("id" => japanese_subject.id.to_s),
+        ])
       end
 
       languages_page.languages_fields.find('[data-qa="checkbox_language_French"]').click
@@ -111,9 +111,9 @@ feature "Edit course modern languages", type: :feature do
       expect(page).to have_field("course_language_ids_#{french_subject.id}", checked: true)
       patch_course_stub = set_patch_course_expectation do |subjects|
         expect(subjects).to match_array([
-                                          include("id" => russian_subject.id.to_s),
-                                          include("id" => japanese_subject.id.to_s),
-                                        ])
+          include("id" => russian_subject.id.to_s),
+          include("id" => japanese_subject.id.to_s),
+        ])
       end
 
       languages_page.language_checkbox("French").click
@@ -185,10 +185,10 @@ feature "Edit course modern languages", type: :feature do
 
         patch_course_stub = set_patch_course_expectation do |subjects|
           expect(subjects).to match_array([
-                                            include("id" => modern_languages_subject.id.to_s),
-                                            include("id" => russian_subject.id.to_s),
-                                            include("id" => japanese_subject.id.to_s),
-                                          ])
+            include("id" => modern_languages_subject.id.to_s),
+            include("id" => russian_subject.id.to_s),
+            include("id" => japanese_subject.id.to_s),
+          ])
         end
 
         languages_page.languages_fields.find('[data-qa="checkbox_language_Russian"]').click

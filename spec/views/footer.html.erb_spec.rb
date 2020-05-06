@@ -33,11 +33,11 @@ end
 
 def get_user(admin: false)
   {
-      "info" => {
-          "first_name" => "bob",
-          "last_name" => "bob",
-      },
-      "admin" => admin,
+    "info" => {
+      "first_name" => "bob",
+      "last_name" => "bob",
+    },
+    "admin" => admin,
   }
 end
 

@@ -200,10 +200,10 @@ describe CourseDecorator do
       build(:course,
             subjects: subjects,
             edit_options: {
-            subjects: subjects.map do |subject|
-              subject.to_jsonapi[:data]
-            end,
-          })
+              subjects: subjects.map do |subject|
+                subject.to_jsonapi[:data]
+              end,
+            })
     end
 
     it "returns ids for only subjects that are selectable" do

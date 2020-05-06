@@ -240,10 +240,10 @@ feature "Course confirmation", type: :feature do
       let(:russian) { build(:subject, :russian) }
       let(:edit_options) do
         {
-            subjects: [modern_languages_subject],
-            age_range_in_years: [],
-            modern_languages: [russian],
-            modern_languages_subject: modern_languages_subject,
+          subjects: [modern_languages_subject],
+          age_range_in_years: [],
+          modern_languages: [russian],
+          modern_languages_subject: modern_languages_subject,
         }
       end
       let(:course) do
