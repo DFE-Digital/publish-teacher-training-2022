@@ -136,11 +136,13 @@ private
   end
 
   def number_of_places_page?
-    params[:training_provider_code].present? && params[:training_provider_code] != "-1"
+    params[:training_provider_code].present? && params[:training_provider_code] != "-1" ||
+      params[:change]
   end
 
   def check_your_information_page?
-    params[:training_provider_code].present? && params[:places].present? && params[:training_provider_code] != "-1"
+    params[:training_provider_code].present? && params[:places].present? &&
+      params[:training_provider_code] != "-1" && !params[:change]
   end
 
   def training_provider

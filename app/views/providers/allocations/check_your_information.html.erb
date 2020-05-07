@@ -6,6 +6,7 @@
                           @provider.recruitment_cycle_year,
                           training_provider_code: params[:training_provider_code],
                           places: params[:places],
+                          change: true,
                           )) %>
 <% end %>
 <% legend = capture do %>
@@ -45,6 +46,16 @@
                 <%= params[:places] %>
               </dd>
               <dd class="govuk-summary-list__actions">
+
+                <%= link_to "Change",
+                  initial_request_provider_recruitment_cycle_allocations_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year,
+                    training_provider_code: params[:training_provider_code],
+                    places: params[:places],
+                    change: true,
+                    ),
+                  class: "govuk-link" %>
               </dd>
             </div>
           </dl>

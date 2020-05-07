@@ -28,6 +28,14 @@ RSpec.feature "PE allocations" do
     and_i_click_continue
     then_i_see_check_your_information_page
     and_the_number_is_the_one_i_entered
+
+    when_i_click_change
+    then_i_see_number_of_places_page
+
+    when_i_change_the_number
+    and_i_click_continue
+    then_i_see_check_your_information_page
+    and_the_number_is_the_new_one
   end
 
   scenario "Accredited body requests new PE allocations for new training provider" do
@@ -291,5 +299,17 @@ RSpec.feature "PE allocations" do
 
   def and_the_number_is_the_one_i_entered
     expect(find("#number-of-places")).to have_content("2")
+  end
+
+  def when_i_click_change
+    click_on "Change"
+  end
+
+  def when_i_change_the_number
+    find("#number-of-places-input").fill_in(with: "3", currently_with: "2")
+  end
+
+  def and_the_number_is_the_new_one
+    expect(find("#number-of-places")).to have_content("3")
   end
 end
