@@ -8,7 +8,9 @@ class InitialRequestFlow
   end
 
   def template
-    if number_of_places_page?
+    if check_your_information_page?
+      "providers/allocations/check_your_information"
+    elsif number_of_places_page?
       "providers/allocations/places"
     elsif blank_search_query? || empty_search_results?
       "providers/allocations/initial_request"
@@ -20,7 +22,7 @@ class InitialRequestFlow
   end
 
   def locals
-    if number_of_places_page?
+    if number_of_places_page? || check_your_information_page?
       {
         training_provider: training_provider,
       }
@@ -135,6 +137,10 @@ private
 
   def number_of_places_page?
     params[:training_provider_code].present? && params[:training_provider_code] != "-1"
+  end
+
+  def check_your_information_page?
+    params[:training_provider_code].present? && params[:places].present? && params[:training_provider_code] != "-1"
   end
 
   def training_provider

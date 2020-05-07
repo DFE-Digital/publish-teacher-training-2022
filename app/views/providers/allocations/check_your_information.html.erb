@@ -1,0 +1,55 @@
+<%= content_for :page_title, "Check your information before sending your request"%>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path(
+                          @provider.provider_code,
+                          @provider.recruitment_cycle_year,
+                          training_provider_code: params[:training_provider_code],
+                          places: params[:places],
+                          )) %>
+<% end %>
+<% legend = capture do %>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading">
+            <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
+            Check your information before sending your request
+        </h1>
+    </legend>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+  <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year,
+                  ),
+                skip_enforcing_utf8: true,
+                method: :get do |form| %>
+
+      <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
+      <%= hidden_field_tag "training_provider_code", params[:places] %>
+
+      <fieldset class="govuk-fieldset">
+        <%= legend %>
+
+        <%= render "shared/error_wrapper", error_keys: [:check_your_information], data_qa: "allocation__check_your_information" do %>
+
+        <div class="body-text">
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Places requested
+              </dt>
+              <dd class="govuk-summary-list__value" id="number-of-places">
+                <%= params[:places] %>
+              </dd>
+              <dd class="govuk-summary-list__actions">
+              </dd>
+            </div>
+          </dl>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

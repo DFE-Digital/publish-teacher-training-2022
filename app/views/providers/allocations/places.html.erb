@@ -34,7 +34,12 @@
           <%= label_tag :places, "Say how many trainees the organisation would like to recruit -
             make sure this number is as accurate as possible.",
             class: "govuk-label" %>
-          <%= number_field_tag :places, nil, min: 1, maxlength: 3, class: "govuk-input govuk-input--width-10" %>
+            <%= number_field_tag :places,
+                    params[:places],
+                    min: 1,
+                    maxlength: 3,
+                    class: "govuk-input govuk-input--width-10",
+                    id: "number-of-places-input" %>
         </div>
       </fieldset>
 

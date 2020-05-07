@@ -23,6 +23,11 @@ RSpec.feature "PE allocations" do
     and_i_choose_a_training_provider
     and_i_click_continue
     then_i_see_number_of_places_page
+
+    when_i_fill_in_the_number_of_places_input
+    and_i_click_continue
+    then_i_see_check_your_information_page
+    and_the_number_is_the_one_i_entered
   end
 
   scenario "Accredited body requests new PE allocations for new training provider" do
@@ -48,6 +53,11 @@ RSpec.feature "PE allocations" do
     and_i_click_continue
     then_i_see_number_of_places_page
     and_i_see_provider_name("Acme SCITT")
+
+    when_i_fill_in_the_number_of_places_input
+    and_i_click_continue
+    then_i_see_check_your_information_page
+    and_the_number_is_the_one_i_entered
   end
 
   scenario "Accredited body requests new PE allocations for training provider they can't find on first page" do
@@ -269,5 +279,17 @@ RSpec.feature "PE allocations" do
 
   def and_i_see_error_message_that_i_must_add_more_info
     expect(page).to have_content("You need to add some information")
+  end
+
+  def when_i_fill_in_the_number_of_places_input
+    find("#number-of-places-input").fill_in(with: "2")
+  end
+
+  def then_i_see_check_your_information_page
+    expect(find("h1")).to have_content("Check your information before sending your request")
+  end
+
+  def and_the_number_is_the_one_i_entered
+    expect(find("#number-of-places")).to have_content("2")
   end
 end
