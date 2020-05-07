@@ -28,14 +28,14 @@
       <fieldset class="govuk-fieldset">
         <%= legend %>
 
-        <%= render "shared/error_wrapper", error_keys: [:places], data_qa: "allocation__places" do %>
+        <%= render "shared/error_wrapper", error_keys: [:number_of_places], data_qa: "allocation__places" do %>
 
         <div class="govuk-form-group">
-          <%= label_tag :places, "Say how many trainees the organisation would like to recruit -
+          <%= label_tag :number_of_places, "Say how many trainees the organisation would like to recruit -
             make sure this number is as accurate as possible.",
             class: "govuk-label" %>
-            <%= number_field_tag :places,
-                    params[:places],
+            <%= number_field_tag :number_of_places,
+                    params[:number_of_places],
                     min: 1,
                     maxlength: 3,
                     class: "govuk-input govuk-input--width-10",

@@ -11,7 +11,7 @@ class InitialRequestFlow
     if check_your_information_page?
       "providers/allocations/check_your_information"
     elsif number_of_places_page?
-      "providers/allocations/places"
+      "providers/allocations/number_of_places"
     elsif blank_search_query? || empty_search_results?
       "providers/allocations/initial_request"
     elsif pick_a_provider_page?
@@ -141,7 +141,7 @@ private
   end
 
   def check_your_information_page?
-    params[:training_provider_code].present? && params[:places].present? &&
+    params[:training_provider_code].present? && params[:number_of_places].present? &&
       params[:training_provider_code] != "-1" && !params[:change]
   end
 
