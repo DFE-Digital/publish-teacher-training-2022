@@ -5,7 +5,7 @@
                           @provider.provider_code,
                           @provider.recruitment_cycle_year,
                           training_provider_code: params[:training_provider_code],
-                          places: params[:places],
+                          number_of_places: params[:number_of_places],
                           change: true,
                           )) %>
 <% end %>
@@ -20,16 +20,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-  <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
-                    @provider.provider_code,
-                    @provider.recruitment_cycle_year,
-                  ),
-                skip_enforcing_utf8: true,
-                method: :get do |form| %>
+    <%= form_with url: provider_recruitment_cycle_allocation_path(
+                      @provider.provider_code,
+                      @provider.recruitment_cycle_year,
+                      params[:training_provider_code],
+                      params[:number_of_places]
+                    ),
+                    skip_enforcing_utf8: true do |form| %>
 
       <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
-      <%= hidden_field_tag "training_provider_code", params[:number_of_places] %>
+      <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
 
       <fieldset class="govuk-fieldset">
         <%= legend %>
@@ -60,6 +60,8 @@
             </div>
           </dl>
         </div>
+
+      <%= form.submit "Send request", class: "govuk-button" %>
       <% end %>
     <% end %>
   </div>

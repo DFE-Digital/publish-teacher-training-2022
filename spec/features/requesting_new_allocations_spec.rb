@@ -36,6 +36,9 @@ RSpec.feature "PE allocations" do
     and_i_click_continue
     then_i_see_check_your_information_page
     and_the_number_is_the_new_one
+
+    when_i_click_send_request
+    then_i_see_confirmation_page
   end
 
   scenario "Accredited body requests new PE allocations for new training provider" do
@@ -311,5 +314,22 @@ RSpec.feature "PE allocations" do
 
   def and_the_number_is_the_new_one
     expect(find("#number-of-places")).to have_content("3")
+  end
+
+  def when_i_click_send_request
+    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accredited_body.provider_code}/allocations")
+      .with(
+        body: {
+          data: {
+            type: "allocations",
+            attributes: { provider_id: @training_provider.id, request_type: "initial", number_of_places: "3" },
+          },
+        }.to_json,
+      )
+    click_on "Send request"
+  end
+
+  def then_i_see_confirmation_page
+    expect(find("h1")).to have_content("Request sent")
   end
 end

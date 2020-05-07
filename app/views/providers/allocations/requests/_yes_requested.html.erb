@@ -16,7 +16,9 @@
     </p>
     <p class="govuk-body">
       In September we’ll let you know how many places we’ve allocated for this course.
-      This will be based on the current year’s recruitment figure of (INSERT FIGURE).
+      <% unless @allocation.initial_request? %>
+        This will be based on the current year’s recruitment figure of (INSERT FIGURE).
+      <% end %>
       If you have any questions, contact <%= bat_contact_mail_to %>
     </p>
     <p class="govuk-body">You have until 10 July to change this request.</p>
