@@ -2,7 +2,7 @@ module Providers
   class AllocationsController < ApplicationController
     before_action :build_recruitment_cycle
     before_action :build_provider
-    before_action :build_training_provider, except: %i[index]
+    before_action :build_training_provider, except: %i[index initial_request]
     before_action :require_provider_to_be_accredited_body!
     before_action :require_admin_permissions!
 
@@ -45,30 +45,12 @@ module Providers
     end
 
     def initial_request
-      get_training_providers_without_previous_allocations
+      flow = InitialRequestFlow.new(params: params)
 
-      if params[:training_provider_code]
-        render "providers/allocations/places"
-      end
+      render flow.template, locals: flow.locals
     end
 
   private
-
-    def get_training_providers_without_previous_allocations
-      training_providers_with_previous_allocations = @provider.training_providers(
-        recruitment_cycle_year: @recruitment_cycle.year,
-        "filter[subjects]": PE_SUBJECT_CODE,
-        "filter[funding_type]": "fee",
-      )
-
-      @training_providers_without_previous_allocations =
-        @provider.training_providers(
-          recruitment_cycle_year: @recruitment_cycle.year,
-        ).reject do |provider|
-          training_providers_with_previous_allocations
-           .map(&:provider_code).include?(provider.provider_code)
-        end
-    end
 
     def build_training_provider
       @training_provider = Provider

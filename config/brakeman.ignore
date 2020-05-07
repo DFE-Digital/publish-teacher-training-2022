@@ -15,7 +15,7 @@
           "type": "controller",
           "class": "CoursesController",
           "method": "preview",
-          "line": 162,
+          "line": 160,
           "file": "app/controllers/courses_controller.rb",
           "rendered": {
             "name": "courses/preview",
@@ -28,6 +28,26 @@
         "template": "courses/preview"
       },
       "user_input": "Provider.where(:recruitment_cycle_year => RecruitmentCycle.find(params.fetch(:recruitment_cycle_year, Settings.current_cycle)).first.year).find(params[:provider_code]).first.website",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "704e6ef141447568eba3d7bffad15a65f0ac4b9e998d779d96ad370503d4da5a",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/providers/allocations_controller.rb",
+      "line": 58,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => InitialRequestFlow.new(:params => (params)).template, { :locals => InitialRequestFlow.new(:params => (params)).locals })",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Providers::AllocationsController",
+        "method": "initial_request"
+      },
+      "user_input": "params",
       "confidence": "Weak",
       "note": ""
     },
@@ -77,7 +97,7 @@
           "type": "controller",
           "class": "CoursesController",
           "method": "preview",
-          "line": 162,
+          "line": 160,
           "file": "app/controllers/courses_controller.rb",
           "rendered": {
             "name": "courses/preview",
@@ -104,6 +124,6 @@
       "note": ""
     }
   ],
-  "updated": "2019-11-25 12:02:02 +0000",
-  "brakeman_version": "4.7.1"
+  "updated": "2020-05-05 17:06:40 +0100",
+  "brakeman_version": "4.8.1"
 }

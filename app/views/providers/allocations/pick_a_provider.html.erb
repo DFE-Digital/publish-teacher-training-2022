@@ -1,0 +1,55 @@
+<%= content_for :page_title, "Pick a provider"%>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path(@provider.provider_code, @recruitment_cycle.year)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Pick a provider</h1>
+
+    <p class="govuk-body">You searched for ‘<%= params[:training_provider_query] %>’</p>
+    <p class="govuk-body">We found these providers which matched your search:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <% training_providers.each do |training_provider| %>
+        <li>
+          <%= govuk_link_to "#{training_provider.provider_name} (#{training_provider.provider_code})",
+            initial_request_provider_recruitment_cycle_allocations_path(training_provider_code: training_provider.provider_code) %>
+        </li>
+      <% end %>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <details class="govuk-details" role="group">
+      <summary class="govuk-details__summary" role="button">
+        <span class="govuk-details__summary-text">Try another provider</span>
+      </summary>
+
+      <div class="govuk-details__text">
+        <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
+                        @provider.provider_code,
+                        @provider.recruitment_cycle_year,
+                        training_provider_code: params[:training_provider_code]
+                      ),
+                      skip_enforcing_utf8: true,
+                      method: :get,
+                      builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+          <%= form.hidden_field :training_provider_code, value: "-1" %>
+
+          <div class="govuk-form-group">
+            <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } %>
+          </div>
+
+          <%= form.govuk_submit "Search again" %>
+        <% end %>
+      </div>
+    </details>
+
+    <p class="govuk-body">
+      To add a new provider to Publish, you should contact
+      <%= bat_contact_mail_to %>
+    </p>
+  </div>
+</div>

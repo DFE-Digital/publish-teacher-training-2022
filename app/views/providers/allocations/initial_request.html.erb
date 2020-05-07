@@ -4,66 +4,39 @@
   <%= govuk_back_link_to(provider_recruitment_cycle_allocations_path) %>
 <% end %>
 
-<% legend = capture do %>
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-6">
-            Who are you requesting a course for?
-        </h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: form_object, scope: "", url: initial_request_provider_recruitment_cycle_allocations_path(
+                      @provider.provider_code,
+                      @provider.recruitment_cycle_year,
+                      training_provider_code: params[:training_provider_code]
+                    ),
+                     skip_enforcing_utf8: true,
+                     method: :get,
+                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+
+      <%= form.govuk_error_summary %>
+
+      <%= form.govuk_radio_buttons_fieldset(:training_provider, legend: { size: 'xl', text: 'Who are you requesting a course for?' }) do %>
         <p class="govuk-body">
           This should be the name of the organisation offering the course - eg
           a lead school, or your own organisation if you’re offering it yourselves.
         </p>
-    </legend>
-<% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-
-  <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
-                    @provider.provider_code,
-                    @provider.recruitment_cycle_year,
-                    params[:training_provider_code]
-                  ),
-                   skip_enforcing_utf8: true,
-                   method: :get do |form| %>
-      <fieldset class="govuk-fieldset">
-        <%= legend %>
-
-        <%= render "shared/error_wrapper", error_keys: [:training_provider], data_qa: "allocation__training_provider" do %>
-        <% @training_providers_without_previous_allocations.each_with_index do |training_provider| %>
-          <% label = training_provider.provider_name %>
-
-          <div class="govuk-radios__item">
-            <%= form.radio_button :training_provider_code,
-                  training_provider.provider_code,
-                  class: 'govuk-radios__input',
-                  data: {
-                    'aria-describedby': "training_provider_code-#{training_provider.provider_name}-help"
-                  }
-            %>
-            <%= form.label :training_provider_code,
-                  label,
-                  value:  training_provider.provider_code,
-                  class: "govuk-label govuk-radios__label"
-            %>
-          </div>
+        <% training_providers.each_with_index do |training_provider| %>
+          <%= form.govuk_radio_button :training_provider_code,
+            training_provider.provider_code,
+            label: { text: training_provider.provider_name } %>
         <% end %>
-        <% if @training_providers_without_previous_allocations.present? %>
-          <div class="govuk-radios__divider">or</div>
+
+        <%= form.govuk_radio_divider %>
+
+        <%= form.govuk_radio_button :training_provider_code, "-1", label: { text: 'Find an organisation not listed above' } do %>
+          <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } %>
         <% end %>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="find-organisation-not-listed-above" name="training_provider_code" type="radio" value="find-organisation">
-          <%= label_tag "Find an organisation not listed above", nil, class: "govuk-label govuk-radios__label" %>
-        </div>
-      </fieldset>
-      <%= form.submit "Continue", class: "govuk-button", data: { qa: 'request_continue' }, name: nil %>
       <% end %>
+
+      <%= form.govuk_submit %>
     <% end %>
-    <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body">
-        To add a new provider to Publish, you should contact
-        <%= bat_contact_mail_to %>
-      </p>
-    </div>
   </div>
 </div>
