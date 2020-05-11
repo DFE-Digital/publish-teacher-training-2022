@@ -28,9 +28,6 @@
                     ),
                     skip_enforcing_utf8: true do |form| %>
 
-      <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
-      <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
-
       <fieldset class="govuk-fieldset">
         <%= legend %>
 
@@ -60,6 +57,8 @@
             </div>
           </dl>
         </div>
+      <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
+      <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
 
       <%= form.submit "Send request", class: "govuk-button" %>
       <% end %>
