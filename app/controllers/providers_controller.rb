@@ -76,10 +76,10 @@ class ProvidersController < ApplicationController
   end
 
   def training_provider_courses
-    @courses = @training_provider.courses
-      .filter { |course| course[:accrediting_provider].present? }
-      .select { |course| course[:accrediting_provider][:provider_code] == @provider.provider_code }
-      .map(&:decorate)
+    @courses = Course
+      .where(recruitment_cycle_year: @recruitment_cycle.year)
+      .where(provider_code: @training_provider.provider_code)
+      .where(accrediting_provider_code: @provider.provider_code).map(&:decorate)
   end
 
   def search
