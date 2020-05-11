@@ -18,7 +18,8 @@
                       params[:training_provider_code],
                       params[:number_of_places]
                     ),
-                    skip_enforcing_utf8: true do |form| %>
+                    skip_enforcing_utf8: true,
+                    builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
 
         <h1 class="govuk-heading-xl">
             <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
@@ -50,7 +51,7 @@
       <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
       <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
 
-      <%= form.submit "Send request", class: "govuk-button" %>
+      <%= form.govuk_submit "Send request" %>
     <% end %>
   </div>
 </div>
