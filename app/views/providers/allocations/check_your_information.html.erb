@@ -9,14 +9,6 @@
                           change: true,
                           )) %>
 <% end %>
-<% legend = capture do %>
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-        <h1 class="govuk-fieldset__heading">
-            <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
-            Check your information before sending your request
-        </h1>
-    </legend>
-<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -28,40 +20,37 @@
                     ),
                     skip_enforcing_utf8: true do |form| %>
 
-      <fieldset class="govuk-fieldset">
-        <%= legend %>
+        <h1 class="govuk-heading-xl">
+            <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
+            Check your information before sending your request
+        </h1>
 
-        <%= render "shared/error_wrapper", error_keys: [:check_your_information], data_qa: "allocation__check_your_information" do %>
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Places requested
+            </dt>
+            <dd class="govuk-summary-list__value" id="number-of-places">
+              <%= params[:number_of_places] %>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <%= link_to "Change",
+                initial_request_provider_recruitment_cycle_allocations_path(
+                  @provider.provider_code,
+                  @provider.recruitment_cycle_year,
+                  training_provider_code: params[:training_provider_code],
+                  number_of_places: params[:number_of_places],
+                  change: true,
+                  ),
+                class: "govuk-link" %>
+            </dd>
+          </div>
+        </dl>
 
-        <div class="body-text">
-          <dl class="govuk-summary-list">
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Places requested
-              </dt>
-              <dd class="govuk-summary-list__value" id="number-of-places">
-                <%= params[:number_of_places] %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-
-                <%= link_to "Change",
-                  initial_request_provider_recruitment_cycle_allocations_path(
-                    @provider.provider_code,
-                    @provider.recruitment_cycle_year,
-                    training_provider_code: params[:training_provider_code],
-                    number_of_places: params[:number_of_places],
-                    change: true,
-                    ),
-                  class: "govuk-link" %>
-              </dd>
-            </div>
-          </dl>
-        </div>
       <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
       <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
 
       <%= form.submit "Send request", class: "govuk-button" %>
-      <% end %>
     <% end %>
   </div>
 </div>
