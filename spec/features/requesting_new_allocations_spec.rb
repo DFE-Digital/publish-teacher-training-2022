@@ -244,7 +244,8 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_see_error_message_that_no_providers_exist_for_search
-    expect(page).to have_content("We couldn't find this provider, please check your input and try again")
+    expect(page)
+      .to have_content("We couldn't find this organisation - please check your information and try again. To add a new organisation to Publish, contact becomingateacher@digital.education.gov.uk.")
   end
 
   def when_i_search_again_for_a_training_provider_that_does_not_exist
