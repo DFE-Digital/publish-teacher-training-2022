@@ -4,15 +4,6 @@
   <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path) %>
 <% end %>
 
-<% legend = capture do %>
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-        <h1 class="govuk-fieldset__heading">
-            <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
-            How many places would you like to request?
-        </h1>
-    </legend>
-<% end %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
@@ -21,30 +12,34 @@
                     @provider.recruitment_cycle_year,
                   ),
                 skip_enforcing_utf8: true,
-                method: :get do |form| %>
+                method: :get,
+                builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
 
-      <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
+    <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
 
-      <fieldset class="govuk-fieldset">
-        <%= legend %>
+    <%= form.govuk_text_field :number_of_places,
+          label: {
+            text: "How many places would you like to request?",
+            size: "xl",
+            tag: "h1",
+          },
+          pattern: "[0-9]*",
+          inputmode: "numeric",
+          width: 10,
+          id: "number-of-places-input" do %>
 
-        <%= render "shared/error_wrapper", error_keys: [:number_of_places], data_qa: "allocation__places" do %>
+        <p class="govuk-body govuk-!-margin-bottom-4">
+          Say how many trainees the organisation would like to recruit
+          - make sure this number is as accurate as possible.
+        </p>
 
-        <div class="govuk-form-group">
-          <%= label_tag :number_of_places, "Say how many trainees the organisation would like to recruit -
-            make sure this number is as accurate as possible.",
-            class: "govuk-label" %>
-            <%= number_field_tag :number_of_places,
-                    params[:number_of_places],
-                    min: 1,
-                    maxlength: 3,
-                    class: "govuk-input govuk-input--width-10",
-                    id: "number-of-places-input" %>
-        </div>
-      </fieldset>
-
-      <%= form.submit "Continue", class: "govuk-button", data: { qa: 'request_continue' } %>
-      <% end %>
     <% end %>
+
+    <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
+
+
+
+    <%= form.govuk_submit %>
+  <% end %>
   </div>
 </div>

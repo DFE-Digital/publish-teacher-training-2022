@@ -309,7 +309,7 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_change_the_number
-    find("#number-of-places-input").fill_in(with: "3", currently_with: "2")
+    find("#number-of-places-input").fill_in(with: "3")
   end
 
   def and_the_number_is_the_new_one
