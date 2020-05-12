@@ -293,7 +293,7 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_fill_in_the_number_of_places_input
-    find("#number-of-places-input").fill_in(with: "2")
+    find_field(:number_of_places).fill_in(with: "2")
   end
 
   def then_i_see_check_your_information_page
@@ -301,7 +301,7 @@ RSpec.feature "PE allocations" do
   end
 
   def and_the_number_is_the_one_i_entered
-    expect(find("#number-of-places")).to have_content("2")
+    expect(find(".govuk-summary-list__value")).to have_content("2")
   end
 
   def when_i_click_change
@@ -309,11 +309,11 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_change_the_number
-    find("#number-of-places-input").fill_in(with: "3")
+    find_field(:number_of_places).fill_in(with: "3")
   end
 
   def and_the_number_is_the_new_one
-    expect(find("#number-of-places")).to have_content("3")
+    expect(find(".govuk-summary-list__value")).to have_content("3")
   end
 
   def when_i_click_send_request
