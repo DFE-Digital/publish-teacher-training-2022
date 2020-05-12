@@ -73,9 +73,9 @@ describe CourseDecorator do
     end
 
     context "for a course in the current cycle" do
-      let(:course) {
+      let(:course) do
         build(:course, recruitment_cycle: current_recruitment_cycle)
-      }
+      end
 
       it "knows which cycle it’s in" do
         expect(decorated_course.next_cycle?).to eq(false)
@@ -84,9 +84,9 @@ describe CourseDecorator do
     end
 
     context "for a course in the next cycle" do
-      let(:course) {
+      let(:course) do
         build(:course, recruitment_cycle: next_recruitment_cycle)
-      }
+      end
 
       it "knows which cycle it’s in" do
         expect(decorated_course.next_cycle?).to eq(true)

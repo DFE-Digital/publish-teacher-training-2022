@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require "rails_helper"
 
 feature "Preview course", type: :feature do
@@ -46,13 +44,13 @@ feature "Preview course", type: :feature do
           early_career_payments: "1000")
   end
 
-  let(:provider) {
+  let(:provider) do
     build(:provider,
           provider_code: "A0",
           website: "https://scitt.org",
           address1: "1 Long Rd",
           postcode: "E1 ABC")
-  }
+  end
   let(:accrediting_provider) { build(:provider) }
   let(:course_response) do
     course.to_jsonapi(

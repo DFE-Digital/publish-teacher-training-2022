@@ -162,12 +162,12 @@ private
   end
 
   def set_user_session
-    logger.debug {
+    logger.debug do
       "Creating new session for user " + {
         email_md5: log_safe_current_user["email_md5"],
         signin_id: current_user_dfe_signin_id,
       }.to_s
-    }
+    end
 
     # TODO: we should return a session object here with a 'user' attached to id.
     user = Session.create(first_name: current_user_info[:first_name],

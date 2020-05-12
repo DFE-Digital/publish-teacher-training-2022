@@ -74,11 +74,11 @@ feature "Edit UCAS email alerts", type: :feature do
   end
 
   context "with contact email already set" do
-    let(:provider) {
+    let(:provider) do
       build(:provider,
             send_application_alerts: "all",
             application_alert_contact: "weeble@example.org")
-    }
+    end
 
     scenario "changing the email address" do
       page.application_alert_contact.set "bob@example.org"

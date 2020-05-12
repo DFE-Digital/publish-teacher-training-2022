@@ -131,7 +131,7 @@ feature "Course fees", type: :feature do
   end
 
   context "when copying course fees from another course" do
-    let(:course_2) {
+    let(:course_2) do
       build :course,
             name: "Biology",
             provider: provider,
@@ -141,16 +141,16 @@ feature "Course fees", type: :feature do
             fee_details: "Some information about the fees",
             financial_support: "Some information about the finance support",
             recruitment_cycle: current_recruitment_cycle
-    }
+    end
 
-    let(:course_3) {
+    let(:course_3) do
       build :course,
             name: "Biology",
             provider: provider,
             fee_details: "Course 3 has just fee details",
             financial_support: "and financial support (Course 3)",
             recruitment_cycle: current_recruitment_cycle
-    }
+    end
 
     let(:provider_for_copy_from_list) do
       build(:provider, courses: [course_1, course_2, course_3], provider_code: "A0")

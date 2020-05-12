@@ -8,12 +8,12 @@ feature "Edit accredited body" do
   let(:new_accredited_body_search_page) { PageObjects::Page::Organisations::Courses::NewAccreditedBodySearchPage.new }
   let(:accrediting_provider_1) { build(:provider) }
   let(:accrediting_provider_2) { build(:provider) }
-  let(:accredited_bodies) {
+  let(:accredited_bodies) do
     [
       { "provider_name": accrediting_provider_1.provider_name, "provider_code" => accrediting_provider_1.provider_code },
       { "provider_name": accrediting_provider_2.provider_name, "provider_code" => accrediting_provider_2.provider_code },
     ]
-  }
+  end
 
   before do
     stub_omniauth(provider: provider)

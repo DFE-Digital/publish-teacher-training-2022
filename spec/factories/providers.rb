@@ -84,13 +84,13 @@ FactoryBot.define do
     end
 
     factory :providers_response, class: Hash do
-      data {
+      data do
         [
           jsonapi(:provider, provider_code: "A0", include_counts: %i[courses]).render,
           jsonapi(:provider, provider_code: "A1", include_counts: %i[courses]).render,
           jsonapi(:provider, provider_code: "A2", include_counts: %i[courses]).render,
         ].map { |d| d[:data] }
-      }
+      end
 
       initialize_with { attributes }
     end

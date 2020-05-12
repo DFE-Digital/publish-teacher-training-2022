@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require "rails_helper"
 
 feature "Edit locations", type: :feature do

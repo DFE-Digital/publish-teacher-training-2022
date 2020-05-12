@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :error, class: Hash do
-    errors {
+    errors do
       [
         {
           title: "Invalid location_name",
@@ -18,14 +18,14 @@ FactoryBot.define do
           source: { pointer: "/data/attributes/postcode" },
         },
       ]
-    }
+    end
 
     initialize_with do
       attributes
     end
 
     trait :for_course_outcome do
-      errors {
+      errors do
         [
           {
             title: "Invalid qualification",
@@ -33,11 +33,11 @@ FactoryBot.define do
             source: { pointer: "/data/attributes/qualification" },
           },
         ]
-      }
+      end
     end
 
     trait :for_course_publish do
-      errors {
+      errors do
         [
           {
             title: "Invalid about_course",
@@ -45,11 +45,11 @@ FactoryBot.define do
             source: { pointer: "/data/attributes/about_course" },
           },
         ]
-      }
+      end
     end
 
     trait :for_provider_update do
-      errors {
+      errors do
         [
           {
             title: "Invalid train_with_us",
@@ -57,11 +57,11 @@ FactoryBot.define do
             source: { pointer: "/data/attributes/train_with_us" },
           },
         ]
-      }
+      end
     end
 
     trait :for_access_request_create do
-      errors {
+      errors do
         [
           {
             title: "Invalid first_name",
@@ -69,7 +69,7 @@ FactoryBot.define do
             source: { pointer: "/data/attributes/first_name" },
           },
         ]
-      }
+      end
     end
   end
 end
