@@ -94,7 +94,7 @@ feature "Course requirements", type: :feature do
   end
 
   context "when copying course requirements from another course" do
-    let(:course_2) {
+    let(:course_2) do
       build(
         :course,
         name: "Biology",
@@ -103,16 +103,16 @@ feature "Course requirements", type: :feature do
         personal_qualities: "Course 2 personal qualities",
         other_requirements: "Course 2 other requirements",
       )
-    }
+    end
 
-    let(:course_3) {
+    let(:course_3) do
       build(
         :course,
         name: "Biology",
         provider: provider,
         required_qualifications: "Required qualifications",
       )
-    }
+    end
 
     let(:provider_for_copy_from_list) do
       build(:provider, courses: [course, course_2, course_3], provider_code: "A0")

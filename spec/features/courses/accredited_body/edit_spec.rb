@@ -1,7 +1,7 @@
 require "rails_helper"
 
 id_selector = ->(code) { "course_accrediting_provider_code_#{code.downcase}" }
-for_selector = ->(code) { "[for=\"#{id_selector.(code)}\"]" }
+for_selector = ->(code) { "[for=\"#{id_selector.call(code)}\"]" }
 
 feature "Edit accredited body", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
@@ -10,12 +10,12 @@ feature "Edit accredited body", type: :feature do
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
   let(:accrediting_provider_1) { build(:provider) }
   let(:accrediting_provider_2) { build(:provider) }
-  let(:accredited_bodies) {
+  let(:accredited_bodies) do
     [
       { "provider_name": accrediting_provider_1.provider_name, "provider_code" => accrediting_provider_1.provider_code },
       { "provider_name": accrediting_provider_2.provider_name, "provider_code" => accrediting_provider_2.provider_code },
     ]
-  }
+  end
 
   before do
     stub_omniauth
@@ -73,12 +73,12 @@ feature "Edit accredited body", type: :feature do
       expect(accredited_body_page).to have_accredited_body_fields
       expect(accredited_body_page.accredited_body_fields)
         .to have_selector(
-          for_selector.(accrediting_provider_1.provider_code),
+          for_selector.call(accrediting_provider_1.provider_code),
           text: accrediting_provider_1.provider_name,
         )
       expect(accredited_body_page.accredited_body_fields)
         .to have_selector(
-          for_selector.(accrediting_provider_2.provider_code),
+          for_selector.call(accrediting_provider_2.provider_code),
           text: accrediting_provider_2.provider_name,
         )
     end
@@ -131,7 +131,7 @@ feature "Edit accredited body", type: :feature do
     scenario "has the correct value selected" do
       expect(accredited_body_page.accredited_body_fields)
         .to have_field(
-          id_selector.(accrediting_provider_2.provider_code),
+          id_selector.call(accrediting_provider_2.provider_code),
           checked: true,
         )
     end

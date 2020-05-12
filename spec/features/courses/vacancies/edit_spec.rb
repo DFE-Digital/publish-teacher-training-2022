@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require "rails_helper"
 
 feature "Edit course vacancies", type: :feature do

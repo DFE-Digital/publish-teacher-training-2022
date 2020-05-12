@@ -84,7 +84,7 @@ feature "Course salary", type: :feature do
   end
 
   context "when copying course salary from another course" do
-    let(:course_2) {
+    let(:course_2) do
       build :course,
             name: "Biology",
             provider: provider,
@@ -92,16 +92,16 @@ feature "Course salary", type: :feature do
             salary_details: "Course 2 salary details",
             funding: "salary",
             recruitment_cycle: current_recruitment_cycle
-    }
+    end
 
-    let(:course_3) {
+    let(:course_3) do
       build :course,
             name: "Biology",
             provider: provider,
             course_length: "TwoYears",
             funding: "salary",
             recruitment_cycle: current_recruitment_cycle
-    }
+    end
 
     let(:provider_for_copy_from_list) do
       build(:provider, provider_code: "A0", courses: [course, course_2, course_3])

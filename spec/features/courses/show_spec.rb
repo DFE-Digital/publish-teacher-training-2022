@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require "rails_helper"
 
 feature "Course show", type: :feature do
@@ -248,14 +246,14 @@ feature "Course show", type: :feature do
   end
 
   context "when the course is new" do
-    let(:course) {
+    let(:course) do
       build :course,
             findable?: false,
             content_status: "draft",
             ucas_status: "new",
             provider: provider
       # recruitment_cycle: current_recruitment_cycle
-    }
+    end
 
     scenario "it displays a status panel" do
       expect(course_page).to have_status_panel

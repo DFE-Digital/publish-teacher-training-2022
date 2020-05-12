@@ -5,11 +5,11 @@ feature "Edit course entry requirements", type: :feature do
   let(:entry_requirements_page) { PageObjects::Page::Organisations::CourseEntryRequirements.new }
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
   let(:provider) { build(:provider) }
-  let(:edit_options) {
+  let(:edit_options) do
     {
       entry_requirements: %w[must_have_qualification_at_application_time expect_to_achieve_before_training_begins equivalence_test],
     }
-  }
+  end
 
   before do
     stub_omniauth

@@ -3,12 +3,12 @@ require "rails_helper"
 feature "View provider about", type: :feature do
   let(:org_about_page) { PageObjects::Page::Organisations::OrganisationAbout.new }
   let(:org_details_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
-  let(:accredited_bodies) {
+  let(:accredited_bodies) do
     [
       { "provider_name": "Baz", "provider_code" => "Z01" },
       { "provider_name": "Qux", "provider_code" => "Z02" },
     ]
-  }
+  end
   let(:provider) do
     build :provider,
           provider_code: "A0",

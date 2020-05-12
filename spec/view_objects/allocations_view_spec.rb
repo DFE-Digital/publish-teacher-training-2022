@@ -10,12 +10,12 @@ describe AllocationsView do
     subject { AllocationsView.new(training_providers: training_providers, allocations: allocations).repeat_allocation_statuses }
 
     context "Accrediting provider has re-requested an allocation for a training provider" do
-      let(:repeat_allocation) {
+      let(:repeat_allocation) do
         build(:allocation, :repeat, accredited_body: accredited_body, provider: training_provider, number_of_places: 1)
-      }
-      let(:initial_allocation) {
+      end
+      let(:initial_allocation) do
         build(:allocation, :initial, accredited_body: accredited_body, provider: another_training_provider, number_of_places: 3)
-      }
+      end
       let(:allocations) { [repeat_allocation, initial_allocation] }
 
       it {
@@ -33,9 +33,9 @@ describe AllocationsView do
 
     context "Accredited body has declined an allocation for a training provider" do
       let(:declined_allocation) { build(:allocation, :decline, accredited_body: accredited_body, provider: training_provider, number_of_places: 0) }
-      let(:initial_allocation) {
+      let(:initial_allocation) do
         build(:allocation, :initial, accredited_body: accredited_body, provider: another_training_provider, number_of_places: 3)
-      }
+      end
       let(:allocations) { [declined_allocation, initial_allocation] }
 
       it {
@@ -77,12 +77,12 @@ describe AllocationsView do
     subject { AllocationsView.new(training_providers: training_providers, allocations: allocations).initial_allocation_statuses }
 
     context "Accredited body has requested an initial allocation for a training provider" do
-      let(:initial_allocation) {
+      let(:initial_allocation) do
         build(:allocation, :initial, accredited_body: accredited_body, provider: training_provider, number_of_places: 3)
-      }
-      let(:repeat_allocation) {
+      end
+      let(:repeat_allocation) do
         build(:allocation, :repeat, accredited_body: accredited_body, provider: another_training_provider, number_of_places: 4)
-      }
+      end
       let(:allocations) { [initial_allocation, repeat_allocation] }
 
       it {
@@ -99,9 +99,9 @@ describe AllocationsView do
     end
 
     context "Accredited body has not requested initial allocations for any training provider" do
-      let(:repeat_allocation) {
+      let(:repeat_allocation) do
         build(:allocation, :repeat, accredited_body: accredited_body, provider: training_provider, number_of_places: 4)
-      }
+      end
 
       let(:allocations) { [repeat_allocation] }
 
