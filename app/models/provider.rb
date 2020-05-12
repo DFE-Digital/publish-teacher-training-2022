@@ -31,6 +31,6 @@ class Provider < Base
 private
 
   def post_base_url
-    "#{Provider.site}#{Provider.path}/%<provider_code>s" % path_attributes
+    format("#{Provider.site}#{Provider.path}/%<provider_code>s", path_attributes)
   end
 end
