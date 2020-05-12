@@ -2,7 +2,11 @@ class SessionsController < ApplicationController
   skip_before_action :request_login
 
   def new
-    redirect_to "/auth/dfe"
+    if Settings.features.signin_intercept
+      render
+    else
+      redirect_to "/auth/dfe"
+    end
   end
 
   def create
