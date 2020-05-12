@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require "rails_helper"
 
 feature "sign-in interception" do
@@ -66,7 +64,7 @@ feature "sign-in interception" do
     OmniAuth.config.logger = Rails.logger
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:dfe] = :invalid_credentials
-    # oauth does this webfinger lookup 🤷 https://tools.ietf.org/html/rfc7033
+    # oauth does this webfinger lookup https://tools.ietf.org/html/rfc7033
     stub_request(:get, "https://test-oidc.signin.education.gov.uk/.well-known/webfinger?rel=http://openid.net/specs/connect/1.0/issuer&resource=https://test-oidc.signin.education.gov.uk:443")
       .to_return(status: 200, body: "", headers: {})
   end
