@@ -11,6 +11,10 @@ class Allocation < Base
   property :request_type
 
   def has_places?
-    number_of_places.positive?
+    number_of_places.to_i.positive?
+  end
+
+  def initial_request?
+    request_type == Allocation::RequestTypes::INITIAL
   end
 end

@@ -2,6 +2,9 @@ require "rails_helper"
 
 RSpec.feature "PE allocations" do
   let(:allocations_page) { PageObjects::Page::Providers::Allocations::IndexPage.new }
+  let(:number_of_places_page) { PageObjects::Page::Providers::Allocations::NumberOfPlacesPage.new }
+  let(:check_your_info_page) { PageObjects::Page::Providers::Allocations::CheckYourInformationPage.new }
+  let(:allocations_show_page) { PageObjects::Page::Providers::Allocations::ShowPage.new }
 
   scenario "Accredited body requests new PE allocations" do
     given_accredited_body_exists
@@ -23,6 +26,22 @@ RSpec.feature "PE allocations" do
     and_i_choose_a_training_provider
     and_i_click_continue
     then_i_see_number_of_places_page
+
+    when_i_fill_in_the_number_of_places_input
+    and_i_click_continue
+    then_i_see_check_your_information_page
+    and_the_number_is_the_one_i_entered
+
+    when_i_click_change
+    then_i_see_number_of_places_page
+
+    when_i_change_the_number
+    and_i_click_continue
+    then_i_see_check_your_information_page
+    and_the_number_is_the_new_one
+
+    when_i_click_send_request
+    then_i_see_confirmation_page
   end
 
   scenario "Accredited body requests new PE allocations for new training provider" do
@@ -48,6 +67,11 @@ RSpec.feature "PE allocations" do
     and_i_click_continue
     then_i_see_number_of_places_page
     and_i_see_provider_name("Acme SCITT")
+
+    when_i_fill_in_the_number_of_places_input
+    and_i_click_continue
+    then_i_see_check_your_information_page
+    and_the_number_is_the_one_i_entered
   end
 
   scenario "Accredited body requests new PE allocations for training provider they can't find on first page" do
@@ -217,7 +241,7 @@ RSpec.feature "PE allocations" do
   end
 
   def then_i_see_number_of_places_page
-    expect(find("h1")).to have_content("How many places would you like to request?")
+    expect(number_of_places_page.header.text).to eq("How many places would you like to request?")
   end
 
   def then_i_see_pick_a_provider_page
@@ -270,5 +294,46 @@ RSpec.feature "PE allocations" do
 
   def and_i_see_error_message_that_i_must_add_more_info
     expect(page).to have_content("You need to add some information")
+  end
+
+  def when_i_fill_in_the_number_of_places_input
+    number_of_places_page.number_of_places_field.fill_in(with: "2")
+  end
+
+  def then_i_see_check_your_information_page
+    expect(check_your_info_page.header.text).to have_content("Check your information before sending your request")
+  end
+
+  def and_the_number_is_the_one_i_entered
+    expect(check_your_info_page.number_of_places.text).to have_content("2")
+  end
+
+  def when_i_click_change
+    check_your_info_page.change_link.click
+  end
+
+  def when_i_change_the_number
+    number_of_places_page.number_of_places_field.fill_in(with: "3")
+  end
+
+  def and_the_number_is_the_new_one
+    expect(check_your_info_page.number_of_places.text).to eq("3")
+  end
+
+  def when_i_click_send_request
+    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accredited_body.provider_code}/allocations")
+      .with(
+        body: {
+          data: {
+            type: "allocations",
+            attributes: { provider_id: @training_provider.id, request_type: "initial", number_of_places: "3" },
+          },
+        }.to_json,
+      )
+    check_your_info_page.send_request_button.click
+  end
+
+  def then_i_see_confirmation_page
+    expect(allocations_show_page.page_heading).to have_content("Request sent")
   end
 end

@@ -33,15 +33,21 @@ module Providers
         accredited_body_code: @provider.provider_code,
         provider_id: @training_provider.id,
         requested: requested?,
+        number_of_places: params[:number_of_places],
       )
 
-      redirect_to provider_recruitment_cycle_allocation_path(requested: params[:requested].downcase)
+      redirect_to provider_recruitment_cycle_allocation_path(
+        requested: (params[:requested].downcase unless initial_request?),
+        number_of_places: params[:number_of_places],
+      )
     end
 
     def show
       # TODO: temp until we retrieve the Allocation from the API
-      number_of_places = requested? ? 42 : 0
-      @allocation = Allocation.new(number_of_places: number_of_places)
+      @allocation = Allocation.new(
+        number_of_places: number_of_places,
+        request_type: (Allocation::RequestTypes::INITIAL if initial_request?),
+      )
     end
 
     def initial_request
@@ -81,7 +87,19 @@ module Providers
     end
 
     def requested?
-      params[:requested].downcase == "yes"
+      initial_request? || params[:requested].downcase == "yes"
+    end
+
+    def initial_request?
+      params[:number_of_places].present?
+    end
+
+    def number_of_places
+      if initial_request?
+        params[:number_of_places]
+      else
+        requested? ? 42 : 0
+      end
     end
   end
 end

@@ -1,0 +1,44 @@
+<%= content_for :page_title, "How many places would you like to request?"%>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+  <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year,
+                  ),
+                skip_enforcing_utf8: true,
+                method: :get,
+                builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+
+    <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
+
+    <%= form.govuk_text_field :number_of_places,
+          label: {
+            text: "How many places would you like to request?",
+            size: "xl",
+            tag: "h1",
+          },
+          pattern: "[0-9]*",
+          inputmode: "numeric",
+          width: 10 do %>
+
+        <p class="govuk-body govuk-!-margin-bottom-4">
+          Say how many trainees the organisation would like to recruit
+          - make sure this number is as accurate as possible.
+        </p>
+
+    <% end %>
+
+    <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
+
+
+
+    <%= form.govuk_submit %>
+  <% end %>
+  </div>
+</div>
