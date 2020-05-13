@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Get training_providers", type: :feature do
+feature "get training_providers", type: :feature do
   let(:organisation_show_page) { PageObjects::Page::Organisations::OrganisationShow.new }
   let(:organisation_training_providers_page) { PageObjects::Page::Organisations::TrainingProviders.new }
   let(:accrediting_body1) { build :provider, accredited_body?: true }
@@ -11,7 +11,7 @@ feature "Get training_providers", type: :feature do
   let(:training_provider2) { build :provider, accredited_bodies: [accrediting_body1] }
   let(:course3) { build :course, accrediting_provider: accrediting_body1, provider: training_provider2 }
   let(:course4) { build :course, accrediting_provider: accrediting_body1, provider: training_provider2 }
-  let(:user) { build :user, :admin }
+  let(:user) { build :user }
   let(:access_request) { build :access_request }
 
   before do
@@ -31,7 +31,7 @@ feature "Get training_providers", type: :feature do
     stub_api_v2_resource_collection([access_request])
   end
 
-  context "When the provider has training providers" do
+  context "when the provider has training providers" do
     it "can be reached from the provider show page" do
       visit provider_path(accrediting_body1.provider_code)
       organisation_show_page.courses_as_accredited_body_link.click
