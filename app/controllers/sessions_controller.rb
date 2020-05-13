@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :request_login
 
   def new
-    if Settings.features.signin_intercept
+    if FeatureService.enabled? :signin_intercept
       render
     else
       redirect_to "/auth/dfe"
