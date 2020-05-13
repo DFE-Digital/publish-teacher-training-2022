@@ -193,6 +193,7 @@ Rails.application.routes.draw do
         resources :allocations, only: %i[index], on: :member, param: :training_provider_code do
           collection do
             get :initial_request, path: "request"
+            post :initial_request, path: "request"
           end
 
           member do

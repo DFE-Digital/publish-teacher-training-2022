@@ -61,7 +61,11 @@ module Providers
     def initial_request
       flow = InitialRequestFlow.new(params: params)
 
-      render flow.template, locals: flow.locals
+      if request.post? && flow.redirect?
+        redirect_to flow.redirect_path
+      else
+        render flow.template, locals: flow.locals
+      end
     end
 
   private

@@ -199,6 +199,8 @@ RSpec.feature "PE allocations" do
     end
   end
 
+private
+
   def and_i_see_request_form
     expect(allocations_new_page.yes).to_not be_checked
     expect(allocations_new_page.no).to_not be_checked
