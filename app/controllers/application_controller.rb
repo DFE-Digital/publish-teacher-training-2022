@@ -172,13 +172,17 @@ private
     # TODO: we should return a session object here with a 'user' attached to id.
     user = Session.create(first_name: current_user_info[:first_name],
                           last_name: current_user_info[:last_name])
+    set_session_info_for_user(user)
+
+    user
+  end
+
+  def set_session_info_for_user(user)
     session[:auth_user]["user_id"] = user.id
     session[:auth_user]["state"] = user.state
     session[:auth_user]["admin"] = user.admin
 
     add_provider_count_cookie
-
-    user
   end
 
   def add_provider_count_cookie

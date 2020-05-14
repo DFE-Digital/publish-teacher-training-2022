@@ -5,8 +5,11 @@
 
     <div class="app-banner app-banner--warning govuk-!-margin-bottom-7">
       <div class="app-banner__message">
-        <h2 class="govuk-heading-m">You might have problems signing in</h2>
-        <p>Some of our users are having trouble signing in. We’re working on the problem now. If you can’t sign in, try again soon.</p>
+        <h2 class="govuk-heading-m">Temporary sign in</h2>
+        <p>
+          DfE Sign In is currently experiencing problems. You need to use this
+          temporary sign in page to access Publish teacher training courses.
+        </p>
       </div>
     </div>
 
@@ -14,9 +17,14 @@
       Sign in
     </h1>
 
-    <p class="govuk-body-l">You must sign in to your account to manage your teacher training courses.</p>
-
-    <%= link_to "Sign in using DfE Sign-in", "/auth/dfe", class: "govuk-button" %>
+    <p class="govuk-body">
+      Enter the email address linked to your Sign In account.
+      You’ll receive a link that gives you access to Publish teacher training courses.
+    </p>
+    <%= form_with model: User.new , url:send_magic_link_path , builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+      <%= f.govuk_text_field :email, label: {text: 'Email address', size:'m'} %>
+      <%= f.govuk_submit "Continue" %>
+    <% end %>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 

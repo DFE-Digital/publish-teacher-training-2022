@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :request_login
 
   def new
-    if Settings.features.signin_intercept
+    if FeatureService.enabled? :signin_intercept
       render
     else
       redirect_to "/auth/dfe"
@@ -32,6 +32,44 @@ class SessionsController < ApplicationController
 
     redirect_to_correct_page(user)
   end
+
+  def create_by_magic
+    FeatureService.require(:signin_by_email)
+
+    user = Session.create_by_magic(
+      magic_link_token: params.require(:token),
+      email: params.require(:email),
+    )
+
+    if user
+      session[:auth_user] = HashWithIndifferentAccess.new(
+        "uid" => nil,
+        "info" => HashWithIndifferentAccess.new(
+          email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
+        ),
+        "credentials" => HashWithIndifferentAccess.new(
+          "id_token" => nil,
+        ),
+      )
+      set_session_info_for_user(user)
+      Raven.user_context(id: current_user["user_id"])
+      logger.debug { "User session create_by_magic " + log_safe_current_user.to_s }
+    end
+
+    redirect_to_correct_page(user)
+  end
+
+  def send_magic_link
+    FeatureService.require(:signin_by_email)
+
+    User.generate_and_send_magic_link(params.require(:user).require(:email))
+
+    redirect_to magic_link_sent_path
+  end
+
+  def magic_link_sent; end
 
   def signout
     if current_user.present?
@@ -71,11 +109,11 @@ private
   end
 
   def redirect_to_correct_page(user)
-    if user.accept_terms_date_utc.nil?
+    if user&.accept_terms_date_utc.nil?
       redirect_to accept_terms_path
-    elsif user.state == "new"
+    elsif user&.state == "new"
       redirect_to transition_info_path
-    elsif Settings.rollover && user.state == "transitioned"
+    elsif Settings.rollover && user&.state == "transitioned"
       redirect_to rollover_path
     else
       redirect_to session[:redirect_back_to] || root_path
