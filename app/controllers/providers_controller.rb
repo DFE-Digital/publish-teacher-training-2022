@@ -79,7 +79,10 @@ class ProvidersController < ApplicationController
     @courses = Course
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .where(provider_code: @training_provider.provider_code)
-      .where(accrediting_provider_code: @provider.provider_code).map(&:decorate)
+      .where(accrediting_provider_code: @provider.provider_code)
+      .map(&:decorate)
+
+    @courses.sort_by!(&:course_code)
   end
 
   def search
