@@ -170,8 +170,9 @@ private
     end
 
     # TODO: we should return a session object here with a 'user' attached to id.
-    user = Session.create(first_name: current_user_info[:first_name],
-                          last_name: current_user_info[:last_name])
+    user = Session.create(
+      first_name: current_user_info[:first_name],
+      last_name: current_user_info[:last_name])
     set_session_info_for_user(user)
 
     user
@@ -214,9 +215,11 @@ private
     end
     # end of debugging
 
-    token = JWT.encode(payload,
-                       Settings.manage_backend.secret,
-                       Settings.manage_backend.algorithm)
+    token = JWT.encode(
+      payload,
+      Settings.manage_backend.secret,
+      Settings.manage_backend.algorithm,
+    )
 
     RequestStore.store[:manage_courses_backend_token] = token
   end

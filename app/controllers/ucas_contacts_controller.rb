@@ -28,8 +28,10 @@ class UcasContactsController < ApplicationController
       @provider.send_application_alerts = provider_params["send_application_alerts"]
       render :alerts
     else
-      @provider.update(send_application_alerts: provider_params["send_application_alerts"],
-                       application_alert_contact: email)
+      @provider.update(
+        send_application_alerts: provider_params["send_application_alerts"],
+        application_alert_contact: email,
+      )
       redirect_to provider_ucas_contacts_path(@provider.provider_code),
                   flash: { success: "Your changes have been saved" }
     end

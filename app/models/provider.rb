@@ -31,6 +31,6 @@ class Provider < Base
 private
 
   def post_base_url
-    format("#{Provider.site}#{Provider.path}/%<provider_code>s", path_attributes)
+    sprintf("#{Provider.site}#{Provider.path}/%<provider_code>s", path_attributes)
   end
 end

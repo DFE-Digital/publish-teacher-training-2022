@@ -11,6 +11,7 @@ module OrganisationHelper
 
   def provider_details(provider)
     link_to "#{provider.provider_name} [#{provider.provider_code}]",
-            provider_path(provider.provider_code), class: "govuk-link"
+            provider_path(provider.provider_code),
+            class: "govuk-link"
   end
 end
