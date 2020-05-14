@@ -9,9 +9,10 @@ class ProviderSerializer < JSONAPI::Serializable::Resource
     end
   end
   has_many :sites
+  has_many :users
 
   attributes(*FactoryBot.attributes_for("provider").keys -
-             %i[courses sites])
+             %i[courses sites users])
 
   attribute :recruitment_cycle
   attribute :recruitment_cycle_year
