@@ -8,12 +8,13 @@ feature "new course applications open", type: :feature do
   let(:provider) { build(:provider) }
   let(:course) do
     build(
-      :course, :new,
+      :course,
+      :new,
       provider: provider,
       study_mode: "full_time_or_part_time",
       gcse_subjects_required_using_level: true,
       start_date: "2019-10-09",
-      accrediting_provider: build(:provider)
+      accrediting_provider: build(:provider),
     )
   end
   let(:recruitment_cycle) { build(:recruitment_cycle) }
@@ -50,13 +51,14 @@ feature "new course applications open", type: :feature do
   context "after setting the application open field" do
     let(:course) do
       build(
-        :course, :new,
+        :course,
+        :new,
         provider: provider,
         study_mode: "full_time_or_part_time",
         gcse_subjects_required_using_level: true,
         applications_open_from: "2019-10-09",
         start_date: "2019-10-09",
-        accrediting_provider: build(:provider)
+        accrediting_provider: build(:provider),
       )
     end
 

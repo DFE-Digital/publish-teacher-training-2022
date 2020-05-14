@@ -24,24 +24,26 @@ feature "new modern language", type: :feature do
   let(:selected_subjects) { [modern_languages_subject] }
 
   let(:course) do
-    build(:course,
-          :new,
-          subjects: selected_subjects,
-          provider: provider,
-          edit_options: {
-            subjects: subjects,
-            modern_languages: modern_languages,
-            modern_languages_subject: modern_languages_subject,
-            age_range_in_years: %w[
-              11_to_16
-              11_to_18
-              14_to_19
-            ],
-          },
-          accrediting_provider: build(:provider),
-          applications_open_from: "2019-10-09",
-          gcse_subjects_required: %w[maths science english],
-          start_date: "2019-10-09")
+    build(
+      :course,
+      :new,
+      subjects: selected_subjects,
+      provider: provider,
+      edit_options: {
+        subjects: subjects,
+        modern_languages: modern_languages,
+        modern_languages_subject: modern_languages_subject,
+        age_range_in_years: %w[
+          11_to_16
+          11_to_18
+          14_to_19
+        ],
+      },
+      accrediting_provider: build(:provider),
+      applications_open_from: "2019-10-09",
+      gcse_subjects_required: %w[maths science english],
+      start_date: "2019-10-09",
+    )
   end
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 

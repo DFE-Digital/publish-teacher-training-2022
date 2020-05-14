@@ -36,7 +36,8 @@ feature "Course requirements", type: :feature do
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}",
       course_response,
-      :patch, 200
+      :patch,
+      200,
     )
     visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
     click_on "Requirements and eligibility"
@@ -79,7 +80,8 @@ feature "Course requirements", type: :feature do
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}",
       build(:error, :for_course_publish),
-      :patch, 422
+      :patch,
+      422,
     )
 
     visit requirements_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)

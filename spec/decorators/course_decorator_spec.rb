@@ -10,20 +10,22 @@ describe CourseDecorator do
   let(:subjects) { [english, mathematics] }
 
   let(:course) do
-    build(:course,
-          course_code: "A1",
-          name: "Mathematics",
-          qualification: "pgce_with_qts",
-          study_mode: "full_time",
-          start_date: start_date,
-          site_statuses: [site_status],
-          provider: provider,
-          accrediting_provider: provider,
-          course_length: "OneYear",
-          subjects: subjects,
-          open_for_applications?: true,
-          last_published_at: "2019-03-05T14:42:34Z",
-          recruitment_cycle: current_recruitment_cycle)
+    build(
+      :course,
+      course_code: "A1",
+      name: "Mathematics",
+      qualification: "pgce_with_qts",
+      study_mode: "full_time",
+      start_date: start_date,
+      site_statuses: [site_status],
+      provider: provider,
+      accrediting_provider: provider,
+      course_length: "OneYear",
+      subjects: subjects,
+      open_for_applications?: true,
+      last_published_at: "2019-03-05T14:42:34Z",
+      recruitment_cycle: current_recruitment_cycle,
+    )
   end
   let(:start_date) { Time.zone.local(2019) }
   let(:site) { build(:site) }
@@ -177,11 +179,14 @@ describe CourseDecorator do
 
   describe "#selectable_subjects" do
     let(:course) do
-      build(:course, edit_options: {
-        subjects: subjects.map do |subject|
-          subject.to_jsonapi[:data]
-        end,
-      })
+      build(
+        :course,
+        edit_options: {
+          subjects: subjects.map do |subject|
+            subject.to_jsonapi[:data]
+          end,
+        },
+      )
     end
 
     it "gets the name and id" do
@@ -197,13 +202,15 @@ describe CourseDecorator do
     let(:subjects) { [biology, mathematics] }
 
     let(:course) do
-      build(:course,
-            subjects: subjects,
-            edit_options: {
-              subjects: subjects.map do |subject|
-                subject.to_jsonapi[:data]
-              end,
-            })
+      build(
+        :course,
+        subjects: subjects,
+        edit_options: {
+          subjects: subjects.map do |subject|
+            subject.to_jsonapi[:data]
+          end,
+        },
+      )
     end
 
     it "returns ids for only subjects that are selectable" do

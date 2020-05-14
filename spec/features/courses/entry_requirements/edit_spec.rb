@@ -98,7 +98,8 @@ feature "Edit course entry requirements", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       choose("course_maths_expect_to_achieve_before_training_begins")
@@ -146,7 +147,8 @@ feature "Edit course entry requirements", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       choose("course_maths_expect_to_achieve_before_training_begins")
@@ -191,7 +193,8 @@ feature "Edit course entry requirements", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       choose("course_maths_expect_to_achieve_before_training_begins")

@@ -142,7 +142,8 @@ feature "Edit accredited body", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       ).with(body: {
         data: {
           course_code: course.course_code,

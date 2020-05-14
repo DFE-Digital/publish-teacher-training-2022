@@ -48,14 +48,16 @@ feature "new course", type: :feature do
   let(:russian) { build(:subject, :russian) }
 
   let(:course) do
-    model = build(:course,
-                  :new,
-                  level: level,
-                  provider: provider,
-                  course_code: "A123",
-                  content_status: "draft",
-                  subjects: [build(:subject, subject_name: "Primary with Mathematics")],
-                  gcse_subjects_required: %w[maths science english])
+    model = build(
+      :course,
+      :new,
+      level: level,
+      provider: provider,
+      course_code: "A123",
+      content_status: "draft",
+      subjects: [build(:subject, subject_name: "Primary with Mathematics")],
+      gcse_subjects_required: %w[maths science english],
+    )
     model.meta[:edit_options][:subjects] = [english]
     model.meta[:edit_options][:modern_languages_subject] = modern_languages
     model
@@ -66,7 +68,8 @@ feature "new course", type: :feature do
       "/providers/#{provider.provider_code}" \
       "/courses",
       course.to_jsonapi,
-      :post, 200
+      :post,
+      200,
     )
   end
 
@@ -249,16 +252,18 @@ feature "new course", type: :feature do
       end
 
       let(:course) do
-        model = build(:course,
-                      :new,
-                      level: level,
-                      provider: provider,
-                      study_mode: "fee",
-                      course_code: "A123",
-                      content_status: "draft",
-                      applications_open_from: DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601,
-                      subjects: [build(:subject, subject_name: "Primary with Mathematics")],
-                      gcse_subjects_required: %w[maths science english])
+        model = build(
+          :course,
+          :new,
+          level: level,
+          provider: provider,
+          study_mode: "fee",
+          course_code: "A123",
+          content_status: "draft",
+          applications_open_from: DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601,
+          subjects: [build(:subject, subject_name: "Primary with Mathematics")],
+          gcse_subjects_required: %w[maths science english],
+        )
         model.meta[:edit_options][:subjects] = [english]
         model.meta[:edit_options][:modern_languages_subject] = modern_languages
 
@@ -309,16 +314,18 @@ feature "new course", type: :feature do
       end
 
       let(:course) do
-        model = build(:course,
-                      :new,
-                      level: level,
-                      provider: provider,
-                      study_mode: "fee",
-                      course_code: "A123",
-                      content_status: "draft",
-                      applications_open_from: DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601,
-                      subjects: [modern_languages, russian],
-                      gcse_subjects_required: %w[maths science english])
+        model = build(
+          :course,
+          :new,
+          level: level,
+          provider: provider,
+          study_mode: "fee",
+          course_code: "A123",
+          content_status: "draft",
+          applications_open_from: DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601,
+          subjects: [modern_languages, russian],
+          gcse_subjects_required: %w[maths science english],
+        )
         model.meta[:edit_options][:subjects] = [modern_languages]
         model.meta[:edit_options][:modern_languages] = [russian]
         model.meta[:edit_options][:modern_languages_subject] = modern_languages

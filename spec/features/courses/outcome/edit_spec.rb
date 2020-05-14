@@ -58,7 +58,8 @@ feature "Edit course outcome", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       choose("course_qualification_qts")
@@ -119,7 +120,9 @@ feature "Edit course outcome", type: :feature do
         "/recruitment_cycles/#{course.recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
-        build(:error, :for_course_outcome), :patch, 422
+        build(:error, :for_course_outcome),
+        :patch,
+        422,
       )
 
       choose("course_qualification_qts")

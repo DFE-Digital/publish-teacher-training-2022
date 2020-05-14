@@ -16,13 +16,15 @@ describe "Courses", type: :request do
 
     let(:course_1) { build :course, provider: provider, name: "English", course_code: "EN01", include_nulls: [:accrediting_provider] }
     let(:course_2) do
-      build(:course,
-            name: "Biology",
-            provider: provider,
-            include_nulls: [:accrediting_provider],
-            about_course: "Foo",
-            interview_process: "Foobar",
-            how_school_placements_work: "Foobarbar")
+      build(
+        :course,
+        name: "Biology",
+        provider: provider,
+        include_nulls: [:accrediting_provider],
+        about_course: "Foo",
+        interview_process: "Foobar",
+        how_school_placements_work: "Foobarbar",
+      )
     end
     let(:course_2_response)   { course_2.to_jsonapi }
     let(:courses)             { [course_1, course_2] }
@@ -48,9 +50,11 @@ describe "Courses", type: :request do
     end
 
     it "renders the course about" do
-      get(about_provider_recruitment_cycle_course_path(provider.provider_code,
-                                                       course.recruitment_cycle.year,
-                                                       course.course_code))
+      get(about_provider_recruitment_cycle_course_path(
+            provider.provider_code,
+            course.recruitment_cycle.year,
+            course.course_code,
+          ))
 
       expect(response.body).to include(
         "#{course.name} (#{course.course_code})",
@@ -65,10 +69,12 @@ describe "Courses", type: :request do
 
     context "with copy_from parameter" do
       it "renders the course about with data from chosen" do
-        get(about_provider_recruitment_cycle_course_path(provider.provider_code,
-                                                         course.recruitment_cycle.year,
-                                                         course.course_code,
-                                                         params: { copy_from: course_2.course_code }))
+        get(about_provider_recruitment_cycle_course_path(
+              provider.provider_code,
+              course.recruitment_cycle.year,
+              course.course_code,
+              params: { copy_from: course_2.course_code },
+            ))
 
         expect(response.body).to include(
           "Your changes are not yet saved",
@@ -130,7 +136,9 @@ describe "Courses", type: :request do
         stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
         stub_api_v2_request(
           "/recruitment_cycles/#{course.recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
-          {}, :patch, 200
+          {},
+          :patch,
+          200,
         ).with(body: {
           data: {
             course_code: course.course_code,
@@ -152,7 +160,9 @@ describe "Courses", type: :request do
       before do
         stub_api_v2_request(
           "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
-          build(:error, :for_course_publish), :patch, 422
+          build(:error, :for_course_publish),
+          :patch,
+          422,
         )
 
         patch about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle.year, course.course_code), params: request_params

@@ -6,18 +6,20 @@ feature "New course level", type: :feature do
   end
   let(:provider) { build(:provider) }
   let(:course) do
-    build(:course,
-          :new,
-          provider: provider,
-          level: :primary,
-          study_mode: "full_time_or_part_time",
-          gcse_subjects_required_using_level: true,
-          applications_open_from: "2019-10-09",
-          start_date: "2019-10-09",
-          accrediting_provider: build(:provider),
-          edit_options: {
-            subjects: [],
-          })
+    build(
+      :course,
+      :new,
+      provider: provider,
+      level: :primary,
+      study_mode: "full_time_or_part_time",
+      gcse_subjects_required_using_level: true,
+      applications_open_from: "2019-10-09",
+      start_date: "2019-10-09",
+      accrediting_provider: build(:provider),
+      edit_options: {
+        subjects: [],
+      },
+    )
   end
 
   before do

@@ -8,14 +8,16 @@ feature "new course entry_requirements", type: :feature do
   let(:provider) { build(:provider, accredited_body?: true, sites: [build(:site)]) }
   let(:level) { :further_education }
   let(:course)  do
-    build(:course,
-          :new,
-          provider: provider,
-          level: level,
-          gcse_subjects_required_using_level: true,
-          study_mode: "full_time",
-          applications_open_from: "2019-10-09",
-          start_date: "2019-10-09")
+    build(
+      :course,
+      :new,
+      provider: provider,
+      level: level,
+      gcse_subjects_required_using_level: true,
+      study_mode: "full_time",
+      applications_open_from: "2019-10-09",
+      start_date: "2019-10-09",
+    )
   end
 
   before do
@@ -164,13 +166,15 @@ feature "new course entry_requirements", type: :feature do
 
   context "Error handling" do
     let(:course) do
-      c = build(:course,
-                provider: provider,
-                level: :primary,
-                gcse_subjects_required_using_level: true,
-                maths: nil,
-                english: nil,
-                science: nil)
+      c = build(
+        :course,
+        provider: provider,
+        level: :primary,
+        gcse_subjects_required_using_level: true,
+        maths: nil,
+        english: nil,
+        science: nil,
+      )
       c.errors.add(:maths, "Invalid")
       c.errors.add(:english, "Invalid")
       c.errors.add(:science, "Invalid")

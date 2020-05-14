@@ -45,11 +45,14 @@ feature "get training_providers", type: :feature do
       expect(organisation_training_providers_page.training_providers.first.course_count.text).to have_content("1 course")
       expect(organisation_training_providers_page.training_providers_list).to have_content(training_provider2.provider_name)
       expect(organisation_training_providers_page.training_providers.second.course_count.text).to have_content("2 courses")
-      expect(organisation_training_providers_page.download_section).to have_link("Download as a CSV file", href: download_training_providers_courses_provider_recruitment_cycle_path(
-        accrediting_body1.provider_code,
-        accrediting_body1.recruitment_cycle.year,
-        format: :csv,
-      ))
+      expect(organisation_training_providers_page.download_section).to have_link(
+        "Download as a CSV file",
+        href: download_training_providers_courses_provider_recruitment_cycle_path(
+          accrediting_body1.provider_code,
+          accrediting_body1.recruitment_cycle.year,
+          format: :csv,
+        ),
+      )
     end
 
     it "should have the correct breadcrumbs" do

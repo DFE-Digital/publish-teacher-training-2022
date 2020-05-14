@@ -340,8 +340,10 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_cannot_access_pe_alloacations_page
-    allocations_page.load(provider_code: @provider.provider_code,
-                          recruitment_cycle_year: @provider.recruitment_cycle.year)
+    allocations_page.load(
+      provider_code: @provider.provider_code,
+      recruitment_cycle_year: @provider.recruitment_cycle.year,
+    )
     expect(page).to have_content("Page not found")
   end
 

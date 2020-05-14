@@ -172,7 +172,8 @@ private
     # TODO: we should return a session object here with a 'user' attached to id.
     user = Session.create(
       first_name: current_user_info[:first_name],
-      last_name: current_user_info[:last_name])
+      last_name: current_user_info[:last_name],
+    )
     set_session_info_for_user(user)
 
     user

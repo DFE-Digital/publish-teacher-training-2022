@@ -172,9 +172,11 @@ RSpec.feature "PE allocations" do
   def given_the_accredited_body_has_an_allocation
     @training_provider_with_allocation = build(:provider)
 
-    @allocation = build(:allocation,
-                        accredited_body: @accredited_body,
-                        provider: @training_provider_with_allocation)
+    @allocation = build(
+      :allocation,
+      accredited_body: @accredited_body,
+      provider: @training_provider_with_allocation,
+    )
 
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",

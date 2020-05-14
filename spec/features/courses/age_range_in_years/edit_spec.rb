@@ -64,7 +64,8 @@ feature "Edit course age range in years", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       age_range_in_years_page.age_range_14_to_19.click
@@ -81,7 +82,8 @@ feature "Edit course age range in years", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       age_range_in_years_page.age_range_other.click

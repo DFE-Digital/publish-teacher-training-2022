@@ -90,7 +90,8 @@ feature "Edit locations", type: :feature do
     scenario "displays validation errors" do
       visit(edit_provider_recruitment_cycle_site_path(
               provider_code,
-              site.recruitment_cycle_year, site.id
+              site.recruitment_cycle_year,
+              site.id,
             ))
 
       expect(location_page).to be_displayed(provider_code: provider_code, site_id: site.id)

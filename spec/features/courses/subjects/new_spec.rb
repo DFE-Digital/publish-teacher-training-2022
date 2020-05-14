@@ -23,16 +23,18 @@ feature "New course level", type: :feature do
   end
   let(:user) { build(:user) }
   let(:course) do
-    build(:course,
-          :new,
-          subjects: selected_subjects,
-          provider: provider,
-          level: level,
-          gcse_subjects_required_using_level: true,
-          edit_options: edit_options,
-          applications_open_from: DateTime.new(2019).utc.iso8601,
-          study_mode: "full_time",
-          accrediting_provider: build(:provider))
+    build(
+      :course,
+      :new,
+      subjects: selected_subjects,
+      provider: provider,
+      level: level,
+      gcse_subjects_required_using_level: true,
+      edit_options: edit_options,
+      applications_open_from: DateTime.new(2019).utc.iso8601,
+      study_mode: "full_time",
+      accrediting_provider: build(:provider),
+    )
   end
 
   let(:access_request) { create(:access_request) }
@@ -121,7 +123,8 @@ feature "New course level", type: :feature do
           new_provider_recruitment_cycle_courses_modern_languages_path(
             provider.provider_code,
             provider.recruitment_cycle.year,
-            course: { subjects_ids: [modern_languages.id] }, goto_confirmation: true,
+            course: { subjects_ids: [modern_languages.id] },
+            goto_confirmation: true,
           ),
         )
       end

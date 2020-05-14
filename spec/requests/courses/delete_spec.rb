@@ -23,9 +23,11 @@ describe "Courses", type: :request do
     end
 
     it "renders the course delete" do
-      get(delete_provider_recruitment_cycle_course_path(provider.provider_code,
-                                                        course.recruitment_cycle.year,
-                                                        course.course_code))
+      get(delete_provider_recruitment_cycle_course_path(
+            provider.provider_code,
+            course.recruitment_cycle.year,
+            course.course_code,
+          ))
 
       expect(response.body).to include(
         "#{course.name} (#{course.course_code})",

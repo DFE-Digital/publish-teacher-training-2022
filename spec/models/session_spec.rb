@@ -12,20 +12,26 @@ describe Session do
     end
 
     it "makes a PATCH request to the API" do
-      Session.create_by_magic(magic_link_token: "magic-token",
-                              email: user.email)
+      Session.create_by_magic(
+        magic_link_token: "magic-token",
+        email: user.email,
+      )
 
       expect(session_stub).to have_been_requested
     end
 
     it "sends the Authorization header" do
       payload = { email: user.email }
-      expected_token = JWT.encode(payload,
-                                  Settings.manage_backend.secret,
-                                  Settings.manage_backend.algorithm)
+      expected_token = JWT.encode(
+        payload,
+        Settings.manage_backend.secret,
+        Settings.manage_backend.algorithm,
+      )
 
-      Session.create_by_magic(magic_link_token: "magic-token",
-                              email: user.email)
+      Session.create_by_magic(
+        magic_link_token: "magic-token",
+        email: user.email,
+      )
 
       expect(session_stub.with(
                headers: { "Authorization" => "Bearer #{expected_token}" },

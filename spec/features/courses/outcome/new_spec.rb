@@ -80,7 +80,8 @@ feature "new course outcome", type: :feature do
   context "Being provided unexpected edit options" do
     let(:course) do
       build(
-        :course, :new,
+        :course,
+        :new,
         provider: provider,
         study_mode: "full_time_or_part_time",
         gcse_subjects_required_using_level: true,
@@ -90,7 +91,7 @@ feature "new course outcome", type: :feature do
         level: level,
         edit_options: {
           qualifications: %w[not_a_real_qualification],
-        }
+        },
       )
     end
 

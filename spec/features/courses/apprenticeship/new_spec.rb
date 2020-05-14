@@ -5,14 +5,16 @@ feature "new course apprenticeship", type: :feature do
     PageObjects::Page::Organisations::Courses::NewApprenticeshipPage.new
   end
   let(:course) do
-    build(:course,
-          :new,
-          provider: provider,
-          gcse_subjects_required: %w[maths science english],
-          study_mode: "full_time_or_part_time",
-          gcse_subjects_required_using_level: true,
-          applications_open_from: "2019-10-09",
-          start_date: "2019-10-09")
+    build(
+      :course,
+      :new,
+      provider: provider,
+      gcse_subjects_required: %w[maths science english],
+      study_mode: "full_time_or_part_time",
+      gcse_subjects_required_using_level: true,
+      applications_open_from: "2019-10-09",
+      start_date: "2019-10-09",
+    )
   end
   let(:provider) { build(:provider, accredited_body?: true) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
