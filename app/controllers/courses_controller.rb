@@ -299,8 +299,9 @@ private
       }
       .sort_by { |accrediting_provider, _| accrediting_provider.downcase }
       .map { |provider_name, courses|
-      [provider_name, courses.sort_by { |course| [course.name, course.course_code] }
-                             .map(&:decorate)]
+      [provider_name,
+       courses.sort_by { |course| [course.name, course.course_code] }
+                                    .map(&:decorate)]
     }
       .to_h
     # rubocop:enable Style/MultilineBlockChain

@@ -45,7 +45,9 @@ feature "View provider contact", type: :feature do
     stub_api_v2_request(
       "/recruitment_cycles/#{provider.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}",
-      build(:error, :for_provider_update), :patch, 422
+      build(:error, :for_provider_update),
+      :patch,
+      422,
     )
 
     visit contact_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year)

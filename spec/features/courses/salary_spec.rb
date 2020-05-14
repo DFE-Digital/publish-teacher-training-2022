@@ -31,7 +31,9 @@ feature "Course salary", type: :feature do
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}",
-      course.to_jsonapi, :patch, 200
+      course.to_jsonapi,
+      :patch,
+      200,
     )
     visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
 
@@ -69,7 +71,9 @@ feature "Course salary", type: :feature do
       "/recruitment_cycles/#{course.recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}",
-      build(:error, :for_course_publish), :patch, 422
+      build(:error, :for_course_publish),
+      :patch,
+      422,
     )
 
     visit salary_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)

@@ -69,7 +69,9 @@ feature "Search providers", type: :feature do
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
         "/providers/#{provider_code}",
-        {}, :get, 404
+        {},
+        :get,
+        404,
       )
 
       root_page.provider_search.fill_in(with: "Unknown Provider (#{provider_code})")

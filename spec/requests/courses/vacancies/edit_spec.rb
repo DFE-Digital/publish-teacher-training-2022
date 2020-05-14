@@ -18,9 +18,11 @@ describe "Edit vacancies" do
     let(:site_status_2) { build(:site_status, :full_time_and_part_time, site: site) }
 
     let(:edit_vacancies_path) do
-      vacancies_provider_recruitment_cycle_course_path(course.provider.provider_code,
-                                                       course.recruitment_cycle.year,
-                                                       course.course_code)
+      vacancies_provider_recruitment_cycle_course_path(
+        course.provider.provider_code,
+        course.recruitment_cycle.year,
+        course.course_code,
+      )
     end
 
     before do
@@ -43,9 +45,11 @@ describe "Edit vacancies" do
     context "Default recruitment cycle" do
       it "should redirect to new sites#index route" do
         get("/organisations/#{course.provider.provider_code}/courses/#{course.course_code}/vacancies")
-        expect(response).to redirect_to(vacancies_provider_recruitment_cycle_course_path(course.provider.provider_code,
-                                                                                         current_recruitment_cycle.year,
-                                                                                         course.course_code))
+        expect(response).to redirect_to(vacancies_provider_recruitment_cycle_course_path(
+                                          course.provider.provider_code,
+                                          current_recruitment_cycle.year,
+                                          course.course_code,
+                                        ))
       end
     end
 

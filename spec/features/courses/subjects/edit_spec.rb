@@ -26,12 +26,14 @@ feature "Edit course subjects", type: :feature do
   end
   let(:course_subjects) { [] }
   let(:course) do
-    build(:course,
-          provider: provider,
-          edit_options: edit_options,
-          subjects: course_subjects,
-          sites: [site],
-          site_statuses: [site_status])
+    build(
+      :course,
+      provider: provider,
+      edit_options: edit_options,
+      subjects: course_subjects,
+      sites: [site],
+      site_statuses: [site_status],
+    )
   end
 
   before do
@@ -73,13 +75,15 @@ feature "Edit course subjects", type: :feature do
 
     context "with a subordinate subject" do
       let(:course) do
-        build(:course,
-              level: "secondary",
-              provider: provider,
-              edit_options: edit_options,
-              subjects: [],
-              sites: [site],
-              site_statuses: [site_status])
+        build(
+          :course,
+          level: "secondary",
+          provider: provider,
+          edit_options: edit_options,
+          subjects: [],
+          sites: [site],
+          site_statuses: [site_status],
+        )
       end
 
       scenario "can select a master subject and subordinate subject based on the level" do
@@ -113,13 +117,15 @@ feature "Edit course subjects", type: :feature do
           }
         end
         let(:course) do
-          build(:course,
-                level: "secondary",
-                provider: provider,
-                edit_options: edit_options,
-                subjects: subjects,
-                sites: [site],
-                site_statuses: [site_status])
+          build(
+            :course,
+            level: "secondary",
+            provider: provider,
+            edit_options: edit_options,
+            subjects: subjects,
+            sites: [site],
+            site_statuses: [site_status],
+          )
         end
 
         scenario "it updates the course" do
@@ -150,13 +156,15 @@ feature "Edit course subjects", type: :feature do
           }
         end
         let(:course) do
-          build(:course,
-                level: "secondary",
-                provider: provider,
-                edit_options: edit_options,
-                subjects: subjects,
-                sites: [site],
-                site_statuses: [site_status])
+          build(
+            :course,
+            level: "secondary",
+            provider: provider,
+            edit_options: edit_options,
+            subjects: subjects,
+            sites: [site],
+            site_statuses: [site_status],
+          )
         end
 
         scenario "it updates the course" do
@@ -190,12 +198,14 @@ feature "Edit course subjects", type: :feature do
       }
     end
     let(:course) do
-      build(:course,
-            provider: provider,
-            edit_options: edit_options,
-            subjects: subjects,
-            sites: [site],
-            site_statuses: [site_status])
+      build(
+        :course,
+        provider: provider,
+        edit_options: edit_options,
+        subjects: subjects,
+        sites: [site],
+        site_statuses: [site_status],
+      )
     end
 
     scenario "it should automatically select modern_languages" do
@@ -210,12 +220,14 @@ feature "Edit course subjects", type: :feature do
     let(:subjects) { [english_subject, biology_subject] }
     let(:course_subjects) { [english_subject, biology_subject] }
     let(:course) do
-      build(:course,
-            provider: provider,
-            edit_options: edit_options,
-            subjects: course_subjects,
-            sites: [site],
-            site_statuses: [site_status])
+      build(
+        :course,
+        provider: provider,
+        edit_options: edit_options,
+        subjects: course_subjects,
+        sites: [site],
+        site_statuses: [site_status],
+      )
     end
 
     scenario "it should automatically select the current subject" do

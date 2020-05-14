@@ -5,9 +5,11 @@ feature "Edit UCAS email alerts", type: :feature do
   let(:org_ucas_contacts_page) { PageObjects::Page::Organisations::UcasContacts.new }
   let(:current_recruitment_cycle) { build :recruitment_cycle }
   let(:provider) do
-    build(:provider,
-          send_application_alerts: nil,
-          application_alert_contact: nil)
+    build(
+      :provider,
+      send_application_alerts: nil,
+      application_alert_contact: nil,
+    )
   end
 
   before do
@@ -75,9 +77,11 @@ feature "Edit UCAS email alerts", type: :feature do
 
   context "with contact email already set" do
     let(:provider) do
-      build(:provider,
-            send_application_alerts: "all",
-            application_alert_contact: "weeble@example.org")
+      build(
+        :provider,
+        send_application_alerts: "all",
+        application_alert_contact: "weeble@example.org",
+      )
     end
 
     scenario "changing the email address" do

@@ -2,9 +2,11 @@ class Session < Base
   class << self
     def create_by_magic(magic_link_token:, email:)
       payload = { email: email }
-      token = JWT.encode(payload,
-                         Settings.manage_backend.secret,
-                         Settings.manage_backend.algorithm)
+      token = JWT.encode(
+        payload,
+        Settings.manage_backend.secret,
+        Settings.manage_backend.algorithm,
+      )
       RequestStore.store[:manage_courses_backend_token] = token
       api_url = "#{site}sessions/create_by_magic"
 

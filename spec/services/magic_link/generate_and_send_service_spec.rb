@@ -76,10 +76,12 @@ describe MagicLink::GenerateAndSendService do
 
     context "response is not successful" do
       let(:response) do
-        spy("Response",
-            success?: false,
-            status: 500,
-            reason_phrase: "API go BOOM")
+        spy(
+          "Response",
+          success?: false,
+          status: 500,
+          reason_phrase: "API go BOOM",
+        )
       end
 
       it "raises an error" do

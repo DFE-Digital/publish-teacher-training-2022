@@ -3,19 +3,23 @@ require "rails_helper"
 feature "About course", type: :feature do
   let(:current_recruitment_cycle) { build :recruitment_cycle }
   let(:provider) do
-    build(:provider,
-          accredited_body?: false,
-          provider_code: "A0")
+    build(
+      :provider,
+      accredited_body?: false,
+      provider_code: "A0",
+    )
   end
 
   let(:course) do
-    build(:course,
-          name: "English",
-          provider: provider,
-          about_course: "About course",
-          interview_process: "Interview process",
-          how_school_placements_work: "How school placements work",
-          recruitment_cycle: current_recruitment_cycle)
+    build(
+      :course,
+      name: "English",
+      provider: provider,
+      about_course: "About course",
+      interview_process: "Interview process",
+      how_school_placements_work: "How school placements work",
+      recruitment_cycle: current_recruitment_cycle,
+    )
   end
 
   let(:course_response) do
@@ -73,7 +77,9 @@ feature "About course", type: :feature do
   scenario "submitting with validation errors" do
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}",
-      build(:error, :for_course_publish), :patch, 422
+      build(:error, :for_course_publish),
+      :patch,
+      422,
     )
 
     visit about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)

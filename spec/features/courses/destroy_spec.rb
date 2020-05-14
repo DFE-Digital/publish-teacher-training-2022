@@ -23,7 +23,8 @@ feature "Delete course", type: :feature do
       "providers/#{provider.provider_code}/" \
       "courses/#{course.course_code}",
       {},
-      :delete, 200
+      :delete,
+      200,
     )
 
     course_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle.year, course_code: course.course_code)

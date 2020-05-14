@@ -15,9 +15,11 @@ module MagicLink
       payload = {
         email: @email,
       }
-      token = JWT.encode(payload,
-                         Settings.manage_backend.secret,
-                         Settings.manage_backend.algorithm)
+      token = JWT.encode(
+        payload,
+        Settings.manage_backend.secret,
+        Settings.manage_backend.algorithm,
+      )
 
       post_url = "#{@site}users/generate_and_send_magic_link"
       response = Faraday.patch(

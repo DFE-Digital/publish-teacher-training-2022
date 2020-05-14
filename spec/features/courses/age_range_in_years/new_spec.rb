@@ -10,15 +10,17 @@ feature "new course age range", type: :feature do
   let(:provider) { build(:provider, sites: [build(:site), build(:site)]) }
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:course) do
-    build(:course,
-          :new,
-          provider: provider,
-          level: :primary,
-          study_mode: "full_time_or_part_time",
-          gcse_subjects_required_using_level: true,
-          applications_open_from: "2019-10-09",
-          start_date: "2019-10-09",
-          accrediting_provider: build(:provider))
+    build(
+      :course,
+      :new,
+      provider: provider,
+      level: :primary,
+      study_mode: "full_time_or_part_time",
+      gcse_subjects_required_using_level: true,
+      applications_open_from: "2019-10-09",
+      start_date: "2019-10-09",
+      accrediting_provider: build(:provider),
+    )
   end
 
   before do
@@ -30,10 +32,12 @@ feature "new course age range", type: :feature do
     stub_api_v2_resource(provider)
     stub_api_v2_resource(build(:provider, provider_code: "A2"))
     stub_api_v2_resource(build(:provider, provider_code: "A4"))
-    new_course = build(:course,
-                       :new,
-                       provider: provider,
-                       level: :primary)
+    new_course = build(
+      :course,
+      :new,
+      provider: provider,
+      level: :primary,
+    )
     stub_api_v2_new_resource(new_course)
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([new_course], include: "subjects,sites,provider.sites,accrediting_provider")

@@ -56,9 +56,11 @@ describe "Courses", type: :request do
     end
 
     it "renders the course length and fees" do
-      get(fees_provider_recruitment_cycle_course_path(provider.provider_code,
-                                                      course.recruitment_cycle_year,
-                                                      course.course_code))
+      get(fees_provider_recruitment_cycle_course_path(
+            provider.provider_code,
+            course.recruitment_cycle_year,
+            course.course_code,
+          ))
 
       expect(response.body).to include(
         "#{course.name} (#{course.course_code})",
@@ -73,10 +75,12 @@ describe "Courses", type: :request do
 
     context "with copy_from parameter" do
       it "renders the course length and fees with data from chosen course" do
-        get(fees_provider_recruitment_cycle_course_path(provider.provider_code,
-                                                        course.recruitment_cycle_year,
-                                                        course.course_code,
-                                                        params: { copy_from: course_2.course_code }))
+        get(fees_provider_recruitment_cycle_course_path(
+              provider.provider_code,
+              course.recruitment_cycle_year,
+              course.course_code,
+              params: { copy_from: course_2.course_code },
+            ))
 
         expect(response.body).to include(
           "Your changes are not yet saved",
@@ -99,10 +103,12 @@ describe "Courses", type: :request do
       end
 
       it "doesn’t blank fields that were empty in the copied source" do
-        get(fees_provider_recruitment_cycle_course_path(provider.provider_code,
-                                                        course_2.recruitment_cycle_year,
-                                                        course_2.course_code,
-                                                        params: { copy_from: course_3.course_code }))
+        get(fees_provider_recruitment_cycle_course_path(
+              provider.provider_code,
+              course_2.recruitment_cycle_year,
+              course_2.course_code,
+              params: { copy_from: course_3.course_code },
+            ))
 
         expect(response.body).to include(
           "Your changes are not yet saved",

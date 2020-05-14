@@ -29,7 +29,8 @@ module ApplicationHelper
                field: field.to_s,
              )
            end
-    content_tag :a, error,
+    content_tag :a,
+                error,
                 class: "govuk-link govuk-!-display-block",
                 href: href
   end

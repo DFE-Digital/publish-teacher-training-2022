@@ -60,7 +60,8 @@ feature "Edit course study mode", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       choose("course_study_mode_full_time")
@@ -91,7 +92,8 @@ feature "Edit course study mode", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       choose("course_study_mode_full_time_or_part_time")

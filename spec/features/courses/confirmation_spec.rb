@@ -13,15 +13,17 @@ feature "Course confirmation", type: :feature do
   let(:study_mode) { "full_time" }
   let(:level) { :secondary }
   let(:course) do
-    build(:course,
-          provider: provider,
-          sites: [site1, site2],
-          study_mode: study_mode,
-          level: level,
-          subjects: [
-            build(:subject, :english),
-            build(:subject, :mathematics),
-          ])
+    build(
+      :course,
+      provider: provider,
+      sites: [site1, site2],
+      study_mode: study_mode,
+      level: level,
+      subjects: [
+        build(:subject, :english),
+        build(:subject, :mathematics),
+      ],
+    )
   end
   let(:provider) { build(:provider, accredited_body?: true, sites: [site1, site2]) }
 
@@ -139,7 +141,8 @@ feature "Course confirmation", type: :feature do
           "/providers/#{provider.provider_code}" \
           "/courses",
           course.to_jsonapi,
-          :post, 200
+          :post,
+          200,
         )
       end
 
@@ -181,7 +184,8 @@ feature "Course confirmation", type: :feature do
               },
             ],
           },
-          :post, 200
+          :post,
+          200,
         )
 
         course_confirmation_page.save.click
@@ -247,18 +251,22 @@ feature "Course confirmation", type: :feature do
         }
       end
       let(:course) do
-        build(:course,
-              provider: provider,
-              sites: [site1, site2],
-              study_mode: study_mode,
-              level: level,
-              edit_options: edit_options,
-              subjects: [modern_languages_subject, russian])
+        build(
+          :course,
+          provider: provider,
+          sites: [site1, site2],
+          study_mode: study_mode,
+          level: level,
+          edit_options: edit_options,
+          subjects: [modern_languages_subject, russian],
+        )
       end
 
       before do
-        stub_api_v2_build_course(level: course.level,
-                                 subjects_ids: [modern_languages_subject.id])
+        stub_api_v2_build_course(
+          level: course.level,
+          subjects_ids: [modern_languages_subject.id],
+        )
       end
 
       it "keeps languages checked" do

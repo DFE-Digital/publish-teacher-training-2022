@@ -103,7 +103,8 @@ feature "Edit course start date", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       )
 
       select("November 2019")

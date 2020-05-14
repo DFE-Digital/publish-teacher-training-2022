@@ -99,7 +99,8 @@ feature "Edit course applications open", type: :feature do
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
         course.to_jsonapi,
-        :patch, 200
+        :patch,
+        200,
       ).with(body: {
         data: {
           course_code: course.course_code,

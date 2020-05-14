@@ -7,16 +7,18 @@ feature "Course details", type: :feature do
   let(:study_mode) { "full_time" }
   let(:level) { :secondary }
   let(:course) do
-    build(:course,
-          study_mode: study_mode,
-          level: level,
-          start_date: Time.zone.local(2019),
-          sites: [site1, site2],
-          provider: provider,
-          accrediting_provider: provider,
-          open_for_applications?: true,
-          age_range_in_years: "3_to_7",
-          recruitment_cycle: current_recruitment_cycle)
+    build(
+      :course,
+      study_mode: study_mode,
+      level: level,
+      start_date: Time.zone.local(2019),
+      sites: [site1, site2],
+      provider: provider,
+      accrediting_provider: provider,
+      open_for_applications?: true,
+      age_range_in_years: "3_to_7",
+      recruitment_cycle: current_recruitment_cycle,
+    )
   end
   let(:site1) { build(:site, location_name: "London") }
   let(:site2) { build(:site, location_name: "Manchester") }
@@ -211,9 +213,11 @@ feature "Course details", type: :feature do
 
   describe "allocations" do
     let(:course) do
-      build(:course,
-            provider: provider,
-            recruitment_cycle: next_recruitment_cycle)
+      build(
+        :course,
+        provider: provider,
+        recruitment_cycle: next_recruitment_cycle,
+      )
     end
 
     context "when the course is in the next recruitment cycle" do
@@ -245,9 +249,11 @@ feature "Course details", type: :feature do
 
     context "when the course is in the current recruitment cycle" do
       let(:course) do
-        build(:course,
-              provider: provider,
-              recruitment_cycle: current_recruitment_cycle)
+        build(
+          :course,
+          provider: provider,
+          recruitment_cycle: current_recruitment_cycle,
+        )
       end
 
       scenario "displays no restrictions" do
@@ -261,9 +267,11 @@ feature "Course details", type: :feature do
     let(:provider) { build(:provider, provider_code: "A0", accredited_body?: false, sites: [site1, site2], recruitment_cycle: next_recruitment_cycle) }
 
     let(:course) do
-      build(:course,
-            provider: provider,
-            recruitment_cycle: next_recruitment_cycle)
+      build(
+        :course,
+        provider: provider,
+        recruitment_cycle: next_recruitment_cycle,
+      )
     end
 
     scenario "displays no restrictions" do

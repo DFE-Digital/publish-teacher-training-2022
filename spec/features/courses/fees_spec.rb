@@ -95,7 +95,8 @@ feature "Course fees", type: :feature do
       "/providers/#{provider.provider_code}" \
       "/courses/#{course_1.course_code}",
       build(:error, :for_course_publish),
-      :patch, 422
+      :patch,
+      422,
     )
 
     visit fees_provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)

@@ -16,13 +16,15 @@ feature "Edit course modern languages", type: :feature do
   let(:japanese_subject) { build(:subject, :japanese) }
   let(:modern_languages) { [japanese_subject, russian_subject, french_subject] }
   let(:course) do
-    build(:course,
-          provider: provider,
-          edit_options: edit_options,
-          languages: [],
-          subjects: subjects,
-          sites: [site],
-          site_statuses: [site_status])
+    build(
+      :course,
+      provider: provider,
+      edit_options: edit_options,
+      languages: [],
+      subjects: subjects,
+      sites: [site],
+      site_statuses: [site_status],
+    )
   end
 
   before do
@@ -128,20 +130,22 @@ feature "Edit course modern languages", type: :feature do
 
   context "the course has an error" do
     let(:course) do
-      build(:course,
-            provider: provider,
-            edit_options: edit_options,
-            languages: [],
-            subjects: subjects,
-            sites: [site],
-            site_statuses: [site_status],
-            errors: [
-              {
-                "source": { "pointer": "/data/attributes/subjects" },
-                "title": "Modern language subjects error",
-                "detail": "Modern language subjects error",
-              },
-            ])
+      build(
+        :course,
+        provider: provider,
+        edit_options: edit_options,
+        languages: [],
+        subjects: subjects,
+        sites: [site],
+        site_statuses: [site_status],
+        errors: [
+          {
+            "source": { "pointer": "/data/attributes/subjects" },
+            "title": "Modern language subjects error",
+            "detail": "Modern language subjects error",
+          },
+        ],
+      )
     end
 
     it "displays the errors" do

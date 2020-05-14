@@ -64,7 +64,9 @@ feature "Edit course sites", type: :feature do
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
-        {}, :patch, 200
+        {},
+        :patch,
+        200,
       ).with(body: {
         data: {
           course_code: course.course_code,
@@ -108,7 +110,9 @@ feature "Edit course sites", type: :feature do
         "/recruitment_cycles/#{current_recruitment_cycle.year}" \
         "/providers/#{provider.provider_code}" \
         "/courses/#{course.course_code}",
-        build(:error), :patch, 422
+        build(:error),
+        :patch,
+        422,
       ).with(body: {
         data: {
           course_code: course.course_code,

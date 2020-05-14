@@ -26,8 +26,10 @@ describe FeatureService do
 
       it "raises an error" do
         expect { FeatureService.require(:rspec_testing) }
-          .to raise_error(RuntimeError,
-                          "Feature rspec_testing is disabled")
+          .to raise_error(
+            RuntimeError,
+            "Feature rspec_testing is disabled",
+          )
       end
     end
   end

@@ -110,7 +110,8 @@ feature "Sign in", type: :feature do
           error_type: "user_not_accepted_terms_and_conditions",
         },
       },
-      :get, 403
+      :get,
+      403,
     )
 
     stub_omniauth(user: user)

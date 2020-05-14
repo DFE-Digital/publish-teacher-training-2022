@@ -25,13 +25,15 @@ feature "Access Requests", type: :feature do
 
     let(:organisation) { build(:organisation) }
     let(:access_request) do
-      build(:access_request,
-            requester: user,
-            requester_email: "v.vincent@pauli.edu",
-            first_name: "Howard",
-            last_name: "Kyoma",
-            email_address: "h.kyoma@pauli.edu",
-            reason: "Manual creation by user support agent")
+      build(
+        :access_request,
+        requester: user,
+        requester_email: "v.vincent@pauli.edu",
+        first_name: "Howard",
+        last_name: "Kyoma",
+        email_address: "h.kyoma@pauli.edu",
+        reason: "Manual creation by user support agent",
+      )
     end
 
     context "user is admin" do
@@ -71,13 +73,15 @@ feature "Access Requests", type: :feature do
 
   describe "admin access request creation page" do
     let(:access_request) do
-      build(:access_request,
-            requester: user,
-            requester_email: "v.vincent@pauli.edu",
-            first_name: "Howard",
-            last_name: "Kyoma",
-            email_address: "h.kyoma@pauli.edu",
-            reason: "Manual creation by user support agent")
+      build(
+        :access_request,
+        requester: user,
+        requester_email: "v.vincent@pauli.edu",
+        first_name: "Howard",
+        last_name: "Kyoma",
+        email_address: "h.kyoma@pauli.edu",
+        reason: "Manual creation by user support agent",
+      )
     end
 
     it "can create an access request" do
@@ -109,13 +113,15 @@ feature "Access Requests", type: :feature do
 
   describe "index page" do
     let(:access_request) do
-      build(:access_request,
-            requester: user,
-            request_date_utc: Date.new(2019, 11, 11),
-            first_name: "Allen",
-            last_name: "Swartz",
-            email_address: "aswartz@mymail.co",
-            organisation: "Aleph Null Academy")
+      build(
+        :access_request,
+        requester: user,
+        request_date_utc: Date.new(2019, 11, 11),
+        first_name: "Allen",
+        last_name: "Swartz",
+        email_address: "aswartz@mymail.co",
+        organisation: "Aleph Null Academy",
+      )
     end
 
     it "lists all access requests" do
@@ -137,13 +143,15 @@ feature "Access Requests", type: :feature do
 
   describe "inform publisher page" do
     let(:access_request) do
-      build(:access_request,
-            requester: user,
-            request_date_utc: Date.new(2019, 11, 11),
-            first_name: "Allen",
-            last_name: "Swartz",
-            email_address: "aswartz@mymail.co",
-            organisation: "Aleph Null Academy")
+      build(
+        :access_request,
+        requester: user,
+        request_date_utc: Date.new(2019, 11, 11),
+        first_name: "Allen",
+        last_name: "Swartz",
+        email_address: "aswartz@mymail.co",
+        organisation: "Aleph Null Academy",
+      )
     end
 
     it "displays the inform publisher page when a request is approved" do
