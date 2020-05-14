@@ -82,7 +82,7 @@ class ProvidersController < ApplicationController
       .where(accrediting_provider_code: @provider.provider_code)
       .map(&:decorate)
 
-    @courses.sort_by!(&:course_code)
+    @courses.sort_by!(&:name)
   end
 
   def search
