@@ -19,10 +19,10 @@ module AllocationServices
               )
 
             described_class.call(
-              requested: true,
               accredited_body_code: accredited_body_code,
               provider_id: provider_id,
               number_of_places: number_of_places,
+              request_type: Allocation::RequestTypes::INITIAL,
             )
           end
         end
@@ -37,9 +37,9 @@ module AllocationServices
               )
 
             described_class.call(
-              requested: true,
               accredited_body_code: accredited_body_code,
               provider_id: provider_id,
+              request_type: Allocation::RequestTypes::REPEAT,
             )
           end
         end
@@ -55,9 +55,9 @@ module AllocationServices
             )
 
           described_class.call(
-            requested: false,
             accredited_body_code: accredited_body_code,
             provider_id: provider_id,
+            request_type: Allocation::RequestTypes::DECLINED,
           )
         end
       end

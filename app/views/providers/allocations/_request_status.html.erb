@@ -40,12 +40,13 @@
                   Change<span class="govuk-visually-hidden"> request for <%= allocation[:training_provider_name] %></span>
                 </a>
               </li>
+
               <li class="govuk-summary-list__actions-list-item">
                 <a class="govuk-link" data-qa="view-<%= allocation[:requested] %>-confirmation"
                    href="<%= provider_recruitment_cycle_allocation_path(@provider.provider_code,
                                                                         @provider.recruitment_cycle_year,
                                                                         allocation[:training_provider_code],
-                                                                        requested: allocation[:requested])
+                                                                        id: allocation[:id])
                    %>">
                   View&nbsp;confirmation<span class="govuk-visually-hidden"> for <%= allocation[:training_provider_name] %></span>
                 </a>

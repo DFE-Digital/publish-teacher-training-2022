@@ -87,6 +87,10 @@ private
       allocation_status[:requested] = Requested::NO
     end
 
+    if matching_allocation&.id
+      allocation_status[:id] = matching_allocation.id
+    end
+
     allocation_status
   end
 

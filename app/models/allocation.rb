@@ -5,7 +5,7 @@ class Allocation < Base
     DECLINED = "declined".freeze
   end
 
-  belongs_to :provider, param: :provider_code
+  belongs_to :provider, param: :provider_code, shallow_path: true
 
   property :number_of_places
   property :request_type
