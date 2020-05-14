@@ -33,7 +33,7 @@ feature "Provider users page" do
   def when_i_visit_the_providers_user_page
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{@provider.provider_code}?include=users",
-      @provider.to_jsonapi(include: %i[users])
+      @provider.to_jsonapi(include: %i[users]),
     )
 
     visit "/organisations/#{@provider.provider_code}/users"
@@ -44,7 +44,7 @@ feature "Provider users page" do
   end
 
   def and_i_see_the_users_details
-    expect(provider_users_page.user_name).to have_content("#{@user.first_name @user.last_name}")
+    expect(provider_users_page.user_name).to have_content((@user.first_name @user.last_name).to_s)
   end
 
   def when_i_click_on_request_access
