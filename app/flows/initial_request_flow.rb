@@ -132,24 +132,35 @@ private
   end
 
   def pick_a_provider_page?
-    params[:training_provider_code] == "-1" && params[:training_provider_query].present?
+    params[:training_provider_code] == "-1" && params[:training_provider_query].present? \
+      && training_providers_from_query_without_associated.count > 1
   end
 
   def number_of_places_page?
+# <<<<<<< Updated upstream
     params[:training_provider_code].present? && params[:training_provider_code] != "-1" ||
+      (params[:training_provider_query].present? && training_providers_from_query_without_associated.count == 1) ||
       params[:change]
   end
 
   def check_your_information_page?
     params[:training_provider_code].present? && params[:number_of_places].present? &&
       params[:training_provider_code] != "-1" && !params[:change]
+# =======
+#     params[:training_provider_code].present? && (params[:training_provider_code] != "-1" \
+#         ||
+# >>>>>>> Stashed changes
   end
 
   def training_provider
-    @training_provider ||= Provider
-      .where(recruitment_cycle_year: recruitment_cycle.year)
-      .find(params[:training_provider_code])
-      .first
+    @training_provider ||= if params[:training_provider_code] == "-1"
+                             training_providers_from_query_without_associated.first
+                           else
+                             Provider
+                               .where(recruitment_cycle_year: recruitment_cycle.year)
+                               .find(params[:training_provider_code])
+                               .first
+                           end
   end
 
   def blank_search_query?

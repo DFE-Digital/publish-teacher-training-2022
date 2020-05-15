@@ -139,6 +139,8 @@ RSpec.feature "PE allocations" do
   end
 
   context "Initial allocations" do
+
+
     context "Accredited body has previously requested an initial allocations for a training provider" do
       scenario "Accredited body views PE allocation page" do
         given_accredited_body_exists
@@ -157,8 +159,11 @@ RSpec.feature "PE allocations" do
         and_i_see_correct_breadcrumbs
       end
     end
+
+
   end
 
+private
   def and_i_see_request_form
     request_form = find '[data-qa="allocation__requested"]'
 
