@@ -4,14 +4,16 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl" data-qa="page-heading">
       <span class="govuk-caption-xl">Manage notifications</span>
-      Changes to courses as an accredited body
+      Changes to your courses as an accredited body
     </h1>
 
     <p class="govuk-body">
-      Receive notifications about courses that you’re the accredited body for.
-      You’ll be told about any new courses added and updated about changes to
-      existing courses.
+      You can sign up for email notifications about these courses. We’ll tell you when a training provider:
     </p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+      <li>adds a new course</li>
+      <li>makes a change to an existing course</li>
+    </ul>
   </div>
 </div>
 <div class="govuk-grid-row">
@@ -22,7 +24,7 @@
                                             legend: { size: "m", text: "Would you like to be notified?", tag: "span" }) do %>
 
         <%= form.govuk_radio_button :consent, "Yes",
-                                    label: { text: "Yes, send notifications to #{current_user["info"]["email"]}" } %>
+                                    label: { text: "Yes, send email notifications to #{current_user["info"]["email"]}" } %>
         <%= form.govuk_radio_button :consent, "No", label: { text: "No" } %>
       <% end %>
       <%= form.govuk_submit "Save" %>
