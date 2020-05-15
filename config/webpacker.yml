@@ -98,5 +98,5 @@ staging:
 qa:
   <<: *production
 
-pentest:
+research:
   <<: *production
