@@ -4,16 +4,19 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Request PE courses for 2021/22</h1>
+
     <p class="govuk-body">
       You need to request any fee-funded PE courses for 2021/22 by 10 July 2020.
       You do not need to request salaried PE courses.
     </p>
+
     <p class="govuk-body">
       Once you’ve made a request, you can change it before 10 July.
     </p>
 
-    <% unless @training_providers.empty? %>
+    <% if @training_providers.present? %>
       <h2 class="govuk-heading-m" data-qa="request-again-header">Request PE again in 2021/22</h2>
+
       <p class="govuk-body">
         These are the organisations currently offering fee-funded PE that you’re
         listed as the accredited body for. Your own organisation will be included
@@ -28,30 +31,36 @@
     <% end %>
   </div>
 
-    <% unless @training_providers.empty? %>
-      <div class="govuk-grid-column-full">
-        <%= render partial: "providers/allocations/request_status", locals: {
-          allocations: @allocations_view.repeat_allocation_statuses,
-          request_type: "repeat"
-        } %>
+  <% if @training_providers.present? %>
+    <div class="govuk-grid-column-full">
+      <%= render partial: "providers/allocations/request_status", locals: {
+        allocations: @allocations_view.repeat_allocation_statuses,
+        request_type: "repeat"
+      } %>
+    </div>
+  <% end %>
 
-        <h3 class="govuk-heading-m">New PE courses 2020/21</h3>
+  <% if @allocations_view.initial_allocation_statuses.present? %>
+    <div class="govuk-grid-column-full">
+      <h3 class="govuk-heading-m">New PE courses 2020/21</h3>
 
-        <%= render partial: "providers/allocations/request_status", locals: {
-          allocations: @allocations_view.initial_allocation_statuses,
-          request_type: "initial"
-        } %>
-      </div>
-    <% end %>
+      <%= render partial: "providers/allocations/request_status", locals: {
+        allocations: @allocations_view.initial_allocation_statuses,
+        request_type: "initial"
+      } %>
+    </div>
+  <% end %>
 
   <div class="govuk-grid-column-two-thirds">
-    <% unless @training_providers.empty? %>
+    <% if @training_providers.present? %>
       <h2 class="govuk-heading-m">Request new PE courses</h2>
     <% end %>
+
     <p class="govuk-body">
-      <% unless @training_providers.empty? %>
+      <% if @training_providers.present? %>
         Request any PE courses for 2021/22 not offered in the current cycle.
       <% end %>
+
       Select the name of the organisation offering the course.
       You’ll be asked to give recruitment figures.
     </p>
