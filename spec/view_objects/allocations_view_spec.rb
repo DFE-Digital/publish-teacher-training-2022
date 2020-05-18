@@ -82,9 +82,11 @@ describe AllocationsView do
       let(:initial_allocation) do
         build(:allocation, :initial, accredited_body: accredited_body, provider: training_provider, number_of_places: 3)
       end
+
       let(:repeat_allocation) do
         build(:allocation, :repeat, accredited_body: accredited_body, provider: another_training_provider, number_of_places: 4)
       end
+
       let(:allocations) { [initial_allocation, repeat_allocation] }
 
       it {
@@ -95,6 +97,7 @@ describe AllocationsView do
             status: "3 PLACES REQUESTED",
             status_colour: AllocationsView::Colour::GREEN,
             requested: AllocationsView::Requested::YES,
+            id: initial_allocation.id,
           },
         ])
       }
