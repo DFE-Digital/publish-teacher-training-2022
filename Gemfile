@@ -89,7 +89,7 @@ group :development, :test do
   gem "parallel_tests"
 
   # Testing framework
-  gem "rspec-rails", "~> 4.0.0"
+  gem "rspec-rails", "~> 4.0.1"
 end
 
 group :development do
