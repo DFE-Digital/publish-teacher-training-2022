@@ -26,6 +26,7 @@ describe AllocationsView do
             status: AllocationsView::Status::REQUESTED,
             status_colour: AllocationsView::Colour::GREEN,
             requested: AllocationsView::Requested::YES,
+            id: repeat_allocation.id,
           },
         ])
       }
@@ -46,6 +47,7 @@ describe AllocationsView do
             status: AllocationsView::Status::NOT_REQUESTED,
             status_colour: AllocationsView::Colour::RED,
             requested: AllocationsView::Requested::NO,
+            id: declined_allocation.id,
           },
         ])
       }

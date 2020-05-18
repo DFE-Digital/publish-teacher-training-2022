@@ -29,25 +29,19 @@ module Providers
 
     def create
       # TODO: we need to add error handling here
-      AllocationServices::Create.call(
+
+      allocation = AllocationServices::Create.call(
         accredited_body_code: @provider.provider_code,
         provider_id: @training_provider.id,
-        requested: requested?,
+        request_type: params[:request_type],
         number_of_places: params[:number_of_places],
       )
 
-      redirect_to provider_recruitment_cycle_allocation_path(
-        requested: (params[:requested].downcase unless initial_request?),
-        number_of_places: params[:number_of_places],
-      )
+      redirect_to provider_recruitment_cycle_allocation_path(id: allocation.id)
     end
 
     def show
-      # TODO: temp until we retrieve the Allocation from the API
-      @allocation = Allocation.new(
-        number_of_places: number_of_places,
-        request_type: (Allocation::RequestTypes::INITIAL if initial_request?),
-      )
+      @allocation = Allocation.find(params[:id]).first
     end
 
     def initial_request
@@ -84,22 +78,6 @@ module Providers
 
     def require_admin_permissions!
       render "errors/forbidden", status: :forbidden unless user_is_admin?
-    end
-
-    def requested?
-      initial_request? || params[:requested].downcase == "yes"
-    end
-
-    def initial_request?
-      params[:number_of_places].present?
-    end
-
-    def number_of_places
-      if initial_request?
-        params[:number_of_places]
-      else
-        requested? ? 42 : 0
-      end
     end
   end
 end

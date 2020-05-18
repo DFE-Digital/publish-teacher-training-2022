@@ -25,25 +25,20 @@
                   ) do |form| %>
       <fieldset class="govuk-fieldset">
         <%= legend %>
-        <% field = "requested"%>
+        <% field = "request_type" %>
 
         <%= render "shared/error_wrapper", error_keys: [field], data_qa: "allocation__#{field}" do %>
-        <% ["Yes", "No"].each_with_index do |value| %>
-          <% label = value %>
+          <% {"Yes" => Allocation::RequestTypes::REPEAT, "No" => Allocation::RequestTypes::DECLINED}.each do |k,v| %>
 
           <div class="govuk-radios__item">
             <%= form.radio_button field,
-                  value,
+                  v,
                   class: 'govuk-radios__input',
                   data: {
-                    'aria-describedby': "#{field}-#{value}-help"
+                    'aria-describedby': "#{field}-#{v}-help"
                   }
             %>
-            <%= form.label field,
-                  label,
-                  value: value,
-                  class: "govuk-label govuk-radios__label"
-            %>
+            <%= form.label "#{field}_#{v}", k, class: "govuk-label govuk-radios__label" %>
           </div>
         <% end %>
       </fieldset>

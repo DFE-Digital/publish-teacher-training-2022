@@ -176,6 +176,7 @@ RSpec.feature "PE allocations" do
       :allocation,
       accredited_body: @accredited_body,
       provider: @training_provider_with_allocation,
+      number_of_places: 2,
     )
 
     stub_api_v2_request(
@@ -323,15 +324,17 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_click_send_request
-    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accredited_body.provider_code}/allocations")
-      .with(
-        body: {
-          data: {
-            type: "allocations",
-            attributes: { provider_id: @training_provider.id, request_type: "initial", number_of_places: "3" },
-          },
-        }.to_json,
-      )
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations",
+      resource_list_to_jsonapi([@allocation]),
+      :post,
+    )
+
+    stub_api_v2_request(
+      "/allocations/#{@allocation.id}",
+      resource_list_to_jsonapi([@allocation]),
+    )
+
     check_your_info_page.send_request_button.click
   end
 

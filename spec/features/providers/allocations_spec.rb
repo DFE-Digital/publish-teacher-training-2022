@@ -160,10 +160,8 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_see_request_form
-    request_form = find '[data-qa="allocation__requested"]'
-
-    expect(request_form.find("#requested_no")).to_not be_checked
-    expect(request_form.find("#requested_yes")).to_not be_checked
+    expect(allocations_new_page.yes).to_not be_checked
+    expect(allocations_new_page.no).to_not be_checked
   end
 
   def and_i_see_training_provider_name
@@ -257,18 +255,18 @@ RSpec.feature "PE allocations" do
   end
 
   def given_the_accredited_body_has_declined_an_allocation
-    allocation = build(:allocation, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 0)
+    @allocation = build(:allocation, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 0)
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
-      resource_list_to_jsonapi([allocation], include: "provider,accredited_body"),
+      resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
   end
 
   def given_the_accredited_body_has_requested_a_repeat_allocation
-    repeat_allocation = build(:allocation, :repeat, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 1)
+    @allocation = build(:allocation, :repeat, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 1)
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
-      resource_list_to_jsonapi([repeat_allocation], include: "provider,accredited_body"),
+      resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
   end
 
@@ -361,35 +359,42 @@ RSpec.feature "PE allocations" do
     expect(find("h1")).to have_content("Do you want to request PE for this organisation?")
   end
 
+  def allocation(options = {})
+    @allocation ||= build(
+      :allocation,
+      options[:request_type] || :repeat,
+      accredited_body: @accredited_body,
+      provider: @training_provider,
+      number_of_places: options[:number_of_places] || 3,
+    )
+  end
+
   def when_i_click_yes
-    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accredited_body.provider_code}/allocations")
-      .with(
-        body: {
-          data: {
-            type: "allocations",
-            attributes: { provider_id: @training_provider.id, request_type: "repeat" },
-          },
-        }.to_json,
-      )
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations",
+      resource_list_to_jsonapi([allocation]),
+      :post,
+    )
 
     allocations_new_page.yes.click
   end
 
   def when_i_click_no
-    stub_request(:post, "http://localhost:3001/api/v2/providers/#{@accredited_body.provider_code}/allocations")
-      .with(
-        body: {
-          data: {
-            type: "allocations",
-            attributes: { provider_id: @training_provider.id, request_type: "declined" },
-          },
-        }.to_json,
-      )
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations",
+      resource_list_to_jsonapi([allocation(request_type: :decline, number_of_places: 0)]),
+      :post,
+    )
 
     allocations_new_page.no.click
   end
 
   def and_i_click_continue
+    stub_api_v2_request(
+      "/allocations/#{allocation.id}",
+      resource_list_to_jsonapi([allocation]),
+    )
+
     allocations_new_page.continue_button.click
   end
 
@@ -403,11 +408,19 @@ RSpec.feature "PE allocations" do
 
   def and_i_click_on_first_view_requested_confirmation
     stub_api_v2_resource(@training_provider)
+    stub_api_v2_request(
+      "/allocations/#{@allocation.id}",
+      resource_list_to_jsonapi([@allocation]),
+    )
     allocations_page.view_requested_confirmation_links.first.click
   end
 
   def and_i_click_on_first_view_not_requested_confirmation
     stub_api_v2_resource(@training_provider)
+    stub_api_v2_request(
+      "/allocations/#{@allocation.id}",
+      resource_list_to_jsonapi([@allocation]),
+    )
     allocations_page.view_not_requested_confirmation_links.first.click
   end
 end
