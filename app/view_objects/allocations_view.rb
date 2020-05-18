@@ -33,9 +33,8 @@ class AllocationsView
   end
 
   def initial_allocation_statuses
-    statuses = @training_providers.map do |training_provider|
-      matching_allocation = find_matching_allocation(training_provider, initial_allocations)
-      build_initial_allocations(matching_allocation, training_provider)
+    statuses = initial_allocations.map do |allocation|
+      build_initial_allocations(allocation, allocation.provider)
     end
 
     statuses.compact
@@ -97,13 +96,17 @@ private
   def build_initial_allocations(matching_allocation, training_provider)
     return if matching_allocation.nil?
 
-    {
+    hash = {
       training_provider_name: training_provider.provider_name,
       training_provider_code: training_provider.provider_code,
       status_colour: Colour::GREEN,
       requested: Requested::YES,
       status: "#{matching_allocation.number_of_places} PLACES REQUESTED",
     }
+
+    hash[:id] = matching_allocation.id if matching_allocation.id
+
+    hash
   end
 
   def not_requested?(matching_allocation)
