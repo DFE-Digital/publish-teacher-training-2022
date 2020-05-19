@@ -329,7 +329,8 @@ RSpec.feature "PE allocations" do
       resource_list_to_jsonapi([@allocation]),
       :post,
     )
-
+    # Mimicking the setup that the API would go through
+    @allocation.request_type = "repeat"
     stub_api_v2_request(
       "/allocations/#{@allocation.id}",
       resource_list_to_jsonapi([@allocation]),
