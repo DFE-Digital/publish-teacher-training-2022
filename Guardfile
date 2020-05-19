@@ -23,8 +23,6 @@
 #                          installed the spring binstubs per the docs)
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
-
-# rubocop:disable Metrics/BlockLength
 group :red_green_refactor, halt_on_fail: true do
   guard :rspec, cmd: "bundle exec spring rspec", failed_mode: :keep do
     require "guard/rspec/dsl"
@@ -43,7 +41,7 @@ group :red_green_refactor, halt_on_fail: true do
     dsl.watch_spec_files_for(ruby.lib_files)
 
     # Rails files
-    rails = dsl.rails(view_extensions: %w(erb))
+    rails = dsl.rails(view_extensions: %w[erb])
     dsl.watch_spec_files_for(rails.app_files)
     dsl.watch_spec_files_for(rails.views)
 
@@ -73,4 +71,3 @@ group :red_green_refactor, halt_on_fail: true do
     watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
   end
 end
-# rubocop:enable Metrics/BlockLength

@@ -53,6 +53,8 @@ Rails.application.routes.draw do
     get "/request-access", on: :member, to: "providers/access_requests#new"
     post "/request-access", on: :member, to: "providers/access_requests#create"
 
+    get "/users", on: :member, to: "providers/users#index"
+
     resource :ucas_contacts, path: "ucas-contacts", on: :member, only: %i[show] do
       get "/alerts", on: :member, to: "ucas_contacts#alerts"
       patch "/alerts", on: :member, to: "ucas_contacts#update_alerts"
