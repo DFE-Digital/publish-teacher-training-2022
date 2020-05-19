@@ -281,3 +281,5 @@ psql -d "your_db" -c "INSERT INTO \"organisation_user\" (user_id, organisation_i
 2. It does not work with snap chromuim so either install chromuim via package manager or setup optional custom browser
 3. Between executing tests, make sure you close the browser that was spawned, in order for you to start from scratch, due to state retentations.
 4. To ensure cookie expectation, ie clearing cookies means close the spawned browser
+
+TEST
