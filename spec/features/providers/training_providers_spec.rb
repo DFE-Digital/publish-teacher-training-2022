@@ -26,7 +26,7 @@ feature "get training_providers", type: :feature do
     stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
       "#{accrediting_body1.provider_code}/training_providers?recruitment_cycle_year=#{accrediting_body1.recruitment_cycle.year}",
-      resource_list_to_jsonapi([training_provider1, training_provider2]),
+      resource_list_to_jsonapi([accrediting_body1, training_provider1, training_provider2]),
     )
     stub_api_v2_resource_collection([access_request])
   end
@@ -62,6 +62,12 @@ feature "get training_providers", type: :feature do
         expect(page).to have_link(accrediting_body1.provider_name.to_s, href: "/organisations/#{accrediting_body1.provider_code}")
         expect(page).to have_content("Courses as an accredited body")
       end
+    end
+
+    it "does not display itself as a training provider" do
+      visit training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
+
+      expect(organisation_training_providers_page.training_providers_list).to_not have_content(accrediting_body1.provider_name)
     end
   end
 end
