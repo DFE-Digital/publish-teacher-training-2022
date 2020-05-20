@@ -18,14 +18,27 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= form_with url:notifications_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+    <%= form_for @user_notification_preferences,
+      url: notification_path(current_user["user_id"]),
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
       <%= form.hidden_field :provider_code, value: params[:provider_code] %>
-      <%= form.govuk_radio_buttons_fieldset(:consent,
-                                            legend: { size: "m", text: "Would you like to be notified?", tag: "span" }) do %>
+      <%= form.govuk_radio_buttons_fieldset(
+        :explitly_enabled,
+        legend: {
+          size: "m",
+          text: "Would you like to be notified?",
+          tag: "span" }) do %>
 
-        <%= form.govuk_radio_button :consent, "Yes",
-                                    label: { text: "Yes, send email notifications to #{current_user["info"]["email"]}" } %>
-        <%= form.govuk_radio_button :consent, "No", label: { text: "No" } %>
+        <%= form.govuk_radio_button :explicitly_enabled,
+          true,
+          label: {
+            text: "Yes, send email notifications to #{current_user["info"]["email"]}"
+        } %>
+        <%= form.govuk_radio_button :explicitly_enabled,
+          false,
+          label: {
+            text: "No"
+        } %>
       <% end %>
       <%= form.govuk_submit "Save" %>
     <% end %>
