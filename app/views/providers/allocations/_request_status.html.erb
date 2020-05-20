@@ -2,13 +2,13 @@
   <table class="govuk-table ucas-info-table govuk-!-margin-bottom-8" data-qa="<%= request_type %>-allocations-table">
     <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th class="govuk-table__header subject-col">
+      <th class="govuk-table__header allocation-report__organisation">
         Organisation
       </th>
-      <th class="govuk-table__header status-col">
+      <th class="govuk-table__header allocation-report__status">
         Status
       </th>
-      <th class="govuk-table__header status-col">
+      <th class="govuk-table__header">
         <span class="govuk-visually-hidden">Actions</span>
       </th>
     </tr>
@@ -35,7 +35,7 @@
                         class: "govuk-link" %>
           <% else %>
             <ul class="govuk-summary-list__actions-list">
-              <li class="govuk-summary-list__actions-list-item">
+              <li class="govuk-summary-list__actions-list-item allocation-report__actions-list-item">
                 <a class="govuk-link" href="#">
                   Change<span class="govuk-visually-hidden"> request for <%= allocation[:training_provider_name] %></span>
                 </a>
