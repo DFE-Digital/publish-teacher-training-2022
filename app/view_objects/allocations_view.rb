@@ -1,4 +1,6 @@
 class AllocationsView
+  include ActionView::Helpers::TextHelper
+
   module Status
     REQUESTED = "REQUESTED".freeze
     NOT_REQUESTED = "NOT REQUESTED".freeze
@@ -101,7 +103,7 @@ private
       training_provider_code: training_provider.provider_code,
       status_colour: Colour::GREEN,
       requested: Requested::YES,
-      status: "#{matching_allocation.number_of_places} PLACES REQUESTED",
+      status: "#{pluralize(matching_allocation.number_of_places, 'place')} requested".upcase,
     }
 
     hash[:id] = matching_allocation.id if matching_allocation.id
