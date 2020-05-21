@@ -20,6 +20,8 @@ class AllocationsView
 
   module RequestType
     INITIAL = "initial".freeze
+    REPEAT = "repeat".freeze
+    DECLINED = "declined".freeze
   end
 
   def initialize(training_providers:, allocations:)
@@ -112,11 +114,11 @@ private
   end
 
   def not_requested?(matching_allocation)
-    matching_allocation && matching_allocation[:number_of_places].zero?
+    matching_allocation && matching_allocation[:request_type] == RequestType::DECLINED
   end
 
   def requested?(matching_allocation)
-    matching_allocation && matching_allocation[:number_of_places] >= 1
+    matching_allocation && matching_allocation[:request_type] == RequestType::REPEAT
   end
 
   def yet_to_request?(matching_allocation)

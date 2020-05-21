@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "id": 2,
+      "type": "allocations",
+      "attributes": {
+        "request_type": "repeat",
+        "number_of_places": 1
+      }
+    }
+  ],
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

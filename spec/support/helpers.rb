@@ -196,6 +196,8 @@ private
       "/access_requests"
     elsif resource.is_a? Organisation
       "/organisations"
+    elsif resource.is_a? Allocation
+      "/allocations"
     else
       raise "Resource '#{resource.class}' was not found. Add to 'url_for_resource_collection' helper."
     end

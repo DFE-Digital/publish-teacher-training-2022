@@ -26,6 +26,7 @@ FactoryBot.define do
           AccessRequest: AccessRequestSerializer,
           Organisation: OrganisationSerializer,
           OrganisationUser: OrganisationUser,
+          Allocation: AllocationSerializer,
         },
         include: opts[:include],
       )

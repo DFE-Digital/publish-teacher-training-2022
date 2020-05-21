@@ -33,7 +33,7 @@ describe AllocationsView do
     end
 
     context "Accredited body has declined an allocation for a training provider" do
-      let(:declined_allocation) { build(:allocation, :decline, accredited_body: accredited_body, provider: training_provider, number_of_places: 0) }
+      let(:declined_allocation) { build(:allocation, :declined, accredited_body: accredited_body, provider: training_provider, number_of_places: 0) }
       let(:initial_allocation) do
         build(:allocation, :initial, accredited_body: accredited_body, provider: another_training_provider, number_of_places: 3)
       end

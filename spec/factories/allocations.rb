@@ -9,8 +9,8 @@ FactoryBot.define do
       request_type { "repeat" }
     end
 
-    trait :decline do
-      request_type { "decline" }
+    trait :declined do
+      request_type { "declined" }
     end
 
     trait :initial do

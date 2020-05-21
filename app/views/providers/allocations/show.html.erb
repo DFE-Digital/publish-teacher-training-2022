@@ -1,4 +1,4 @@
-<% if @allocation.has_places? %>
+<% if @allocation.repeat_request? || @allocation.initial_request? %>
   <%= render partial: "providers/allocations/requests/yes_requested" %>
 <% else %>
   <%= render partial: "providers/allocations/requests/not_requested" %>

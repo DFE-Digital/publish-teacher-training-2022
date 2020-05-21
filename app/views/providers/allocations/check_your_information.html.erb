@@ -15,8 +15,8 @@
     <%= form_with url: provider_recruitment_cycle_allocation_path(
                       @provider.provider_code,
                       @provider.recruitment_cycle_year,
-                      params[:training_provider_code],
-                      params[:number_of_places]
+                      training_provider_code: params[:training_provider_code],
+                      number_of_places: params[:number_of_places]
                     ),
                     skip_enforcing_utf8: true,
                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
@@ -47,7 +47,7 @@
             </dd>
           </div>
         </dl>
-
+      <%= hidden_field_tag "allocation[request_type]", AllocationsView::RequestType::INITIAL %>
       <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
       <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
 

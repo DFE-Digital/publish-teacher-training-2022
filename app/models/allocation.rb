@@ -14,6 +14,10 @@ class Allocation < Base
     number_of_places.to_i.positive?
   end
 
+  def repeat_request?
+    request_type == Allocation::RequestTypes::REPEAT
+  end
+
   def initial_request?
     request_type == Allocation::RequestTypes::INITIAL
   end

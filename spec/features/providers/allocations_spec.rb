@@ -159,13 +159,53 @@ RSpec.feature "PE allocations" do
     end
   end
 
+  context "Accredited body previously declined a repeat PE allocation" do
+    scenario "Accredited body updates an existing PE allocation to 'yes'" do
+      given_accredited_body_exists
+      given_training_provider_with_pe_fee_funded_course_exists
+      given_the_accredited_body_has_declined_an_allocation
+
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+
+      when_i_click_change
+      then_i_see_request_pe_allocations_page
+
+      when_i_click_yes_to_update
+      and_i_click_continue_to_modify
+      and_i_see_the_corresponding_page_title("Request sent")
+    end
+  end
+
+  context "Accredited body has previously accepted a repeat PE allocation" do
+    scenario "Accredited body updates an existing PE allocation to 'no'" do
+      given_accredited_body_exists
+      given_training_provider_with_pe_fee_funded_course_exists
+      given_the_accredited_body_has_requested_a_repeat_allocation
+
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+
+      when_i_click_change
+      then_i_see_request_pe_allocations_page
+
+      when_i_click_no_to_update
+      and_i_click_continue_to_modify
+      and_i_see_the_corresponding_page_title("#{@training_provider.provider_name} Thank you")
+    end
+  end
+
   def and_i_see_request_form
     expect(allocations_new_page.yes).to_not be_checked
     expect(allocations_new_page.no).to_not be_checked
   end
 
   def and_i_see_training_provider_name
-    expect(find("h1")).to have_content(@training_provider.provider_name)
+    expect(find("span.govuk-caption-xl")).to have_content(@training_provider.provider_name)
   end
 
   def then_i_see_the_pe_allocations_request_page
@@ -180,11 +220,12 @@ RSpec.feature "PE allocations" do
 
     footer_stub_for_access_request_count
 
-    visit repeat_request_provider_recruitment_cycle_allocation_path(@accredited_body.provider_code, @accredited_body.recruitment_cycle.year, @training_provider.provider_code)
+    visit new_repeat_request_provider_recruitment_cycle_allocation_path(@accredited_body.provider_code, @accredited_body.recruitment_cycle.year, @training_provider.provider_code)
   end
 
   def footer_stub_for_access_request_count
     stub_api_v2_resource_collection([build(:access_request)])
+    stub_api_v2_resource(@training_provider)
   end
 
   def given_accredited_body_exists
@@ -255,11 +296,13 @@ RSpec.feature "PE allocations" do
   end
 
   def given_the_accredited_body_has_declined_an_allocation
-    @allocation = build(:allocation, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 0)
+    @allocation = build(:allocation, :declined, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 0)
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
       resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
+    stub_api_v2_resource(@training_provider)
+    stub_api_v2_resource(@allocation)
   end
 
   def given_the_accredited_body_has_requested_a_repeat_allocation
@@ -268,6 +311,8 @@ RSpec.feature "PE allocations" do
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
       resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
+    stub_api_v2_resource(@training_provider)
+    stub_api_v2_resource(@allocation)
   end
 
   def given_the_accredited_body_has_requested_an_initial_allocation
@@ -379,14 +424,65 @@ RSpec.feature "PE allocations" do
     allocations_new_page.yes.click
   end
 
+  def when_i_click_yes_to_update
+    @returned_allocation = build(:allocation, :repeat, id: @allocation.id, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 1)
+    stub_request(:patch, "http://localhost:3001/api/v2/allocations/#{@allocation.id}")
+      .with(
+        body: {
+          data: {
+            id: @allocation.id,
+            type: "allocations",
+            attributes: { request_type: "repeat" },
+          },
+        }.to_json,
+      ).to_return(
+        headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
+        body: File.new("spec/fixtures/api_responses/repeat-allocation.json"),
+      )
+
+    allocations_new_page.yes.click
+  end
+
   def when_i_click_no
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations",
-      resource_list_to_jsonapi([allocation(request_type: :decline, number_of_places: 0)]),
+      resource_list_to_jsonapi([allocation(request_type: :declined, number_of_places: 0)]),
       :post,
     )
 
     allocations_new_page.no.click
+  end
+
+  def when_i_click_no_to_update
+    @returned_allocation = build(:allocation, :declined, id: @allocation.id, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 1)
+    stub_request(:patch, "http://localhost:3001/api/v2/allocations/#{@allocation.id}")
+      .with(
+        body: {
+          data: {
+            id: @allocation.id,
+            type: "allocations",
+            attributes: { request_type: "declined" },
+          },
+        }.to_json,
+      ).to_return(
+        headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
+        body: File.new("spec/fixtures/api_responses/declined-allocation.json"),
+      )
+
+    allocations_new_page.no.click
+  end
+
+  def when_i_click_change
+    click_on "Change"
+  end
+
+  def and_i_click_continue_to_modify
+    stub_api_v2_request(
+      "/allocations/#{@returned_allocation.id}",
+      resource_list_to_jsonapi([@returned_allocation]),
+    )
+
+    allocations_new_page.continue_button.click
   end
 
   def and_i_click_continue

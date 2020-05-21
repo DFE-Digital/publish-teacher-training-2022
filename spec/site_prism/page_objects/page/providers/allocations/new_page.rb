@@ -6,8 +6,8 @@ module PageObjects
           set_url "/organisations/{provider_code}/{recruitment_cycle_year}/allocations/{training_provider_code}/new"
 
           element :form, "form"
-          element :yes, "#request_type_repeat"
-          element :no, "#request_type_declined"
+          element :yes, "#allocation-request-type-repeat-field"
+          element :no, "#allocation-request-type-declined-field"
           element :continue_button, "input[value='Continue']"
         end
       end
