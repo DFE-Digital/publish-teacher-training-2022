@@ -6,8 +6,7 @@ feature "Notifications", type: :feature do
 
   let(:provider) { build :provider }
   let(:access_request) { build :access_request }
-  # TODO: remove admin flag when we are ready to release to users
-  let(:user) { build :user, admin: true }
+  let(:user) { build :user }
 
   before do
     stub_omniauth(user: user)
