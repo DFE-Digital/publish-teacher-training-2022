@@ -10,10 +10,10 @@
     </div>
     <h2 class="govuk-heading-m">What happens now?</h2>
     <p class="govuk-body">
-      An email has been sent to
-      <%= mail_to @provider.email, @provider.email, class: 'govuk-link' %>
-      confirming this choice and setting out next steps.
+      You have until 10 July to change this request. On or after 10 July,
+      we’ll send an email to your organisation confirming the number of places.
     </p>
+
     <p class="govuk-body">
       In September we’ll let you know how many places we’ve allocated for this course.
       <% unless @allocation.initial_request? %>
