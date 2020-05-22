@@ -65,6 +65,8 @@ class InitialRequestFlow
     end
   end
 
+  delegate :valid?, to: :form_object
+
 private
 
   def training_provider_selected?
@@ -190,12 +192,6 @@ private
   end
 
   def blank_search_query?
-    return @blank_search_query if @blank_search_query
-
-    @blank_search_query = params[:training_provider_code] == "-1" && params[:training_provider_query].blank?
-
-    form_object.add_no_search_query_error if @blank_search_query
-
-    @blank_search_query
+    params[:training_provider_code] == "-1" && params[:training_provider_query].blank?
   end
 end
