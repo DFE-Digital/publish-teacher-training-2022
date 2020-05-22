@@ -1,4 +1,6 @@
 class InitialRequestFlow
+  include Rails.application.routes.url_helpers
+
   PE_SUBJECT_CODE = "C6".freeze
 
   attr_reader :params
@@ -43,7 +45,39 @@ class InitialRequestFlow
     end
   end
 
+  def redirect?
+    (training_provider_search? && one_search_result?) || training_provider_selected?
+  end
+
+  def redirect_path
+    if training_provider_selected?
+      initial_request_provider_recruitment_cycle_allocations_path(
+        provider_code: provider.provider_code,
+        recruitment_cycle_year: recruitment_cycle.year,
+        training_provider_code: params[:training_provider_code],
+      )
+    else
+      initial_request_provider_recruitment_cycle_allocations_path(
+        provider_code: provider.provider_code,
+        recruitment_cycle_year: recruitment_cycle.year,
+        training_provider_code: training_provider[:provider_code],
+      )
+    end
+  end
+
 private
+
+  def training_provider_selected?
+    params[:training_provider_code].present? && params[:training_provider_code] != "-1"
+  end
+
+  def training_provider_search?
+    params[:training_provider_code] == "-1" && params[:training_provider_query].present?
+  end
+
+  def one_search_result?
+    training_providers_from_query_without_associated.count == 1
+  end
 
   def form_object
     permitted_params = params.slice(:training_provider_code, :training_provider_query)
@@ -124,7 +158,7 @@ private
   def empty_search_results?
     return @empty_search_results if @empty_search_results
 
-    @empty_search_results = params[:training_provider_code] == "-1" && params[:training_provider_query].present? && training_providers_from_query_without_associated.empty?
+    @empty_search_results = training_provider_search? && training_providers_from_query_without_associated.empty?
 
     form_object.add_no_results_error if @empty_search_results
 
@@ -132,24 +166,27 @@ private
   end
 
   def pick_a_provider_page?
-    params[:training_provider_code] == "-1" && params[:training_provider_query].present?
+    training_provider_search? && training_providers_from_query_without_associated.count > 1
   end
 
   def number_of_places_page?
-    params[:training_provider_code].present? && params[:training_provider_code] != "-1" ||
-      params[:change]
+    training_provider_selected? ||
+      (params[:training_provider_query].present? && one_search_result?) || params[:change]
   end
 
   def check_your_information_page?
-    params[:training_provider_code].present? && params[:number_of_places].present? &&
-      params[:training_provider_code] != "-1" && !params[:change]
+    training_provider_selected? && params[:number_of_places].present? && !params[:change]
   end
 
   def training_provider
-    @training_provider ||= Provider
-      .where(recruitment_cycle_year: recruitment_cycle.year)
-      .find(params[:training_provider_code])
-      .first
+    @training_provider ||= if params[:training_provider_code] == "-1"
+                             training_providers_from_query_without_associated.first
+                           else
+                             Provider
+                               .where(recruitment_cycle_year: recruitment_cycle.year)
+                               .find(params[:training_provider_code])
+                               .first
+                           end
   end
 
   def blank_search_query?
