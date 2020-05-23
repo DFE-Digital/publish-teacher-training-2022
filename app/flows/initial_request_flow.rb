@@ -74,7 +74,7 @@ private
   end
 
   def training_provider_search?
-    params[:training_provider_code] == "-1" && params[:training_provider_query].present?
+    params[:training_provider_code] == "-1" && params[:training_provider_query].present? && params[:training_provider_query].size > 1
   end
 
   def one_search_result?
@@ -173,7 +173,7 @@ private
 
   def number_of_places_page?
     training_provider_selected? ||
-      (params[:training_provider_query].present? && one_search_result?) || params[:change]
+      (params[:training_provider_query].present? && params[:training_provider_query].size > 1 && one_search_result?) || params[:change]
   end
 
   def check_your_information_page?
