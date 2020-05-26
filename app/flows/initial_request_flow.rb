@@ -32,6 +32,7 @@ class InitialRequestFlow
       {
         training_providers: training_providers_without_associated,
         form_object: form_object,
+        provider: provider,
       }
     elsif pick_a_provider_page?
       {
@@ -41,6 +42,7 @@ class InitialRequestFlow
       {
         training_providers: training_providers_without_associated,
         form_object: form_object,
+        provider: provider,
       }
     end
   end
