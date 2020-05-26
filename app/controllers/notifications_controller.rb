@@ -1,6 +1,10 @@
 class NotificationsController < ApplicationController
   def index
-    user_notification_preferences
+    @notifications_view = NotificationsView.new(
+      request: request,
+      current_user: current_user,
+      user_notification_preferences: user_notification_preferences,
+    )
   end
 
   def update
