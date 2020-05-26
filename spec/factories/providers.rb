@@ -89,6 +89,10 @@ FactoryBot.define do
       provider.recruitment_cycle_year = evaluator.recruitment_cycle.year
     end
 
+    trait :accredited_body do
+      accredited_body? { true }
+    end
+
     factory :providers_response, class: Hash do
       data do
         [
