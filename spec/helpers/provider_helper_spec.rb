@@ -5,12 +5,6 @@ feature "View helpers", type: :helper do
   let(:html_escaped_version_of_email) { "ab%2Btest%40c.com" }
   let(:provider) { build(:provider) }
 
-  describe "#add_course_link" do
-    it "builds a link" do
-      expect(helper.add_course_link(email, provider, is_current_cycle: true)).to eq("<a class=\"govuk-button govuk-!-margin-bottom-2\" rel=\"noopener noreferrer\" target=\"_blank\" href=\"#{CGI.escapeHTML(helper.add_course_url(email, provider, is_current_cycle: true))}\">Add a new course</a>")
-    end
-  end
-
   describe "#add_course_url" do
     describe "for accredited bodies" do
       let(:provider) { build(:provider, accredited_body?: true) }
