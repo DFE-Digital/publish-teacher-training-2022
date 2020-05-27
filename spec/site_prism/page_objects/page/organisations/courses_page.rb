@@ -11,7 +11,7 @@ module PageObjects
         element :flash, ".govuk-success-summary"
         element :caption, ".govuk-caption-xl"
 
-        element :course_create, '[data-qa="course-create"]'
+        element :course_create, ".govuk-button", text: "Add a new course"
         element :course_create_additional, '[data-qa="course-create-additional"]'
 
         sections :courses_tables, '[data-qa="courses__table-section"]' do

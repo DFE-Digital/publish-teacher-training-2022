@@ -9,10 +9,6 @@ module ProviderHelper
     end
   end
 
-  def create_course_link(provider, **opts)
-    govuk_link_to("Add a new course", new_provider_recruitment_cycle_course_path(provider_code: provider.provider_code, recruitment_cycle_year: provider.recruitment_cycle_year), class: "govuk-button govuk-!-margin-bottom-2", **opts)
-  end
-
   def google_form_url_for(settings, email, provider)
     settings.url + "&" +
       { settings.email_entry => email, settings.provider_code_entry => provider.provider_code }.to_query
