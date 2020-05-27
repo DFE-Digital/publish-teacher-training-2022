@@ -5,10 +5,17 @@ class Allocation < Base
     DECLINED = "declined".freeze
   end
 
-  belongs_to :provider, param: :provider_code, shallow_path: true
+  belongs_to :provider, param: :provider_code, shallow_path: true # accredited_body
 
   property :number_of_places
   property :request_type
+
+  def self.for_provider_and_training_provider(recruitment_cycle:, provider:, training_provider:)
+    Allocation.where(recruitment_cycle_year: recruitment_cycle.year)
+              .where(provider_code: provider.provider_code)
+              .where(training_provider_code: training_provider.provider_code)
+              .first
+  end
 
   def has_places?
     number_of_places.to_i.positive?

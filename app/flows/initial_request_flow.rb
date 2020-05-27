@@ -36,7 +36,7 @@ class InitialRequestFlow
       }
     elsif pick_a_provider_page?
       {
-        training_providers: training_providers_from_query_without_associated,
+        training_providers: training_providers_from_query,
       }
     else
       {
@@ -51,14 +51,23 @@ class InitialRequestFlow
     (training_provider_search? && one_search_result?) || training_provider_selected?
   end
 
+  def allocation
+    if (training_provider_search? && one_search_result?) || training_provider_selected?
+      Allocation.where(recruitment_cycle_year: recruitment_cycle.year)
+                .where(provider_code: provider.provider_code, training_provider_code: training_provider[:provider_code])
+                .first
+    end
+  end
+
   def redirect_path
-    if training_provider_selected?
-      initial_request_provider_recruitment_cycle_allocations_path(
-        provider_code: provider.provider_code,
-        recruitment_cycle_year: recruitment_cycle.year,
-        training_provider_code: params[:training_provider_code],
+    if allocation
+      edit_provider_recruitment_cycle_allocation_path(
+        provider.provider_code,
+        provider.recruitment_cycle_year,
+        training_provider.provider_code,
+        id: allocation[:id],
       )
-    else
+    elsif (training_provider_search? && one_search_result?) || training_provider_selected?
       initial_request_provider_recruitment_cycle_allocations_path(
         provider_code: provider.provider_code,
         recruitment_cycle_year: recruitment_cycle.year,
@@ -80,7 +89,7 @@ private
   end
 
   def one_search_result?
-    training_providers_from_query_without_associated.count == 1
+    training_providers_from_query.count == 1
   end
 
   def form_object
@@ -170,7 +179,7 @@ private
   end
 
   def pick_a_provider_page?
-    training_provider_search? && training_providers_from_query_without_associated.count > 1
+    training_provider_search? && training_providers_from_query.count > 1
   end
 
   def number_of_places_page?
@@ -184,7 +193,7 @@ private
 
   def training_provider
     @training_provider ||= if params[:training_provider_code] == "-1"
-                             training_providers_from_query_without_associated.first
+                             training_providers_from_query.first
                            else
                              Provider
                                .where(recruitment_cycle_year: recruitment_cycle.year)
