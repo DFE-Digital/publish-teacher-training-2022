@@ -4,8 +4,9 @@ module PageObjects
       class IndexPage < PageObjects::Base
         set_url "/notifications"
 
-        element :opt_in_radio, "#consent-yes-field"
-        element :opt_out_radio, "#consent-no-field"
+        element :cancel_changes_link, "#cancel-changes-link"
+        element :opt_in_radio, "#user-notification-preferences-explicitly-enabled-true-field"
+        element :opt_out_radio, "#user-notification-preferences-explicitly-enabled-field"
         element :save_button, "input[value=Save]"
       end
     end
