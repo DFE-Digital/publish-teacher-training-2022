@@ -10,8 +10,7 @@ class InitialRequestForm
   def add_no_results_error
     errors.add(
       :training_provider_query,
-      "We couldn't find this organisation - please check your information and try again.
-                To add a new organisation to Publish, contact #{Settings.service_support.contact_email_address}.",
+      "We could not find this organisation - please check your information and try again.",
     )
   end
 
