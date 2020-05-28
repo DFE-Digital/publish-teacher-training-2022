@@ -36,13 +36,23 @@
           <% else %>
             <ul class="govuk-summary-list__actions-list">
               <li class="govuk-summary-list__actions-list-item allocation-report__actions-list-item">
-                <%= govuk_link_to "Change",
-                                  edit_provider_recruitment_cycle_allocation_path(
-                                    @provider.provider_code,
-                                    @provider.recruitment_cycle_year,
-                                    allocation[:training_provider_code],
-                                    id: allocation[:id]
-                                  ) %>
+                <% if allocation[:request_type] == AllocationsView::RequestType::INITIAL %>
+                  <%= govuk_link_to "Change",
+                                    do_you_want_provider_recruitment_cycle_allocation_path(
+                                      @provider.provider_code,
+                                      @provider.recruitment_cycle_year,
+                                      allocation[:training_provider_code],
+                                      id: allocation[:id]
+                                    ) %>
+                <% else %>
+                  <%= govuk_link_to "Change",
+                                    edit_provider_recruitment_cycle_allocation_path(
+                                      @provider.provider_code,
+                                      @provider.recruitment_cycle_year,
+                                      allocation[:training_provider_code],
+                                      id: allocation[:id]
+                                    ) %>
+                <% end %>
               </li>
 
               <li class="govuk-summary-list__actions-list-item">

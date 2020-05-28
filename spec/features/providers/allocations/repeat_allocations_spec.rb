@@ -475,6 +475,8 @@ private
   end
 
   def when_i_click_change
+    stub_api_v2_resource(@allocation, include: "provider,accredited_body")
+
     click_on "Change"
   end
 
