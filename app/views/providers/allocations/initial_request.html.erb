@@ -39,6 +39,7 @@
         <% else %>
           <%= hidden_field_tag "training_provider_code", "-1" %>
           <%= form.govuk_text_field :training_provider_query, label: { text: 'Find an organisation' } %>
+          <div id="provider-autocomplete" class="govuk-body"></div>
         <% end %>
       <% end %>
 
