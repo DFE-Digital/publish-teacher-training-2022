@@ -25,29 +25,34 @@ module Providers
       )
     end
 
-    def new_repeat_request; end
+    def new_repeat_request
+      @allocation = RepeatRequestForm.new
+    end
 
     def edit
       @allocation = Allocation.find(params[:id]).first
     end
 
     def create
-      # TODO: we need to add error handling here
+      @allocation = RepeatRequestForm.new(request_type: params[:request_type])
 
-      allocation = AllocationServices::Create.call(
-        accredited_body_code: @provider.provider_code,
-        provider_id: @training_provider.id,
-        request_type: params[:allocation][:request_type],
-        number_of_places: params[:number_of_places],
-      )
-
-      redirect_to provider_recruitment_cycle_allocation_path(id: allocation.id)
+      if @allocation.valid?
+        allocation = AllocationServices::Create.call(
+          accredited_body_code: @provider.provider_code,
+          provider_id: @training_provider.id,
+          request_type: params[:request_type],
+          number_of_places: params[:number_of_places],
+        )
+        redirect_to provider_recruitment_cycle_allocation_path(id: allocation.id)
+      else
+        render :new_repeat_request
+      end
     end
 
     def update
       @allocation = Allocation.find(params[:id]).first
 
-      @allocation.request_type = params[:allocation][:request_type]
+      @allocation.request_type = params[:request_type]
 
       @allocation.save if @allocation.changed?
 

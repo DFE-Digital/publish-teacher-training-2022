@@ -47,7 +47,7 @@
             </dd>
           </div>
         </dl>
-      <%= hidden_field_tag "allocation[request_type]", AllocationsView::RequestType::INITIAL %>
+      <%= hidden_field_tag "request_type", AllocationsView::RequestType::INITIAL %>
       <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
       <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
 

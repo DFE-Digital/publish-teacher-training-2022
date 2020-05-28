@@ -7,16 +7,20 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-xl"><%= @training_provider.provider_name %></span>
     <%= form_with url: provider_recruitment_cycle_allocation_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year,
                     params[:training_provider_code]
                   ),
-                  scope: "allocation",
+                  model: @allocation,
+                  scope: "",
                   builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
-      <%= form.govuk_radio_buttons_fieldset(:allocation_fieldset, legend: { size: 'xl', text: page_title }) do %>
-        <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::REPEAT, label: { text: "Yes" } %>
+      <%= form.govuk_error_summary %>
+
+      <span class="govuk-caption-xl"><%= @training_provider.provider_name %></span>
+
+      <%= form.govuk_radio_buttons_fieldset(:request_type, legend: { size: 'xl', text: page_title }) do %>
+        <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::REPEAT, label: { text: "Yes" }, link_errors: true %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
       <% end %>
       <%= form.govuk_submit %>
