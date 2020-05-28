@@ -141,6 +141,27 @@ RSpec.feature "PE allocations" do
     and_i_see_error_message_that_i_must_add_more_info
   end
 
+  scenario "Accredited body searches for provider with string containing only one character" do
+    given_accredited_body_exists
+    given_the_accredited_body_has_an_allocation
+    given_there_is_a_training_provider_with_previous_allocations
+    # once the feature is released it should be changed to
+    # given_i_am_signed_in_as_a_user_from_the_accredited_body
+    given_i_am_signed_in_as_an_admin
+
+    when_i_visit_my_organisations_page
+    and_i_click_request_pe_courses
+    then_i_see_the_pe_allocations_page
+
+    when_i_click_choose_an_organisation_button
+    then_i_see_the_request_new_pe_allocations_page
+
+    when_i_search_for_a_training_provider_with_string_containing_one_character
+    and_i_click_continue
+    then_i_see_the_request_new_pe_allocations_page
+    and_i_see_error_message_that_my_search_query_must_contain_two_characters
+  end
+
   def given_accredited_body_exists
     @accredited_body = build(:provider, accredited_body?: true)
     stub_api_v2_resource(@accredited_body.recruitment_cycle)
@@ -295,8 +316,17 @@ RSpec.feature "PE allocations" do
     page.fill_in("training_provider_query", with: "")
   end
 
+  def when_i_search_for_a_training_provider_with_string_containing_one_character
+    page.choose("Find an organisation not listed above")
+    page.fill_in("training_provider_query", with: "x")
+  end
+
   def and_i_see_error_message_that_i_must_add_more_info
     expect(page).to have_content("You need to add some information")
+  end
+
+  def and_i_see_error_message_that_my_search_query_must_contain_two_characters
+    expect(page).to have_content("Please enter a minimum of two characters")
   end
 
   def when_i_fill_in_the_number_of_places_input
