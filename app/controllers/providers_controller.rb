@@ -24,6 +24,8 @@ class ProvidersController < ApplicationController
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:code])
       .first
+
+    @provider_view = ProviderView.new(provider: @provider, providers: providers)
   end
 
   def details
@@ -151,5 +153,9 @@ private
     cycle_year = params.fetch(:year, Settings.current_cycle)
 
     @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
+  end
+
+  def providers
+    @providers ||= Provider.where(recruitment_cycle_year: Settings.current_cycle)
   end
 end

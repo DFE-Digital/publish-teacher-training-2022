@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe "providers/show" do
   let(:provider_show_page) { PageObjects::Page::Organisations::OrganisationShow.new }
+  let(:provider_view) { instance_double(ProviderView) }
 
   module CurrentUserMethod
     def current_user; end
@@ -11,7 +12,8 @@ describe "providers/show" do
     view.extend(CurrentUserMethod)
     allow(view).to receive(:current_user).and_return({ "admin" => admin })
     assign(:provider, provider)
-
+    allow(provider_view).to receive(:show_notifications_link?).and_return(notifications_link_boolean)
+    assign(:provider_view, provider_view)
     render
 
     provider_show_page.load(rendered)
@@ -19,6 +21,7 @@ describe "providers/show" do
 
   context "provider is an accredited body" do
     let(:provider) { build(:provider, :accredited_body) }
+    let(:notifications_link_boolean) { true }
 
     context "user is an admin" do
       let(:admin) { true }
@@ -43,10 +46,21 @@ describe "providers/show" do
         expect(provider_show_page).to have_notifications_preference_link
       end
     end
+
+    context "more than one provider is an accredited body" do
+      let(:admin) { false }
+      let(:provider) { build(:provider, :accredited_body) }
+      let(:notifications_link_boolean) { false }
+
+      it "doesn't display the notification preferences" do
+        expect(provider_show_page).not_to have_notifications_preference_link
+      end
+    end
   end
 
   context "provider is not an accredited body" do
     let(:provider) { build(:provider) }
+    let(:notifications_link_boolean) { false }
 
     context "user is an admin" do
       let(:admin) { true }
