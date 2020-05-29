@@ -1,4 +1,4 @@
-<% if @provider.accredited_body? %>
+<% if @provider.accredited_body? && current_user["admin"]%>
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
     <%= govuk_link_to "Notifications", notifications_path, class: "govuk-link", data:{qa: "notifications-link"} %>
   </h2>
