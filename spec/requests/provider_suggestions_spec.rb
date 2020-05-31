@@ -52,8 +52,8 @@ describe "/providers/suggest", type: :request do
             },
             {
               "code" => "B01",
-              "name" => "Bar SCITT"
-            }
+              "name" => "Bar SCITT",
+            },
           ],
         )
       end

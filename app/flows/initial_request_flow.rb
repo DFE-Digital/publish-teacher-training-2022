@@ -12,7 +12,7 @@ class InitialRequestFlow
   def template
     if check_your_information_page?
       "providers/allocations/check_your_information"
-    elsif number_of_places_page?
+    elsif number_of_places_page? || number_of_places_zero?
       "providers/allocations/number_of_places"
     elsif blank_search_query? || empty_search_results?
       "providers/allocations/initial_request"
@@ -27,6 +27,7 @@ class InitialRequestFlow
     if number_of_places_page? || check_your_information_page?
       {
         training_provider: training_provider,
+        form_object: form_object,
       }
     elsif blank_search_query? || empty_search_results?
       {
@@ -48,6 +49,8 @@ class InitialRequestFlow
   end
 
   def redirect?
+    return false if valid_number_of_places?
+
     (training_provider_search? && one_search_result?) || training_provider_selected?
   end
 
@@ -71,6 +74,14 @@ class InitialRequestFlow
 
 private
 
+  def valid_number_of_places?
+    params[:number_of_places] && !params[:number_of_places].include?(".") && params[:number_of_places].to_i.positive?
+  end
+
+  def number_of_places_zero?
+    params[:number_of_places] && params[:number_of_places].to_i.zero?
+  end
+
   def training_provider_selected?
     params[:training_provider_code].present? && params[:training_provider_code] != "-1"
   end
@@ -84,8 +95,8 @@ private
   end
 
   def form_object
-    permitted_params = params.slice(:training_provider_code, :training_provider_query)
-                             .permit(:training_provider_code, :training_provider_query)
+    permitted_params = params.slice(:training_provider_code, :training_provider_query, :number_of_places)
+                             .permit(:training_provider_code, :training_provider_query, :number_of_places)
 
     @form_object ||= InitialRequestForm.new(permitted_params)
   end
@@ -179,7 +190,7 @@ private
   end
 
   def check_your_information_page?
-    training_provider_selected? && params[:number_of_places].present? && !params[:change]
+    training_provider_selected? && valid_number_of_places? && !params[:change]
   end
 
   def training_provider

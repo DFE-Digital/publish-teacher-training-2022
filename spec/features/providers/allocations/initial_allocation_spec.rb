@@ -64,7 +64,6 @@ RSpec.feature "PE allocations" do
     then_i_see_pick_a_provider_page
 
     when_i_click_on_a_provider_from_search_results
-    and_i_click_continue
     then_i_see_number_of_places_page
     and_i_see_provider_name("Acme SCITT")
 
@@ -160,6 +159,107 @@ RSpec.feature "PE allocations" do
     and_i_click_continue
     then_i_see_the_request_new_pe_allocations_page
     and_i_see_error_message_that_my_search_query_must_contain_two_characters
+  end
+
+  context "Accredited body enters number of places" do
+    scenario "Accredited body submits form without specifying number of places" do
+      given_accredited_body_exists
+      given_the_accredited_body_has_an_allocation
+      given_there_is_a_training_provider_with_previous_allocations
+      # once the feature is released it should be changed to
+      # given_i_am_signed_in_as_a_user_from_the_accredited_body
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+      then_i_see_the_pe_allocations_page
+
+      when_i_click_choose_an_organisation_button
+      then_i_see_the_request_new_pe_allocations_page
+
+      and_i_choose_a_training_provider
+      and_i_click_continue
+      then_i_see_number_of_places_page
+
+      and_i_click_continue
+      then_i_see_number_of_places_page
+      and_i_see_error_message_that_i_must_enter_a_number
+    end
+
+    scenario "Accredited body enters '0'" do
+      given_accredited_body_exists
+      given_the_accredited_body_has_an_allocation
+      given_there_is_a_training_provider_with_previous_allocations
+      # once the feature is released it should be changed to
+      # given_i_am_signed_in_as_a_user_from_the_accredited_body
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+      then_i_see_the_pe_allocations_page
+
+      when_i_click_choose_an_organisation_button
+      then_i_see_the_request_new_pe_allocations_page
+
+      and_i_choose_a_training_provider
+      and_i_click_continue
+      then_i_see_number_of_places_page
+
+      when_i_fill_in_the_number_of_places_input_with_zero
+      and_i_click_continue
+      then_i_see_number_of_places_page
+      and_i_see_error_message_that_i_must_enter_a_number
+    end
+
+    scenario "Accredited body enters a float (1.1)" do
+      given_accredited_body_exists
+      given_the_accredited_body_has_an_allocation
+      given_there_is_a_training_provider_with_previous_allocations
+      # once the feature is released it should be changed to
+      # given_i_am_signed_in_as_a_user_from_the_accredited_body
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+      then_i_see_the_pe_allocations_page
+
+      when_i_click_choose_an_organisation_button
+      then_i_see_the_request_new_pe_allocations_page
+
+      and_i_choose_a_training_provider
+      and_i_click_continue
+      then_i_see_number_of_places_page
+
+      when_i_fill_in_the_number_of_places_input_with_a_float
+      and_i_click_continue
+      then_i_see_number_of_places_page
+      and_i_see_error_message_that_i_must_enter_a_number
+    end
+
+    scenario "Accredited body enters a non-numeric character" do
+      given_accredited_body_exists
+      given_the_accredited_body_has_an_allocation
+      given_there_is_a_training_provider_with_previous_allocations
+      # once the feature is released it should be changed to
+      # given_i_am_signed_in_as_a_user_from_the_accredited_body
+      given_i_am_signed_in_as_an_admin
+
+      when_i_visit_my_organisations_page
+      and_i_click_request_pe_courses
+      then_i_see_the_pe_allocations_page
+
+      when_i_click_choose_an_organisation_button
+      then_i_see_the_request_new_pe_allocations_page
+
+      and_i_choose_a_training_provider
+      and_i_click_continue
+      then_i_see_number_of_places_page
+
+      when_i_fill_in_the_number_of_places_input_with_a_letter
+      and_i_click_continue
+      then_i_see_number_of_places_page
+      and_i_see_error_message_that_i_must_enter_a_number
+    end
   end
 
   def given_accredited_body_exists
@@ -329,8 +429,24 @@ RSpec.feature "PE allocations" do
     expect(page).to have_content("Please enter a minimum of two characters")
   end
 
+  def and_i_see_error_message_that_i_must_enter_a_number
+    expect(page).to have_content("You must enter a number")
+  end
+
   def when_i_fill_in_the_number_of_places_input
     number_of_places_page.number_of_places_field.fill_in(with: "2")
+  end
+
+  def when_i_fill_in_the_number_of_places_input_with_a_letter
+    number_of_places_page.number_of_places_field.fill_in(with: "a")
+  end
+
+  def when_i_fill_in_the_number_of_places_input_with_zero
+    number_of_places_page.number_of_places_field.fill_in(with: "0")
+  end
+
+  def when_i_fill_in_the_number_of_places_input_with_a_float
+    number_of_places_page.number_of_places_field.fill_in(with: "1.1")
   end
 
   def then_i_see_check_your_information_page
