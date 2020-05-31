@@ -17,6 +17,15 @@
         "provider_name": "Acme SCITT",
         "recruitment_cycle_year": "2020"
       }
+    },
+    {
+      "id": "8",
+      "type": "providers",
+      "attributes": {
+        "provider_code": "B01",
+        "provider_name": "Bar SCITT",
+        "recruitment_cycle_year": "2020"
+      }
     }
   ],
   "jsonapi": {

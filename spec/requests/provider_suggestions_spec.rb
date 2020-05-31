@@ -50,6 +50,10 @@ describe "/providers/suggest", type: :request do
               "code" => "A01",
               "name" => "Acme SCITT",
             },
+            {
+              "code" => "B01",
+              "name" => "Bar SCITT"
+            }
           ],
         )
       end
