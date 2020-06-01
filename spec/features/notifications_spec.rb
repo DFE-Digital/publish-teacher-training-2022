@@ -6,7 +6,7 @@ feature "Notifications", type: :feature do
 
   let(:provider) { build :provider }
   let(:access_request) { build :access_request }
-  let(:user) { build :user, :admin }
+  let(:user) { build :user }
 
   before do
     stub_omniauth(user: user)
