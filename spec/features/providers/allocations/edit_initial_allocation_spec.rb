@@ -12,9 +12,7 @@ RSpec.feature "PE allocations" do
       given_accredited_body_exists
       given_the_accredited_body_has_an_initial_allocation
       given_there_is_a_training_provider_with_previous_allocations
-      # once the feature is released it should be changed to
-      # given_i_am_signed_in_as_a_user_from_the_accredited_body
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_my_organisations_page
       and_i_click_request_pe_courses
@@ -39,9 +37,7 @@ RSpec.feature "PE allocations" do
       given_accredited_body_exists
       given_the_accredited_body_has_an_initial_allocation
       given_there_is_a_training_provider_with_previous_allocations
-      # once the feature is released it should be changed to
-      # given_i_am_signed_in_as_a_user_from_the_accredited_body
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_my_organisations_page
       and_i_click_request_pe_courses
@@ -60,9 +56,7 @@ RSpec.feature "PE allocations" do
           given_accredited_body_exists
           given_the_accredited_body_has_an_initial_allocation
           given_there_is_a_training_provider_with_previous_allocations
-          # once the feature is released it should be changed to
-          # given_i_am_signed_in_as_a_user_from_the_accredited_body
-          given_i_am_signed_in_as_an_admin
+          given_i_am_signed_in_as_a_user_from_the_accredited_body
 
           when_i_visit_my_organisations_page
           and_i_click_request_pe_courses
@@ -85,9 +79,7 @@ RSpec.feature "PE allocations" do
           given_accredited_body_exists
           given_the_accredited_body_has_an_initial_allocation
           given_there_is_a_training_provider_with_previous_allocations
-          # once the feature is released it should be changed to
-          # given_i_am_signed_in_as_a_user_from_the_accredited_body
-          given_i_am_signed_in_as_an_admin
+          given_i_am_signed_in_as_a_user_from_the_accredited_body
 
           when_i_visit_my_organisations_page
           and_i_click_request_pe_courses
@@ -110,9 +102,7 @@ RSpec.feature "PE allocations" do
           given_accredited_body_exists
           given_the_accredited_body_has_an_initial_allocation
           given_there_is_a_training_provider_with_previous_allocations
-          # once the feature is released it should be changed to
-          # given_i_am_signed_in_as_a_user_from_the_accredited_body
-          given_i_am_signed_in_as_an_admin
+          given_i_am_signed_in_as_a_user_from_the_accredited_body
 
           when_i_visit_my_organisations_page
           and_i_click_request_pe_courses
@@ -135,9 +125,7 @@ RSpec.feature "PE allocations" do
           given_accredited_body_exists
           given_the_accredited_body_has_an_initial_allocation
           given_there_is_a_training_provider_with_previous_allocations
-          # once the feature is released it should be changed to
-          # given_i_am_signed_in_as_a_user_from_the_accredited_body
-          given_i_am_signed_in_as_an_admin
+          given_i_am_signed_in_as_a_user_from_the_accredited_body
 
           when_i_visit_my_organisations_page
           and_i_click_request_pe_courses
@@ -179,16 +167,24 @@ RSpec.feature "PE allocations" do
       resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
 
-    stub_api_v2_resource(@training_provider_with_allocation)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@training_provider_with_allocation.provider_code}/show_any" \
+      "?recruitment_cycle_year=2020",
+      resource_list_to_jsonapi([@training_provider_with_allocation]),
+    )
   end
 
-  def given_i_am_signed_in_as_an_admin
-    stub_omniauth(user: build(:user, :admin))
+  def user
+    @user ||= build(:user)
+  end
+
+  def given_i_am_signed_in_as_a_user_from_the_accredited_body
+    stub_omniauth(user: user)
   end
 
   def given_there_is_a_training_provider_with_previous_allocations
     @training_provider = build(:provider)
-    stub_api_v2_resource(@training_provider)
 
     @training_provider_with_fee_funded_pe = build(:provider)
 

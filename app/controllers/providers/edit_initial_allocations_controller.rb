@@ -81,10 +81,10 @@ module Providers
   private
 
     def training_provider
-      @training_provider ||= Provider
-       .where(recruitment_cycle_year: recruitment_cycle.year)
-       .find(params[:training_provider_code])
-       .first
+      return @training_provider if @training_provider
+
+      p = Provider.new(recruitment_cycle_year: recruitment_cycle.year, provider_code: params[:training_provider_code])
+      @training_provider = p.show_any(recruitment_cycle_year: recruitment_cycle.year).first
     end
 
     def provider
