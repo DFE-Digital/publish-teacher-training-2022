@@ -39,8 +39,8 @@ describe "providers/show" do
         expect(provider_show_page).to have_courses_as_accredited_body_link
       end
 
-      it "doesn't display the notification preferences" do
-        expect(provider_show_page).not_to have_notifications_preference_link
+      it "displays the notification preferences" do
+        expect(provider_show_page).to have_notifications_preference_link
       end
     end
   end
