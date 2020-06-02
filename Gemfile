@@ -119,7 +119,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", ">= 2.15"
 
-  gem "webdrivers", "~> 4.3"
+  gem "webdrivers", "~> 4.4"
 
   # Add Junit formatter for rspec
   gem "rspec_junit_formatter"
