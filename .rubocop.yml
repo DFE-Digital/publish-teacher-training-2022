@@ -27,3 +27,5 @@ Style/HashTransformKeys:
   Enabled: true
 Style/HashTransformValues:
   Enabled: false
+Rails/FindBy:
+  Enabled: false
