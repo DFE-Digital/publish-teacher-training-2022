@@ -218,7 +218,7 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_click_request_pe_courses
-    click_on "Request PE courses for 2021/22"
+    click_on "Request PE courses for 2021 – 2022"
   end
 
   def and_i_click_change

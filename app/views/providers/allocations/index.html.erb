@@ -1,13 +1,13 @@
-<%= content_for :page_title, "Request PE courses for 2021/22" %>
+<%= content_for :page_title, raw("Request PE courses for 2021&thinsp;–&thinsp;2022") %>
 <%= content_for :before_content, render_breadcrumbs("allocations") %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Request PE courses for 2021/22</h1>
+    <h1 class="govuk-heading-xl">Request PE courses for 2021&thinsp;–&thinsp;2022</h1>
 
     <p class="govuk-body">
-      You must request any fee-funded PE courses for 2021/22 by 10 July 2020.
-      You do not need to request salaried PE courses.
+      You must request any fee-funded PE courses for 2021&thinsp;–&thinsp;2022 by 10 July 2020.
+      You do not need to request any other courses, including salaried PE.
     </p>
 
     <p class="govuk-body">
@@ -21,12 +21,11 @@
 
       <p class="govuk-body">
         These are the organisations currently offering fee-funded PE that you’re the accredited body for.
-        Your own organisation will be included if it offers its own courses.
+        You’ll be included if you offer your own courses.
       </p>
-
       <p class="govuk-body">
-        Tell us if you’d like to request PE again for these organisations.
-        We won’t ask for projected recruitment figures - places will be allocated based on current numbers.
+        Tell us if these organisations want to run PE again. You won’t need to request a specific number
+        of places - these will be decided by DfE, based on each organisation’s current allocation.
       </p>
 
       <p class="govuk-body">
@@ -46,7 +45,7 @@
 
   <% if @allocations_view.initial_allocation_statuses.present? %>
     <div class="govuk-grid-column-full">
-      <h3 class="govuk-heading-m">New PE courses 2021/22</h3>
+      <h3 class="govuk-heading-m">New PE courses 2021&thinsp;–&thinsp;2022</h3>
 
       <%= render partial: "providers/allocations/request_status", locals: {
         allocations: @allocations_view.initial_allocation_statuses,
@@ -64,12 +63,12 @@
 
     <p class="govuk-body">
       <% if @training_providers.present? %>
-        Request fee-funded PE for 2021/22 for any organisations not currently offering this course.
+        Request fee-funded PE for 2021&thinsp;–&thinsp;2022 for any organisations not currently offering this course.
       <% else %>
         Select the name of the organisation(s) offering this course.
       <% end %>
 
-      We'll need to know how many trainees each organisation would like to recruit.
+      We'll need to know how many places each one would like to offer.
     </p>
 
     <%= link_to "Choose an organisation",

@@ -4,21 +4,21 @@
       <strong class="govuk-tag govuk-tag--purple">Admin Feature</strong>
     </div>
     <h2 class="govuk-heading-m">
-      <%= link_to "Request PE courses for 2021/22",
+      <%= link_to raw("Request PE courses for 2021&thinsp;–&thinsp;2022"),
                   provider_recruitment_cycle_allocations_path(@provider.provider_code, year),
                   class: "govuk-link",
                   data: { qa: "request-allocations-link" } %>
     </h2>
 
-    <p class="govuk-body">Use this section to request fee-funded PE courses for the next recruitment cycle. This includes:</p>
+    <p class="govuk-body">
+      Only accredited bodies are able to see this section. Use it to request fee-funded PE courses
+      (ones without a salary) for the next recruitment cycle.
+    </p>
+
+    <p class="govuk-body">This includes:</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>your own courses</li>
-      <li>courses you’re the accredited body for</li>
+      <li>courses you’re the accredited body for (you must request these on behalf of training partners)</li>
     </ul>
-    <p class="govuk-body">
-    Only accredited bodies are able to see this section. You must request courses
-    on behalf of any organisations you’re the accredited body for, as well as
-    courses you’re offering yourselves.
-    </p>
   </div>
 <% end %>
