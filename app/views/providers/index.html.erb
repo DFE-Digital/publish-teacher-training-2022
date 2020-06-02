@@ -2,12 +2,24 @@
 
 <h1 class="govuk-heading-xl">Organisations</h1>
 
-<% if current_user.present? && current_user["admin"] %>
-  <%= render partial: "providers/search" %>
-<% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if current_user.present? && current_user["admin"] %>
+      <%= render partial: "providers/search" %>
+    <% end %>
 
-<ul class="govuk-list">
-  <%= render partial: "providers/provider", collection: @providers %>
-</ul>
+    <ul class="govuk-list">
+      <%= render partial: "providers/provider", collection: @providers %>
+    </ul>
 
-<%= pagy_govuk_nav(@pagy).html_safe %>
+    <%= pagy_govuk_nav(@pagy).html_safe %>
+  </div>
+
+  <aside class="govuk-grid-column-one-third">
+    <div class="app-related">
+      <% if @providers_view.show_notifications_link? %>
+        <%= render partial: "providers/notifications_sign_up_link" %>
+      <% end %>
+    </div>
+  </aside>
+</div>

@@ -3,8 +3,10 @@ require "rails_helper"
 feature "Notifications", type: :feature do
   let(:organisation_show_page) { PageObjects::Page::Organisations::OrganisationShow.new }
   let(:notifications_index_page) { PageObjects::Page::Notifications::IndexPage.new }
+  let(:provider_view) { instance_double(ProviderView) }
 
-  let(:provider) { build :provider }
+  let(:provider) { build :provider, accredited_body?: true }
+  let(:providers) { [provider] }
   let(:access_request) { build :access_request }
   let(:user) { build :user }
 
@@ -15,21 +17,7 @@ feature "Notifications", type: :feature do
     stub_api_v2_resource_collection([access_request])
   end
 
-  context "When the provider is not an accredited body" do
-    it "does not have the notifications link" do
-      when_i_visit_providers_page
-      then_i_should_not_see_notifications_link
-    end
-  end
-
   context "When the provider is an accredited body" do
-    let(:provider) { build :provider, accredited_body?: true }
-
-    it "organisation page does have the notifications link" do
-      when_i_visit_accredited_body_page
-      then_i_should_see_notifications_link
-    end
-
     describe "User sets notification preferences for the first time" do
       it "should allow the user to opt into notifications" do
         given_a_user_has_never_set_their_preferences
@@ -87,20 +75,12 @@ private
     )
   end
 
-  def when_i_visit_providers_page
-    visit provider_path(provider.provider_code)
-  end
-
   def when_i_visit_accredited_body_page
-    when_i_visit_providers_page
+    visit provider_path(provider.provider_code)
   end
 
   def then_i_should_see_notifications_link
     expect(organisation_show_page).to have_notifications_preference_link
-  end
-
-  def then_i_should_not_see_notifications_link
-    expect(organisation_show_page).not_to have_notifications_preference_link
   end
 
   def and_i_click_on_notifications_link

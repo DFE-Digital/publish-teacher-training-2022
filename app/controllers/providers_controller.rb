@@ -10,10 +10,11 @@ class ProvidersController < ApplicationController
     page = (params[:page] || 1).to_i
     per_page = 10
 
-    @providers = Provider.where(recruitment_cycle_year: Settings.current_cycle)
-                         .page(page)
+    @providers = providers.page(page)
 
     @pagy = Pagy.new(count: @providers.meta.count, page: page, items: per_page)
+
+    @providers_view = ProvidersView.new(providers: providers)
 
     render "providers/no_providers", status: :forbidden if @providers.empty?
     redirect_to provider_path(@providers.first.provider_code) if @providers.size == 1
@@ -24,6 +25,8 @@ class ProvidersController < ApplicationController
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:code])
       .first
+
+    @provider_view = ProviderView.new(provider: @provider, providers: providers)
   end
 
   def details
@@ -151,5 +154,9 @@ private
     cycle_year = params.fetch(:year, Settings.current_cycle)
 
     @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
+  end
+
+  def providers
+    @providers ||= Provider.where(recruitment_cycle_year: Settings.current_cycle)
   end
 end
