@@ -90,8 +90,13 @@ private
       allocation_status[:requested] = Requested::NO
     end
 
-    if matching_allocation&.id
+    if matching_allocation
       allocation_status[:id] = matching_allocation.id
+      allocation_status[:request_type] = matching_allocation.request_type
+    end
+
+    if matching_allocation&.accredited_body
+      allocation_status[:accredited_body_code] = matching_allocation.accredited_body.provider_code
     end
 
     allocation_status
@@ -105,6 +110,7 @@ private
       training_provider_code: training_provider.provider_code,
       status_colour: Colour::GREEN,
       requested: Requested::YES,
+      request_type: matching_allocation.request_type,
       status: "#{pluralize(matching_allocation.number_of_places, 'place')} requested".upcase,
     }
 

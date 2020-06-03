@@ -30,7 +30,9 @@ module Providers
     end
 
     def edit
-      @allocation = Allocation.find(params[:id]).first
+      @allocation = Allocation.includes(:provider, :accredited_body)
+                                .find(params[:id])
+                                .first
     end
 
     def create

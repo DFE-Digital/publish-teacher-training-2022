@@ -105,7 +105,7 @@ module Helpers
     query_params = {}
     query_params[:include] = include if include.present?
 
-    if method.in?(%i[get patch])
+    if method.in?(%i[get patch delete])
       url = url_for_resource(resource)
     elsif method == :post
       url = url_for_resource_collection(resource)

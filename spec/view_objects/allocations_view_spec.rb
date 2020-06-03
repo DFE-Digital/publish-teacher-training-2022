@@ -23,10 +23,12 @@ describe AllocationsView do
           {
             training_provider_name: training_provider.provider_name,
             training_provider_code: training_provider.provider_code,
+            accredited_body_code: accredited_body.provider_code,
             status: AllocationsView::Status::REQUESTED,
             status_colour: AllocationsView::Colour::GREEN,
             requested: AllocationsView::Requested::YES,
             id: repeat_allocation.id,
+            request_type: AllocationsView::RequestType::REPEAT,
           },
         ])
       }
@@ -44,10 +46,12 @@ describe AllocationsView do
           {
             training_provider_name: training_provider.provider_name,
             training_provider_code: training_provider.provider_code,
+            accredited_body_code: accredited_body.provider_code,
             status: AllocationsView::Status::NOT_REQUESTED,
             status_colour: AllocationsView::Colour::RED,
             requested: AllocationsView::Requested::NO,
             id: declined_allocation.id,
+            request_type: AllocationsView::RequestType::DECLINED,
           },
         ])
       }
@@ -98,6 +102,7 @@ describe AllocationsView do
               status: "3 PLACES REQUESTED",
               status_colour: AllocationsView::Colour::GREEN,
               requested: AllocationsView::Requested::YES,
+              request_type: AllocationsView::RequestType::INITIAL,
               id: initial_allocation.id,
             },
           ])
