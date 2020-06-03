@@ -335,6 +335,11 @@ RSpec.feature "PE allocations" do
   end
 
   def and_i_choose_a_training_provider
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations?filter[recruitment_cycle_year]=2020&filter[training_provider_code]=#{@training_provider.provider_code}&page[page]=1&page[per_page]=1",
+      resource_list_to_jsonapi([]),
+    )
+
     page.choose(@training_provider.provider_name)
   end
 
@@ -344,6 +349,15 @@ RSpec.feature "PE allocations" do
                   headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
                   body: File.new("spec/fixtures/api_responses/provider-suggestions.json"),
                 )
+
+    provider_codes = JSON.parse(File.read("spec/fixtures/api_responses/provider-suggestions.json")).dig("data").map { |p| p["attributes"]["provider_code"] }
+
+    provider_codes.each do |provider_code|
+      stub_api_v2_request(
+        "/providers/#{@accredited_body.provider_code}/allocations?filter[recruitment_cycle_year]=2020&filter[training_provider_code]=#{provider_code}&page[page]=1&page[per_page]=1",
+        resource_list_to_jsonapi([]),
+      )
+    end
 
     page.choose("Find an organisation not listed above")
     page.fill_in("training_provider_query", with: "ACME")
