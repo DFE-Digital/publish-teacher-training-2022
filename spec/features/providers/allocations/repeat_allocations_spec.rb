@@ -11,10 +11,7 @@ RSpec.feature "PE allocations" do
         given_accredited_body_exists
         given_training_provider_with_pe_fee_funded_course_exists
         given_the_accredited_body_has_requested_a_repeat_allocation
-
-        given_i_am_signed_in_as_an_admin
-        # once the feature is released it should be changed to
-        # given_i_am_signed_in_as_a_user_from_the_accredited_body
+        given_i_am_signed_in_as_a_user_from_the_accredited_body
 
         when_i_visit_my_organisations_page
         and_i_click_request_pe_courses
@@ -29,8 +26,7 @@ RSpec.feature "PE allocations" do
       given_accredited_body_exists
       given_training_provider_with_pe_fee_funded_course_exists
       given_the_accredited_body_has_not_requested_an_allocation
-
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_my_organisations_page
       and_i_click_request_pe_courses
@@ -49,8 +45,7 @@ RSpec.feature "PE allocations" do
       given_accredited_body_exists
       given_training_provider_with_pe_fee_funded_course_exists
       given_the_accredited_body_has_not_requested_an_allocation
-
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_my_organisations_page
       and_i_click_request_pe_courses
@@ -71,8 +66,7 @@ RSpec.feature "PE allocations" do
       given_accredited_body_exists
       given_training_provider_with_pe_fee_funded_course_exists
       given_the_accredited_body_has_requested_a_repeat_allocation
-
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_my_organisations_page
       and_i_click_request_pe_courses
@@ -90,8 +84,7 @@ RSpec.feature "PE allocations" do
       given_accredited_body_exists
       given_training_provider_with_pe_fee_funded_course_exists
       given_the_accredited_body_has_declined_an_allocation
-
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_my_organisations_page
       and_i_click_request_pe_courses
@@ -107,29 +100,19 @@ RSpec.feature "PE allocations" do
 
     scenario "There is no PE allocations page for non accredited body" do
       given_a_provider_exists
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_training_providers_page
       there_is_no_request_pe_courses_link
       and_i_cannot_access_pe_alloacations_page
     end
 
-    scenario "Non-admin user cannot views PE allocations page" do
-      given_accredited_body_exists
-      given_i_am_signed_in
-
-      when_i_visit_my_organisations_page
-      there_is_no_request_pe_courses_link
-      and_i_cannot_access_accredited_body_pe_allocations_page
-    end
-
     scenario "Accredited body views PE allocations request page for training provider" do
       given_accredited_body_exists
       given_training_provider_exists
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_pe_allocations_request_page
-
       then_i_see_the_pe_allocations_request_page
 
       and_i_see_back_link
@@ -144,10 +127,7 @@ RSpec.feature "PE allocations" do
         given_accredited_body_exists
         given_training_provider_with_pe_fee_funded_course_exists
         given_the_accredited_body_has_requested_an_initial_allocation
-
-        given_i_am_signed_in_as_an_admin
-        # once the feature is released it should be changed to
-        # given_i_am_signed_in_as_a_user_from_the_accredited_body
+        given_i_am_signed_in_as_a_user_from_the_accredited_body
 
         when_i_visit_my_organisations_page
         and_i_click_request_pe_courses
@@ -164,8 +144,7 @@ RSpec.feature "PE allocations" do
       given_accredited_body_exists
       given_training_provider_with_pe_fee_funded_course_exists
       given_the_accredited_body_has_declined_an_allocation
-
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_my_organisations_page
       and_i_click_request_pe_courses
@@ -184,8 +163,7 @@ RSpec.feature "PE allocations" do
       given_accredited_body_exists
       given_training_provider_with_pe_fee_funded_course_exists
       given_the_accredited_body_has_requested_a_repeat_allocation
-
-      given_i_am_signed_in_as_an_admin
+      given_i_am_signed_in_as_a_user_from_the_accredited_body
 
       when_i_visit_my_organisations_page
       and_i_click_request_pe_courses
@@ -218,7 +196,13 @@ private
   def when_i_visit_pe_allocations_request_page
     stub_api_v2_resource(@accredited_body)
     stub_api_v2_resource(@accredited_body.recruitment_cycle)
-    stub_api_v2_resource(@training_provider)
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@training_provider.provider_code}/show_any" \
+      "?recruitment_cycle_year=2020",
+      resource_list_to_jsonapi([@training_provider]),
+    )
 
     footer_stub_for_access_request_count
 
@@ -232,10 +216,6 @@ private
 
   def given_accredited_body_exists
     @accredited_body = build(:provider, accredited_body?: true)
-  end
-
-  def given_i_am_signed_in_as_an_admin
-    stub_omniauth(user: build(:user, :admin))
   end
 
   def when_i_visit_my_organisations_page
@@ -255,16 +235,16 @@ private
   end
 
   def given_accredited_body_exists
-    @accredited_body = build(:provider, accredited_body?: true)
+    @accredited_body = build(:provider, accredited_body?: true, users: [user])
     stub_api_v2_resource(@accredited_body.recruitment_cycle)
   end
 
-  def given_i_am_signed_in
-    stub_omniauth(user: build(:user))
+  def user
+    @user ||= build(:user)
   end
 
-  def given_i_am_signed_in_as_an_admin
-    stub_omniauth(user: build(:user, :admin))
+  def given_i_am_signed_in_as_a_user_from_the_accredited_body
+    stub_omniauth(user: user)
   end
 
   def given_training_provider_with_pe_fee_funded_course_exists
@@ -303,7 +283,12 @@ private
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
       resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
-    stub_api_v2_resource(@training_provider)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@training_provider.provider_code}/show_any" \
+      "?recruitment_cycle_year=2020",
+      resource_list_to_jsonapi([@training_provider]),
+    )
     stub_api_v2_resource(@allocation)
   end
 
@@ -313,7 +298,14 @@ private
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
       resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
-    stub_api_v2_resource(@training_provider)
+
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@training_provider.provider_code}/show_any" \
+      "?recruitment_cycle_year=2020",
+      resource_list_to_jsonapi([@training_provider]),
+    )
+
     stub_api_v2_resource(@allocation)
   end
 
@@ -398,7 +390,13 @@ private
   end
 
   def when_i_click_confirm_choice
-    stub_api_v2_resource(@training_provider)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@training_provider.provider_code}/show_any" \
+      "?recruitment_cycle_year=2020",
+      resource_list_to_jsonapi([@training_provider]),
+    )
+
     click_on "Confirm choice"
   end
 
@@ -507,7 +505,13 @@ private
   end
 
   def and_i_click_on_first_view_requested_confirmation
-    stub_api_v2_resource(@training_provider)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@training_provider.provider_code}/show_any" \
+      "?recruitment_cycle_year=2020",
+      resource_list_to_jsonapi([@training_provider]),
+    )
+
     stub_api_v2_request(
       "/allocations/#{@allocation.id}",
       resource_list_to_jsonapi([@allocation]),
@@ -516,7 +520,13 @@ private
   end
 
   def and_i_click_on_first_view_not_requested_confirmation
-    stub_api_v2_resource(@training_provider)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@training_provider.provider_code}/show_any" \
+      "?recruitment_cycle_year=2020",
+      resource_list_to_jsonapi([@training_provider]),
+    )
+
     stub_api_v2_request(
       "/allocations/#{@allocation.id}",
       resource_list_to_jsonapi([@allocation]),

@@ -34,8 +34,8 @@ describe "providers/show" do
     context "user isn't an admin" do
       let(:admin) { false }
 
-      it "doesn't display the PE allocation link" do
-        expect(provider_show_page).not_to have_request_allocations_link
+      it "displays the PE allocation link" do
+        expect(provider_show_page).to have_request_allocations_link
       end
 
       it "displays the 'Courses as an accredited body' link" do

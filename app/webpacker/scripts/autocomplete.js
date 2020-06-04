@@ -31,7 +31,9 @@ export const request = endpoint => {
   };
 };
 
-export const initAutocomplete = ($el, $input, inputValueTemplate) => {
+export const initAutocomplete = ($el, $input, inputValueTemplate, options = {}) => {
+  let path = options.path || "/providers/suggest";
+
   accessibleAutocomplete({
     element: $el,
     id: $input.id,
@@ -39,7 +41,7 @@ export const initAutocomplete = ($el, $input, inputValueTemplate) => {
     name: $input.name,
     defaultValue: $input.value,
     minLength: 3,
-    source: request("/providers/suggest"),
+    source: request(path),
     templates: {
       inputValue: inputValueTemplate,
       suggestion: result => result && `${result.name} (${result.code})`

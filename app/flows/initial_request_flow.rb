@@ -153,7 +153,7 @@ private
     return @training_providers_from_query if @training_providers_from_query
 
     query = params[:training_provider_query]
-    @training_providers_from_query ||= ProviderSuggestion.suggest(query)
+    @training_providers_from_query ||= ProviderSuggestion.suggest_any(query)
   end
 
   def training_providers_from_query_without_associated
@@ -206,10 +206,8 @@ private
     @training_provider ||= if params[:training_provider_code] == "-1"
                              training_providers_from_query.first
                            else
-                             Provider
-                               .where(recruitment_cycle_year: recruitment_cycle.year)
-                               .find(params[:training_provider_code])
-                               .first
+                             p = Provider.new(recruitment_cycle_year: recruitment_cycle.year, provider_code: params[:training_provider_code])
+                             p.show_any(recruitment_cycle_year: recruitment_cycle.year).first
                            end
   end
 

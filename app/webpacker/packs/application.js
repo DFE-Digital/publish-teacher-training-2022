@@ -74,7 +74,7 @@ try {
     initAutocomplete($autocomplete, $provider_input, provider_template);
   }
   if($autocomplete && $allocation_training_provider_input) {
-    initAutocomplete($autocomplete, $allocation_training_provider_input, provider_template);
+    initAutocomplete($autocomplete, $allocation_training_provider_input, provider_template, {path: "/providers/suggest_any"});
   }
 } catch (err) {
   console.error("Failed to initialise provider autocomplete:", err);

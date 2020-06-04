@@ -4,7 +4,6 @@ module Providers
     before_action :build_provider
     before_action :build_training_provider, except: %i[index initial_request]
     before_action :require_provider_to_be_accredited_body!
-    before_action :require_admin_permissions!
 
     PE_SUBJECT_CODE = "C6".freeze
 
@@ -78,10 +77,10 @@ module Providers
   private
 
     def build_training_provider
-      @training_provider = Provider
-       .where(recruitment_cycle_year: @recruitment_cycle.year)
-       .find(params[:training_provider_code])
-       .first
+      return @training_provider if @training_provider
+
+      p = Provider.new(recruitment_cycle_year: @recruitment_cycle.year, provider_code: params[:training_provider_code])
+      @training_provider = p.show_any(recruitment_cycle_year: @recruitment_cycle.year).first
     end
 
     def build_provider
@@ -99,10 +98,6 @@ module Providers
 
     def require_provider_to_be_accredited_body!
       render "errors/not_found", status: :not_found unless @provider.accredited_body?
-    end
-
-    def require_admin_permissions!
-      render "errors/forbidden", status: :forbidden unless user_is_admin?
     end
   end
 end
