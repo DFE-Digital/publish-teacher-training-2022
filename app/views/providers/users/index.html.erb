@@ -1,12 +1,13 @@
 <%= content_for :page_title, "Users" %>
+<%= content_for :before_content, render_breadcrumbs(:users) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Users</h1>
     <p class="govuk-body">
-      These users currently have access to this account. They can manage all your course and organisation details, including publishing, closing and withdrawing courses.
+      These users currently have access to this organisation. They can manage all your course and organisation details, including publishing, closing and withdrawing courses.
     </p>
-    <%= link_to "Invite user", request_access_provider_path(code: @provider.provider_code), class: "govuk-button" %>
+    <%= link_to "Request access for someone else", request_access_provider_path(code: @provider.provider_code), class: "govuk-button" %>
     <% @users.each do |user| %>
       <div>
         <h2 class="govuk-heading-m govuk-!-margin-bottom-1">

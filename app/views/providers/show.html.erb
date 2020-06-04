@@ -44,8 +44,8 @@
       <% if @provider_view.show_notifications_link? %>
         <%= render partial: "providers/notifications_sign_up_link" %>
       <% end %>
-      <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= govuk_link_to "Request access", request_access_provider_path(code: @provider.provider_code) %></h2>
-      <p class="govuk-body">Request a DfE Sign-in account for others who manage your courses.</p>
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= govuk_link_to "Users", users_provider_path(code: @provider.provider_code) %></h2>
+      <p class="govuk-body">View users who manage your courses.</p>
 
       <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= govuk_link_to "UCAS contacts", provider_ucas_contacts_path(provider_code: @provider.provider_code) %></h2>
       <p class="govuk-body">Update or request UCAS contact details.</p>
