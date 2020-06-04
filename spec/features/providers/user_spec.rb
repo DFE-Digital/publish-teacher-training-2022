@@ -48,7 +48,7 @@ feature "Provider users page" do
   end
 
   def when_i_click_on_request_access
-    click_on("Invite user")
+    click_on("Request access for someone else")
   end
 
   def then_i_see_the_request_access_form
