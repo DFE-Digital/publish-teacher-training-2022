@@ -29,7 +29,7 @@ private
 
   def number_of_places_valid?
     !number_of_places.empty? &&
-      !number_of_places.include?(".") &&
+      /\A\d+\z/.match?(number_of_places) &&
       number_of_places.to_i.positive?
   end
 end

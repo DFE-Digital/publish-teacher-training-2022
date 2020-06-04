@@ -63,9 +63,9 @@ RSpec.describe InitialRequestForm do
       end
     end
 
-    context "when number_of_places is a letter" do
+    context "when number_of_places contains a letter" do
       subject do
-        described_class.new(number_of_places: "a")
+        described_class.new(number_of_places: "3a")
       end
 
       it "returns an error" do

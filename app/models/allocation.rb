@@ -29,13 +29,6 @@ class Allocation < Base
     number_of_places.to_i.positive?
   end
 
-  def add_invalid_number_of_places_errors
-    errors.add(
-      :number_of_places,
-      "We could not find this organisation - please check your information and try ",
-    )
-  end
-
   def repeat_request?
     request_type == Allocation::RequestTypes::REPEAT
   end
@@ -48,7 +41,7 @@ private
 
   def number_of_places_valid?
     !number_of_places.to_s.empty? &&
-      !number_of_places.to_s.include?(".") &&
+      /\A\d+\z/.match?(number_of_places.to_s) &&
       number_of_places.to_i.positive?
   end
 end

@@ -84,7 +84,7 @@ class InitialRequestFlow
 private
 
   def valid_number_of_places?
-    params[:number_of_places] && !params[:number_of_places].include?(".") && params[:number_of_places].to_i.positive?
+    params[:number_of_places] && /\A\d+\z/.match?(params[:number_of_places]) && params[:number_of_places].to_i.positive?
   end
 
   def number_of_places_zero?

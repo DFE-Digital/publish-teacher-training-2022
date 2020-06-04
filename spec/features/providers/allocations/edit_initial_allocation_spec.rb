@@ -149,7 +149,7 @@ RSpec.feature "PE allocations" do
           and_i_click_continue
           then_i_see_edit_number_of_places_page
 
-          when_i_fill_in_the_number_of_places_input_with_a_letter
+          when_i_fill_in_the_number_of_places_input_with_a_letter_and_number
           and_i_click_continue
 
           then_i_see_edit_number_of_places_page
@@ -268,8 +268,8 @@ RSpec.feature "PE allocations" do
     number_of_places_page.number_of_places_field.fill_in(with: "1.1")
   end
 
-  def when_i_fill_in_the_number_of_places_input_with_a_letter
-    number_of_places_page.number_of_places_field.fill_in(with: "a")
+  def when_i_fill_in_the_number_of_places_input_with_a_letter_and_number
+    number_of_places_page.number_of_places_field.fill_in(with: "3a")
   end
 
   def when_i_fill_in_the_number_of_places_input_with_nothing

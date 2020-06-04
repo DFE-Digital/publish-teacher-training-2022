@@ -452,7 +452,7 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_fill_in_the_number_of_places_input_with_a_letter
-    number_of_places_page.number_of_places_field.fill_in(with: "a")
+    number_of_places_page.number_of_places_field.fill_in(with: "3a")
   end
 
   def when_i_fill_in_the_number_of_places_input_with_zero
