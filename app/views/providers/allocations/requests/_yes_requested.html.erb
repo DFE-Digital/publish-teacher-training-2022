@@ -5,28 +5,30 @@
     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7" data-qa="page-heading">
       <h1 class="govuk-panel__title">Request sent</h1>
       <p class="govuk-panel__body govuk-!-margin-bottom-0">
-        You’ve confirmed that <%= @training_provider.provider_name %> would like to offer PE in 2021/22
+        You’ve confirmed that <%= @training_provider.provider_name %> would like to offer PE in 2021 &thinsp;–&thinsp; 2022.
       </p>
     </div>
     <h2 class="govuk-heading-m">What happens now?</h2>
     <p class="govuk-body">
-      You have until 10 July to change this request. On or after 10 July,
-      we’ll send an email to your organisation confirming the number of places.
+      You have until 10 July to change this request. After this date,  we’ll send an email to your
+      organisation confirming your choice and setting out next steps.
     </p>
-
+    <h2 class="govuk-heading-m">
+      How many places will be allocated?
+    </h2>
     <p class="govuk-body">
-      In September we’ll let you know how many places we’ve allocated for this course.
+      In September we'll let you know how many places we've allocated for this course.
       <% unless @allocation.initial_request? %>
-        This will be based on the current year’s recruitment figure of <strong><%= @allocation.number_of_places %></strong>.
+        This will be based on the organisation's allocation for 2020 - 2021.
       <% end %>
     </p>
+
     <p class="govuk-body">
       If you have any questions, contact <%= bat_contact_mail_to %>.
     </p>
-    <p class="govuk-body">You have until 10 July to change this request.</p>
 
     <p class="govuk-body">
-      <%= link_to 'Return to Request PE courses for 2021/22',
+      <%= link_to raw('Return to Request PE courses for 2021&thinsp;–&thinsp;2022'),
                   provider_recruitment_cycle_allocations_path(@provider.provider_code, Settings.current_cycle),
                   class: "govuk-link govuk-!-font-weight-bold" %>
     </p>

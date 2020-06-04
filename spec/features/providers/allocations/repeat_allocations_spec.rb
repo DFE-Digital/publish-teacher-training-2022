@@ -334,11 +334,11 @@ private
   end
 
   def and_i_click_request_pe_courses
-    click_on "Request PE courses for 2021/22"
+    click_on "Request PE courses for 2021 – 2022"
   end
 
   def then_i_see_the_pe_allocations_page
-    expect(find("h1")).to have_content("Request PE courses for 2021/22")
+    expect(find("h1")).to have_content("Request PE courses for 2021 – 2022")
   end
 
   def and_i_see_only_repeat_allocation_statuses
