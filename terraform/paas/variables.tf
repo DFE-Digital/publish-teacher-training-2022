@@ -26,18 +26,14 @@ variable SENTRY_DSN {
   type = string
 }
 
-variable SETTINGS__GOOGLE__GCP_API_KEY {
-  type = string
-}
-
 variable SETTINGS__GOOGLE__MAPS_API_KEY {
   type = string
 }
 
-variable SETTINGS_DFE_SIGNIN_SECRET {
+variable SETTINGS__DFE_SIGNIN__SECRET {
   type = string
 }
 
-variable SETTINGS_LOGSTASH_HOST {
+variable SETTINGS__LOGSTASH__HOST {
   type = string
 }

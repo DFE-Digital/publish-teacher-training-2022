@@ -11,5 +11,6 @@ app_env = {
   RAILS_SERVE_STATIC_FILES                         = true
   WEBPACKER_DEV_SERVER_HOST                        = "webpacker"
   WEBSITE_SLOT_POLL_WORKER_FOR_CHANGE_NOTIFICATION = "0"
-  SETTINGS_LOGSTASH_PORT                           = 22135
+  SETTINGS__LOGSTASH__PORT                         = 22135
+  SETTINGS__DFE_SIGNIN__BASE_URL                   = "https://qa-publish-teacher-training-courses.london.cloudapps.digital"
 }

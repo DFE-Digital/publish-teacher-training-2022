@@ -40,3 +40,13 @@ end-to-end-tests/cypress/videos
 end-to-end-tests/cypress/screenshots
 end-to-end-tests/browsers
 end-to-end-tests/config/local.json
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/environment
+terraform.tfplan
+terraform.tfstate
+terraform.tfstate.d/
+./*.tfstate
+lock.json
