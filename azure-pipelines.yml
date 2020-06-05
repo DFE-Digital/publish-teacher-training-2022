@@ -35,36 +35,6 @@ steps:
     arguments: '--cache-from $(IMAGE_NAME):latest'
     addDefaultLabels: false
 
-- script: |
-    set -x
-    docker run --name test-run-image -d $(IMAGE_NAME)
-    docker exec test-run-image rake "parallel:spec[,, -O .azure_parallel]"
-    test_result=$?
-      if [ "$test_result" != "0" ]
-      then
-          echo "##vso[task.logissue type=error] Test task failed."
-          exit 1
-      fi
-    docker cp test-run-image:/app/rspec-output .
-    docker stop test-run-image
-    docker rm test-run-image
-  displayName: 'Run tests'
-
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: JUnit
-    testResultsFiles: 'rspec-output/*.xml'
-    failedTaskOnFailedTest: true
-
-- task: Docker@1
-  displayName: Run javascript tests
-  inputs:
-    command: Run an image
-    imageName: $(IMAGE_NAME)
-    containerCommand: yarn test
-    runInBackground: false
-
 - task: Docker@1
   displayName: Run ruby linter
   inputs:
@@ -79,6 +49,36 @@ steps:
     command: Run an image
     imageName: $(IMAGE_NAME)
     containerCommand: scss-lint app/webpacker/stylesheets
+    runInBackground: false
+
+- script: |
+    set -x
+    docker run --name test-run-image -d $(IMAGE_NAME)
+    docker exec test-run-image rake "parallel:spec[,, -O .azure_parallel]"
+    test_result=$?
+      if [ "$test_result" != "0" ]
+      then
+          echo "##vso[task.logissue type=error] Test task failed."
+          exit 1
+      fi
+    docker cp test-run-image:/app/rspec-output .
+    docker stop test-run-image
+    docker rm test-run-image
+  displayName: 'Run ruby tests'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: 'rspec-output/*.xml'
+    failedTaskOnFailedTest: true
+
+- task: Docker@1
+  displayName: Run javascript tests
+  inputs:
+    command: Run an image
+    imageName: $(IMAGE_NAME)
+    containerCommand: yarn test
     runInBackground: false
 
 - task: Docker@1
