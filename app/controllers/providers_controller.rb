@@ -71,13 +71,7 @@ class ProvidersController < ApplicationController
   def training_providers
     @training_providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
     @training_providers.delete_if { |tp| tp.provider_code == @provider.provider_code }
-
-    courses = Course.where(
-      recruitment_cycle_year: @recruitment_cycle.year,
-      accrediting_provider_code: @provider.provider_code,
-    )
-
-    @course_counts = courses.group_by(&:provider_code).transform_values(&:size)
+    @course_counts = @training_providers.meta[:accredited_courses_counts]
   end
 
   def training_provider_courses

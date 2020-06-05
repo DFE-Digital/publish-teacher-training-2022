@@ -26,7 +26,15 @@ feature "get training_providers", type: :feature do
     stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
       "#{accrediting_body1.provider_code}/training_providers?recruitment_cycle_year=#{accrediting_body1.recruitment_cycle.year}",
-      resource_list_to_jsonapi([accrediting_body1, training_provider1, training_provider2]),
+      resource_list_to_jsonapi(
+        [accrediting_body1, training_provider1, training_provider2],
+        meta: {
+          accredited_courses_counts: {
+            "#{training_provider1.provider_code}": "1",
+            "#{training_provider2.provider_code}": "2",
+          },
+        },
+      ),
     )
     stub_api_v2_resource_collection([access_request])
   end
