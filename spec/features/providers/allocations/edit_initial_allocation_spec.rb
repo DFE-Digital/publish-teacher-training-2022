@@ -29,6 +29,11 @@ RSpec.feature "PE allocations" do
       then_see_the_check_answers_page
       and_the_number_is_the_one_i_entered
 
+      when_i_click_change
+      then_i_see_edit_number_of_places_page
+      and_i_see_the_updated_number_of_places
+      and_i_click_continue
+
       when_i_click_send_request
       then_i_see_confirmation_page
     end
@@ -226,6 +231,10 @@ RSpec.feature "PE allocations" do
     click_on "Change"
   end
 
+  def when_i_click_change
+    click_on "Change"
+  end
+
   def then_i_see_do_you_want_page
     expect(find("h1")).to have_content("Do you want to request PE for this organisation?")
   end
@@ -278,6 +287,10 @@ RSpec.feature "PE allocations" do
 
   def and_the_number_is_the_one_i_entered
     expect(check_answers_page.number_of_places.text).to have_content("10")
+  end
+
+  def and_i_see_the_updated_number_of_places
+    expect(number_of_places_page.number_of_places_field.value).to have_content("10")
   end
 
   def when_i_click_send_request
