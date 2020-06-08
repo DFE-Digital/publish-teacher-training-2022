@@ -62,6 +62,8 @@ steps:
           exit 1
       fi
     docker cp test-run-image:/app/rspec-output .
+    docker cp test-run-image:/app/coverage .
+
     docker stop test-run-image
     docker rm test-run-image
   displayName: 'Run ruby tests'
@@ -88,6 +90,22 @@ steps:
     imageName: $(IMAGE_NAME)
     containerCommand: rails brakeman
     runInBackground: false
+
+- script: |
+    set -x
+    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    chmod +x ./cc-test-reporter
+
+    ./cc-test-reporter before-build
+    # As the tests were run in the docker container the paths to the coverage are prefixed with "/app/"
+    # So we need to replace it with the docker hosts current directory
+    sed "s|\"/app/|\"`pwd`/|g" coverage/.resultset.json -i
+    ./cc-test-reporter after-build
+  displayName: 'Publish Code Climate Test Coverage'
+  env:
+    CC_TEST_REPORTER_ID: $(ccReporterID)
+    AGENT_JOBSTATUS: $(Agent.JobStatus)
+    GIT_BRANCH: $(Build.SourceBranchName)
 
 - task: Docker@1
   displayName: Tag image with current build number $(Build.BuildNumber)
