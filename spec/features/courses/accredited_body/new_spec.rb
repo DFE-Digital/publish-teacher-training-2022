@@ -49,7 +49,7 @@ feature "Edit accredited body" do
 
     context "when selecting an accredited body" do
       let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
-      let(:selected_fields) { { level: "primary", accrediting_provider_code: accrediting_provider_1.provider_code } }
+      let(:selected_fields) { { level: "primary", accredited_body_code: accrediting_provider_1.provider_code } }
       let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
       before do
@@ -85,7 +85,7 @@ feature "Edit accredited body" do
     context "Searching for a new accredited body" do
       context "with some results" do
         before do
-          stub_api_v2_build_course(level: "primary", accrediting_provider_code: "other")
+          stub_api_v2_build_course(level: "primary", accredited_body_code: "other")
           searching_returns_some_results
           choose "A new accredited body you’re working with"
           fill_in "Name of accredited body", with: "ACME"
@@ -98,7 +98,7 @@ feature "Edit accredited body" do
 
         context "When selecting an accredited body" do
           let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
-          let(:selected_fields) { { level: "primary", accrediting_provider_code: "A01" } }
+          let(:selected_fields) { { level: "primary", accredited_body_code: "A01" } }
           let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
           before do

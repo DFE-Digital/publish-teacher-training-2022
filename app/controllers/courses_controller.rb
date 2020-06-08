@@ -217,7 +217,7 @@ private
         :start_date,
         :funding_type,
         :age_range_in_years,
-        :accrediting_provider_code,
+        :accredited_body_code,
         subjects_ids: [],
         sites_ids: [],
       )

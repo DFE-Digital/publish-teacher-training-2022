@@ -87,7 +87,7 @@ describe "Providers", type: :request do
         stub_api_v2_resource(accredited_provider)
         stub_api_v2_request(
           "/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}/courses" \
-          "?filter[accrediting_provider_code]=#{accredited_provider.provider_code}&include=provider",
+          "?filter[accredited_body_code]=#{accredited_provider.provider_code}&include=provider",
           resource_list_to_jsonapi([course], include: :provider),
         )
 

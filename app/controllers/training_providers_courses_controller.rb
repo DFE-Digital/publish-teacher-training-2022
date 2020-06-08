@@ -7,7 +7,7 @@ class TrainingProvidersCoursesController < ApplicationController
 
   def index
     course_csv_rows = Course.includes(:provider)
-      .where(recruitment_cycle_year: @recruitment_cycle.year, accrediting_provider_code: @provider.provider_code)
+      .where(recruitment_cycle_year: @recruitment_cycle.year, accredited_body_code: @provider.provider_code)
       .map(&:decorate)
       .map do |c|
       {

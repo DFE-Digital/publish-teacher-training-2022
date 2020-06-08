@@ -20,7 +20,7 @@ feature "get training_providers", type: :feature do
     stub_api_v2_resource(accrediting_body1.recruitment_cycle)
     stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/courses" \
-      "?filter[accrediting_provider_code]=#{accrediting_body1.provider_code}",
+      "?filter[accredited_body_code]=#{accrediting_body1.provider_code}",
       resource_list_to_jsonapi([course1, course3, course4]),
     )
     stub_api_v2_request(
