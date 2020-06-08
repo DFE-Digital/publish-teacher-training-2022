@@ -75,6 +75,15 @@
       initial_request_provider_recruitment_cycle_allocations_path(
         @provider.provider_code,
         @provider.recruitment_cycle_year),
-      class: "govuk-button govuk-!-margin-bottom-2" %>
+      class: "govuk-button govuk-!-margin-bottom-8" %>
+
+    <h2 class="govuk-heading-m">
+      Tell us what you think about this process
+    </h2>
+    <p class="govuk-body">
+      <%= link_to "Take part in our brief survey to help us improve Publish",
+                  "https://forms.gle/4EuNG8XGm3AqavRU9",
+                  class: "govuk-link govuk-!-font-weight-bold",
+                  target: "_blank" %>
   </div>
 </div>
