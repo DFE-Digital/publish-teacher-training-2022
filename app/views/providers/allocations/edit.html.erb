@@ -7,7 +7,6 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-xl"><%= @training_provider.provider_name %></span>
     <%= form_with url: provider_recruitment_cycle_allocation_path(
                     id: @allocation.id
                   ),
@@ -15,7 +14,8 @@
                   scope: "",
                   method: :patch,
                   builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
-      <%= form.govuk_radio_buttons_fieldset(:old_department_id, legend: { size: 'xl', text: page_title }) do %>
+      <%= form.govuk_radio_buttons_fieldset(:old_department_id, legend: { size: 'xl', text: page_title },
+                                            caption: { text: "#{@training_provider.provider_name} ", size:'xl'}) do %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::REPEAT, label: { text: "Yes" } %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
       <% end %>

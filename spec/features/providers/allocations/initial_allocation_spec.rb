@@ -383,7 +383,7 @@ RSpec.feature "PE allocations" do
   end
 
   def then_i_see_number_of_places_page
-    expect(number_of_places_page.header.text).to eq("How many places would you like to request?")
+    expect(number_of_places_page.header.text).to have_content("How many places would you like to request?")
   end
 
   def then_i_see_pick_a_provider_page
