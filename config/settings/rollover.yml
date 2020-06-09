@@ -1,0 +1,8 @@
+dfe_signin:
+  secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
+  base_url: https://s121d04-rollover-publish-as.azurewebsites.net
+manage_backend:
+  base_url: https://s121d04-rollover-ttapi-as.azurewebsites.net
+environment:
+  label: "QA"
+  selector_name: "qa"
