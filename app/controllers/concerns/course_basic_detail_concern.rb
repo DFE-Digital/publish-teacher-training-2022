@@ -126,7 +126,7 @@ private
           :master_subject_id,
           :subordinate_subject_id,
           :funding_type,
-          :accrediting_provider_code,
+          :accredited_body_code,
           sites_ids: [],
           subjects_ids: [],
         )

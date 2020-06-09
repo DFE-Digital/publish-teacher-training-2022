@@ -10,7 +10,7 @@ module Courses
     end
 
     def continue
-      other_selected_with_no_autocompleted_code = course_params[:accrediting_provider_code] == "other" && @autocompleted_provider_code.blank?
+      other_selected_with_no_autocompleted_code = course_params[:accredited_body_code] == "other" && @autocompleted_provider_code.blank?
 
       if other_selected_with_no_autocompleted_code
         redirect_to(
@@ -20,7 +20,7 @@ module Courses
           ),
         )
       else
-        params[:course][:accrediting_provider_code] = @autocompleted_provider_code if @autocompleted_provider_code.present?
+        params[:course][:accredited_body_code] = @autocompleted_provider_code if @autocompleted_provider_code.present?
         super
       end
     end
@@ -40,13 +40,13 @@ module Courses
 
     def update
       build_provider
-      code = update_course_params[:accrediting_provider_code]
+      code = update_course_params[:accredited_body_code]
       query = update_course_params[:accredited_body]
 
       @errors = errors_for_search_query(code, query)
       return render :edit if @errors.present?
 
-      if update_params[:accrediting_provider_code] == "other"
+      if update_params[:accredited_body_code] == "other"
         redirect_to_provider_search
       elsif @course.update(update_params)
         redirect_to_update_successful
@@ -75,7 +75,7 @@ module Courses
     end
 
     def error_keys
-      [:accrediting_provider_code]
+      [:accredited_body_code]
     end
 
     def redirect_to_provider_search
@@ -115,7 +115,7 @@ module Courses
       if code == "other" && query.length < 3
         errors = { accredited_body: ["Accredited body search too short, enter 2 or more characters"] }
       elsif code.blank?
-        errors = { accrediting_provider_code: ["Pick an accredited body"] }
+        errors = { accredited_body_code: ["Pick an accredited body"] }
       end
 
       errors
@@ -133,17 +133,17 @@ module Courses
     def update_course_params
       params.require(:course).permit(
         :autocompleted_provider_code,
-        :accrediting_provider_code,
+        :accredited_body_code,
         :accredited_body,
       )
     end
 
     def update_params
       autocompleted_code = update_course_params[:autocompleted_provider_code]
-      code = update_course_params[:accrediting_provider_code]
+      code = update_course_params[:accredited_body_code]
 
       {
-        accrediting_provider_code: autocompleted_code.presence || code,
+        accredited_body_code: autocompleted_code.presence || code,
       }
     end
   end

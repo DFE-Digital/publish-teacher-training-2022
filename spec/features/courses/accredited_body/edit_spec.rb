@@ -1,6 +1,6 @@
 require "rails_helper"
 
-id_selector = ->(code) { "course_accrediting_provider_code_#{code.downcase}" }
+id_selector = ->(code) { "course_accredited_body_code_#{code.downcase}" }
 for_selector = ->(code) { "[for=\"#{id_selector.call(code)}\"]" }
 
 feature "Edit accredited body", type: :feature do
@@ -149,7 +149,7 @@ feature "Edit accredited body", type: :feature do
           course_code: course.course_code,
           type: "courses",
           attributes: {
-            accrediting_provider_code: accrediting_provider_1.provider_code,
+            accredited_body_code: accrediting_provider_1.provider_code,
           },
         },
       }.to_json)
