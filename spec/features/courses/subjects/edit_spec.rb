@@ -132,8 +132,7 @@ feature "Edit course subjects", type: :feature do
           subjects_page.load_with_course(course)
           edit_subject_stub = stub_api_v2_resource(course, method: :patch)
 
-          subjects_page.subjects_fields.select(subjects.first.subject_name)
-          subjects_page.subordinate_subject_accordion.click
+          subjects_page.master_subject_fields.select(subjects.first.subject_name)
           subjects_page.subordinate_subject_fields.select("")
           subjects_page.save.click
 
@@ -171,8 +170,7 @@ feature "Edit course subjects", type: :feature do
           subjects_page.load_with_course(course)
           edit_subject_stub = stub_api_v2_resource(course, method: :patch)
 
-          subjects_page.subjects_fields.select("")
-          subjects_page.subordinate_subject_accordion.click
+          subjects_page.master_subject_fields.select("")
           subjects_page.subordinate_subject_fields.select("")
           subjects_page.save.click
 
@@ -237,7 +235,6 @@ feature "Edit course subjects", type: :feature do
 
     scenario "it should automatically select the current subject" do
       subjects_page.load_with_course(course)
-      subjects_page.subordinate_subject_accordion.click
       expect(subjects_page).to have_select("course_subordinate_subject_id", selected: biology_subject.subject_name)
     end
 
