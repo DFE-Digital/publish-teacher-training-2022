@@ -4,5 +4,5 @@ dfe_signin:
 manage_backend:
   base_url: https://s121d04-rollover-ttapi-as.azurewebsites.net
 environment:
-  label: "QA"
+  label: "Rollover"
   selector_name: "qa"
