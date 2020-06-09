@@ -16,7 +16,7 @@
     </div>
 
     <% if course.level == "secondary" %>
-      <details class="govuk-details govuk-!-margin-top-6 govuk-!-margin-bottom-0" role="group" data-qa="course__subordinate_subject_accordion" <% if course.selected_subject_ids.second %>open<% end %>>
+      <details class="govuk-details govuk-!-margin-top-6 govuk-!-margin-bottom-0" role="group" data-qa="course__subordinate_subject_details" <% if course.selected_subject_ids.second %>open<% end %>>
         <summary class="govuk-details__summary" role="button">
           <span class="govuk-details__summary-text">
             Add a second subject (optional)

@@ -92,7 +92,7 @@ feature "Edit course subjects", type: :feature do
 
         subjects_page.subjects_fields.select(subjects.first.subject_name)
 
-        subjects_page.subordinate_subject_accordion.click
+        subjects_page.subordinate_subject_details.click
         subjects_page.subordinate_subject_fields.select(subjects.second.subject_name)
         subjects_page.save.click
         subjects_uri = URI(current_url)
@@ -246,7 +246,7 @@ feature "Edit course subjects", type: :feature do
         subjects_page.load_with_course(course)
 
         expect(subjects_page).to have_select("course_master_subject_id", selected: modern_languages_subject.subject_name)
-        subjects_page.subordinate_subject_accordion.click
+        subjects_page.subordinate_subject_details.click
         expect(subjects_page).to have_select("course_subordinate_subject_id", selected: nil)
       end
     end
