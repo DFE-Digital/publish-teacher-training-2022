@@ -27,6 +27,7 @@
 
       <%= form.govuk_error_summary %>
       <%= form.govuk_text_field :number_of_places,
+          value: params[:number_of_places] || allocation.number_of_places,
           label: {
             text: "How many places would you like to request?",
             size: "xl",
