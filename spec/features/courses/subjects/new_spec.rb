@@ -79,7 +79,7 @@ feature "New course level", type: :feature do
       before do
         build_course_with_selected_value_request
         new_subjects_page.subjects_fields.select(english.subject_name).click
-        new_subjects_page.subordinate_subject_accordion.click
+        new_subjects_page.subordinate_subject_details.click
         new_subjects_page.subordinate_subjects_fields.select(biology.subject_name).click
         new_subjects_page.continue.click
       end
@@ -135,7 +135,7 @@ feature "New course level", type: :feature do
     let(:level) { :primary }
     scenario "Only displays the master subject field" do
       expect(new_subjects_page).to have_subjects_fields
-      expect(new_subjects_page).not_to have_subordinate_subject_accordion
+      expect(new_subjects_page).not_to have_subordinate_subject_details
     end
 
     context "Selecting master subject" do

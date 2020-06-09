@@ -8,7 +8,7 @@ module PageObjects
           element :title, '[data-qa="page-heading"]'
           element :subjects_fields, '[data-qa="course__subjects"]'
           element :master_subject_fields, '[data-qa="course__master_subject"]'
-          element :subordinate_subject_accordion, '[data-qa="course__subordinate_subject_accordion"]'
+          element :subordinate_subject_details, '[data-qa="course__subordinate_subject_details"]'
           element :subordinate_subjects_fields, '[data-qa="course__subordinate_subjects"]'
           element :continue, '[data-qa="course__save"]'
           element :google_form_link, '[data-qa="course__google_form_link"]'
