@@ -24,16 +24,15 @@
                     model: allocation,
                     method: :post,
                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+
       <%= form.govuk_error_summary %>
-
-      <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
-
-    <%= form.govuk_text_field :number_of_places,
+      <%= form.govuk_text_field :number_of_places,
           label: {
             text: "How many places would you like to request?",
             size: "xl",
             tag: "h1",
           },
+          caption: { text: "#{training_provider.provider_name} ", size:'xl'},
           pattern: "[0-9]*",
           inputmode: "numeric",
           width: 10 do %>
@@ -42,8 +41,7 @@
           Say how many places the organisation would like to offer for this
           course - make sure this number is as accurate as possible.
         </p>
-
-    <% end %>
+      <% end %>
 
     <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
 
