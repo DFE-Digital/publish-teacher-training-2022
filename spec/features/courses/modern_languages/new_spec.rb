@@ -66,8 +66,8 @@ feature "new modern language", type: :feature do
     scenario "It displays the correct title" do
       visit_modern_languages
 
-      expect(page.title).to start_with("Pick modern languages")
-      expect(new_modern_languages_page.title.text).to eq("Pick modern languages")
+      expect(page.title).to start_with("Pick all the languages")
+      expect(new_modern_languages_page.title.text).to eq("Pick all the languages for this course")
     end
   end
 
