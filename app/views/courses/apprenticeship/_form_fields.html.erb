@@ -8,7 +8,7 @@
 
     <%= render "shared/error_messages", error_keys: [:funding_type, :program_type] %>
 
-    <div class="govuk-radios" data-module="govuk-radios">
+    <div class="govuk-radios govuk-!-margin-top-2" data-module="govuk-radios">
       <div class="govuk-radios__item">
         <%= form.radio_button :funding_type,
                 'apprenticeship',
