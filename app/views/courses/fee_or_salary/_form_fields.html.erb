@@ -4,11 +4,10 @@
       <h1 class="govuk-fieldset__heading">
         Is it fee paying or salaried?
       </h1>
-      <br>
     </legend>
 
     <%= render "shared/error_messages", error_keys: [:funding_type] %>
-    <div class="govuk-radios" data-module="govuk-radios">
+    <div class="govuk-radios govuk-!-margin-top-2" data-module="govuk-radios">
       <div class="govuk-radios__item">
         <%= form.radio_button :funding_type,
                 'fee',

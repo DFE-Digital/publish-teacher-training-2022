@@ -5,7 +5,7 @@
 
 <%= render 'shared/errors' %>
 
-<h1 class="govuk-heading-xl">
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
   Who is the accredited body?
 </h1>
 
@@ -18,7 +18,7 @@
                   method: :get do |form| %>
 
       <%= render "courses/new_fields_holder", form: form, except_keys: [:accrediting_provider_code] do |fields| %>
-        <div class="govuk-radios" data-module="govuk-radios" data-qa="course__accredited_body">
+        <div class="govuk-radios govuk-!-margin-top-2" data-module="govuk-radios" data-qa="course__accredited_body">
           <% if provider.accredited_bodies.length > 0 %>
             <%= render partial: "provider_suggestion",
               collection: provider.accredited_bodies,
