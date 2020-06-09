@@ -10,7 +10,7 @@
     </legend>
     <%= render "shared/error_messages", error_keys: [:modern_languages_subjects] %>
 
-    <div class="govuk-form-group govuk-!-margin-top-6" data-qa="course__languages">
+    <div class="govuk-form-group govuk-!-margin-top-2" data-qa="course__languages">
       <div class="govuk-checkboxes" data-module="govuk-checkboxes">
         <% course.meta["edit_options"]["modern_languages"].each do |language| %>
           <div class="govuk-checkboxes__item">
