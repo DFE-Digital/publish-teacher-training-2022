@@ -100,3 +100,6 @@ qa:
 
 research:
   <<: *production
+
+rollover:
+  <<: *production
