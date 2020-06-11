@@ -260,6 +260,12 @@ describe CourseDecorator do
         it { is_expected.to eq("Salary") }
       end
 
+      context "Apprenticeship" do
+        let(:course) { build :course, funding_type: "apprenticeship" }
+
+        it { is_expected.to eq("Salary") }
+      end
+
       context "Bursary and Scholarship" do
         let(:mathematics) { build(:subject, :mathematics, scholarship: "2000", bursary_amount: "3000") }
         let(:course) { build :course, subjects: [mathematics] }
