@@ -11,6 +11,8 @@ FactoryBot.define do
     accept_terms_date_utc { Time.current }
     organisation_users { [] }
     sign_in_user_id { Faker::Number.number(digits: 10) }
+    associated_with_accredited_body { false }
+    notifications_configured { true }
 
     trait :new do
       state { "new" }
@@ -18,6 +20,14 @@ FactoryBot.define do
 
     trait :transitioned do
       state { "transitioned" }
+    end
+
+    trait :rolled_over do
+      state { "rolled_over" }
+    end
+
+    trait :notifications_configured do
+      state { "notifications_configured" }
     end
 
     trait :inactive do

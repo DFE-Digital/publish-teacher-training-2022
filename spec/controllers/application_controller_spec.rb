@@ -113,7 +113,16 @@ describe ApplicationController, type: :controller do
           allow(Session).to receive(:create)
                               .with(first_name: user_info[:first_name],
                                     last_name: user_info[:last_name])
-                              .and_return(double(id: user_id, state: "new", admin: true))
+                              .and_return(
+                                double(
+                                  id: user_id,
+                                  state: "new",
+                                  admin: true,
+                                  associated_with_accredited_body: false,
+                                  notifications_configured: false,
+                                  attributes: {},
+                                ),
+                              )
           allow(Provider).to receive_message_chain(:where, :all)
                                .and_return(%w[one two])
 

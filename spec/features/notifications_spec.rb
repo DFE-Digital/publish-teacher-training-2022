@@ -8,7 +8,7 @@ feature "Notifications", type: :feature do
   let(:provider) { build :provider, accredited_body?: true }
   let(:providers) { [provider] }
   let(:access_request) { build :access_request }
-  let(:user) { build :user }
+  let(:user) { build :user, :notifications_configured }
 
   before do
     stub_omniauth(user: user)
@@ -142,6 +142,7 @@ private
   end
 
   def and_save_my_choice
+    stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
     notifications_index_page.save_button.click
   end
 

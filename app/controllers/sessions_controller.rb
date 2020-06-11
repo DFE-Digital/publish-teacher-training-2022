@@ -24,40 +24,42 @@ class SessionsController < ApplicationController
 
     Raven.tags_context(sign_in_user_id: current_user.fetch("uid"))
     add_token_to_connection
-    user = set_user_session
+    set_user_session
 
     # current_user['user_id'] won't be set until set_user_session is run
     Raven.user_context(id: current_user["user_id"])
     logger.debug { "User session create " + log_safe_current_user.to_s }
 
+    user = user_from_session
     redirect_to_correct_page(user)
   end
 
   def create_by_magic
     FeatureService.require(:signin_by_email)
 
-    user = Session.create_by_magic(
+    user_session = Session.create_by_magic(
       magic_link_token: params.require(:token),
       email: params.require(:email),
     )
 
-    if user
+    if user_session
       session[:auth_user] = HashWithIndifferentAccess.new(
         "uid" => nil,
         "info" => HashWithIndifferentAccess.new(
-          email: user.email,
-          first_name: user.first_name,
-          last_name: user.last_name,
+          email: user_session.email,
+          first_name: user_session.first_name,
+          last_name: user_session.last_name,
         ),
         "credentials" => HashWithIndifferentAccess.new(
           "id_token" => nil,
         ),
       )
-      set_session_info_for_user(user)
+      set_session_info_for_user(user_session)
       Raven.user_context(id: current_user["user_id"])
       logger.debug { "User session create_by_magic " + log_safe_current_user.to_s }
     end
 
+    user = user_from_session
     redirect_to_correct_page(user)
   end
 
@@ -111,12 +113,18 @@ private
   def redirect_to_correct_page(user)
     if user&.accept_terms_date_utc.nil?
       redirect_to accept_terms_path
-    elsif user&.state == "new"
-      redirect_to transition_info_path
-    elsif Settings.rollover && user&.state == "transitioned"
-      redirect_to rollover_path
+    elsif user.next_state
+      redirect_to redirect_path[user.next_state]
     else
       redirect_to session[:redirect_back_to] || root_path
     end
+  end
+
+  def redirect_path
+    {
+      transitioned: transition_info_path,
+      rolled_over: rollover_path,
+      notifications_configured: notifications_info_path,
+    }
   end
 end

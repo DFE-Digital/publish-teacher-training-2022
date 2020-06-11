@@ -17,14 +17,24 @@ class NotificationsController < ApplicationController
       return
     end
 
+    unless user.notifications_configured
+      UpdateUserService.call(user, "accept_notifications_screen!")
+    end
+
     user_notification_preferences.update(
       enabled: params[:user_notification_preferences][:explicitly_enabled],
     )
+
     flash[:success] = "Your notification preferences have been saved."
+
     redirect_to redirect_to_path
   end
 
 private
+
+  def user
+    @user = User.find(current_user["user_id"]).first
+  end
 
   def redirect_to_path
     if params[:user_notification_preferences][:provider_code].present?

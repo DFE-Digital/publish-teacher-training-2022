@@ -182,9 +182,18 @@ private
   def set_session_info_for_user(user)
     session[:auth_user]["user_id"] = user.id
     session[:auth_user]["state"] = user.state
+    session[:auth_user]["associated_with_accredited_body"] = user.associated_with_accredited_body
+    session[:auth_user]["notifications_configured"] = user.notifications_configured
     session[:auth_user]["admin"] = user.admin
+    session[:auth_user]["attributes"] = user.attributes
 
     add_provider_count_cookie
+  end
+
+  def user_from_session
+    User.new(
+      current_user["attributes"],
+    )
   end
 
   def add_provider_count_cookie

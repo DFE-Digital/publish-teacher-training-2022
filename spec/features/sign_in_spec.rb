@@ -2,6 +2,7 @@ require "rails_helper"
 
 feature "Sign in", type: :feature do
   let(:transition_info_page) { PageObjects::Page::TransitionInfo.new }
+  let(:notifications_info_page) { PageObjects::Page::NotificationsInfo.new }
   let(:rollover_page)        { PageObjects::Page::Rollover.new }
   let(:accept_terms_page)    { PageObjects::Page::AcceptTerms.new }
   let(:organisations_page)   { PageObjects::Page::OrganisationsPage.new }
@@ -33,9 +34,8 @@ feature "Sign in", type: :feature do
   end
 
   scenario "using DfE Sign-in" do
+    user = build(:user)
     allow(Settings).to receive(:rollover).and_return(true)
-    user = build :user
-
     stub_omniauth(user: user)
 
     visit root_path
@@ -45,63 +45,142 @@ feature "Sign in", type: :feature do
     expect(root_page).to be_displayed
   end
 
-  scenario "new user accepts the transition info page" do
-    allow(Settings).to receive(:rollover).and_return(true)
-    user = build :user, :new
+  describe "Interruption screens" do
+    before do
+      stub_omniauth(user: user)
+    end
 
-    stub_omniauth(user: user)
-    request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
+    describe "transition screen" do
+      let(:user) { build(:user, :new) }
+      let(:user_update_request) do
+        stub_request(
+          :patch,
+          "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
+        )
+                                    .with(body: /"state":"transitioned"/)
+      end
+      let(:user_get_request) { stub_api_v2_request("/users/#{user.id}", user.to_jsonapi) }
 
-    visit "/signin"
+      before do
+        user_get_request
+        user_update_request
+      end
 
-    expect(transition_info_page).to be_displayed
+      context "Rollover is enabled" do
+        let(:user) { build(:user, :new) }
+        let(:user_update_request) do
+          stub_request(
+            :patch,
+            "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
+          )
+                                      .with(body: /"state":"transitioned"/)
+        end
+        let(:user_get_request) { stub_api_v2_request("/users/#{user.id}", user.to_jsonapi) }
 
-    expect(transition_info_page.title).to have_content("Important new features")
-    transition_info_page.continue.click
+        before do
+          user_get_request
+          user_update_request
+          allow(Settings).to receive(:rollover).and_return(true)
+        end
 
-    expect(rollover_page).to be_displayed
-    expect(request).to have_been_made
-  end
+        scenario "new user accepts the transition info page" do
+          visit "/signin"
 
-  scenario "new user accepts the transition info page with rollover disabled" do
-    allow(Settings).to receive(:rollover).and_return(false)
-    user = build :user, :new
+          expect(transition_info_page).to be_displayed
+          expect(transition_info_page.title).to have_content("Important new features")
 
-    stub_omniauth(user: user)
-    request = stub_api_v2_request "/users/#{user.id}/accept_transition_screen", user.to_jsonapi, :patch
+          transition_info_page.continue.click
 
-    visit "/signin"
+          expect(rollover_page).to be_displayed
+          expect(user_update_request).to have_been_made
+        end
+      end
 
-    expect(transition_info_page).to be_displayed
+      context "Roll over is disabled" do
+        before do
+          allow(Settings).to receive(:rollover).and_return(false)
+        end
 
-    expect(transition_info_page.title).to have_content("Important new features")
-    transition_info_page.continue.click
+        scenario "new user accepts the transition info page" do
+          visit "/signin"
 
-    expect(root_page).to be_displayed
-    expect(request).to have_been_made
-  end
+          expect(transition_info_page).to be_displayed
+          expect(transition_info_page.title).to have_content("Important new features")
 
-  scenario "new user accepts the rollover page" do
-    allow(Settings).to receive(:rollover).and_return(true)
-    user = build :user, :transitioned
+          transition_info_page.continue.click
 
-    stub_omniauth(user: user)
-    request = stub_api_v2_request "/users/#{user.id}/accept_rollover_screen", user.to_jsonapi, :patch
+          expect(root_page).to be_displayed
+          expect(user_update_request).to have_been_made
+        end
+      end
+    end
 
-    visit "/signin"
+    describe "rollover screen" do
+      let(:user) { build(:user, :transitioned) }
+      let(:user_update_request) do
+        stub_request(
+          :patch,
+          "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
+        )
+                                    .with(body: /"state":"rolled_over"/)
+      end
+      let(:user_get_request) { stub_api_v2_request("/users/#{user.id}", user.to_jsonapi) }
 
-    expect(rollover_page).to be_displayed
+      before do
+        user_get_request
+        user_update_request
+        allow(Settings).to receive(:rollover).and_return(true)
+      end
 
-    expect(rollover_page.title).to have_content("Begin preparing for the next cycle")
-    rollover_page.continue.click
+      scenario "new user accepts the rollover page" do
+        visit "/signin"
 
-    expect(root_page).to be_displayed
-    expect(request).to have_been_made
+        expect(rollover_page).to be_displayed
+
+        expect(rollover_page.title).to have_content("Begin preparing for the next cycle")
+        rollover_page.continue.click
+
+        expect(root_page).to be_displayed
+        expect(user_update_request).to have_been_made
+      end
+    end
+
+    describe "notifications screen" do
+      let(:user) { build(:user, :rolled_over, associated_with_accredited_body: true, notifications_configured: false) }
+      let(:user_update_request) do
+        stub_request(
+          :patch,
+          "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
+        )
+                                    .with(body: /"state":"notifications_configured"/)
+      end
+      let(:user_get_request) { stub_api_v2_request("/users/#{user.id}", user.to_jsonapi) }
+
+      before do
+        user_get_request
+        user_update_request
+      end
+
+      scenario "accredited body user accepts the new accredited body features page" do
+        visit "/signin"
+
+        expect(notifications_info_page).to be_displayed
+
+        expect(notifications_info_page).to have_content("Get notifications about your courses")
+        rollover_page.continue.click
+
+        expect(root_page).to be_displayed
+        expect(user_update_request).to have_been_made
+      end
+    end
   end
 
   scenario "new inactive user accepts the terms and conditions page with rollover disabled" do
     allow(Settings).to receive(:rollover).and_return(false)
     user = build :user, :inactive, :new
+    update_request = stub_request(:patch, "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}")
+
+    stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
 
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
@@ -115,7 +194,6 @@ feature "Sign in", type: :feature do
     )
 
     stub_omniauth(user: user)
-    request = stub_api_v2_request "/users/#{user.id}/accept_terms", user.to_jsonapi, :patch
 
     visit "/signin"
 
@@ -131,6 +209,6 @@ feature "Sign in", type: :feature do
     accept_terms_page.continue.click
 
     expect(transition_info_page).to be_displayed
-    expect(request).to have_been_made
+    expect(update_request).to have_been_made
   end
 end
