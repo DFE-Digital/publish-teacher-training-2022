@@ -1,6 +1,6 @@
 class ApplicationDecorator < Draper::Decorator
   def status_tag
-    tag = h.content_tag(:div, status_tag_content.html_safe, class: "govuk-tag #{status_tag_css_class}")
+    tag = h.tag.div(status_tag_content.html_safe, class: "govuk-tag #{status_tag_css_class}")
     tag += unpublished_status_hint if object.has_unpublished_changes?
     tag.html_safe
   end
@@ -31,6 +31,6 @@ private
   end
 
   def unpublished_status_hint
-    h.content_tag(:div, "*&nbsp;Unpublished&nbsp;changes".html_safe, class: "govuk-body govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1")
+    h.tag.div("*&nbsp;Unpublished&nbsp;changes".html_safe, class: "govuk-body govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1")
   end
 end

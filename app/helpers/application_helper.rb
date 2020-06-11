@@ -29,10 +29,9 @@ module ApplicationHelper
                field: field.to_s,
              )
            end
-    content_tag :a,
-                error,
-                class: "govuk-link govuk-!-display-block",
-                href: href
+    tag.a error,
+          class: "govuk-link govuk-!-display-block",
+          href: href
   end
 
   def enrichment_summary_label(model, key, fields)
@@ -40,14 +39,14 @@ module ApplicationHelper
       errors = fields.map { |field|
         @errors[field]&.map { |error| enrichment_error_link(model, field, error) }
       }.flatten
-      content_tag :dt, class: "govuk-summary-list__key app-course-parts__fields__label--error" do
+      tag.dt class: "govuk-summary-list__key app-course-parts__fields__label--error" do
         [
-          content_tag(:span, key),
+          tag.span(key),
           *errors,
         ].reduce(:+)
       end
     else
-      content_tag :dt, key, class: "govuk-summary-list__key"
+      tag.dt key, class: "govuk-summary-list__key"
     end
   end
 
@@ -60,11 +59,11 @@ module ApplicationHelper
     end
 
     data_qa = "enrichment__#{fields.first}"
-    content_tag :dd, value, class: css_class, data: { qa: data_qa }
+    tag.dd value, class: css_class, data: { qa: data_qa }
   end
 
   def enrichment_summary_item(model, key, value, fields)
-    content_tag :div, class: "govuk-summary-list__row" do
+    tag.div class: "govuk-summary-list__row" do
       enrichment_summary_label(model, key, fields) + enrichment_summary_value(value, fields)
     end
   end
