@@ -19,8 +19,10 @@ RSpec.feature "PE allocations" do
       and_i_click_change
 
       then_i_see_do_you_want_page
+      and_i_click_continue
+      then_i_see_an_error_message
 
-      when_i_select_yes
+      when_i_select_yes_with_error
       and_i_click_continue
       then_i_see_edit_number_of_places_page
 
@@ -239,8 +241,16 @@ RSpec.feature "PE allocations" do
     expect(find("h1")).to have_content("Do you want to request PE for this organisation?")
   end
 
+  def then_i_see_an_error_message
+    expect(page).to have_content("Select one option")
+  end
+
   def when_i_select_yes
     do_you_want_page.yes.click
+  end
+
+  def when_i_select_yes_with_error
+    choose "Yes"
   end
 
   def when_i_select_no

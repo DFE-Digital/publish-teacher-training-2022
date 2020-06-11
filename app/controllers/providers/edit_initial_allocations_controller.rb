@@ -1,7 +1,7 @@
 module Providers
   class EditInitialAllocationsController < ApplicationController
     def do_you_want
-      if request.post?
+      if posted_with_params
         case params[:allocation][:request_type]
         when AllocationsView::RequestType::INITIAL
           redirect_to number_of_places_provider_recruitment_cycle_allocation_path(
@@ -19,11 +19,11 @@ module Providers
           )
         end
       else
-        render locals: {
-          training_provider: training_provider,
-          allocation: allocation,
-          provider: provider,
-        }
+        validate_if_post_request
+        render locals: { training_provider: training_provider,
+                         allocation: allocation,
+                         provider: provider,
+                         allocation_model: allocation_model }
       end
     end
 
@@ -108,6 +108,10 @@ module Providers
                                 .first
     end
 
+    def allocation_model
+      @allocation_model ||= ChangeInitialRequestForm.new
+    end
+
     def update
       allocation.number_of_places = params[:allocation][:number_of_places].to_i
       allocation.set_all_dirty!
@@ -120,6 +124,14 @@ module Providers
 
     def destroy
       allocation.destroy
+    end
+
+    def posted_with_params
+      request.post? && params[:allocation]
+    end
+
+    def validate_if_post_request
+      allocation_model.valid? if request.post?
     end
   end
 end
