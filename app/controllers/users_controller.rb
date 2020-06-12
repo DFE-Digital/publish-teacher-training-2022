@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def accept_transition_info
-    accept_screen("accept_transition_screen", Settings.rollover ? rollover_path : providers_path)
+    accept_screen("accept_transition_screen", rollover_path)
   end
 
   def accept_rollover

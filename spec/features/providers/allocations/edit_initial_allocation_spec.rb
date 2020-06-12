@@ -7,7 +7,7 @@ RSpec.feature "PE allocations" do
   let(:confirm_deletion_page) { PageObjects::Page::Providers::Allocations::EditInitialAllocations::ConfirmDeletionPage.new }
   let(:allocations_show_page) { PageObjects::Page::Providers::Allocations::ShowPage.new }
 
-  context "updating an initial allocation" do
+  xcontext "updating an initial allocation" do
     scenario "changing the number of places for an allocation" do
       given_accredited_body_exists
       given_the_accredited_body_has_an_initial_allocation

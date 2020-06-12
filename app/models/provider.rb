@@ -27,7 +27,7 @@ class Provider < Base
   end
 
   def rolled_over?
-    Settings.rollover
+    true
   end
 
 private

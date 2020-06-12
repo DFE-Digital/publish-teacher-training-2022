@@ -79,9 +79,7 @@ feature "View provider", type: :feature do
     expect(breadcrumbs[0].text).to eq(provider.provider_name)
     expect(breadcrumbs[0]["href"]).to eq("/organisations/#{provider.provider_code}")
 
-    if Settings.rollover
-      expect(breadcrumbs[1].text).to eq(provider.recruitment_cycle.title)
-      expect(breadcrumbs[1]["href"]).to eq("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}")
-    end
+    expect(breadcrumbs[1].text).to eq(provider.recruitment_cycle.title)
+    expect(breadcrumbs[1]["href"]).to eq("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}")
   end
 end

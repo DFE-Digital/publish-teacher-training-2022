@@ -15,7 +15,7 @@ feature "View providers", type: :feature do
     allow(Settings).to receive(:rollover).and_return(rollover)
   end
 
-  context "with two providers" do
+  xcontext "with two providers" do
     let(:provider_2) { build :provider, provider_code: "A1", include_counts: [:courses] }
     let(:provider_response) { provider_1.to_jsonapi(include: %i[courses accrediting_provider]) }
 
@@ -69,7 +69,7 @@ feature "View providers", type: :feature do
     end
   end
 
-  context "with more than ten providers" do
+  xcontext "with more than ten providers" do
     let(:provider_2) { build :provider, provider_code: "A1", include_counts: [:courses] }
 
     it "displays pagination navigation" do
@@ -91,7 +91,7 @@ feature "View providers", type: :feature do
     end
   end
 
-  context "with no providers" do
+  xcontext "with no providers" do
     let(:no_providers_page) { PageObjects::Page::Organisations::NoProviders.new }
     let(:forbidden_page) { PageObjects::Page::Forbidden.new }
 

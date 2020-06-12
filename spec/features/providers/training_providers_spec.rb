@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "get training_providers", type: :feature do
+RSpec.feature "get training_providers", type: :feature do
   let(:organisation_show_page) { PageObjects::Page::Organisations::OrganisationShow.new }
   let(:organisation_training_providers_page) { PageObjects::Page::Organisations::TrainingProviders.new }
   let(:accrediting_body1) { build :provider, accredited_body?: true }
@@ -40,7 +40,7 @@ feature "get training_providers", type: :feature do
   end
 
   context "when the provider has training providers" do
-    it "can be reached from the provider show page" do
+    xit "can be reached from the provider show page" do
       visit provider_path(accrediting_body1.provider_code)
       organisation_show_page.courses_as_accredited_body_link.click
       expect(current_path).to eq training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "PE allocations" do
+RSpec.xfeature "PE allocations" do
   let(:allocations_page) { PageObjects::Page::Providers::Allocations::IndexPage.new }
   let(:allocations_new_page) { PageObjects::Page::Providers::Allocations::NewPage.new }
   let(:allocations_show_page) { PageObjects::Page::Providers::Allocations::ShowPage.new }

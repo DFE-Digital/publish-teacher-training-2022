@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "View locations", type: :feature do
+RSpec.xfeature "View locations", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:sites) do
     [

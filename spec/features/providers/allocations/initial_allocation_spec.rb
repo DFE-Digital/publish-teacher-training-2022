@@ -6,7 +6,7 @@ RSpec.feature "PE allocations" do
   let(:check_your_info_page) { PageObjects::Page::Providers::Allocations::CheckYourInformationPage.new }
   let(:allocations_show_page) { PageObjects::Page::Providers::Allocations::ShowPage.new }
 
-  scenario "Accredited body requests new PE allocations" do
+  xscenario "Accredited body requests new PE allocations" do
     given_accredited_body_exists
     given_the_accredited_body_has_an_allocation
     given_there_is_a_training_provider_with_previous_allocations
@@ -42,7 +42,7 @@ RSpec.feature "PE allocations" do
     then_i_see_confirmation_page
   end
 
-  scenario "Accredited body requests new PE allocations for new training provider" do
+  xscenario "Accredited body requests new PE allocations for new training provider" do
     given_accredited_body_exists
     given_the_accredited_body_has_an_allocation
     given_there_is_a_training_provider_with_previous_allocations
@@ -69,7 +69,7 @@ RSpec.feature "PE allocations" do
     and_the_number_is_the_one_i_entered
   end
 
-  scenario "Accredited body requests new PE allocations for training provider they can't find on first page" do
+  xscenario "Accredited body requests new PE allocations for training provider they can't find on first page" do
     given_accredited_body_exists
     given_the_accredited_body_has_an_allocation
     given_there_is_a_training_provider_with_previous_allocations
@@ -88,7 +88,7 @@ RSpec.feature "PE allocations" do
     and_i_see_error_message_that_no_providers_exist_for_search
   end
 
-  scenario "Accredited body requests new PE allocations for training provider they can't find on pick a provider page" do
+  xscenario "Accredited body requests new PE allocations for training provider they can't find on pick a provider page" do
     given_accredited_body_exists
     given_the_accredited_body_has_an_allocation
     given_there_is_a_training_provider_with_previous_allocations
@@ -111,7 +111,7 @@ RSpec.feature "PE allocations" do
     and_i_see_error_message_that_no_providers_exist_for_search
   end
 
-  scenario "Accredited body requests new PE allocations for training provider with empty search" do
+  xscenario "Accredited body requests new PE allocations for training provider with empty search" do
     given_accredited_body_exists
     given_the_accredited_body_has_an_allocation
     given_there_is_a_training_provider_with_previous_allocations
@@ -130,7 +130,7 @@ RSpec.feature "PE allocations" do
     and_i_see_error_message_that_i_must_add_more_info
   end
 
-  scenario "Accredited body searches for provider with string containing only one character" do
+  xscenario "Accredited body searches for provider with string containing only one character" do
     given_accredited_body_exists
     given_the_accredited_body_has_an_allocation
     given_there_is_a_training_provider_with_previous_allocations
@@ -150,7 +150,7 @@ RSpec.feature "PE allocations" do
   end
 
   context "Accredited body enters number of places" do
-    scenario "Accredited body submits form without specifying number of places" do
+    xscenario "Accredited body submits form without specifying number of places" do
       given_accredited_body_exists
       given_the_accredited_body_has_an_allocation
       given_there_is_a_training_provider_with_previous_allocations
@@ -172,7 +172,7 @@ RSpec.feature "PE allocations" do
       and_i_see_error_message_that_i_must_enter_a_number
     end
 
-    scenario "Accredited body enters '0'" do
+    xscenario "Accredited body enters '0'" do
       given_accredited_body_exists
       given_the_accredited_body_has_an_allocation
       given_there_is_a_training_provider_with_previous_allocations
@@ -195,7 +195,7 @@ RSpec.feature "PE allocations" do
       and_i_see_error_message_that_i_must_enter_a_number
     end
 
-    scenario "Accredited body enters a float (1.1)" do
+    xscenario "Accredited body enters a float (1.1)" do
       given_accredited_body_exists
       given_the_accredited_body_has_an_allocation
       given_there_is_a_training_provider_with_previous_allocations
@@ -218,7 +218,7 @@ RSpec.feature "PE allocations" do
       and_i_see_error_message_that_i_must_enter_a_number
     end
 
-    scenario "Accredited body enters a non-numeric character" do
+    xscenario "Accredited body enters a non-numeric character" do
       given_accredited_body_exists
       given_the_accredited_body_has_an_allocation
       given_there_is_a_training_provider_with_previous_allocations

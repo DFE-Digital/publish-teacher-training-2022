@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "providers/show" do
+RSpec.xdescribe "providers/show" do
   let(:provider_show_page) { PageObjects::Page::Organisations::OrganisationShow.new }
   let(:provider_view) { instance_double(ProviderView) }
 

@@ -63,7 +63,7 @@ feature "Sign in", type: :feature do
     expect(request).to have_been_made
   end
 
-  scenario "new user accepts the transition info page with rollover disabled" do
+  xscenario "new user accepts the transition info page with rollover disabled" do
     allow(Settings).to receive(:rollover).and_return(false)
     user = build :user, :new
 
