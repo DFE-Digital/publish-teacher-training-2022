@@ -346,6 +346,10 @@
               {
                 "name": "SETTINGS__LOGSTASH__PORT",
                 "value": "[parameters('logstashPort')]"
+              },
+              {
+                "name": "SETTINGS__ROLLOVER",
+                "value": "[parameters('rollover')]"
               }
             ]
           },
