@@ -238,8 +238,14 @@ describe CourseDecorator do
         it { is_expected.to be_salaried }
       end
 
-      context "course is not salaried" do
+      context "course is an apprenticeship with salary" do
         let(:course) { build :course, funding_type: "apprenticeship" }
+
+        it { is_expected.to be_salaried }
+      end
+
+      context "course is not salaried" do
+        let(:course) { build :course, :with_fees }
 
         it { is_expected.to_not be_salaried }
       end
@@ -250,6 +256,12 @@ describe CourseDecorator do
 
       context "Salary" do
         let(:course) { build :course, funding_type: "salary" }
+
+        it { is_expected.to eq("Salary") }
+      end
+
+      context "Apprenticeship" do
+        let(:course) { build :course, funding_type: "apprenticeship" }
 
         it { is_expected.to eq("Salary") }
       end
