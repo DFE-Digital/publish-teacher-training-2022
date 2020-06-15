@@ -203,7 +203,7 @@ feature "Edit accredited body", type: :feature do
 
   def searching_returns_some_results
     stub_api_v2_request(
-      "/providers/suggest?query=ACME",
+      "/providers/suggest_any?query=ACME&filter[only_accredited_body]=true",
       resource_list_to_jsonapi([
         build(:provider_suggestion, provider_name: "ACME 1", provider_code: "A01"),
         build(:provider_suggestion, provider_name: "ACME 2"),
@@ -215,7 +215,7 @@ feature "Edit accredited body", type: :feature do
 
   def searching_returns_no_results
     stub_api_v2_request(
-      "/providers/suggest?query=ACME",
+      "/providers/suggest_any?query=ACME&filter[only_accredited_body]=true",
       resource_list_to_jsonapi([]),
     )
   end

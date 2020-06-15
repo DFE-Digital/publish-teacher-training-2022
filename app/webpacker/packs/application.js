@@ -23,7 +23,7 @@ try {
   const provider_template = result => result && `${result.name} (${result.code})`;
 
   if ($autocomplete && $accredited_body_input) {
-    initAutocomplete($autocomplete, $accredited_body_input, accredited_body_template);
+    initAutocomplete($autocomplete, $accredited_body_input, accredited_body_template, {path: "/providers/suggest_any_accredited_body"});
   }
   if($autocomplete && $provider_input) {
     initAutocomplete($autocomplete, $provider_input, provider_template);

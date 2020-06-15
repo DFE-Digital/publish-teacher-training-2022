@@ -20,7 +20,7 @@ describe "Courses" do
         build(:recruitment_cycle)
         provider1 = build(:provider, provider_name: "asd")
         provider2 = build(:provider, provider_name: "aoe")
-        stub_api_v2_request("/providers/suggest?query=a", resource_list_to_jsonapi([provider1, provider2]))
+        stub_api_v2_request("/providers/suggest_any?query=a&filter[only_accredited_body]=true", resource_list_to_jsonapi([provider1, provider2]))
         get(accredited_body_search_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code, query: "a"))
         expect(response.body).to include("asd")
         expect(response.body).to include("aoe")
