@@ -179,6 +179,13 @@
         "description": "true to offer the user the option to sign-in using a magic link sent to them by email"
       }
     }
+    "rollover": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "Initiate publish into rollover mode."
+      }
+    }
 
   },
   "variables": {
