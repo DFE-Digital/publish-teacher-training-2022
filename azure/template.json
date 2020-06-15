@@ -187,7 +187,6 @@
       }
     }
 
-  },
   "variables": {
     "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
     "resourceNamePrefix": "[toLower(concat(parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
