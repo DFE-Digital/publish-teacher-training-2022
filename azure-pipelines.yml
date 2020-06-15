@@ -56,32 +56,31 @@ steps:
     docker run --name test-run-image -d $(IMAGE_NAME)
     docker exec test-run-image rake "parallel:spec[,, -O .azure_parallel]"
     test_result=$?
-      if [ "$test_result" != "0" ]
-      then
-          echo "##vso[task.logissue type=error] Test task failed."
-          exit 1
-      fi
+
     docker cp test-run-image:/app/rspec-output .
     docker cp test-run-image:/app/coverage .
 
     docker stop test-run-image
     docker rm test-run-image
+
+    exit $test_result
   displayName: 'Run ruby tests'
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: JUnit
-    testResultsFiles: 'rspec-output/*.xml'
-    failedTaskOnFailedTest: true
+- bash: |
+    set -x
+    # Start up container and run the ruby test suite
+    docker run --name test-run-image -d $(IMAGE_NAME)
+    docker exec test-run-image yarn test --coverage
+    test_result=$?
 
-- task: Docker@1
-  displayName: Run javascript tests
-  inputs:
-    command: Run an image
-    imageName: $(IMAGE_NAME)
-    containerCommand: yarn test
-    runInBackground: false
+    # Copy test results and coverage to docker host (used by another script)
+    docker cp test-run-image:/app/coverage .
+
+    # Remove container
+    docker rm -f test-run-image
+
+    exit $test_result
+  displayName: 'Run JavaScript tests'
 
 - task: Docker@1
   displayName: Run Brakeman static analysis
@@ -100,11 +99,19 @@ steps:
     # As the tests were run in the docker container the paths to the coverage are prefixed with "/app/"
     # So we need to replace it with the docker hosts current directory
     sed "s|\"/app/|\"`pwd`/|g" coverage/.resultset.json -i
-    ./cc-test-reporter after-build
+
+    # Format the two different test coverage formats (SimpleCov anf lcov) to code climates json format
+    ./cc-test-reporter format-coverage --input-type simplecov --output coverage/rspec.json
+    ./cc-test-reporter format-coverage --input-type lcov --output coverage/javascript.json
+
+    # Aggregate the two results to form a single result for our code base
+    ./cc-test-reporter sum-coverage --output 'coverage/total.json' coverage/javascript.json coverage/rspec.json
+
+    # Upload the our test coverage to code climat
+    ./cc-test-reporter upload-coverage --input coverage/total.json
   displayName: 'Publish Code Climate Test Coverage'
   env:
     CC_TEST_REPORTER_ID: $(ccReporterID)
-    AGENT_JOBSTATUS: $(Agent.JobStatus)
     GIT_BRANCH: $(Build.SourceBranchName)
 
 - task: Docker@1
@@ -147,3 +154,10 @@ steps:
   displayName: 'Publish Artifact'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: 'rspec-output/*.xml'
+    failedTaskOnFailedTest: true
