@@ -1,0 +1,23 @@
+<h2 class="govuk-heading-m">
+  <%= link_to "Current cycle (#{Settings.current_cycle} - #{Settings.current_cycle + 1})",
+              provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle),
+              data: { qa: 'provider__courses__current_cycle' },
+              class: "govuk-link" %>
+</h2>
+<p class="govuk-body">Use this section to:</p>
+<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+  <li>manage courses in the current cycle</li>
+  <li>edit locations and vacancies in the current cycle</li>
+</ul>
+
+<h2 class="govuk-heading-m">
+  <%= link_to "Next cycle (#{Settings.current_cycle + 1} - #{Settings.current_cycle + 2})",
+              provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle + 1),
+              data: { qa: 'provider__courses__next_cycle' },
+              class: "govuk-link" %>
+</h2>
+<p class="govuk-body">Use this section to:</p>
+<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+  <li>prepare courses for the next cycle</li>
+  <li>manage locations needed for the next cycle</li>
+</ul>
