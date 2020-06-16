@@ -33,7 +33,7 @@ module Courses
       build_provider
       build_previous_course_creation_params
       @query = params[:query]
-      @provider_suggestions = ProviderSuggestion.suggest(@query)
+      @provider_suggestions = ProviderSuggestion.suggest_any_accredited_body(@query)
     rescue JsonApiClient::Errors::ClientError => e
       @errors = e
     end
@@ -59,7 +59,7 @@ module Courses
     def search
       build_course
       @query = params[:query]
-      @provider_suggestions = ProviderSuggestion.suggest(@query)
+      @provider_suggestions = ProviderSuggestion.suggest_any_accredited_body(@query)
     rescue JsonApiClient::Errors::ClientError => e
       @errors = e
     end

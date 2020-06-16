@@ -234,6 +234,7 @@ Rails.application.routes.draw do
 
   get "/providers/suggest", to: "provider_suggestions#suggest"
   get "/providers/suggest_any", to: "provider_suggestions#suggest_any"
+  get "/providers/suggest_any_accredited_body", to: "provider_suggestions#suggest_any_accredited_body"
   get "/providers/search", to: "providers#search"
   # redirect URL's from legacy c# app
   get "/organisation/:provider_code", to: redirect("/organisations/%{provider_code}", status: 301)
