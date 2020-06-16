@@ -12,7 +12,7 @@ initAll();
 window.initLocationsMap = initLocationsMap;
 
 const $form = document.querySelector('[data-module="form-check-leave"]');
-new FormCheckLeave($form).init();
+new FormCheckLeave($form);
 
 try {
   const $autocomplete = document.getElementById("provider-autocomplete");
