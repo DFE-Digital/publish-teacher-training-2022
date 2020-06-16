@@ -8,6 +8,9 @@
 <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
   <li>manage courses in the current cycle</li>
   <li>edit locations and vacancies in the current cycle</li>
+  <% if @provider.accredited_body? %>
+    <li>see which courses you're the accredited body for in the current cycle</li>
+  <% end %>
 </ul>
 
 <h2 class="govuk-heading-m">
@@ -20,4 +23,7 @@
 <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
   <li>prepare courses for the next cycle</li>
   <li>manage locations needed for the next cycle</li>
+  <% if @provider.accredited_body? %>
+    <li>see which courses you're the accredited body for in the next cycle</li>
+  <% end %>
 </ul>
