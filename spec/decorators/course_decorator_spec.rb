@@ -573,8 +573,19 @@ describe CourseDecorator do
 
     context "when the course has no start date" do
       let(:start_date) { nil }
+
       it "should return the September of the current cycle" do
         expect(decorated_course.return_start_date).to eq("September #{Settings.current_cycle}")
+      end
+    end
+
+    context "during rollover" do
+      let(:start_date) { nil }
+
+      before { allow(Settings).to receive(:rollover).and_return(true) }
+
+      it "should return the September of the next cycle" do
+        expect(decorated_course.return_start_date).to eq("September #{Settings.current_cycle + 1}")
       end
     end
   end
