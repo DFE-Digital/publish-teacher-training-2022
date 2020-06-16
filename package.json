@@ -18,6 +18,11 @@
   "jest": {
     "roots": [
       "app"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/app/**/*.spec.js",
+      "!**/node_modules/**"
     ]
   }
 }
