@@ -178,6 +178,13 @@
       "metadata": {
         "description": "true to offer the user the option to sign-in using a magic link sent to them by email"
       }
+    },
+    "rollover": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "The publish provider page offers current and next rollover cycles when set to true."
+      }
     }
 
   },
@@ -346,6 +353,10 @@
               {
                 "name": "SETTINGS__LOGSTASH__PORT",
                 "value": "[parameters('logstashPort')]"
+              },
+              {
+                "name": "SETTINGS__ROLLOVER",
+                "value": "[parameters('rollover')]"
               }
             ]
           },
