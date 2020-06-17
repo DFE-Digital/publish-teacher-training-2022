@@ -25,7 +25,7 @@ feature "get training_providers", type: :feature do
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
-      "#{accrediting_body1.provider_code}/training_providers?recruitment_cycle_year=#{accrediting_body1.recruitment_cycle.year}",
+      "#{accrediting_body1.provider_code}/training_providers",
       resource_list_to_jsonapi(
         [accrediting_body1, training_provider1, training_provider2],
         meta: {

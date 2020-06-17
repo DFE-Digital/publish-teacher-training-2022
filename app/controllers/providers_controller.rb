@@ -69,7 +69,7 @@ class ProvidersController < ApplicationController
   end
 
   def training_providers
-    @training_providers = @provider.training_providers(recruitment_cycle_year: @recruitment_cycle.year)
+    @training_providers = TrainingProvider.where(recruitment_cycle_year: @recruitment_cycle.year, provider_code: @provider.provider_code)
     @training_providers.delete_if { |tp| tp.provider_code == @provider.provider_code }
     @course_counts = @training_providers.meta[:accredited_courses_counts]
   end
@@ -130,9 +130,8 @@ private
   end
 
   def build_training_provider
-    @training_provider = Provider
-      .includes(courses: [:accrediting_provider])
-      .where(recruitment_cycle_year: @recruitment_cycle.year)
+    @training_provider = TrainingProvider
+      .where(recruitment_cycle_year: @recruitment_cycle.year, provider_code: @provider.provider_code)
       .find(params[:training_provider_code])
       .first
   end

@@ -4,10 +4,10 @@ class Provider < Base
   has_many :courses, param: :course_code
   has_many :sites
   has_one :allocation
+  has_many :training_providers
 
   self.primary_key = :provider_code
 
-  custom_endpoint :training_providers, on: :member, request_method: :get
   custom_endpoint :show_any, on: :member, request_method: :get
 
   def publish

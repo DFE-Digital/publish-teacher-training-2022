@@ -8,10 +8,11 @@ module Providers
     PE_SUBJECT_CODE = "C6".freeze
 
     def index
-      @training_providers = @provider.training_providers(
+      @training_providers = TrainingProvider.where(
         recruitment_cycle_year: @recruitment_cycle.year,
-        "filter[subjects]": PE_SUBJECT_CODE,
-        "filter[funding_type]": "fee",
+        provider_code: @provider.provider_code,
+        subjects: PE_SUBJECT_CODE,
+        funding_type: "fee",
       )
 
       allocations = Allocation

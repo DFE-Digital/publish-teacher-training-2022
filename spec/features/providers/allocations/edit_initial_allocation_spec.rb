@@ -199,15 +199,13 @@ RSpec.feature "PE allocations" do
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@accredited_body.provider_code}/training_providers" \
       "?filter[funding_type]=fee" \
-      "&filter[subjects]=C6" \
-      "&recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
+      "&filter[subjects]=C6",
       resource_list_to_jsonapi([@training_provider_with_fee_funded_pe]),
     )
 
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
-      "#{@accredited_body.provider_code}/training_providers" \
-      "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
+      "#{@accredited_body.provider_code}/training_providers",
       resource_list_to_jsonapi([@training_provider, @training_provider_with_fee_funded_pe, @training_provider_with_allocation]),
     )
   end
