@@ -1,0 +1,33 @@
+<h2 class="govuk-heading-m">
+  <%= link_to "Current cycle (#{Settings.current_cycle} - #{Settings.current_cycle + 1})",
+              provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle),
+              data: { qa: 'provider__courses__current_cycle' },
+              class: "govuk-link" %>
+</h2>
+<p class="govuk-body">Use this section to:</p>
+<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+  <li>manage current courses</li>
+  <li>edit locations and vacancies for current courses</li>
+  <% if @provider.accredited_body? %>
+    <li>see which courses you're currently the accredited body for</li>
+    <li>request PE courses for the next cycle (and view requests you've already made)</li>
+  <% end %>
+</ul>
+
+<h2 class="govuk-heading-m">
+  <%= link_to "Next cycle (#{Settings.current_cycle + 1} - #{Settings.current_cycle + 2})",
+              provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle + 1),
+              data: { qa: 'provider__courses__next_cycle' },
+              class: "govuk-link" %>
+</h2>
+<p class="govuk-body">
+  Courses for the next cycle will appear on Find postgraduate teacher training from October 2020.
+  Use this section to:
+</p>
+<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+  <li>prepare your courses for the next cycle</li>
+  <li>manage locations for the next cycle</li>
+  <% if @provider.accredited_body? %>
+    <li>see which courses in the next cycle you're the accredited body for</li>
+  <% end %>
+</ul>
