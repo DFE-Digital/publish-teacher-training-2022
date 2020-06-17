@@ -1,4 +1,6 @@
-<h2 class="govuk-heading-m"><%= link_to "Locations", provider_recruitment_cycle_sites_path(provider.provider_code, year), class: "govuk-link", data: { qa: 'provider__locations' } %></h2>
+<h2 class="govuk-heading-m">
+  <%= govuk_link_to "Locations", provider_recruitment_cycle_sites_path(provider.provider_code, year) %>
+</h2>
 <p class="govuk-body">Use this section to:</p>
 <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
   <li>edit location names and addresses</li>
