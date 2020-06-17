@@ -30,6 +30,7 @@ describe "recruitment_cycles/show.html", type: :view do
         expect(recruitment_cycle_page).to have_courses_link
         expect(recruitment_cycle_page).to have_locations_link
         expect(recruitment_cycle_page).to have_courses_as_accredited_body_link
+        expect(recruitment_cycle_page).to have_request_for_pe_link
       end
     end
 
@@ -46,6 +47,7 @@ describe "recruitment_cycles/show.html", type: :view do
         expect(recruitment_cycle_page).to have_courses_link
         expect(recruitment_cycle_page).to have_locations_link
         expect(recruitment_cycle_page).to have_no_courses_as_accredited_body_link
+        expect(recruitment_cycle_page).to have_no_request_for_pe_link
       end
     end
   end
@@ -70,6 +72,7 @@ describe "recruitment_cycles/show.html", type: :view do
         expect(recruitment_cycle_page).to have_courses_link
         expect(recruitment_cycle_page).to have_locations_link
         expect(recruitment_cycle_page).to have_courses_as_accredited_body_link
+        expect(recruitment_cycle_page).to have_no_request_for_pe_link
       end
     end
 
@@ -86,6 +89,7 @@ describe "recruitment_cycles/show.html", type: :view do
         expect(recruitment_cycle_page).to have_courses_link
         expect(recruitment_cycle_page).to have_locations_link
         expect(recruitment_cycle_page).to have_no_courses_as_accredited_body_link
+        expect(recruitment_cycle_page).to have_no_request_for_pe_link
       end
     end
   end
