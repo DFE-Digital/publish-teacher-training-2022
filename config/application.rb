@@ -2,6 +2,7 @@ require_relative "boot"
 
 require "csv"
 require "rails"
+require "govuk/components"
 # Pick the frameworks you want:
 require "active_model/railtie"
 require "active_job/railtie"
