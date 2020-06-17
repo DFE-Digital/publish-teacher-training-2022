@@ -230,7 +230,11 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def return_start_date
-    start_date.presence || "September #{Settings.current_cycle}"
+    if Settings.rollover
+      start_date.presence || "September #{Settings.current_cycle + 1}"
+    else
+      start_date.presence || "September #{Settings.current_cycle}"
+    end
   end
 
 private
