@@ -144,7 +144,9 @@ private
   end
 
   def build_recruitment_cycle
-    cycle_year = params.fetch(:year, Settings.current_cycle)
+    # this is due to #training_provider_courses being nested as a route
+    # this causes the route param "year" to be prefixed
+    cycle_year = params[:recruitment_cycle_year] || params[:year] || Settings.current_cycle
 
     @recruitment_cycle = RecruitmentCycle.find(cycle_year).first
   end
