@@ -11,6 +11,7 @@ module PageObjects
         element :locations_link, "a", text: "Locations"
         element :courses_link, "a", text: "Courses"
         element :courses_as_accredited_body_link, "a", text: "Courses as an accredited body"
+        element :request_for_pe_link, "a", text: "Request PE courses for"
       end
     end
   end

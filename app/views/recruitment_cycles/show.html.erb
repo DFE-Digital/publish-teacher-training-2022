@@ -22,5 +22,8 @@
     <%= render partial: 'recruitment_cycles/courses_info', locals: { provider: @provider, year: params[:year] } %>
     <%= render partial: 'recruitment_cycles/locations_info', locals: { provider: @provider, year: params[:year] } %>
     <%= render partial: 'recruitment_cycles/courses_accredited_body', locals: { provider: @provider, year: params[:year] } %>
+    <% if @recruitment_cycle.current? %>
+      <%= render partial: 'recruitment_cycles/allocations', locals: { provider: @provider, year: params[:year] } %>
+    <% end %>
   </div>
 </div>
