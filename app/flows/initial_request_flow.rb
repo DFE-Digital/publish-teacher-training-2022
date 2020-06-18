@@ -117,17 +117,19 @@ private
   end
 
   def training_providers_with_fee_paying_pe_course
-    @training_providers_with_fee_paying_pe_course ||= provider.training_providers(
+    @training_providers_with_fee_paying_pe_course ||= TrainingProvider.where(
       recruitment_cycle_year: recruitment_cycle.year,
-      "filter[subjects]": PE_SUBJECT_CODE,
-      "filter[funding_type]": "fee",
+      provider_code: provider.provider_code,
+      subjects: PE_SUBJECT_CODE,
+      funding_type: "fee",
     )
   end
 
   def all_training_providers
     @all_training_providers ||=
-      provider.training_providers(
+      TrainingProvider.where(
         recruitment_cycle_year: recruitment_cycle.year,
+        provider_code: provider.provider_code,
       )
   end
 

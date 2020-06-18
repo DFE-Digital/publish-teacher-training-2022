@@ -253,8 +253,7 @@ private
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@accredited_body.provider_code}/training_providers" \
       "?filter[funding_type]=fee" \
-      "&filter[subjects]=C6" \
-      "&recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
+      "&filter[subjects]=C6",
       resource_list_to_jsonapi([@training_provider]),
     )
   end
@@ -264,8 +263,7 @@ private
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@accredited_body.provider_code}/training_providers" \
       "?filter[funding_type]=fee" \
-      "&filter[subjects]=C6" \
-      "&recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
+      "&filter[subjects]=C6",
       resource_list_to_jsonapi([]),
     )
   end

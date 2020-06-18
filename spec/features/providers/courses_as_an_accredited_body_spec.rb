@@ -26,13 +26,14 @@ feature "get courses as an accredited body", type: :feature do
       resource_list_to_jsonapi([course1]),
     )
     stub_api_v2_request(
-      "/recruitment_cycles/#{training_provider2.recruitment_cycle.year}/providers/" \
-      "#{training_provider2.provider_code}?include=courses.accrediting_provider",
+      "/recruitment_cycles/#{training_provider2.recruitment_cycle.year}" \
+      "/providers/#{accrediting_body1.provider_code}" \
+      "/training_providers/#{training_provider2.provider_code}",
       training_provider2.to_jsonapi(include: :courses),
     )
     stub_api_v2_request(
       "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
-      "#{accrediting_body1.provider_code}/training_providers?recruitment_cycle_year=#{accrediting_body1.recruitment_cycle.year}",
+      "#{accrediting_body1.provider_code}/training_providers",
       resource_list_to_jsonapi([training_provider2, accrediting_body2], { meta: { accredited_courses_counts: {} } }),
     )
     stub_api_v2_request(
