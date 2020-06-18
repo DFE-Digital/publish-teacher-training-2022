@@ -48,16 +48,14 @@
         </li>
       </ul>
 
-      <details class="govuk-details" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            Several courses in the same subject?
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          <p class="govuk-body">If you offer more than one course in the same subject - eg two Primary courses - it’s important to say how they differ (eg differences in school placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.</p>
-        </div>
-      </details>
+      <%= render GovukComponent::Details.new(summary: "Several courses in the same subject?") do %>
+        <p class="govuk-body">
+          If you offer more than one course in the same subject -
+          eg two Primary courses - it’s important to say how they differ
+          (eg differences in school placements or in the focus of the training).
+          Otherwise, applicants may be unable to decide between them.
+        </p>
+      <% end %>>
 
       <div id="about_course_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="400">
         <%= render "shared/form_field",
