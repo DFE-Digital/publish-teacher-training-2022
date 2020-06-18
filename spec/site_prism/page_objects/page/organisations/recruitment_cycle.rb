@@ -7,8 +7,10 @@ module PageObjects
         element :title, ".govuk-heading-xl"
         element :caption, ".govuk-caption-xl"
 
-        element :locations_link, "a[data-qa=provider__locations]", text: "Locations"
-        element :courses_link, "a[data-qa=provider__courses]", text: "Courses"
+        element :about_organisation_link, "a", text: "About your organisation"
+        element :locations_link, "a", text: "Locations"
+        element :courses_link, "a", text: "Courses"
+        element :courses_as_accredited_body_link, "a", text: "Courses as an accredited body"
       end
     end
   end
