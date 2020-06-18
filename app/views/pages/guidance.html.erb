@@ -2,9 +2,9 @@
 
 <% content_for :before_content do %>
   <% if request.referrer.present? %>
-    <%= govuk_back_link_to(:back) %>
+    <%= render GovukComponent::BackLink.new(text: 'Back', href: :back) %>
   <% else %>
-    <%= govuk_back_link_to(providers_path) %>
+    <%= render GovukComponent::BackLink.new(text: 'Back', href: providers_path) %>
   <% end %>
 <% end %>
 

@@ -1,6 +1,7 @@
 <%= content_for :page_title, "Email alerts for new applications" %>
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_ucas_contacts_path(@provider.provider_code)) %>
+  <%= render GovukComponent::BackLink.new(
+    text: 'Back', href: provider_ucas_contacts_path(@provider.provider_code)) %>
 <% end %>
 
 <%= render 'shared/errors' %>

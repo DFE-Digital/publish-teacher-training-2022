@@ -7,7 +7,7 @@ module PageObjects
           element :error_flash, ".govuk-error-summary"
           element :error_messages, ".govuk-error-message"
           element :continue, '[data-qa="course__save"]'
-          element :back, '[data-qa="page-back"]'
+          element :back, ".govuk-back-link"
         end
       end
     end

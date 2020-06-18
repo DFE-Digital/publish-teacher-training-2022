@@ -1,15 +1,13 @@
 <%= content_for :page_title, "Check your information before sending your request"%>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(
-        number_of_places_provider_recruitment_cycle_allocation_path(
-          provider.provider_code,
-          recruitment_cycle.year,
-          training_provider.provider_code,
-          number_of_places: params[:number_of_places],
-          id: allocation.id
-        )
-      ) %>
+  <%= render GovukComponent::BackLink.new(
+    text: 'Back',
+    href: number_of_places_provider_recruitment_cycle_allocation_path( provider.provider_code,
+                                                                       recruitment_cycle.year,
+                                                                       training_provider.provider_code,
+                                                                       number_of_places: params[:number_of_places],
+                                                                       id: allocation.id)) %>
 <% end %>
 
 <div class="govuk-grid-row">

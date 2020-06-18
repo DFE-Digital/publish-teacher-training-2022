@@ -1,7 +1,10 @@
 <%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Edit 'Contact information'" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
+  <%= render GovukComponent::BackLink.new(
+    text: 'Back',
+    href: details_provider_recruitment_cycle_path(@provider.provider_code,
+                                                  @provider.recruitment_cycle_year)) %>
 <% end %>
 
 <%= render 'shared/errors' %>

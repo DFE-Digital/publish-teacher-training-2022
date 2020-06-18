@@ -1,7 +1,8 @@
 <%= content_for :page_title, "Organisation search" %>
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(
-    details_provider_recruitment_cycle_course_path(
+  <%= render GovukComponent::BackLink.new(
+    text: 'Back',
+    href: details_provider_recruitment_cycle_course_path(
       course.provider_code,
       course.recruitment_cycle_year,
       course.course_code)) %>

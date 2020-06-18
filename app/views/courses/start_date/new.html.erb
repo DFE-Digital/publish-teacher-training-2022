@@ -1,6 +1,6 @@
 <%= content_for :page_title, "When does the course start?" %>
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(@back_link_path) %>
+  <%= render GovukComponent::BackLink.new(text: 'Back', href: @back_link_path) %>
 <% end %>
 
 <%= render 'shared/errors' %>

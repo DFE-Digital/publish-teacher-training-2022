@@ -7,12 +7,6 @@ feature "View helpers", type: :helper do
     end
   end
 
-  describe "#govuk_back_link_to" do
-    it "returns an anchor tag with the govuk-back-link class" do
-      expect(helper.govuk_back_link_to("https://localhost:44364/organisations/A0")).to eq("<a class=\"govuk-back-link\" data-qa=\"page-back\" href=\"https://localhost:44364/organisations/A0\">Back</a>")
-    end
-  end
-
   describe "#enrichment_error_url" do
     it "returns enrichment error URL" do
       course = Course.new(build(:course).attributes)

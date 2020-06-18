@@ -1,7 +1,11 @@
 <%= content_for :page_title, "Requirements and eligibility – #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
+  <%= render GovukComponent::BackLink.new(
+    text: 'Back',
+    href: provider_recruitment_cycle_course_path(@provider.provider_code,
+                                                 course.recruitment_cycle_year,
+                                                 course.course_code)) %>
 <% end %>
 
 <%= render partial: 'courses/copy_content_warning',

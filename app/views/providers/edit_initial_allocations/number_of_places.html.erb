@@ -1,14 +1,12 @@
 <%= content_for :page_title, "How many places would you like to request?"%>
 
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(
-        do_you_want_provider_recruitment_cycle_allocation_path(
-          provider.provider_code,
-          recruitment_cycle.year,
-          training_provider.provider_code,
-          id: allocation.id
-        )
-      ) %>
+  <%= render GovukComponent::BackLink.new(
+    text: 'Back',
+    href: do_you_want_provider_recruitment_cycle_allocation_path( provider.provider_code,
+                                                                  recruitment_cycle.year,
+                                                                  training_provider.provider_code,
+                                                                  id: allocation.id)) %>
 <% end %>
 
 <div class="govuk-grid-row">
