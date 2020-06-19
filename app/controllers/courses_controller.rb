@@ -1,5 +1,7 @@
 class CoursesController < ApplicationController
   decorates_assigned :course
+  decorates_assigned :provider
+
   before_action :initialise_errors
   before_action :build_recruitment_cycle
   before_action :build_courses, only: %i[index about requirements fees salary]
