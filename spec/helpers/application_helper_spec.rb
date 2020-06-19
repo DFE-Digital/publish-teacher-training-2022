@@ -49,4 +49,45 @@ RSpec.feature "View helpers", type: :helper do
         .to eq('<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">About course</dt><dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="enrichment__about">Something about the course</dd></div>')
     end
   end
+
+  describe "#markdown" do
+    it "converts markdown to HTML" do
+      expect(helper.markdown("test")).to eq("<p class=\"govuk-body\">test</p>")
+    end
+
+    it "converts markdown lists to HTML lists" do
+      expect(helper.markdown("* test\n* another test")).to include("<li>test</li>")
+    end
+
+    it "ignores emphasis markdown" do
+      output = helper.markdown("This does not have *emphasis*\n**something important**\n***super***")
+      expect(output).to include("This does not have *emphasis*")
+      expect(output).to include("**something important**")
+      expect(output).to include("***super***")
+    end
+
+    it "converts quotes to smart quotes" do
+      output = helper.markdown("\"Wow -- what's this...\", O'connor asked.")
+      expect(output).to eq("<p class=\"govuk-body\">“Wow – what’s this…”, O’connor asked.</p>")
+    end
+
+    # Redcarpet fixes out of the box
+    it "fixes incorrect markdown links" do
+      output = helper.markdown("[Google] (https://www.google.com)")
+      expect(output).to include("<a href=\"https://www.google.com\" class=\"govuk-link\">Google</a>")
+    end
+  end
+
+  describe "#smart_quotes" do
+    it "converts quotes to smart quotes" do
+      output = helper.smart_quotes("\"Wow -- what's this...\", O'connor asked.")
+      expect(output).to include("“Wow – what’s this…”, O’connor asked.")
+    end
+
+    context "when nil" do
+      it "returns empty string" do
+        expect(helper.smart_quotes(nil)).to be_blank
+      end
+    end
+  end
 end
