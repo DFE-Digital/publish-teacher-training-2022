@@ -65,7 +65,6 @@ GEM
     aes_key_wrap (1.0.1)
     application_insights (0.5.6)
     ast (2.4.1)
-    attr_extras (6.2.3)
     attr_required (1.0.1)
     better_errors (2.7.1)
       coderay (>= 1.0.0)
@@ -418,8 +417,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    super_diff (0.4.2)
-      attr_extras
+    super_diff (0.5.0)
       diff-lcs
       patience_diff
     swd (1.1.2)
