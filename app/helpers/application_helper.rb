@@ -13,6 +13,16 @@ module ApplicationHelper
     options = { autolink: true, lax_spacing: true }
     markdown = Redcarpet::Markdown.new(render, options)
     markdown.render(source).html_safe
+
+    # Convert quotes to smart quotes
+    source_with_smart_quotes = smart_quotes(source)
+    markdown.render(source_with_smart_quotes).html_safe
+  end
+
+  def smart_quotes(string)
+    return "" if string.blank?
+
+    RubyPants.new(string, 2, ruby_pants_options).to_html
   end
 
   def enrichment_error_link(model, field, error)
@@ -66,5 +76,23 @@ module ApplicationHelper
     tag.div class: "govuk-summary-list__row" do
       enrichment_summary_label(model, key, fields) + enrichment_summary_value(value, fields)
     end
+  end
+
+private
+
+  # Use characters rather than HTML entities for smart quotes this matches how
+  # we write smart quotes in templates and allows us to use them in <title>
+  # elements
+  # https://github.com/jmcnevin/rubypants/blob/master/lib/rubypants.rb
+  def ruby_pants_options
+    {
+      double_left_quote: "“",
+      double_right_quote: "”",
+      single_left_quote: "‘",
+      single_right_quote: "’",
+      ellipsis: "…",
+      em_dash: "—",
+      en_dash: "–",
+    }
   end
 end
