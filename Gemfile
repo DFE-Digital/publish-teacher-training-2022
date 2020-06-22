@@ -12,6 +12,9 @@ gem "puma", "~> 4.3"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker"
 
+# State machine to track users through their onboarding journey
+gem "aasm"
+
 # Used to build our forms and style them using govuk-frontend class names
 gem "govuk_design_system_formbuilder"
 
@@ -60,9 +63,6 @@ gem "rails_semantic_logger"
 gem "pagy"
 
 group :development, :test do
-  # State machine to track users through their onboarding journey
-  gem "aasm"
-
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
 
