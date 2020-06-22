@@ -13,6 +13,7 @@ module Helpers
         "email" => user.email,
         "id" => user.id,
         "state" => user.state,
+        "associated_with_accredited_body" => user.associated_with_accredited_body,
         "admin" => user.admin,
       },
       "credentials" => {

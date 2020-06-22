@@ -20,8 +20,8 @@
     <p class="govuk-body">
       or
     </p>
-    <p class="govuk-body">
-      <%= link_to "Continue to your courses without signing up", root_path, class:"govuk-link" %>
-    </p>
+    <%= form_for :user, url: accept_notifications_info_path, method: :patch do |f| %>
+      <%= f.submit "Continue", class: "govuk-button", data: { qa: 'rollover__continue' } %>
+    <% end %>
   </div>
 </div>

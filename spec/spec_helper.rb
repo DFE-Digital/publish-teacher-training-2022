@@ -2,6 +2,7 @@ require "super_diff/rspec"
 require "capybara"
 require "capybara/rspec"
 require "site_prism"
+require "aasm/rspec"
 require "simplecov"
 
 SimpleCov.minimum_coverage 90

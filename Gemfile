@@ -60,6 +60,9 @@ gem "rails_semantic_logger"
 gem "pagy"
 
 group :development, :test do
+  # State machine to track users through their onboarding journey
+  gem "aasm"
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
 
