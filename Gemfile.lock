@@ -192,7 +192,7 @@ GEM
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
     json (2.3.0)
-    json-jwt (1.11.0)
+    json-jwt (1.13.0)
       activesupport (>= 4.2)
       aes_key_wrap
       bindata
@@ -241,7 +241,7 @@ GEM
     omniauth (1.9.1)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
-    omniauth_openid_connect (0.3.4)
+    omniauth_openid_connect (0.3.5)
       addressable (~> 2.5)
       omniauth (~> 1.9)
       openid_connect (~> 1.1)
@@ -275,13 +275,13 @@ GEM
     public_suffix (4.0.5)
     puma (4.3.5)
       nio4r (~> 2.0)
-    rack (2.0.9)
-    rack-oauth2 (1.12.0)
+    rack (2.2.3)
+    rack-oauth2 (1.14.0)
       activesupport
       attr_required
       httpclient
       json-jwt (>= 1.11.0)
-      rack (< 2.1)
+      rack (>= 2.1.0)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
