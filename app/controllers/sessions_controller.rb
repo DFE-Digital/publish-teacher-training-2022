@@ -110,7 +110,7 @@ private
     request.env["omniauth.auth"]
   end
 
-  def redirect_to_correct_page(user)
+  def redirect_to_correct_page(user, use_redirect_back_to: true)
     if user&.accept_terms_date_utc.nil?
       redirect_to accept_terms_path
     elsif user.next_state
