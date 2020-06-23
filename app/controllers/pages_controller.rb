@@ -32,7 +32,7 @@ private
 
   def skip_already_transitioned_interruptions
     user = user_from_session
-    if redirect_path[user.next_state] != request.fullpath
+    if user_state_to_redirect_paths[user.next_state] != request.fullpath
       redirect_to_correct_page(user, use_redirect_back_to: false)
     end
   end
