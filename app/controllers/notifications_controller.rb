@@ -17,7 +17,7 @@ class NotificationsController < ApplicationController
       return
     end
 
-    unless user.notifications_configured
+    if user.may_accept_notifications_screen?
       UpdateUserService.call(user, "accept_notifications_screen!")
     end
 
