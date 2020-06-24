@@ -229,6 +229,7 @@ Rails.application.routes.draw do
   get "/transition-info", to: "pages#transition_info", as: :transition_info
   patch "/accept-transition-info", to: "users#accept_transition_info"
   get "/rollover", to: "pages#rollover", as: :rollover
+  get "/rollover-recruitment", to: "pages#rollover_recruitment", as: :rollover_recruitment
   patch "/accept-rollover", to: "users#accept_rollover"
   get "/accept-terms", to: "pages#accept_terms"
   patch "/accept-terms", to: "users#accept_terms"

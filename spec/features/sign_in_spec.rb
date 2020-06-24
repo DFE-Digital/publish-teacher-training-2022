@@ -1,12 +1,13 @@
 require "rails_helper"
 
 feature "Sign in", type: :feature do
-  let(:transition_info_page) { PageObjects::Page::TransitionInfo.new }
-  let(:notifications_info_page) { PageObjects::Page::NotificationsInfo.new }
-  let(:rollover_page)        { PageObjects::Page::Rollover.new }
-  let(:accept_terms_page)    { PageObjects::Page::AcceptTerms.new }
-  let(:organisations_page)   { PageObjects::Page::OrganisationsPage.new }
-  let(:root_page)            { PageObjects::Page::RootPage.new }
+  let(:transition_info_page)      { PageObjects::Page::TransitionInfo.new }
+  let(:notifications_info_page)   { PageObjects::Page::NotificationsInfo.new }
+  let(:rollover_page)             { PageObjects::Page::Rollover.new }
+  let(:rollover_recruitment_page) { PageObjects::Page::RolloverRecruitment.new }
+  let(:accept_terms_page)         { PageObjects::Page::AcceptTerms.new }
+  let(:organisations_page)        { PageObjects::Page::OrganisationsPage.new }
+  let(:root_page)                 { PageObjects::Page::RootPage.new }
   let(:providers) do
     [
       build(:provider, courses: [build(:course)]),
@@ -137,8 +138,12 @@ feature "Sign in", type: :feature do
 
         expect(rollover_page).to be_displayed
 
-        expect(rollover_page.title).to have_content("Begin preparing for the next cycle")
+        expect(rollover_page.title).to have_content("Prepare for the next cycle")
         rollover_page.continue.click
+
+        expect(rollover_recruitment_page).to be_displayed
+        expect(rollover_recruitment_page.title).to have_content("Recruiting for the 2021 - 2022 cycle")
+        rollover_recruitment_page.continue.click
 
         expect(root_page).to be_displayed
         expect(user_update_request).to have_been_made
