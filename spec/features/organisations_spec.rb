@@ -20,9 +20,12 @@ feature "View organisations", type: :feature do
     stub_omniauth(user: user)
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
-    stub_api_v2_resource_collection([organisation], include: "providers,users")
     stub_api_v2_resource_collection([access_request], include: "requester")
     stub_api_v2_resource_collection([access_request])
+    stub_api_v2_request(
+      "/organisations?include=providers,users&page[page]=1&sort=name",
+      resource_list_to_jsonapi([organisation], include: "providers,users", meta: { count: 1 }),
+    )
   end
 
   describe "page header" do

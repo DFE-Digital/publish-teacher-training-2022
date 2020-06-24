@@ -16,3 +16,5 @@
     <%= render partial: "organisation", collection: @organisations %>
   </tbody>
 </table>
+
+<%= pagy_govuk_nav(@pagy).html_safe %>
