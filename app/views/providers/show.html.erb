@@ -19,9 +19,6 @@
   </div>
   <aside class="govuk-grid-column-one-third">
     <div class="app-related">
-      <% if @provider_view.show_notifications_link? %>
-        <%= render partial: "providers/notifications_sign_up_link" %>
-      <% end %>
       <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= govuk_link_to "Users", users_provider_path(code: @provider.provider_code) %></h2>
       <p class="govuk-body">View users who manage your courses.</p>
 

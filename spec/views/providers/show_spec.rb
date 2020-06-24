@@ -2,7 +2,6 @@ require "rails_helper"
 
 describe "providers/show" do
   let(:provider_show_page) { PageObjects::Page::Organisations::OrganisationShow.new }
-  let(:provider_view) { instance_double(ProviderView) }
 
   module CurrentUserMethod
     def current_user; end
@@ -12,8 +11,6 @@ describe "providers/show" do
     view.extend(CurrentUserMethod)
     allow(view).to receive(:current_user).and_return({ "admin" => admin })
     assign(:provider, provider)
-    allow(provider_view).to receive(:show_notifications_link?).and_return(notifications_link_boolean)
-    assign(:provider_view, provider_view)
     render
 
     provider_show_page.load(rendered)
@@ -41,20 +38,6 @@ describe "providers/show" do
       it "displays the 'Courses as an accredited body' link" do
         expect(provider_show_page).to have_courses_as_accredited_body_link
       end
-
-      it "displays the notification preferences" do
-        expect(provider_show_page).to have_notifications_preference_link
-      end
-    end
-
-    context "more than one provider is an accredited body" do
-      let(:admin) { false }
-      let(:provider) { build(:provider, :accredited_body) }
-      let(:notifications_link_boolean) { false }
-
-      it "doesn't display the notification preferences" do
-        expect(provider_show_page).not_to have_notifications_preference_link
-      end
     end
   end
 
@@ -72,10 +55,6 @@ describe "providers/show" do
       it "doesn't display the 'Courses as an accredited body' link" do
         expect(provider_show_page).not_to have_courses_as_accredited_body_link
       end
-
-      it "doesn't display the notification preferences" do
-        expect(provider_show_page).not_to have_notifications_preference_link
-      end
     end
 
     context "user is not an admin" do
@@ -87,10 +66,6 @@ describe "providers/show" do
 
       it "doesn't display the 'Courses as an accredited body' link" do
         expect(provider_show_page).not_to have_courses_as_accredited_body_link
-      end
-
-      it "doesn't display the notification preferences" do
-        expect(provider_show_page).not_to have_notifications_preference_link
       end
     end
   end

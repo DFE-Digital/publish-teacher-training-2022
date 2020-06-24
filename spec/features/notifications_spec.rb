@@ -3,12 +3,18 @@ require "rails_helper"
 feature "Notifications", type: :feature do
   let(:organisation_show_page) { PageObjects::Page::Organisations::OrganisationShow.new }
   let(:notifications_index_page) { PageObjects::Page::Notifications::IndexPage.new }
-  let(:provider_view) { instance_double(ProviderView) }
+  let(:header) { PageObjects::Partials::Header.new }
 
   let(:provider) { build :provider, accredited_body?: true }
   let(:providers) { [provider] }
   let(:access_request) { build :access_request }
-  let(:user) { build :user, :notifications_configured }
+  let(:user) do
+    build(
+      :user,
+      :notifications_configured,
+      associated_with_accredited_body: true,
+    )
+  end
 
   before do
     stub_omniauth(user: user)
@@ -24,6 +30,7 @@ feature "Notifications", type: :feature do
         when_i_visit_accredited_body_page
         and_i_click_on_notifications_link
         then_the_notifications_page_is_displayed
+        and_the_notifications_link_has_an_active_state
         then_neither_radio_button_is_selected
         and_i_select_yes
         and_save_my_choice
@@ -37,6 +44,7 @@ feature "Notifications", type: :feature do
         when_i_visit_accredited_body_page
         and_i_click_on_notifications_link
         then_the_notifications_page_is_displayed
+        and_the_notifications_link_has_an_active_state
         then_yes_radio_button_is_preselected
         and_i_select_no
         and_save_my_choice
@@ -80,15 +88,19 @@ private
   end
 
   def then_i_should_see_notifications_link
-    expect(organisation_show_page).to have_notifications_preference_link
+    expect(header).to have_notifications_preference_link
   end
 
   def and_i_click_on_notifications_link
-    organisation_show_page.notifications_preference_link.click
+    header.notifications_preference_link.click
   end
 
   def then_the_notifications_page_is_displayed
     expect(notifications_index_page).to be_displayed
+  end
+
+  def and_the_notifications_link_has_an_active_state
+    expect(header).to have_active_notifications_preference_link
   end
 
   def and_i_select_yes

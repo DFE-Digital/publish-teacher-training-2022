@@ -14,12 +14,4 @@
 
     <%= pagy_govuk_nav(@pagy).html_safe %>
   </div>
-
-  <% if @providers_view.show_notifications_link? %>
-    <aside class="govuk-grid-column-one-third">
-      <div class="app-related govuk-!-padding-bottom-1">
-        <%= render partial: "providers/notifications_sign_up_link" %>
-      </div>
-    </aside>
-  <% end %>
 </div>

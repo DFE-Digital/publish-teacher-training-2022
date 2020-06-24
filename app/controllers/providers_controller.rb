@@ -14,8 +14,6 @@ class ProvidersController < ApplicationController
 
     @pagy = Pagy.new(count: @providers.meta.count, page: page, items: per_page)
 
-    @providers_view = ProvidersView.new(providers: providers)
-
     render "providers/no_providers", status: :forbidden if @providers.empty?
     redirect_to provider_path(@providers.first.provider_code) if @providers.size == 1
   end
@@ -25,8 +23,6 @@ class ProvidersController < ApplicationController
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:code])
       .first
-
-    @provider_view = ProviderView.new(provider: @provider, providers: providers)
   end
 
   def details
