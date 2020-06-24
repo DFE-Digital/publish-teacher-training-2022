@@ -1,45 +1,69 @@
 require "rails_helper"
 
 describe "authorisation", type: :request do
-  context "authorised_user defined in settings" do
-    let(:user) { build(:user, password: password) }
-    let(:password) { "password" }
-    let(:provider) { build :provider }
-    let(:recruitment_cycle) { build :recruitment_cycle }
-    let(:headers) { {} }
+  let(:basic_auth) { false }
 
-    before do
-      stub_api_v2_resource(recruitment_cycle)
-      stub_api_v2_resource_collection([provider])
-      stub_api_v2_resource(provider)
-    end
+  around :each do |example|
+    Settings.basic_auth = basic_auth
 
-    context "basic http authenticated" do
-      let(:headers) do
-        {
-          "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
-                                    .encode_credentials(user.email, password),
-        }
-      end
+    example.run
 
-      it "considers the user logged in" do
-        stub_authorised_development_user(user) do
-          get "/organisations/#{provider.provider_code}", headers: headers
+    Settings.basic_auth = false
+  end
+
+  describe "basic auth" do
+    context "when enabled" do
+      let(:basic_auth) { true }
+
+      context "with correct details" do
+        let(:headers) do
+          {
+            "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
+                                      .encode_credentials("admin", "secret"),
+          }
         end
 
-        expect(response).to be_successful
-      end
-    end
+        it "grants access" do
+          expect(Digest::SHA512).to receive(:hexdigest).with("secret").and_return("52785638ec464fd61f5c9b372797f1a7475225cabeb2b40b2d757eff9b337ff069b2314bb0c0611d44ca5d39c91906ab3415de0fbc36625b970e3c2c03d122da").at_least(:once)
 
-    context "without basic http authentication" do
-      it "requests user login" do
-        stub_authorised_development_user(user) do
-          get "/organisations/#{provider.provider_code}", headers: headers
+          get "/", headers: headers
+          expect(response).to redirect_to("/signin")
+          get "/signin", headers: headers
+          expect(response).to redirect_to("/auth/dfe")
+        end
+      end
+
+      context "with incorrect details" do
+        let(:headers) do
+          {
+            "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
+                                      .encode_credentials("foo", "bar"),
+          }
         end
 
-        expect(response).to be_unauthorized
+        it "denys access" do
+          get "/", headers: headers
+
+          expect(response).to have_http_status(401)
+        end
       end
     end
+
+    context "when disabled" do
+      let(:basic_auth) { false }
+
+      it "redirects to DfE signin" do
+        get "/"
+        expect(response).to redirect_to("/signin")
+        get "/signin"
+        expect(response).to redirect_to("/auth/dfe")
+      end
+    end
+  end
+
+  describe "developer auth" do
+    context "when enabled"
+    context "when disabled"
   end
 
   describe "/send_magic_link" do

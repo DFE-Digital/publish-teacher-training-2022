@@ -72,3 +72,5 @@ features:
     has_current_cycle_started?: true
 commit_sha_file: COMMIT_SHA
 allocations_state: closed
+basic_auth: false
+developer_auth: false

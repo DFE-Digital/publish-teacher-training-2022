@@ -29,6 +29,9 @@ Style/HashTransformValues:
   Enabled: false
 Rails/FindBy:
   Enabled: false
+Rails/ApplicationController:
+  Exclude:
+    - app/controllers/personas_controller.rb
 
 # rubocop-govuk 3.17.0 started to enforce this but no active record is actually in use
 # https://github.com/alphagov/rubocop-govuk/commit/c4a4329d5e44dc98b24f1d344a3532054b1539e0
