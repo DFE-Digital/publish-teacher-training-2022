@@ -72,3 +72,7 @@ features:
     has_current_cycle_started?: true
 commit_sha_file: COMMIT_SHA
 allocations_state: closed
+basic_auth: false
+basic_auth_username: admin
+basic_auth_password_digest: "52785638ec464fd61f5c9b372797f1a7475225cabeb2b40b2d757eff9b337ff069b2314bb0c0611d44ca5d39c91906ab3415de0fbc36625b970e3c2c03d122da"
+developer_auth: false

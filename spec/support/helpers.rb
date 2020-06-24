@@ -33,34 +33,6 @@ module Helpers
     )
     Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:dfe]
     stub_api_v2_request("/sessions", user.to_jsonapi, :post)
-
-    disable_authorised_development_user
-  end
-
-  def stub_authorised_development_user(user)
-    raise <<~EOMESSAGE unless block_given?
-      Can only stub authorised_user with a block, for example:
-
-        stub_authorised_development_user(user) do
-          get "/organisations"
-        end
-    EOMESSAGE
-
-    authorised_user = Config::Options.new(
-      email: user.email,
-      password: user.password,
-      first_name: user.first_name,
-      last_name: user.last_name,
-    )
-
-    stub_api_v2_request("/sessions", user.to_jsonapi, :post)
-
-    begin
-      Settings[:authorised_users] = [[0, authorised_user]]
-      yield
-    ensure
-      Settings.delete_field(:authorised_users)
-    end
   end
 
   def stub_api_v2_request(url_path, stub, method = :get, status = 200, token: nil, body: nil, &validate_request_body)
@@ -158,10 +130,6 @@ module Helpers
       url_for_build_course_with_params(params),
       jsonapi_response,
     )
-  end
-
-  def disable_authorised_development_user
-    allow(Settings).to receive(:key?).with(:authorised_users).and_return(false)
   end
 
 private

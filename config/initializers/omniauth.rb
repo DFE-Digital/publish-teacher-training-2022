@@ -1,3 +1,11 @@
+if Settings.developer_auth
+  Rails.application.config.middleware.use OmniAuth::Builder do
+    provider :developer,
+             fields: %i[email first_name last_name],
+             uid_field: :email
+  end
+end
+
 module OmniAuth
   module Strategies
     class OpenIDConnect

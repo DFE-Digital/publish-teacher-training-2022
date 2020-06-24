@@ -1,9 +1,12 @@
 class SessionsController < ApplicationController
   skip_before_action :request_login
   skip_before_action :check_interrupt_redirects
+  skip_before_action :verify_authenticity_token, if: proc { Settings.developer_auth }
 
   def new
-    if FeatureService.enabled?(:signin_intercept) || !FeatureService.enabled?(:dfe_signin)
+    if Settings.developer_auth
+      redirect_to "/personas"
+    elsif FeatureService.enabled?(:signin_intercept) || !FeatureService.enabled?(:dfe_signin)
       render
     else
       redirect_to "/auth/dfe"
@@ -23,6 +26,7 @@ class SessionsController < ApplicationController
       "credentials" => HashWithIndifferentAccess.new(
         "id_token" => auth_hash.dig("credentials", :id_token),
       ),
+      "provider" => auth_hash.dig("provider"),
     )
 
     Raven.tags_context(sign_in_user_id: current_user.fetch("uid"))
@@ -76,20 +80,22 @@ class SessionsController < ApplicationController
 
   def signout
     if current_user.present?
-      if development_mode_auth? || magic_link_enabled?
-        # Disappointingly, with HTTP basic auth it's trick to really log
-        # someone out, since the browser just holds onto the user's username /
-        # password and re-submits it until their session ends. So they'll just
-        # create a new session after this "logout".
+      case session[:auth_user]["provider"]
+      when "developer"
         reset_session
-        redirect_to root_path
+        redirect_to "/personas"
       else
-        uri = URI("#{Settings.dfe_signin.issuer}/session/end")
-        uri.query = {
-          id_token_hint: current_user["credentials"]["id_token"],
-          post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
-        }.to_query
-        redirect_to uri.to_s
+        if magic_link_enabled?
+          reset_session
+          redirect_to root_path
+        else
+          uri = URI("#{Settings.dfe_signin.issuer}/session/end")
+          uri.query = {
+            id_token_hint: current_user["credentials"]["id_token"],
+            post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
+          }.to_query
+          redirect_to uri.to_s
+        end
       end
     else
       redirect_to root_path

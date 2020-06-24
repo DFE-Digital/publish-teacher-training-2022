@@ -6,3 +6,5 @@ manage_backend:
 environment:
   label: "QA"
   selector_name: "qa"
+basic_auth: true
+developer_auth: true
