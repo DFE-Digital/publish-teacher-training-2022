@@ -14,6 +14,7 @@ class User < Base
     state :new, initial: true
     state :transitioned
     state :rolled_over
+    state :accepted_rollover_2021
     state :notifications_configured
 
     event :accept_transition_screen do
@@ -21,13 +22,13 @@ class User < Base
     end
 
     event :accept_rollover_screen do
-      transitions from: :transitioned, to: :rolled_over do
+      transitions from: %i[transitioned rolled_over], to: :accepted_rollover_2021 do
         guard { Settings.rollover }
       end
     end
 
     event :accept_notifications_screen do
-      transitions from: :rolled_over, to: :notifications_configured do
+      transitions from: %i[rolled_over accepted_rollover_2021], to: :notifications_configured do
         guard { associated_with_accredited_body }
         guard { !notifications_configured }
       end
@@ -35,8 +36,7 @@ class User < Base
   end
 
   def next_state
-    aasm
-        .states(permitted: true)
+    aasm.states(permitted: true)
         .map(&:name)
         .first
   end

@@ -26,6 +26,10 @@ FactoryBot.define do
       state { "rolled_over" }
     end
 
+    trait :accepted_rollover_2021 do
+      state { "accepted_rollover_2021" }
+    end
+
     trait :notifications_configured do
       state { "notifications_configured" }
     end

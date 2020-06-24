@@ -28,15 +28,23 @@ describe User, type: :model do
   describe "rolled_over state event" do
     context "rollover is allowed" do
       let(:transitioned_user) { build(:user, :transitioned) }
+      let(:rolled_over_user) { build(:user, :rolled_over) }
 
       before do
         allow(Settings).to receive(:rollover).and_return(true)
       end
 
-      it "changes state from 'transitioned' to 'rolled_over'" do
+      it "changes state from 'transitioned' to 'accepted_rollover_2021'" do
         transitioned_user.accept_rollover_screen!
 
-        expect(transitioned_user.rolled_over?).to be true
+        expect(transitioned_user.accepted_rollover_2021?).to be true
+        expect(update_request).to have_been_made
+      end
+
+      it "changes state from 'rolled_over' to 'accepted_rollover_2021'" do
+        rolled_over_user.accept_rollover_screen!
+
+        expect(rolled_over_user.accepted_rollover_2021?).to be true
         expect(update_request).to have_been_made
       end
     end
@@ -66,10 +74,26 @@ describe User, type: :model do
         )
       end
 
+      let(:accepted_rollover_2021_user) do
+        build(
+          :user,
+          :accepted_rollover_2021,
+          associated_with_accredited_body: true,
+          notifications_configured: false,
+        )
+      end
+
       it "changes state from 'rolled_over' to 'notifications_configured'" do
         rolled_over_user.accept_notifications_screen!
 
         expect(rolled_over_user.notifications_configured?).to be true
+        expect(update_request).to have_been_made
+      end
+
+      it "changes state from 'accepted_rollover_2021' to 'notifications_configured'" do
+        accepted_rollover_2021_user.accept_notifications_screen!
+
+        expect(accepted_rollover_2021_user.notifications_configured?).to be true
         expect(update_request).to have_been_made
       end
     end
