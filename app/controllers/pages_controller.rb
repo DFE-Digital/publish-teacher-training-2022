@@ -19,5 +19,7 @@ class PagesController < ApplicationController
 
   def rollover; end
 
+  def rollover_recruitment; end
+
   def accept_terms; end
 end

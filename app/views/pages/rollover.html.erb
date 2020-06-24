@@ -1,28 +1,25 @@
-<%= content_for :page_title, "Begin preparing for the next cycle" %>
+<%= content_for :page_title, "Prepare for the next cycle" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Begin preparing for the next cycle</h1>
-    <p class="govuk-body">All your courses, locations and details have been rolled over from the current cycle. You can now update them for the next recruitment cycle (2020 – 2021).</p>
-    <p class="govuk-body">You can:</p>
+    <h1 class="govuk-heading-xl">
+      Prepare for the next cycle
+    </h1>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>prepare your course descriptions</li>
-      <li>request new courses for the next cycle</li>
-      <li>delete courses you’re no longer running</li>
-    </ul>
-
-    <h2 class="govuk-heading-m">Changes to the professional skills test</h2>
-    <p class="govuk-body">In the next cycle candidates will not need to take a professional skills test.</p>
-
-    <p class="govuk-body govuk-!-margin-bottom-8">
-      <a class="govuk-link" href="https://www.gov.uk/government/news/changes-to-the-professional-skills-test-for-teachers" target="_blank">
-        View the announcement on GOV.UK
-      </a>
+    <p class="govuk-body">
+      All your courses, locations and details have been copied over
+      from the current recruitment cycle (2020 - 2021). You can now
+      update them for 2021 – 2022.
     </p>
 
-    <%= form_for :user, url: accept_rollover_path, method: :patch do |f| %>
-      <%= f.submit "Continue", class: "govuk-button", data: { qa: 'rollover__continue' } %>
-    <% end %>
+    <p class="govuk-body">You should:</p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+      <li>add any new courses</li>
+      <li>delete courses you're no longer running</li>
+      <li>edit titles, outcomes and locations where necessary</li>
+    </ul>
+
+    <%= link_to "Continue", rollover_recruitment_path,  class: "govuk-button" %>
   </div>
 </div>
