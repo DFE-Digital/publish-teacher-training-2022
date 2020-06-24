@@ -24,11 +24,6 @@ feature "View pages", type: :feature do
     expect(find("h1")).to have_content("Privacy policy")
   end
 
-  scenario "Navigate to /new-features" do
-    new_features_page.load
-    expect(new_features_page.title).to have_content("New features coming to Publish")
-  end
-
   scenario "Navigate to /guidance" do
     visit "/guidance"
     expect(find("h1")).to have_content("Guidance for Publish teacher training courses")

@@ -223,7 +223,6 @@ Rails.application.routes.draw do
   get "/terms-conditions", to: "pages#terms", as: :terms
   get "/privacy-policy", to: "pages#privacy", as: :privacy
   get "/guidance", to: "pages#guidance", as: :guidance
-  get "/new-features", to: "pages#new_features", as: :new_features
   get "/notifications-info", to: "pages#notifications_info", as: :notifications_info
   patch "/accept-notifications-info", to: "users#accept_notifications_info"
   get "/transition-info", to: "pages#transition_info", as: :transition_info
