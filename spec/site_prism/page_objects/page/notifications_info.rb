@@ -4,7 +4,7 @@ module PageObjects
       set_url "/notifications-info"
 
       element :title, "h1"
-      element :continue, "[data-qa=transition__continue]"
+      element :continue, ".govuk-button[value=Continue]"
     end
   end
 end

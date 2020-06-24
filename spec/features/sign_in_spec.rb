@@ -172,7 +172,7 @@ feature "Sign in", type: :feature do
         expect(notifications_info_page).to be_displayed
 
         expect(notifications_info_page).to have_content("Get notifications about your courses")
-        rollover_page.continue.click
+        notifications_info_page.continue.click
 
         expect(root_page).to be_displayed
         expect(user_update_request).to have_been_made
