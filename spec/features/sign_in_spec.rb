@@ -69,6 +69,8 @@ feature "Sign in", type: :feature do
 
       context "Rollover is enabled" do
         let(:user) { build(:user, :new) }
+        let(:transitioned_user) { build(:user, :transitioned, id: user.id) }
+
         let(:user_update_request) do
           stub_request(
             :patch,
@@ -76,7 +78,14 @@ feature "Sign in", type: :feature do
           )
                                       .with(body: /"state":"transitioned"/)
         end
-        let(:user_get_request) { stub_api_v2_request("/users/#{user.id}", user.to_jsonapi) }
+
+        let(:user_get_request) do
+          stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}").to_return(
+            { body: user.to_jsonapi.to_json, headers: { 'Content-Type': "application/vnd.api+json" } },
+            { body: user.to_jsonapi.to_json, headers: { 'Content-Type': "application/vnd.api+json" } },
+            { body: transitioned_user.to_jsonapi.to_json, headers: { 'Content-Type': "application/vnd.api+json" } },
+          )
+        end
 
         before do
           user_get_request

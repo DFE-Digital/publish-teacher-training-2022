@@ -14,7 +14,9 @@ class PagesController < ApplicationController
 
   def guidance; end
 
-  def accredited_body_new_features; end
+  def new_features; end
+
+  def notifications_info; end
 
   def transition_info; end
 
@@ -31,7 +33,7 @@ class PagesController < ApplicationController
 private
 
   def skip_already_transitioned_interruptions
-    user = user_from_session
+    user = User.find(current_user["user_id"]).first
     if user_state_to_redirect_paths[user.next_state] != request.fullpath
       redirect_to_correct_page(user, use_redirect_back_to: false)
     end
