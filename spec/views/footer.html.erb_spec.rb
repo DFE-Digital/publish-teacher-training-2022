@@ -19,31 +19,31 @@ describe "footer partial" do
     expect(page).not_to have_access_requests_link
     expect(page).not_to have_organisations_link
   end
-end
 
-def mock_access_requests
-  count = 4
-  allow(AccessRequest).to receive(:return_count).and_return(count)
-  count
-end
+  def mock_access_requests
+    count = 4
+    allow(AccessRequest).to receive(:return_count).and_return(count)
+    count
+  end
 
-def get_admin_user
-  get_user admin: true
-end
+  def get_admin_user
+    get_user admin: true
+  end
 
-def get_user(admin: false)
-  {
-    "info" => {
-      "first_name" => "bob",
-      "last_name" => "bob",
-    },
-    "admin" => admin,
-  }
-end
+  def get_user(admin: false)
+    {
+      "info" => {
+        "first_name" => "bob",
+        "last_name" => "bob",
+      },
+      "admin" => admin,
+    }
+  end
 
-def render_footer_for(user)
-  render "layouts/footer", current_user: user
-  page = PageObjects::Partials::Footer.new
-  page.load(rendered)
-  page
+  def render_footer_for(user)
+    render "layouts/footer", current_user: user
+    page = PageObjects::Partials::Footer.new
+    page.load(rendered)
+    page
+  end
 end
