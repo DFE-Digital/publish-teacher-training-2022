@@ -232,6 +232,7 @@ Rails.application.routes.draw do
   patch "/accept-rollover", to: "users#accept_rollover"
   get "/accept-terms", to: "pages#accept_terms"
   patch "/accept-terms", to: "users#accept_terms"
+  get "/performance-dashboard", to: "pages#performance_dashboard", as: :performance_dashboard
 
   get "/providers/suggest", to: "provider_suggestions#suggest"
   get "/providers/suggest_any", to: "provider_suggestions#suggest_any"

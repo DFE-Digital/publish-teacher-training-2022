@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :request_login, only: %i[guidance accessibility terms cookies privacy]
+  skip_before_action :request_login, only: %i[guidance accessibility terms cookies privacy performance_dashboard]
 
   def accessibility; end
 
@@ -20,4 +20,8 @@ class PagesController < ApplicationController
   def rollover_recruitment; end
 
   def accept_terms; end
+
+  def performance_dashboard
+    @performance_data = PerformanceDashboardService.call
+  end
 end

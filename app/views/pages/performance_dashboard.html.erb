@@ -1,0 +1,44 @@
+<%= content_for :page_title, "Service performance" %>
+
+<h1 class="govuk-heading-xl">
+  Service performance
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <h2 class="govuk-heading-m">Providers</h2>
+    <div class="app-performance-dashboard app-performance-dashboard--secondary">
+      <div class="app-performance-dashboard__title">
+        <%= @performance_data.total_providers %>
+      </div>
+      using Publish
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <h2 class="govuk-heading-m">Courses</h2>
+    <div class="app-performance-dashboard app-performance-dashboard--secondary">
+      <div class="app-performance-dashboard__title">
+        <%= @performance_data.total_courses %>
+      </div>
+      available on Find
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <h2 class="govuk-heading-m">Users</h2>
+    <div class="app-performance-dashboard app-performance-dashboard--secondary">
+      <div class="app-performance-dashboard__title">
+        <%= @performance_data.total_users %>
+      </div>
+      registered in Publish
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <h2 class="govuk-heading-m">Allocations</h2>
+    <div class="app-performance-dashboard app-performance-dashboard--secondary">
+      <div class="app-performance-dashboard__title">
+        <%= @performance_data.total_allocations %>
+      </div>
+      requests made
+    </div>
+  </div>
+</div>

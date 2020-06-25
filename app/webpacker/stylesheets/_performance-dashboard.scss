@@ -1,0 +1,12 @@
+.app-performance-dashboard {
+  @include govuk-font($size: 19);
+  @include govuk-responsive-padding(4);
+}
+
+.app-performance-dashboard--secondary {
+  background: govuk-colour("light-grey");
+}
+
+.app-performance-dashboard__title {
+  @include govuk-font($size: 48, $weight: bold);
+}
