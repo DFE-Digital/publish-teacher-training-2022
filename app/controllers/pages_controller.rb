@@ -21,5 +21,7 @@ class PagesController < ApplicationController
 
   def accept_terms; end
 
-  def performance_dashboard; end
+  def performance_dashboard
+    @performance_data = PerformanceDashboardService.call
+  end
 end

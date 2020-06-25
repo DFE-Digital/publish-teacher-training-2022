@@ -1,0 +1,292 @@
+{
+  "providers": {
+    "total": {
+      "all": 1941,
+      "non_training_providers": 881,
+      "training_providers": 1060
+    },
+    "training_providers": {
+      "findable_total": {
+        "open": 807,
+        "closed": 253
+      },
+      "accredited_body": {
+        "open": {
+          "accredited_body": 193,
+          "not_an_accredited_body": 614
+        },
+        "closed": {
+          "accredited_body": 34,
+          "not_an_accredited_body": 219
+        }
+      },
+      "provider_type": {
+        "open": {
+          "scitt": 118,
+          "lead_school": 618,
+          "university": 70,
+          "unknown": 0,
+          "invalid_value": 0
+        },
+        "closed": {
+          "scitt": 30,
+          "lead_school": 222,
+          "university": 1,
+          "unknown": 0,
+          "invalid_value": 0
+        }
+      },
+      "region_code": {
+        "open": {
+          "no_region": 0,
+          "london": 121,
+          "south_east": 118,
+          "south_west": 55,
+          "wales": 0,
+          "west_midlands": 103,
+          "east_midlands": 58,
+          "eastern": 93,
+          "north_west": 104,
+          "yorkshire_and_the_humber": 101,
+          "north_east": 51,
+          "scotland": 0
+        },
+        "closed": {
+          "no_region": 0,
+          "london": 43,
+          "south_east": 39,
+          "south_west": 31,
+          "wales": 0,
+          "west_midlands": 22,
+          "east_midlands": 15,
+          "eastern": 36,
+          "north_west": 24,
+          "yorkshire_and_the_humber": 28,
+          "north_east": 14,
+          "scotland": 0
+        }
+      }
+    }
+  },
+  "courses": {
+    "total": {
+      "all": 17697,
+      "non_findable": 4631,
+      "all_findable": 13066
+    },
+    "findable_total": {
+      "open": 5920,
+      "closed": 7146
+    },
+    "provider_type": {
+      "open": {
+        "scitt": 1016,
+        "lead_school": 4098,
+        "university": 805,
+        "unknown": 0,
+        "invalid_value": 0
+      },
+      "closed": {
+        "scitt": 967,
+        "lead_school": 5903,
+        "university": 276,
+        "unknown": 0,
+        "invalid_value": 0
+      }
+    },
+    "program_type": {
+      "open": {
+        "higher_education_programme": 857,
+        "school_direct_training_programme": 3568,
+        "school_direct_salaried_training_programme": 514,
+        "scitt_programme": 902,
+        "pg_teaching_apprenticeship": 79
+      },
+      "closed": {
+        "higher_education_programme": 279,
+        "school_direct_training_programme": 4437,
+        "school_direct_salaried_training_programme": 1411,
+        "scitt_programme": 902,
+        "pg_teaching_apprenticeship": 117
+      }
+    },
+    "study_mode": {
+      "open": {
+        "full_time": 5545,
+        "part_time": 100,
+        "full_time_or_part_time": 275
+      },
+      "closed": {
+        "full_time": 6833,
+        "part_time": 111,
+        "full_time_or_part_time": 202
+      }
+    },
+    "qualification": {
+      "open": {
+        "qts": 1151,
+        "pgce_with_qts": 4686,
+        "pgde_with_qts": 49,
+        "pgce": 29,
+        "pgde": 5
+      },
+      "closed": {
+        "qts": 1459,
+        "pgce_with_qts": 5596,
+        "pgde_with_qts": 87,
+        "pgce": 1,
+        "pgde": 3
+      }
+    },
+    "is_send": {
+      "open": {
+        "yes": 63,
+        "no": 5857
+      },
+      "closed": {
+        "yes": 88,
+        "no": 7058
+      }
+    },
+    "subject": {
+      "open": {
+        "Primary": 920,
+        "Primary with English": 15,
+        "Primary with geography and history": 12,
+        "Primary with mathematics": 93,
+        "Primary with modern languages": 9,
+        "Primary with physical education": 28,
+        "Primary with science": 14,
+        "Art and design": 169,
+        "Science": 15,
+        "Biology": 346,
+        "Business studies": 84,
+        "Chemistry": 407,
+        "Citizenship": 13,
+        "Classics": 12,
+        "Communication and media studies": 12,
+        "Computing": 293,
+        "Dance": 29,
+        "Design and technology": 257,
+        "Drama": 136,
+        "Economics": 23,
+        "English": 373,
+        "Geography": 360,
+        "Health and social care": 13,
+        "History": 275,
+        "Mathematics": 539,
+        "Music": 182,
+        "Philosophy": 0,
+        "Physical education": 117,
+        "Physics": 454,
+        "Psychology": 35,
+        "Religious education": 253,
+        "Social sciences": 32,
+        "French": 177,
+        "English as a second or other language": 1,
+        "German": 86,
+        "Italian": 3,
+        "Japanese": 0,
+        "Mandarin": 4,
+        "Russian": 1,
+        "Spanish": 139,
+        "Further education": 34,
+        "Modern Languages": 429,
+        "Modern languages (other)": 189
+      },
+      "closed": {
+        "Primary": 805,
+        "Primary with English": 0,
+        "Primary with geography and history": 0,
+        "Primary with mathematics": 68,
+        "Primary with modern languages": 11,
+        "Primary with physical education": 12,
+        "Primary with science": 0,
+        "Art and design": 298,
+        "Science": 5,
+        "Biology": 467,
+        "Business studies": 173,
+        "Chemistry": 439,
+        "Citizenship": 8,
+        "Classics": 11,
+        "Communication and media studies": 20,
+        "Computing": 305,
+        "Dance": 52,
+        "Design and technology": 309,
+        "Drama": 201,
+        "Economics": 12,
+        "English": 592,
+        "Geography": 392,
+        "Health and social care": 26,
+        "History": 419,
+        "Mathematics": 468,
+        "Music": 235,
+        "Philosophy": 0,
+        "Physical education": 423,
+        "Physics": 444,
+        "Psychology": 59,
+        "Religious education": 253,
+        "Social sciences": 74,
+        "French": 267,
+        "English as a second or other language": 1,
+        "German": 142,
+        "Italian": 3,
+        "Japanese": 5,
+        "Mandarin": 12,
+        "Russian": 3,
+        "Spanish": 240,
+        "Further education": 4,
+        "Modern Languages": 605,
+        "Modern languages (other)": 190
+      }
+    }
+  },
+  "publish": {
+    "users": {
+      "total": {
+        "all": 3050,
+        "active_users": 1883,
+        "non_active_users": 1167
+      },
+      "recent_active_users": 708
+    },
+    "providers": {
+      "total": {
+        "all": 1941,
+        "providers_with_non_active_users": 1090,
+        "providers_with_recent_active_users": 851
+      },
+      "with_1_recent_active_users": 682,
+      "with_2_recent_active_users": 139,
+      "with_3_recent_active_users": 24,
+      "with_4_recent_active_users": 6,
+      "with_more_than_5_recent_active_users": 0
+    },
+    "courses": {
+      "total_updated_recently": 4292,
+      "updated_non_findable_recently": 56,
+      "updated_findable_recently": 4236,
+      "updated_open_courses_recently": 704,
+      "updated_closed_courses_recently": 3532,
+      "created_recently": 95
+    }
+  },
+  "allocations": {
+    "previous": {
+      "total": {
+        "allocations": 433,
+        "distinct_accredited_bodies": 153,
+        "distinct_providers": 397,
+        "number_of_places": 1461
+      }
+    },
+    "current": {
+      "total": {
+        "allocations": 183,
+        "distinct_accredited_bodies": 86,
+        "distinct_providers": 180,
+        "number_of_places": 677
+      }
+    }
+  }
+}
