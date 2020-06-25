@@ -1,6 +1,6 @@
 <footer class="govuk-footer" role="contentinfo">
   <div class="govuk-width-container">
-    <% if current_user.present? && current_user["admin"] %>
+    <% if current_user.present? && current_user["admin"] && current_user["accepted_terms?"] %>
       <div class="govuk-footer__navigation" id="admin">
         <div class="govuk-footer__section">
           <h2 class="govuk-footer__heading govuk-heading-m">Support tools</h2>

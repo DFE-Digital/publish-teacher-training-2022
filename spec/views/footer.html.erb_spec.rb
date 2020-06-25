@@ -1,14 +1,27 @@
 require "rails_helper"
 
 describe "footer partial" do
-  scenario "shows access request link with count to admin users" do
-    access_requests = mock_access_requests
-    user = get_admin_user
+  context "admin user has accepted terms" do
+    scenario "shows access request link with count to admin users" do
+      access_requests = mock_access_requests
+      user = get_admin_user
 
-    page = render_footer_for user
+      page = render_footer_for user
 
-    expect(page.access_requests_link).to have_text("Access Requests (#{access_requests})")
-    expect(page).to have_organisations_link
+      expect(page.access_requests_link).to have_text("Access Requests (#{access_requests})")
+      expect(page).to have_organisations_link
+    end
+  end
+
+  context "admin user has not accepted terms" do
+    scenario "shows access request link with count to admin users" do
+      user = get_admin_user_who_has_not_accepted_terms
+
+      page = render_footer_for user
+
+      expect(page).to_not have_access_requests_link
+      expect(page).to_not have_organisations_link
+    end
   end
 
   scenario "doesn't show access request link to non-admin users" do
@@ -30,13 +43,18 @@ describe "footer partial" do
     get_user admin: true
   end
 
-  def get_user(admin: false)
+  def get_admin_user_who_has_not_accepted_terms
+    get_user admin: true, accepted_terms: false
+  end
+
+  def get_user(admin: false, accepted_terms: true)
     {
       "info" => {
         "first_name" => "bob",
         "last_name" => "bob",
       },
       "admin" => admin,
+      "accepted_terms?" => accepted_terms,
     }
   end
 
