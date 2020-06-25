@@ -4,6 +4,13 @@ describe "pages/performance_dashboard" do
   let(:performance_dashboard_page) { PageObjects::Page::PerformanceDashboardPage.new }
 
   before do
+    service = double PerformanceDashboardService,
+                     total_providers: "1,000",
+                     total_courses: "555",
+                     total_users: "3,000",
+                     total_allocations: "300"
+
+    assign(:performance_data, service)
     render
     performance_dashboard_page.load(rendered)
   end

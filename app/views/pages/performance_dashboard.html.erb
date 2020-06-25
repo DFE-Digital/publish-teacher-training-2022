@@ -9,7 +9,7 @@
     <h2 class="govuk-heading-m">Providers</h2>
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
       <div class="app-performance-dashboard__title">
-        2,000
+        <%= @performance_data.total_providers %>
       </div>
       using Publish
     </div>
@@ -18,7 +18,7 @@
     <h2 class="govuk-heading-m">Courses</h2>
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
       <div class="app-performance-dashboard__title">
-        13,999
+        <%= @performance_data.total_courses %>
       </div>
       available on Find
     </div>
@@ -27,7 +27,7 @@
     <h2 class="govuk-heading-m">Users</h2>
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
       <div class="app-performance-dashboard__title">
-        2,600
+        <%= @performance_data.total_users %>
       </div>
       registered in Publish
     </div>
@@ -36,7 +36,7 @@
     <h2 class="govuk-heading-m">Allocations</h2>
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
       <div class="app-performance-dashboard__title">
-       677
+        <%= @performance_data.total_allocations %>
       </div>
       requests made
     </div>
