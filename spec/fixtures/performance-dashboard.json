@@ -7,12 +7,12 @@
     },
     "training_providers": {
       "findable_total": {
-        "open": 807,
-        "closed": 253
+        "open": 1807,
+        "closed": 2530
       },
       "accredited_body": {
         "open": {
-          "accredited_body": 193,
+          "accredited_body": 1930,
           "not_an_accredited_body": 614
         },
         "closed": {
