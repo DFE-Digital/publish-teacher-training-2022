@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :request_login, only: %i[guidance accessibility terms cookies privacy new_features]
+  skip_before_action :request_login, only: %i[guidance accessibility terms cookies privacy]
 
   def accessibility; end
 
@@ -10,8 +10,6 @@ class PagesController < ApplicationController
   def privacy; end
 
   def guidance; end
-
-  def new_features; end
 
   def accredited_body_new_features; end
 
