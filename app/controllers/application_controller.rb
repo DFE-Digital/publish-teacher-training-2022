@@ -184,6 +184,7 @@ private
     session[:auth_user]["state"] = user.state
     session[:auth_user]["associated_with_accredited_body"] = user.associated_with_accredited_body
     session[:auth_user]["notifications_configured"] = user.notifications_configured
+    session[:auth_user]["accepted_terms?"] = user.accept_terms_date_utc.present?
     session[:auth_user]["admin"] = user.admin
     session[:auth_user]["attributes"] = user.attributes
 

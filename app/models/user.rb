@@ -6,8 +6,8 @@ class User < Base
 
   custom_endpoint :accept_terms, on: :member, request_method: :patch
 
-  def self.member(id, state)
-    new(id: id, state: state)
+  def self.member(id)
+    new(id: id)
   end
 
   aasm do

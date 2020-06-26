@@ -183,7 +183,7 @@ feature "Sign in", type: :feature do
   scenario "new inactive user accepts the terms and conditions page with rollover disabled" do
     allow(Settings).to receive(:rollover).and_return(false)
     user = build :user, :inactive, :new
-    update_request = stub_request(:patch, "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}")
+    update_request = stub_request(:patch, "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}/accept_terms")
 
     stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
 

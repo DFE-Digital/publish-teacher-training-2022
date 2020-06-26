@@ -85,6 +85,10 @@ describe ApplicationController, type: :controller do
           expect(controller.request.session[:auth_user][:provider_count]).to eq nil
         end
 
+        it "has set accept_terms?" do
+          expect(controller.request.session[:auth_user][:accept_terms?]).to eq nil
+        end
+
         describe "sentry contexts" do
           before do
             allow(Raven).to receive(:user_context)
@@ -119,6 +123,7 @@ describe ApplicationController, type: :controller do
                                   state: "new",
                                   admin: true,
                                   associated_with_accredited_body: false,
+                                  accept_terms_date_utc: Time.current,
                                   notifications_configured: false,
                                   attributes: {},
                                 ),
