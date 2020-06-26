@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get :ping, controller: :heartbeat
   get :healthcheck, controller: :heartbeat
+  get :sha, controller: :heartbeat
 
   # DfE Sign In
   get "/signin", to: "sessions#new", as: "signin"
