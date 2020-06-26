@@ -5,7 +5,7 @@ module PageObjects
 
       element :page_heading, ".govuk-heading-xl"
 
-      sections :primary_indicators, ".app-performance-dashboard" do
+      sections :primary_indicators, ".app-performance-dashboard--kpi" do
         element :section_heading, ".govuk-heading-m"
       end
     end
