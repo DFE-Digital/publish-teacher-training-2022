@@ -43,7 +43,7 @@ feature "Sign in", type: :feature do
 
     # Redirect to DfE Signin and come back
     expect(page).to have_content("Sign out (#{user.first_name} #{user.last_name})")
-    expect(root_page).to be_displayed
+    expect(page.current_path).to eql("/rollover")
   end
 
   describe "Interruption screens" do
@@ -122,8 +122,7 @@ feature "Sign in", type: :feature do
         stub_request(
           :patch,
           "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
-        )
-                                    .with(body: /"state":"rolled_over"/)
+        ).with(body: /"state":"accepted_rollover_2021"/)
       end
       let(:user_get_request) { stub_api_v2_request("/users/#{user.id}", user.to_jsonapi) }
 

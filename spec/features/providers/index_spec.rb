@@ -62,9 +62,9 @@ feature "View providers", type: :feature do
         )
 
         visit provider_path(provider_1.provider_code)
-        expect(find("h1")).to have_content(provider_1.provider_name.to_s)
-        expect(organisation_page).to have_current_cycle
-        expect(organisation_page).to have_next_cycle
+
+        expect(page.current_path).to eql("/rollover")
+        expect(find("h1")).to have_content("Prepare for the next cycle")
       end
     end
   end
