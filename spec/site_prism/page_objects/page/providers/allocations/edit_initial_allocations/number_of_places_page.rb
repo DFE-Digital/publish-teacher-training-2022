@@ -7,7 +7,7 @@ module PageObjects
             set_url "/organisations/{provider_code}/{recruitment_cycle_year}/allocations/{provider_code}/edit_initial_allocations/number_of_places"
 
             element :header, "h1"
-            element :number_of_places_field, "#allocation-number-of-places-field"
+            element :number_of_places_field, "#number-of-places-field"
           end
         end
       end

@@ -207,13 +207,11 @@ Rails.application.routes.draw do
             get :edit, path: "edit", param: :id
             patch :update
 
-            scope :edit_initial_allocations do
-              get :do_you_want, to: "edit_initial_allocations#do_you_want"
-              post :do_you_want, to: "edit_initial_allocations#do_you_want"
-              get :number_of_places, to: "edit_initial_allocations#number_of_places"
-              post :number_of_places, to: "edit_initial_allocations#number_of_places"
-              get :check_answers, to: "edit_initial_allocations#check_answers"
-              post :check_answers, to: "edit_initial_allocations#check_answers"
+            scope :initial_requests do
+              get :edit, to: "edit_initial_allocations#edit", as: "get_edit_initial_request"
+              post :edit, to: "edit_initial_allocations#edit", as: "post_edit_initial_request"
+              post :update, to: "edit_initial_allocations#update", as: "update_initial_request"
+              get :delete, to: "edit_initial_allocations#delete", as: "delete_initial_request"
               get :confirm_deletion, to: "edit_initial_allocations#confirm_deletion"
             end
           end
