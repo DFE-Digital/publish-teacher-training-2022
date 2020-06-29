@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe PerformanceDashboardService do
   let(:service) { described_class.new }
 
@@ -28,7 +30,7 @@ describe PerformanceDashboardService do
 
     it "returns a total of allocation for the current recruitment cycle year" do
       data = service.call
-      expect(data.total_allocations).to eq("183")
+      expect(data.total_allocations).to eq("1,183")
     end
   end
 
@@ -51,6 +53,52 @@ describe PerformanceDashboardService do
     it "returns a total of providers who are accredited bodies" do
       data = service.call
       expect(data.providers_accredited_bodies).to eq("1,930")
+    end
+  end
+
+  describe "allocations tab data" do
+    describe "current allocations" do
+      it "returns a total of allocations" do
+        data = service.call
+        expect(data.allocations_requests("current")).to eq("1,183")
+      end
+
+      it "returns a total of providers" do
+        data = service.call
+        expect(data.allocations_number_of_places("current")).to eq("1,677")
+      end
+
+      it "returns a total of accredited bodies" do
+        data = service.call
+        expect(data.allocations_accredited_bodies("current")).to eq("1,186")
+      end
+
+      it "returns a total number of places" do
+        data = service.call
+        expect(data.allocations_providers("current")).to eq("1,180")
+      end
+    end
+
+    describe "previous allocations" do
+      it "returns a total of allocations" do
+        data = service.call
+        expect(data.allocations_requests("previous")).to eq("1,433")
+      end
+
+      it "returns a total of providers" do
+        data = service.call
+        expect(data.allocations_number_of_places("previous")).to eq("1,461")
+      end
+
+      it "returns a total of accredited bodies" do
+        data = service.call
+        expect(data.allocations_accredited_bodies("previous")).to eq("1,153")
+      end
+
+      it "returns a total number of places" do
+        data = service.call
+        expect(data.allocations_providers("previous")).to eq("1,397")
+      end
     end
   end
 

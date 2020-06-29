@@ -11,7 +11,11 @@ describe "pages/performance_dashboard" do
                      total_allocations: "300",
                      providers_published_courses: "3,400",
                      providers_unpublished_courses: "2,000",
-                     providers_accredited_bodies: "2,999"
+                     providers_accredited_bodies: "2,999",
+                     allocations_requests: "1,000",
+                     allocations_providers: "2,000",
+                     allocations_number_of_places: "3,000",
+                     allocations_accredited_bodies: "4,000"
 
     assign(:performance_data, service)
     render
