@@ -8,7 +8,10 @@ describe "pages/performance_dashboard" do
                      total_providers: "1,000",
                      total_courses: "555",
                      total_users: "3,000",
-                     total_allocations: "300"
+                     total_allocations: "300",
+                     providers_published_courses: "3,400",
+                     providers_unpublished_courses: "2,000",
+                     providers_accredited_bodies: "2,999"
 
     assign(:performance_data, service)
     render

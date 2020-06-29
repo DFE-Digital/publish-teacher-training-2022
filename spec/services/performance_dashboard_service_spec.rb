@@ -10,7 +10,7 @@ describe PerformanceDashboardService do
       )
   end
 
-  describe "#total_providers" do
+  describe "4 initial performance indicators" do
     it "returns a total of providers" do
       data = service.call
       expect(data.total_providers).to eq("1,941")
@@ -29,6 +29,28 @@ describe PerformanceDashboardService do
     it "returns a total of allocation for the current recruitment cycle year" do
       data = service.call
       expect(data.total_allocations).to eq("183")
+    end
+  end
+
+  describe "providers tab data" do
+    it "returns a total of providers" do
+      data = service.call
+      expect(data.total_providers).to eq("1,941")
+    end
+
+    it "returns a total of providers with publish courses" do
+      data = service.call
+      expect(data.providers_published_courses).to eq("1,807")
+    end
+
+    it "returns a total of providers with courses not published" do
+      data = service.call
+      expect(data.providers_unpublished_courses).to eq("2,530")
+    end
+
+    it "returns a total of providers who are accredited bodies" do
+      data = service.call
+      expect(data.providers_accredited_bodies).to eq("1,930")
     end
   end
 

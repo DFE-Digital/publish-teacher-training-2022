@@ -3,8 +3,24 @@
   @include govuk-responsive-padding(4);
 }
 
-.app-performance-dashboard--secondary {
+.app-performance-dashboard--primary {
+  background-color: govuk-colour("blue");
+  color: govuk-colour("white");
+}
+
+.app-performance-dashboard--secondary,
+.app-performance-dashboard--kpi {
   background: govuk-colour("light-grey");
+}
+
+.app-performance-dashboard--green {
+  background-color: govuk-colour("green");
+  color: govuk-colour("white");
+}
+
+.app-performance-dashboard--red {
+  color: govuk-shade(govuk-colour("red"), 30);
+  background: govuk-tint(govuk-colour("red"), 80);
 }
 
 .app-performance-dashboard__title {

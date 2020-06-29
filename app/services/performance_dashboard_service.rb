@@ -32,4 +32,16 @@ class PerformanceDashboardService
   def total_allocations
     number_with_delimiter(@response["allocations"]["current"]["total"]["allocations"])
   end
+
+  def providers_published_courses
+    number_with_delimiter(@response["providers"]["training_providers"]["findable_total"]["open"])
+  end
+
+  def providers_unpublished_courses
+    number_with_delimiter(@response["providers"]["training_providers"]["findable_total"]["closed"])
+  end
+
+  def providers_accredited_bodies
+    number_with_delimiter(@response["providers"]["training_providers"]["accredited_body"]["open"]["accredited_body"])
+  end
 end
