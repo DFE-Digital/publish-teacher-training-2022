@@ -35,6 +35,12 @@ describe "pages/performance_dashboard" do
     end
   end
 
+  describe "courses tab" do
+    it "reports on 4 sets of figures" do
+      expect(performance_dashboard_page.courses_tab.data_sets.length).to eq(4)
+    end
+  end
+
   describe "users tab" do
     it "has four user data results" do
       expect(performance_dashboard_page.user_tab.data_sets.length).to eq(4)

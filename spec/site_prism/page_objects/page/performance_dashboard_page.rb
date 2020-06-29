@@ -9,6 +9,10 @@ module PageObjects
         element :section_heading, ".govuk-heading-m"
       end
 
+      section :courses_tab, "#courses" do
+        elements :data_sets, '.app-performance-dashboard'
+      end
+
       section :user_tab, "#users" do
         elements :data_sets, ".app-performance-dashboard"
       end
