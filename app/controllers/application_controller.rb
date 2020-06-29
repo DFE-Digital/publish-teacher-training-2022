@@ -140,6 +140,7 @@ private
     {
       transitioned: transition_info_path,
       rolled_over: rollover_path,
+      accepted_rollover_2021: rollover_path,
       notifications_configured: notifications_info_path,
     }
   end

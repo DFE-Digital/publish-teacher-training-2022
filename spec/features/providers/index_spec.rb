@@ -5,9 +5,10 @@ feature "View providers", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider_1) { build :provider, provider_code: "A0", include_counts: [:courses] }
   let(:rollover) { false }
+  let(:user) { build(:user, :transitioned) }
 
   before do
-    stub_omniauth
+    stub_omniauth(user: user)
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
       current_recruitment_cycle.to_jsonapi,
@@ -60,6 +61,8 @@ feature "View providers", type: :feature do
           "/providers/#{provider_1.provider_code}",
           provider_response,
         )
+
+        stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
 
         visit provider_path(provider_1.provider_code)
 

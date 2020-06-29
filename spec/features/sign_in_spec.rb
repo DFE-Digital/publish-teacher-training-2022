@@ -38,6 +38,7 @@ feature "Sign in", type: :feature do
     user = build(:user)
     allow(Settings).to receive(:rollover).and_return(true)
     stub_omniauth(user: user)
+    stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
 
     visit root_path
 
