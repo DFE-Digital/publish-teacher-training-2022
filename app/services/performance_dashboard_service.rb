@@ -60,4 +60,16 @@ class PerformanceDashboardService
   def allocations_providers(recruitment_cycle)
     number_with_delimiter(@response["allocations"][recruitment_cycle]["total"]["distinct_providers"])
   end
+
+  def users_active
+    number_with_delimiter(@response["publish"]["users"]["total"]["active_users"])
+  end
+
+  def users_not_active
+    number_with_delimiter(@response["publish"]["users"]["total"]["non_active_users"])
+  end
+
+  def users_active_30_days
+    number_with_delimiter(@response["publish"]["users"]["recent_active_users"])
+  end
 end
