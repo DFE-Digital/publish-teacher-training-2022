@@ -109,23 +109,4 @@ private
   def auth_hash
     request.env["omniauth.auth"]
   end
-
-  def redirect_to_correct_page(user)
-    if user&.accept_terms_date_utc.nil?
-      redirect_to accept_terms_path
-    elsif user.next_state
-      redirect_to redirect_path[user.next_state]
-    else
-      redirect_to session[:redirect_back_to] || root_path
-    end
-  end
-
-  def redirect_path
-    {
-      rolled_over: rollover_path,
-      accepted_rollover_2021: rollover_path,
-      notifications_configured: notifications_info_path,
-      transitioned: transition_info_path,
-    }
-  end
 end
