@@ -11,7 +11,11 @@ describe "pages/performance_dashboard" do
                      total_allocations: "300",
                      providers_published_courses: "3,400",
                      providers_unpublished_courses: "2,000",
-                     providers_accredited_bodies: "2,999"
+                     providers_accredited_bodies: "2,999",
+                     allocations_requests: "1,000",
+                     allocations_providers: "2,000",
+                     allocations_number_of_places: "3,000",
+                     allocations_accredited_bodies: "4,000"
 
     assign(:performance_data, service)
     render
@@ -25,6 +29,12 @@ describe "pages/performance_dashboard" do
   describe "high level performance indicators" do
     it "has 4 sections" do
       expect(performance_dashboard_page.primary_indicators.length).to eq(4)
+    end
+  end
+
+  describe "allocations tab" do
+    it "has two recruitment cycle years worth of data" do
+      expect(performance_dashboard_page.allocation_tab.recruitment_cycles.length).to eq(2)
     end
   end
 end

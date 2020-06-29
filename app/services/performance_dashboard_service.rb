@@ -44,4 +44,20 @@ class PerformanceDashboardService
   def providers_accredited_bodies
     number_with_delimiter(@response["providers"]["training_providers"]["accredited_body"]["open"]["accredited_body"])
   end
+
+  def allocations_requests(recruitment_cycle)
+    number_with_delimiter(@response["allocations"][recruitment_cycle]["total"]["allocations"])
+  end
+
+  def allocations_number_of_places(recruitment_cycle)
+    number_with_delimiter(@response["allocations"][recruitment_cycle]["total"]["number_of_places"])
+  end
+
+  def allocations_accredited_bodies(recruitment_cycle)
+    number_with_delimiter(@response["allocations"][recruitment_cycle]["total"]["distinct_accredited_bodies"])
+  end
+
+  def allocations_providers(recruitment_cycle)
+    number_with_delimiter(@response["allocations"][recruitment_cycle]["total"]["distinct_providers"])
+  end
 end

@@ -274,18 +274,18 @@
   "allocations": {
     "previous": {
       "total": {
-        "allocations": 433,
-        "distinct_accredited_bodies": 153,
-        "distinct_providers": 397,
+        "allocations": 1433,
+        "distinct_accredited_bodies": 1153,
+        "distinct_providers": 1397,
         "number_of_places": 1461
       }
     },
     "current": {
       "total": {
-        "allocations": 183,
-        "distinct_accredited_bodies": 86,
-        "distinct_providers": 180,
-        "number_of_places": 677
+        "allocations": 1183,
+        "distinct_accredited_bodies": 1186,
+        "distinct_providers": 1180,
+        "number_of_places": 1677
       }
     }
   }
