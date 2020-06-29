@@ -6,7 +6,7 @@
   <div class="govuk-grid-column-full">
     <div class="app-performance-dashboard app-performance-dashboard--primary">
       <div class="app-performance-dashboard__title">
-        <%= @performance_data.total_providers %>
+        <%= @performance_data.total_courses %>
       </div>
       courses listed in Find
     </div>
@@ -17,7 +17,7 @@
   <div class="govuk-grid-column-one-third">
     <div class="app-performance-dashboard app-performance-dashboard--green">
       <div class="app-performance-dashboard__title">
-        <%= @performance_data.providers_published_courses %>
+        <%= @performance_data.courses_total_open %>
       </div>
       open courses
     </div>
@@ -25,7 +25,7 @@
   <div class="govuk-grid-column-one-third">
     <div class="app-performance-dashboard app-performance-dashboard--red">
       <div class="app-performance-dashboard__title">
-        <%= @performance_data.providers_unpublished_courses %>
+        <%= @performance_data.courses_total_closed %>
       </div>
       closed courses
     </div>
@@ -33,7 +33,7 @@
   <div class="govuk-grid-column-one-third">
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
       <div class="app-performance-dashboard__title">
-        <%= @performance_data.providers_accredited_bodies %>
+        <%= @performance_data.courses_total_draft %>
       </div>
       draft courses
     </div>

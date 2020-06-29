@@ -10,7 +10,7 @@ module PageObjects
       end
 
       section :courses_tab, "#courses" do
-        elements :data_sets, '.app-performance-dashboard'
+        elements :data_sets, ".app-performance-dashboard"
       end
 
       section :user_tab, "#users" do

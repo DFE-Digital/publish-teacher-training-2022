@@ -45,6 +45,18 @@ class PerformanceDashboardService
     number_with_delimiter(@response["providers"]["training_providers"]["accredited_body"]["open"]["accredited_body"])
   end
 
+  def courses_total_open
+    number_with_delimiter(@response["courses"]["findable_total"]["open"])
+  end
+
+  def courses_total_closed
+    number_with_delimiter(@response["courses"]["findable_total"]["closed"])
+  end
+
+  def courses_total_draft
+    number_with_delimiter(@response["courses"]["total"]["non_findable"])
+  end
+
   def allocations_requests(recruitment_cycle)
     number_with_delimiter(@response["allocations"][recruitment_cycle]["total"]["allocations"])
   end
