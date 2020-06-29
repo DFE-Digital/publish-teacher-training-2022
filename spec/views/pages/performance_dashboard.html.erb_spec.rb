@@ -27,4 +27,10 @@ describe "pages/performance_dashboard" do
       expect(performance_dashboard_page.primary_indicators.length).to eq(4)
     end
   end
+
+  describe "allocations tab" do
+    it "has two recruitment cycle years worth of data" do
+      expect(performance_dashboard_page.allocation_tab.recruitment_cycles.length).to eq(2)
+    end
+  end
 end
