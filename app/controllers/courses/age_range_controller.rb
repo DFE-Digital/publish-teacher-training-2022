@@ -45,6 +45,12 @@ module Courses
     end
 
     def build_errors
+      if no_selection?
+        return {
+          age_range_in_years: [t("age_range.errors.missing_error")],
+        }
+      end
+
       if age_range_from_and_to_missing?
         return {
           age_range_in_years: [t("age_range.errors.from_and_to_error")],
@@ -78,6 +84,10 @@ module Courses
           age_range_in_years_to: [t("age_range.errors.to_invalid_error")],
         }
       end
+    end
+
+    def no_selection?
+      age_range_param.blank?
     end
 
     def age_range_less_than_4?
