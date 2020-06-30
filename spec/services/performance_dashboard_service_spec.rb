@@ -56,6 +56,23 @@ describe PerformanceDashboardService do
     end
   end
 
+  describe "courses tab data" do
+    it "returns a total number of open courses" do
+      data = service.call
+      expect(data.courses_total_open).to eq("5,920")
+    end
+
+    it "returns a total number of closes courses" do
+      data = service.call
+      expect(data.courses_total_closed).to eq("7,146")
+    end
+
+    it "returns a total number of closes courses" do
+      data = service.call
+      expect(data.courses_total_draft).to eq("4,631")
+    end
+  end
+
   describe "users tab data" do
     it "returns a total of users" do
       data = service.call

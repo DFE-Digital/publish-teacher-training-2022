@@ -12,6 +12,9 @@ describe "pages/performance_dashboard" do
                      providers_published_courses: "3,400",
                      providers_unpublished_courses: "2,000",
                      providers_accredited_bodies: "2,999",
+                     courses_total_open: "4,999",
+                     courses_total_closed: "5,999",
+                     courses_total_draft: "6,999",
                      allocations_requests: "1,000",
                      allocations_providers: "2,000",
                      allocations_number_of_places: "3,000",
@@ -32,6 +35,12 @@ describe "pages/performance_dashboard" do
   describe "high level performance indicators" do
     it "has 4 sections" do
       expect(performance_dashboard_page.primary_indicators.length).to eq(4)
+    end
+  end
+
+  describe "courses tab" do
+    it "reports on 4 sets of figures" do
+      expect(performance_dashboard_page.courses_tab.data_sets.length).to eq(4)
     end
   end
 

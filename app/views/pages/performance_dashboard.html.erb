@@ -16,11 +16,11 @@
         Providers
       </a>
     </li>
-<!--    <li class="govuk-tabs__list-item" role="presentation">-->
-<!--      <a class="govuk-tabs__tab" href="#courses" id="tab_courses" role="tab" aria-controls="courses" aria-selected="false" tabindex="-1">-->
-<!--        Courses-->
-<!--      </a>-->
-<!--    </li>-->
+    <li class="govuk-tabs__list-item" role="presentation">
+      <a class="govuk-tabs__tab" href="#courses" id="tab_courses" role="tab" aria-controls="courses" aria-selected="false" tabindex="-1">
+        Courses
+      </a>
+    </li>
     <li class="govuk-tabs__list-item" role="presentation">
       <a class="govuk-tabs__tab" href="#users" id="tab_users" role="tab" aria-controls="users" aria-selected="false" tabindex="-1">
         Users
@@ -35,6 +35,9 @@
   <div class="govuk-tabs__panel" id="providers" role="tabpanel" aria-labelledby="tab_providers">
     <h2 class="govuk-heading-l">Providers</h2>
     <%= render partial: "pages/performance_dashboard/providers_tab" %>
+  </div>
+  <div class="govuk-tabs__panel" id="courses" role="tabpanel" aria-labelledby="tab_courses">
+    <%= render partial: "pages/performance_dashboard/courses_tab" %>
   </div>
   <div class="govuk-tabs__panel" id="users" role="tabpanel" aria-labelledby="tab_users">
     <%= render partial: "pages/performance_dashboard/users_tab" %>
