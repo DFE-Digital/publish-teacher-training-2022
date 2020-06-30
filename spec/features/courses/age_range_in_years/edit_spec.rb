@@ -16,6 +16,25 @@ feature "Edit course age range in years", type: :feature do
     age_range_in_years_page.load_with_course(course)
   end
 
+  context "a course with no age range" do
+    let(:course) do
+      build(
+        :course,
+        age_range_in_years: nil,
+        edit_options: {
+          age_range_in_years: %w[11_to_16 11_to_18 14_to_19],
+        },
+        provider: provider,
+      )
+    end
+
+    it "is not valid and returns error message" do
+      age_range_in_years_page.save.click
+
+      expect(age_range_in_years_page.error_flash).to have_content("Choose an age range")
+    end
+  end
+
   context "a course with an age range of 11 to 16" do
     let(:course) do
       build(
