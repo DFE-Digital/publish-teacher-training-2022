@@ -56,6 +56,28 @@ describe PerformanceDashboardService do
     end
   end
 
+  describe "users tab data" do
+    it "returns a total of users" do
+      data = service.call
+      expect(data.total_users).to eq("3,050")
+    end
+
+    it "returns a total of active users" do
+      data = service.call
+      expect(data.users_active).to eq("1,883")
+    end
+
+    it "returns a total of inactive users" do
+      data = service.call
+      expect(data.users_not_active).to eq("1,167")
+    end
+
+    it "returns a total of recently active users" do
+      data = service.call
+      expect(data.users_active_30_days).to eq("1,708")
+    end
+  end
+
   describe "allocations tab data" do
     describe "current allocations" do
       it "returns a total of allocations" do

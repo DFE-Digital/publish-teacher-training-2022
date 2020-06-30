@@ -15,7 +15,10 @@ describe "pages/performance_dashboard" do
                      allocations_requests: "1,000",
                      allocations_providers: "2,000",
                      allocations_number_of_places: "3,000",
-                     allocations_accredited_bodies: "4,000"
+                     allocations_accredited_bodies: "4,000",
+                     users_active: "1,111",
+                     users_not_active: "2,222",
+                     users_active_30_days: "3,333"
 
     assign(:performance_data, service)
     render
@@ -29,6 +32,12 @@ describe "pages/performance_dashboard" do
   describe "high level performance indicators" do
     it "has 4 sections" do
       expect(performance_dashboard_page.primary_indicators.length).to eq(4)
+    end
+  end
+
+  describe "users tab" do
+    it "has four user data results" do
+      expect(performance_dashboard_page.user_tab.data_sets.length).to eq(4)
     end
   end
 
