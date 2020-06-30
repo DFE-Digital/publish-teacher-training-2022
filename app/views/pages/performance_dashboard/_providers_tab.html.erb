@@ -1,4 +1,4 @@
-<div class="govuk-grid-row govuk-!-margin-bottom-3">
+<div class="govuk-grid-row govuk-!-margin-bottom-1">
   <div class="govuk-grid-column-full">
     <div class="app-performance-dashboard app-performance-dashboard--primary">
       <div class="app-performance-dashboard__title">
@@ -12,7 +12,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
     <div class="app-performance-dashboard app-performance-dashboard--green">
-      <div class="app-performance-dashboard__title">
+      <div class="app-performance-dashboard__title--small">
         <%= @performance_data.providers_published_courses %>
       </div>
       with published courses
@@ -20,7 +20,7 @@
   </div>
   <div class="govuk-grid-column-one-third">
     <div class="app-performance-dashboard app-performance-dashboard--red">
-      <div class="app-performance-dashboard__title">
+      <div class="app-performance-dashboard__title--small">
         <%= @performance_data.providers_unpublished_courses %>
       </div>
       with courses not published
@@ -28,7 +28,7 @@
   </div>
   <div class="govuk-grid-column-one-third">
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
-      <div class="app-performance-dashboard__title">
+      <div class="app-performance-dashboard__title--small">
         <%= @performance_data.providers_accredited_bodies %>
       </div>
       accredited bodies

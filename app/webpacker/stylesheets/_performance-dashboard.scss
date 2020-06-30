@@ -31,3 +31,8 @@
 .app-performance-dashboard__title {
   @include govuk-font($size: 48, $weight: bold);
 }
+
+.app-performance-dashboard__title--small {
+  @include govuk-font($size: 36, $weight: bold);
+}
+

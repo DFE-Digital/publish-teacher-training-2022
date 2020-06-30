@@ -1,7 +1,7 @@
-<div class="govuk-grid-row<%= " govuk-!-margin-bottom-3" if recruitment_cycle=="current"%>">
+<div class="govuk-grid-row<%= recruitment_cycle == "current" ? " govuk-!-margin-bottom-1" : nil %>">
   <div class="govuk-grid-column-one-quarter">
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
-      <div class="app-performance-dashboard__title">
+      <div class="app-performance-dashboard__title--small">
         <%= @performance_data.allocations_requests(recruitment_cycle) %>
       </div>
       requests
@@ -9,7 +9,7 @@
   </div>
   <div class="govuk-grid-column-one-quarter">
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
-      <div class="app-performance-dashboard__title">
+      <div class="app-performance-dashboard__title--small">
         <%= @performance_data.allocations_number_of_places(recruitment_cycle) %>
       </div>
       number of places
@@ -17,7 +17,7 @@
   </div>
   <div class="govuk-grid-column-one-quarter">
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
-      <div class="app-performance-dashboard__title">
+      <div class="app-performance-dashboard__title--small">
         <%= @performance_data.allocations_accredited_bodies(recruitment_cycle) %>
       </div>
       accredited bodies
@@ -25,7 +25,7 @@
   </div>
   <div class="govuk-grid-column-one-quarter">
     <div class="app-performance-dashboard app-performance-dashboard--secondary">
-      <div class="app-performance-dashboard__title">
+      <div class="app-performance-dashboard__title--small">
         <%= @performance_data.allocations_providers(recruitment_cycle) %>
       </div>
       providers
