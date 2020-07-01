@@ -103,6 +103,7 @@ private
       :page,
       :train_with_us,
       :train_with_disability,
+      :provider_name,
       :email,
       :telephone,
       :website,

@@ -22,6 +22,24 @@
     <%= form_with model: @provider, url: contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
       <%= f.hidden_field :page, value: :contact %>
 
+      <% if current_user["admin"] %>
+        <div class="app-admin-only__section">
+          <div class="app-admin-only__section-header">
+            <strong class="govuk-tag govuk-tag--purple">Admin Feature</strong>
+          </div>
+
+          <%= render "shared/form_field",
+            form: f,
+            field: :provider_name,
+            label: "Provider name" do |field, options| %>
+            <span class="govuk-hint">
+              The marketing name of the provider
+            </span>
+            <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
+          <% end %>
+        </div>
+      <% end %>
+
       <%= render "shared/form_field",
         form: f, field: :email, label: "Email address" do |field, options| %>
         <span class="govuk-hint">
