@@ -139,7 +139,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def other_course_length?
-    %w[OneYear TwoYears].exclude?(course.course_length)
+    %w[OneYear TwoYears].exclude?(course.course_length) && !course.course_length.nil?
   end
 
   def other_age_range?

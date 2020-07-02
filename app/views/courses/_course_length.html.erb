@@ -20,7 +20,9 @@
         <%= f.label :course_length, 'Up to 2 years', value: 'TwoYears', class: 'govuk-label govuk-radios__label' %>
       </div>
       <div class="govuk-radios__item">
-        <%= f.radio_button :course_length, 'Other', class: 'govuk-radios__input', data: {"aria-controls" => "other-container" },
+        <%= f.radio_button :course_length, 'Other',
+          class: 'govuk-radios__input',
+          data: { "aria-controls" => "other-container" },
           checked: course.other_course_length?,
           aria: { describedby: @errors[:course_length] ? "course_length-error" : '' } %>
         <%= f.label :course_length, 'Other', value: 'Other', class: 'govuk-label govuk-radios__label' %>
