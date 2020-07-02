@@ -65,4 +65,5 @@ use_ssl: true
 features:
   signin_intercept: false
   signin_by_email: false
+  dfe_signin: true
 commit_sha_file: COMMIT_SHA

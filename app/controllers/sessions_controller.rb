@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :request_login
 
   def new
-    if FeatureService.enabled? :signin_intercept
+    if FeatureService.enabled?(:signin_intercept) || !FeatureService.enabled?(:dfe_signin)
       render
     else
       redirect_to "/auth/dfe"
@@ -10,6 +10,8 @@ class SessionsController < ApplicationController
   end
 
   def create
+    redirect_to signin_path and return unless FeatureService.enabled? :dfe_signin
+
     session[:auth_user] = HashWithIndifferentAccess.new(
       "uid" => auth_hash.dig("uid"),
       "info" => HashWithIndifferentAccess.new(
