@@ -5,6 +5,7 @@ class Base < JsonApiClient::Resource
   class MCBConnection < JsonApiClient::Connection
     def run(request_method, path, params: nil, headers: {}, body: nil)
       authorization = "Bearer #{RequestStore.store[:manage_courses_backend_token]}"
+
       super(
         request_method,
         path,

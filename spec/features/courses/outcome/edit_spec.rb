@@ -75,7 +75,7 @@ feature "Edit course outcome", type: :feature do
     let(:course) do
       build(
         :course,
-        level: :further_education,
+        level: "further_education",
         qualification: "pgde",
         provider: provider,
       )
