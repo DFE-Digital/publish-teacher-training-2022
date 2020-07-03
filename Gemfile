@@ -129,6 +129,9 @@ group :test do
   # Add Junit formatter for rspec
   gem "rspec_junit_formatter"
 
+  # Add sonarqube formatter for rspec (Sonar Cloud)
+  gem 'rspec-sonarqube-formatter', '~> 1.3', require: false
+
   gem "webmock"
 
   # Show test coverage %

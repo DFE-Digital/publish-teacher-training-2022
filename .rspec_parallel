@@ -1,3 +1,4 @@
 --format progress
 --format ParallelTests::RSpec::RuntimeLogger --out tmp/parallel_runtime_rspec.log
 --require './spec/spec_helper.rb' --no-profile  --format RspecJunitFormatter --out rspec-output/rspec-output<%= ENV['TEST_ENV_NUMBER'] %>.xml
+--format RspecSonarqubeFormatter --out rspec-output/test-report.xml
