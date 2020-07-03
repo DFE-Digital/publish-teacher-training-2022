@@ -50,3 +50,6 @@ terraform.tfstate
 terraform.tfstate.d/
 ./*.tfstate
 lock.json
+
+# SonarCloud scanner
+.scannerwork
