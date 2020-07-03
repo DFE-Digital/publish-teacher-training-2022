@@ -110,6 +110,22 @@ steps:
 
     # Upload the our test coverage to code climat
     ./cc-test-reporter upload-coverage --input coverage/total.json
+
+
+    export SONAR_SCANNER_VERSION=4.2.0.1873
+    export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+    curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+    unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+    export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+    export SONAR_SCANNER_OPTS="-server"
+
+    sonar-scanner \
+      -Dsonar.organization=dfe-digital \
+      -Dsonar.projectKey=DFE-Digital_publish-teacher-training \
+      -Dsonar.sources=. \
+      -Dsonar.host.url=https://sonarcloud.io \
+      -Dsonar.login=cfe8b8ccdb31562c5587b80a5bc3ae16b9814af2
+
   displayName: 'Publish Code Climate Test Coverage'
   env:
     CC_TEST_REPORTER_ID: $(ccReporterID)
