@@ -43,24 +43,30 @@ module Courses
         site_status.recruitment_cycle_year = @course.recruitment_cycle_year
         site_status.save
       end
+
+      @course.send_vacancies_filled_notification if single_site_no_vacancies?
     end
 
     def update_vacancies_for_multiple_sites
+      # TODO: refactor so that a validation is displayed if a user
+      # deselects all locations and submits
       params.dig(:course, :site_status_attributes)
         &.values&.each do |vacancy_status|
-          site_status = find_site_status vacancy_status[:id]
-          # Set all site_status.vac_status to 'no_vacancies' if radio button is checked
-          site_status.vac_status = if params[:course][:has_vacancies] == "false"
-                                     "no_vacancies"
-                                   else
-                                     VacancyStatusDeterminationService.call(
-                                       vacancy_status_full_time: vacancy_status[:full_time],
-                                       vacancy_status_part_time: vacancy_status[:part_time],
-                                       course: @course,
-                                     )
-                                   end
-          site_status.save
-        end
+        site_status = find_site_status vacancy_status[:id]
+        # Set all site_status.vac_status to 'no_vacancies' if radio button is checked
+        site_status.vac_status = if params[:course][:has_vacancies] == "false"
+                                   "no_vacancies"
+                                 else
+                                   VacancyStatusDeterminationService.call(
+                                     vacancy_status_full_time: vacancy_status[:full_time],
+                                     vacancy_status_part_time: vacancy_status[:part_time],
+                                     course: @course,
+                                   )
+                                 end
+        site_status.save
+      end
+
+      @course.send_vacancies_filled_notification if multiple_sites_no_vacancies?
     end
 
     def build_course
@@ -78,6 +84,22 @@ module Courses
 
     def find_site_status(id)
       @site_statuses.find { |site_status_by_id| site_status_by_id.id == id }
+    end
+
+    def single_site_no_vacancies?
+      params[:change_vacancies_confirmation] == "no_vacancies_confirmation" && @course.has_vacancies? == true
+    end
+
+    def multiple_sites_no_vacancies?
+      vacancy_statuses = params.dig(:course, :site_status_attributes)
+        &.values&.map do |vacancy_status|
+        VacancyStatusDeterminationService.call(
+          vacancy_status_full_time: vacancy_status[:full_time],
+          vacancy_status_part_time: vacancy_status[:part_time],
+          course: @course,
+        )
+      end
+      @course.has_vacancies? == true && (params[:course][:has_vacancies] == "false" || vacancy_statuses.all? { |v| v == "no_vacancies" })
     end
   end
 end
