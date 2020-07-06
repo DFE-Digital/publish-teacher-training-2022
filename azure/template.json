@@ -364,6 +364,18 @@
               {
                 "name": "SETTINGS__ROLLOVER",
                 "value": "[parameters('rollover')]"
+              },
+              {
+                "name": "SETTINGS__FEATURES__SIGNIN_INTERCEPT",
+                "value": "[parameters('settingsFeaturesSigninIntercept')]"
+              },
+              {
+                "name": "SETTINGS__FEATURES__SIGNIN_BY_EMAIL",
+                "value": "[parameters('settingsFeaturesSigninByEmail')]"
+              },
+              {
+                "name": "SETTINGS__FEATURES__DFE_SIGNIN",
+                "value": "[parameters('settingsFeaturesDfeSignin')]"
               }
             ]
           },
