@@ -25,6 +25,10 @@ class Course < Base
     post_request("/withdraw")
   end
 
+  def send_vacancies_filled_notification
+    post_request("/send_vacancies_filled_notification")
+  end
+
   def self.build_new(params)
     response = connection.run(:get, "#{Course.site}build_new_course?#{params.to_query}")
 

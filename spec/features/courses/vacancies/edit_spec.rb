@@ -6,6 +6,16 @@ feature "Edit course vacancies", type: :feature do
   let(:courses_page) { PageObjects::Page::Organisations::CoursesPage.new }
   let(:course_code) { "X104" }
   let(:provider) { build(:provider) }
+  let(:send_vacancies_filled_notification_stub) do
+    stub_request(
+      :post,
+      "#{Settings.manage_backend.base_url}/api/v2" \
+      "/recruitment_cycles/#{current_recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "/courses/#{course.course_code}" \
+      "/send_vacancies_filled_notification",
+    )
+  end
 
   before do
     stub_omniauth
@@ -21,6 +31,7 @@ feature "Edit course vacancies", type: :feature do
     stub_request(:patch, %r{\Ahttp://localhost:3001/api/v2/site_statuses/\d+})
     stub_course_request(course)
     course_vacancies_page.load_with_course(course)
+    send_vacancies_filled_notification_stub
   end
 
   context "A full time course with one running site" do
@@ -162,6 +173,9 @@ feature "Edit course vacancies", type: :feature do
       ].each do |name, checked|
         expect(course_vacancies_page.vacancies_running_sites_checkboxes).to have_field(name, checked: checked)
       end
+
+      publish_changes
+      expect(send_vacancies_filled_notification_stub).to_not have_been_requested
     end
   end
 
@@ -233,14 +247,24 @@ feature "Edit course vacancies", type: :feature do
         provider: provider,
         site_statuses: [
           jsonapi_site_status("Uni 1", :full_time, "running"),
+          jsonapi_site_status("Uni 2", :full_time, "running"),
         ],
       )
     end
 
-    scenario "removing a full time vacancy" do
+    scenario "removing a full time vacancy with no vacancies remaining" do
+      expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
+      uncheck("Uni 1 (Full time)")
+      uncheck("Uni 2 (Full time)")
+      publish_changes
+      expect(send_vacancies_filled_notification_stub).to have_been_requested.times(1)
+    end
+
+    scenario "removing a full time vacancy with one remaining" do
       expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
       uncheck("Uni 1 (Full time)")
       publish_changes
+      expect(send_vacancies_filled_notification_stub).to_not have_been_requested
     end
 
     scenario "removing all vacancies" do
@@ -250,6 +274,7 @@ feature "Edit course vacancies", type: :feature do
       expect(course_vacancies_page.vacancies_radio_no_vacancies).to be_checked
 
       publish_changes
+      expect(send_vacancies_filled_notification_stub).to have_been_requested.times(1)
     end
   end
 
