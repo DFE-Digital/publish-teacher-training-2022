@@ -179,6 +179,13 @@
         "description": "true to offer the user the option to sign-in using a magic link sent to them by email"
       }
     },
+    "settingsFeaturesDfeSignin": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "false to disable login via DfE Signin. Users are redirected to the magic link singin page"
+      }
+    },
     "rollover": {
       "type": "string",
       "defaultValue": "false",
@@ -357,6 +364,18 @@
               {
                 "name": "SETTINGS__ROLLOVER",
                 "value": "[parameters('rollover')]"
+              },
+              {
+                "name": "SETTINGS__FEATURES__SIGNIN_INTERCEPT",
+                "value": "[parameters('settingsFeaturesSigninIntercept')]"
+              },
+              {
+                "name": "SETTINGS__FEATURES__SIGNIN_BY_EMAIL",
+                "value": "[parameters('settingsFeaturesSigninByEmail')]"
+              },
+              {
+                "name": "SETTINGS__FEATURES__DFE_SIGNIN",
+                "value": "[parameters('settingsFeaturesDfeSignin')]"
               }
             ]
           },
