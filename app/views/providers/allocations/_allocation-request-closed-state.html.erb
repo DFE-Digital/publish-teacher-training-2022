@@ -1,0 +1,57 @@
+<%= content_for :page_title, raw("PE courses for 2021&thinsp;–&thinsp;2022") %>
+<%= content_for :before_content, render_breadcrumbs("allocations") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">PE courses for 2021&thinsp;–&thinsp;2022</h1>
+
+    <p class="govuk-body">
+      You can no longer request fee-funded PE for 2021 - 2022. The request window closed on 10 July.
+    </p>
+
+    <p class="govuk-body">
+      Your requests are set out below. In September, we’ll tell you if they’ve been approved and,
+      if so, how many places have been allocated for each organisation.
+    </p>
+
+    <p class="govuk-body">
+      Also included are current courses that were not requested for 2021&thinsp;–&thinsp;2022.
+    </p>
+
+    <p class="govuk-body">
+      For now, if you have any questions contact <%= bat_contact_mail_to %>.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Courses for 2021&thinsp;–&thinsp;2022
+    </h2>
+
+    <h2 class="govuk-heading-m">
+      Courses not running in 2021&thinsp;–&thinsp;2022
+    </h2>
+
+    <p class="govuk-body">
+      You did not request fee-funded PE for 2021&thinsp;–&thinsp;2022.
+    </p>
+
+    <p class="govuk-body">
+      Your organisation, and any organisations you’re the accredited body for,
+      will not be offering this course - even if it’s being offered in 2020&thinsp;–&thinsp;2021.
+      You must have permission to run this course in 2021&thinsp;–&thinsp;2022.
+    </p>
+
+    <p class="govuk-body">
+      If you have any questions, contact <%= bat_contact_mail_to %>.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Tell us what you think about this process
+    </h2>
+    <p class="govuk-body">
+      <%= link_to "Take part in our brief survey to help us improve Publish",
+                  "https://forms.gle/4EuNG8XGm3AqavRU9",
+                  class: "govuk-link govuk-!-font-weight-bold",
+                  target: "_blank" %>
+
+  </div>
+</div>
