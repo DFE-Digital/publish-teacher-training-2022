@@ -11,14 +11,14 @@ FactoryBot.define do
         # produce valid and usable objects.
 
         age_range_in_years = case level
-                             when :primary
+                             when "primary"
                                %w[
                                  3_to_7
                                  5_to_11
                                  7_to_11
                                  7_to_14
                                ]
-                             when :secondary
+                             when "secondary"
                                %w[
                                  11_to_16
                                  11_to_18
@@ -27,7 +27,7 @@ FactoryBot.define do
                              end
 
         qualifications = case level
-                         when :further_education
+                         when "further_education"
                            %w[pgce pgde]
                          else
                            %w[pgce_with_qts qts pgde_with_qts]
@@ -91,7 +91,7 @@ FactoryBot.define do
     funding_type { "fee" }
     applications_open_from { DateTime.new(2019).utc.iso8601 }
     is_send? { false }
-    level { :secondary }
+    level { "secondary" }
     about_course { nil }
     interview_process { nil }
     how_school_placements_work { nil }
@@ -148,9 +148,9 @@ FactoryBot.define do
 
       if evaluator.gcse_subjects_required_using_level
         course.gcse_subjects_required = case course.level
-                                        when :primary
+                                        when "primary"
                                           %w[maths english science]
-                                        when :secondary
+                                        when "secondary"
                                           %w[maths english]
                                         else
                                           []

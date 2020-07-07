@@ -33,6 +33,16 @@ module PageObjects
         element :entry_requirements, "[data-qa=course__entry_requirements]"
         element :allocations_info, "[data-qa=course__allocations_info]"
         element :contact_support, "[data-qa=course__contact_support]"
+
+        def title_detail
+          node = page.find_all("div.govuk-summary-list__row").find { |n| n.text.include?("Title") }
+          Detail.new(page, node)
+        end
+
+        class Detail < SitePrism::Section
+          element :value, "dd.govuk-summary-list__value"
+          element :actions, "dd.govuk-summary-list__actions"
+        end
       end
     end
   end

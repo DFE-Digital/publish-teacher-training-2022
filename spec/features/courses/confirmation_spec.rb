@@ -11,7 +11,7 @@ feature "Course confirmation", type: :feature do
   let(:site1) { build(:site, location_name: "Site one") }
   let(:site2) { build(:site, location_name: "Site two") }
   let(:study_mode) { "full_time" }
-  let(:level) { :secondary }
+  let(:level) { "secondary" }
   let(:course) do
     build(
       :course,

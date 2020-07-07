@@ -85,7 +85,7 @@ feature "new course", type: :feature do
 
   context "Beginning the course creation flow" do
     context "SCITT with single location" do
-      let(:level) { :primary }
+      let(:level) { "primary" }
 
       scenario "builds the new course on the API" do
         go_to_new_course_page_for_provider(provider)
@@ -183,7 +183,7 @@ feature "new course", type: :feature do
     end
 
     context "Further education provider with single location" do
-      let(:level) { :further_education }
+      let(:level) { "further_education" }
 
       scenario "creates the correct course" do
         # This is intended to be a test which will go through the entire flow
@@ -237,7 +237,7 @@ feature "new course", type: :feature do
 
   context "going backwards through the course creation flow" do
     context "with one site and no modern language subjects" do
-      let(:level) { :primary }
+      let(:level) { "primary" }
       let(:sites) { [site1] }
       let(:course_creation_params) do
         {
@@ -299,7 +299,7 @@ feature "new course", type: :feature do
     end
 
     context "with multiple sites and modern language subjects" do
-      let(:level) { :secondary }
+      let(:level) { "secondary" }
       let(:sites) { [site1, site2] }
       let(:course_creation_params) do
         {

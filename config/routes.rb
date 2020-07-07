@@ -148,6 +148,9 @@ Rails.application.routes.draw do
         get "/publish", on: :member, to: "courses#details"
         post "/publish", on: :member, to: "courses#publish"
 
+        get "/title", on: :member, to: "courses/title#edit"
+        put "/title", on: :member, to: "courses/title#update"
+
         get "/entry-requirements", on: :member, to: "courses/entry_requirements#edit"
         put "/entry-requirements", on: :member, to: "courses/entry_requirements#update"
 

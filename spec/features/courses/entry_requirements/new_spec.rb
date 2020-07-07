@@ -6,7 +6,7 @@ feature "new course entry_requirements", type: :feature do
     PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new
   end
   let(:provider) { build(:provider, accredited_body?: true, sites: [build(:site)]) }
-  let(:level) { :further_education }
+  let(:level) { "further_education" }
   let(:course)  do
     build(
       :course,
@@ -31,7 +31,7 @@ feature "new course entry_requirements", type: :feature do
   end
 
   context "level primary" do
-    let(:level) { :primary }
+    let(:level) { "primary" }
     before do
       stub_api_v2_build_course(
         maths: "expect_to_achieve_before_training_begins",
@@ -79,7 +79,7 @@ feature "new course entry_requirements", type: :feature do
   end
 
   context "level secondary" do
-    let(:level) { :secondary }
+    let(:level) { "secondary" }
     before do
       stub_api_v2_build_course(
         maths: "expect_to_achieve_before_training_begins",
@@ -129,7 +129,7 @@ feature "new course entry_requirements", type: :feature do
   end
 
   context "Going back" do
-    let(:level) { :primary }
+    let(:level) { "primary" }
     before { visit_new_entry_requirements }
 
     context "With an accredited body" do
@@ -169,7 +169,7 @@ feature "new course entry_requirements", type: :feature do
       c = build(
         :course,
         provider: provider,
-        level: :primary,
+        level: "primary",
         gcse_subjects_required_using_level: true,
         maths: nil,
         english: nil,

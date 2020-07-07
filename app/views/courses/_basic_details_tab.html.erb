@@ -200,8 +200,23 @@
         </dt>
         <dd class="govuk-summary-list__value" data-qa="course__name">
           <%= course.name %>
+
+          <% if current_user["admin"] %>
+            <div class="app-admin-only__section">
+              <div class="app-admin-only__section-header">
+                <strong class="govuk-tag govuk-tag--purple">Admin Feature</strong>
+              </div>
+              Only admins can make changes
+            </div>
+          <% end %>
         </dd>
-        <dd class="govuk-summary-list__actions"></dd>
+        <dd class="govuk-summary-list__actions">
+          <% if current_user["admin"] %>
+            <%= link_to title_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link" do %>
+              Change<span class="govuk-visually-hidden"> course title</span>
+            <% end %>
+          <% end %>
+        </dd>
       </div>
 
       <div class="govuk-summary-list__row">

@@ -14,7 +14,7 @@ feature "new course age range", type: :feature do
       :course,
       :new,
       provider: provider,
-      level: :primary,
+      level: "primary",
       study_mode: "full_time_or_part_time",
       gcse_subjects_required_using_level: true,
       applications_open_from: "2019-10-09",
@@ -36,7 +36,7 @@ feature "new course age range", type: :feature do
       :course,
       :new,
       provider: provider,
-      level: :primary,
+      level: "primary",
     )
     stub_api_v2_new_resource(new_course)
     stub_api_v2_resource(recruitment_cycle)
@@ -79,7 +79,7 @@ feature "new course age range", type: :feature do
 
   context "Error handling" do
     let(:course) do
-      c = build(:course, provider: provider, level: :secondary, age_range_in_years: nil)
+      c = build(:course, provider: provider, level: "secondary", age_range_in_years: nil)
       c.errors.add(:age_range_in_years, "Invalid")
       c
     end
