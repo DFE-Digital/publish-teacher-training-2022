@@ -26,9 +26,17 @@
       Courses for 2021&thinsp;–&thinsp;2022
     </h2>
 
+    <%= render partial: "providers/allocations/allocation_report_closed_state", locals: {
+               allocations: @allocations_view.requested_allocations_statuses,
+               request_type: "repeat"} %>
+
     <h2 class="govuk-heading-m">
       Courses not running in 2021&thinsp;–&thinsp;2022
     </h2>
+
+    <%= render partial: "providers/allocations/allocation_report_closed_state", locals: {
+               allocations: @allocations_view.not_requested_allocations_statuses,
+               request_type: "repeat"} %>
 
     <p class="govuk-body">
       You did not request fee-funded PE for 2021&thinsp;–&thinsp;2022.

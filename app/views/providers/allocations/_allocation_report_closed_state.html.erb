@@ -1,0 +1,28 @@
+<% if allocations.present? %>
+  <table class="govuk-table ucas-info-table govuk-!-margin-bottom-8" data-qa="<%= request_type %>-allocations-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header">
+        Organisation
+      </th>
+      <th class="govuk-table__header allocation-report__status">
+        Status
+      </th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <% allocations.each do |allocation| %>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" data-qa="provider-name">
+          <%= allocation[:training_provider_name] %>
+        </th>
+        <td class="govuk-table__cell">
+            <span class="govuk-tag govuk-tag--<%= allocation[:status_colour] %>">
+              <%= allocation[:status] %>
+            </span>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

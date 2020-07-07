@@ -5,6 +5,7 @@ class AllocationsView
     REQUESTED = "REQUESTED".freeze
     NOT_REQUESTED = "NOT REQUESTED".freeze
     YET_TO_REQUEST = "YET TO REQUEST".freeze
+    NO_REQUEST_SENT = "NO REQUEST SENT".freeze
   end
 
   module Colour
@@ -44,6 +45,23 @@ class AllocationsView
     statuses.compact
   end
 
+  def requested_allocations_statuses
+    statuses = requested_allocations.map do |allocation|
+      build_requested_allocations(allocation, allocation.provider)
+    end
+
+    statuses.compact.sort_by! { |hsh| hsh[:training_provider_name] }
+  end
+
+  def not_requested_allocations_statuses
+    statuses = filtered_training_providers.map do |training_provider|
+      matching_allocation = find_matching_allocation(training_provider, not_requested_allocations)
+      build_not_requested_allocations(matching_allocation, training_provider)
+    end
+
+    statuses.compact.sort_by! { |hsh| hsh[:training_provider_name] }
+  end
+
 private
 
   def filtered_training_providers
@@ -61,6 +79,14 @@ private
 
   def initial_allocations
     @allocations.select { |allocation| allocation.request_type == RequestType::INITIAL }
+  end
+
+  def requested_allocations
+    @allocations.select { |allocation| allocation.request_type.in?([RequestType::INITIAL, RequestType::REPEAT]) }
+  end
+
+  def not_requested_allocations
+    @allocations.select { |allocation| allocation.request_type == RequestType::DECLINED }
   end
 
   def find_matching_allocation(training_provider, allocations)
@@ -117,6 +143,40 @@ private
     hash[:id] = matching_allocation.id if matching_allocation.id
 
     hash
+  end
+
+  def build_requested_allocations(allocation, training_provider)
+    return if allocation.nil?
+
+    hash = {
+      training_provider_name: training_provider.provider_name,
+      training_provider_code: training_provider.provider_code,
+      status_colour: Colour::GREEN,
+      status: Status::REQUESTED,
+    }
+
+    hash
+  end
+
+  def build_not_requested_allocations(allocation, training_provider)
+    return if training_provider.provider_name.in?(requested_allocations_statuses.map { |tp| tp[:training_provider_name] })
+
+    allocation_status = {
+      training_provider_name: training_provider.provider_name,
+      training_provider_code: training_provider.provider_code,
+    }
+
+    if yet_to_request?(allocation)
+      allocation_status[:status] = "NO REQUEST SENT"
+      allocation_status[:status_colour] = Colour::GREY
+    end
+
+    if not_requested?(allocation)
+      allocation_status[:status] = Status::NOT_REQUESTED
+      allocation_status[:status_colour] = Colour::RED
+    end
+
+    allocation_status
   end
 
   def not_requested?(matching_allocation)
