@@ -157,9 +157,8 @@ feature "New course level", type: :feature do
 
     context "Not selecting master subject" do
       let(:course) do
-        c = build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options)
-        c.errors.add(:subjects, "Invalid")
-        c
+        build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options)
+         .tap { |course| course.errors.add(:subjects, "Invalid") }
       end
       let(:selected_fields) { { subjects_ids: [""] } }
       let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
@@ -177,9 +176,8 @@ feature "New course level", type: :feature do
     context "Error handling" do
       let(:level) { :primary }
       let(:course) do
-        c = build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options)
-        c.errors.add(:subjects, "Invalid")
-        c
+        build(:course, :new, provider: provider, level: level, gcse_subjects_required_using_level: true, edit_options: edit_options)
+         .tap { |course| course.errors.add(:subjects, "Invalid") }
       end
 
       before do
