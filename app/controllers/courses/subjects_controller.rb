@@ -91,13 +91,14 @@ module Courses
     end
 
     def build_course_params
-      selected_master = params[:course][:master_subject_id]
+      selected_master = nil
+      selected_master = params[:course][:master_subject_id] if params[:course][:master_subject_id].present?
       selected_subordinate = nil
       selected_subordinate = params[:course][:subordinate_subject_id] if params[:course][:subordinate_subject_id].present?
       previous_subject_selections = params[:course][:subjects_ids]
 
       params[:course][:subjects_ids] = []
-      params[:course][:subjects_ids] << selected_master
+      params[:course][:subjects_ids] << selected_master if selected_master
       params[:course][:subjects_ids] << selected_subordinate if selected_subordinate
       params[:course].delete(:master_subject_id)
       params[:course].delete(:subordinate_subject_id)
