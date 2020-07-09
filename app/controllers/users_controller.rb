@@ -16,7 +16,8 @@ class UsersController < ApplicationController
 
   def accept_terms
     if params.require(:user)[:terms_accepted] == "1"
-      User.member(current_user["user_id"]).accept_terms
+      result = User.member(current_user["user_id"]).accept_terms
+      session["auth_user"]["attributes"]["accept_terms_date_utc"] = result.first.accept_terms_date_utc
       redirect_to page_after_accept_terms
     else
       @errors = { user_terms_accepted: ["You must accept the terms and conditions to continue"] }

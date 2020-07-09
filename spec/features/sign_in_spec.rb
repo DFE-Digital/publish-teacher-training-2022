@@ -191,8 +191,10 @@ feature "Sign in", type: :feature do
 
   scenario "new inactive user accepts the terms and conditions page with rollover disabled" do
     allow(Settings).to receive(:rollover).and_return(false)
-    user = build :user, :inactive, :new
-    update_request = stub_request(:patch, "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}/accept_terms")
+    user = build(:user, :inactive, :new)
+    accepted_user = build(:user, user.attributes)
+    accepted_user.accept_terms_date_utc = 1.second.ago
+    stub_api_v2_request("/users/#{user.id}/accept_terms", accepted_user.to_jsonapi, :patch)
 
     stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
 
@@ -223,6 +225,5 @@ feature "Sign in", type: :feature do
     accept_terms_page.continue.click
 
     expect(transition_info_page).to be_displayed
-    expect(update_request).to have_been_made
   end
 end
