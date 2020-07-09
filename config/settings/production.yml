@@ -11,3 +11,4 @@ search_ui:
 environment:
   label: "Beta"
   selector_name: "beta"
+allocations_state: open

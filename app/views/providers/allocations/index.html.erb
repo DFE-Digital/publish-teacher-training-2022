@@ -1,5 +1,1 @@
-<% if 1==1 %>
-  <%= render partial: 'providers/allocations/allocation-request-open-state' %>
-<% else %>
-  <%= render partial: 'providers/allocations/allocation-request-closed-state' %>
-<% end %>
+<%= render partial: "providers/allocations/allocation-request-#{Allocation.journey_mode}-state" %>

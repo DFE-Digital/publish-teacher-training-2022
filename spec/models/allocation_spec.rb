@@ -1,6 +1,36 @@
 require "rails_helper"
 
 RSpec.describe Allocation do
+  describe ".journey_mode" do
+    context "when allocation period is open" do
+      it "returns 'open'" do
+        Settings.allocations_state = "open"
+        expect(Allocation.journey_mode).to eq("open")
+      end
+    end
+
+    context "when allocation period is closed" do
+      it "returns 'closed'" do
+        Settings.allocations_state = "closed"
+        expect(Allocation.journey_mode).to eq("closed")
+      end
+    end
+
+    context "when allocation period is confirmed" do
+      it "returns 'closed'" do
+        Settings.allocations_state = "confirmed"
+        expect(Allocation.journey_mode).to eq("confirmed")
+      end
+    end
+
+    context "when allocation period setting is invalid" do
+      it "returns 'open by default'" do
+        Settings.allocations_state = "not_the_correct_state"
+        expect(Allocation.journey_mode).to eq("open")
+      end
+    end
+  end
+
   describe "validations" do
     context "when number_of_places is empty" do
       subject do
