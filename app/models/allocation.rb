@@ -5,6 +5,14 @@ class Allocation < Base
     DECLINED = "declined".freeze
   end
 
+  def self.journey_mode
+    {
+      "open" => "open",
+      "closed" => "closed",
+      "confirmed" => "confirmed",
+    }.fetch(Settings.allocations_state, "open")
+  end
+
   belongs_to :provider, param: :provider_code, shallow_path: true # accredited_body
 
   property :number_of_places

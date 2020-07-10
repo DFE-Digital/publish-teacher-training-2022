@@ -1,0 +1,32 @@
+<% if allocations.present? %>
+  <% unique_heading_id = rand(1...100) %>
+  <h2 class="govuk-heading-m" id="<%= unique_heading_id %>">
+    <%= section_heading.html_safe %>
+  </h2>
+  <table class="govuk-table ucas-info-table govuk-!-margin-bottom-8" aria-describedby="<%= unique_heading_id %>" data-qa="<%= request_type %>-allocations-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">
+        Organisation
+      </th>
+      <th class="govuk-table__header allocation-report__status" scope="col">
+        Status
+      </th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <% allocations.each do |allocation| %>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" data-qa="provider-name" scope="row">
+          <%= allocation[:training_provider_name] %>
+        </th>
+        <td class="govuk-table__cell">
+            <span class="govuk-tag govuk-tag--<%= allocation[:status_colour] %>">
+              <%= allocation[:status] %>
+            </span>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
