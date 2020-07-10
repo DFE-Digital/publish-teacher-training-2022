@@ -1,6 +1,6 @@
 <% if @provider.accredited_body? %>
   <h2 class="govuk-heading-m">
-    <%= govuk_link_to raw("Request PE courses for 2021&thinsp;–&thinsp;2022"),
+    <%= govuk_link_to "Request PE courses for 2021 to 2022",
                 provider_recruitment_cycle_allocations_path(@provider.provider_code, year) %>
   </h2>
 

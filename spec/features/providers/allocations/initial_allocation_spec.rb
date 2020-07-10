@@ -310,6 +310,10 @@ RSpec.feature "PE allocations" do
     stub_omniauth(user: user)
   end
 
+  def and_i_click_request_pe_courses
+    click_on "Request PE courses for 2021 to 2022"
+  end
+
   def when_i_visit_my_organisations_page
     stub_api_v2_resource(@accredited_body)
     stub_api_v2_resource_collection([build(:access_request)])
@@ -318,12 +322,8 @@ RSpec.feature "PE allocations" do
     expect(find("h1")).to have_content(@accredited_body.provider_name.to_s)
   end
 
-  def and_i_click_request_pe_courses
-    click_on "Request PE courses for 2021 – 2022"
-  end
-
   def then_i_see_the_pe_allocations_page
-    expect(find("h1")).to have_content("Request PE courses for 2021 – 2022")
+    expect(find("h1")).to have_content("Request PE courses for 2021 to 2022")
   end
 
   def when_i_click_choose_an_organisation_button
