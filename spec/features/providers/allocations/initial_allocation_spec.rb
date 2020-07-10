@@ -6,6 +6,10 @@ RSpec.feature "PE allocations" do
   let(:check_your_info_page) { PageObjects::Page::Providers::Allocations::CheckYourInformationPage.new }
   let(:allocations_show_page) { PageObjects::Page::Providers::Allocations::ShowPage.new }
 
+  before do
+    allow(Settings).to receive(:allocations_state).and_return("open")
+  end
+
   scenario "Accredited body requests new PE allocations" do
     given_accredited_body_exists
     given_the_accredited_body_has_an_allocation

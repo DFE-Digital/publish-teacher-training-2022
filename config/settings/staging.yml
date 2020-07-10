@@ -11,4 +11,3 @@ search_ui:
 environment:
   label: "Staging"
   selector_name: "staging"
-allocations_state: open

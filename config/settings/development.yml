@@ -11,4 +11,3 @@ environment:
   selector_name: "development"
 log_level: debug
 use_ssl: false
-allocations_state: closed
