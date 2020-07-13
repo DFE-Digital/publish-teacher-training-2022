@@ -7,4 +7,3 @@ search_ui:
 environment:
   label: "Test"
   selector_name: "test"
-allocations_state: open

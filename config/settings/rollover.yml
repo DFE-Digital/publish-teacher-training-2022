@@ -6,4 +6,3 @@ manage_backend:
 environment:
   label: "Rollover"
   selector_name: "qa"
-allocations_state: open

@@ -5,6 +5,10 @@ RSpec.feature "PE allocations" do
   let(:allocations_new_page) { PageObjects::Page::Providers::Allocations::NewPage.new }
   let(:allocations_show_page) { PageObjects::Page::Providers::Allocations::ShowPage.new }
 
+  before do
+    allow(Settings).to receive(:allocations_state).and_return("open")
+  end
+
   context "Repeat allocations" do
     context "Accredited body has previously requested a repeat allocation for a training provider" do
       scenario "Accredited body views PE allocations page" do

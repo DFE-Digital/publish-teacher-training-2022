@@ -6,4 +6,3 @@ manage_backend:
 environment:
   label: "QA"
   selector_name: "qa"
-allocations_state: open
