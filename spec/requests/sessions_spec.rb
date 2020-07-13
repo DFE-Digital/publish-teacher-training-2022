@@ -64,5 +64,16 @@ describe "Sessions", type: :request do
         expect(session[:auth_user][:info][:email]).to eq email
       end
     end
+
+    describe "sign out" do
+      let(:email) { user.email }
+      let(:token) { SecureRandom.uuid }
+
+      it "destroys the session" do
+        get signout_path
+
+        expect(session[:auth_user]).to_not be_present
+      end
+    end
   end
 end
