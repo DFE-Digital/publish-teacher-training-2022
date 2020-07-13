@@ -1,5 +1,5 @@
 <h2 class="govuk-heading-m">
-  <%= link_to "Current cycle (#{Settings.current_cycle} - #{Settings.current_cycle + 1})",
+  <%= link_to "Current cycle (#{Settings.current_cycle} to #{Settings.current_cycle + 1})",
               provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle),
               data: { qa: 'provider__courses__current_cycle' },
               class: "govuk-link" %>
@@ -15,7 +15,7 @@
 </ul>
 
 <h2 class="govuk-heading-m">
-  <%= link_to "Next cycle (#{Settings.current_cycle + 1} - #{Settings.current_cycle + 2})",
+  <%= link_to "Next cycle (#{Settings.current_cycle + 1} to #{Settings.current_cycle + 2})",
               provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle + 1),
               data: { qa: 'provider__courses__next_cycle' },
               class: "govuk-link" %>

@@ -5,7 +5,7 @@
     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7" data-qa="page-heading">
       <h1 class="govuk-panel__title">Request sent</h1>
       <p class="govuk-panel__body govuk-!-margin-bottom-0">
-        You’ve confirmed that <%= @training_provider.provider_name %> would like to offer PE in 2021 &thinsp;–&thinsp; 2022.
+        You’ve confirmed that <%= @training_provider.provider_name %> would like to offer PE in 2021 to 2022.
       </p>
     </div>
     <h2 class="govuk-heading-m">What happens now?</h2>
@@ -19,7 +19,7 @@
     <p class="govuk-body">
       In September we'll let you know how many places we've allocated for this course.
       <% unless @allocation.initial_request? %>
-        This will be based on the organisation's allocation for 2020 - 2021.
+        This will be based on the organisation's allocation for 2020 to 2021.
       <% end %>
     </p>
 
@@ -28,7 +28,7 @@
     </p>
 
     <p class="govuk-body">
-      <%= link_to raw('Return to Request PE courses for 2021&thinsp;–&thinsp;2022'),
+      <%= link_to raw('Return to Request PE courses for 2021 to 2022'),
                   provider_recruitment_cycle_allocations_path(@provider.provider_code, Settings.current_cycle),
                   class: "govuk-link govuk-!-font-weight-bold" %>
     </p>

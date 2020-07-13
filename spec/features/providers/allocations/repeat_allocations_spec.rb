@@ -328,11 +328,11 @@ private
   end
 
   def and_i_click_request_pe_courses
-    click_on "Request PE courses for 2021 – 2022"
+    click_on "Request PE courses for 2021 to 2022"
   end
 
   def then_i_see_the_pe_allocations_page
-    expect(find("h1")).to have_content("Request PE courses for 2021 – 2022")
+    expect(find("h1")).to have_content("Request PE courses for 2021 to 2022")
   end
 
   def and_i_see_only_repeat_allocation_statuses
@@ -357,7 +357,7 @@ private
         @accredited_body.provider_name.to_s,
         href: "/organisations/#{@accredited_body.provider_code}",
       )
-      expect(page).to have_content("Request PE courses for 2021/22")
+      expect(page).to have_content("Request PE courses for 2021 to 2022")
     end
   end
 
@@ -367,7 +367,7 @@ private
   end
 
   def there_is_no_request_pe_courses_link
-    expect(page).not_to have_link("Request PE courses for 2021/22")
+    expect(page).not_to have_link("Request PE courses for 2021 to 2022")
   end
 
   def when_i_visit_training_providers_page

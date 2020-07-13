@@ -22,7 +22,7 @@ class RecruitmentCycle < Base
   end
 
   def year_range
-    "#{year} – #{year.to_i + 1}"
+    "#{year} to #{year.to_i + 1}"
   end
 
   def title

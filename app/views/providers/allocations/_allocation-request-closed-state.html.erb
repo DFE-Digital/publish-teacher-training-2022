@@ -1,13 +1,13 @@
-<%= content_for :page_title, raw("PE courses for 2021&thinsp;–&thinsp;2022") %>
+<%= content_for :page_title, raw("PE courses for 2021 to 2022") %>
 <%= content_for :before_content, render_breadcrumbs("allocations_closed") %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">PE courses for 2021&thinsp;–&thinsp;2022</h1>
+    <h1 class="govuk-heading-xl">PE courses for 2021 to 2022</h1>
 
     <% if @allocations_view.requested_allocations_statuses.any? || @allocations_view.not_requested_allocations_statuses.any? %>
       <p class="govuk-body">
-        You can no longer request fee-funded PE for 2021&thinsp;–&thinsp;2022. The request window closed on 10 July.
+        You can no longer request fee-funded PE for 2021 to 2022. The request window closed on 10 July.
       </p>
 
       <p class="govuk-body">
@@ -16,7 +16,7 @@
       </p>
 
       <p class="govuk-body">
-        Also included are current courses that were not requested for 2021&thinsp;–&thinsp;2022.
+        Also included are current courses that were not requested for 2021 to 2022.
       </p>
 
       <p class="govuk-body">
@@ -24,23 +24,23 @@
       </p>
 
       <%= render partial: "providers/allocations/allocation_report_closed_state", locals: {
-                 section_heading: "Courses for 2021&thinsp;–&thinsp;2022",
+                 section_heading: "Courses for 2021 to 2022",
                  allocations: @allocations_view.requested_allocations_statuses,
                  request_type: "repeat"} %>
 
       <%= render partial: "providers/allocations/allocation_report_closed_state", locals: {
-                 section_heading: "Courses not running in 2021&thinsp;–&thinsp;2022",
+                 section_heading: "Courses not running in 2021 to 2022",
                  allocations: @allocations_view.not_requested_allocations_statuses,
                  request_type: "repeat"} %>
     <% else %>
       <p class="govuk-body">
-        You did not request fee-funded PE for 2021&thinsp;–&thinsp;2022.
+        You did not request fee-funded PE for 2021 to 2022.
       </p>
 
       <p class="govuk-body">
         Your organisation, and any organisations you’re the accredited body for,
-        will not be offering this course - even if it’s being offered in 2020&thinsp;–&thinsp;2021.
-        You can not run this course in 2021&thinsp;–&thinsp;2022 without permission from the Department for Education.
+        will not be offering this course - even if it’s being offered in 2020 to 2021.
+        You can not run this course in 2021 to 2022 without permission from the Department for Education.
       </p>
 
       <p class="govuk-body">
