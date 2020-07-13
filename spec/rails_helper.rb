@@ -49,3 +49,7 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+Capybara.register_driver :rack_test do |app|
+  Capybara::RackTest::Driver.new(app, redirect_limit: 10)
+end
