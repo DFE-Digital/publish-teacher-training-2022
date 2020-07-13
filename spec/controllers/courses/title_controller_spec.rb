@@ -3,14 +3,16 @@ require "rails_helper"
 RSpec.describe Courses::TitleController do
   let(:provider) { build(:provider) }
   let(:course) { build(:course, provider: provider) }
-  let(:admin) do
+  let(:user) { build(:user) }
+  let(:current_user) do
     {
       user_id: 1,
       uid: SecureRandom.uuid,
       info: {
         email: "dave@example.com",
       },
-      admin: true,
+      admin: user.admin,
+      attributes: user.attributes,
     }.with_indifferent_access
   end
 
@@ -22,16 +24,6 @@ RSpec.describe Courses::TitleController do
 
   describe "#edit" do
     context "when a non-admin" do
-      let(:current_user) do
-        {
-          user_id: 1,
-          uid: SecureRandom.uuid,
-          info: {
-            email: "dave@example.com",
-          },
-        }.with_indifferent_access
-      end
-
       it "is forbidden" do
         get :edit, params: {
           provider_code: provider.provider_code,
@@ -45,7 +37,7 @@ RSpec.describe Courses::TitleController do
     end
 
     context "when an admin" do
-      let(:current_user) { admin }
+      let(:user) { build(:user, :admin) }
 
       it "is accessible" do
         get :edit, params: {
@@ -59,7 +51,7 @@ RSpec.describe Courses::TitleController do
   end
 
   describe "#update" do
-    let(:current_user) { admin }
+    let(:user) { build(:user, :admin) }
 
     it "updates the course title" do
       stub_api_v2_resource(course, method: :patch) do |body|

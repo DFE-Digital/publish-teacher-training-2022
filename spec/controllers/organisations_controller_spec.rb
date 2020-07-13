@@ -6,8 +6,9 @@ describe OrganisationsController, type: :controller do
       user_id: 1,
       uid: SecureRandom.uuid,
       info: {
-        email: "dave@example.com",
+        email: user.email,
       },
+      attributes: user.attributes,
     }.with_indifferent_access
   end
 
