@@ -4,8 +4,7 @@ feature "View provider", type: :feature do
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
 
   before do
-    allow(Settings).to receive(:current_cycle_open).and_return(true)
-    # allow(Settings.features).to receive(:can_edit_current_and_next_cycles).and_return(true)
+    allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(true)
     stub_omniauth
 
     stub_api_v2_resource(provider.recruitment_cycle)

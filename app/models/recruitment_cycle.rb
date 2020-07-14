@@ -14,7 +14,7 @@ class RecruitmentCycle < Base
   end
 
   def current_and_open?
-    current? && Settings.current_cycle_open
+    current? && FeatureService.enabled?("rollover.has_current_cycle_started?")
   end
 
   def next?

@@ -189,7 +189,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def current_cycle_and_open?
-    current_cycle? && Settings.current_cycle_open
+    current_cycle? && FeatureService.enabled?("rollover.has_current_cycle_started?")
   end
 
   def next_cycle?
