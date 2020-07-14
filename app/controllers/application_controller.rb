@@ -73,6 +73,10 @@ class ApplicationController < ActionController::Base
     !Rails.env.production? && Settings.key?(:authorised_users)
   end
 
+  def magic_link_enabled?
+    Settings.features.signin_intercept && Settings.features.signin_by_email && !Settings.features.dfe_signin
+  end
+
   def authenticate
     if current_user.present?
       logger.info { "Authenticated user session found " + log_safe_current_user.to_s }
