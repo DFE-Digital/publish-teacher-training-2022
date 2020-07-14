@@ -31,7 +31,7 @@ describe User, type: :model do
       let(:rolled_over_user) { build(:user, :rolled_over) }
 
       before do
-        allow(Settings).to receive(:rollover).and_return(true)
+        allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
       end
 
       it "changes state from 'transitioned' to 'accepted_rollover_2021'" do
@@ -53,7 +53,7 @@ describe User, type: :model do
       let(:rolled_over_user) { create(:user, :rolled_over) }
 
       before do
-        allow(Settings).to receive(:rollover).and_return(false)
+        allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
       end
 
       it "raises and error when trying to change state from 'transitioned' to 'rolled_over'" do

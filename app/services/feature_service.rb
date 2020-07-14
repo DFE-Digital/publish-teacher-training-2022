@@ -9,7 +9,9 @@ module FeatureService
     end
 
     def enabled?(feature_name)
-      Settings.features[feature_name]
+      segments = feature_name.to_s.split(".")
+
+      segments.reduce(Settings.features) { |config, segment| config[segment] }
     end
   end
 end

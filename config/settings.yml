@@ -49,9 +49,7 @@ service_support:
 environment:
   label: "Beta"
   selector_name: "beta"
-rollover: false
 current_cycle: 2020
-current_cycle_open: true
 application_name: publish-teacher-training
 logstash:
   type: tcp
@@ -66,5 +64,11 @@ features:
   signin_intercept: false
   signin_by_email: false
   dfe_signin: true
+  rollover:
+    # During rollover providers should be able to edit current & next recruitment cycle courses
+    can_edit_current_and_next_cycles: true
+    # Normally a short period of time between rollover and the next cycle
+    # actually starting when it would be set to false
+    has_current_cycle_started?: true
 commit_sha_file: COMMIT_SHA
 allocations_state: closed

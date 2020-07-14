@@ -36,7 +36,7 @@ feature "Sign in", type: :feature do
 
   scenario "using DfE Sign-in" do
     user = build(:user)
-    allow(Settings).to receive(:rollover).and_return(true)
+    allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
     stub_omniauth(user: user)
     stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
 
@@ -91,7 +91,7 @@ feature "Sign in", type: :feature do
         before do
           user_get_request
           user_update_request
-          allow(Settings).to receive(:rollover).and_return(true)
+          allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
         end
 
         scenario "new user accepts the transition info page" do
@@ -109,7 +109,7 @@ feature "Sign in", type: :feature do
 
       context "Roll over is disabled" do
         before do
-          allow(Settings).to receive(:rollover).and_return(false)
+          allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
         end
 
         scenario "new user accepts the transition info page" do
@@ -139,7 +139,7 @@ feature "Sign in", type: :feature do
       before do
         user_get_request
         user_update_request
-        allow(Settings).to receive(:rollover).and_return(true)
+        allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
       end
 
       scenario "new user accepts the rollover page" do
@@ -190,7 +190,7 @@ feature "Sign in", type: :feature do
   end
 
   scenario "new inactive user accepts the terms and conditions page with rollover disabled" do
-    allow(Settings).to receive(:rollover).and_return(false)
+    allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
     user = build(:user, :inactive, :new)
     accepted_user = build(:user, user.attributes)
     accepted_user.accept_terms_date_utc = 1.second.ago

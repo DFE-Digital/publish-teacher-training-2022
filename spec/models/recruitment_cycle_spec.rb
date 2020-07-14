@@ -17,7 +17,7 @@ describe RecruitmentCycle do
 
       it "displays as the current cycle" do
         allow(Settings).to receive(:current_cycle).and_return(2020)
-        allow(Settings).to receive(:current_cycle_open).and_return(true)
+        allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(true)
         expect(recruitment_cycle.title).to eq("Current cycle (2020 to 2021)")
       end
     end
@@ -27,7 +27,7 @@ describe RecruitmentCycle do
 
       it "displays as the new cycle" do
         allow(Settings).to receive(:current_cycle).and_return(2020)
-        allow(Settings).to receive(:current_cycle_open).and_return(false)
+        allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(false)
         expect(recruitment_cycle.title).to eq("New cycle (2020 to 2021)")
       end
     end
@@ -37,7 +37,7 @@ describe RecruitmentCycle do
 
       it "displays as the new cycle" do
         allow(Settings).to receive(:current_cycle).and_return(2019)
-        allow(Settings).to receive(:current_cycle_open).and_return(false)
+        allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(false)
         expect(recruitment_cycle.title).to eq("Next cycle (2020 to 2021)")
       end
     end
@@ -47,7 +47,7 @@ describe RecruitmentCycle do
 
       it "displays as the previous cycle" do
         allow(Settings).to receive(:current_cycle).and_return(2020)
-        allow(Settings).to receive(:current_cycle_open).and_return(false)
+        allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(false)
         expect(recruitment_cycle.title).to eq("2019 to 2020")
       end
     end

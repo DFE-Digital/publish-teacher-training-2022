@@ -189,7 +189,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def current_cycle_and_open?
-    current_cycle? && Settings.current_cycle_open
+    current_cycle? && FeatureService.enabled?("rollover.has_current_cycle_started?")
   end
 
   def next_cycle?
@@ -230,7 +230,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def return_start_date
-    if Settings.rollover
+    if FeatureService.enabled?("rollover.can_edit_current_and_next_cycles")
       start_date.presence || "September #{Settings.current_cycle + 1}"
     else
       start_date.presence || "September #{Settings.current_cycle}"

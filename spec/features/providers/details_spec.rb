@@ -4,7 +4,7 @@ feature "View provider", type: :feature do
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
 
   before do
-    allow(Settings).to receive(:current_cycle_open).and_return(true)
+    allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(true)
     stub_omniauth
 
     stub_api_v2_resource(provider.recruitment_cycle)
@@ -79,7 +79,7 @@ feature "View provider", type: :feature do
     expect(breadcrumbs[0].text).to eq(provider.provider_name)
     expect(breadcrumbs[0]["href"]).to eq("/organisations/#{provider.provider_code}")
 
-    if Settings.rollover
+    if FeatureService.enabled?("rollover.can_edit_current_and_next_cycles")
       expect(breadcrumbs[1].text).to eq(provider.recruitment_cycle.title)
       expect(breadcrumbs[1]["href"]).to eq("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}")
     end

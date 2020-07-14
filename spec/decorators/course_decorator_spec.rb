@@ -582,7 +582,7 @@ describe CourseDecorator do
     context "during rollover" do
       let(:start_date) { nil }
 
-      before { allow(Settings).to receive(:rollover).and_return(true) }
+      before { allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true) }
 
       it "should return the September of the next cycle" do
         expect(decorated_course.return_start_date).to eq("September #{Settings.current_cycle + 1}")

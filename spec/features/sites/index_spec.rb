@@ -21,7 +21,7 @@ feature "View locations", type: :feature do
   let(:location_page) { PageObjects::Page::LocationPage.new }
 
   before do
-    allow(Settings).to receive(:rollover).and_return(false)
+    allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
     user = build(:user)
     stub_omniauth(user: user, provider: provider)
 
@@ -80,7 +80,7 @@ feature "View locations", type: :feature do
 
   context "rollover" do
     it "it shows a list of locations" do
-      allow(Settings).to receive(:rollover).and_return(true)
+      allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
       root_page.load
       expect(organisation_page).to be_displayed(provider_code: provider_code)
       organisation_page.current_cycle.click

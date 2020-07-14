@@ -6,7 +6,7 @@ describe "Recruitment cycles" do
   let(:next_recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
 
   before do
-    allow(Settings).to receive(:current_cycle_open).and_return(true)
+    allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(true)
     stub_omniauth
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
@@ -29,7 +29,7 @@ describe "Recruitment cycles" do
 
   describe "GET show" do
     it "redirects to the course index page" do
-      allow(Settings).to receive(:rollover).and_return(false)
+      allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
 
       get("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}")
       expect(response).to redirect_to(provider_path(provider.provider_code))
@@ -40,7 +40,7 @@ describe "Recruitment cycles" do
 
     context "rollover" do
       it "renders the recruitment cycle page" do
-        allow(Settings).to receive(:rollover).and_return(true)
+        allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
 
         get("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}")
         expect(response.body).to include("Current cycle")
