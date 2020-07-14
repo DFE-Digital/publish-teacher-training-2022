@@ -17,7 +17,7 @@ feature "View provider about", type: :feature do
   end
 
   before do
-    allow(Settings).to receive(:rollover).and_return(false)
+    allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
     stub_omniauth
 
     stub_api_v2_request(

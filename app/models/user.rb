@@ -23,7 +23,7 @@ class User < Base
 
     event :accept_rollover_screen do
       transitions from: %i[transitioned rolled_over], to: :accepted_rollover_2021 do
-        guard { Settings.rollover }
+        guard { FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") }
       end
     end
 

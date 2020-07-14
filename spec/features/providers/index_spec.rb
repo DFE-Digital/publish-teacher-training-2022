@@ -13,7 +13,7 @@ feature "View providers", type: :feature do
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
       current_recruitment_cycle.to_jsonapi,
     )
-    allow(Settings).to receive(:rollover).and_return(rollover)
+    allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(rollover)
   end
 
   context "with two providers" do

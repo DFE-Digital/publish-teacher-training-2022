@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def accept_transition_info
     UpdateUserService.call(user, "accept_transition_screen!")
-    redirect_to Settings.rollover ? rollover_path : providers_path
+    redirect_to FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") ? rollover_path : providers_path
   end
 
   def accept_rollover

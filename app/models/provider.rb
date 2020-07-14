@@ -27,7 +27,7 @@ class Provider < Base
   end
 
   def rolled_over?
-    Settings.rollover
+    FeatureService.enabled?("rollover.can_edit_current_and_next_cycles")
   end
 
 private

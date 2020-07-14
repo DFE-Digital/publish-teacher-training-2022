@@ -25,7 +25,7 @@ feature "Search providers", type: :feature do
       resource_list_to_jsonapi([provider1, provider2], meta: { count: 2 }),
     )
 
-    allow(Settings).to receive(:rollover).and_return(rollover)
+    allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(rollover)
 
     root_page.load
   end

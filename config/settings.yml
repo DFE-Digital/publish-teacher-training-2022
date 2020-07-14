@@ -49,7 +49,6 @@ service_support:
 environment:
   label: "Beta"
   selector_name: "beta"
-rollover: false
 current_cycle: 2020
 current_cycle_open: true
 application_name: publish-teacher-training
@@ -66,5 +65,7 @@ features:
   signin_intercept: false
   signin_by_email: false
   dfe_signin: true
+  rollover:
+    can_edit_current_and_next_cycles: false
 commit_sha_file: COMMIT_SHA
 allocations_state: closed
