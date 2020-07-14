@@ -66,6 +66,6 @@ features:
   signin_by_email: false
   dfe_signin: true
   rollover:
-    can_edit_current_and_next_cycles: false
+    can_edit_current_and_next_cycles: true
 commit_sha_file: COMMIT_SHA
 allocations_state: closed

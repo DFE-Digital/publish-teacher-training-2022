@@ -7,3 +7,9 @@ search_ui:
 environment:
   label: "Test"
   selector_name: "test"
+features:
+  # Rollover is only enabled for a limited time each year so this explicitly
+  # sets it to false. If tests need to test when rollover is enabled then they
+  # should set the rollover setting in that test to true
+  rollover:
+    can_edit_current_and_next_cycles: false
