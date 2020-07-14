@@ -186,7 +186,7 @@ feature "Edit accredited body", type: :feature do
           expect(accredited_body_page).to be_displayed
           expect(accredited_body_page).to have_content("search too short")
 
-          fill_in "Name of accredited body", with: "AT"
+          fill_in "Name of accredited body", with: "A"
           click_on "Save and publish changes"
 
           expect(accredited_body_page).to be_displayed
