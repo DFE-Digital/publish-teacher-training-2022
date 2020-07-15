@@ -102,7 +102,7 @@ describe "Courses", type: :request do
       {
         page: "about",
         about_course: "Something about this course",
-        how_school_placements_work: "Something about how school placements work",
+        how_school_placements_work: "Something about how teaching placements work",
         interview_process: "Something about the interview process",
       }
     end

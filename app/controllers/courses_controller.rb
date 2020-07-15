@@ -97,7 +97,7 @@ class CoursesController < ApplicationController
       @copied_fields = [
         ["About the course", "about_course"],
         ["Interview process", "interview_process"],
-        ["How school placements work", "how_school_placements_work"],
+        ["How teaching placements work", "how_school_placements_work"],
       ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end

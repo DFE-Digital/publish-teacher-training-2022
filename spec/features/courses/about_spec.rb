@@ -17,7 +17,7 @@ feature "About course", type: :feature do
       provider: provider,
       about_course: "About course",
       interview_process: "Interview process",
-      how_school_placements_work: "How school placements work",
+      how_school_placements_work: "How teaching placements work",
       recruitment_cycle: current_recruitment_cycle,
     )
   end
@@ -65,7 +65,7 @@ feature "About course", type: :feature do
     )
 
     fill_in "About this course", with: "Something interesting about this course"
-    fill_in "How school placements work", with: "Something about how school placements work"
+    fill_in "How teaching placements work", with: "Something about how teaching placements work"
     click_on "Save"
 
     expect(about_course_page.flash).to have_content(
@@ -116,7 +116,7 @@ feature "About course", type: :feature do
             provider: provider,
             about_course: "Course 2 - About course",
             interview_process: "Course 2 - Interview process",
-            how_school_placements_work: "Course 2 - How school placements work"
+            how_school_placements_work: "Course 2 - How teaching placements work"
     end
 
     let(:course_3) do
@@ -147,7 +147,7 @@ feature "About course", type: :feature do
         "Your changes are not yet saved",
         "About the course",
         "Interview process",
-        "How school placements work",
+        "How teaching placements work",
       ].each do |name|
         expect(about_course_page.warning_message).to have_content(name)
       end
@@ -170,7 +170,7 @@ feature "About course", type: :feature do
 
       [
         "Interview process",
-        "How school placements work",
+        "How teaching placements work",
       ].each do |name|
         expect(about_course_page.warning_message).not_to have_content(name)
       end
