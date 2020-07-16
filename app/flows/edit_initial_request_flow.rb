@@ -9,9 +9,9 @@ class EditInitialRequestFlow
   end
 
   def template
-    if proceed_to_check_answers_page?
+    if can_proceed_to_check_answers_page?
       "providers/edit_initial_allocations/check_answers"
-    elsif proceed_to_number_of_places_page?
+    elsif can_proceed_to_number_of_places_page?
       "providers/edit_initial_allocations/number_of_places"
     else
       "providers/edit_initial_allocations/do_you_want"
@@ -19,26 +19,17 @@ class EditInitialRequestFlow
   end
 
   def locals
-    if proceed_to_check_answers_page? || proceed_to_number_of_places_page?
-      {
-        training_provider: training_provider,
-        provider: provider,
-        form_object: form_object,
-        recruitment_cycle: recruitment_cycle,
-        allocation: allocation,
-      }
-    else
-      {
-        training_provider: training_provider,
-        allocation: allocation,
-        provider: provider,
-        form_object: form_object,
-      }
-    end
+    {
+      training_provider: training_provider,
+      provider: provider,
+      form_object: form_object,
+      recruitment_cycle: recruitment_cycle,
+      allocation: allocation,
+    }
   end
 
   def redirect_path
-    if proceed_to_check_answers_page? || accepted_initial_allocation?
+    if can_proceed_to_check_answers_page? || accepted_initial_allocation?
       get_edit_initial_request_provider_recruitment_cycle_allocation_path(
         provider_code: allocation.accredited_body.provider_code,
         recruitment_cycle_year: recruitment_cycle.year,
@@ -65,14 +56,14 @@ private
   end
 
   def number_of_places_validation_error?
-    (params[:next_step] == "check_answers" && !form_object.valid?)
+    params[:next_step] == "check_answers" && !form_object.valid?
   end
 
-  def proceed_to_number_of_places_page?
+  def can_proceed_to_number_of_places_page?
     params[:next_step] == "number_of_places" && params[:request_type].present? || number_of_places_validation_error?
   end
 
-  def proceed_to_check_answers_page?
+  def can_proceed_to_check_answers_page?
     params[:next_step] == "check_answers" && params[:number_of_places].present? && form_object.valid?
   end
 
@@ -112,9 +103,26 @@ private
   end
 
   def form_object
+    if params[:number_of_places]
+      number_of_places_form_object
+    else
+      request_form_object
+    end
+  end
+
+  def request_form_object
     permitted_params = params
-                         .slice(:request_type, :number_of_places)
-                         .permit(:request_type, :number_of_places)
-    @form_object ||= EditInitialRequestForm.new(permitted_params)
+                         .slice(:request_type)
+                         .permit(:request_type)
+
+    @request_form_object ||= Allocations::EditInitial::RequestTypeForm.new(permitted_params)
+  end
+
+  def number_of_places_form_object
+    permitted_params = params
+                         .slice(:number_of_places)
+                         .permit(:number_of_places)
+
+    @number_of_places_form_object ||= Allocations::EditInitial::NumberOfPlacesForm.new(permitted_params)
   end
 end
