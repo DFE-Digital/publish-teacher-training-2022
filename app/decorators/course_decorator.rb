@@ -237,6 +237,14 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def placements_heading
+    if is_further_education?
+      "How teaching placements work"
+    else
+      "How school placements work"
+    end
+  end
+
 private
 
   def not_on_find

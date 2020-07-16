@@ -615,4 +615,22 @@ describe CourseDecorator do
       end
     end
   end
+
+  describe "#placements_heading" do
+    context "when the subject is not further education" do
+      let(:course) { build(:course) }
+
+      it "returns school placements" do
+        expect(decorated_course.placements_heading).to eq("How school placements work")
+      end
+    end
+
+    context "when the subject is further education" do
+      let(:course) { build(:course, level: "further_education") }
+
+      it "returns teaching placements" do
+        expect(decorated_course.placements_heading).to eq("How teaching placements work")
+      end
+    end
+  end
 end
