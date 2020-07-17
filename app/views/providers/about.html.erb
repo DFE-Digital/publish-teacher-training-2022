@@ -61,7 +61,8 @@
         <h2 class="govuk-heading-l" id="accredited_bodies-error">About your accredited body</h2>
 
         <p id="about-training-provider-hint" class="govuk-body">
-          Tell applicants about your accredited body - you could mention their academic specialities and achievements. Be specific with the claims you make, and support with them evidence.
+          Tell applicants about your accredited body - you could mention their academic specialities and achievements.
+          Be specific with the claims you make, and support with them evidence.
         </p>
 
         <% provider.accredited_bodies.each_with_index do |provider,index| %>
@@ -95,7 +96,8 @@
         <li>mental health conditions</li>
       </ul>
       <p class="govuk-body">
-        If accessibility varies between locations, give details. It’s also useful for applicants to know how you’ve accommodated others with specific access needs in the past.
+        If accessibility varies between locations, give details. It’s also useful for applicants to know how
+        you’ve accommodated others with specific access needs in the past.
       </p>
 
       <%= f.govuk_text_area :train_with_disability,
