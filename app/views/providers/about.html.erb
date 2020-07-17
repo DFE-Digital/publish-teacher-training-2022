@@ -49,7 +49,7 @@
       </li>
     </ul>
 
-    <%= form_with model: @provider,
+    <%= form_with model: provider,
                   builder: GOVUKDesignSystemFormBuilder::FormBuilder,
                   url: about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
                   method: :put do |f| %>
@@ -65,23 +65,10 @@
           Be specific with the claims you make, and support with them evidence.
         </p>
 
-        <% provider.accredited_bodies.each_with_index do |provider,index| %>
-          <%= f.hidden_field "accredited_bodies[][provider_name]", value: provider["provider_name"], id: nil %>
-          <%= f.hidden_field "accredited_bodies[][provider_code]", value: provider["provider_code"], id: nil %>
-          <div class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
-            <%= render "shared/form_field",
-              form: f,
-              field: "accredited_bodies[][description]",
-              label: "#{provider['provider_name']} (optional)",
-              id: "accredited_bodies[#{index}][description]",
-              label_bold: true do |field, options| %>
-              <%= f.text_area field, options.merge(
-                value: provider['description'],
-                rows: 10,
-                class: 'govuk-textarea govuk-js-character-count'
-              ) %>
-            <% end %>
-          </div>
+        <%= f.fields model: :accredited_bodies do |abf| %>
+          <%= abf.hidden_field :provider_name %>
+          <%= abf.hidden_field :provider_code %>
+          <%= abf.govuk_text_area :description, label: { text: "#{ abf.object.provider_name} (optional)", size:'s' }, max_words: 100, rows: 10 %>
         <% end %>
       <% end %>
 
