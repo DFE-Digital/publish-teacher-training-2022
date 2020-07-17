@@ -74,8 +74,8 @@ feature "View provider about", type: :feature do
 
     fill_in "provider[train_with_us]", with: "Foo"
     fill_in "provider[train_with_disability]", with: "Bar"
-    fill_in "accredited_bodies[0][description]", with: "Baz"
-    fill_in "accredited_bodies[1][description]", with: "Qux"
+    fill_in "provider-accredited-bodies-attributes-0-description-field", with: "Baz"
+    fill_in "provider-accredited-bodies-attributes-1-description-field", with: "Qux"
     click_on "Save"
 
     expect(org_details_page.flash).to have_content(
