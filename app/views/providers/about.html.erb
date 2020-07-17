@@ -49,7 +49,10 @@
       </li>
     </ul>
 
-    <%= form_with model: @provider, url: about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
+    <%= form_with model: @provider,
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+                  url: about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
+                  method: :put do |f| %>
       <%= f.hidden_field :page, value: :about %>
 
       <div class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
