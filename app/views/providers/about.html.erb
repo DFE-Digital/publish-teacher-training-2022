@@ -4,61 +4,60 @@
   <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= form_with model: provider,
+              builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+              url: about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
+              method: :put do |f| %>
+  <%= f.hidden_field :page, value: :about %>
+  <%= f.govuk_error_summary "You’ll need to correct some information." %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">
-        <%= @provider.provider_name %>
-      </span>
-      About your organisation
-    </h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-xl">
+          <%= @provider.provider_name %>
+        </span>
+        About your organisation
+      </h1>
+    </div>
   </div>
-</div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body">
-      Tell applicants why they should choose to train with you. Say:
-    </p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body">
+        Tell applicants why they should choose to train with you. Say:
+      </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>who you are</li>
-      <li>who you work with</li>
-    </ul>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>who you are</li>
+        <li>who you work with</li>
+      </ul>
 
-    <p class="govuk-body">
-      You could mention:
-    </p>
+      <p class="govuk-body">
+        You could mention:
+      </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>your key values</li>
-      <li>your specialisms</li>
-      <li>your past achievements (eg student successes, Ofsted ratings)</li>
-    </ul>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>your key values</li>
+        <li>your specialisms</li>
+        <li>your past achievements (eg student successes, Ofsted ratings)</li>
+      </ul>
 
-    <p class="govuk-body">
-      Be specific with any claims you make, and support them with evidence. For example:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>don’t say “our students are some of the happiest in the country”</li>
-      <li>
-        do say “the Times Educational Supplement ranked our students as 4th
-        happiest in the country”
-      </li>
-    </ul>
-
-    <%= form_with model: provider,
-                  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
-                  url: about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
-                  method: :put do |f| %>
-      <%= f.hidden_field :page, value: :about %>
+      <p class="govuk-body">
+        Be specific with any claims you make, and support them with evidence. For example:
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>don’t say “our students are some of the happiest in the country”</li>
+        <li>
+          do say “the Times Educational Supplement ranked our students as 4th
+          happiest in the country”
+        </li>
+      </ul>
 
       <%= f.govuk_text_area :train_with_us, label: { text: 'Training with you', size:'s' }, max_words: 250, rows: 15 %>
 
       <% if provider.accredited_bodies.present? %>
-        <h2 class="govuk-heading-l" id="accredited_bodies-error">About your accredited body</h2>
+        <h2 class="govuk-heading-l">About your accredited body</h2>
 
         <p id="about-training-provider-hint" class="govuk-body">
           Tell applicants about your accredited body - you could mention their academic specialities and achievements.
@@ -94,12 +93,13 @@
       <hr class="govuk-section-break govuk-section-break--l">
       <p class="govuk-body">Changes will appear on Find postgraduate teacher training within 2 hours.</p>
       <%= f.submit "Save and publish changes", class: "govuk-button" %>
-    <% end %>
 
-    <div class="form-group">
-      <p class="govuk-body">
-        <%= govuk_link_to "Cancel changes", details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
-      </p>
+
+      <div class="form-group">
+        <p class="govuk-body">
+          <%= govuk_link_to "Cancel changes", details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
+        </p>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
