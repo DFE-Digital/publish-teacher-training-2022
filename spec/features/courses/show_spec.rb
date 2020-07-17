@@ -340,16 +340,7 @@ feature "Course show", type: :feature do
           course_page.publish.click
 
           expect(page.title).to have_content("Error:")
-          expect(course_page).to be_displayed
           expect(course_page.error_summary).to have_content("About course can't be blank")
-        end
-
-        scenario "it deep links and persists errors" do
-          course_page.publish.click
-
-          click_link "About course can't be blank", match: :first
-
-          expect(about_course_page.error_flash).to have_content("About course can't be blank")
         end
       end
     end

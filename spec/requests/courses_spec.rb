@@ -54,9 +54,8 @@ describe "Courses" do
         post publish_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
       end
 
-      it "redirects to the course description page" do
-        expect(flash[:error_summary]).to eq(about_course: ["About course can't be blank"])
-        expect(response).to redirect_to(provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
+      it "displays errors" do
+        response.body.include?("About course can&#39;t be blank")
       end
     end
   end

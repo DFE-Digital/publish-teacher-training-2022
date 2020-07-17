@@ -45,9 +45,9 @@ module ApplicationHelper
   end
 
   def enrichment_summary_label(model, key, fields)
-    if fields.select { |field| @errors&.key? field }.any?
+    if fields.select { |field| @errors&.key? field.to_sym }.any?
       errors = fields.map { |field|
-        @errors[field]&.map { |error| enrichment_error_link(model, field, error) }
+        @errors[field.to_sym]&.map { |error| enrichment_error_link(model, field, error) }
       }.flatten
       tag.dt class: "govuk-summary-list__key app-course-parts__fields__label--error" do
         [

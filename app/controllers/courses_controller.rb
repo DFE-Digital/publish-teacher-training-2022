@@ -174,11 +174,12 @@ class CoursesController < ApplicationController
   def publish
     if @course.publish
       flash[:success] = "Your course has been published."
+      redirect_to provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
     else
-      flash[:error_summary] = @course.errors.messages
+      @errors = @course.errors.messages
+      build_course
+      render :show
     end
-
-    redirect_to provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
   end
 
 private
