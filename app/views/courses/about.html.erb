@@ -54,7 +54,11 @@
           </span>
         </summary>
         <div class="govuk-details__text">
-          <p class="govuk-body">If you offer more than one course in the same subject - eg two Primary courses - it’s important to say how they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.</p>
+          <p class="govuk-body">
+            If you offer more than one course in the same subject - eg two Primary courses - it’s important to say how
+            they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants
+            may be unable to decide between them.
+          </p>
         </div>
       </details>
 
@@ -103,7 +107,9 @@
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link govuk-link--no-visited-state" %>
+        <%= link_to 'Cancel changes',
+                    provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                    class: "govuk-link govuk-link--no-visited-state" %>
       </p>
     <% end %>
   </div>
