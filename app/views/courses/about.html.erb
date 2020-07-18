@@ -58,12 +58,8 @@
         </div>
       </details>
 
-      <div id="about_course_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="400">
-        <%= render "shared/form_field",
-          form: f, field: :about_course, label: 'About this course', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 20, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :about_course, label: { text: 'About this course', size:'s' }, max_words: 400, rows: 20 %>
+
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
@@ -77,12 +73,7 @@
         <li>whether they’ll have to sit any tests - if so, how can they prepare?</li>
       </ul>
 
-      <div id="interview_process_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
-        <%= render "shared/form_field",
-          form: f, field: :interview_process, label: 'Interview process (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :interview_process, label: { text: 'Interview process (optional)', size:'s' }, max_words: 250, rows: 15 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
@@ -107,12 +98,7 @@
         <li>how placement schools are selected</li>
       </ul>
 
-      <div id="how_school_placements_work_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="350">
-        <%= render "shared/form_field",
-          form: f, field: :how_school_placements_work, label: course.placements_heading, label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :how_school_placements_work, label: { text: course.placements_heading, size:'s' }, max_words: 350, rows: 15 %>
 
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
