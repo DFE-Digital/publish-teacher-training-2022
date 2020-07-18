@@ -7,20 +7,21 @@
 <%= render partial: 'courses/copy_content_warning',
                     locals: { copied_fields: @copied_fields } if params[:copy_from].present? %>
 
-<%= render 'shared/errors' %>
+<%= form_with model: course,
+              builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+              url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+              data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
+  <%= f.hidden_field :page, value: :about %>
+  <%= f.govuk_error_summary "You’ll need to correct some information." %>
 
-<h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl"><%= course.name_and_code %></span>
-  About this course
-</h1>
+  <h1 class="govuk-heading-xl">
+    <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+    About this course
+  </h1>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course,
-                  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
-                  url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-                  data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
-      <%= f.hidden_field :page, value: :about %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
       <p class="govuk-body">You should give a short, factual summary of the course.</p>
 
       <p class="govuk-body">Tell applicants:</p>
@@ -63,7 +64,6 @@
       </details>
 
       <%= f.govuk_text_area :about_course, label: { text: 'About this course', size:'s' }, max_words: 400, rows: 20 %>
-
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
@@ -111,13 +111,13 @@
                     provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
                     class: "govuk-link govuk-link--no-visited-state" %>
       </p>
-    <% end %>
-  </div>
+    </div>
 
-  <aside class="govuk-grid-column-one-third">
-    <%= render partial: 'courses/related_sidebar',
-                        locals: {
-                          course: course,
-                          page_path: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) } %>
-  </aside>
-</div>
+    <aside class="govuk-grid-column-one-third">
+      <%= render partial: 'courses/related_sidebar',
+                          locals: {
+                            course: course,
+                            page_path: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) } %>
+    </aside>
+  </div>
+<% end %>
