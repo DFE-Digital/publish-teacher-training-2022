@@ -38,7 +38,7 @@
               <li class="govuk-summary-list__actions-list-item allocation-report__actions-list-item">
                 <% if allocation[:request_type] == AllocationsView::RequestType::INITIAL %>
                   <%= govuk_link_to "Change",
-                                    do_you_want_provider_recruitment_cycle_allocation_path(
+                                    get_edit_initial_request_provider_recruitment_cycle_allocation_path(
                                       @provider.provider_code,
                                       @provider.recruitment_cycle_year,
                                       allocation[:training_provider_code],

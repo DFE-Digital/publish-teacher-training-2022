@@ -1,12 +1,14 @@
-<%= content_for :page_title, "Check your information before sending your request"%>
+<%= content_for :page_title, "Check your information before sending your request" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(
-        number_of_places_provider_recruitment_cycle_allocation_path(
+        get_edit_initial_request_provider_recruitment_cycle_allocation_path(
           provider.provider_code,
           recruitment_cycle.year,
           training_provider.provider_code,
           number_of_places: params[:number_of_places],
+          request_type: params[:request_type],
+          next_step: "number_of_places",
           id: allocation.id
         )
       ) %>
@@ -14,14 +16,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: check_answers_provider_recruitment_cycle_allocation_path(
-                          provider.provider_code,
-                          recruitment_cycle.year,
-                          training_provider.provider_code,
-                          id: allocation.id
-                        ),
-                        skip_enforcing_utf8: true,
-                        builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+    <%= form_with url: update_initial_request_provider_recruitment_cycle_allocation_path(
+      provider.provider_code,
+      recruitment_cycle.year,
+      training_provider.provider_code,
+      id: allocation.id
+    ),
+                  model: form_object,
+                  scope: "",
+                  skip_enforcing_utf8: true,
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
 
       <h1 class="govuk-heading-xl">
         <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
@@ -38,19 +42,22 @@
           </dd>
           <dd class="govuk-summary-list__actions">
             <%= link_to "Change",
-                  number_of_places_provider_recruitment_cycle_allocation_path(
-                    provider.provider_code,
-                    recruitment_cycle.year,
-                    training_provider.provider_code,
-                    number_of_places: params[:number_of_places],
-                    id: allocation.id
-                  ),
-              class: "govuk-link" %>
+                        get_edit_initial_request_provider_recruitment_cycle_allocation_path(
+                          provider.provider_code,
+                          recruitment_cycle.year,
+                          training_provider.provider_code,
+                          number_of_places: params[:number_of_places],
+                          request_type: params[:request_type],
+                          next_step: "number_of_places",
+                          id: allocation.id
+                        ),
+                        class: "govuk-link" %>
           </dd>
         </div>
       </dl>
 
-      <%= hidden_field_tag "allocation[number_of_places]", params[:number_of_places] %>
+      <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
+      <%= hidden_field_tag "request_type", params[:request_type] %>
       <%= hidden_field_tag "finish_flow", "1" %>
 
       <%= form.govuk_submit "Send request" %>

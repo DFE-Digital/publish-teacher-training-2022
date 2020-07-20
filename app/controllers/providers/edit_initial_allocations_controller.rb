@@ -1,30 +1,38 @@
 module Providers
   class EditInitialAllocationsController < ApplicationController
-    def do_you_want
-      if posted_with_params
-        case params[:allocation][:request_type]
-        when AllocationsView::RequestType::INITIAL
-          redirect_to number_of_places_provider_recruitment_cycle_allocation_path(
-            provider_code: allocation.accredited_body.provider_code,
-            recruitment_cycle_year: recruitment_cycle.year,
-            training_provider_code: allocation.provider.provider_code,
-            id: allocation.id,
-          )
-        when AllocationsView::RequestType::DECLINED
-          destroy
-          redirect_to confirm_deletion_provider_recruitment_cycle_allocation_path(
-            provider_code: provider.provider_code,
-            recruitment_cycle_year: recruitment_cycle.year,
-            training_provider_code: training_provider.provider_code,
-          )
-        end
+    def edit
+      flow = EditInitialRequestFlow.new(params: params)
+
+      if request.post? && flow.valid?
+        redirect_to flow.redirect_path
       else
-        validate_if_post_request
-        render locals: { training_provider: training_provider,
-                         allocation: allocation,
-                         provider: provider,
-                         allocation_model: allocation_model }
+        render flow.template, locals: flow.locals
       end
+    end
+
+    def update
+      update_allocation
+
+      @allocation = Allocation.includes(:provider, :accredited_body)
+                              .find(params[:id])
+                              .first
+
+      redirect_to provider_recruitment_cycle_allocation_path(
+        provider_code: allocation.accredited_body.provider_code,
+        recruitment_cycle_year: recruitment_cycle.year,
+        training_provider_code: allocation.provider.provider_code,
+        id: allocation.id,
+      )
+    end
+
+    def delete
+      allocation.destroy
+
+      redirect_to confirm_deletion_provider_recruitment_cycle_allocation_path(
+        provider_code: provider.provider_code,
+        recruitment_cycle_year: recruitment_cycle.year,
+        training_provider_code: training_provider.provider_code,
+      )
     end
 
     def confirm_deletion
@@ -35,50 +43,13 @@ module Providers
       render template: "providers/allocations/show"
     end
 
-    def number_of_places
-      if params.dig("allocation", "number_of_places")
-        allocation.number_of_places = params.dig("allocation", "number_of_places")
-      end
-
-      if request.post? && allocation.valid?
-        redirect_to check_answers_provider_recruitment_cycle_allocation_path(
-          provider_code: allocation.accredited_body.provider_code,
-          recruitment_cycle_year: recruitment_cycle.year,
-          training_provider_code: allocation.provider.provider_code,
-          number_of_places: params[:allocation][:number_of_places],
-          id: allocation.id,
-        )
-      else
-        render locals: {
-          training_provider: training_provider,
-          provider: provider,
-          allocation: allocation,
-          recruitment_cycle: recruitment_cycle,
-        }
-      end
-    end
-
-    def check_answers
-      if request.post?
-        update
-        redirect_to provider_recruitment_cycle_allocation_path(
-          provider_code: allocation.accredited_body.provider_code,
-          recruitment_cycle_year: recruitment_cycle.year,
-          training_provider_code: allocation.provider.provider_code,
-          id: allocation.id,
-        )
-      else
-        render locals: {
-          training_provider: training_provider,
-          allocation: allocation,
-          provider: provider,
-          recruitment_cycle: recruitment_cycle,
-          number_of_places: params[:number_of_places],
-        }
-      end
-    end
-
   private
+
+    def update_allocation
+      allocation.number_of_places = params[:number_of_places].to_i
+      allocation.set_all_dirty!
+      allocation.save
+    end
 
     def training_provider
       return @training_provider if @training_provider
@@ -106,32 +77,6 @@ module Providers
       @allocation ||= Allocation.includes(:provider, :accredited_body)
                                 .find(params[:id])
                                 .first
-    end
-
-    def allocation_model
-      @allocation_model ||= ChangeInitialRequestForm.new
-    end
-
-    def update
-      allocation.number_of_places = params[:allocation][:number_of_places].to_i
-      allocation.set_all_dirty!
-      allocation.save
-
-      @allocation = Allocation.includes(:provider, :accredited_body)
-                                .find(params[:id])
-                                .first
-    end
-
-    def destroy
-      allocation.destroy
-    end
-
-    def posted_with_params
-      request.post? && params[:allocation]
-    end
-
-    def validate_if_post_request
-      allocation_model.valid? if request.post?
     end
   end
 end
