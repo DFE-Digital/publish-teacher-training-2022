@@ -3,25 +3,33 @@
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render 'errors' %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course,
+    <%= form_with model: form_object,
+          scope: :course,
+          builder: GOVUKDesignSystemFormBuilder::FormBuilder,
           url: age_range_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
           method: :put do |form| %>
 
-      <%= render "shared/error_wrapper", error_keys: [:age_range_in_years], data_qa: "course__age_range_in_years" do %>
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading">
-              <span class="govuk-caption-xl"><%= course.name_and_code %></span>
-              Specify an age range
-            </h1>
-          </legend>
-          <%= render "shared/error_messages", error_keys: [:age_range_in_years] %>
-          <%= render 'form_fields', form: form %>
-        </fieldset>
+      <%= form.govuk_error_summary "You’ll need to correct some information." %>
+
+      <%= form.govuk_radio_buttons_fieldset(:age_range_in_years, legend: { size: 'xl', text: 'Specify an age range' }, caption: { text: course.name_and_code, size: 'xl' }) do %>
+        <% @course.meta['edit_options']['age_range_in_years'].each do |value| %>
+          <%= form.govuk_radio_button :age_range_in_years,
+            value,
+            label: { text: I18n.t("edit_options.age_range_in_years.#{value}.label") },
+            link_errors: true %>
+        <% end %>
+
+        <%= form.govuk_radio_divider %>
+
+        <%= form.govuk_radio_button :age_range_in_years, "other", label: { text: 'Another age range' } do %>
+          <p class="govuk-body">Enter an age range in years, for example: 5 to 11. The course must cover 4 or more school years.</p>
+
+          <%= form.govuk_text_field :course_age_range_in_years_other_from, label: { text: 'From' }, class: 'govuk-input govuk-input--width-2' %>
+
+          <%= form.govuk_text_field :course_age_range_in_years_other_to, label: { text: 'To' }, class: 'govuk-input govuk-input--width-2' %>
+        <% end %>
       <% end %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
