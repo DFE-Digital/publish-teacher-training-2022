@@ -99,7 +99,7 @@ class ProvidersController < ApplicationController
 private
 
   def provider_params
-    params.require(:provider).permit(
+    permitted_params = params.require(:provider).permit(
       :page,
       :train_with_us,
       :train_with_disability,
@@ -113,10 +113,31 @@ private
       :address4,
       :postcode,
       :region_code,
-      accredited_bodies: %i[provider_name provider_code description],
+      accredited_bodies_attributes: %i[provider_name provider_code description],
     ).to_h # Without this, accredited_bodies is an array of params objects
     # instead of an array of plain hashes and gets serialized incorrectly
     # on its way to the backend.
+    permitted_params.merge(accredited_bodies_param).except(:accredited_bodies_attributes)
+  end
+
+  def accredited_bodies_param
+    ab = params.require(:provider).except(
+      :page,
+      :train_with_us,
+      :train_with_disability,
+      :provider_name,
+      :email,
+      :telephone,
+      :website,
+      :address1,
+      :address2,
+      :address3,
+      :address4,
+      :postcode,
+      :region_code,
+    )
+      .permit(accredited_bodies_attributes: %i[provider_name provider_code description])
+    { accredited_bodies: ab[:accredited_bodies_attributes].to_h.values }
   end
 
   def build_provider
