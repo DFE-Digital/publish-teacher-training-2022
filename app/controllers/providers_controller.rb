@@ -137,7 +137,7 @@ private
       :region_code,
     )
       .permit(accredited_bodies_attributes: %i[provider_name provider_code description])
-    { accredited_bodies: ab[:accredited_bodies_attributes].to_h.map { |_k, v| v } }
+    { accredited_bodies: ab[:accredited_bodies_attributes].to_h.values }
   end
 
   def build_provider
