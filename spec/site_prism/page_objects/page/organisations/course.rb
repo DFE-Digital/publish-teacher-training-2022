@@ -13,7 +13,7 @@ module PageObjects
         element :international_fees, "[data-qa=enrichment__international_fees]"
         element :fee_details, "[data-qa=enrichment__fee_details]"
         element :financial_support, "[data-qa=enrichment__financial_support]"
-        element :required_qualifications, "[data-qa=enrichment__qualifications]"
+        element :required_qualifications, "[data-qa=enrichment__required_qualifications]"
         element :personal_qualities, "[data-qa=enrichment__personal_qualities]"
         element :other_requirements, "[data-qa=enrichment__other_requirements]"
         element :has_vacancies, "[data-qa=course__has_vacancies]"

@@ -59,13 +59,13 @@ module ViewHelper
     base = "/organisations/#{provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}"
 
     {
-      "about_course" => base + "/about?display_errors=true#about_course_wrapper",
-      "how_school_placements_work" => base + "/about?display_errors=true#how_school_placements_work_wrapper",
-      "fee_uk_eu" => base + "/fees?display_errors=true#fee_uk_eu_wrapper",
-      "course_length" => base + (course.has_fees? ? "/fees" : "/salary") + "?display_errors=true#course_length_wrapper",
-      "salary_details" => base + "/salary?display_errors=true#salary_details_wrapper",
-      "required_qualifications" => base + "/requirements?display_errors=true#required_qualifications_wrapper",
-    }[field]
+      about_course: base + "/about?display_errors=true#about_course_wrapper",
+      how_school_placements_work: base + "/about?display_errors=true#how_school_placements_work_wrapper",
+      fee_uk_eu: base + "/fees?display_errors=true#fee_uk_eu_wrapper",
+      course_length: base + (course.has_fees? ? "/fees" : "/salary") + "?display_errors=true#course_length_wrapper",
+      salary_details: base + "/salary?display_errors=true#salary_details_wrapper",
+      required_qualifications: base + "/requirements?display_errors=true#required_qualifications_wrapper",
+    }.with_indifferent_access[field]
   end
 
   def provider_enrichment_error_url(provider:, field:)
