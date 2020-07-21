@@ -123,7 +123,7 @@ describe ApplicationController, type: :controller do
                                   state: "new",
                                   admin: true,
                                   associated_with_accredited_body: false,
-                                  accept_terms_date_utc: Time.current,
+                                  accept_terms_date_utc: Time.zone.now,
                                   notifications_configured: false,
                                   attributes: {},
                                 ),
