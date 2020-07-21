@@ -31,7 +31,7 @@ feature "Edit course age range in years", type: :feature do
     it "is not valid and returns error message" do
       age_range_in_years_page.save.click
 
-      expect(age_range_in_years_page.error_flash).to have_content("Choose an age range")
+      expect(age_range_in_years_page).to have_content("You need to pick an age range")
     end
   end
 
@@ -61,20 +61,19 @@ feature "Edit course age range in years", type: :feature do
     end
 
     scenario "presents a choice for each age range" do
-      expect(age_range_in_years_page).to have_age_range_fields
-      expect(age_range_in_years_page.age_range_fields)
-        .to have_selector('[for="course_age_range_in_years_11_to_16"]', text: "11 to 16")
-      expect(age_range_in_years_page.age_range_fields)
-        .to have_selector('[for="course_age_range_in_years_11_to_18"]', text: "11 to 18")
-      expect(age_range_in_years_page.age_range_fields)
-        .to have_selector('[for="course_age_range_in_years_14_to_19"]', text: "14 to 19")
-      expect(age_range_in_years_page.age_range_fields)
-        .to have_selector('[for="course_age_range_in_years_other"]', text: "Another age range")
+      expect(age_range_in_years_page)
+        .to have_selector('[for="course-age-range-in-years-11-to-16-field"]', text: "11 to 16")
+      expect(age_range_in_years_page)
+        .to have_selector('[for="course-age-range-in-years-11-to-18-field"]', text: "11 to 18")
+      expect(age_range_in_years_page)
+        .to have_selector('[for="course-age-range-in-years-14-to-19-field"]', text: "14 to 19")
+      expect(age_range_in_years_page)
+        .to have_selector('[for="course-age-range-in-years-other-field"]', text: "Another age range")
     end
 
     scenario "has the correct value selected" do
-      expect(age_range_in_years_page.age_range_fields)
-        .to have_field("course_age_range_in_years_11_to_16", checked: true)
+      expect(age_range_in_years_page)
+        .to have_field("course-age-range-in-years-11-to-16-field", checked: true)
     end
 
     scenario "can be updated with a pre-determined age range" do
@@ -121,8 +120,14 @@ feature "Edit course age range in years", type: :feature do
         age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
-        expect(age_range_in_years_page.error_flash).to have_content(
-          "You’ll need to correct some information.\nEnter an age in both From and To",
+        expect(age_range_in_years_page).to have_content(
+          "You’ll need to correct some information.",
+        )
+        expect(age_range_in_years_page).to have_content(
+          "Enter an age in From",
+        )
+        expect(age_range_in_years_page).to have_content(
+          "Enter an age in To",
         )
       end
 
@@ -132,8 +137,11 @@ feature "Edit course age range in years", type: :feature do
         age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
-        expect(age_range_in_years_page.error_flash).to have_content(
-          "You’ll need to correct some information.\nEnter an age in To",
+        expect(age_range_in_years_page).to have_content(
+          "You’ll need to correct some information.",
+        )
+        expect(age_range_in_years_page).to have_content(
+          "Enter an age in To",
         )
       end
 
@@ -143,8 +151,11 @@ feature "Edit course age range in years", type: :feature do
         age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
-        expect(age_range_in_years_page.error_flash).to have_content(
-          "You’ll need to correct some information.\nEnter an age in From",
+        expect(age_range_in_years_page).to have_content(
+          "You’ll need to correct some information.",
+        )
+        expect(age_range_in_years_page).to have_content(
+          "Enter an age in From",
         )
       end
 
@@ -155,8 +166,11 @@ feature "Edit course age range in years", type: :feature do
         age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
-        expect(age_range_in_years_page.error_flash).to have_content(
-          "You’ll need to correct some information.\nEnter a valid age in From",
+        expect(age_range_in_years_page).to have_content(
+          "You’ll need to correct some information.",
+        )
+        expect(age_range_in_years_page).to have_content(
+          "Enter a valid age in From",
         )
       end
 
@@ -167,8 +181,11 @@ feature "Edit course age range in years", type: :feature do
         age_range_in_years_page.save.click
 
         expect(age_range_in_years_page).to be_displayed
-        expect(age_range_in_years_page.error_flash).to have_content(
-          "You’ll need to correct some information.\nEnter a valid age in To",
+        expect(age_range_in_years_page).to have_content(
+          "You’ll need to correct some information.",
+        )
+        expect(age_range_in_years_page).to have_content(
+          "Enter a valid age in To",
         )
       end
     end

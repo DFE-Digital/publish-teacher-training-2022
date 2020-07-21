@@ -4,33 +4,51 @@ module Courses
     decorates_assigned :course
     before_action :build_course, only: %i[edit update]
 
-    def edit; end
-
-    def update
-      @errors = build_errors
-      if @errors.present?
-        @course.age_range_in_years = "#{age_from_param}_to_#{age_to_param}"
-        return render :edit
+    def edit
+      if params[:display_errors] == "true"
+        form_object.valid?
       end
 
-      update_age_range_param
+      render locals: { form_object: form_object }
+    end
 
-      if @course.update(course_params)
+    def update
+      if form_object.valid?
         flash[:success] = "Your changes have been saved"
-        redirect_to(
-          details_provider_recruitment_cycle_course_path(
-            @course.provider_code,
-            @course.recruitment_cycle_year,
-            @course.course_code,
-          ),
-        )
+
+        update_age_range_param
+
+        if @course.update(course_params)
+          redirect_to(
+            details_provider_recruitment_cycle_course_path(
+              @course.provider_code,
+              @course.recruitment_cycle_year,
+              @course.course_code,
+            ),
+          )
+        end
       else
-        @errors = @course.errors.messages
-        render :edit
+        render :edit, locals: { form_object: form_object }
       end
     end
 
   private
+
+    def age_range_presets
+      @course.meta["edit_options"]["age_range_in_years"]
+    end
+
+    def form_object
+      @form_object ||= AgeRangeForm.new(permitted_params.merge(presets: age_range_presets))
+    end
+
+    def permitted_params
+      if params[:course]
+        (params[:course] || ActionController::Parameters.new).permit(:age_range_in_years, :course_age_range_in_years_other_from, :course_age_range_in_years_other_to)
+      else
+        @course.attributes.select { |k, _v| %w[age_range_in_years course_age_range_in_years_other_from course_age_range_in_years_other_to].include?(k) }
+      end
+    end
 
     def error_keys
       [:age_range_in_years]
@@ -42,72 +60,6 @@ module Courses
 
     def valid_custom_age_range?
       age_from_param.present? && age_to_param.present? && age_range_is_other?
-    end
-
-    def build_errors
-      if no_selection?
-        return {
-          age_range_in_years: [t("age_range.errors.missing_error")],
-        }
-      end
-
-      if age_range_from_and_to_missing?
-        return {
-          age_range_in_years: [t("age_range.errors.from_and_to_error")],
-          age_range_in_years_from: [t("age_range.errors.from_missing_error")],
-          age_range_in_years_to: [t("age_range.errors.to_missing_error")],
-        }
-      end
-
-      if age_range_from_missing?
-        return {
-          age_range_in_years_from: [t("age_range.errors.from_missing_error")],
-        }
-      end
-
-      if age_range_to_missing?
-        return {
-          age_range_in_years_to: [t("age_range.errors.to_missing_error")],
-        }
-      end
-
-      if age_range_from_invalid?
-        return {
-          age_range_in_years: [t("age_range.errors.from_invalid_error")],
-          age_range_in_years_from: [t("age_range.errors.from_invalid_error")],
-        }
-      end
-
-      if age_range_less_than_4?
-        {
-          age_range_in_years: [t("age_range.errors.to_invalid_error")],
-          age_range_in_years_to: [t("age_range.errors.to_invalid_error")],
-        }
-      end
-    end
-
-    def no_selection?
-      age_range_param.blank?
-    end
-
-    def age_range_less_than_4?
-      age_range_is_other? && ((age_to_param.to_i - age_from_param.to_i).abs < 4)
-    end
-
-    def age_range_from_invalid?
-      age_range_is_other? && (age_from_param.to_i > age_to_param.to_i)
-    end
-
-    def age_range_from_and_to_missing?
-      age_range_is_other? && (age_from_param.blank? && age_to_param.blank?)
-    end
-
-    def age_range_from_missing?
-      age_range_is_other? && (age_from_param.blank? && age_to_param.present?)
-    end
-
-    def age_range_to_missing?
-      age_range_is_other? && (age_from_param.present? && age_to_param.blank?)
     end
 
     def age_to_param

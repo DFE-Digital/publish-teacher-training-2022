@@ -119,9 +119,11 @@ en:
         label: "Get an email for each application you receive"
   age_range:
     errors:
-      missing_error: Choose an age range
+      missing_error: You need to pick an age range
       from_and_to_error: "Enter an age in both From and To"
       from_missing_error: "Enter an age in From"
       to_missing_error: "Enter an age in To"
       from_invalid_error: "Enter a valid age in From"
       to_invalid_error: "Enter a valid age in To"
+      from_range: "From age must be between %{min} and %{max}"
+      to_range: "To age must be between %{min} and %{max}"
