@@ -260,7 +260,7 @@ feature "new course", type: :feature do
           study_mode: "fee",
           course_code: "A123",
           content_status: "draft",
-          applications_open_from: DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601,
+          applications_open_from: Time.zone.parse(recruitment_cycle.application_start_date).utc.iso8601,
           subjects: [build(:subject, subject_name: "Primary with Mathematics")],
           gcse_subjects_required: %w[maths science english],
         )
@@ -322,7 +322,7 @@ feature "new course", type: :feature do
           study_mode: "fee",
           course_code: "A123",
           content_status: "draft",
-          applications_open_from: DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601,
+          applications_open_from: Time.zone.parse(recruitment_cycle.application_start_date).utc.iso8601,
           subjects: [modern_languages, russian],
           gcse_subjects_required: %w[maths science english],
         )
@@ -371,7 +371,7 @@ private
   def save_course
     course_creation_request
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
-    confirmation_page.save.click
+    confirmation_page.save_button.click
   end
 
   def select_level(course_creation_params, level:, level_selection:, next_page:)
@@ -486,7 +486,7 @@ private
 
   def select_applications_open_from(course_creation_params, next_page:)
     course_creation_params[:applications_open_from] = recruitment_cycle.application_start_date
-    course.applications_open_from = DateTime.parse(recruitment_cycle.application_start_date).utc.iso8601
+    course.applications_open_from = Time.zone.parse(recruitment_cycle.application_start_date).utc.iso8601
     stub_api_v2_build_course(course_creation_params)
 
     new_applications_open_page.applications_open_field.click

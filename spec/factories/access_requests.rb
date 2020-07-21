@@ -8,7 +8,7 @@ FactoryBot.define do
     email_address { Faker::Internet.safe_email(name: "#{first_name} #{last_name}") }
     organisation { "organisation" }
     reason { Faker::Lorem.sentence(word_count: 10) }
-    request_date_utc { Time.now.utc }
+    request_date_utc { Time.zone.now }
     status { %w[requested approved completed declined].sample }
     requester { build :user }
   end

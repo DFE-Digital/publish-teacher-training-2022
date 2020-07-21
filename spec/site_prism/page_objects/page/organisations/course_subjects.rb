@@ -8,7 +8,7 @@ module PageObjects
         element :master_subject_fields, '[data-qa="course__master_subject"]'
         element :subordinate_subject_details, '[data-qa="course__subordinate_subject_details"]'
         element :subordinate_subject_fields, '[data-qa="course__subordinate_subjects"]'
-        element :save, '[data-qa="course__save"]'
+        element :save_button, '[data-qa="course__save"]'
       end
     end
   end

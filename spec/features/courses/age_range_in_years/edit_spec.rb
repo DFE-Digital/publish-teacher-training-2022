@@ -29,7 +29,7 @@ feature "Edit course age range in years", type: :feature do
     end
 
     it "is not valid and returns error message" do
-      age_range_in_years_page.save.click
+      age_range_in_years_page.save_button.click
 
       expect(age_range_in_years_page).to have_content("You need to pick an age range")
     end
@@ -87,7 +87,7 @@ feature "Edit course age range in years", type: :feature do
       )
 
       age_range_in_years_page.age_range_14_to_19.click
-      age_range_in_years_page.save.click
+      age_range_in_years_page.save_button.click
 
       expect(course_details_page).to be_displayed
       expect(course_details_page.flash).to have_content("Your changes have been saved")
@@ -107,7 +107,7 @@ feature "Edit course age range in years", type: :feature do
       age_range_in_years_page.age_range_other.click
       age_range_in_years_page.age_range_from_field.set("14")
       age_range_in_years_page.age_range_to_field.set("19")
-      age_range_in_years_page.save.click
+      age_range_in_years_page.save_button.click
 
       expect(course_details_page).to be_displayed
       expect(course_details_page.flash).to have_content("Your changes have been saved")
@@ -117,7 +117,7 @@ feature "Edit course age range in years", type: :feature do
     context "displaying errors for custom age range selection" do
       scenario "From and To ages is missing" do
         age_range_in_years_page.age_range_other.click
-        age_range_in_years_page.save.click
+        age_range_in_years_page.save_button.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
@@ -134,7 +134,7 @@ feature "Edit course age range in years", type: :feature do
       scenario "From age is missing" do
         age_range_in_years_page.age_range_other.click
         age_range_in_years_page.age_range_from_field.set("16")
-        age_range_in_years_page.save.click
+        age_range_in_years_page.save_button.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
@@ -148,7 +148,7 @@ feature "Edit course age range in years", type: :feature do
       scenario "To age is missing" do
         age_range_in_years_page.age_range_other.click
         age_range_in_years_page.age_range_to_field.set("19")
-        age_range_in_years_page.save.click
+        age_range_in_years_page.save_button.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
@@ -163,7 +163,7 @@ feature "Edit course age range in years", type: :feature do
         age_range_in_years_page.age_range_other.click
         age_range_in_years_page.age_range_from_field.set("19")
         age_range_in_years_page.age_range_to_field.set("17")
-        age_range_in_years_page.save.click
+        age_range_in_years_page.save_button.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
@@ -178,7 +178,7 @@ feature "Edit course age range in years", type: :feature do
         age_range_in_years_page.age_range_other.click
         age_range_in_years_page.age_range_from_field.set("17")
         age_range_in_years_page.age_range_to_field.set("17")
-        age_range_in_years_page.save.click
+        age_range_in_years_page.save_button.click
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
