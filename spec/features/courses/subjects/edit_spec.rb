@@ -62,7 +62,7 @@ feature "Edit course subjects", type: :feature do
       edit_subject_stub = stub_api_v2_resource(course, method: :patch)
 
       subjects_page.master_subject_fields.select(subjects.first.subject_name)
-      subjects_page.save.click
+      subjects_page.save_button.click
 
       subject_uri = URI(current_url)
       expect(subject_uri.path).to eq("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}/courses/#{course.course_code}/details")
@@ -94,7 +94,7 @@ feature "Edit course subjects", type: :feature do
 
         subjects_page.subordinate_subject_details.click
         subjects_page.subordinate_subject_fields.select(subjects.second.subject_name)
-        subjects_page.save.click
+        subjects_page.save_button.click
         subjects_uri = URI(current_url)
         expect(subjects_uri.path).to eq("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}/courses/#{course.course_code}/details")
 
@@ -134,7 +134,7 @@ feature "Edit course subjects", type: :feature do
 
           subjects_page.master_subject_fields.select(subjects.first.subject_name)
           subjects_page.subordinate_subject_fields.select("")
-          subjects_page.save.click
+          subjects_page.save_button.click
 
           expect(course_details_page).to be_displayed
           expect(edit_subject_stub.with do |request|
@@ -172,7 +172,7 @@ feature "Edit course subjects", type: :feature do
 
           subjects_page.master_subject_fields.select("")
           subjects_page.subordinate_subject_fields.select("")
-          subjects_page.save.click
+          subjects_page.save_button.click
 
           expect(course_details_page).to be_displayed
           expect(edit_subject_stub.with do |request|

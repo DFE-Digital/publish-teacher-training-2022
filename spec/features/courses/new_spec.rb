@@ -371,7 +371,7 @@ private
   def save_course
     course_creation_request
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
-    confirmation_page.save.click
+    confirmation_page.save_button.click
   end
 
   def select_level(course_creation_params, level:, level_selection:, next_page:)

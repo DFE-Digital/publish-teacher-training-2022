@@ -95,7 +95,7 @@ feature "Edit course sites", type: :feature do
     scenario "adding a location" do
       check(site2.location_name, allow_label_click: true)
 
-      locations_page.save.click
+      locations_page.save_button.click
 
       expect(locations_page.success_summary).to have_content(
         "Course locations saved",
@@ -130,7 +130,7 @@ feature "Edit course sites", type: :feature do
     scenario "displays validation errors" do
       uncheck(site1.location_name, allow_label_click: true)
 
-      locations_page.save.click
+      locations_page.save_button.click
 
       expect(page.title).to have_content("Error:")
       expect(locations_page).to be_displayed(provider_code: provider.provider_code, course_code: course.course_code)

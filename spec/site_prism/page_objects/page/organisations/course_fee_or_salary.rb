@@ -9,7 +9,7 @@ module PageObjects
           element :fee, '[data-qa="course__funding_type_fee"]'
           element :salary, '[data-qa="course__funding_type_salary"]'
         end
-        element :save, '[data-qa="course__save"]'
+        element :save_button, '[data-qa="course__save"]'
       end
     end
   end

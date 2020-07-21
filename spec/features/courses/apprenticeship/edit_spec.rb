@@ -67,7 +67,7 @@ feature "Edit course apprenticeship status", type: :feature do
       )
 
       apprenticeship_page.funding_type_fee.click
-      apprenticeship_page.save.click
+      apprenticeship_page.save_button.click
 
       expect(patch_stub).to have_been_requested
     end

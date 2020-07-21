@@ -6,7 +6,7 @@ module PageObjects
 
         element :success_summary, ".govuk-success-summary"
         element :error_summary, ".govuk-error-summary"
-        element :save, "[data-qa=course__save]"
+        element :save_button, "[data-qa=course__save]"
       end
     end
   end

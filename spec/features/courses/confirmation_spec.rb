@@ -151,7 +151,7 @@ feature "Course confirmation", type: :feature do
         stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
         course_create_request
 
-        course_confirmation_page.save.click
+        course_confirmation_page.save_button.click
       end
 
       scenario "It creates the course on the API" do
@@ -188,7 +188,7 @@ feature "Course confirmation", type: :feature do
           200,
         )
 
-        course_confirmation_page.save.click
+        course_confirmation_page.save_button.click
 
         expect_course_confirmation_page_to_display_course_information
         expect(course_confirmation_page).to have_content(

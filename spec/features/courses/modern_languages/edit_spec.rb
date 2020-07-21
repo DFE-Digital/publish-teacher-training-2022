@@ -85,7 +85,7 @@ feature "Edit course modern languages", type: :feature do
 
       languages_page.languages_fields.find('[data-qa="checkbox_language_French"]').click
       languages_page.languages_fields.find('[data-qa="checkbox_language_Japanese"]').click
-      languages_page.save.click
+      languages_page.save_button.click
 
       expect(course_details_page).to be_displayed
       expect(patch_course_stub).to have_been_made
@@ -121,7 +121,7 @@ feature "Edit course modern languages", type: :feature do
       languages_page.language_checkbox("French").click
       languages_page.language_checkbox("Russian").click
       languages_page.language_checkbox("Japanese").click
-      languages_page.save.click
+      languages_page.save_button.click
 
       expect(course_details_page).to be_displayed
       expect(patch_course_stub).to have_been_made
@@ -152,7 +152,7 @@ feature "Edit course modern languages", type: :feature do
       stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}/providers/#{provider.provider_code}/courses/#{course.course_code}", build(:error), :patch, 422)
 
       languages_page.load_with_course(course)
-      languages_page.save.click
+      languages_page.save_button.click
       expect(languages_page).to have_error_flash
     end
   end
@@ -179,7 +179,7 @@ feature "Edit course modern languages", type: :feature do
     context "but is changed to a modern language course" do
       before do
         subjects_page.master_subject_fields.select("Modern Languages")
-        subjects_page.save.click
+        subjects_page.save_button.click
       end
 
       it "takes user through wizard and saves subjects" do
@@ -197,7 +197,7 @@ feature "Edit course modern languages", type: :feature do
 
         languages_page.languages_fields.find('[data-qa="checkbox_language_Russian"]').click
         languages_page.languages_fields.find('[data-qa="checkbox_language_Japanese"]').click
-        languages_page.save.click
+        languages_page.save_button.click
 
         expect(patch_course_stub).to have_been_made
       end

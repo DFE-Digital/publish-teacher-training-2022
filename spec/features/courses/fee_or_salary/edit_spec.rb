@@ -71,7 +71,7 @@ feature "Edit course fee or salary status", type: :feature do
       )
 
       fee_or_salary_page.funding_type_fields.salary.click
-      fee_or_salary_page.save.click
+      fee_or_salary_page.save_button.click
 
       expect(patch_stub).to have_been_requested
     end
