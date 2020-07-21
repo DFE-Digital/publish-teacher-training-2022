@@ -47,9 +47,9 @@ User.create(admin: true,
             email: "john.smith@digital.education.gov.uk",
             first_name: "John",
             last_name: "Smith",
-            welcome_email_date_utc: Time.now,
-            accept_terms_date_utc: Time.now,
-            invite_date_utc: Time.now,
+            welcome_email_date_utc: Time.zone.now,
+            accept_terms_date_utc: Time.zone.now,
+            invite_date_utc: Time.zone.now,
             state: "transitioned")
 ```
 
