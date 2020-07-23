@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Edit accredited body" do
+feature "New accredited body" do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider, sites: [build(:site)]) }
   let(:course) { build(:course, provider: provider) }
@@ -108,6 +108,37 @@ feature "Edit accredited body" do
           end
 
           include_examples "a course creation page"
+        end
+
+        context "When not selecting an accredited body" do
+          let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
+          let(:selected_fields) { { level: "primary", accredited_body_code: "A01" } }
+          let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
+
+          before do
+            build_course_with_selected_value_request
+            new_accredited_body_search_page.continue.click
+          end
+
+          scenario "it raises a validation error" do
+            expect(new_accredited_body_search_page).to have_content("Pick an accredited body")
+          end
+        end
+
+        context "When searching for an accredited body with fewer than two characters" do
+          let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
+          let(:selected_fields) { { level: "primary", accredited_body_code: "A01" } }
+          let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
+
+          before do
+            build_course_with_selected_value_request
+            choose "other"
+            new_accredited_body_search_page.continue.click
+          end
+
+          scenario "it raises a validation error" do
+            expect(new_accredited_body_search_page).to have_content("Accredited body search too short, enter 2 or more characters")
+          end
         end
       end
     end

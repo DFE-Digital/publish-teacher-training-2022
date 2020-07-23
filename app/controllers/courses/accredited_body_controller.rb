@@ -10,9 +10,14 @@ module Courses
     end
 
     def continue
-      other_selected_with_no_autocompleted_code = course_params[:accredited_body_code] == "other" && @autocompleted_provider_code.blank?
+      code = course_params[:accredited_body_code]
+      query = @accredited_body
 
-      if other_selected_with_no_autocompleted_code
+      @errors = errors_for_search_query(code, query)
+
+      if @errors.present?
+        render :new
+      elsif other_selected_with_no_autocompleted_code?(code)
         redirect_to(
           search_new_provider_recruitment_cycle_courses_accredited_body_path(
             query: @accredited_body,
@@ -112,7 +117,7 @@ module Courses
     def errors_for_search_query(code, query)
       errors = {}
 
-      if code == "other" && query.length < 3
+      if other_selected_with_no_autocompleted_code?(code) && query.length < 2
         errors = { accredited_body: ["Accredited body search too short, enter 2 or more characters"] }
       elsif code.blank?
         errors = { accredited_body_code: ["Pick an accredited body"] }
@@ -145,6 +150,10 @@ module Courses
       {
         accredited_body_code: autocompleted_code.presence || code,
       }
+    end
+
+    def other_selected_with_no_autocompleted_code?(code)
+      code == "other" && @autocompleted_provider_code.blank?
     end
   end
 end
