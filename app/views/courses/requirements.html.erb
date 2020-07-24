@@ -23,7 +23,10 @@
       <%= f.hidden_field :page, value: :requirements %>
       <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
 
-      <p class="govuk-body">State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met.</p>
+      <p class="govuk-body">
+        State the minimum academic qualifications needed for this course.
+        You could also say what happens if these requirements aren’t met.
+      </p>
 
       <%= f.govuk_text_area :required_qualifications, label: { text: 'Qualifications needed', size:'s' }, max_words: 100, rows: 10 %>
 
@@ -31,7 +34,9 @@
 
       <h3 class="govuk-heading-l remove-top-margin">Personal qualities</h3>
 
-      <p class="govuk-body">Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
+      <p class="govuk-body">
+        Tell applicants about the skills, motivation and experience you’re looking for
+        (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
       </p>
 
       <%= f.govuk_text_area :personal_qualities, label: { text: 'Personal qualities (optional)', size:'s' }, max_words: 100, rows: 10 %>
@@ -40,7 +45,9 @@
 
       <h3 class="govuk-heading-l remove-top-margin">Other requirements</h3>
 
-      <p class="govuk-body">If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience).
+      <p class="govuk-body">
+        If applicants need any non-academic qualifications or documents, list them here
+        (eg criminal record checks, or relevant work experience).
       </p>
 
       <%= f.govuk_text_area :other_requirements, label: { text:  'Other requirements (optional)', size:'s' }, max_words: 100, rows: 10 %>
@@ -48,7 +55,9 @@
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link govuk-link--no-visited-state" %>
+        <%= link_to 'Cancel changes',
+                    provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                    class: "govuk-link govuk-link--no-visited-state" %>
       </p>
     <% end %>
   </div>
