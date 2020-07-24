@@ -26,8 +26,8 @@ class Course < Base
     post_request("/withdraw")
   end
 
-  def send_vacancies_filled_notification
-    post_request("/send_vacancies_filled_notification")
+  def send_vacancies_updated_notification(body = {})
+    post_request("/send_vacancies_updated_notification", body)
   end
 
   def self.build_new(params)

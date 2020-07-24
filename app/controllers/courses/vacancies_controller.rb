@@ -13,7 +13,12 @@ module Courses
         return render(:edit)
       end
 
-      @course.has_multiple_running_sites_or_study_modes? ? update_vacancies_for_multiple_sites : update_vacancies_for_a_single_site
+      if @course.has_multiple_running_sites_or_study_modes?
+        update_vacancies_for_multiple_sites
+      else
+        update_vacancies_for_a_single_site
+      end
+
       flash[:success] = "Course vacancies published"
       redirect_to provider_recruitment_cycle_courses_path(params[:provider_code], params[:recruitment_cycle_year])
     end
@@ -44,7 +49,7 @@ module Courses
         site_status.save
       end
 
-      @course.send_vacancies_filled_notification if single_site_no_vacancies?
+      @course.send_vacancies_updated_notification({ vacancies_filled: single_site_no_vacancies? })
     end
 
     def update_vacancies_for_multiple_sites
@@ -66,7 +71,8 @@ module Courses
         site_status.save
       end
 
-      @course.send_vacancies_filled_notification if multiple_sites_no_vacancies?
+      @course.send_vacancies_updated_notification({ vacancies_filled: true }) if all_sites_have_no_vacancies?
+      @course.send_vacancies_updated_notification({ vacancies_filled: false }) if all_sites_have_vacancies?
     end
 
     def build_course
@@ -90,8 +96,17 @@ module Courses
       params[:change_vacancies_confirmation] == "no_vacancies_confirmation" && @course.has_vacancies? == true
     end
 
-    def multiple_sites_no_vacancies?
-      vacancy_statuses = params.dig(:course, :site_status_attributes)
+    def all_sites_have_no_vacancies?
+      @course.has_vacancies? == true &&
+        (params[:course][:has_vacancies] == "false" || vacancy_statuses.all? { |v| v == "no_vacancies" })
+    end
+
+    def all_sites_have_vacancies?
+      params[:course][:has_vacancies] == "true" && vacancy_statuses.all? { |v| v != "no_vacancies" }
+    end
+
+    def vacancy_statuses
+      params.dig(:course, :site_status_attributes)
         &.values&.map do |vacancy_status|
         VacancyStatusDeterminationService.call(
           vacancy_status_full_time: vacancy_status[:full_time],
@@ -99,7 +114,6 @@ module Courses
           course: @course,
         )
       end
-      @course.has_vacancies? == true && (params[:course][:has_vacancies] == "false" || vacancy_statuses.all? { |v| v == "no_vacancies" })
     end
   end
 end
