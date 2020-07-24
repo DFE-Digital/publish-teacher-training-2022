@@ -25,12 +25,7 @@
 
       <p class="govuk-body">State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met.</p>
 
-      <div id="required_qualifications_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
-        <%= render "shared/form_field",
-          form: f, field: :required_qualifications, label: 'Qualifications needed', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :required_qualifications, label: { text: 'Qualifications needed', size:'s' }, max_words: 100, rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
@@ -39,12 +34,7 @@
       <p class="govuk-body">Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
       </p>
 
-      <div id="personal_qualities_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
-        <%= render "shared/form_field",
-          form: f, field: :personal_qualities, label: 'Personal qualities (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :personal_qualities, label: { text: 'Personal qualities (optional)', size:'s' }, max_words: 100, rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
@@ -53,12 +43,7 @@
       <p class="govuk-body">If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience).
       </p>
 
-      <div id="other_requirements_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
-        <%= render "shared/form_field",
-          form: f, field: :other_requirements, label: 'Other requirements (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :other_requirements, label: { text:  'Other requirements (optional)', size:'s' }, max_words: 100, rows: 10 %>
 
       <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
 
