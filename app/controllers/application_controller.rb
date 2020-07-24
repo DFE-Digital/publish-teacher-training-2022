@@ -61,10 +61,13 @@ class ApplicationController < ActionController::Base
 
   def log_safe_current_user(reload: false)
     if @log_safe_current_user.nil? || reload
-      @log_safe_current_user = current_user.dup
-      email = @log_safe_current_user["info"]&.fetch("email", "")
-      @log_safe_current_user.delete("info")
-      @log_safe_current_user["email_md5"] = Digest::MD5.hexdigest(email)
+      email = current_user["info"]&.fetch("email", "")
+
+      @log_safe_current_user = {
+        email_md5: Digest::MD5.hexdigest(email),
+        sign_in_user_id: current_user["uid"],
+        user_id: current_user["user_id"],
+      }
     end
     @log_safe_current_user
   end

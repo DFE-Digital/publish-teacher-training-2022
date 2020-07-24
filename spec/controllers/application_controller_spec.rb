@@ -13,42 +13,42 @@ describe ApplicationController, type: :controller do
     end
   end
 
-  describe "#authenticate" do
-    subject { controller.authenticate }
+  context "user is authenticated" do
+    let(:user_first_name) { "John" }
+    let(:user_last_name) { "Smith" }
+    let(:user_email) { "email@example.com" }
+    let(:sign_in_user_id) { SecureRandom.uuid }
 
-    before do
-      disable_authorised_development_user
+    let(:user_info) do
+      {
+        "first_name" => user_first_name,
+        "last_name" => user_last_name,
+        "email" => user_email,
+      }
     end
 
-    context "user is authenticated" do
-      let(:user_first_name) { "John" }
-      let(:user_last_name) { "Smith" }
-      let(:user_email) { "email@example.com" }
-      let(:sign_in_user_id) { SecureRandom.uuid }
+    let(:payload) do
+      {
+        email: user_email.to_s,
+        sign_in_user_id: sign_in_user_id,
+        first_name: user_first_name,
+        last_name: user_last_name,
+      }
+    end
 
-      let(:user_info) do
-        {
-          "first_name" => user_first_name,
-          "last_name" => user_last_name,
-          "email" => user_email,
-        }
-      end
+    before do
+      allow(Base).to receive(:connection)
 
-      let(:payload) do
-        {
-          email: user_email.to_s,
-          sign_in_user_id: sign_in_user_id,
-          first_name: user_first_name,
-          last_name: user_last_name,
-        }
-      end
+      allow(JWT).to receive(:encode)
+        .with(payload, Settings.manage_backend.secret, Settings.manage_backend.algorithm)
+        .and_return("anything")
+    end
+
+    describe "#authenticate" do
+      subject { controller.authenticate }
 
       before do
-        allow(Base).to receive(:connection)
-
-        allow(JWT).to receive(:encode)
-          .with(payload, Settings.manage_backend.secret, Settings.manage_backend.algorithm)
-          .and_return("anything")
+        disable_authorised_development_user
       end
 
       context "user_id is not blank" do
@@ -108,10 +108,46 @@ describe ApplicationController, type: :controller do
                                .with(sign_in_user_id: sign_in_user_id)
           end
         end
+
+        describe "#log_safe_current_user" do
+          it "does not include user email address" do
+            expect(controller.log_safe_current_user.to_s).to_not include(user_email)
+            expect(controller.log_safe_current_user(reload: true).to_s).to_not include(user_email)
+          end
+
+          it "email address is md5 hashed" do
+            expect(controller.log_safe_current_user[:email_md5]).to be_eql(Digest::MD5.hexdigest(user_email))
+            expect(controller.log_safe_current_user(reload: true)[:email_md5]).to be_eql(Digest::MD5.hexdigest(user_email))
+          end
+
+          it "has user_id" do
+            expect(controller.log_safe_current_user[:user_id]).to be_eql(user_id)
+            expect(controller.log_safe_current_user(reload: true)[:user_id]).to be_eql(user_id)
+          end
+
+          it "has sign_in_user_id" do
+            expect(controller.log_safe_current_user[:sign_in_user_id]).to be_eql(sign_in_user_id)
+            expect(controller.log_safe_current_user(reload: true)[:sign_in_user_id]).to be_eql(sign_in_user_id)
+          end
+        end
       end
 
       context "user_id is blank" do
         let(:user_id) { 999 }
+
+        let(:session) do
+          {
+            id: user_id,
+            state: "new",
+            admin: true,
+            associated_with_accredited_body: false,
+            accept_terms_date_utc: Time.zone.now,
+            notifications_configured: false,
+            first_name: user_first_name,
+            last_name: user_last_name,
+            email: user_email,
+          }
+        end
 
         before do
           allow(Session).to receive(:create)
@@ -119,13 +155,8 @@ describe ApplicationController, type: :controller do
                                     last_name: user_info[:last_name])
                               .and_return(
                                 double(
-                                  id: user_id,
-                                  state: "new",
-                                  admin: true,
-                                  associated_with_accredited_body: false,
-                                  accept_terms_date_utc: Time.zone.now,
-                                  notifications_configured: false,
-                                  attributes: {},
+                                  **session,
+                                  attributes: session,
                                 ),
                               )
           allow(Provider).to receive_message_chain(:where, :all)
@@ -181,6 +212,28 @@ describe ApplicationController, type: :controller do
 
             expect(Raven).to have_received(:tags_context)
                                .with(sign_in_user_id: sign_in_user_id)
+          end
+        end
+
+        describe "#log_safe_current_user" do
+          it "does not include user email address" do
+            expect(controller.log_safe_current_user.to_s).to_not include(user_email)
+            expect(controller.log_safe_current_user(reload: true).to_s).to_not include(user_email)
+          end
+
+          it "email address is md5 hashed" do
+            expect(controller.log_safe_current_user[:email_md5]).to be_eql(Digest::MD5.hexdigest(user_email))
+            expect(controller.log_safe_current_user(reload: true)[:email_md5]).to be_eql(Digest::MD5.hexdigest(user_email))
+          end
+
+          it "has user_id" do
+            expect(controller.log_safe_current_user[:user_id]).to be_eql(user_id)
+            expect(controller.log_safe_current_user(reload: true)[:user_id]).to be_eql(user_id)
+          end
+
+          it "has sign_in_user_id" do
+            expect(controller.log_safe_current_user[:sign_in_user_id]).to be_eql(sign_in_user_id)
+            expect(controller.log_safe_current_user(reload: true)[:sign_in_user_id]).to be_eql(sign_in_user_id)
           end
         end
       end
