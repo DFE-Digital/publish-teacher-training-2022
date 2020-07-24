@@ -52,7 +52,7 @@
 
       <%= f.govuk_text_area :other_requirements, label: { text:  'Other requirements (optional)', size:'s' }, max_words: 100, rows: 10 %>
 
-      <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
+      <%= f.govuk_submit "Save" %>
 
       <p class="govuk-body">
         <%= link_to 'Cancel changes',
