@@ -7,68 +7,65 @@
 <%= render partial: 'courses/copy_content_warning',
                     locals: { copied_fields: @copied_fields } if params[:copy_from].present? %>
 
-<%= render 'shared/errors' %>
+<%= form_with model: course,
+              builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+              url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+              data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
+  <%= f.hidden_field :page, value: :requirements %>
+  <%= f.govuk_error_summary "You’ll need to correct some information." %>
 
-<h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl"><%= course.name_and_code %></span>
-  Requirements and eligibility
-</h1>
+  <h1 class="govuk-heading-xl">
+    <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+    Requirements and eligibility
+  </h1>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course, url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
-      <%= f.hidden_field :page, value: :requirements %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
       <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
 
-      <p class="govuk-body">State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met.</p>
+      <p class="govuk-body">
+        State the minimum academic qualifications needed for this course.
+        You could also say what happens if these requirements aren’t met.
+      </p>
 
-      <div id="required_qualifications_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
-        <%= render "shared/form_field",
-          form: f, field: :required_qualifications, label: 'Qualifications needed', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :required_qualifications, label: { text: 'Qualifications needed', size:'s' }, max_words: 100, rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
       <h3 class="govuk-heading-l remove-top-margin">Personal qualities</h3>
 
-      <p class="govuk-body">Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
+      <p class="govuk-body">
+        Tell applicants about the skills, motivation and experience you’re looking for
+        (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
       </p>
 
-      <div id="personal_qualities_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
-        <%= render "shared/form_field",
-          form: f, field: :personal_qualities, label: 'Personal qualities (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :personal_qualities, label: { text: 'Personal qualities (optional)', size:'s' }, max_words: 100, rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
       <h3 class="govuk-heading-l remove-top-margin">Other requirements</h3>
 
-      <p class="govuk-body">If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience).
+      <p class="govuk-body">
+        If applicants need any non-academic qualifications or documents, list them here
+        (eg criminal record checks, or relevant work experience).
       </p>
 
-      <div id="other_requirements_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="100">
-        <%= render "shared/form_field",
-          form: f, field: :other_requirements, label: 'Other requirements (optional)', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 10, class: 'govuk-textarea govuk-js-character-count') %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area :other_requirements, label: { text:  'Other requirements (optional)', size:'s' }, max_words: 100, rows: 10 %>
 
-      <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
+      <%= f.govuk_submit "Save" %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes', provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link govuk-link--no-visited-state" %>
+        <%= link_to 'Cancel changes',
+                    provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                    class: "govuk-link govuk-link--no-visited-state" %>
       </p>
-    <% end %>
-  </div>
+    </div>
 
-  <aside class="govuk-grid-column-one-third">
-    <%= render partial: 'courses/related_sidebar',
-                        locals: {
-                          course: course,
-                          page_path: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) } %>
-  </aside>
-</div>
+    <aside class="govuk-grid-column-one-third">
+      <%= render partial: 'courses/related_sidebar',
+                          locals: {
+                            course: course,
+                            page_path: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) } %>
+    </aside>
+  </div>
+<% end %>
