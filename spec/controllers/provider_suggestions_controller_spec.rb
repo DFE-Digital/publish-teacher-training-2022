@@ -1,13 +1,16 @@
 require "rails_helper"
 
 RSpec.describe ProviderSuggestionsController do
+  let(:user) { build(:user) }
+
   let(:current_user) do
     {
       user_id: 1,
       uid: SecureRandom.uuid,
       info: {
-        email: "dave@example.com",
+        email: user.email,
       },
+      attributes: user.attributes,
     }.with_indifferent_access
   end
 

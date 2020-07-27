@@ -10,7 +10,7 @@ class User < Base
     new(id: id)
   end
 
-  aasm do
+  aasm whiny_transitions: false do
     state :new, initial: true
     state :transitioned
     state :rolled_over
@@ -22,15 +22,8 @@ class User < Base
     end
 
     event :accept_rollover_screen do
-      transitions from: %i[transitioned rolled_over], to: :accepted_rollover_2021 do
+      transitions from: %i[notifications_configured transitioned rolled_over], to: :accepted_rollover_2021 do
         guard { FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") }
-      end
-    end
-
-    event :accept_notifications_screen do
-      transitions from: %i[rolled_over accepted_rollover_2021], to: :notifications_configured do
-        guard { associated_with_accredited_body }
-        guard { !notifications_configured }
       end
     end
   end
@@ -60,5 +53,9 @@ class User < Base
 
   def self.generate_and_send_magic_link(email)
     MagicLink::GenerateAndSendService.call(email: email, site: site)
+  end
+
+  def accepted_terms?
+    accept_terms_date_utc.present?
   end
 end

@@ -35,7 +35,7 @@ feature "Sign in", type: :feature do
   end
 
   scenario "using DfE Sign-in" do
-    user = build(:user)
+    user = build(:user, :transitioned)
     allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
     stub_omniauth(user: user)
     stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
@@ -158,35 +158,6 @@ feature "Sign in", type: :feature do
         expect(user_update_request).to have_been_made
       end
     end
-
-    describe "notifications screen" do
-      let(:user) { build(:user, :rolled_over, associated_with_accredited_body: true, notifications_configured: false) }
-      let(:user_update_request) do
-        stub_request(
-          :patch,
-          "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
-        )
-                                    .with(body: /"state":"notifications_configured"/)
-      end
-      let(:user_get_request) { stub_api_v2_request("/users/#{user.id}", user.to_jsonapi) }
-
-      before do
-        user_get_request
-        user_update_request
-      end
-
-      scenario "accredited body user accepts the new accredited body features page" do
-        visit "/signin"
-
-        expect(notifications_info_page).to be_displayed
-
-        expect(notifications_info_page).to have_content("Get notifications about your courses")
-        notifications_info_page.continue.click
-
-        expect(root_page).to be_displayed
-        expect(user_update_request).to have_been_made
-      end
-    end
   end
 
   scenario "new inactive user accepts the terms and conditions page with rollover disabled" do
@@ -196,10 +167,8 @@ feature "Sign in", type: :feature do
     accepted_user.accept_terms_date_utc = 1.second.ago
     stub_api_v2_request("/users/#{user.id}/accept_terms", accepted_user.to_jsonapi, :patch)
 
-    stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
-
     stub_api_v2_request(
-      "/recruitment_cycles/#{current_recruitment_cycle.year}",
+      "/recruitment_cycles/#{current_recruitment_cycle.year}/providers",
       {
         meta: {
           error_type: "user_not_accepted_terms_and_conditions",

@@ -57,61 +57,7 @@ describe User, type: :model do
       end
 
       it "raises and error when trying to change state from 'transitioned' to 'rolled_over'" do
-        expect { rolled_over_user.accept_rollover_screen! }.to raise_error(AASM::InvalidTransition)
-        expect(update_request).not_to have_been_made
-      end
-    end
-  end
-
-  describe "notifications_configured state event" do
-    context "user is associated with an accredited body and does not have notifications configured" do
-      let(:rolled_over_user) do
-        build(
-          :user,
-          :rolled_over,
-          associated_with_accredited_body: true,
-          notifications_configured: false,
-        )
-      end
-
-      let(:accepted_rollover_2021_user) do
-        build(
-          :user,
-          :accepted_rollover_2021,
-          associated_with_accredited_body: true,
-          notifications_configured: false,
-        )
-      end
-
-      it "changes state from 'rolled_over' to 'notifications_configured'" do
-        rolled_over_user.accept_notifications_screen!
-
-        expect(rolled_over_user.notifications_configured?).to be true
-        expect(update_request).to have_been_made
-      end
-
-      it "changes state from 'accepted_rollover_2021' to 'notifications_configured'" do
-        accepted_rollover_2021_user.accept_notifications_screen!
-
-        expect(accepted_rollover_2021_user.notifications_configured?).to be true
-        expect(update_request).to have_been_made
-      end
-    end
-
-    context "user is not associated with an accredited body and has notifications configured" do
-      let(:rolled_over_user) { build(:user, :rolled_over, associated_with_accredited_body: false, notifications_configured: true) }
-
-      it "raises an error when trying to change state from 'rolled_over' to 'notifications_configured'" do
-        expect { rolled_over_user.accept_notifications_screen! }.to raise_error(AASM::InvalidTransition)
-        expect(update_request).not_to have_been_made
-      end
-    end
-
-    context "user is associated with an accredited body and has notifications configured" do
-      let(:rolled_over_user) { build(:user, :notifications_configured, associated_with_accredited_body: true, notifications_configured: true) }
-
-      it "raises an error when trying to change state from 'rolled_over' to 'subscribed_to_notifications'" do
-        expect { rolled_over_user.accept_notifications_screen! }.to raise_error(AASM::InvalidTransition)
+        expect { rolled_over_user.accept_rollover_screen! }.to_not raise_error
         expect(update_request).not_to have_been_made
       end
     end
@@ -122,6 +68,24 @@ describe User, type: :model do
 
     it "returns the next state" do
       expect(new_user.next_state).to eq(:transitioned)
+    end
+  end
+
+  describe "#accepted_terms?" do
+    context "when they have accepted terms" do
+      subject { build(:user) }
+
+      it "returns true" do
+        expect(subject.accepted_terms?).to be_truthy
+      end
+    end
+
+    context "when they have not accepted terms" do
+      subject { build(:user, :inactive) }
+
+      it "returns false" do
+        expect(subject.accepted_terms?).to be_falsey
+      end
     end
   end
 end

@@ -1,4 +1,6 @@
 class NotificationsController < ApplicationController
+  skip_before_action :check_interrupt_redirects
+
   def index
     @notifications_view = NotificationsView.new(
       request: request,
@@ -15,10 +17,6 @@ class NotificationsController < ApplicationController
       }
       redirect_to notifications_path
       return
-    end
-
-    if user.may_accept_notifications_screen?
-      UpdateUserService.call(user, "accept_notifications_screen!")
     end
 
     user_notification_preferences.update(
