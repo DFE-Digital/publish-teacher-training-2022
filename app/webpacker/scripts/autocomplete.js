@@ -47,6 +47,7 @@ export const initAutocomplete = ($el, $input, inputValueTemplate, options = {}) 
       suggestion: result => result && `${result.name} (${result.code})`
     },
     onConfirm: option => ($input.value = option ? option.code : ""),
+    confirmOnBlur: false,
     autoselect: true
   });
 
