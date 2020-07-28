@@ -24,6 +24,19 @@
   </div>
 <% end %>
 
+<% if course.age_range_in_years.nil? && !course.is_further_education? %>
+  <div class="app-notice-summary" role="alert" aria-labelledby="notice-summary-heading" tabindex="-1" data-module="govuk-error-summary">
+    <h3 class="app-notice-summary__title" id="notice-summary-heading">You need to provide some information before publishing this course</h3>
+    <p class="app-notice-summary__body" id="notice-summary-body">
+      <%= link_to age_range_provider_recruitment_cycle_course_path(@provider.provider_code,
+                                                                   course.recruitment_cycle_year,
+                                                                   course.course_code), class: "app-notice-summary__link" do %>
+        Specify an age range
+      <% end %>
+    </p>
+  </div>
+<% end %>
+
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.description %></span>
   <%= course.name_and_code %>
