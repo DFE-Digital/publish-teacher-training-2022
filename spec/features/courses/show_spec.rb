@@ -343,6 +343,58 @@ feature "Course show", type: :feature do
           expect(course_page.error_summary).to have_content("About course can't be blank")
         end
       end
+
+      describe "age range notice summary" do
+        context "with primary" do
+          context "with age range set" do
+            let(:course) { build(:course, level: "primary", provider: provider, age_range_in_years: "7_to_11") }
+            it "should not display the banner" do
+              course_page.load(provider_code: provider.provider_code,
+                               recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
+              expect(course_page).to have_no_notice_summary_banner
+            end
+          end
+
+          context "with no age range set" do
+            let(:course) { build(:course, level: "primary", provider: provider, age_range_in_years: nil) }
+            it "should display the banner" do
+              course_page.load(provider_code: provider.provider_code,
+                               recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
+              expect(course_page).to have_notice_summary_banner
+            end
+          end
+        end
+
+        context "with secondary " do
+          context "with age range set" do
+            let(:course) { build(:course, level: "secondary", provider: provider, age_range_in_years: "7_to_11") }
+            it "should not display the banner" do
+              course_page.load(provider_code: provider.provider_code,
+                               recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
+              expect(course_page).to have_no_notice_summary_banner
+            end
+          end
+
+          context "with no age range set" do
+            let(:course) { build(:course, level: "secondary", provider: provider, age_range_in_years: nil) }
+            it "should display the banner" do
+              course_page.load(provider_code: provider.provider_code,
+                               recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
+              expect(course_page).to have_notice_summary_banner
+            end
+          end
+        end
+
+        context "with further eduction" do
+          let(:course) { build(:course, level: "secondar", provider: provider) }
+
+          scenario "no age range summary notice" do
+            course_page.load(provider_code: provider.provider_code,
+                             recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
+            expect(course_page).to have_no_notice_summary_banner
+          end
+        end
+      end
     end
   end
 end
