@@ -23,7 +23,7 @@ class NotificationsController < ApplicationController
       enabled: params[:user_notification_preferences][:explicitly_enabled],
     )
 
-    flash[:success] = "Your notification preferences have been saved."
+    flash[:success] = "Email notification preferences for #{user.email} have been saved."
 
     redirect_to redirect_to_path
   end
