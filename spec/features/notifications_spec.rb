@@ -161,7 +161,7 @@ private
   def then_i_should_see_my_preferences_have_been_saved
     expect(@put_request).to have_been_made
     expect(organisation_show_page)
-      .to have_content("Your notification preferences have been saved")
+      .to have_content("Email notification preferences for #{user.email} have been saved")
   end
 
   def then_yes_radio_button_is_preselected

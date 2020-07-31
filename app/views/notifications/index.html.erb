@@ -3,21 +3,23 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl" data-qa="page-heading">
-      <span class="govuk-caption-xl">Manage notifications</span>
-      Changes to your courses as an accredited body
+      <span class="govuk-caption-xl">Notifications for accredited bodies</span>
+      Changes to courses
     </h1>
 
     <p class="govuk-body">
-      You can sign up for email notifications about these courses. We’ll tell you when a training provider:
+      We’ll tell you when a training provider:
     </p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
       <li>publishes a new course on Find postgraduate teacher training</li>
       <li>makes a change to an existing course</li>
+      <li>withdraws a course</li>
+      <li>changes the vacancy status of a course</li>
     </ul>
   </div>
 </div>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
+  <div class="govuk-grid-column-two-thirds">
     <%= form_for @notifications_view.user_notification_preferences,
       url: notification_path(@notifications_view.user_id),
       builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
@@ -25,14 +27,14 @@
       <%= form.govuk_radio_buttons_fieldset(
         :explitly_enabled,
         legend: {
-          size: "m",
-          text: "Would you like to be notified?",
+          size: "l",
+          text: "Would you like to receive email notifications?",
           tag: "span" }) do %>
 
         <%= form.govuk_radio_button :explicitly_enabled,
           true,
           label: {
-            text: "Yes, send email notifications to #{@notifications_view.user_email}"
+            text: "Yes, send me notifications"
         } %>
         <%= form.govuk_radio_button :explicitly_enabled,
           false,
