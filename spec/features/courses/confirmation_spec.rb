@@ -286,6 +286,20 @@ feature "Course confirmation", type: :feature do
       include_examples "goes to the edit page"
     end
 
+    context "age range showing" do
+      let(:level) { "primary" }
+      it "does show age range if course is primary" do
+        expect(course_confirmation_page.details).to have_age_range
+      end
+    end
+
+    context "age range not showing" do
+      let(:level) { "further_education" }
+      it "does not show age range if course is further education" do
+        expect(course_confirmation_page.details).to have_no_age_range
+      end
+    end
+
     context "study mode" do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewStudyModePage.new }
 

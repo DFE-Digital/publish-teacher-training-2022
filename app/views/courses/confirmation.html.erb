@@ -64,21 +64,23 @@
               </dd>
             </div>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Age range
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__age_range">
-                <%= course.age_range %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "age range",
-                  "age_range",
-                  :new_provider_recruitment_cycle_courses_age_range_path
-                ) %>
-              </dd>
-            </div>
+            <% unless course.is_further_education? %>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Age range
+                </dt>
+                <dd class="govuk-summary-list__value" data-qa="course__age_range">
+                  <%= course.age_range %>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <%= course_creation_change_button(
+                    "age range",
+                    "age_range",
+                    :new_provider_recruitment_cycle_courses_age_range_path
+                  ) %>
+                </dd>
+              </div>
+            <% end %>
 
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">
