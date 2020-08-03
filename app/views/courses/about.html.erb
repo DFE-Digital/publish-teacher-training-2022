@@ -13,6 +13,7 @@
               data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
   <%= f.hidden_field :page, value: :about %>
   <%= f.govuk_error_summary "You’ll need to correct some information." %>
+<% end %>
 
   <h1 class="govuk-heading-xl">
     <span class="govuk-caption-xl"><%= course.name_and_code %></span>
@@ -21,96 +22,102 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <%= form_with model: course,
+                    builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+                    url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                    data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
+        <%= f.hidden_field :page, value: :about %>
 
-      <p class="govuk-body">You should give a short, factual summary of the course.</p>
+        <p class="govuk-body">You should give a short, factual summary of the course.</p>
 
-      <p class="govuk-body">Tell applicants:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>what they’ll learn (eg what units are taught)</li>
-        <li>how the course is structured</li>
-        <li>whether it has any distinctive features</li>
-      </ul>
+        <p class="govuk-body">Tell applicants:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>what they’ll learn (eg what units are taught)</li>
+          <li>how the course is structured</li>
+          <li>whether it has any distinctive features</li>
+        </ul>
 
-      <p class="govuk-body">You could include details such as:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>how candidates are assessed</li>
-        <li>the size of the workload (eg how many essays per term)</li>
-        <li>league-table rankings and student employability ratings</li>
-        <li>quotes from past students</li>
-      </ul>
+        <p class="govuk-body">You could include details such as:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>how candidates are assessed</li>
+          <li>the size of the workload (eg how many essays per term)</li>
+          <li>league-table rankings and student employability ratings</li>
+          <li>quotes from past students</li>
+        </ul>
 
-      <p class="govuk-body">Remember to:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>make your content specific to this course - don’t repeat the descriptions you’ve used for other courses</li>
-        <li>use short paragraphs (no more than five sentences each)</li>
-        <li>use bullet points where possible (to check formatting, use the 'preview' function after saving your content)</li>
-        <li>spell out all acronyms the first time you use them, eg ITT, NQT, EAL, ICT (applicants may not be familiar with these terms)
-        </li>
-      </ul>
+        <p class="govuk-body">Remember to:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>make your content specific to this course - don’t repeat the descriptions you’ve used for other courses</li>
+          <li>use short paragraphs (no more than five sentences each)</li>
+          <li>use bullet points where possible (to check formatting, use the 'preview' function after saving your content)</li>
+          <li>spell out all acronyms the first time you use them, eg ITT, NQT, EAL, ICT (applicants may not be familiar with these terms)
+          </li>
+        </ul>
 
-      <details class="govuk-details" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            Several courses in the same subject?
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          <p class="govuk-body">
-            If you offer more than one course in the same subject - eg two Primary courses - it’s important to say how
-            they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants
-            may be unable to decide between them.
-          </p>
-        </div>
-      </details>
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              Several courses in the same subject?
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <p class="govuk-body">
+              If you offer more than one course in the same subject - eg two Primary courses - it’s important to say how
+              they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants
+              may be unable to decide between them.
+            </p>
+          </div>
+        </details>
 
-      <%= f.govuk_text_area :about_course, label: { text: 'About this course', size:'s' }, max_words: 400, rows: 20 %>
+        <%= f.govuk_text_area :about_course, label: { text: 'About this course', size:'s' }, max_words: 400, rows: 20 %>
 
-      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
-      <h3 class="govuk-heading-l remove-top-margin">Interview process</h3>
+        <h3 class="govuk-heading-l remove-top-margin">Interview process</h3>
 
-      <p class="govuk-body">Tell applicants:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>how many interviews they’ll have</li>
-        <li>how long each interview will be</li>
-        <li>who’ll be interviewing them - will it be one-on-one or a group interview?</li>
-        <li>whether they’ll have to sit any tests - if so, how can they prepare?</li>
-      </ul>
+        <p class="govuk-body">Tell applicants:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>how many interviews they’ll have</li>
+          <li>how long each interview will be</li>
+          <li>who’ll be interviewing them - will it be one-on-one or a group interview?</li>
+          <li>whether they’ll have to sit any tests - if so, how can they prepare?</li>
+        </ul>
 
-      <%= f.govuk_text_area :interview_process, label: { text: 'Interview process (optional)', size:'s' }, max_words: 250, rows: 15 %>
+        <%= f.govuk_text_area :interview_process, label: { text: 'Interview process (optional)', size:'s' }, max_words: 250, rows: 15 %>
 
-      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
-      <h3 class="govuk-heading-l remove-top-margin"><%= course.placements_heading %></h3>
+        <h3 class="govuk-heading-l remove-top-margin"><%= course.placements_heading %></h3>
 
-      <p class="govuk-body">
-        Give applicants more information about the schools they’ll be teaching in. Tell them:
-      </p>
+        <p class="govuk-body">
+          Give applicants more information about the schools they’ll be teaching in. Tell them:
+        </p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>how many placements a candidate will have</li>
-        <li>how much time they’ll spend in each school</li>
-        <li>if mentors are available within the schools</li>
-        <li>the average distance candidates have to travel from home to school</li>
-      </ul>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>how many placements a candidate will have</li>
+          <li>how much time they’ll spend in each school</li>
+          <li>if mentors are available within the schools</li>
+          <li>the average distance candidates have to travel from home to school</li>
+        </ul>
 
-      <p class="govuk-body">You could also mention:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>the age ranges taught (eg 11 to 16 or 11 to 18)</li>
-        <li>how many schools you partner with in total</li>
-        <li>whether candidates are able to change schools</li>
-        <li>how placement schools are selected</li>
-      </ul>
+        <p class="govuk-body">You could also mention:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>the age ranges taught (eg 11 to 16 or 11 to 18)</li>
+          <li>how many schools you partner with in total</li>
+          <li>whether candidates are able to change schools</li>
+          <li>how placement schools are selected</li>
+        </ul>
 
-      <%= f.govuk_text_area :how_school_placements_work, label: { text: course.placements_heading, size:'s' }, max_words: 350, rows: 15 %>
+        <%= f.govuk_text_area :how_school_placements_work, label: { text: course.placements_heading, size:'s' }, max_words: 350, rows: 15 %>
 
-      <%= f.govuk_submit "Save" %>
+        <%= f.govuk_submit "Save" %>
 
-      <p class="govuk-body">
-        <%= link_to 'Cancel changes',
-                    provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-                    class: "govuk-link govuk-link--no-visited-state" %>
-      </p>
+        <p class="govuk-body">
+          <%= link_to 'Cancel changes',
+                      provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                      class: "govuk-link govuk-link--no-visited-state" %>
+        </p>
+      <% end %>
     </div>
 
     <aside class="govuk-grid-column-one-third">
@@ -120,4 +127,3 @@
                             page_path: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) } %>
     </aside>
   </div>
-<% end %>
