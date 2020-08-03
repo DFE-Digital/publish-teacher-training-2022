@@ -27,9 +27,9 @@ class Base < JsonApiClient::Resource
 
 private
 
-  def post_request(path, attributes = {})
+  def post_request(path)
     post_options = {
-      body: { data: { attributes: attributes, type: self.class.to_s.downcase } },
+      body: { data: { attributes: {}, type: self.class.to_s.downcase } },
       params: request_params.to_params,
     }
 

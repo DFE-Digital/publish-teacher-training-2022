@@ -49,7 +49,7 @@ module Courses
         site_status.save
       end
 
-      @course.send_vacancies_updated_notification({ vacancies_filled: single_site_no_vacancies? })
+      send_vacancies_updated_notification(vacancies_filled: single_site_no_vacancies?)
     end
 
     def update_vacancies_for_multiple_sites
@@ -71,8 +71,8 @@ module Courses
         site_status.save
       end
 
-      @course.send_vacancies_updated_notification({ vacancies_filled: true }) if all_sites_have_no_vacancies?
-      @course.send_vacancies_updated_notification({ vacancies_filled: false }) if all_sites_have_vacancies?
+      send_vacancies_updated_notification(vacancies_filled: true) if all_sites_have_no_vacancies?
+      send_vacancies_updated_notification(vacancies_filled: false) if all_sites_have_vacancies?
     end
 
     def build_course
@@ -93,16 +93,25 @@ module Courses
     end
 
     def single_site_no_vacancies?
-      params[:change_vacancies_confirmation] == "no_vacancies_confirmation" && @course.has_vacancies? == true
+      params[:change_vacancies_confirmation] == "no_vacancies_confirmation" && @course.has_vacancies?
     end
 
     def all_sites_have_no_vacancies?
-      @course.has_vacancies? == true &&
+      @course.has_vacancies? &&
         (params[:course][:has_vacancies] == "false" || vacancy_statuses.all? { |v| v == "no_vacancies" })
     end
 
     def all_sites_have_vacancies?
       params[:course][:has_vacancies] == "true" && vacancy_statuses.all? { |v| v != "no_vacancies" }
+    end
+
+    def send_vacancies_updated_notification(vacancies_filled:)
+      @course.send_vacancies_updated_notification(
+        course_code: @course.course_code,
+        recruitment_cycle_year: @course.recruitment_cycle_year,
+        provider_code: params[:provider_code],
+        vacancies_filled: vacancies_filled,
+      )
     end
 
     def vacancy_statuses
