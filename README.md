@@ -34,38 +34,7 @@ bundle
 bundle exec rake webpacker:compile
 ```
 
-### 3. Setup Basic Auth Login
-
-For local development, we rely on Basic Auth instead of DFE Sign-In, which can
-be enabled if required. This will require that you have a login in the database,
-this will be there if you have an account in production but if you don't yet, or
-don't want to use it, you can create a user locally with:
-
-```ruby
-# Optional, use if you don't already have an account.
-User.create(admin: true,
-            email: "john.smith@digital.education.gov.uk",
-            first_name: "John",
-            last_name: "Smith",
-            welcome_email_date_utc: Time.zone.now,
-            accept_terms_date_utc: Time.zone.now,
-            invite_date_utc: Time.zone.now,
-            state: "transitioned")
-```
-
-Then create the file `config/settings/development.local.yml` with the contents:
-
-```yaml
-authorised_users:
-  0:
-    first_name: [your first name, this will be updated in the db]
-    last_name: [your last name, this will be updated in the db]
-    email: [the email address to login with]
-    password: [the password you wish to use]
-```
-
-
-### 4. Run the server
+### 3. Run the server
 
 1. Run `bundle exec rails s` to launch the app on https://localhost:3000.
 
@@ -162,11 +131,27 @@ To track exceptions through Sentry, configure the `SENTRY_DSN` environment varia
 SENTRY_DSN=https://aaa:bbb@sentry.io/123 rails s
 ```
 
+## Basic auth
+
+Basic auth is enabled in non-production and non-local environments. The credentials can be found in the Confluence pages.
+
+## Persona login
+
+Persona login is availale in local development and non-production environments. This allows you to log in to existing anonymised accounts or pre-selected accounts identified by personas.
+
 ## Using DfE Sign-In
 
 Occasionally you may want to test the system integration with DfE Sign-In. In
 the dev environment the system is configured to use basic auth so you need to
 take a few extra steps to make it work with DfE Sign-In.
+
+### Disable developer auth
+
+The developer auth strategy supercedes DfE Sign-In and must be disabled first.
+
+In `config/settings/development.local.yml` set `developer_auth` to `false`
+
+The app must be rebooted in order for this change to take affect.
 
 ### Ensure You Have a DfE Sign-In Account
 

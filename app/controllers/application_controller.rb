@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   include Pagy::Backend
 
+  before_action :http_basic_auth
   before_action :authenticate
   before_action :store_request_id
   before_action :request_login
@@ -34,17 +35,6 @@ class ApplicationController < ActionController::Base
   def current_user
     if is_authenticated?
       session[:auth_user]
-    elsif development_mode_auth?
-      user = authenticate_with_http_basic do |email, pass|
-        authorise_development_mode?(email, pass)
-      end
-      if user.present?
-        setup_development_mode_session(
-          email: user.email,
-          first_name: user.first_name,
-          last_name: user.last_name,
-        )
-      end
     end
   end
 
@@ -73,10 +63,6 @@ class ApplicationController < ActionController::Base
     @log_safe_current_user
   end
 
-  def development_mode_auth?
-    !Rails.env.production? && Settings.key?(:authorised_users)
-  end
-
   def magic_link_enabled?
     Settings.features.signin_intercept && Settings.features.signin_by_email && !Settings.features.dfe_signin
   end
@@ -101,16 +87,11 @@ class ApplicationController < ActionController::Base
   def request_login
     return if current_user.present?
 
-    if development_mode_auth?
-      logger.info("Doing development mode authentication")
-      request_http_basic_authentication("Development Mode")
-    else
-      logger.info("Authenticated user session not found " + {
-        redirect_back_to: request.path,
-      }.to_s)
-      session[:redirect_back_to] = request.path
-      redirect_to "/signin"
-    end
+    logger.info("Authenticated user session not found " + {
+      redirect_back_to: request.path,
+    }.to_s)
+    session[:redirect_back_to] = request.path
+    redirect_to "/signin"
   end
 
   def current_user_info
@@ -131,6 +112,14 @@ class ApplicationController < ActionController::Base
   end
 
 private
+
+  def http_basic_auth
+    if Settings.basic_auth
+      authenticate_or_request_with_http_basic do |name, password|
+        name == Settings.basic_auth_username && Digest::SHA512.hexdigest(password) == Settings.basic_auth_password_digest
+      end
+    end
+  end
 
   def check_interrupt_redirects(use_redirect_back_to: true)
     if !user_from_session.accepted_terms?

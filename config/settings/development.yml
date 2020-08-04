@@ -11,3 +11,5 @@ environment:
   selector_name: "development"
 log_level: debug
 use_ssl: false
+basic_auth: false
+developer_auth: true
