@@ -12,6 +12,8 @@ class Course < Base
   property :science, type: :string
   property :name, type: :string
 
+  custom_endpoint :send_vacancies_updated_notification, on: :member, request_method: :post
+
   self.primary_key = :course_code
 
   def publish
@@ -24,10 +26,6 @@ class Course < Base
 
   def withdraw
     post_request("/withdraw")
-  end
-
-  def send_vacancies_filled_notification
-    post_request("/send_vacancies_filled_notification")
   end
 
   def self.build_new(params)
