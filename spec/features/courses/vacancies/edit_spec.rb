@@ -6,7 +6,6 @@ feature "Edit course vacancies", type: :feature do
   let(:courses_page) { PageObjects::Page::Organisations::CoursesPage.new }
   let(:course_code) { "X104" }
   let(:provider) { build(:provider) }
-  let(:vacancies_filled) { false }
   let(:send_vacancies_updated_notification_stub) do
     stub_request(
       :post,
@@ -16,7 +15,7 @@ feature "Edit course vacancies", type: :feature do
       "/courses/#{course.course_code}" \
       "/send_vacancies_updated_notification",
     ).with(
-      body: /"vacancies_filled":#{vacancies_filled}/,
+      body: /"vacancy_statuses":/,
     )
   end
 
@@ -70,25 +69,28 @@ feature "Edit course vacancies", type: :feature do
     end
 
     context "vacancies filled" do
-      let(:vacancies_filled) { true }
       scenario "turns off all vacancies" do
         course_vacancies_page.confirm_no_vacancies_checkbox.check
         publish_changes("Close applications")
-        expect(send_vacancies_updated_notification_stub).to have_been_requested
+        expect(send_vacancies_updated_notification_stub).to have_been_requested.times(1)
       end
     end
   end
 
   context "A full time course with one running site but no vacancies" do
+    let(:site_statuses) do
+      [
+        jsonapi_site_status("Uni 1", :no_vacancies, "running"),
+      ]
+    end
+
     let(:course) do
       build(
         :course,
         :full_time,
         course_code: course_code,
         provider: provider,
-        site_statuses: [
-          jsonapi_site_status("Uni 1", :no_vacancies, "running"),
-        ],
+        site_statuses: site_statuses,
       )
     end
 
@@ -113,7 +115,7 @@ feature "Edit course vacancies", type: :feature do
     scenario "turns on all vacancies" do
       course_vacancies_page.confirm_has_vacancies_checkbox.check
       publish_changes("Reopen applications")
-      expect(send_vacancies_updated_notification_stub).to have_been_requested
+      expect(send_vacancies_updated_notification_stub).to have_been_requested.times(1)
     end
   end
 
@@ -183,7 +185,7 @@ feature "Edit course vacancies", type: :feature do
       end
 
       publish_changes
-      expect(send_vacancies_updated_notification_stub).to_not have_been_requested
+      expect(send_vacancies_updated_notification_stub).to have_been_requested.times(1)
     end
   end
 
@@ -261,8 +263,6 @@ feature "Edit course vacancies", type: :feature do
     end
 
     context "removing vacancies from a course" do
-      let(:vacancies_filled) { true }
-
       scenario "removing a full time vacancy with no vacancies remaining" do
         expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
         uncheck("Uni 1 (Full time)")
@@ -286,7 +286,7 @@ feature "Edit course vacancies", type: :feature do
       expect(course_vacancies_page.vacancies_radio_has_some_vacancies).to be_checked
       uncheck("Uni 1 (Full time)")
       publish_changes
-      expect(send_vacancies_updated_notification_stub).to_not have_been_requested
+      expect(send_vacancies_updated_notification_stub).to have_been_requested.times(1)
     end
   end
 
@@ -322,7 +322,7 @@ feature "Edit course vacancies", type: :feature do
       check("Uni 1")
 
       publish_changes
-      expect(send_vacancies_updated_notification_stub).to_not have_been_requested
+      expect(send_vacancies_updated_notification_stub).to have_been_requested.times(1)
     end
   end
 
