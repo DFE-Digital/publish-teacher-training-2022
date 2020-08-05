@@ -99,6 +99,14 @@ feature "Course confirmation", type: :feature do
       end
     end
 
+    context "When new course is further education and provider is not accredited body" do
+      let(:provider) { build(:provider, accredited_body?: false) }
+      let(:level) { "further_education"}
+      it "shows further education course details on confirmation page" do
+        expect(course_confirmation_page.details.level.text).to eq("Further education")
+      end
+    end
+    
     context "When the course has nil fields" do
       let(:study_mode) { nil }
       let(:level) { nil }

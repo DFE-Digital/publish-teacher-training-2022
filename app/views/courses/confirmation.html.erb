@@ -187,7 +187,7 @@
               </dd>
             </div>
 
-            <% unless @provider.accredited_body? %>
+            <% unless @provider.accredited_body? || course.is_further_education? %>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Accredited body
