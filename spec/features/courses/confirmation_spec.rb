@@ -101,12 +101,12 @@ feature "Course confirmation", type: :feature do
 
     context "When new course is further education and provider is not accredited body" do
       let(:provider) { build(:provider, accredited_body?: false) }
-      let(:level) { "further_education"}
+      let(:level) { "further_education" }
       it "shows further education course details on confirmation page" do
         expect(course_confirmation_page.details.level.text).to eq("Further education")
       end
     end
-    
+
     context "When the course has nil fields" do
       let(:study_mode) { nil }
       let(:level) { nil }
@@ -243,6 +243,20 @@ feature "Course confirmation", type: :feature do
       end
 
       include_examples "goes to the edit page"
+    end
+
+    context "when course is primary or secondary" do
+      let(:level) { "primary" }
+      it "keeps subject field for non-FE courses" do
+        expect(course_confirmation_page.details).to have_subjects
+      end
+    end
+
+    context "when course is further education" do
+      let(:level) { "further_education" }
+      it "removes subject field for FE courses" do
+        expect(course_confirmation_page.details).to have_no_subjects
+      end
     end
 
     context "modern languages" do
