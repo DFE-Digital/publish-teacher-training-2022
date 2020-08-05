@@ -2,12 +2,12 @@
 
 <h1 class="govuk-heading-xl">Publish test users</h1>
 
-<%= link_to "Login as anonymised user", "/auth/developer", class: 'govuk-link' %>
+<%= link_to "Login as an anonymised user", "/auth/developer", class: 'govuk-link' %>
 
-<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <h2 class="govuk-heading-l">Anne</h2>
-<strong class="govuk-tag govuk-tag--blue">Non-accredited</strong>
+<strong class="govuk-tag govuk-tag--blue">School Direct</strong>
 
 <p class="govuk-body govuk-!-padding-top-5">
   Anne is a course administrator who belongs to one school direct.
@@ -18,17 +18,16 @@
   <%= hidden_field_tag "first_name", "Course administrator" %>
   <%= hidden_field_tag "last_name", "Anne" %>
 
-  <%= submit_tag "Login as Anne", class: "govuk-button" %>
+  <%= submit_tag "Login as Anne", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
 
-<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <h2 class="govuk-heading-l">Susy</h2>
-<strong class="govuk-tag govuk-tag--blue">Accredited</strong>
-<strong class="govuk-tag govuk-tag--blue">Non-accredited</strong>
+<strong class="govuk-tag govuk-tag--blue">Accredited Body</strong>
 
 <p class="govuk-body govuk-!-padding-top-5">
-  Susy belongs to one accredited body.
+  Susy is a SCITT service manager who belongs to one accredited body.
 </p>
 
 <%= form_tag("/auth/developer/callback") do %>
@@ -36,19 +35,19 @@
   <%= hidden_field_tag "first_name", "ITT partnership manager" %>
   <%= hidden_field_tag "last_name", "Susy" %>
 
-  <%= submit_tag "Login as Susy", class: "govuk-button" %>
+  <%= submit_tag "Login as Susy", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
 
-<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <h2 class="govuk-heading-l">Mary</h2>
 
 <strong class="govuk-tag govuk-tag--blue">Multi-org</strong>
-<strong class="govuk-tag govuk-tag--blue">Accredited</strong>
-<strong class="govuk-tag govuk-tag--blue">Non-accredited</strong>
+<strong class="govuk-tag govuk-tag--blue">Accredited Body</strong>
+<strong class="govuk-tag govuk-tag--blue">School Direct</strong>
 
 <p class="govuk-body govuk-!-padding-top-5">
-Mary belongs to:
+Mary is a SCITT Business Support Coordinator who belongs to:
   <ul class="govuk-list govuk-list--bullet">
     <li>multiple accredited bodies, <strong>Suffolk and Norfolk Primary SCITT</strong> and <strong>Suffolk and Norfolk Secondary SCITT</strong></li>
     <li>a school direct <strong>Thorpe St Andrew School and Sixth Form</strong> with courses accredited by <strong>Suffolk and Norfolk Secondary SCITT</strong></li>
@@ -61,17 +60,17 @@ Mary belongs to:
   <%= hidden_field_tag "first_name", "Multi-org administrator" %>
   <%= hidden_field_tag "last_name", "Mary" %>
 
-  <%= submit_tag "Login as Mary", class: "govuk-button" %>
+  <%= submit_tag "Login as Mary", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
 
-<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <h2 class="govuk-heading-l">Colin</h2>
 
-<strong class="govuk-tag govuk-tag--blue">Support</strong>
+<strong class="govuk-tag govuk-tag--blue">Admin</strong>
 
 <p class="govuk-body govuk-!-padding-top-5">
-  Colin belongs to all organisations with adminstration access
+  Colin is a DfE support agent who has administrator access to all organisations.
 </p>
 
 <%= form_tag("/auth/developer/callback") do %>
@@ -79,5 +78,5 @@ Mary belongs to:
   <%= hidden_field_tag "first_name", "Support agent" %>
   <%= hidden_field_tag "last_name", "Colin" %>
 
-  <%= submit_tag "Login as Colin", class: "govuk-button" %>
+  <%= submit_tag "Login as Colin", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
