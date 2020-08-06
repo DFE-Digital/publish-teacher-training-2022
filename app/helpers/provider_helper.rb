@@ -9,6 +9,8 @@ module ProviderHelper
     end
   end
 
+private
+
   def google_form_url_for(settings, email, provider)
     settings.url + "&" +
       { settings.email_entry => email, settings.provider_code_entry => provider.provider_code }.to_query
