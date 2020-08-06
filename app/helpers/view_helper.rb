@@ -5,16 +5,6 @@ module ViewHelper
     end
   end
 
-  def subject_page_title(course)
-    if course.level == "primary"
-      "Pick a primary subject"
-    elsif course.level == "secondary"
-      "Pick a secondary subject"
-    else
-      "Select a subject"
-    end
-  end
-
   def subject_input_label(course)
     if course.level == "primary"
       "Primary subject"

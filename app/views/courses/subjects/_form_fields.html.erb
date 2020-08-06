@@ -6,7 +6,7 @@
           <span class="govuk-caption-xl"><%= course.name_and_code %></span>
         <% end %>
 
-        <%= subject_page_title(@course) %>
+        <%= course.subject_page_title %>
       </h1>
     </legend>
     <%= render "shared/error_messages", error_keys: [:subjects] %>
