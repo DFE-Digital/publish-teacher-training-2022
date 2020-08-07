@@ -633,4 +633,60 @@ describe CourseDecorator do
       end
     end
   end
+
+  describe "#subject_page_title" do
+    let(:subject_page_title) { course.decorate.subject_page_title }
+
+    context "a primary course" do
+      let(:course) { build :course, level: "primary" }
+
+      it "returns the correct page title" do
+        expect(subject_page_title).to eq("Pick a primary subject")
+      end
+    end
+
+    context "a secondary course" do
+      let(:course) { build :course, level: "secondary" }
+
+      it "returns the correct page title" do
+        expect(subject_page_title).to eq("Pick a secondary subject")
+      end
+    end
+
+    context "a further education course" do
+      let(:course) { build :course, level: "further_education" }
+
+      it "returns the correct page title" do
+        expect(subject_page_title).to eq("Pick a subject")
+      end
+    end
+  end
+
+  describe "#subject_input_label" do
+    let(:subject_input_label) { course.decorate.subject_input_label }
+
+    context "a primary course" do
+      let(:course) { build :course, level: "primary" }
+
+      it "returns the correct input label" do
+        expect(subject_input_label).to eq("Primary subject")
+      end
+    end
+
+    context "a secondary course" do
+      let(:course) { build :course, level: "secondary" }
+
+      it "returns the correct input label" do
+        expect(subject_input_label).to eq("Secondary subject")
+      end
+    end
+
+    context "a further education course" do
+      let(:course) { build :course, level: "further_education" }
+
+      it "returns the correct input label" do
+        expect(subject_input_label).to eq("Pick a subject")
+      end
+    end
+  end
 end

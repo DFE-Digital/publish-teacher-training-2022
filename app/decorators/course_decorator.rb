@@ -245,6 +245,26 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def subject_page_title
+    if level == "primary"
+      "Pick a primary subject"
+    elsif level == "secondary"
+      "Pick a secondary subject"
+    else
+      "Pick a subject"
+    end
+  end
+
+  def subject_input_label
+    if level == "primary"
+      "Primary subject"
+    elsif level == "secondary"
+      "Secondary subject"
+    else
+      "Pick a subject"
+    end
+  end
+
 private
 
   def not_on_find

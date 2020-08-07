@@ -5,26 +5,6 @@ module ViewHelper
     end
   end
 
-  def subject_page_title(course)
-    if course.level == "primary"
-      "Pick a primary subject"
-    elsif course.level == "secondary"
-      "Pick a secondary subject"
-    else
-      "Select a subject"
-    end
-  end
-
-  def subject_input_label(course)
-    if course.level == "primary"
-      "Primary subject"
-    elsif course.level == "secondary"
-      "Secondary subject"
-    else
-      "Select a subject"
-    end
-  end
-
   def govuk_link_to(body, url = body, html_options = { class: "govuk-link" })
     link_to body, url, html_options
   end
