@@ -27,19 +27,21 @@
         </dd>
       </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= 'Subject'.pluralize(course.subjects.count) %>
-        </dt>
-        <dd class="govuk-summary-list__value" data-qa="course__subjects">
-          <%= course.sorted_subjects %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to subjects_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_subjects_link" } do %>
-            Change<span class="govuk-visually-hidden"> subjects</span>
-          <% end %>
-        </dd>
-      </div>
+      <% unless course.is_further_education? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= 'Subject'.pluralize(course.subjects.count) %>
+          </dt>
+          <dd class="govuk-summary-list__value" data-qa="course__subjects">
+            <%= course.sorted_subjects %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to subjects_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_subjects_link" } do %>
+              Change<span class="govuk-visually-hidden"> subjects</span>
+            <% end %>
+          </dd>
+        </div>
+      <% end %>
 
       <% unless course.level == 'further_education' %>
         <div class="govuk-summary-list__row">

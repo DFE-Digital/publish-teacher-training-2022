@@ -48,21 +48,23 @@
               </dd>
             </div>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                <%= 'Subject'.pluralize(course.subjects.count) %>
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__subjects">
-                <%= course.sorted_subjects %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "subjects",
-                  "subjects",
-                  :new_provider_recruitment_cycle_courses_subjects_path
-                ) %>
-              </dd>
-            </div>
+            <% unless course.is_further_education? %>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  <%= 'Subject'.pluralize(course.subjects.count) %>
+                </dt>
+                <dd class="govuk-summary-list__value" data-qa="course__subjects">
+                  <%= course.sorted_subjects %>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <%= course_creation_change_button(
+                      "subjects",
+                      "subjects",
+                      :new_provider_recruitment_cycle_courses_subjects_path
+                    ) %>
+                </dd>
+              </div>
+            <% end %>
 
             <% unless course.is_further_education? %>
               <div class="govuk-summary-list__row">
@@ -187,7 +189,7 @@
               </dd>
             </div>
 
-            <% unless @provider.accredited_body? %>
+            <% unless @provider.accredited_body? || course.is_further_education? %>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                   Accredited body
