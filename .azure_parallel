@@ -1,4 +1,0 @@
---require spec_helper
---no-profile
---format RspecJunitFormatter
---out rspec-output/rspec-output<%= ENV['TEST_ENV_NUMBER'] %>.xml
