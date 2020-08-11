@@ -4,28 +4,28 @@ RSpec.describe Allocation do
   describe ".journey_mode" do
     context "when allocation period is open" do
       it "returns 'open'" do
-        Settings.allocations_state = "open"
+        Settings.features.allocations.state = "open"
         expect(Allocation.journey_mode).to eq("open")
       end
     end
 
     context "when allocation period is closed" do
       it "returns 'closed'" do
-        Settings.allocations_state = "closed"
+        Settings.features.allocations.state = "closed"
         expect(Allocation.journey_mode).to eq("closed")
       end
     end
 
     context "when allocation period is confirmed" do
       it "returns 'closed'" do
-        Settings.allocations_state = "confirmed"
+        Settings.features.allocations.state = "confirmed"
         expect(Allocation.journey_mode).to eq("confirmed")
       end
     end
 
     context "when allocation period setting is invalid" do
       it "returns 'open by default'" do
-        Settings.allocations_state = "not_the_correct_state"
+        Settings.features.allocations.state = "not_the_correct_state"
         expect(Allocation.journey_mode).to eq("open")
       end
     end

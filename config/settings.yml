@@ -61,6 +61,12 @@ google:
   maps_api_key: replace_me
 use_ssl: true
 features:
+  allocations:
+    # Options:
+    # open - Users can make requests for allocations
+    # closed - Readonly - Users can see if they have or have not made request (does not show number of places)
+    # confirmed - final allocation places are displayed to users in a readonly state
+    state: closed
   signin_intercept: false
   signin_by_email: false
   dfe_signin: true
@@ -71,7 +77,6 @@ features:
     # actually starting when it would be set to false
     has_current_cycle_started?: true
 commit_sha_file: COMMIT_SHA
-allocations_state: closed
 basic_auth: false
 basic_auth_username: admin
 basic_auth_password_digest: "52785638ec464fd61f5c9b372797f1a7475225cabeb2b40b2d757eff9b337ff069b2314bb0c0611d44ca5d39c91906ab3415de0fbc36625b970e3c2c03d122da"

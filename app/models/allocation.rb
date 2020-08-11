@@ -10,7 +10,7 @@ class Allocation < Base
       "open" => "open",
       "closed" => "closed",
       "confirmed" => "confirmed",
-    }.fetch(Settings.allocations_state, "open")
+    }.fetch(Settings.features.allocations.state, "open")
   end
 
   belongs_to :provider, param: :provider_code, shallow_path: true # accredited_body
