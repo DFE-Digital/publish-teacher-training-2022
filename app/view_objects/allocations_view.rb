@@ -53,6 +53,14 @@ class AllocationsView
     statuses.compact.sort_by! { |hsh| hsh[:training_provider_name] }
   end
 
+  def confirmed_allocation_places
+    statuses = confirmed_allocations.map do |allocation|
+      build_confirmed_allocations(allocation, allocation.provider)
+    end
+
+    statuses.compact.sort_by! { |hsh| hsh[:training_provider_name] }
+  end
+
   def not_requested_allocations_statuses
     statuses = filtered_training_providers.map do |training_provider|
       matching_allocation = find_matching_allocation(training_provider, not_requested_allocations)
@@ -82,6 +90,10 @@ private
   end
 
   def requested_allocations
+    @allocations.select { |allocation| allocation.request_type.in?([RequestType::INITIAL, RequestType::REPEAT]) }
+  end
+
+  def confirmed_allocations
     @allocations.select { |allocation| allocation.request_type.in?([RequestType::INITIAL, RequestType::REPEAT]) }
   end
 
@@ -141,6 +153,17 @@ private
     }
 
     hash[:id] = matching_allocation.id if matching_allocation.id
+
+    hash
+  end
+
+  def build_confirmed_allocations(allocation, training_provider)
+    return if allocation.nil?
+
+    hash = {
+      training_provider_name: training_provider.provider_name,
+      number_of_places: allocation.number_of_places,
+    }
 
     hash
   end

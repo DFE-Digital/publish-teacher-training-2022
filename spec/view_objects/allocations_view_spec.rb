@@ -133,6 +133,50 @@ describe AllocationsView do
     end
   end
 
+  context "allocations are confirmed" do
+    describe "#confirmed_allocation_places" do
+      subject { AllocationsView.new(training_providers: training_providers, allocations: allocations).confirmed_allocation_places }
+      context "returns confirmed repeat and initial allocations with number of places" do
+        let(:confirmed_repeat_allocation) do
+          build(:allocation, :repeat, accredited_body: accredited_body, provider: training_provider, number_of_places: 1)
+        end
+
+        let(:confirmed_initial_allocation) do
+          build(:allocation, :initial, accredited_body: accredited_body, provider: another_training_provider, number_of_places: 2)
+        end
+
+        let(:allocations) { [confirmed_repeat_allocation, confirmed_initial_allocation] }
+
+        it {
+          is_expected.to eq([{ training_provider_name: training_provider.provider_name,
+                               number_of_places: confirmed_repeat_allocation.number_of_places },
+                             { training_provider_name: another_training_provider.provider_name,
+                               number_of_places: confirmed_initial_allocation.number_of_places }])
+        }
+      end
+
+      context "no confirmed declined allocations are returned" do
+        let(:confirmed_declined_allocation) do
+          build(:allocation, :declined, accredited_body: accredited_body, provider: training_provider, number_of_places: 0)
+        end
+
+        let(:allocations) { [confirmed_declined_allocation] }
+
+        it {
+          is_expected.to eq([])
+        }
+      end
+
+      context "no allocations are returned if their status is 'YET TO REQUEST'" do
+        let(:allocations) { [] }
+
+        it {
+          is_expected.to eq([])
+        }
+      end
+    end
+  end
+
   context "allocation period is closed" do
     describe "#requested_allocations" do
       subject { AllocationsView.new(training_providers: training_providers, allocations: allocations).requested_allocations_statuses }

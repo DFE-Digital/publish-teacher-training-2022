@@ -1,0 +1,36 @@
+
+<%= content_for :page_title, "PE courses for 2021 to 2022" %>
+<%= content_for :before_content, render_breadcrumbs("allocations_closed") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"> Fee-funded PE courses for 2021 to 2022</h1>
+
+    <% if @allocations_view.confirmed_allocation_places.any? %>
+      <p class="govuk-body">
+        You requested fee-funded PE for the following organisations for 2021 to 2022.
+        These requests have been approved. Each organisation’s allocation is also included.
+      </p>
+
+      <p class="govuk-body">
+        If you have any questions, contact <%= bat_contact_mail_to %>.
+      </p>
+
+      <%= render partial: "providers/allocations/allocation_report_confirmed_state", locals: {
+                 confirmed_allocations: @allocations_view.confirmed_allocation_places
+               } %>
+    <% else %>
+      <p class="govuk-body">
+        You did not request fee-funded PE for 2021 to 2022.
+      </p>
+
+      <p class="govuk-body">
+        Any current courses that have not been requested will not be running in 2021 to 2022.
+      </p>
+
+      <p class="govuk-body">
+        If you have any questions, contact <%= bat_contact_mail_to %>.
+      </p>
+    <% end %>
+  </div>
+</div>
