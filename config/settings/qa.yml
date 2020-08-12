@@ -10,3 +10,6 @@ environment:
   selector_name: "qa"
 basic_auth: true
 developer_auth: true
+features:
+  allocations:
+    state: confirmed

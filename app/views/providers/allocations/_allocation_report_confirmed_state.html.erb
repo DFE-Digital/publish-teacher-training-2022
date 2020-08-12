@@ -1,0 +1,25 @@
+<table class="govuk-table ucas-info-table govuk-!-margin-bottom-8">
+  <caption class="govuk-visually-hidden">A list of confirmed allocations for 2021 to 2022</caption>
+  <thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="col">
+      Organisation
+    </th>
+    <th class="govuk-table__header allocation-report__status" scope="col">
+      Number of Places
+    </th>
+  </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% confirmed_allocations.each do |allocation| %>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" data-qa="provider-name" scope="row">
+        <%= allocation[:training_provider_name] %>
+      </th>
+      <td class="govuk-table__cell">
+        <%= allocation[:number_of_places] %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

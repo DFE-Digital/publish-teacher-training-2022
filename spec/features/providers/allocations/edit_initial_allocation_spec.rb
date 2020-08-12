@@ -8,7 +8,7 @@ RSpec.feature "PE allocations" do
   let(:allocations_show_page) { PageObjects::Page::Providers::Allocations::ShowPage.new }
 
   before do
-    allow(Settings).to receive(:allocations_state).and_return("open")
+    allow(Settings.features.allocations).to receive(:state).and_return("open")
   end
 
   context "updating an initial allocation" do
