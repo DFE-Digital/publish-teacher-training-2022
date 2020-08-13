@@ -4,7 +4,7 @@ dfe_signin:
 manage_backend:
   base_url: https://s121d04-rollover-ttapi-as.azurewebsites.net
 environment:
-  label: "Rollover"
+  label: "Rollover (only 2021)"
   selector_name: "qa"
 basic_auth: true
 developer_auth: true
@@ -37,7 +37,7 @@ google_forms:
 #  current_cycle                                                       #
 ########################################################################
 # defaults current cycle when omitted in url
-current_cycle: 2020
+current_cycle: 2021
 
 ########################################################################
 #  rollover                                                            #
@@ -46,10 +46,10 @@ current_cycle: 2020
 features:
   rollover:
     # During rollover providers should be able to edit current & next recruitment cycle courses
-    can_edit_current_and_next_cycles: true
+    can_edit_current_and_next_cycles: false
     # Normally a short period of time between rollover and the next cycle
     # actually starting when it would be set to false
-    has_current_cycle_started?: false
+    has_current_cycle_started?: true
     
     # "Current cycle" (open ) [has_current_cycle_started?: true && current_cycle]
     # "New cycle" (not open yet) [has_current_cycle_started?: false && current_cycle]
