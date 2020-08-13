@@ -8,3 +8,50 @@ environment:
   selector_name: "qa"
 basic_auth: true
 developer_auth: true
+
+
+##############################
+#  google_forms new courses  #
+##############################
+google_forms:
+  next_cycle:
+    new_course_for_accredited_bodies:
+      url: https://docs.google.com/forms/d/e/1FAIpQLScckkzOwt93FTZGgZCBRA6spAnSO06UKewD5N6P3moBhIpKiA/viewform?usp=pp_url
+      email_entry: entry.957076544
+      provider_code_entry: entry.1735563938
+    new_course_for_unaccredited_bodies:
+      url: https://docs.google.com/forms/d/e/1FAIpQLSeD1BwS11lYm4PJ8WZMRIU5U02h0z-T5WlC0aqycc1CHV-e0A/viewform?usp=pp_url
+      email_entry: entry.1033530353
+      provider_code_entry: entry.158771972
+  current_cycle:
+    new_course_for_accredited_bodies:
+      url: https://docs.google.com/forms/d/e/1FAIpQLScckkzOwt93FTZGgZCBRA6spAnSO06UKewD5N6P3moBhIpKiA/viewform?usp=pp_url
+      email_entry: entry.957076544
+      provider_code_entry: entry.1735563938
+    new_course_for_unaccredited_bodies:
+      url: https://docs.google.com/forms/d/e/1FAIpQLSeD1BwS11lYm4PJ8WZMRIU5U02h0z-T5WlC0aqycc1CHV-e0A/viewform?usp=pp_url
+      email_entry: entry.1033530353
+      provider_code_entry: entry.158771972
+
+########################################################################
+#  current_cycle                                                       #
+########################################################################
+# defaults current cycle when omitted in url
+current_cycle: 2020
+
+########################################################################
+#  rollover                                                            #
+########################################################################
+
+features:
+  rollover:
+    # During rollover providers should be able to edit current & next recruitment cycle courses
+    can_edit_current_and_next_cycles: true
+    # Normally a short period of time between rollover and the next cycle
+    # actually starting when it would be set to false
+    has_current_cycle_started?: false
+    
+    # "Current cycle" (open ) [has_current_cycle_started?: true && current_cycle]
+    # "New cycle" (not open yet) [has_current_cycle_started?: false && current_cycle]
+    # "Next cycle" () [has_current_cycle_started?: false && next_cycle]
+    # year 
