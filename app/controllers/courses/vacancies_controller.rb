@@ -49,7 +49,9 @@ module Courses
         site_status.save
       end
 
-      send_vacancies_updated_notification(vacancies_filled: single_site_no_vacancies?)
+      vacancy_statuses = [{ id: @site_statuses.first.id, status: vac_status }]
+
+      send_vacancies_updated_notification(vacancy_statuses: vacancy_statuses)
     end
 
     def update_vacancies_for_multiple_sites
@@ -71,8 +73,7 @@ module Courses
         site_status.save
       end
 
-      send_vacancies_updated_notification(vacancies_filled: true) if all_sites_have_no_vacancies?
-      send_vacancies_updated_notification(vacancies_filled: false) if all_sites_have_vacancies?
+      send_vacancies_updated_notification(vacancy_statuses: vacancy_statuses)
     end
 
     def build_course
@@ -96,32 +97,26 @@ module Courses
       params[:change_vacancies_confirmation] == "no_vacancies_confirmation" && @course.has_vacancies?
     end
 
-    def all_sites_have_no_vacancies?
-      @course.has_vacancies? &&
-        (params[:course][:has_vacancies] == "false" || vacancy_statuses.all? { |v| v == "no_vacancies" })
-    end
-
-    def all_sites_have_vacancies?
-      params[:course][:has_vacancies] == "true" && vacancy_statuses.all? { |v| v != "no_vacancies" }
-    end
-
-    def send_vacancies_updated_notification(vacancies_filled:)
+    def send_vacancies_updated_notification(vacancy_statuses:)
       @course.send_vacancies_updated_notification(
         course_code: @course.course_code,
         recruitment_cycle_year: @course.recruitment_cycle_year,
         provider_code: params[:provider_code],
-        vacancies_filled: vacancies_filled,
+        vacancy_statuses: vacancy_statuses,
       )
     end
 
     def vacancy_statuses
       params.dig(:course, :site_status_attributes)
         &.values&.map do |vacancy_status|
-        VacancyStatusDeterminationService.call(
-          vacancy_status_full_time: vacancy_status[:full_time],
-          vacancy_status_part_time: vacancy_status[:part_time],
-          course: @course,
-        )
+        {
+          id: vacancy_status[:id],
+          status: VacancyStatusDeterminationService.call(
+            vacancy_status_full_time: vacancy_status[:full_time],
+            vacancy_status_part_time: vacancy_status[:part_time],
+            course: @course,
+          ),
+        }
       end
     end
   end
