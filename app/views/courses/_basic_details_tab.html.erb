@@ -286,13 +286,9 @@
         <p class="govuk-body">At the moment you can change:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li><abbr class="app-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr> specialism</li>
-          <li>age range</li>
-          <li>outcome</li>
-          <li>full time or part time</li>
-          <li>course locations</li>
-          <li>application open date</li>
-          <li>course start date</li>
-          <li>GCSE requirements</li>
+          <% course.listing_basic_details.each do |details|%>
+              <li><%= details %></li>
+          <% end %>
         </ul>
 
         <p class="govuk-body">
