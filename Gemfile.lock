@@ -191,7 +191,6 @@ GEM
     httpclient (2.8.3)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
-    json (2.3.0)
     json-jwt (1.13.0)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -399,11 +398,10 @@ GEM
     sentry-raven (2.13.0)
       faraday (>= 0.7.6, < 1.0)
     shellany (0.0.1)
-    simplecov (0.17.1)
+    simplecov (0.19.0)
       docile (~> 1.1)
-      json (>= 1.8, < 3)
-      simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.2)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.2)
     site_prism (3.4.2)
       addressable (~> 2.5)
       capybara (~> 3.3)
@@ -518,7 +516,7 @@ DEPENDENCIES
   rubypants
   scss_lint-govuk
   sentry-raven
-  simplecov (< 0.18)
+  simplecov (< 0.20)
   site_prism
   spring
   spring-commands-rspec
