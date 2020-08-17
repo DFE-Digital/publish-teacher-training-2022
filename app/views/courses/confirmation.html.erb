@@ -16,22 +16,8 @@
       <div class="govuk-grid-row govuk-!-margin-bottom-9">
         <div class="govuk-grid-column-full">
           <dl class="govuk-summary-list govuk-!-margin-bottom-0" data-qa="course__details">
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Level
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__level">
-                <%= course.level&.humanize %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "level",
-                  "level",
-                  :new_provider_recruitment_cycle_courses_level_path
-                ) %>
-              </dd>
-            </div>
-
+            <%= render(CourseLevelComponent.new(course: course, changeable: true)) %>
+            
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">
                 <abbr class="app-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr>

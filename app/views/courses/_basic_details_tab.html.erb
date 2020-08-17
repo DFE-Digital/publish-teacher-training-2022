@@ -1,15 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Level
-        </dt>
-        <dd class="govuk-summary-list__value" data-qa="course__level">
-          <%= course.level&.humanize %>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
+      <%= render(CourseLevelComponent.new(course: course)) %>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">

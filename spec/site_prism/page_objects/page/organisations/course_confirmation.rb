@@ -7,7 +7,7 @@ module PageObjects
         element :save_button, '[data-qa="course__save"]'
 
         section :details, '[data-qa="course__details"]' do
-          element :edit_level, '[data-qa="course__edit_level_link"]'
+          element :edit_level, "a", text: "Change Level"
           element :level, '[data-qa="course__level"]'
           element :edit_age_range, '[data-qa="course__edit_age_range_link"]'
           element :age_range, '[data-qa="course__age_range"]'
