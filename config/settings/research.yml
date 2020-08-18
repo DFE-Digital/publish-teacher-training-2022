@@ -1,7 +1,7 @@
 dfe_signin:
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
   base_url: https://s121d03-publish-as.azurewebsites.net
-manage_backend:
+teacher_training_api:
   base_url: https://s121d03-ttapi-as.azurewebsites.net
 environment:
   label: "QA"

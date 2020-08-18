@@ -4,8 +4,8 @@ class Session < Base
       payload = { email: email }
       token = JWT.encode(
         payload,
-        Settings.manage_backend.secret,
-        Settings.manage_backend.algorithm,
+        Settings.teacher_training_api.secret,
+        Settings.teacher_training_api.algorithm,
       )
       RequestStore.store[:manage_courses_backend_token] = token
       api_url = "#{site}sessions/create_by_magic"

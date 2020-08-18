@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe User, type: :model do
   let(:seen_accredited_body_features_user) { build(:user, :seen_accredited_body_new_features, associated_with_accredited_body: true) }
-  let!(:update_request) { stub_request(:post, "#{Settings.manage_backend.base_url}/api/v2/users") }
+  let!(:update_request) { stub_request(:post, "#{Settings.teacher_training_api.base_url}/api/v2/users") }
 
   describe "initial state" do
     let(:user) { build(:user, state: nil) }

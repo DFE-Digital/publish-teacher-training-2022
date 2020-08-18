@@ -10,7 +10,7 @@ class PerformanceDashboardService
   def initialize; end
 
   def call
-    fetch_data = Faraday.get("#{Settings.manage_backend.base_url}/reporting.json")
+    fetch_data = Faraday.get("#{Settings.teacher_training_api.base_url}/reporting.json")
     @response = JSON.parse(fetch_data.body)
     self
   rescue StandardError

@@ -114,18 +114,14 @@
     },
     "appServicePlanSize": {
       "type": "string",
-      "allowedValues": [
-        "1",
-        "2",
-        "3"
-      ],
+      "allowedValues": ["1", "2", "3"],
       "defaultValue": "1"
     },
     "appServicePlanTier": {
       "type": "string",
       "defaultValue": "Standard",
       "metadata": {
-          "description": "The App Service Plan tier."
+        "description": "The App Service Plan tier."
       }
     },
     "appServicePlanInstances": {
@@ -148,21 +144,21 @@
       "type": "array",
       "defaultValue": [],
       "metadata": {
-          "description": "Array of paths to perform monitoring on. In form TEST_NAME:HOST where HOST is the complete URL minus the http(s):// prefix."
+        "description": "Array of paths to perform monitoring on. In form TEST_NAME:HOST where HOST is the complete URL minus the http(s):// prefix."
       }
     },
     "alertRecipientEmails": {
       "type": "array",
       "defaultValue": [],
       "metadata": {
-          "description": "Array of recipients to receive availability email alerts. In form NAME:EMAIL_ADDRESS."
+        "description": "Array of recipients to receive availability email alerts. In form NAME:EMAIL_ADDRESS."
       }
     },
     "resourceTags": {
       "type": "object",
       "defaultValue": {},
       "metadata": {
-          "description": "List of resource tags as a JSON object"
+        "description": "List of resource tags as a JSON object"
       }
     },
     "settingsFeaturesSigninIntercept": {
@@ -193,7 +189,6 @@
         "description": "The publish provider page offers current and next rollover cycles when set to true."
       }
     }
-
   },
   "variables": {
     "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
@@ -206,20 +201,20 @@
     "availabilityCheckHosts": "[if(greater(length(parameters('customAvailabilityMonitors')), 0), concat(variables('defaultAvailabilityCheckHosts'), parameters('customAvailabilityMonitors')), variables('defaultAvailabilityCheckHosts'))]",
     "copy": [
       {
-          "name": "availabilityTests",
-          "count": "[length(variables('availabilityCheckHosts'))]",
-          "input": {
-              "nameSuffix": "[split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[0]]",
-              "url": "[concat('https://', split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[1])]",
-              "guid": "[guid(variables('availabilityCheckHosts')[copyIndex('availabilityTests')])]"
-          }
+        "name": "availabilityTests",
+        "count": "[length(variables('availabilityCheckHosts'))]",
+        "input": {
+          "nameSuffix": "[split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[0]]",
+          "url": "[concat('https://', split(variables('availabilityCheckHosts')[copyIndex('availabilityTests')], ':')[1])]",
+          "guid": "[guid(variables('availabilityCheckHosts')[copyIndex('availabilityTests')])]"
+        }
       },
       {
         "name": "alertRecipientEmails",
         "count": "[if(greater(length(parameters('alertRecipientEmails')), 0), length(parameters('alertRecipientEmails')), 1)]",
         "input": {
-            "displayName": "[if(greater(length(parameters('alertRecipientEmails')), 0), split(parameters('alertRecipientEmails')[copyIndex('alertRecipientEmails')], ':')[0], 'UNUSED')]",
-            "emailAddress": "[if(greater(length(parameters('alertRecipientEmails')), 0), split(parameters('alertRecipientEmails')[copyIndex('alertRecipientEmails')], ':')[1], 'UNUSED')]"
+          "displayName": "[if(greater(length(parameters('alertRecipientEmails')), 0), split(parameters('alertRecipientEmails')[copyIndex('alertRecipientEmails')], ':')[0], 'UNUSED')]",
+          "emailAddress": "[if(greater(length(parameters('alertRecipientEmails')), 0), split(parameters('alertRecipientEmails')[copyIndex('alertRecipientEmails')], ':')[1], 'UNUSED')]"
         }
       }
     ]
@@ -243,12 +238,12 @@
             "value": "[parameters('appServicePlanSize')]"
           },
           "appServicePlanTier": {
-              "value": "[parameters('appServicePlanTier')]"
+            "value": "[parameters('appServicePlanTier')]"
           },
           "appServicePlanInstances": {
             "value": "[parameters('appServicePlanInstances')]"
           },
-          "resourceTags":{
+          "resourceTags": {
             "value": "[parameters('resourceTags')]"
           }
         }
@@ -275,7 +270,7 @@
           "keyVaultResourceGroup": {
             "value": "[parameters('keyVaultResourceGroup')]"
           },
-          "resourceTags":{
+          "resourceTags": {
             "value": "[parameters('resourceTags')]"
           }
         }
@@ -304,9 +299,9 @@
           "runtimeStack": {
             "value": "[variables('appServiceRuntimeStack')]"
           },
-          "http20Enabled":{
+          "http20Enabled": {
             "value": true
-            },
+          },
           "appServiceAppSettings": {
             "value": [
               {
@@ -338,7 +333,7 @@
                 "value": "[parameters('dfeSignInSecret')]"
               },
               {
-                "name": "SETTINGS__MANAGE_BACKEND__SECRET",
+                "name": "SETTINGS__TEACHER_TRAINING_API__SECRET",
                 "value": "[parameters('settingsManageBackendSecret')]"
               },
               {
@@ -385,14 +380,12 @@
           "certificateThumbprint": {
             "value": "[if(greater(length(parameters('customHostname')), 0), reference('app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
           },
-          "resourceTags":{
+          "resourceTags": {
             "value": "[parameters('resourceTags')]"
           }
         }
       },
-      "dependsOn": [
-        "app-service-plan"
-      ]
+      "dependsOn": ["app-service-plan"]
     },
     {
       "name": "app-service-logs",
@@ -411,14 +404,12 @@
           "httpLoggingEnabled": {
             "value": true
           },
-          "resourceTags":{
+          "resourceTags": {
             "value": "[parameters('resourceTags')]"
           }
         }
       },
-      "dependsOn": [
-        "app-service"
-      ]
+      "dependsOn": ["app-service"]
     },
     {
       "apiVersion": "2017-05-10",
@@ -437,7 +428,7 @@
           "attachedService": {
             "value": "[variables('appServiceName')]"
           },
-          "resourceTags":{
+          "resourceTags": {
             "value": "[parameters('resourceTags')]"
           }
         }
@@ -461,13 +452,11 @@
             "value": "[variables('availabilityTests')]"
           },
           "resourceTags": {
-              "value": "[parameters('resourceTags')]"
+            "value": "[parameters('resourceTags')]"
           }
         }
       },
-      "dependsOn": [
-        "app-insights"
-      ]
+      "dependsOn": ["app-insights"]
     },
     {
       "apiVersion": "2017-05-10",
@@ -487,13 +476,11 @@
             "value": "[variables('alertRecipientEmails')]"
           },
           "resourceTags": {
-              "value": "[parameters('resourceTags')]"
+            "value": "[parameters('resourceTags')]"
           }
         }
       },
-      "dependsOn": [
-        "app-insights"
-      ]
+      "dependsOn": ["app-insights"]
     },
     {
       "apiVersion": "2017-05-10",
@@ -501,46 +488,43 @@
       "condition": "[greater(length(parameters('alertRecipientEmails')), 0)]",
       "type": "Microsoft.Resources/deployments",
       "copy": {
-          "name": "customAlerts",
-          "count": "[length(variables('availabilityCheckHosts'))]"
+        "name": "customAlerts",
+        "count": "[length(variables('availabilityCheckHosts'))]"
       },
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-            "uri": "[concat(variables('deploymentUrlBase'), 'availability-test-alert.json')]",
-            "contentVersion": "1.0.0.0"
+          "uri": "[concat(variables('deploymentUrlBase'), 'availability-test-alert.json')]",
+          "contentVersion": "1.0.0.0"
         },
         "parameters": {
           "resourceTags": {
-              "value": "[parameters('resourceTags')]"
+            "value": "[parameters('resourceTags')]"
           },
           "appInsightsName": {
-              "value": "[variables('appServiceName')]"
+            "value": "[variables('appServiceName')]"
           },
           "appInsightsId": {
-              "value": "[reference('app-insights').outputs.AppInsightsResourceId.value]"
+            "value": "[reference('app-insights').outputs.AppInsightsResourceId.value]"
           },
           "alertName": {
-              "value": "[concat(variables('appServiceName'), '-at-alert-', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0])]"
+            "value": "[concat(variables('appServiceName'), '-at-alert-', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0])]"
           },
           "actionGroupId": {
-              "value": "[if(greater(length(parameters('alertRecipientEmails')), 0), reference('action-group', '2019-03-01').outputs.actionGroupResourceId.value, '')]"
+            "value": "[if(greater(length(parameters('alertRecipientEmails')), 0), reference('action-group', '2019-03-01').outputs.actionGroupResourceId.value, '')]"
           },
           "alertDescriptionText": {
-              "value": "[concat('Custom URL availability monitor alert for \"', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0], '\".')]"
+            "value": "[concat('Custom URL availability monitor alert for \"', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0], '\".')]"
           },
           "alertSeverity": {
-              "value": 1
+            "value": 1
           },
           "webTestId": {
-              "value": "[resourceId('microsoft.insights/webtests', concat(variables('appServiceName'), '-at-', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0]))]"
+            "value": "[resourceId('microsoft.insights/webtests', concat(variables('appServiceName'), '-at-', split(variables('availabilityCheckHosts')[copyIndex('customAlerts')], ':')[0]))]"
           }
         }
       },
-      "dependsOn": [
-          "availability-test",
-          "action-group"
-      ]
+      "dependsOn": ["availability-test", "action-group"]
     }
   ],
   "outputs": {

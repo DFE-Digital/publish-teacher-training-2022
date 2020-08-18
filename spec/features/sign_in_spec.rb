@@ -57,7 +57,7 @@ feature "Sign in", type: :feature do
       let(:user_update_request) do
         stub_request(
           :patch,
-          "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
+          "#{Settings.teacher_training_api.base_url}/api/v2/users/#{user.id}",
         )
                                     .with(body: /"state":"transitioned"/)
       end
@@ -75,13 +75,13 @@ feature "Sign in", type: :feature do
         let(:user_update_request) do
           stub_request(
             :patch,
-            "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
+            "#{Settings.teacher_training_api.base_url}/api/v2/users/#{user.id}",
           )
                                       .with(body: /"state":"transitioned"/)
         end
 
         let(:user_get_request) do
-          stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}").to_return(
+          stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/users/#{user.id}").to_return(
             { body: user.to_jsonapi.to_json, headers: { 'Content-Type': "application/vnd.api+json" } },
             { body: user.to_jsonapi.to_json, headers: { 'Content-Type': "application/vnd.api+json" } },
             { body: transitioned_user.to_jsonapi.to_json, headers: { 'Content-Type': "application/vnd.api+json" } },
@@ -131,7 +131,7 @@ feature "Sign in", type: :feature do
       let(:user_update_request) do
         stub_request(
           :patch,
-          "#{Settings.manage_backend.base_url}/api/v2/users/#{user.id}",
+          "#{Settings.teacher_training_api.base_url}/api/v2/users/#{user.id}",
         ).with(body: /"state":"accepted_rollover_2021"/)
       end
       let(:user_get_request) { stub_api_v2_request("/users/#{user.id}", user.to_jsonapi) }

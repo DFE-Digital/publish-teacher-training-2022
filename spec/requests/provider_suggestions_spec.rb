@@ -30,7 +30,7 @@ describe "/providers/suggest", type: :request do
 
     [query, query_with_unicode_character].each do |provider_query|
       it "returns success (200) for query: '#{provider_query}'" do
-        provider_suggestions = stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/providers/suggest?query=#{provider_query}")
+        provider_suggestions = stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/providers/suggest?query=#{provider_query}")
                                  .to_return(
                                    headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
                                    body: File.new("spec/fixtures/api_responses/provider-suggestions.json"),

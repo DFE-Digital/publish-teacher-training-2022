@@ -36,7 +36,7 @@ module Helpers
   end
 
   def stub_api_v2_request(url_path, stub, method = :get, status = 200, token: nil, body: nil, &validate_request_body)
-    url = "#{Settings.manage_backend.base_url}/api/v2#{url_path}"
+    url = "#{Settings.teacher_training_api.base_url}/api/v2#{url_path}"
 
     stubbed_request = stub_request(method, url)
                         .to_return(

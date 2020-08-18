@@ -17,8 +17,8 @@ module MagicLink
       }
       token = JWT.encode(
         payload,
-        Settings.manage_backend.secret,
-        Settings.manage_backend.algorithm,
+        Settings.teacher_training_api.secret,
+        Settings.teacher_training_api.algorithm,
       )
 
       post_url = "#{@site}users/generate_and_send_magic_link"
