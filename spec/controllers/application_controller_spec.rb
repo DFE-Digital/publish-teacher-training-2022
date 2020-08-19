@@ -40,7 +40,7 @@ describe ApplicationController, type: :controller do
       allow(Base).to receive(:connection)
 
       allow(JWT).to receive(:encode)
-        .with(payload, Settings.manage_backend.secret, Settings.manage_backend.algorithm)
+        .with(payload, Settings.teacher_training_api.secret, Settings.teacher_training_api.algorithm)
         .and_return("anything")
     end
 

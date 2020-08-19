@@ -9,7 +9,7 @@ feature "Edit course vacancies", type: :feature do
   let(:send_vacancies_updated_notification_stub) do
     stub_request(
       :post,
-      "#{Settings.manage_backend.base_url}/api/v2" \
+      "#{Settings.teacher_training_api.base_url}/api/v2" \
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \

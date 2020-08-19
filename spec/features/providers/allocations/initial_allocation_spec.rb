@@ -344,7 +344,7 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_search_for_a_training_provider
-    stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/providers/suggest_any?query=ACME")
+    stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/providers/suggest_any?query=ACME")
                 .to_return(
                   headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
                   body: File.new("spec/fixtures/api_responses/provider-suggestions.json"),
@@ -401,7 +401,7 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_search_for_a_training_provider_that_does_not_exist
-    stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/providers/suggest_any?query=donotexist")
+    stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/providers/suggest_any?query=donotexist")
                 .to_return(
                   headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
                   body: File.new("spec/fixtures/api_responses/empty-provider-suggestions.json"),
@@ -417,7 +417,7 @@ RSpec.feature "PE allocations" do
   end
 
   def when_i_search_again_for_a_training_provider_that_does_not_exist
-    stub_request(:get, "#{Settings.manage_backend.base_url}/api/v2/providers/suggest_any?query=donotexist")
+    stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/providers/suggest_any?query=donotexist")
                 .to_return(
                   headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
                   body: File.new("spec/fixtures/api_responses/empty-provider-suggestions.json"),

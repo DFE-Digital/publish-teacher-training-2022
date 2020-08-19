@@ -75,8 +75,8 @@ describe "authorisation", type: :request do
 
         expected_token = JWT.encode(
           { email: email },
-          Settings.manage_backend.secret,
-          Settings.manage_backend.algorithm,
+          Settings.teacher_training_api.secret,
+          Settings.teacher_training_api.algorithm,
         )
 
         expect(api_stub).to have_been_requested

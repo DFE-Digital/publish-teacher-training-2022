@@ -21,7 +21,7 @@ env:
   TF_VAR_SETTINGS__DFE_SIGNIN__SECRET: ${{ secrets.TF_VAR_SETTINGS__DFE_SIGNIN__SECRET }}
   TF_VAR_SETTINGS__LOGSTASH__HOST: ${{ secrets.TF_VAR_SETTINGS__LOGSTASH__HOST }}
   TF_VAR_APPINSIGHTS_INSTRUMENTATION: ${{ secrets.TF_VAR_APPINSIGHTS_INSTRUMENTATION }}
-  TF_VAR_SETTINGS__MANAGE_BACKEND__SECRET: ${{ secrets.TF_VAR_SETTINGS__MANAGE_BACKEND__SECRET }}
+  TF_VAR_SETTINGS__TEACHER_TRAINING_API__SECRET: ${{ secrets.TF_VAR_SETTINGS__TEACHER_TRAINING_API__SECRET }}
 
 jobs:
   terraform:
@@ -29,22 +29,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout the repository to the GitHub Actions runner
-      uses: actions/checkout@v2
+      - name: Checkout the repository to the GitHub Actions runner
+        uses: actions/checkout@v2
 
-    - name: Install Terraform CloudFoundry Provider
-      run: |
+      - name: Install Terraform CloudFoundry Provider
+        run: |
           mkdir -p $HOME/.terraform.d/plugins/linux_amd64
           wget -O ${{ env.CF_PROVIDER_DIR }} https://github.com/cloudfoundry-community/terraform-provider-cf/releases/latest/download/terraform-provider-cloudfoundry_linux_amd64
           chmod +x ${{ env.CF_PROVIDER_DIR }}
-    - name: Terraform init
-      run: |
+      - name: Terraform init
+        run: |
           terraform init \
            -backend-config=storage_account_name=${{ env.BACKEND_STORAGE_ACCOUNT_NAME }} \
            -backend-config=access_key=${{ env.BACKEND_ACCESS_KEY }} \
            -backend-config=key=${{ env.BACKEND_KEY }} \
             ${{ env.PAAS_TF_DIR }}
-    - name: Terraform apply
-      run: |
+      - name: Terraform apply
+        run: |
           terraform apply -var-file=${{ env.PAAS_TF_DIR }}/${{ env.TERRAFORM_VAR_FILE }} -auto-approve \
             ${{ env.PAAS_TF_DIR }}

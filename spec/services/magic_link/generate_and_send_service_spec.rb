@@ -38,8 +38,8 @@ describe MagicLink::GenerateAndSendService do
     it "sets the Authorization header" do
       expected_token = JWT.encode(
         { email: email },
-        Settings.manage_backend.secret,
-        Settings.manage_backend.algorithm,
+        Settings.teacher_training_api.secret,
+        Settings.teacher_training_api.algorithm,
       )
 
       described_class.call(email: email, site: site)

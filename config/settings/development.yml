@@ -8,7 +8,7 @@ features:
     # closed - Readonly - Users can see if they have or have not made request (does not show number of places)
     # confirmed - final allocation places are displayed to users in a readonly state
     state: confirmed
-manage_backend:
+teacher_training_api:
   secret: secret
   base_url: http://localhost:3001
 search_ui:

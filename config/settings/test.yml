@@ -1,6 +1,6 @@
 dfe_signin:
   base_url: https://localhost:3000
-manage_backend:
+teacher_training_api:
   base_url: http://localhost:3001
 search_ui:
   base_url: https://localhost:5000
