@@ -163,6 +163,7 @@ private
     hash = {
       training_provider_name: training_provider.provider_name,
       number_of_places: allocation.number_of_places,
+      confirmed_number_of_places: allocation.confirmed_number_of_places,
     }
 
     hash
