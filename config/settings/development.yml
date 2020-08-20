@@ -3,11 +3,9 @@ dfe_signin:
   base_url: https://localhost:3000
 features:
   allocations:
-    # Options:
-    # open - Users can make requests for allocations
-    # closed - Readonly - Users can see if they have or have not made request (does not show number of places)
-    # confirmed - final allocation places are displayed to users in a readonly state
-    state: confirmed
+    # state: open # Users can make requests for allocations
+    # state: closed # Readonly - Users can see if they have or have not made request (does not show number of places)
+    state: confirmed # final allocation places are displayed to users in a readonly state
 teacher_training_api:
   secret: secret
   base_url: http://localhost:3001

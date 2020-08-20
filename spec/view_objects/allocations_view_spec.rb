@@ -136,22 +136,31 @@ describe AllocationsView do
   context "allocations are confirmed" do
     describe "#confirmed_allocation_places" do
       subject { AllocationsView.new(training_providers: training_providers, allocations: allocations).confirmed_allocation_places }
+
       context "returns confirmed repeat and initial allocations with number of places" do
         let(:confirmed_repeat_allocation) do
-          build(:allocation, :repeat, accredited_body: accredited_body, provider: training_provider, number_of_places: 1)
+          build(:allocation, :repeat, accredited_body: accredited_body,
+                                      provider: training_provider,
+                                      number_of_places: 1,
+                                      confirmed_number_of_places: 3)
         end
 
         let(:confirmed_initial_allocation) do
-          build(:allocation, :initial, accredited_body: accredited_body, provider: another_training_provider, number_of_places: 2)
+          build(:allocation, :initial, accredited_body: accredited_body,
+                                       provider: another_training_provider,
+                                       number_of_places: 2,
+                                       confirmed_number_of_places: 4)
         end
 
         let(:allocations) { [confirmed_repeat_allocation, confirmed_initial_allocation] }
 
         it {
           is_expected.to eq([{ training_provider_name: training_provider.provider_name,
-                               number_of_places: confirmed_repeat_allocation.number_of_places },
+                               number_of_places: confirmed_repeat_allocation.number_of_places,
+                               confirmed_number_of_places: confirmed_repeat_allocation.confirmed_number_of_places },
                              { training_provider_name: another_training_provider.provider_name,
-                               number_of_places: confirmed_initial_allocation.number_of_places }])
+                               number_of_places: confirmed_initial_allocation.number_of_places,
+                               confirmed_number_of_places: confirmed_initial_allocation.confirmed_number_of_places }])
         }
       end
 

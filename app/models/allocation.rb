@@ -16,6 +16,7 @@ class Allocation < Base
   belongs_to :provider, param: :provider_code, shallow_path: true # accredited_body
 
   property :number_of_places
+  property :confirmed_number_of_places
   property :request_type
 
   validate :selected_number_of_places, if: :initial_request?
