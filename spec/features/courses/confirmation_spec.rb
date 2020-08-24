@@ -109,11 +109,9 @@ feature "Course confirmation", type: :feature do
 
     context "When the course has nil fields" do
       let(:study_mode) { nil }
-      let(:level) { nil }
 
       scenario "It shows blank for nil fields" do
         expect(course_confirmation_page.details.study_mode.text).to be_blank
-        expect(course_confirmation_page.details.level.text).to be_blank
       end
     end
 

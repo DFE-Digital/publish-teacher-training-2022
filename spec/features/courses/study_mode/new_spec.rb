@@ -18,6 +18,7 @@ feature "new course study mode", type: :feature do
       applications_open_from: "2019-10-09",
       start_date: "2019-10-09",
       accrediting_provider: build(:provider),
+      level: "secondary",
     )
   end
   let(:provider) { build(:provider, sites: [build(:site), build(:site)]) }

@@ -15,6 +15,7 @@ feature "new course applications open", type: :feature do
       gcse_subjects_required_using_level: true,
       start_date: "2019-10-09",
       accrediting_provider: build(:provider),
+      level: "secondary",
     )
   end
   let(:recruitment_cycle) { build(:recruitment_cycle) }
@@ -59,6 +60,7 @@ feature "new course applications open", type: :feature do
         applications_open_from: "2019-10-09",
         start_date: "2019-10-09",
         accrediting_provider: build(:provider),
+        level: "secondary",
       )
     end
 
