@@ -43,6 +43,7 @@ feature "new modern language", type: :feature do
       applications_open_from: "2019-10-09",
       gcse_subjects_required: %w[maths science english],
       start_date: "2019-10-09",
+      level: "secondary",
     )
   end
   let(:recruitment_cycle) { build(:recruitment_cycle) }

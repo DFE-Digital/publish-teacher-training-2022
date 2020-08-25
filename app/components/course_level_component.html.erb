@@ -1,0 +1,15 @@
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    Level
+  </dt>
+  <dd class="govuk-summary-list__value" data-qa="course__level">
+    <%= course.level.humanize %>
+  </dd>
+  <dd class="govuk-summary-list__actions">
+    <% if changeable %>
+      <%= link_to new_provider_recruitment_cycle_courses_level_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true)), class: "govuk-link"  do %>
+        Change<span class="govuk-visually-hidden"> Level</span>
+      <% end %>
+    <% end %>
+  </dd>
+</div>

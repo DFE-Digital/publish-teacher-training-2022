@@ -14,6 +14,7 @@ feature "new course apprenticeship", type: :feature do
       gcse_subjects_required_using_level: true,
       applications_open_from: "2019-10-09",
       start_date: "2019-10-09",
+      level: "secondary",
     )
   end
   let(:provider) { build(:provider, accredited_body?: true) }

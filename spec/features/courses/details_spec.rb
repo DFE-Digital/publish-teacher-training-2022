@@ -112,13 +112,11 @@ feature "Course details", type: :feature do
 
   context "When the course has nil fields" do
     let(:study_mode) { nil }
-    let(:level) { nil }
 
     scenario "It shows blank for nil fields" do
       visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
 
       expect(course_details_page.study_mode.text).to be_blank
-      expect(course_details_page.level.text).to be_blank
     end
   end
 

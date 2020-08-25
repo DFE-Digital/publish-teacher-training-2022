@@ -245,6 +245,23 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def listing_basic_details
+    if is_further_education?
+      ["outcome",
+       "full time or part time",
+       "fee or salary",
+       "application open date",
+       "course start date"]
+    else
+      ["age range",
+       "outcome",
+       "full time or part time",
+       "application open date",
+       "course start date",
+       "GCSE requirements"]
+    end
+  end
+
   def subject_page_title
     if level == "primary"
       "Pick a primary subject"
