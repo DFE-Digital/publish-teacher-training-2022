@@ -5,7 +5,7 @@ const baseUrl = Cypress.config().baseUrl;
 describe("login", function () {
   // NOTE: user only has one organisation associated so,
   //       it can not view a list of organisations
-  it("viewing B1T organisation details ", function () {
+  it("viewing organisation details ", function () {
     const params = {
       auth: {
         username: "admin",
@@ -18,11 +18,11 @@ describe("login", function () {
     cy.visit(params);
     cy.contains('Login as an anonymised user').click();
     cy.get('input#email')
-      .type('becomingateacher+integration-tests@digital.education.gov.uk');
+      .type('anonimized-user-10599@example.org');
     cy.get('form').submit();
 
-    cy.url().should('eq', `${baseUrl}organisations/B1T`);
-    cy.get('h1').contains('bat 1');
+    cy.url().should('eq', `${baseUrl}organisations/1A4`);
+    cy.get('h1').contains('School Direct');
     cy.get('footer').scrollIntoView({ duration: 100 });
   });
 });
