@@ -5,13 +5,11 @@
 // https://github.com/cypress-io/cypress/issues/5723
 // https://github.com/cypress-io/cypress/issues/781
 
-
 import publicly_visble_pages from "../../fixtures/publicly_visible/pages.json";
 
 const baseUrl = Cypress.config().baseUrl;
 
 describe("publicly visible pages", function () {
-
   publicly_visble_pages.forEach(publicly_visble_page => {
     describe(`${publicly_visble_page.pageType} pages`, function () {
       publicly_visble_page.pages.forEach(page => {
@@ -26,6 +24,10 @@ function canView(page) {
     const url = baseUrl + page.urlPath;
 
     const params = {
+      auth: {
+        username: "admin",
+        password: Cypress.env('password')
+      },
       method: 'GET',
       url: baseUrl + page.urlPath,
       failOnStatusCode: false
@@ -36,7 +38,7 @@ function canView(page) {
       .get(page.selector).contains(page.content);
 
     if(page.selector !== 'body') {
-      cy.get('footer').scrollIntoView({ duration: 2000 });
+      cy.get('footer').scrollIntoView({ duration: 100 });
     }
   };
 };
