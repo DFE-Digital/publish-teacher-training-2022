@@ -13,3 +13,6 @@ environment:
   selector_name: "staging"
 basic_auth: true
 developer_auth: true
+features:
+  allocations:
+    state: confirmed
