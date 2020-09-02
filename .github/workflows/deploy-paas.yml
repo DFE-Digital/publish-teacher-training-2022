@@ -31,11 +31,16 @@ jobs:
     steps:
       - name: Checkout the repository to the GitHub Actions runner
         uses: actions/checkout@v2
+    
+      - name: Pin Terraform version
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.29
 
       - name: Install Terraform CloudFoundry Provider
         run: |
           mkdir -p $HOME/.terraform.d/plugins/linux_amd64
-          wget -O ${{ env.CF_PROVIDER_DIR }} https://github.com/cloudfoundry-community/terraform-provider-cf/releases/latest/download/terraform-provider-cloudfoundry_linux_amd64
+          wget -O ${{ env.CF_PROVIDER_DIR }} https://github.com/cloudfoundry-community/terraform-provider-cf/releases/download/v0.12.2/terraform-provider-cloudfoundry_linux_amd64
           chmod +x ${{ env.CF_PROVIDER_DIR }}
       - name: Terraform init
         run: |
@@ -48,3 +53,4 @@ jobs:
         run: |
           terraform apply -var-file=${{ env.PAAS_TF_DIR }}/${{ env.TERRAFORM_VAR_FILE }} -auto-approve \
             ${{ env.PAAS_TF_DIR }}
+
