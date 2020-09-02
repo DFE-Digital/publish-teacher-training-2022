@@ -210,7 +210,7 @@ class CourseDecorator < ApplicationDecorator
     else
       year = recruitment_cycle.year.to_i
       day_month = Date.parse(recruitment_cycle.application_start_date).strftime("%-d %B")
-      "On #{day_month} when applications for the #{year} – #{year + 1} cycle open"
+      "On #{day_month} when applications for the #{year} to #{year + 1} cycle open"
     end
   end
 
