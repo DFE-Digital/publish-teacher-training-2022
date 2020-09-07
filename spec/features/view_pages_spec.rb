@@ -16,7 +16,7 @@ feature "View pages", type: :feature do
 
   scenario "Navigate to /terms-conditions" do
     visit "/terms-conditions"
-    expect(find("h1")).to have_content("Terms and Conditions")
+    expect(find("h1")).to have_content("Terms and conditions")
   end
 
   scenario "Navigate to /privacy-policy" do

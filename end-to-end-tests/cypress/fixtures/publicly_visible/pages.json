@@ -15,7 +15,7 @@
             {
                 "urlPath": "terms-conditions",
                 "selector": "h1",
-                "content": "Terms and Conditions"
+                "content": "Terms and conditions"
             },
             {
                 "urlPath": "privacy-policy",
