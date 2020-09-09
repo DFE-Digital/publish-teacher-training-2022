@@ -19,6 +19,7 @@ describe "recruitment_cycles/show.html", type: :view do
 
     describe "when accredited body user is viewing the current cycle" do
       before do
+        allow(Allocation).to receive(:journey_mode).and_return("open")
         assign(:provider, accredited_body)
         render template: "recruitment_cycles/show"
         recruitment_cycle_page.load(rendered)

@@ -9,6 +9,7 @@ describe "providers/show" do
 
   before do
     view.extend(CurrentUserMethod)
+    allow(Allocation).to receive(:journey_mode).and_return("open")
     allow(view).to receive(:current_user).and_return({ "admin" => admin })
     assign(:provider, provider)
     render
