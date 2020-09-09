@@ -1,12 +1,11 @@
 <% if @provider.accredited_body? %>
   <h2 class="govuk-heading-m">
-    <%= govuk_link_to "Request PE courses for 2021 to 2022",
-                provider_recruitment_cycle_allocations_path(@provider.provider_code, year) %>
+    <%= govuk_link_to t("allocations_for_pe.#{Allocation.journey_mode}_state_link_text"),
+                      provider_recruitment_cycle_allocations_path(@provider.provider_code, year) %>
   </h2>
 
   <p class="govuk-body">
-    Only accredited bodies are able to see this section. Use it to request fee-funded PE courses
-    (ones without a salary) for the next recruitment cycle.
+    <%= t("allocations_for_pe.#{Allocation.journey_mode}_state_copy") %>
   </p>
 
   <p class="govuk-body">This includes:</p>
