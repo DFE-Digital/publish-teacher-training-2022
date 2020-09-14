@@ -3,6 +3,8 @@
 
   <% if course.salaried? %>
     <%= render partial: 'courses/preview/financial_support/salaried' %>
+  <% elsif course.use_financial_support_placeholder? %>
+    <%= render partial: 'courses/preview/financial_support/placeholder', locals: { course: course } %>
   <% elsif course.excluded_from_bursary? %>
     <%= render partial: 'courses/preview/financial_support/loan', locals: { course: course } %>
   <% elsif course.bursary_only? %>
