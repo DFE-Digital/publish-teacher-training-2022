@@ -716,4 +716,49 @@ describe CourseDecorator do
       end
     end
   end
+
+  describe "#cycle_range" do
+    let(:expected_cycle_range) do
+      "#{current_recruitment_cycle.year} to #{(current_recruitment_cycle.year.to_i + 1)}"
+    end
+
+    subject { course.decorate.cycle_range }
+
+    it "should state the correct cycle range" do
+      expect(subject).to eq(expected_cycle_range)
+    end
+  end
+
+  describe "#use_financial_support_placeholder?" do
+    before do
+      allow(Settings).to receive(:financial_support_placeholder_cycle)
+        .and_return(financial_support_placeholder_cycle)
+    end
+
+    subject { course.decorate.use_financial_support_placeholder? }
+    context "financial_support_placeholder_cycle is nil" do
+      let(:financial_support_placeholder_cycle) { nil }
+
+      it "should be false" do
+        expect(subject).to be_falsey
+      end
+    end
+    context "financial_support_placeholder_cycle not the same as course recruitment_cycle_year" do
+      let(:financial_support_placeholder_cycle) do
+        course.recruitment_cycle_year.to_i + 1
+      end
+      it "should be false" do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context "financial_support_placeholder_cycle same as course recruitment_cycle_year" do
+      let(:financial_support_placeholder_cycle) do
+        course.recruitment_cycle_year.to_i
+      end
+      it "should be true" do
+        expect(subject).to be_truthy
+      end
+    end
+  end
 end

@@ -196,6 +196,14 @@ class CourseDecorator < ApplicationDecorator
     course.recruitment_cycle_year.to_i == Settings.current_cycle + 1
   end
 
+  def use_financial_support_placeholder?
+    course.recruitment_cycle_year.to_i == Settings.financial_support_placeholder_cycle
+  end
+
+  def cycle_range
+    "#{course.recruitment_cycle_year} to #{(course.recruitment_cycle_year.to_i + 1)}"
+  end
+
   def age_range
     if object.age_range_in_years.present?
       I18n.t("edit_options.age_range_in_years.#{object.age_range_in_years}.label", default: object.age_range_in_years.humanize)
