@@ -50,7 +50,7 @@ environment:
   label: "Beta"
   selector_name: "beta"
 current_cycle: 2020
-# `financial_support_placeholder_cycle` the cycle year value should be 
+# `financial_support_placeholder_cycle` the cycle year value should be
 # omitted if placeholder is not required otherwise it should be the
 # new/next cycle.
 financial_support_placeholder_cycle: 2021
@@ -67,8 +67,8 @@ use_ssl: true
 features:
   allocations:
     # state: open # Users can make requests for allocations
-    state: closed # Readonly - Users can see if they have or have not made request (does not show number of places)
-    # state: confirmed # final allocation places are displayed to users in a readonly state
+    # state: closed # Readonly - Users can see if they have or have not made request (does not show number of places)
+    state: confirmed # final allocation places are displayed to users in a readonly state
   signin_intercept: false
   signin_by_email: false
   dfe_signin: true
