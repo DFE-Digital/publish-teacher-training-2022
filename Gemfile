@@ -30,7 +30,7 @@ gem "omniauth_openid_connect", "~> 0.3"
 
 # App Insights for Azure
 gem "application_insights"
-gem "pkg-config", "~> 1.4.3"
+gem "pkg-config", "~> 1.4.4"
 
 # Parsing JSON from an API
 gem "json_api_client"
