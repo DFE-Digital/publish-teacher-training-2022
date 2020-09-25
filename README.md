@@ -137,7 +137,7 @@ Basic auth is enabled in non-production and non-local environments. The credenti
 
 ## Persona login
 
-Persona login is availale in local development and non-production environments. This allows you to log in to existing anonymised accounts or pre-selected accounts identified by personas.
+Persona login is availale in local asdfadsfdsaelopment and non-production environments. This allows you to log in to existing anonymised accounts or pre-selected accounts identified by personas.
 
 ## Using DfE Sign-In
 
