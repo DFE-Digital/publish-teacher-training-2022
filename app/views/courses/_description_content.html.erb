@@ -27,7 +27,7 @@
   <%= enrichment_summary_item(:course, 'Course length', course.length, ['course_length']) %>
 
   <% if course.has_fees? %>
-    <%= enrichment_summary_item(:course, 'Fee for UK and EU students', number_to_currency(course.fee_uk_eu), ['fee_uk_eu']) %>
+    <%= enrichment_summary_item(:course, 'Fee for UK students', number_to_currency(course.fee_uk_eu), ['fee_uk_eu']) %>
     <%= enrichment_summary_item(:course, 'Fee for international students (optional)', number_to_currency(course.fee_international), ['international_fees']) %>
     <%= enrichment_summary_item(:course, 'Fee details (optional)', course.fee_details, ['fee_details']) %>
     <%= enrichment_summary_item(:course, 'Financial support you offer (optional)', course.financial_support, ['financial_support']) %>
