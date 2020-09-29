@@ -21,7 +21,12 @@ describe "pages/performance_dashboard" do
                      allocations_accredited_bodies: "4,000",
                      users_active: "1,111",
                      users_not_active: "2,222",
-                     users_active_30_days: "3,333"
+                     users_active_30_days: "3,333",
+                     published_courses: "2000",
+                     new_courses_published: "1000",
+                     deleted_courses: "200",
+                     existing_courses_in_draft: "500",
+                     existing_courses_in_review: "5000"
 
     assign(:performance_data, service)
     render
@@ -53,6 +58,16 @@ describe "pages/performance_dashboard" do
   describe "allocations tab" do
     it "has two recruitment cycle years worth of data" do
       expect(performance_dashboard_page.allocation_tab.recruitment_cycles.length).to eq(2)
+    end
+  end
+
+  describe "rollover tab" do
+    before do
+      allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
+    end
+
+    it "has five sets of figures" do
+      expect(performance_dashboard_page.rollover_tab.data_sets.length).to eq(5)
     end
   end
 end

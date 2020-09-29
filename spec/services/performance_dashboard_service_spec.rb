@@ -141,6 +141,34 @@ describe PerformanceDashboardService do
     end
   end
 
+  describe "rollover data" do
+    let(:data) { service.call }
+
+    before do
+      data
+    end
+
+    it "returns a number of published courses" do
+      expect(data.published_courses).to eq("2,965")
+    end
+
+    it "returns a number of newly published courses" do
+      expect(data.new_courses_published).to eq("124")
+    end
+
+    it "returns a number of deleted courses" do
+      expect(data.deleted_courses).to eq("289")
+    end
+
+    it "returns a number of existing courses in draft" do
+      expect(data.existing_courses_in_draft).to eq("667")
+    end
+
+    it "returns a number of existing courses in review" do
+      expect(data.existing_courses_in_review).to eq("14,082")
+    end
+  end
+
   describe "when service fails to fetch data" do
     before do
       stub_request(:get, "http://localhost:3001/reporting.json")

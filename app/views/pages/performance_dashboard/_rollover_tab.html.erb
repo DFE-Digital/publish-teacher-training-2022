@@ -1,0 +1,49 @@
+<h2 class="govuk-heading-l">
+  Rollover
+</h2>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-1">
+  <div class="govuk-grid-column-full">
+    <div class="app-performance-dashboard app-performance-dashboard--primary">
+      <div class="app-performance-dashboard__title">
+        <%= @performance_data.published_courses %>
+      </div>
+      courses published for next cycle
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-performance-dashboard app-performance-dashboard--green">
+      <div class="app-performance-dashboard__title--small">
+        <%= @performance_data.new_courses_published %>
+      </div>
+      new courses published
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-performance-dashboard app-performance-dashboard--red">
+      <div class="app-performance-dashboard__title--small">
+        <%= @performance_data.deleted_courses %>
+      </div>
+      existing courses deleted
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-performance-dashboard app-performance-dashboard--secondary">
+      <div class="app-performance-dashboard__title--small">
+        <%= @performance_data.existing_courses_in_draft %>
+      </div>
+      existing courses in draft
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-performance-dashboard app-performance-dashboard--secondary">
+      <div class="app-performance-dashboard__title--small">
+        <%= @performance_data.existing_courses_in_review %>
+      </div>
+      existing courses in review
+    </div>
+  </div>
+</div>

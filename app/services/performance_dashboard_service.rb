@@ -84,4 +84,28 @@ class PerformanceDashboardService
   def users_active_30_days
     number_with_delimiter(@response["publish"]["users"]["recent_active_users"])
   end
+
+  def rollover_total
+    @response["rollover"]["total"]
+  end
+
+  def published_courses
+    number_with_delimiter(rollover_total["published_courses"])
+  end
+
+  def new_courses_published
+    number_with_delimiter(rollover_total["new_courses_published"])
+  end
+
+  def deleted_courses
+    number_with_delimiter(rollover_total["deleted_courses"])
+  end
+
+  def existing_courses_in_draft
+    number_with_delimiter(rollover_total["existing_courses_in_draft"])
+  end
+
+  def existing_courses_in_review
+    number_with_delimiter(rollover_total["existing_courses_in_review"])
+  end
 end

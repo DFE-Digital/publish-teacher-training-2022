@@ -20,6 +20,10 @@ module PageObjects
       section :allocation_tab, "#allocations" do
         elements :recruitment_cycles, ".govuk-grid-row"
       end
+
+      section :rollover_tab, "#rollover" do
+        elements :data_sets, ".app-performance-dashboard"
+      end
     end
   end
 end

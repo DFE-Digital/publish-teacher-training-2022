@@ -288,5 +288,14 @@
         "number_of_places": 1677
       }
     }
+  },
+  "rollover": {
+    "total": {
+      "published_courses": 2965,
+      "new_courses_published": 124,
+      "deleted_courses": 289,
+      "existing_courses_in_draft": 667,
+      "existing_courses_in_review": 14082
+    }
   }
 }
