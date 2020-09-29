@@ -5,6 +5,7 @@ class Provider < Base
   has_many :sites
   has_one :allocation
   has_many :training_providers
+  has_many :contacts
 
   self.primary_key = :provider_code
 
