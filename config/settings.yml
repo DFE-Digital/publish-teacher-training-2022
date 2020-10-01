@@ -78,6 +78,7 @@ features:
     # Normally a short period of time between rollover and the next cycle
     # actually starting when it would be set to false
     has_current_cycle_started?: true
+    show_next_cycle_allocation_recruitment_page: false
 commit_sha_file: COMMIT_SHA
 basic_auth: false
 basic_auth_username: admin
