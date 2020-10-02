@@ -165,6 +165,9 @@ GEM
     formatador (0.2.5)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    govuk-components (0.4.0)
+      rails (~> 6.0.3, >= 6.0.3)
+      view_component (~> 2.18.1)
     govuk_design_system_formbuilder (1.2.9)
       actionview (>= 5.2)
       activemodel (>= 5.2)
@@ -442,7 +445,7 @@ GEM
     validate_url (1.0.11)
       activemodel (>= 3.0.0)
       public_suffix
-    view_component (2.19.1)
+    view_component (2.18.2)
       activesupport (>= 5.0.0, < 7.0)
     web-console (4.0.4)
       actionview (>= 6.0.0)
@@ -489,6 +492,7 @@ DEPENDENCIES
   draper
   factory_bot_rails
   faker
+  govuk-components
   govuk_design_system_formbuilder
   guard
   guard-rspec
@@ -527,7 +531,6 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   super_diff
   tzinfo-data
-  view_component
   web-console (>= 3.3.0)
   webdrivers (~> 4.4)
   webmock

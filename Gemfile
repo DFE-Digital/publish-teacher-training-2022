@@ -17,6 +17,7 @@ gem "aasm"
 
 # Used to build our forms and style them using govuk-frontend class names
 gem "govuk_design_system_formbuilder"
+gem 'govuk-components'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
@@ -63,8 +64,6 @@ gem "rails_semantic_logger"
 gem "pagy"
 
 gem "rubypants"
-
-gem "view_component"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
