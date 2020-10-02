@@ -26,7 +26,7 @@ notify:
   unregistered_user_template_url: https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/templates/9ecac443-8cfd-49ac-ac59-e7ffa0ab6278
   registered_user_template_url: https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/templates/4da327dd-907a-4619-abe6-45f348bb2fa3
 google_forms:
-  next_cycle:
+  current_cycle:
     new_course_for_accredited_bodies:
       url: https://docs.google.com/forms/d/e/1FAIpQLSexQtIhIDiHM6vyy23OrJmeSoLTmLlw4y_2S3TI7FDQV2VcsQ/viewform?usp=pp_url
       email_entry: entry.957076544
@@ -35,13 +35,14 @@ google_forms:
       url: https://docs.google.com/forms/d/e/1FAIpQLSdmuYIBDGuESZJBKGVTIdEFntdcjX86J5u6yXTSFNpk18oJeA/viewform?usp=pp_url
       email_entry: entry.1033530353
       provider_code_entry: entry.158771972
-  current_cycle:
+  # NOTE: not in use, url is for 2021
+  next_cycle:
     new_course_for_accredited_bodies:
-      url: https://docs.google.com/forms/d/e/1FAIpQLScckkzOwt93FTZGgZCBRA6spAnSO06UKewD5N6P3moBhIpKiA/viewform?usp=pp_url
+      url: https://docs.google.com/forms/d/e/1FAIpQLSexQtIhIDiHM6vyy23OrJmeSoLTmLlw4y_2S3TI7FDQV2VcsQ/viewform?usp=pp_url
       email_entry: entry.957076544
       provider_code_entry: entry.1735563938
     new_course_for_unaccredited_bodies:
-      url: https://docs.google.com/forms/d/e/1FAIpQLSeD1BwS11lYm4PJ8WZMRIU5U02h0z-T5WlC0aqycc1CHV-e0A/viewform?usp=pp_url
+      url: https://docs.google.com/forms/d/e/1FAIpQLSexQtIhIDiHM6vyy23OrJmeSoLTmLlw4y_2S3TI7FDQV2VcsQ/viewform?usp=pp_url
       email_entry: entry.1033530353
       provider_code_entry: entry.158771972
 service_support:
