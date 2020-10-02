@@ -140,7 +140,8 @@ feature "Sign in", type: :feature do
         user_get_request
         user_update_request
         allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
-        allow(Settings.features.rollover).to receive(:show_next_cycle_allocation_recruitment_page).and_return(show_next_cycle_allocation_recruitment_page)
+        allow(Settings.features.rollover).to receive(:show_next_cycle_allocation_recruitment_page)
+          .and_return(show_next_cycle_allocation_recruitment_page)
       end
 
       context "when show next cycle allocation recruitment page is set to true" do
