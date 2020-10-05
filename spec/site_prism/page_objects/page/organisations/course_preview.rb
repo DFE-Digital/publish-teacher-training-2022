@@ -18,7 +18,6 @@ module PageObjects
         element :interview_process, "[data-qa=course__interview_process]"
         element :school_placements, '[data-qa="course__about_schools"]'
         element :uk_fees, "[data-qa=course__uk_fees]"
-        element :eu_fees, "[data-qa=course__eu_fees]"
         element :fee_details, "[data-qa=course__fee_details]"
         element :international_fees, "[data-qa=course__international_fees]"
         element :loan_details, "[data-qa=course__loan_details]"

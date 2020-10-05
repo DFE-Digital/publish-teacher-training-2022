@@ -53,7 +53,7 @@ feature "Course fees", type: :feature do
     )
 
     choose "1 year"
-    fill_in "Fee for UK and EU students", with: "8,000"
+    fill_in "Fee for UK students", with: "8,000"
     fill_in "Fee for international students (optional)", with: "16,000"
 
     fill_in "Fee details (optional)", with: "Test fee details"
@@ -101,7 +101,7 @@ feature "Course fees", type: :feature do
 
     visit fees_provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
 
-    fill_in "Fee for UK and EU students", with: 100_000_000
+    fill_in "Fee for UK students", with: 100_000_000
     click_on "Save"
 
     expect(course_fees_page.error_flash).to have_content(

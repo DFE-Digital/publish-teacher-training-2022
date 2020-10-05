@@ -146,10 +146,6 @@ feature "Preview course", type: :feature do
       "£9,250",
     )
 
-    expect(preview_course_page.eu_fees).to have_content(
-      "£9,250",
-    )
-
     expect(preview_course_page.international_fees).to have_content(
       "£9,250",
     )

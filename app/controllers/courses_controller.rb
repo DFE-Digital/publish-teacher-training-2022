@@ -120,7 +120,7 @@ class CoursesController < ApplicationController
     if params[:copy_from].present?
       @copied_fields = [
         ["Course length", "course_length"],
-        ["Fee for UK and EU students", "fee_uk_eu"],
+        ["Fee for UK students", "fee_uk_eu"],
         ["Fee for international students", "fee_international"],
         ["Fee details", "fee_details"],
         ["Financial support", "financial_support"],
