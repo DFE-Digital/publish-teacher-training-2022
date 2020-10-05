@@ -161,7 +161,7 @@ feature "Preview course", type: :feature do
     expect(decorated_course.use_financial_support_placeholder?).to be_truthy
 
     expect(preview_course_page.find(".govuk-inset-text"))
-      .to have_text("Bursaries, scholarships and financial support for 2021 to 2022 will be announced soon.")
+      .to have_text("Financial support for 2021 to 2022 will be announced soon. Further information is available on Get Into Teaching.")
     expect(preview_course_page).to_not have_scholarship_amount
     expect(preview_course_page).to_not have_bursary_amount
     # NOTE: revert to this once we know the actual figures
