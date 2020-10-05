@@ -181,7 +181,7 @@ RSpec.feature "PE allocations" do
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider_with_allocation.provider_code}/show_any" \
-      "?recruitment_cycle_year=2020",
+      "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider_with_allocation]),
     )
   end

@@ -204,7 +204,7 @@ private
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider.provider_code}/show_any" \
-      "?recruitment_cycle_year=2020",
+      "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider]),
     )
 
@@ -230,7 +230,7 @@ private
   def and_i_see_back_link
     expect(page).to have_link(
       "Back",
-      href: "/organisations/#{@accredited_body.provider_code}/2020/allocations",
+      href: "/organisations/#{@accredited_body.provider_code}/#{@accredited_body.recruitment_cycle.year}/allocations",
     )
   end
 
@@ -288,7 +288,7 @@ private
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider.provider_code}/show_any" \
-      "?recruitment_cycle_year=2020",
+      "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider]),
     )
     stub_api_v2_resource(@allocation)
@@ -304,7 +304,7 @@ private
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider.provider_code}/show_any" \
-      "?recruitment_cycle_year=2020",
+      "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider]),
     )
 
@@ -395,7 +395,7 @@ private
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider.provider_code}/show_any" \
-      "?recruitment_cycle_year=2020",
+      "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider]),
     )
 
@@ -510,7 +510,7 @@ private
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider.provider_code}/show_any" \
-      "?recruitment_cycle_year=2020",
+      "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider]),
     )
 
@@ -525,7 +525,7 @@ private
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider.provider_code}/show_any" \
-      "?recruitment_cycle_year=2020",
+      "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",
       resource_list_to_jsonapi([@training_provider]),
     )
 
