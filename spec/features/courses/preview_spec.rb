@@ -156,9 +156,18 @@ feature "Preview course", type: :feature do
 
     expect(preview_course_page).to_not have_salary_details
 
-    expect(preview_course_page.scholarship_amount).to have_content("a scholarship of £2,000")
+    # START: finanical support placeholder
+    # NOTE: This is temporary.
+    expect(decorated_course.use_financial_support_placeholder?).to be_truthy
 
-    expect(preview_course_page.bursary_amount).to have_content("a bursary of £4,000")
+    expect(preview_course_page.find(".govuk-inset-text"))
+      .to have_text("Bursaries, scholarships and financial support for 2021 to 2022 will be announced soon.")
+    expect(preview_course_page).to_not have_scholarship_amount
+    expect(preview_course_page).to_not have_bursary_amount
+    # NOTE: revert to this in due course.
+    # expect(preview_course_page.scholarship_amount).to have_content("a scholarship of £2,000")
+    # expect(preview_course_page.bursary_amount).to have_content("a bursary of £4,000")
+    # END: finanical support placeholder
 
     expect(preview_course_page.financial_support_details).to have_content("Financial support from the training provider")
 
