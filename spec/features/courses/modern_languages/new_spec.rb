@@ -56,7 +56,7 @@ feature "new modern language", type: :feature do
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
     stub_api_v2_request(
-      "/recruitment_cycles/2020/providers?page[page]=1",
+      "/recruitment_cycles/#{provider.recruitment_cycle.year}/providers?page[page]=1",
       resource_list_to_jsonapi([provider], meta: { count: 1 }),
     )
 

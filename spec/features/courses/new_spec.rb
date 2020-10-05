@@ -501,11 +501,11 @@ private
   end
 
   def select_start_date(course_creation_params)
-    course_creation_params[:start_date] = "September 2020"
+    course_creation_params[:start_date] = "September #{recruitment_cycle.year}"
     course.start_date = Time.zone.local(2019, 9)
     stub_api_v2_build_course(course_creation_params)
 
-    new_start_date_page.select "September 2020"
+    new_start_date_page.select "September #{recruitment_cycle.year}"
     new_start_date_page.continue.click
 
     # Addressable, the gem site-prism relies on, cannot match parameters containing a +

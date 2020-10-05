@@ -16,7 +16,7 @@ describe "Providers", type: :request do
           current_recruitment_cycle = build(:recruitment_cycle)
           stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
           stub_api_v2_request(
-            "/recruitment_cycles/2020/providers?page[page]=1",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers?page[page]=1",
             resource_list_to_jsonapi([provider], meta: { count: 1 }),
           )
           get(path)
@@ -32,7 +32,7 @@ describe "Providers", type: :request do
           providers = [provider1, provider2]
           stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
           stub_api_v2_request(
-            "/recruitment_cycles/2020/providers?page[page]=1",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers?page[page]=1",
             resource_list_to_jsonapi(providers, meta: { count: 2 }),
           )
           get(path)
@@ -46,7 +46,7 @@ describe "Providers", type: :request do
           current_recruitment_cycle = build(:recruitment_cycle)
           stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
           stub_api_v2_request(
-            "/recruitment_cycles/2020/providers?page[page]=1",
+            "/recruitment_cycles/#{current_recruitment_cycle.year}/providers?page[page]=1",
             resource_list_to_jsonapi([], meta: { count: 0 }),
           )
           get(path)
