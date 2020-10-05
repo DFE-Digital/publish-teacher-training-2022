@@ -16,8 +16,8 @@ gem "webpacker"
 gem "aasm"
 
 # Used to build our forms and style them using govuk-frontend class names
+gem "govuk-components"
 gem "govuk_design_system_formbuilder"
-gem 'govuk-components'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
