@@ -4,31 +4,7 @@ describe "pages/performance_dashboard" do
   let(:performance_dashboard_page) { PageObjects::Page::PerformanceDashboardPage.new }
 
   before do
-    service = double PerformanceDashboardService,
-                     total_providers: "1,000",
-                     total_courses: "555",
-                     total_users: "3,000",
-                     total_allocations: "300",
-                     providers_published_courses: "3,400",
-                     providers_unpublished_courses: "2,000",
-                     providers_accredited_bodies: "2,999",
-                     courses_total_open: "4,999",
-                     courses_total_closed: "5,999",
-                     courses_total_draft: "6,999",
-                     allocations_requests: "1,000",
-                     allocations_providers: "2,000",
-                     allocations_number_of_places: "3,000",
-                     allocations_accredited_bodies: "4,000",
-                     users_active: "1,111",
-                     users_not_active: "2,222",
-                     users_active_30_days: "3,333",
-                     published_courses: "2000",
-                     new_courses_published: "1000",
-                     deleted_courses: "200",
-                     existing_courses_in_draft: "500",
-                     existing_courses_in_review: "5000"
-
-    assign(:performance_data, service)
+    assign(:performance_data, mock_service)
     render
     performance_dashboard_page.load(rendered)
   end
@@ -64,10 +40,41 @@ describe "pages/performance_dashboard" do
   describe "rollover tab" do
     before do
       allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
+      assign(:performance_data, mock_service)
+      render
+      performance_dashboard_page.load(rendered)
     end
 
     it "has five sets of figures" do
       expect(performance_dashboard_page.rollover_tab.data_sets.length).to eq(5)
     end
+  end
+
+private
+
+  def mock_service
+    @mock_service ||= double PerformanceDashboardService,
+                             total_providers: "1,000",
+                             total_courses: "555",
+                             total_users: "3,000",
+                             total_allocations: "300",
+                             providers_published_courses: "3,400",
+                             providers_unpublished_courses: "2,000",
+                             providers_accredited_bodies: "2,999",
+                             courses_total_open: "4,999",
+                             courses_total_closed: "5,999",
+                             courses_total_draft: "6,999",
+                             allocations_requests: "1,000",
+                             allocations_providers: "2,000",
+                             allocations_number_of_places: "3,000",
+                             allocations_accredited_bodies: "4,000",
+                             users_active: "1,111",
+                             users_not_active: "2,222",
+                             users_active_30_days: "3,333",
+                             published_courses: "2000",
+                             new_courses_published: "1000",
+                             deleted_courses: "200",
+                             existing_courses_in_draft: "500",
+                             existing_courses_in_review: "5000"
   end
 end
