@@ -30,112 +30,7 @@
 
     <p class="govuk-body">UCAS will contact these people at your organisation:</p>
 
-    <dl class="govuk-summary-list govuk-!-margin-top-6 govuk-!-margin-bottom-9">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          UCAS Teacher Training (UTT) correspondent
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body" data-qa="provider__utt_contact">
-            <% if @provider.utt_contact.present? %>
-              <%= @provider.utt_contact[:name] %>
-              <%= @provider.utt_contact[:email] %>
-              <%= @provider.utt_contact[:telephone] %>
-            <% else %>
-              Information unknown
-            <% end %>
-          </p>
-          <p class="govuk-body-s">
-            This person will receive the UCAS monthly bulletin, which includes information about deadlines for application decisions
-          </p>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          web-link correspondent
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body" data-qa="provider__web_link_contact">
-            <% if @provider.web_link_contact.present? %>
-              <%= @provider.web_link_contact[:name] %>
-              <%= @provider.web_link_contact[:email] %>
-              <%= @provider.web_link_contact[:telephone] %>
-            <% else %>
-              Information unknown
-            <% end %>
-          </p>
-          <p class="govuk-body-s">
-            This person will receive notices about UCAS systems and planned downtime
-          </p>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Finance contact
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body" data-qa="provider__finance_contact">
-            <% if @provider.finance_contact.present? %>
-              <%= @provider.finance_contact[:name] %>
-              <%= @provider.finance_contact[:email] %>
-              <%= @provider.finance_contact[:telephone] %>
-            <% else %>
-              Information unknown
-            <% end %>
-          </p>
-          <p class="govuk-body-s">
-            This person will receive invoices from UCAS for payment of fees
-          </p>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Fraud contact
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body" data-qa="provider__fraud_contact">
-            <% if @provider.fraud_contact.present? %>
-              <%= @provider.fraud_contact[:name] %>
-              <%= @provider.fraud_contact[:email] %>
-              <%= @provider.fraud_contact[:telephone] %>
-            <% else %>
-              Information unknown
-            <% end %>
-          </p>
-          <p class="govuk-body-s">
-            This person will receive alerts about fraudulent activity (for example when a plagiarised personal statement is detected)
-          </p>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          UCAS Administrator
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body" data-qa="provider__admin_contact">
-            <% if @provider.admin_contact.present? %>
-              <%= @provider.admin_contact[:name] %>
-              <%= @provider.admin_contact[:email] %>
-              <%= @provider.admin_contact[:telephone] %>
-            <% else %>
-              Information unknown
-            <% end %>
-          </p>
-          <p class="govuk-body-s">
-            This person is responsible for setting up and maintaining UCAS user accounts.
-          </p>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-    </dl>
+    <%= render partial: "ucas_contact_list", locals: { ucas_contact_view: @ucas_contact_view } %>
 
     <hr class="govuk-section-break govuk-section-break--l" />
 
@@ -149,8 +44,8 @@
         </dt>
         <dd class="govuk-summary-list__value">
           <p class="govuk-body" data-qa="provider__gt12_contact">
-            <% if @provider.gt12_contact.present? %>
-              <%= @provider.gt12_contact %>
+            <% if @ucas_contact_view.gt12_contact.present? %>
+              <%= @ucas_contact_view.gt12_contact %>
             <% else %>
               Information unknown
             <% end %>
@@ -174,11 +69,11 @@
         </dt>
         <dd class="govuk-summary-list__value">
           <p class="govuk-body" data-qa="provider__send_application_alerts">
-            <%= t("edit_options.send_application_alerts.#{@provider.send_application_alerts}.label") %>
+            <%= t("edit_options.send_application_alerts.#{@ucas_contact_view.send_application_alerts}.label") %>
           </p>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to alerts_provider_ucas_contacts_path(@provider.provider_code), class: "govuk-link", data: { qa: 'send_application_alerts__change' } do %>
+          <%= link_to alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code), class: "govuk-link", data: { qa: 'send_application_alerts__change' } do %>
             Change<span class="govuk-visually-hidden"> email alerts for new applications</span>
           <% end %>
         </dd>
@@ -189,15 +84,15 @@
         </dt>
         <dd class="govuk-summary-list__value">
           <p class="govuk-body" data-qa="provider__application_alert_contact">
-            <% if @provider.application_alert_contact.present? %>
-              <%= @provider.application_alert_contact %>
+            <% if @ucas_contact_view.application_alert_contact.present? %>
+              <%= @ucas_contact_view.application_alert_contact %>
             <% else %>
               Information unknown
             <% end %>
           </p>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to alerts_provider_ucas_contacts_path(@provider.provider_code), class: "govuk-link", data: { qa: 'application_alert_contact__change' } do %>
+          <%= link_to alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code), class: "govuk-link", data: { qa: 'application_alert_contact__change' } do %>
             Change<span class="govuk-visually-hidden"> email alerts for new applications</span>
           <% end %>
         </dd>

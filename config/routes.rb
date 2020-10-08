@@ -66,6 +66,8 @@ Rails.application.routes.draw do
       patch "/alerts", on: :member, to: "ucas_contacts#update_alerts"
     end
 
+    resources :contacts, only: %i[edit update]
+
     # TODO: Extract year constraint to future proof for future cycles
     resources :recruitment_cycles, param: :year, constraints: { year: /2021|2022/ }, path: "", only: :show do
       get "/details", on: :member, to: "providers#details"

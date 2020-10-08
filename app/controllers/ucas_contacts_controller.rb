@@ -4,6 +4,7 @@ class UcasContactsController < ApplicationController
     raise "missing provider code" unless provider_code
 
     @provider = Provider
+                  .includes(:contacts)
                   .where(recruitment_cycle_year: Settings.current_cycle)
                   .find(provider_code)
                   .first
@@ -11,7 +12,9 @@ class UcasContactsController < ApplicationController
     @provider.send_application_alerts = "none" unless @provider.send_application_alerts
   end
 
-  def show; end
+  def show
+    @ucas_contact_view = UcasContactView.new(provider: @provider)
+  end
 
   def alerts; end
 

@@ -134,3 +134,20 @@ en:
     open_state_copy: "Only accredited bodies are able to see this section. Use it to request fee-funded PE courses(ones without a salary) for the next recruitment cycle."
     closed_state_copy: "Only accredited bodies are able to see this section. Use it to request fee-funded PE courses (ones without a salary) for the next recruitment cycle."
     confirmed_state_copy: "Use it to view the outcome of requests for fee-funded PE courses (ones without a salary) for the next recruitment cycle."
+  ucas_contacts:
+    admin:
+      heading: UCAS Administrator
+      purpose: This person is responsible for setting up and maintaining UCAS user accounts.
+      submit: Request changes
+    utt:
+      heading: UCAS Teacher Training (UTT) correspondent
+      purpose: This person will receive the UCAS monthly bulletin, which includes information about deadlines for application decisions.
+    web_link:
+      heading: UCAS web-link correspondent
+      purpose: This person will receive notices about UCAS systems and planned downtime.
+    fraud:
+      heading: Fraud contact
+      purpose: This person will receive alerts about fraudulent activity (for example when a plagiarised personal statement is detected).
+    finance:
+      heading: Finance contact
+      purpose: This person will receive invoices from UCAS for payment of fees.

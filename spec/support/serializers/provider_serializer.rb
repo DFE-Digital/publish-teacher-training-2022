@@ -10,6 +10,7 @@ class ProviderSerializer < JSONAPI::Serializable::Resource
   end
   has_many :sites
   has_many :users
+  has_many :contacts
 
   attributes(*FactoryBot.attributes_for("provider").keys -
              %i[courses sites users])

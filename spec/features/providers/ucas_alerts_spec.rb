@@ -14,7 +14,7 @@ feature "Edit UCAS email alerts", type: :feature do
 
   before do
     stub_omniauth
-    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "contacts")
     visit alerts_provider_ucas_contacts_path(provider.provider_code)
   end
 
