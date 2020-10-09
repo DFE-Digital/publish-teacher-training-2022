@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "12.15.0"
+    "node": "12.x"
   },
   "scripts": {
     "test": "jest"
