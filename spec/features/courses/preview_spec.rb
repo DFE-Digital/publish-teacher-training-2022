@@ -243,7 +243,7 @@ feature "Preview course", type: :feature do
 
   def expect_financial_support_placeholder
     expect(decorated_course.use_financial_support_placeholder?).to be_truthy
-    
+
     expect(preview_course_page.find(".govuk-inset-text"))
       .to have_text("Financial support for 2021 to 2022 will be announced soon. Further information is available on Get Into Teaching.")
     expect(preview_course_page).to_not have_scholarship_amount
