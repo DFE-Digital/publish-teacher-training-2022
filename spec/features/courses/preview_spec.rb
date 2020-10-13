@@ -84,6 +84,8 @@ feature "Preview course", type: :feature do
   scenario "viewing the preview course page" do
     visit preview_provider_recruitment_cycle_course_path(provider.provider_code, current_recruitment_cycle.year, course.course_code)
 
+    expect_finanical_support
+
     expect(preview_course_page.title).to have_content(
       "#{course.name} (#{course.course_code})",
     )
@@ -156,19 +158,6 @@ feature "Preview course", type: :feature do
 
     expect(preview_course_page).to_not have_salary_details
 
-    # START: finanical support placeholder
-    # NOTE: This is temporary as the financial incentives for this cycle haven't been released yet.
-    expect(decorated_course.use_financial_support_placeholder?).to be_truthy
-
-    expect(preview_course_page.find(".govuk-inset-text"))
-      .to have_text("Financial support for 2021 to 2022 will be announced soon. Further information is available on Get Into Teaching.")
-    expect(preview_course_page).to_not have_scholarship_amount
-    expect(preview_course_page).to_not have_bursary_amount
-    # NOTE: revert to this once we know the actual figures
-    # expect(preview_course_page.scholarship_amount).to have_content("a scholarship of £2,000")
-    # expect(preview_course_page.bursary_amount).to have_content("a bursary of £4,000")
-    # END: finanical support placeholder
-
     expect(preview_course_page.financial_support_details).to have_content("Financial support from the training provider")
 
     expect(preview_course_page.required_qualifications).to have_content(
@@ -236,5 +225,35 @@ feature "Preview course", type: :feature do
 
   def jsonapi_site_status(name, study_mode, status)
     build(:site_status, study_mode, site: build(:site, location_name: name), status: status)
+  end
+
+  def expect_finanical_support
+    # NOTE: There is a period at the beginning of the new/current
+    #       recruitment cycle whereby the financial incentives
+    #       announcement is still pending.
+
+    financial_incentives_been_announced = true
+
+    if financial_incentives_been_announced
+      expect_financial_incentives
+    else
+      expect_financial_support_placeholder
+    end
+  end
+
+  def expect_financial_support_placeholder
+    expect(decorated_course.use_financial_support_placeholder?).to be_truthy
+
+    expect(preview_course_page.find(".govuk-inset-text"))
+      .to have_text("Financial support for 2021 to 2022 will be announced soon. Further information is available on Get Into Teaching.")
+    expect(preview_course_page).to_not have_scholarship_amount
+    expect(preview_course_page).to_not have_bursary_amount
+  end
+
+  def expect_financial_incentives
+    expect(decorated_course.use_financial_support_placeholder?).to be_falsey
+
+    expect(preview_course_page.scholarship_amount).to have_content("a scholarship of £2,000")
+    expect(preview_course_page.bursary_amount).to have_content("a bursary of £4,000")
   end
 end
