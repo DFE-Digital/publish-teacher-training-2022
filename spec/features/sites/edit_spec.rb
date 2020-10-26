@@ -61,7 +61,7 @@ feature "Edit locations", type: :feature do
     scenario "it shows a location" do
       visit edit_provider_recruitment_cycle_site_path(provider_code, site.recruitment_cycle_year, site.id)
 
-      expect(location_page).to be_displayed(provider_code, site.id)
+      expect(location_page).to be_displayed(provider_code: provider_code, site_id: site.id)
       expect(location_page.title).to have_content("Main site 1")
 
       location_page.publish_changes.click
