@@ -188,6 +188,27 @@
       "metadata": {
         "description": "The publish provider page offers current and next rollover cycles when set to true."
       }
+    },
+    "dockerRegistryUrl": {
+      "type": "string",
+      "defaultValue": "https://index.docker.io",
+      "metadata": {
+          "description": "URL of the docker registry, eg: https://index.docker.io"
+      }
+    },
+    "dockerRegistryUsername": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+          "description": "Username to login to the docker registry"
+      }
+    },
+    "dockerRegistryPassword": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+          "description": "Password to login to the docker registry"
+      }
     }
   },
   "variables": {
@@ -371,6 +392,18 @@
               {
                 "name": "SETTINGS__FEATURES__DFE_SIGNIN",
                 "value": "[parameters('settingsFeaturesDfeSignin')]"
+              },
+              {
+                  "name": "DOCKER_REGISTRY_SERVER_URL",
+                  "value": "[parameters('dockerRegistryUrl')]"
+              },
+              {
+                  "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                  "value": "[parameters('dockerRegistryUsername')]"
+              },
+              {
+                  "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                  "value": "[parameters('dockerRegistryPassword')]"
               }
             ]
           },
