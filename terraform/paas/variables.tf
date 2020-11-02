@@ -37,3 +37,11 @@ variable SETTINGS__DFE_SIGNIN__SECRET {
 variable SETTINGS__LOGSTASH__HOST {
   type = string
 }
+
+variable DOCKERHUB_USERNAME {
+  type = string
+}
+
+variable DOCKERHUB_PASSWORD {
+  type = string
+}

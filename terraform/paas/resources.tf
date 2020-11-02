@@ -4,6 +4,11 @@ resource cloudfoundry_app publish-training {
   docker_image = var.app.docker_image
   strategy     = "blue-green-v2"
 
+  docker_credentials = {
+    username = var.DOCKERHUB_USERNAME
+    password = var.DOCKERHUB_PASSWORD
+  }
+
   environment = {
     ASSETS_PRECOMPILE                                = var.app_env.ASSETS_PRECOMPILE
     RAILS_ENV                                        = var.app_env.RAILS_ENV
