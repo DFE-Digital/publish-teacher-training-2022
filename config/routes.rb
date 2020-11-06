@@ -68,8 +68,7 @@ Rails.application.routes.draw do
 
     resources :contacts, only: %i[edit update]
 
-    # TODO: Extract year constraint to future proof for future cycles
-    resources :recruitment_cycles, param: :year, constraints: { year: /2021|2022/ }, path: "", only: :show do
+    resources :recruitment_cycles, param: :year, constraints: { year: /#{Settings.current_cycle}|#{Settings.current_cycle + 1}/ }, path: "", only: :show do
       get "/details", on: :member, to: "providers#details"
       get "/contact", on: :member, to: "providers#contact"
       put "/contact", on: :member, to: "providers#update"
