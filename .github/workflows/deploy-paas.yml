@@ -53,4 +53,6 @@ jobs:
         run: |
           terraform apply -var-file=${{ env.PAAS_TF_DIR }}/${{ env.TERRAFORM_VAR_FILE }} -auto-approve \
             ${{ env.PAAS_TF_DIR }}
-
+        env:
+          TF_VAR_DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          TF_VAR_DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
