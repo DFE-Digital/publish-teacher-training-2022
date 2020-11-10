@@ -15,11 +15,8 @@ module MagicLink
       payload = {
         email: @email,
       }
-      token = JWT.encode(
-        payload,
-        Settings.teacher_training_api.secret,
-        Settings.teacher_training_api.algorithm,
-      )
+
+      token = JWT::EncodeService.call(payload: payload)
 
       post_url = "#{@site}users/generate_and_send_magic_link"
       response = Faraday.patch(

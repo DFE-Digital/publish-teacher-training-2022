@@ -247,11 +247,7 @@ private
     end
     # end of debugging
 
-    token = JWT.encode(
-      payload,
-      Settings.teacher_training_api.secret,
-      Settings.teacher_training_api.algorithm,
-    )
+    token = JWT::EncodeService.call(payload: payload)
 
     RequestStore.store[:manage_courses_backend_token] = token
   end

@@ -18,6 +18,10 @@ teacher_training_api:
   secret: <%= SecureRandom.base64 %>
   # URL of the API app (teacher-training-api)
   base_url: http://localhost:3001
+  issuer: "publish-teacher-training"
+  audience: "teacher-training-api"
+  subject: "access"
+
 search_ui:
   # URL of the C# search ui app (search-and-compare-ui)
   base_url: https://localhost:5000
