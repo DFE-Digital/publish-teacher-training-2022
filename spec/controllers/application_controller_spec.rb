@@ -39,8 +39,8 @@ describe ApplicationController, type: :controller do
     before do
       allow(Base).to receive(:connection)
 
-      allow(JWT).to receive(:encode)
-        .with(payload, Settings.teacher_training_api.secret, Settings.teacher_training_api.algorithm)
+      allow(JWT::EncodeService).to receive(:call)
+        .with(payload: payload)
         .and_return("anything")
     end
 
@@ -65,8 +65,8 @@ describe ApplicationController, type: :controller do
           controller.authenticate
         end
 
-        it "has performed jwt encoding" do
-          expect(JWT).to have_received(:encode)
+        it "has performed jwt encoding service" do
+          expect(JWT::EncodeService).to have_received(:call)
         end
 
         it "has not called session create" do
@@ -168,8 +168,8 @@ describe ApplicationController, type: :controller do
           controller.authenticate
         end
 
-        it "has performed jwt encoding" do
-          expect(JWT).to have_received(:encode)
+        it "has performed jwt encoding service" do
+          expect(JWT::EncodeService).to have_received(:call)
         end
 
         it "has called session create" do
