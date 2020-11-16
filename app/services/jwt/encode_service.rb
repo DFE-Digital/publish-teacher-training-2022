@@ -1,10 +1,6 @@
 module JWT
   class EncodeService
-    class << self
-      def call(*args)
-        new(*args).call
-      end
-    end
+    include ServicePattern
 
     def initialize(payload:)
       @payload = payload
