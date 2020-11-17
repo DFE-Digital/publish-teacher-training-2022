@@ -62,23 +62,30 @@ describe "authorisation", type: :request do
   end
 
   describe "/send_magic_link" do
+    let(:email) { "logmein@localhost" }
+    let(:payload) { { email: email } }
+    let(:expected_token) { "expected_token" }
+    let(:stub_api_request) do
+      stub_api_v2_request(
+        "/users/generate_and_send_magic_link",
+        "",
+        :patch,
+      )
+    end
+
+    before do
+      allow(JWT::EncodeService).to receive(:call)
+        .with(payload: payload)
+        .and_return(expected_token)
+    end
+
     context "with the signin_by_email feature enabled", feature_signin_by_email: true do
       it "makes a request to the api to send the magic link" do
-        api_stub = stub_api_v2_request(
-          "/users/generate_and_send_magic_link",
-          "",
-          :patch,
-        )
-        email = "logmein@localhost"
+        api_stub = stub_api_request
 
         post "/send_magic_link", params: { user: { email: email } }
 
-        expected_token = JWT.encode(
-          { email: email },
-          Settings.teacher_training_api.secret,
-          Settings.teacher_training_api.algorithm,
-        )
-
+        expect(JWT::EncodeService).to have_received(:call)
         expect(api_stub).to have_been_requested
         expect(api_stub.with(
                  headers: { "Authorization" => "Bearer #{expected_token}" },
@@ -86,23 +93,16 @@ describe "authorisation", type: :request do
       end
 
       it "makes redirects to the magic_link_sent page" do
-        stub_api_v2_request(
-          "/users/generate_and_send_magic_link",
-          "",
-          :patch,
-        )
-        email = "logmein@localhost"
+        stub_api_request
 
         post "/send_magic_link", params: { user: { email: email } }
-
+        expect(JWT::EncodeService).to have_received(:call)
         expect(response).to redirect_to magic_link_sent_path
       end
     end
 
     context "with the signin_by_email feature disabled", feature_signin_by_email: false do
       it "returns an error" do
-        email = "logmein@localhost"
-
         expect {
           post "/send_magic_link", params: { user: { email: email } }
         }.to raise_error RuntimeError, "Feature signin_by_email is disabled"

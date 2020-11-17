@@ -2,13 +2,18 @@ require "rails_helper"
 
 describe MagicLink::GenerateAndSendService do
   let(:email) { "bat@localhost" }
-  let(:site)  { "http://localhost:3000" }
+  let(:payload) { { email: email } }
+  let(:expected_token) { "expected_token" }
+  let(:site) { "http://localhost:3000" }
 
   describe "#call" do
     let(:response) { spy("Response", success?: true) }
 
     before :each do
       allow(Faraday).to receive(:patch).and_return(response)
+      allow(JWT::EncodeService).to receive(:call)
+        .with(payload: payload)
+        .and_return(expected_token)
     end
 
     it "makes a PATCH request to the API" do
@@ -36,12 +41,6 @@ describe MagicLink::GenerateAndSendService do
     end
 
     it "sets the Authorization header" do
-      expected_token = JWT.encode(
-        { email: email },
-        Settings.teacher_training_api.secret,
-        Settings.teacher_training_api.algorithm,
-      )
-
       described_class.call(email: email, site: site)
 
       expect(Faraday).to(

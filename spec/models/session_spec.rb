@@ -6,36 +6,33 @@ describe Session do
     let(:session_stub) do
       stub_api_v2_request("/sessions/create_by_magic?magic_link_token=magic-token", user.to_jsonapi, :patch)
     end
+    let(:payload) { { email: user.email } }
+    let(:expected_token) { "expected_token" }
 
     before(:each) do
       session_stub
-    end
+      allow(JWT::EncodeService).to receive(:call)
+        .with(payload: payload)
+        .and_return(expected_token)
 
-    it "makes a PATCH request to the API" do
       Session.create_by_magic(
         magic_link_token: "magic-token",
         email: user.email,
       )
+    end
 
+    it "makes a PATCH request to the API" do
       expect(session_stub).to have_been_requested
     end
 
     it "sends the Authorization header" do
-      payload = { email: user.email }
-      expected_token = JWT.encode(
-        payload,
-        Settings.teacher_training_api.secret,
-        Settings.teacher_training_api.algorithm,
-      )
-
-      Session.create_by_magic(
-        magic_link_token: "magic-token",
-        email: user.email,
-      )
-
       expect(session_stub.with(
                headers: { "Authorization" => "Bearer #{expected_token}" },
              )).to have_been_made
+    end
+
+    it "has performed jwt encoding service" do
+      expect(JWT::EncodeService).to have_received(:call)
     end
   end
 end
