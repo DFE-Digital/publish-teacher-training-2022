@@ -29,7 +29,7 @@ module JWT
       now = Time.zone.now
       {
         aud: Settings.teacher_training_api.audience,
-        exp: (now + 5.minutes).to_i,
+        exp: (now + 6.hours).to_i,
         iat: now.to_i,
         iss: Settings.teacher_training_api.issuer,
         sub: Settings.teacher_training_api.subject,

@@ -15,7 +15,7 @@ describe JWT::EncodeService do
   let(:claims) do
     {
       "aud" => Settings.teacher_training_api.audience,
-      "exp" => (now + 5.minutes).to_i,
+      "exp" => (now + 6.hours).to_i,
       "iat" => now.to_i,
       "iss" => Settings.teacher_training_api.issuer,
       "sub" => Settings.teacher_training_api.subject,
@@ -31,7 +31,7 @@ describe JWT::EncodeService do
   end
 
   let(:static_decoded_token) do
-    token = "eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVtYWlsIjoiYmF0QGxvY2FsaG9zdCJ9LCJhdWQiOiJ0ZWFjaGVyLXRyYWluaW5nLWFwaSIsImV4cCI6MTYwNTA5MzM3MSwiaWF0IjoxNjA1MDkzMDcxLCJpc3MiOiJwdWJsaXNoLXRlYWNoZXItdHJhaW5pbmciLCJzdWIiOiJhY2Nlc3MifQ.njFc7S3opebXsOkkCM3UMCACfpxJmgsDIrvj2eJvBLY"
+    token = "eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVtYWlsIjoiYmF0QGxvY2FsaG9zdCJ9LCJhdWQiOiJ0ZWFjaGVyLXRyYWluaW5nLWFwaSIsImV4cCI6MTYwNTExNDY3MSwiaWF0IjoxNjA1MDkzMDcxLCJpc3MiOiJwdWJsaXNoLXRlYWNoZXItdHJhaW5pbmciLCJzdWIiOiJhY2Nlc3MifQ.wjqihS2hKNR5l3k9fInL_0n6mwv45B5pZxyaBUvvYtQ"
     JWT.decode(
       token,
       Settings.teacher_training_api.secret,
