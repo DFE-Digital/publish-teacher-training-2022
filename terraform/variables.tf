@@ -21,7 +21,7 @@ variable dockerhub_username {}
 
 variable dockerhub_password {}
 
-variable paas_app_config { type = map }
+variable paas_app_config_file { default = "workspace_variables/app_config.yml" }
 
 variable paas_app_secrets_file { default = "workspace_variables/app_secrets.yml" }
 
@@ -38,6 +38,7 @@ locals {
     username = var.dockerhub_username
     password = var.dockerhub_password
   }
+  paas_app_config                = yamldecode(file(var.paas_app_config_file))[var.paas_app_environment]
   paas_app_secrets               = yamldecode(file(var.paas_app_secrets_file))
-  paas_app_environment_variables = merge(local.paas_app_secrets, var.paas_app_config)
+  paas_app_environment_variables = merge(local.paas_app_secrets, local.paas_app_config)
 }

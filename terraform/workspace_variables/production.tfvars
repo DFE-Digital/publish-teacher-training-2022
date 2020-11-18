@@ -5,13 +5,6 @@ paas_web_app_host_name = "www"
 paas_web_app_instances = 1
 paas_web_app_memory    = 512
 
-paas_app_config = {
-  RAILS_ENV                 = "production"
-  RAILS_SERVE_STATIC_FILES  = true
-  ASSETS_PRECOMPILE         = true
-  WEBPACKER_DEV_SERVER_HOST = "webpacker"
-}
-
 #StatusCake
 statuscake_alerts = {
   prod-pubtt = {
