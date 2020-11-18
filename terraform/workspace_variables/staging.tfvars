@@ -1,6 +1,21 @@
-alerts =  {
-staging-pubtt = {
-    website_name = "staging-publish-teacher-training"
+#PaaS
+cf_space               = "bat-staging"
+paas_app_environment   = "staging"
+paas_web_app_host_name = "staging"
+paas_web_app_instances = 1
+paas_web_app_memory    = 512
+
+paas_app_config = {
+  RAILS_ENV                 = "staging"
+  RAILS_SERVE_STATIC_FILES  = true
+  ASSETS_PRECOMPILE         = true
+  WEBPACKER_DEV_SERVER_HOST = "webpacker"
+}
+
+#StatusCake
+statuscake_alerts = {
+  staging-pubtt = {
+    website_name  = "publish-teacher-training-staging"
     website_url   = "https://www.staging.publish-teacher-training-courses.service.gov.uk/ping"
     test_type     = "HTTP"
     check_rate    = 60
