@@ -5,13 +5,6 @@ paas_web_app_host_name = "staging"
 paas_web_app_instances = 1
 paas_web_app_memory    = 512
 
-paas_app_config = {
-  RAILS_ENV                 = "staging"
-  RAILS_SERVE_STATIC_FILES  = true
-  ASSETS_PRECOMPILE         = true
-  WEBPACKER_DEV_SERVER_HOST = "webpacker"
-}
-
 #StatusCake
 statuscake_alerts = {
   staging-pubtt = {

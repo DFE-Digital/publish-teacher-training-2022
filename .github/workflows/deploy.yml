@@ -44,6 +44,12 @@ jobs:
           DEPLOY_ENV:   ${{ github.event.inputs.environment }}
           DOCKER_IMAGE: ${{ format('dfedigital/publish-teacher-training:paas-{0}', github.event.inputs.sha) }}
 
+      - name: Download app secrets file
+        working-directory: terraform/workspace_variables
+        run: echo $APP_SECRETS | base64 -d >> app_secrets.yml
+        env:
+          APP_SECRETS: ${{ secrets[format('APP_SECRETS_{0}', env.DEPLOY_ENV)] }}
+
       - name: Terraform init, plan & apply
         run: |
           terraform init -backend-config workspace_variables/${{ env.DEPLOY_ENV }}_backend.tfvars
