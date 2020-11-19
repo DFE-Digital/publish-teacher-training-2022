@@ -23,6 +23,7 @@ yarn-debug.log*
 .yarn-integrity
 
 .env
+.envrc
 config/localhost/https/localhost.key
 config/localhost/https/localhost.crt
 
@@ -50,3 +51,7 @@ terraform.tfstate
 terraform.tfstate.d/
 ./*.tfstate
 lock.json
+**/.terraform/
+terraform/workspace_variables/*.yml
+terraform/workspace_variables/*.base64
+!terraform/workspace_variables/app_config.yml
