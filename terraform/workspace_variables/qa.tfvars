@@ -1,6 +1,21 @@
-alerts =  {
-qa-pubtt = {
-    website_name = "qa-publish-teacher-training"
+#PaaS
+cf_space               = "bat-qa"
+paas_app_environment   = "qa"
+paas_web_app_host_name = "qa"
+paas_web_app_instances = 1
+paas_web_app_memory    = 512
+
+paas_app_config = {
+  RAILS_ENV                 = "qa"
+  RAILS_SERVE_STATIC_FILES  = true
+  ASSETS_PRECOMPILE         = true
+  WEBPACKER_DEV_SERVER_HOST = "webpacker"
+}
+
+#StatusCake
+statuscake_alerts = {
+  qa-pubtt = {
+    website_name  = "publish-teacher-training-qa"
     website_url   = "https://www.qa.publish-teacher-training-courses.service.gov.uk/ping"
     test_type     = "HTTP"
     check_rate    = 60
