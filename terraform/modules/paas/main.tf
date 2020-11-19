@@ -1,10 +1,13 @@
 resource cloudfoundry_app web_app {
-  name               = local.web_app_name
-  space              = data.cloudfoundry_space.space.id
-  docker_image       = var.docker_image
-  docker_credentials = var.dockerhub_credentials
-  strategy           = "blue-green-v2"
-  environment        = var.app_environment_variables
+  name                       = local.web_app_name
+  space                      = data.cloudfoundry_space.space.id
+  health_check_type          = "http"
+  health_check_http_endpoint = "/ping"
+  docker_image               = var.docker_image
+  docker_credentials         = var.dockerhub_credentials
+  timeout                    = 180
+  strategy                   = "blue-green-v2"
+  environment                = var.app_environment_variables
 
   dynamic "routes" {
     for_each = local.web_app_routes
