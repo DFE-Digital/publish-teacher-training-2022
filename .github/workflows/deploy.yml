@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Start ${{ github.event.inputs.environment }} Deployment
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@master
         id: deployment
         with:
           env:   ${{ github.event.inputs.environment }}
@@ -51,6 +51,7 @@ jobs:
           APP_SECRETS: ${{ secrets[format('APP_SECRETS_{0}', env.DEPLOY_ENV)] }}
 
       - name: Terraform init, plan & apply
+        working-directory: terraform
         run: |
           terraform init -backend-config workspace_variables/${{ env.DEPLOY_ENV }}_backend.tfvars
           terraform plan -var-file workspace_variables/${{ env.DEPLOY_ENV }}.tfvars -out tfplan
@@ -67,7 +68,7 @@ jobs:
 
       - name: Update ${{ github.event.inputs.environment }} status
         if: ${{ always() }}
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@master
         with:
           env:  ${{ github.event.inputs.environment }}
           ref:  ${{ github.event.inputs.sha }}
