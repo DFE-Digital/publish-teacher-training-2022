@@ -42,6 +42,7 @@ jobs:
             qa) next_env=staging ;;
             staging) next_env=production ;;
           esac
+          echo "NEXT_ENV=$next_env" >> $GITHUB_ENV
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
           echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
         env:
