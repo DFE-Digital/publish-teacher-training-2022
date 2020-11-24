@@ -3,11 +3,9 @@ require "rails_helper"
 RSpec.describe HeartbeatController do
   describe "#sha" do
     around :each do |example|
-      File.open("COMMIT_SHA", "w") { |f| f.write "some-sha" }
+      ENV["COMMIT_SHA"] = "some-sha"
 
       example.run
-
-      File.delete("COMMIT_SHA")
     end
 
     it "returns sha" do

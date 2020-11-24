@@ -1,4 +1,5 @@
 FROM ruby:2.7.2-alpine
+ARG COMMIT_SHA
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
@@ -26,5 +27,7 @@ RUN yarn install --frozen-lockfile
 ADD . $APP_HOME/
 
 RUN bundle exec rake assets:precompile
+
+ENV COMMIT_SHA=${COMMIT_SHA}
 
 CMD bundle exec rails server -b 0.0.0.0

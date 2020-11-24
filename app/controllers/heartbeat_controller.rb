@@ -4,7 +4,7 @@ class HeartbeatController < ActionController::API
   end
 
   def sha
-    render json: { sha: commit_sha }
+    render json: { sha: ENV["COMMIT_SHA"] }
   end
 
   def healthcheck
@@ -27,13 +27,5 @@ private
     response.success?
   rescue StandardError
     false
-  end
-
-  def commit_sha_path
-    Rails.root.join(Settings.commit_sha_file)
-  end
-
-  def commit_sha
-    File.read(commit_sha_path).strip
   end
 end
