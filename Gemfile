@@ -134,7 +134,7 @@ group :test do
   gem "webmock"
 
   # Show test coverage %
-  gem "simplecov", "< 0.18", require: false
+  gem "simplecov", "< 0.21", require: false
 
   # Make diffs of Ruby objects much more readable
   gem "super_diff"
