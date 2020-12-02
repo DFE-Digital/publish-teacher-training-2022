@@ -6,5 +6,3 @@ teacher_training_api:
 environment:
   label: "Rollover"
   selector_name: "qa"
-basic_auth: true
-developer_auth: true
