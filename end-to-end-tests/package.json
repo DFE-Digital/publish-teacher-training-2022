@@ -3,7 +3,7 @@
     "node": "12.15.0"
   },
   "devDependencies": {
-    "cypress": "6.0.0"
+    "cypress": "6.0.1"
   },
   "scripts": {
     "cy:run": "cypress run",
