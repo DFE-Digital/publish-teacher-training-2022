@@ -156,8 +156,9 @@ GEM
       railties (>= 5.0.0)
     faker (2.15.1)
       i18n (>= 1.6, < 2)
-    faraday (1.0.1)
+    faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
+      ruby2_keywords
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
     ffi (1.13.1)
@@ -198,7 +199,7 @@ GEM
       activesupport (>= 4.2)
       aes_key_wrap
       bindata
-    json_api_client (1.17.1)
+    json_api_client (1.18.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       addressable (~> 2.2)
@@ -384,6 +385,7 @@ GEM
     rubocop-rspec (1.42.0)
       rubocop (>= 0.87.0)
     ruby-progressbar (1.10.1)
+    ruby2_keywords (0.0.2)
     rubypants (0.7.1)
     rubyzip (2.3.0)
     sass (3.7.4)
