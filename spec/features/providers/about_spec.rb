@@ -18,7 +18,7 @@ feature "View provider about", type: :feature do
 
   before do
     allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
-    stub_omniauth
+    signed_in_user
 
     stub_api_v2_request(
       "/recruitment_cycles/#{provider.recruitment_cycle.year}",

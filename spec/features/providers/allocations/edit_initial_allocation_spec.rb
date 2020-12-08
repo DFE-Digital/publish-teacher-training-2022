@@ -191,7 +191,7 @@ RSpec.feature "PE allocations" do
   end
 
   def given_i_am_signed_in_as_a_user_from_the_accredited_body
-    stub_omniauth(user: user)
+    signed_in_user(user: user)
   end
 
   def given_there_is_a_training_provider_with_previous_allocations

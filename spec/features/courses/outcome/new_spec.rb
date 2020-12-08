@@ -9,7 +9,7 @@ feature "new course outcome", type: :feature do
   let(:empty_build_course_request) { stub_api_v2_build_course }
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource(provider)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")

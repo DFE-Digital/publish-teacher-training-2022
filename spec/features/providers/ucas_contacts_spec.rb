@@ -28,7 +28,7 @@ feature "View provider UCAS contact", type: :feature do
   end
 
   before do
-    stub_omniauth
+    signed_in_user
 
     stub_api_v2_resource(provider, include: "contacts")
   end

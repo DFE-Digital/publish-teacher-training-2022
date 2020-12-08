@@ -7,7 +7,7 @@ feature "Edit course start date", type: :feature do
   let(:provider) { build(:provider) }
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
     stub_api_v2_resource(provider)

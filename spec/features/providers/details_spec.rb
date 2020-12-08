@@ -5,7 +5,7 @@ feature "View provider", type: :feature do
 
   before do
     allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(true)
-    stub_omniauth
+    signed_in_user
 
     stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource(provider)

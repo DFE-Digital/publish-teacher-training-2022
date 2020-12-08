@@ -8,19 +8,29 @@ Rails.application.routes.draw do
   get :healthcheck, controller: :heartbeat
   get :sha, controller: :heartbeat
 
-  if Settings.developer_auth
-    post "/auth/developer/callback", to: "sessions#create"
-    get "/personas", to: "personas#index"
-  end
+  # Old links
+  get "/signin", to: redirect("/sign-in")
+  get "/signout", to: redirect("/sign-out")
 
-  # DfE Sign In
-  get "/signin", to: "sign_in#index", as: "signin"
+  get "/sign-in", to: "sign_in#index"
+  get "/sign-out", to: "sessions#signout"
+
+  # Magic
   post "/send_magic_link", to: "sessions#send_magic_link"
   get "/magic_link_sent", to: "sessions#magic_link_sent"
   get "/signin_with_magic_link", to: "sessions#create_by_magic", as: "signin_with_magic_link"
-  get "/signout", to: "sessions#signout", as: "signout"
+
+  # DfE Sign-in
   get "/auth/dfe/callback", to: "sessions#create"
   get "/auth/dfe/signout", to: "sessions#destroy"
+
+  # Persona
+  if Settings.developer_auth
+    get "/personas", to: "personas#index"
+    post "/auth/developer/callback", to: "sessions#create"
+    get "/auth/developer/signout", to: "sessions#destroy"
+  end
+
   get "/auth/failure", to: "sessions#failure"
 
   root to: "providers#index"

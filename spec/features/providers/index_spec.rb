@@ -8,7 +8,7 @@ feature "View providers", type: :feature do
   let(:user) { build(:user, :transitioned) }
 
   before do
-    stub_omniauth(user: user)
+    signed_in_user(user: user)
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
       current_recruitment_cycle.to_jsonapi,

@@ -28,7 +28,7 @@ feature "update ucas contact" do
   end
 
   def and_i_am_logged_in
-    stub_omniauth
+    signed_in_user
   end
 
   def and_my_provider_has_ucas_contacts

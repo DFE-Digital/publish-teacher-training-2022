@@ -17,7 +17,7 @@ feature "Notifications", type: :feature do
   end
 
   before do
-    stub_omniauth(user: user)
+    signed_in_user(user: user)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource_collection([access_request])

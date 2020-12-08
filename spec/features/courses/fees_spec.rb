@@ -11,7 +11,7 @@ feature "Course fees", type: :feature do
   end
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(course_1, include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(course_1, include: "sites,provider.sites,accrediting_provider")

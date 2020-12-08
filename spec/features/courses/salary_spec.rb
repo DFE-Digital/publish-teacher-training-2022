@@ -17,7 +17,7 @@ feature "Course salary", type: :feature do
   end
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
     stub_api_v2_resource(provider)

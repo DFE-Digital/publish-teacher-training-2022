@@ -111,15 +111,15 @@ describe "Providers", type: :request do
 
   context "when the user is not authenticated" do
     describe "GET suggest" do
-      it "redirects to signin" do
+      it "redirects to sign-in" do
         get "/providers/suggest"
 
-        expect(response).to redirect_to("http://www.example.com/signin")
+        expect(response).to redirect_to("http://www.example.com/sign-in")
       end
     end
 
     describe "GET courses-as-an-accredited-body" do
-      it "redirects to signin" do
+      it "redirects to sign-in" do
         accredited_provider = build(:provider)
 
         path = download_training_providers_courses_provider_recruitment_cycle_path(
@@ -129,7 +129,7 @@ describe "Providers", type: :request do
         )
         get(path)
 
-        expect(response).to redirect_to("http://www.example.com/signin")
+        expect(response).to redirect_to("http://www.example.com/sign-in")
       end
     end
   end
