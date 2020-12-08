@@ -20,7 +20,7 @@ feature "Edit course vacancies", type: :feature do
   end
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",
       current_recruitment_cycle.to_jsonapi,

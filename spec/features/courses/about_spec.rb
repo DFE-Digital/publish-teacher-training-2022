@@ -29,7 +29,7 @@ feature "About course", type: :feature do
   end
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,courses.accrediting_provider")
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")

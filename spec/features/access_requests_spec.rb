@@ -13,7 +13,7 @@ feature "Access Requests", type: :feature do
 
   let(:submitted_access_request) { stub_api_v2_request("/access_requests/#{access_request.id}/approve", nil, :post) }
   before do
-    stub_omniauth
+    signed_in_user
 
     stub_api_v2_resource(access_request, include: "requester,requester.organisations")
     stub_api_v2_resource_collection([access_request], include: "requester")
@@ -39,7 +39,7 @@ feature "Access Requests", type: :feature do
     context "user is admin" do
       let(:user) { build(:user, admin: true, organisations: [organisation]) }
       before do
-        stub_omniauth(user: user)
+        signed_in_user(user: user)
       end
 
       it "links to the access requests page" do
@@ -57,7 +57,7 @@ feature "Access Requests", type: :feature do
     context "user is not admin" do
       let(:user) { build(:user, admin: false, organisations: [organisation]) }
       before do
-        stub_omniauth(user: user)
+        signed_in_user(user: user)
       end
 
       it "does not link to the access requests page" do

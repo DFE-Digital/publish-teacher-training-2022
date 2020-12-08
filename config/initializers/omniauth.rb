@@ -25,7 +25,7 @@ module OmniAuth
       def callback_phase
         error = request.params["error_reason"] || request.params["error"]
         if error == "sessionexpired"
-          redirect("/signin")
+          redirect("/sign-in")
         elsif error
           raise CallbackError.new(request.params["error"], request.params["error_description"] || request.params["error_reason"], request.params["error_uri"])
         elsif request.params["state"].to_s.empty? || request.params["state"] != stored_state
@@ -104,7 +104,7 @@ if Settings.dfe_signin.issuer.present?
       end
     rescue ActionController::InvalidAuthenticityToken
       response = Rack::Response.new
-      response.redirect("/signin")
+      response.redirect("/sign-in")
       response.finish
     end
   end

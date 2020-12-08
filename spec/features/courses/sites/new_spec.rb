@@ -23,7 +23,7 @@ feature "New course sites" do
   let(:build_course_with_two_sites_request) { stub_api_v2_build_course(sites_ids: [site1.id, site2.id]) }
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_resource(provider)
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}" \

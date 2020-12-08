@@ -5,7 +5,7 @@ feature "Access Requests", type: :feature do
   let(:provider) { build(:provider) }
 
   before do
-    stub_omniauth
+    signed_in_user
   end
 
   context "without validation errors" do

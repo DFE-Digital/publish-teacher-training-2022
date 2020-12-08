@@ -7,7 +7,7 @@ feature "New course start date", type: :feature do
   let(:course) { build(:course, provider: provider, start_date: nil, accrediting_provider: build(:provider)) }
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_resource(provider)
     stub_api_v2_new_resource(course)
     stub_api_v2_resource(recruitment_cycle)

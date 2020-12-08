@@ -14,7 +14,7 @@ feature "Edit locations", type: :feature do
 
   describe "when visiting a site that doesn’t exist" do
     before do
-      stub_omniauth
+      signed_in_user
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}",
         current_recruitment_cycle.to_jsonapi,
@@ -37,7 +37,7 @@ feature "Edit locations", type: :feature do
 
   describe "without errors" do
     before do
-      stub_omniauth
+      signed_in_user
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}",
         current_recruitment_cycle.to_jsonapi,
@@ -73,7 +73,7 @@ feature "Edit locations", type: :feature do
 
   describe "with validations errors" do
     before do
-      stub_omniauth
+      signed_in_user
       stub_api_v2_request(
         "/recruitment_cycles/#{current_recruitment_cycle.year}",
         current_recruitment_cycle.to_jsonapi,

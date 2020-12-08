@@ -17,7 +17,7 @@ feature "get courses as an accredited body", type: :feature do
 
   before do
     course1.accrediting_provider = accrediting_body1
-    stub_omniauth(user: user)
+    signed_in_user(user: user)
     stub_api_v2_resource(accrediting_body1)
     stub_api_v2_resource(accrediting_body1.recruitment_cycle)
     stub_api_v2_request(

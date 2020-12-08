@@ -43,7 +43,7 @@ describe "requests made to mc-be" do
       #   - Request 1: allow the call to complete - this will use the wrong
       #                user token for its call to the backend api.
 
-      stub_omniauth
+      signed_in_user
 
       stub_api_v2_request("/recruitment_cycles/#{current_recruitment_cycle.year}", current_recruitment_cycle.to_jsonapi)
 

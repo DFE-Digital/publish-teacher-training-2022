@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
       redirect_back_to: request.path,
     }.to_s)
     session[:redirect_back_to] = request.path
-    redirect_to "/signin"
+    redirect_to sign_in_path
   end
 
   def current_user_info

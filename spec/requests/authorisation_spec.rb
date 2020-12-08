@@ -27,9 +27,7 @@ describe "authorisation", type: :request do
           expect(Digest::SHA512).to receive(:hexdigest).with("secret").and_return("52785638ec464fd61f5c9b372797f1a7475225cabeb2b40b2d757eff9b337ff069b2314bb0c0611d44ca5d39c91906ab3415de0fbc36625b970e3c2c03d122da").at_least(:once)
 
           get "/", headers: headers
-          expect(response).to redirect_to("/signin")
-          get "/signin", headers: headers
-          expect(response).to redirect_to("/auth/dfe")
+          expect(response).to redirect_to(sign_in_path)
         end
       end
 
@@ -52,11 +50,9 @@ describe "authorisation", type: :request do
     context "when disabled" do
       let(:basic_auth) { false }
 
-      it "redirects to DfE signin" do
+      it "redirects to sign-in page" do
         get "/"
-        expect(response).to redirect_to("/signin")
-        get "/signin"
-        expect(response).to redirect_to("/auth/dfe")
+        expect(response).to redirect_to(sign_in_path)
       end
     end
   end

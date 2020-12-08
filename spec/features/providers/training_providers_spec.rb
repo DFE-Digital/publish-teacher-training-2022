@@ -15,7 +15,7 @@ feature "get training_providers", type: :feature do
   let(:access_request) { build :access_request }
 
   before do
-    stub_omniauth(user: user)
+    signed_in_user(user: user)
     stub_api_v2_resource(accrediting_body1)
     stub_api_v2_resource(accrediting_body1.recruitment_cycle)
     stub_api_v2_request(

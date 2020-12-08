@@ -40,7 +40,7 @@ feature "New course level", type: :feature do
   let(:access_request) { create(:access_request) }
 
   before do
-    stub_omniauth(user: user)
+    signed_in_user(user: user)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
