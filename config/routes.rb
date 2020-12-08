@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   # DfE Sign In
-  get "/signin", to: "sessions#new", as: "signin"
+  get "/signin", to: "sign_in#index", as: "signin"
   post "/send_magic_link", to: "sessions#send_magic_link"
   get "/magic_link_sent", to: "sessions#magic_link_sent"
   get "/signin_with_magic_link", to: "sessions#create_by_magic", as: "signin_with_magic_link"
