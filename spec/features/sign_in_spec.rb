@@ -40,8 +40,7 @@ feature "Sign in", type: :feature do
     stub_omniauth(user: user)
     stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
 
-    visit root_path
-
+    visit_dfe_sign_in(root_path)
     # Redirect to DfE Signin and come back
     expect(page).to have_content("Sign out (#{user.first_name} #{user.last_name})")
     expect(page.current_path).to eql("/rollover")
@@ -95,7 +94,7 @@ feature "Sign in", type: :feature do
         end
 
         scenario "new user accepts the transition info page" do
-          visit "/signin"
+          visit_dfe_sign_in("/signin")
 
           expect(transition_info_page).to be_displayed
           expect(transition_info_page.title).to have_content("Important new features")
@@ -113,7 +112,7 @@ feature "Sign in", type: :feature do
         end
 
         scenario "new user accepts the transition info page" do
-          visit "/signin"
+          visit_dfe_sign_in("/signin")
 
           expect(transition_info_page).to be_displayed
           expect(transition_info_page.title).to have_content("Important new features")
@@ -147,8 +146,7 @@ feature "Sign in", type: :feature do
       context "when show next cycle allocation recruitment page is set to true" do
         let(:show_next_cycle_allocation_recruitment_page) { true }
         scenario "new user accepts the rollover page" do
-          visit "/signin"
-
+          visit_dfe_sign_in("/signin")
           expect(rollover_page).to be_displayed
 
           expect(rollover_page.title).to have_content("Prepare for the next cycle")
@@ -169,8 +167,7 @@ feature "Sign in", type: :feature do
         let(:show_next_cycle_allocation_recruitment_page) { false }
 
         scenario "new user accepts the rollover page" do
-          visit "/signin"
-
+          visit_dfe_sign_in("/signin")
           expect(rollover_page).to be_displayed
 
           expect(rollover_page.title).to have_content("Prepare for the next cycle")
@@ -207,8 +204,7 @@ feature "Sign in", type: :feature do
 
     stub_omniauth(user: user)
 
-    visit "/signin"
-
+    visit_dfe_sign_in("/signin")
     expect(accept_terms_page).to be_displayed
 
     expect(accept_terms_page.title).to have_content("Before you begin")
@@ -222,4 +218,9 @@ feature "Sign in", type: :feature do
 
     expect(transition_info_page).to be_displayed
   end
+end
+
+def visit_dfe_sign_in(url)
+  visit url
+  click_button("Sign in using DfE Sign-in")
 end
