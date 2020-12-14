@@ -57,6 +57,11 @@ jobs:
       run:
         working-directory: /app
     steps:
+      - uses: softprops/turnstyle@v1
+        name: Wait for other inprogress deployment runs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
       - name: Ruby Linting
         run:  rubocop app config lib spec --format clang
 
