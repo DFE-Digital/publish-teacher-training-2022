@@ -10,7 +10,7 @@
     <% if FeatureService.enabled?("dfe_signin")%>
       <%= govuk_button_to("Sign in using DfE Sign-in", "/auth/dfe") %>
     <% else %>    
-      <%= govuk_link_to "Sign in using Persona", "/personas", { class: "govuk-button" }  %>
+      <%= govuk_link_to "Sign in using a Persona", "/personas", { class: "govuk-button" }  %>
     <% end %>
 
     <p class="govuk-body-m">If you do not have a DfE Sign-in account but need access to Publish teaching training email
