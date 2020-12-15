@@ -4,8 +4,6 @@ class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token, if: proc { Settings.developer_auth }
 
   def create
-    redirect_to sign_in_path and return unless FeatureService.enabled? :dfe_signin
-
     session[:auth_user] = HashWithIndifferentAccess.new(
       "uid" => auth_hash.dig("uid"),
       "info" => HashWithIndifferentAccess.new(

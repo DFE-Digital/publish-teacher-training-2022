@@ -17,7 +17,7 @@ feature "Sign in", type: :feature do
       scenario "navigate to sign in" do
         expect(sign_in_page.page_heading).to have_text("Sign in")
         expect(sign_in_page).to have_title("Sign in - Publish teacher training courses - GOV.UK")
-        expect(sign_in_page.sign_in_button.text).to eq("Sign in using Persona")
+        expect(sign_in_page.sign_in_button.text).to eq("Sign in using a Persona")
       end
     end
 
