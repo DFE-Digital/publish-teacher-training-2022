@@ -1,8 +1,0 @@
-dfe_signin:
-  secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
-  base_url: https://s121d04-rollover-publish-as.azurewebsites.net
-teacher_training_api:
-  base_url: https://s121d04-rollover-ttapi-as.azurewebsites.net
-environment:
-  label: "Rollover"
-  selector_name: "qa"
