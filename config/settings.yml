@@ -74,9 +74,6 @@ features:
     # state: open # Users can make requests for allocations
     # state: closed # Readonly - Users can see if they have or have not made request (does not show number of places)
     state: confirmed # final allocation places are displayed to users in a readonly state
-  signin_intercept: false
-  signin_by_email: false
-  dfe_signin: true
   rollover:
     # During rollover providers should be able to edit current & next recruitment cycle courses
     can_edit_current_and_next_cycles: false
@@ -84,7 +81,12 @@ features:
     # actually starting when it would be set to false
     has_current_cycle_started?: true
     show_next_cycle_allocation_recruitment_page: false
-basic_auth: false
-basic_auth_username: admin
-basic_auth_password_digest: "52785638ec464fd61f5c9b372797f1a7475225cabeb2b40b2d757eff9b337ff069b2314bb0c0611d44ca5d39c91906ab3415de0fbc36625b970e3c2c03d122da"
-developer_auth: false
+
+authentication:
+  mode: dfe_signin  # default authentication mode
+  # mode: magic     # when dfe_signin is down
+  # mode: persona   # none critical systems, ie localhost
+  basic_auth:       # mainly to enforce for none critical systems
+    disabled: false 
+    username: admin
+    password_digest: "52785638ec464fd61f5c9b372797f1a7475225cabeb2b40b2d757eff9b337ff069b2314bb0c0611d44ca5d39c91906ab3415de0fbc36625b970e3c2c03d122da"

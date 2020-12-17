@@ -21,4 +21,22 @@ describe Settings do
   end
 
   its(%w[current_cycle]) { should eq 2021 }
+
+  describe "settings.authentication" do
+    subject do
+      settings[:authentication]
+    end
+
+    its(%w[mode]) { should eq "dfe_signin" }
+  end
+
+  describe "settings.authentication.basic_auth" do
+    subject do
+      settings[:authentication][:basic_auth]
+    end
+
+    its(%w[disabled]) { should be_falsey }
+    its(%w[username]) { should_not be_blank }
+    its(%w[password_digest]) { should_not be_blank }
+  end
 end
