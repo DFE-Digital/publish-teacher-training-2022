@@ -1,4 +1,4 @@
-if Settings.developer_auth
+if Settings.authentication.mode == "persona"
   Rails.application.config.middleware.use OmniAuth::Builder do
     provider :developer,
              fields: %i[email first_name last_name],

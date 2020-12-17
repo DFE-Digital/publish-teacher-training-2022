@@ -15,20 +15,18 @@ Rails.application.routes.draw do
   get "/sign-in", to: "sign_in#index"
   get "/sign-out", to: "sessions#signout"
 
-  # Magic
-  post "/send_magic_link", to: "sessions#send_magic_link"
-  get "/magic_link_sent", to: "sessions#magic_link_sent"
-  get "/signin_with_magic_link", to: "sessions#create_by_magic", as: "signin_with_magic_link"
-
-  # DfE Sign-in
-  get "/auth/dfe/callback", to: "sessions#create"
-  get "/auth/dfe/signout", to: "sessions#destroy"
-
-  # Persona
-  if Settings.developer_auth
+  case Settings.authentication.mode
+  when "magic"
+    post "/send_magic_link", to: "sessions#send_magic_link"
+    get "/magic_link_sent", to: "sessions#magic_link_sent"
+    get "/signin_with_magic_link", to: "sessions#create_by_magic", as: "signin_with_magic_link"
+  when "persona"
     get "/personas", to: "personas#index"
     post "/auth/developer/callback", to: "sessions#create"
     get "/auth/developer/signout", to: "sessions#destroy"
+  else
+    get "/auth/dfe/callback", to: "sessions#create"
+    get "/auth/dfe/signout", to: "sessions#destroy"
   end
 
   get "/auth/failure", to: "sessions#failure"

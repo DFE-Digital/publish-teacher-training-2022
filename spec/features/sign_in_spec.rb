@@ -5,14 +5,14 @@ feature "Sign in", type: :feature do
 
   describe "sign in page is rendered" do
     before do
-      allow(Settings.features).to receive(:dfe_signin)
-      .and_return(dfe_signin)
+      allow(Settings.authentication).to receive(:mode)
+        .and_return(mode)
 
       sign_in_page.load
     end
 
-    context "dfe_signin is false" do
-      let(:dfe_signin) { false }
+    context "mode is persona" do
+      let(:mode) { "persona" }
 
       scenario "navigate to sign in" do
         expect(sign_in_page.page_heading).to have_text("Sign in")
@@ -21,8 +21,18 @@ feature "Sign in", type: :feature do
       end
     end
 
-    context "dfe_signin is true" do
-      let(:dfe_signin) { true }
+    context "mode is dfe_signin" do
+      let(:mode) { "dfe_signin" }
+
+      scenario "navigate to sign in" do
+        expect(sign_in_page.page_heading).to have_text("Sign in")
+        expect(sign_in_page).to have_title("Sign in - Publish teacher training courses - GOV.UK")
+        expect(sign_in_page.sign_in_button.value).to eq("Sign in using DfE Sign-in")
+      end
+    end
+
+    context "mode is magic" do
+      let(:mode) { "magic" }
 
       scenario "navigate to sign in" do
         expect(sign_in_page.page_heading).to have_text("Sign in")

@@ -63,10 +63,6 @@ class ApplicationController < ActionController::Base
     @log_safe_current_user
   end
 
-  def magic_link_enabled?
-    Settings.features.signin_intercept && Settings.features.signin_by_email && !Settings.features.dfe_signin
-  end
-
   def authenticate
     if current_user.present?
       logger.info { "Authenticated user session found " + log_safe_current_user.to_s }
@@ -114,9 +110,9 @@ class ApplicationController < ActionController::Base
 private
 
   def http_basic_auth
-    if Settings.basic_auth
+    if Settings.authentication.mode == "persona" && !Settings.authentication.basic_auth.disabled
       authenticate_or_request_with_http_basic do |name, password|
-        name == Settings.basic_auth_username && Digest::SHA512.hexdigest(password) == Settings.basic_auth_password_digest
+        name == Settings.authentication.basic_auth.username && Digest::SHA512.hexdigest(password) == Settings.authentication.basic_auth.password_digest
       end
     end
   end

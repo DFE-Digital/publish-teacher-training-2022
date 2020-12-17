@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_action :request_login
   skip_before_action :check_interrupt_redirects
-  skip_before_action :verify_authenticity_token, if: proc { Settings.developer_auth }
+  skip_before_action :verify_authenticity_token, if: proc { Settings.authentication.mode == "persona" }
 
   def create
     session[:auth_user] = HashWithIndifferentAccess.new(
@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
   end
 
   def create_by_magic
-    FeatureService.require(:signin_by_email)
+    # FeatureService.require(:signin_by_email)
 
     user_session = Session.create_by_magic(
       magic_link_token: params.require(:token),
@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
   end
 
   def send_magic_link
-    FeatureService.require(:signin_by_email)
+    # FeatureService.require(:signin_by_email)
 
     User.generate_and_send_magic_link(params.require(:user).require(:email))
 
@@ -67,26 +67,20 @@ class SessionsController < ApplicationController
   def magic_link_sent; end
 
   def signout
-    if current_user.present?
-      case session[:auth_user]["provider"]
-      when "developer"
-        reset_session
-        redirect_to "/personas"
-      else
-        if magic_link_enabled?
-          reset_session
-          redirect_to root_path
-        else
-          uri = URI("#{Settings.dfe_signin.issuer}/session/end")
-          uri.query = {
-            id_token_hint: current_user["credentials"]["id_token"],
-            post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
-          }.to_query
-          redirect_to uri.to_s
-        end
-      end
-    else
+    reset_session
+
+    case Settings.authentication.mode
+    when "magic"
       redirect_to root_path
+    when "persona"
+      redirect_to "/personas"
+    else
+      uri = URI("#{Settings.dfe_signin.issuer}/session/end")
+      uri.query = {
+        id_token_hint: current_user["credentials"]["id_token"],
+        post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
+      }.to_query
+      redirect_to uri.to_s
     end
   end
 

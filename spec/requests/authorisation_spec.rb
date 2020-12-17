@@ -1,54 +1,76 @@
 require "rails_helper"
 
 describe "authorisation", type: :request do
-  let(:basic_auth) { false }
-
-  around :each do |example|
-    Settings.basic_auth = basic_auth
-
-    example.run
-
-    Settings.basic_auth = false
-  end
-
   describe "basic auth" do
-    context "when enabled" do
-      let(:basic_auth) { true }
+    before do
+      allow(Settings.authentication).to receive(:mode)
+      .and_return(mode)
+    end
 
-      context "with correct details" do
-        let(:headers) do
-          {
-            "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
-                                      .encode_credentials("admin", "secret"),
-          }
+    context "when mode is persona" do
+      let(:mode) { "persona" }
+
+      before do
+        allow(Settings.authentication.basic_auth).to receive(:disabled)
+        .and_return(disabled)
+      end
+
+      context "when disabled is false" do
+        let(:disabled) { false }
+
+        context "with correct details" do
+          let(:headers) do
+            {
+              "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
+                                        .encode_credentials("admin", "secret"),
+            }
+          end
+
+          it "grants access" do
+            expect(Digest::SHA512).to receive(:hexdigest).with("secret").and_return("52785638ec464fd61f5c9b372797f1a7475225cabeb2b40b2d757eff9b337ff069b2314bb0c0611d44ca5d39c91906ab3415de0fbc36625b970e3c2c03d122da").at_least(:once)
+
+            get "/", headers: headers
+            expect(response).to redirect_to(sign_in_path)
+          end
         end
 
-        it "grants access" do
-          expect(Digest::SHA512).to receive(:hexdigest).with("secret").and_return("52785638ec464fd61f5c9b372797f1a7475225cabeb2b40b2d757eff9b337ff069b2314bb0c0611d44ca5d39c91906ab3415de0fbc36625b970e3c2c03d122da").at_least(:once)
+        context "with incorrect details" do
+          let(:headers) do
+            {
+              "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
+                                        .encode_credentials("foo", "bar"),
+            }
+          end
 
-          get "/", headers: headers
-          expect(response).to redirect_to(sign_in_path)
+          it "denys access" do
+            get "/", headers: headers
+
+            expect(response).to have_http_status(401)
+          end
         end
       end
 
-      context "with incorrect details" do
-        let(:headers) do
-          {
-            "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
-                                      .encode_credentials("foo", "bar"),
-          }
-        end
+      context "when disabled is true" do
+        let(:disabled) { true }
 
-        it "denys access" do
-          get "/", headers: headers
-
-          expect(response).to have_http_status(401)
+        it "redirects to sign-in page" do
+          get "/"
+          expect(response).to redirect_to(sign_in_path)
         end
       end
     end
 
-    context "when disabled" do
-      let(:basic_auth) { false }
+    context "when mode is dfe_signin" do
+      let(:mode) { "dfe_signin" }
+
+      it "redirects to sign-in page" do
+        get "/"
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
+
+    context "when mode is magic" do
+      let(:mode) { "magic" }
 
       it "redirects to sign-in page" do
         get "/"
