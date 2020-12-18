@@ -132,35 +132,35 @@ To track exceptions through Sentry, configure the `SENTRY_DSN` environment varia
 SENTRY_DSN=https://aaa:bbb@sentry.io/123 rails s
 ```
 
-## Basic auth
+## Authentication Mode
 
-Basic auth is enabled in non-production and non-local environments. The credentials can be found in the Confluence pages.
+There are 3 mutually exclusive ways to login
 
-## Persona login
+- Non-Production environments
+  - `persona`
 
-Persona login is availale in local development and non-production environments. This allows you to log in to existing anonymised accounts or pre-selected accounts identified by personas.
+- Production environments
+  - `dfe_signin`
+  - `magic`
 
-## Using DfE Sign-In
+### Persona login
 
-Occasionally you may want to test the system integration with DfE Sign-In. In
-the dev environment the system is configured to use basic auth so you need to
-take a few extra steps to make it work with DfE Sign-In.
+Persona login is available in local development and non-production environments. This allows you to log in to existing anonymised accounts or pre-selected accounts identified by personas.
+> Basic auth is enabled by default for this Authentication Mode. The credentials can be found in the Confluence pages.
 
-### Disable developer auth
+### DfE Sign-In & magic
 
-The developer auth strategy supercedes DfE Sign-In and must be disabled first.
+DfE Sign-In is third party and also the default Authentication Mode.
 
-In `config/settings/development.local.yml` set `developer_auth` to `false`
+When DfE Sign-In is not available, a fallback Authentication Mode called `magic` can be used instead.
 
-The app must be rebooted in order for this change to take affect.
+Additional configuration will be required for either Authentication Modes.
 
-### Ensure You Have a DfE Sign-In Account
-
-You likely already have an account for certain environments, but you will need
+> You likely already have an account for certain environments, but you will need
 to ensure you have an account in the DfE Sign-In test environment to be able to
 login locally. Check with team members on how to do this.
 
-### Configure DfE Sign-In
+#### Configure DfE Sign-In
 
 Create the following file and ask the team for the secret.
 
@@ -170,7 +170,7 @@ dfe_signin:
     secret: dfe_sign_in_test_server_client_secret_here
 ```
 
-### Trust the TLS certificate
+#### Trust the TLS certificate
 
 Depending on your browser you may need to add the automatically generated SSL
 certificate to your OS keychain to make the browser trust the local site.
@@ -181,7 +181,7 @@ On macOS:
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain config/localhost/https/localhost.crt
 ```
 
-### Run The Server in SSL Mode
+#### Run The Server in SSL Mode
 
 You'll have to configure the server to run in SSL mode by setting the
 environment variable `SETTINGS__USE_SSL`, for example, use this command to run
