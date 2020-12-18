@@ -1,29 +1,28 @@
 require "rails_helper"
 
 feature "Sign in", type: :feature do
-  let(:sign_in_page) { PageObjects::Page::SignIn.new }
-
   describe "sign in page is rendered" do
-    before do
-      allow(Settings.authentication).to receive(:mode)
-        .and_return(mode)
+    let(:sign_in_page) { PageObjects::Page::SignIn.new }
 
+    before do
       sign_in_page.load
     end
+    context "when mode is persona", authentication_mode: :persona do
+      context "when basic_auth disabled is false" do
+        before do
+          allow(Settings.authentication.basic_auth).to receive(:disabled).and_return(true)
+          sign_in_page.load
+        end
 
-    context "mode is persona" do
-      let(:mode) { "persona" }
-
-      scenario "navigate to sign in" do
-        expect(sign_in_page.page_heading).to have_text("Sign in")
-        expect(sign_in_page).to have_title("Sign in - Publish teacher training courses - GOV.UK")
-        expect(sign_in_page.sign_in_button.text).to eq("Sign in using a Persona")
+        scenario "navigate to sign in" do
+          expect(sign_in_page.page_heading).to have_text("Sign in")
+          expect(sign_in_page).to have_title("Sign in - Publish teacher training courses - GOV.UK")
+          expect(sign_in_page.sign_in_button.text).to eq("Sign in using a Persona")
+        end
       end
     end
 
-    context "mode is dfe_signin" do
-      let(:mode) { "dfe_signin" }
-
+    context "when mode is dfe_signin", authentication_mode: :dfe_signin do
       scenario "navigate to sign in" do
         expect(sign_in_page.page_heading).to have_text("Sign in")
         expect(sign_in_page).to have_title("Sign in - Publish teacher training courses - GOV.UK")
@@ -31,13 +30,11 @@ feature "Sign in", type: :feature do
       end
     end
 
-    context "mode is magic" do
-      let(:mode) { "magic" }
-
+    context "when mode is magic", authentication_mode: :magic do
       scenario "navigate to sign in" do
         expect(sign_in_page.page_heading).to have_text("Sign in")
         expect(sign_in_page).to have_title("Sign in - Publish teacher training courses - GOV.UK")
-        expect(sign_in_page.sign_in_button.value).to eq("Sign in using DfE Sign-in")
+        expect(sign_in_page.sign_in_button.value).to eq("Continue")
       end
     end
   end

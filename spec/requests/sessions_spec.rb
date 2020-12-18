@@ -22,7 +22,7 @@ describe "Sessions", type: :request do
     end
   end
 
-  describe "GET create_by_magic", feature_signin_by_email: true do
+  describe "GET create_by_magic", authentication_mode: :magic do
     let(:user) { build :user }
     let(:recruitment_cycle) { build :recruitment_cycle }
     let(:create_by_magic) do

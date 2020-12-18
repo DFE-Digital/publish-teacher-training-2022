@@ -29,8 +29,6 @@ class SessionsController < ApplicationController
   end
 
   def create_by_magic
-    # FeatureService.require(:signin_by_email)
-
     user_session = Session.create_by_magic(
       magic_link_token: params.require(:token),
       email: params.require(:email),
@@ -57,8 +55,6 @@ class SessionsController < ApplicationController
   end
 
   def send_magic_link
-    # FeatureService.require(:signin_by_email)
-
     User.generate_and_send_magic_link(params.require(:user).require(:email))
 
     redirect_to magic_link_sent_path
@@ -67,21 +63,10 @@ class SessionsController < ApplicationController
   def magic_link_sent; end
 
   def signout
+    url = signout_redirect_url
     reset_session
 
-    case Settings.authentication.mode
-    when "magic"
-      redirect_to root_path
-    when "persona"
-      redirect_to "/personas"
-    else
-      uri = URI("#{Settings.dfe_signin.issuer}/session/end")
-      uri.query = {
-        id_token_hint: current_user["credentials"]["id_token"],
-        post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
-      }.to_query
-      redirect_to uri.to_s
-    end
+    redirect_to url
   end
 
   def failure
@@ -94,6 +79,26 @@ class SessionsController < ApplicationController
   end
 
 private
+
+  def signout_redirect_url
+    case Settings.authentication.mode
+    when "magic"
+      root_path
+    when "persona"
+      "/personas"
+    else
+      if current_user.present?
+        uri = URI("#{Settings.dfe_signin.issuer}/session/end")
+        uri.query = {
+          id_token_hint: current_user["credentials"]["id_token"],
+          post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
+        }.to_query
+        uri.to_s
+      else
+        root_path
+      end
+    end
+  end
 
   def auth_hash
     request.env["omniauth.auth"]
