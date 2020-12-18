@@ -161,25 +161,11 @@
         "description": "List of resource tags as a JSON object"
       }
     },
-    "settingsFeaturesSigninIntercept": {
+    "settingsAuthenticationMode": {
       "type": "string",
-      "defaultValue": "false",
+      "defaultValue": "dfe_signin",
       "metadata": {
-        "description": "when true, intercept the signin flow with an explanatory page; used when there are issues with DfE Sign-In"
-      }
-    },
-    "settingsFeaturesSigninByEmail": {
-      "type": "string",
-      "defaultValue": "false",
-      "metadata": {
-        "description": "true to offer the user the option to sign-in using a magic link sent to them by email"
-      }
-    },
-    "settingsFeaturesDfeSignin": {
-      "type": "string",
-      "defaultValue": "true",
-      "metadata": {
-        "description": "false to disable login via DfE Signin. Users are redirected to the magic link singin page"
+        "description": "The authentication mode, available production options 'dfe_signin', 'magic' (dfe_signin fallback) and 'persona' (non-production option)"
       }
     },
     "rollover": {
@@ -382,16 +368,8 @@
                 "value": "[parameters('rollover')]"
               },
               {
-                "name": "SETTINGS__FEATURES__SIGNIN_INTERCEPT",
-                "value": "[parameters('settingsFeaturesSigninIntercept')]"
-              },
-              {
-                "name": "SETTINGS__FEATURES__SIGNIN_BY_EMAIL",
-                "value": "[parameters('settingsFeaturesSigninByEmail')]"
-              },
-              {
-                "name": "SETTINGS__FEATURES__DFE_SIGNIN",
-                "value": "[parameters('settingsFeaturesDfeSignin')]"
+                "name": "SETTINGS__AUTHENTICATION__MODE",
+                "value": "[parameters('settingsAuthenticationMode')]"
               },
               {
                   "name": "DOCKER_REGISTRY_SERVER_URL",
