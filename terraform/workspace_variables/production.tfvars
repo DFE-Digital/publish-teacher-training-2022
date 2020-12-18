@@ -1,9 +1,10 @@
 #PaaS
-cf_space               = "bat-prod"
-paas_app_environment   = "prod"
-paas_web_app_host_name = "www"
-paas_web_app_instances = 1
-paas_web_app_memory    = 512
+cf_space                    = "bat-prod"
+paas_app_environment        = "prod"
+paas_app_environment_config = "prod"
+paas_web_app_host_name      = "www"
+paas_web_app_instances      = 1
+paas_web_app_memory         = 512
 
 #StatusCake
 statuscake_alerts = {
