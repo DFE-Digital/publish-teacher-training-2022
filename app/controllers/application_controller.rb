@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     if is_authenticated?
-      session[:auth_user]
+      @current_user ||= session[:auth_user]
     end
   end
 
