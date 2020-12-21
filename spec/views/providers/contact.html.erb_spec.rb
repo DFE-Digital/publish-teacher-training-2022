@@ -1,21 +1,18 @@
 require "rails_helper"
 
 RSpec.describe "providers/contact.html.erb" do
+  module CurrentUserMethod
+    def current_user; end
+  end
+
   before do
+    view.extend(CurrentUserMethod)
     assign(:provider, build(:provider))
+    allow(view).to receive(:current_user).and_return({ "admin" => admin })
   end
 
   context "when not an admin" do
-    before do
-      controller.singleton_class.class_eval do
-      protected
-
-        def current_user
-          { "admin" => false }
-        end
-        helper_method :current_user
-      end
-    end
+    let(:admin) { false }
 
     it "cannot see provider_name field" do
       render
@@ -25,16 +22,7 @@ RSpec.describe "providers/contact.html.erb" do
   end
 
   context "when an admin" do
-    before do
-      controller.singleton_class.class_eval do
-      protected
-
-        def current_user
-          { "admin" => true }
-        end
-        helper_method :current_user
-      end
-    end
+    let(:admin) { true }
 
     it "can see provider_name field" do
       render
