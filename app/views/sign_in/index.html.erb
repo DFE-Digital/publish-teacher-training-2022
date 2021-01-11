@@ -7,7 +7,7 @@
 
     <p class="govuk-body-m"> Use DfE Sign-in to access your account.</p>
 
-    <% if Settings.authentication.mode == "dfe_signin"%>
+    <% if AuthenticationService.dfe_signin? %>
       <%= govuk_button_to("Sign in using DfE Sign-in", "/auth/dfe") %>
     <% else %>    
       <%= govuk_link_to "Sign in using a Persona", "/personas", { class: "govuk-button" }  %>
@@ -16,5 +16,5 @@
     <p class="govuk-body-m">If you do not have a DfE Sign-in account but need access to Publish teaching training email
       <%= bat_contact_mail_to %>. 
     </p>
-  </div>
+  </div>  
 </div>

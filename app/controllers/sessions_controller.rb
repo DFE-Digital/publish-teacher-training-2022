@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_action :request_login
   skip_before_action :check_interrupt_redirects
-  skip_before_action :verify_authenticity_token, if: proc { Settings.authentication.mode == "persona" }
+  skip_before_action :verify_authenticity_token, if: proc { AuthenticationService.persona? }
 
   def create
     session[:auth_user] = HashWithIndifferentAccess.new(
@@ -81,22 +81,19 @@ class SessionsController < ApplicationController
 private
 
   def signout_redirect_url
-    case Settings.authentication.mode
-    when "magic"
+    if AuthenticationService.magic?
       root_path
-    when "persona"
+    elsif AuthenticationService.persona?
       "/personas"
+    elsif current_user.present?
+      uri = URI("#{Settings.dfe_signin.issuer}/session/end")
+      uri.query = {
+        id_token_hint: current_user["credentials"]["id_token"],
+        post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
+      }.to_query
+      uri.to_s
     else
-      if current_user.present?
-        uri = URI("#{Settings.dfe_signin.issuer}/session/end")
-        uri.query = {
-          id_token_hint: current_user["credentials"]["id_token"],
-          post_logout_redirect_uri: "#{Settings.dfe_signin.base_url}/auth/dfe/signout",
-        }.to_query
-        uri.to_s
-      else
-        root_path
-      end
+      root_path
     end
   end
 

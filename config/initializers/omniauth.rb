@@ -1,4 +1,6 @@
-if Settings.authentication.mode == "persona"
+require_relative "../../app/services/authentication_service"
+
+if AuthenticationService.persona?
   Rails.application.config.middleware.use OmniAuth::Builder do
     provider :developer,
              fields: %i[email first_name last_name],

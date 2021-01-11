@@ -3,7 +3,7 @@ class SignInController < ApplicationController
   skip_before_action :check_interrupt_redirects
 
   def index
-    if Settings.authentication.mode == "magic"
+    if AuthenticationService.magic?
       render "dfe_sign_in_is_down"
     else
       render "index"

@@ -1,4 +1,4 @@
-if Settings.authentication.mode == "persona"
+if AuthenticationService.persona?
   class PersonasController < ActionController::Base
     layout "application"
 

@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
 private
 
   def http_basic_auth
-    if Settings.authentication.mode == "persona" && !Settings.authentication.basic_auth.disabled
+    if AuthenticationService.basic_auth?
       authenticate_or_request_with_http_basic do |name, password|
         name == Settings.authentication.basic_auth.username && Digest::SHA512.hexdigest(password) == Settings.authentication.basic_auth.password_digest
       end
