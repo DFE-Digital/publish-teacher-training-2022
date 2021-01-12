@@ -141,7 +141,7 @@ There are 3 mutually exclusive ways to login
 
 - Production environments
   - `dfe_signin`
-  - `magic`
+  - `magic_link`
 
 ### Persona login
 
@@ -152,7 +152,7 @@ Persona login is available in local development and non-production environments.
 
 DfE Sign-In is third party and also the default Authentication Mode.
 
-When DfE Sign-In is not available, a fallback Authentication Mode called `magic` can be used instead.
+When DfE Sign-In is not available, a fallback Authentication Mode called `magic_link` can be used instead.
 
 Additional configuration will be required for either Authentication Modes.
 

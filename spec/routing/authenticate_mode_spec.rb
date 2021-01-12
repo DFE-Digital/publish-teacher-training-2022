@@ -19,7 +19,7 @@ RSpec.describe "routes for authentication", type: :routing do
     end
 
     describe "dfe_signin is down turn on" do
-      context "magic", authentication_mode: :magic do
+      context "magic_link", authentication_mode: :magic_link do
         it "routes magic" do
           expect(post: "/send_magic_link").to route_to("sessions#send_magic_link")
           expect(get: "/magic_link_sent").to route_to("sessions#magic_link_sent")

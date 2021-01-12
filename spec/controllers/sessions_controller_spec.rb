@@ -27,7 +27,7 @@ describe SessionsController, type: :controller do
       end
     end
 
-    context "when using magic link", authentication_mode: :magic do
+    context "when using magic link", authentication_mode: :magic_link do
       before do
         session[:auth_user] = {
           "uid" => "user@example.com",

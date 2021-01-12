@@ -8,7 +8,7 @@ describe AuthenticationService do
 
     it { expect(subject.dfe_signin?).to eq true }
 
-    it { expect(subject.magic?).to eq false }
+    it { expect(subject.magic_link?).to eq false }
 
     it { expect(subject.basic_auth?).to eq false }
   end
@@ -38,7 +38,7 @@ describe AuthenticationService do
 
       it { expect(subject.dfe_signin?).to eq false }
 
-      it { expect(subject.magic?).to eq false }
+      it { expect(subject.magic_link?).to eq false }
 
       it { expect(subject.basic_auth?).to eq true }
 
@@ -57,7 +57,7 @@ describe AuthenticationService do
 
       it { expect(subject.dfe_signin?).to eq true }
 
-      it { expect(subject.magic?).to eq false }
+      it { expect(subject.magic_link?).to eq false }
 
       it { expect(subject.basic_auth?).to eq false }
 
@@ -67,16 +67,16 @@ describe AuthenticationService do
       end
     end
 
-    context "is magic" do
-      let(:mode_value) { "magic" }
+    context "is magic_link" do
+      let(:mode_value) { "magic_link" }
 
-      it { expect(subject.mode).to eql("magic") }
+      it { expect(subject.mode).to eql("magic_link") }
 
       it { expect(subject.persona?).to eq false }
 
       it { expect(subject.dfe_signin?).to eq false }
 
-      it { expect(subject.magic?).to eq true }
+      it { expect(subject.magic_link?).to eq true }
 
       it { expect(subject.basic_auth?).to eq false }
 
@@ -95,7 +95,7 @@ describe AuthenticationService do
 
       it { expect(subject.dfe_signin?).to eq true }
 
-      it { expect(subject.magic?).to eq false }
+      it { expect(subject.magic_link?).to eq false }
 
       it { expect(subject.basic_auth?).to eq false }
 

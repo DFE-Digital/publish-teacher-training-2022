@@ -1,5 +1,5 @@
 RSpec.configure do |configure|
-  # Allow examples to be tagged with "authentication_mode: :magic".
+  # Allow examples to be tagged with "authentication_mode: :magic_link".
   # Allow examples to be tagged with "authentication_mode: :dfe_signin".
   # Allow examples to be tagged with "authentication_mode: :persona".
   # This will then reload routes for that mode

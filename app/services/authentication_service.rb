@@ -2,7 +2,7 @@ module AuthenticationService
   class << self
     DFE_SIGNIN = "dfe_signin".freeze
     PERSONA = "persona".freeze
-    MAGIC = "magic".freeze
+    MAGIC_LINK = "magic_link".freeze
 
     def basic_auth?
       persona? && !Settings.authentication.basic_auth.disabled
@@ -10,8 +10,8 @@ module AuthenticationService
 
     def mode
       case Settings.authentication.mode
-      when MAGIC
-        MAGIC
+      when MAGIC_LINK
+        MAGIC_LINK
       when PERSONA
         PERSONA
       else
@@ -23,8 +23,8 @@ module AuthenticationService
       mode == DFE_SIGNIN
     end
 
-    def magic?
-      mode == MAGIC
+    def magic_link?
+      mode == MAGIC_LINK
     end
 
     def persona?

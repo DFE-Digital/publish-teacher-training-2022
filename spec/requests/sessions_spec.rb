@@ -22,7 +22,7 @@ describe "Sessions", type: :request do
     end
   end
 
-  describe "GET create_by_magic", authentication_mode: :magic do
+  describe "GET create_by_magic", authentication_mode: :magic_link do
     let(:user) { build :user }
     let(:recruitment_cycle) { build :recruitment_cycle }
     let(:create_by_magic) do

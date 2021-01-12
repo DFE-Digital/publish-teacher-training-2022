@@ -30,7 +30,7 @@ feature "Sign in", type: :feature do
       end
     end
 
-    context "when mode is magic", authentication_mode: :magic do
+    context "when mode is magic_link", authentication_mode: :magic_link do
       scenario "navigate to sign in" do
         expect(sign_in_page.page_heading).to have_text("Sign in")
         expect(sign_in_page).to have_title("Sign in - Publish teacher training courses - GOV.UK")

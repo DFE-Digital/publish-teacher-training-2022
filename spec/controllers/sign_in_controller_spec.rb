@@ -9,7 +9,7 @@ describe SignInController, type: :controller do
       end
     end
 
-    context "when mode is magic", authentication_mode: :magic do
+    context "when mode is magic_link", authentication_mode: :magic_link do
       it "renders the dfe_sign_in_is_down page" do
         get :index
         expect(response).to render_template("sign_in/dfe_sign_in_is_down")

@@ -12,7 +12,7 @@ describe "authorisation", type: :request do
     end
   end
 
-  context "when mode is magic", authentication_mode: :magic do
+  context "when mode is magic_link", authentication_mode: :magic_link do
     describe "/send_magic_link" do
       let(:payload) { { email: email } }
       let(:expected_token) { "expected_token" }

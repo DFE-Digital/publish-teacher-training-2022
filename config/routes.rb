@@ -15,12 +15,11 @@ Rails.application.routes.draw do
   get "/sign-in", to: "sign_in#index"
   get "/sign-out", to: "sessions#signout"
 
-  case Settings.authentication.mode
-  when "magic"
+  if AuthenticationService.magic_link?
     post "/send_magic_link", to: "sessions#send_magic_link"
     get "/magic_link_sent", to: "sessions#magic_link_sent"
     get "/signin_with_magic_link", to: "sessions#create_by_magic", as: "signin_with_magic_link"
-  when "persona"
+  elsif AuthenticationService.persona?
     get "/personas", to: "personas#index"
     post "/auth/developer/callback", to: "sessions#create"
     get "/auth/developer/signout", to: "sessions#destroy"

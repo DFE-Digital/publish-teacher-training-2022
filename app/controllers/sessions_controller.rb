@@ -81,7 +81,7 @@ class SessionsController < ApplicationController
 private
 
   def signout_redirect_url
-    if AuthenticationService.magic?
+    if AuthenticationService.magic_link?
       root_path
     elsif AuthenticationService.persona?
       "/personas"

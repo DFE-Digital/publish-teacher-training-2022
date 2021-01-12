@@ -12,7 +12,10 @@ environment:
   label: "Beta"
   selector_name: "beta"
 
+authentication:
+  mode: dfe_signin
+
 # # Wield magic
 # # Uncomment if and only if dfe_signin is down
 # authentication:
-#   mode: magic
+#   mode: magic_link
