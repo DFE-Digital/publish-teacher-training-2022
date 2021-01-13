@@ -323,6 +323,9 @@
           "http20Enabled": {
             "value": true
           },
+          "healthCheckPath": {
+            "value": "/ping"
+          },
           "appServiceAppSettings": {
             "value": [
               {
@@ -368,6 +371,10 @@
               {
                 "name": "WEBSITE_SLOT_POLL_WORKER_FOR_CHANGE_NOTIFICATION",
                 "value": "0"
+              },
+              {
+                "name": "WEBSITE_HEALTHCHECK_MAXPINGFAILURES",
+                "value": "5"
               },
               {
                 "name": "SETTINGS__LOGSTASH__HOST",
