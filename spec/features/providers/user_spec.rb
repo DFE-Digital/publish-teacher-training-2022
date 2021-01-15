@@ -27,7 +27,7 @@ feature "Provider users page" do
 
   def given_i_am_signed_in_as_a_provider_user
     stub_api_v2_resource(@provider.recruitment_cycle)
-    stub_omniauth(user: @user)
+    signed_in_user(user: @user)
   end
 
   def when_i_visit_the_providers_user_page

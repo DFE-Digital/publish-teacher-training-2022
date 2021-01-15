@@ -17,7 +17,7 @@ feature "View organisations", type: :feature do
   let(:access_request) { build(:access_request) }
 
   before do
-    stub_omniauth(user: user)
+    signed_in_user(user: user)
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
     stub_api_v2_resource_collection([access_request], include: "requester")
@@ -40,7 +40,7 @@ feature "View organisations", type: :feature do
     context "user is not admin" do
       let(:non_admin_user) { build(:user, admin: false, organisations: [organisation]) }
       before do
-        stub_omniauth(user: non_admin_user)
+        signed_in_user(user: non_admin_user)
       end
 
       it "does not link to the organisations page" do

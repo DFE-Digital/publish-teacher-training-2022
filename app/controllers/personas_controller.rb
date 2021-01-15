@@ -1,4 +1,4 @@
-if Settings.developer_auth
+if AuthenticationService.persona?
   class PersonasController < ActionController::Base
     layout "application"
 

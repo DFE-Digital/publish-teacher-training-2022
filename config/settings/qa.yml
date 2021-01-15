@@ -8,5 +8,6 @@ search_ui:
 environment:
   label: "QA"
   selector_name: "qa"
-basic_auth: true
-developer_auth: true
+authentication:
+  mode: persona   # none critical systems, ie localhost
+  

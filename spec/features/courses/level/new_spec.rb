@@ -23,7 +23,7 @@ feature "New course level", type: :feature do
   end
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(provider)

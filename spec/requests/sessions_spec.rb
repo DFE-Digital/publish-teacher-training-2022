@@ -6,7 +6,7 @@ describe "Sessions", type: :request do
       stub_omniauth
       get(auth_dfe_callback_path)
 
-      get(signout_path)
+      get(sign_out_path)
       expect(response).to(
         redirect_to(
           "#{Settings.dfe_signin.issuer}/session/end?id_token_hint=&post_logout_redirect_uri=https%3A%2F%2Flocalhost%3A3000%2Fauth%2Fdfe%2Fsignout",
@@ -16,13 +16,13 @@ describe "Sessions", type: :request do
 
     context "user session is not present" do
       it "redirects to root path" do
-        get(signout_path)
+        get(sign_out_path)
         expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe "GET create_by_magic", feature_signin_by_email: true do
+  describe "GET create_by_magic", authentication_mode: :magic_link do
     let(:user) { build :user }
     let(:recruitment_cycle) { build :recruitment_cycle }
     let(:create_by_magic) do
@@ -70,7 +70,7 @@ describe "Sessions", type: :request do
       let(:token) { SecureRandom.uuid }
 
       it "destroys the session" do
-        get signout_path
+        get sign_out_path
 
         expect(session[:auth_user]).to_not be_present
       end

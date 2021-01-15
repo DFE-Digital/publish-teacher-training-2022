@@ -11,3 +11,11 @@ search_ui:
 environment:
   label: "Beta"
   selector_name: "beta"
+
+authentication:
+  mode: dfe_signin
+
+# # Wield magic
+# # Uncomment if and only if dfe_signin is down
+# authentication:
+#   mode: magic_link

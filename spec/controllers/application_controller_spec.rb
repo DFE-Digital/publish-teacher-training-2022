@@ -9,7 +9,7 @@ describe ApplicationController, type: :controller do
     subject { controller.request_login }
 
     context "user is unauthenticated" do
-      it { should redirect_to "/signin" }
+      it { should redirect_to sign_in_path }
     end
   end
 

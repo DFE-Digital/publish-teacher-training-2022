@@ -1,54 +1,11 @@
 require "rails_helper"
 
 describe SessionsController, type: :controller do
-  context "signin is disabled" do
-    before do
-      allow(Settings.features).to receive(:dfe_signin)
-        .and_return(false)
-    end
-
-    describe "new" do
-      it "renders the new session page" do
-        get :new
-        expect(response).to render_template("sessions/new")
-      end
-    end
-
-    describe "create" do
-      it "redirects to /signin" do
-        get :create
-        expect(response).to redirect_to(signin_path)
-      end
-    end
-  end
-
-  context "signin is enabled" do
-    before do
-      allow(Settings.features).to receive(:dfe_signin)
-        .and_return(true)
-    end
-
-    describe "new" do
-      it "redirects to signin" do
-        get :new
-        expect(response).to redirect_to("/auth/dfe")
-      end
-    end
-  end
-
-  context "when developer auth is enabled" do
-    describe "#new" do
-      it "redirects to personas login" do
-        allow(Settings).to receive(:developer_auth).and_return(true)
-        get :new
-        expect(response).to redirect_to("/personas")
-      end
-    end
-  end
-
   describe "#signout" do
-    context "when using developer auth" do
+    context "when using developer auth", authentication_mode: :persona do
       before do
+        allow(Settings.authentication.basic_auth).to receive(:disabled).and_return(true)
+
         session[:auth_user] = {
           "provider" => "developer",
           "uid" => "user@example.com",
@@ -70,12 +27,8 @@ describe SessionsController, type: :controller do
       end
     end
 
-    context "when using magic link" do
+    context "when using magic link", authentication_mode: :magic_link do
       before do
-        allow(Settings.features).to receive(:signin_intercept).and_return(true)
-        allow(Settings.features).to receive(:signin_by_email).and_return(true)
-        allow(Settings.features).to receive(:dfe_signin).and_return(false)
-
         session[:auth_user] = {
           "uid" => "user@example.com",
           "user_id" => "some-id",

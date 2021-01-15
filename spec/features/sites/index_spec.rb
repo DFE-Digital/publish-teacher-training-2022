@@ -23,7 +23,7 @@ feature "View locations", type: :feature do
   before do
     allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
     user = build(:user)
-    stub_omniauth(user: user, provider: provider)
+    signed_in_user(user: user, provider: provider)
 
     stub_api_v2_request(
       "/recruitment_cycles/#{current_recruitment_cycle.year}",

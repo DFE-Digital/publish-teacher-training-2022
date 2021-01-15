@@ -4,13 +4,8 @@ feature "Handling Unauthorized responses from the backend", type: :feature do
   let(:no_providers_page) { PageObjects::Page::Organisations::NoProviders.new }
 
   before do
-    stub_omniauth
+    signed_in_user
     stub_api_v2_request("/recruitment_cycles/#{Settings.current_cycle}", {}, :get, 401)
-  end
-
-  it "does not redirect" do
-    visit "/organisations/A0/"
-    expect(page.current_path).to eq("/organisations/A0")
   end
 
   it "renders the no-providers page" do

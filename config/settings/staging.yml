@@ -11,5 +11,4 @@ search_ui:
 environment:
   label: "Staging"
   selector_name: "staging"
-basic_auth: false
-developer_auth: false
+

@@ -28,7 +28,7 @@ feature "Course confirmation", type: :feature do
   let(:provider) { build(:provider, accredited_body?: true, sites: [site1, site2]) }
 
   before do
-    stub_omniauth(provider: provider)
+    signed_in_user(provider: provider)
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(provider, include: "sites")

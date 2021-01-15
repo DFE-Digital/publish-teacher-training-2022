@@ -74,7 +74,7 @@ feature "new course", type: :feature do
   end
 
   before do
-    stub_omniauth(provider: provider)
+    signed_in_user(provider: provider)
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(provider, include: "sites")

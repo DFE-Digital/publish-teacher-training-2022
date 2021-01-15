@@ -28,6 +28,7 @@ gem "canonical-rails"
 # DfE Sign-In
 gem "omniauth", "~> 1.9"
 gem "omniauth_openid_connect", "~> 0.3"
+gem "omniauth-rails_csrf_protection"
 
 # App Insights for Azure
 gem "application_insights"

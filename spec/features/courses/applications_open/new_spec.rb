@@ -21,7 +21,7 @@ feature "new course applications open", type: :feature do
   let(:recruitment_cycle) { build(:recruitment_cycle) }
 
   before do
-    stub_omniauth(provider: provider)
+    signed_in_user(provider: provider)
     stub_api_v2_resource(provider)
     stub_api_v2_resource(build(:provider, provider_code: "A2"))
     stub_api_v2_resource(build(:provider, provider_code: "A4"))
