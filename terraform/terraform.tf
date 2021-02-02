@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.29.0"
+      version = "2.45.1"
     }
     cloudfoundry = {
       source  = "cloudfoundry-community/cloudfoundry"
@@ -20,15 +20,26 @@ terraform {
 
 provider cloudfoundry {
   api_url      = local.cf_api_url
-  user         = var.cf_user
-  password     = var.cf_user_password
+  user         = local.infra_secrets.CF_USER
+  password     = local.infra_secrets.CF_PASSWORD
   sso_passcode = var.cf_sso_passcode
 }
 
 provider statuscake {
-  username = var.statuscake_username
-  apikey   = var.statuscake_password
+  username = local.infra_secrets.STATUSCAKE_USERNAME
+  apikey   = local.infra_secrets.STATUSCAKE_PASSWORD
 }
+
+provider azurerm {
+  features {}
+
+  skip_provider_registration = true
+  subscription_id            = local.azure_credentials.subscriptionId
+  client_id                  = local.azure_credentials.clientId
+  client_secret              = local.azure_credentials.clientSecret
+  tenant_id                  = local.azure_credentials.tenantId
+}
+
 
 module paas {
   source = "./modules/paas"
