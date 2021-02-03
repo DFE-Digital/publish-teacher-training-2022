@@ -18,3 +18,8 @@ statuscake_alerts = {
     node_locations = ["UKINT", "UK1", "MAN1", "MAN5", "DUB2"]
   }
 }
+
+key_vault_name              = "s121p01-shared-kv-01"
+key_vault_resource_group    = "s121p01-shared-rg"
+key_vault_app_secret_name   = "PUBLISH-APP-SECRETS-SANDBOX"
+key_vault_infra_secret_name = "BAT-INFRA-SECRETS-SANDBOX"

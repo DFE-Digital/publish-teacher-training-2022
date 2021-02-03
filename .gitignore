@@ -52,6 +52,3 @@ terraform.tfstate.d/
 ./*.tfstate
 lock.json
 **/.terraform/
-terraform/**/*.yml
-terraform/**/*.base64
-!terraform/workspace_variables/app_config.yml

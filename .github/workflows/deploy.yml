@@ -18,7 +18,7 @@ on:
       sandbox:
         description: Deploy to sandbox?
         default: 'false'
-        required: true        
+        required: true
       sha:
         description: Commit sha to be deployed
         required: true
@@ -86,13 +86,9 @@ jobs:
           terraform apply -auto-approve -input=false "tfplan"
         env:
           ARM_ACCESS_KEY:             ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
-          TF_VAR_dockerhub_username:  ${{ secrets.DOCKERHUB_USERNAME }}
-          TF_VAR_dockerhub_password:  ${{ secrets.DOCKERHUB_PASSWORD }}
           TF_VAR_paas_docker_image:   ${{ env.DOCKER_IMAGE }}
-          TF_VAR_cf_user:             ${{ secrets[format('CF_USERNAME_{0}', env.DEPLOY_ENV)] }}
-          TF_VAR_cf_user_password:    ${{ secrets[format('CF_PASSWORD_{0}', env.DEPLOY_ENV)] }}
-          TF_VAR_statuscake_username: ${{ secrets.STATUSCAKE_USERNAME }}
-          TF_VAR_statuscake_password: ${{ secrets.STATUSCAKE_API_KEY }}
+          TF_VAR_azure_credentials:   ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
+
 
       - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
         uses: benc-uk/workflow-dispatch@v1
@@ -107,7 +103,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref:   ${{ github.ref }}
-          checkName: smoke-tests-${{ env.DEPLOY_ENV }} 
+          checkName: smoke-tests-${{ env.DEPLOY_ENV }}
           timeoutSeconds:  300
           intervalSeconds: 15
 
