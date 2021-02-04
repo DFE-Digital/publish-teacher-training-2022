@@ -15,6 +15,10 @@ resource cloudfoundry_app web_app {
       route = routes.value.id
     }
   }
+
+  service_binding {
+    service_instance = cloudfoundry_user_provided_service.logging.id
+  }
 }
 
 resource cloudfoundry_route web_app_cloudapps_digital_route {

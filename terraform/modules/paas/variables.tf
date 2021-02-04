@@ -17,6 +17,7 @@ variable app_environment {}
 variable app_environment_variables { type = map }
 
 locals {
-  web_app_name   = "publish-teacher-training-${var.app_environment}"
-  web_app_routes = [cloudfoundry_route.publish_service_gov_uk_route, cloudfoundry_route.web_app_cloudapps_digital_route]
+  web_app_name         = "publish-teacher-training-${var.app_environment}"
+  web_app_routes       = [cloudfoundry_route.publish_service_gov_uk_route, cloudfoundry_route.web_app_cloudapps_digital_route]
+  logging_service_name = "publish-teacher-training-logit-${var.app_environment}"
 }
