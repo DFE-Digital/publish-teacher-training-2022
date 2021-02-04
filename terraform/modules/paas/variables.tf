@@ -10,6 +10,8 @@ variable docker_image {}
 
 variable dockerhub_credentials {}
 
+variable logstash_url {}
+
 variable app_environment {}
 
 variable app_environment_variables { type = map }

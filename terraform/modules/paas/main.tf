@@ -28,3 +28,9 @@ resource cloudfoundry_route publish_service_gov_uk_route {
   space    = data.cloudfoundry_space.space.id
   hostname = var.web_app_host_name
 }
+
+resource cloudfoundry_user_provided_service logging {
+  name             = local.logging_service_name
+  space            = data.cloudfoundry_space.space.id
+  syslog_drain_url = var.logstash_url
+}
