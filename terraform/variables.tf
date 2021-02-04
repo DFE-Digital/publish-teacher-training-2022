@@ -26,7 +26,7 @@ variable key_vault_app_secret_name {}
 
 variable key_vault_infra_secret_name {}
 
-variable azure_credentials {}
+variable azure_credentials { default = null }
 
 #StatusCake
 variable statuscake_alerts {
@@ -37,12 +37,11 @@ variable statuscake_alerts {
 locals {
   cf_api_url = "https://api.london.cloud.service.gov.uk"
 
-
   paas_app_config                = yamldecode(file(var.paas_app_config_file))[var.paas_app_environment_config]
   app_secrets                    = yamldecode(data.azurerm_key_vault_secret.app_secrets.value)
   infra_secrets                  = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
   paas_app_environment_variables = merge(local.app_secrets, local.paas_app_config)
-  azure_credentials              = jsondecode(var.azure_credentials)
+  azure_credentials              = try(jsondecode(var.azure_credentials), null)
 
   dockerhub_credentials = {
     username = local.infra_secrets.DOCKERHUB_USERNAME
