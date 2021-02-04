@@ -52,6 +52,7 @@ module paas {
   web_app_memory            = var.paas_web_app_memory
   web_app_instances         = var.paas_web_app_instances
   app_environment_variables = local.paas_app_environment_variables
+  logstash_url              = local.infra_secrets.LOGSTASH_URL
 }
 
 module statuscake {

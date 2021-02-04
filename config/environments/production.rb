@@ -62,6 +62,9 @@ Rails.application.configure do
     config.logger = LogStashLogger.new(Settings.logstash.to_h)
   else
     config.logger = ActiveSupport::Logger.new(STDOUT)
-    config.logger.warn("logstash not configured, falling back to standard Rails logging")
+    config.semantic_logger.application = Settings.application_name
+    config.rails_semantic_logger.format = :json
+    SemanticLogger.add_appender(io: STDOUT, level: config.log_level, formatter: config.rails_semantic_logger.format)
+    config.logger.info("Application logging to STDOUT")
   end
 end
