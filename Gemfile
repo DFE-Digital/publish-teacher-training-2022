@@ -32,7 +32,7 @@ gem "omniauth-rails_csrf_protection"
 
 # App Insights for Azure
 gem "application_insights"
-gem "pkg-config", "~> 1.4.4"
+gem "pkg-config", "~> 1.4.5"
 
 # Parsing JSON from an API
 gem "json_api_client"
