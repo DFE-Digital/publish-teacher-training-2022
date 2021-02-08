@@ -27,7 +27,7 @@ help:
 	echo "        make review APP_NAME=<APP_NAME> deploy-plan IMAGE_TAG=GIT_REF PASSCODE=<CF_SSO_CODE>"
 	echo "  Delete a review app"
 	echo ""
-	echo "        make review APP_NAME=<APP_NAME> destory IMAGE_TAG=GIT_REF PASSCODE=<CF_SSO_CODE>"
+	echo "        make review APP_NAME=<APP_NAME> destroy IMAGE_TAG=GIT_REF PASSCODE=<CF_SSO_CODE>"
 	echo "Examples:"
 	echo "  Deploy an pre-built image to qa"
 	echo ""
