@@ -10,6 +10,10 @@
   background: govuk-colour("red");
 }
 
+.app-tag--sandbox {
+  background: govuk-colour("purple");
+}
+
 .app-header__container--development {
   border-bottom-color: govuk-colour("dark-grey");
 }
@@ -20,4 +24,8 @@
 
 .app-header__container--staging {
   border-bottom-color: govuk-colour("red");
+}
+
+.app-header__container--sandbox {
+  border-bottom-color: govuk-colour("purple");
 }
