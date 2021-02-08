@@ -77,6 +77,10 @@ module ViewHelper
     Settings.environment.label
   end
 
+  def sandbox_mode?
+    Settings.environment.selector_name == "sandbox"
+  end
+
   # Ad-hoc, informally specified, and bug-ridden Ruby implementation of half
   # of https://github.com/JedWatson/classnames.
   #
