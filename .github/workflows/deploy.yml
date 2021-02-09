@@ -72,15 +72,24 @@ jobs:
           DEPLOY_ENV:   ${{ matrix.environment }}
           DOCKER_IMAGE: ${{ format('dfedigital/publish-teacher-training:paas-{0}', github.event.inputs.sha) }}
 
-      - name: Download app secrets file
-        working-directory: terraform/workspace_variables
-        run: echo $APP_SECRETS | base64 -d >> app_secrets.yml
-        env:
-          APP_SECRETS: ${{ secrets[format('APP_SECRETS_{0}', env.DEPLOY_ENV)] }}
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
+
+      - name: Validate Azure key vault secrets
+        run: |
+          wget https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb
+          chmod +x fetch_config.rb
+          . "terraform/workspace_variables/${DEPLOY_ENV}.sh"
+          ./fetch_config.rb -s "azure-key-vault-secret:${TF_VAR_key_vault_name}/${TF_VAR_key_vault_app_secret_name}" -d quiet \
+            && echo Data in "${TF_VAR_key_vault_name}/${TF_VAR_key_vault_app_secret_name}" looks valid
+          ./fetch_config.rb -s "azure-key-vault-secret:${TF_VAR_key_vault_name}/${TF_VAR_key_vault_infra_secret_name}" -d quiet \
+            && echo Data in "${TF_VAR_key_vault_name}/${TF_VAR_key_vault_infra_secret_name}" looks valid
 
       - name: Terraform init, plan & apply
         working-directory: terraform
         run: |
+          . "workspace_variables/${DEPLOY_ENV}.sh"
           terraform init -backend-config workspace_variables/${{ env.DEPLOY_ENV }}_backend.tfvars
           terraform plan -var-file workspace_variables/${{ env.DEPLOY_ENV }}.tfvars -out tfplan
           terraform apply -auto-approve -input=false "tfplan"

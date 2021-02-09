@@ -27,7 +27,7 @@ help:
 	echo "        make review APP_NAME=<APP_NAME> deploy-plan IMAGE_TAG=GIT_REF PASSCODE=<CF_SSO_CODE>"
 	echo "  Delete a review app"
 	echo ""
-	echo "        make review APP_NAME=<APP_NAME> destory IMAGE_TAG=GIT_REF PASSCODE=<CF_SSO_CODE>"	
+	echo "        make review APP_NAME=<APP_NAME> destroy IMAGE_TAG=GIT_REF PASSCODE=<CF_SSO_CODE>"
 	echo "Examples:"
 	echo "  Deploy an pre-built image to qa"
 	echo ""
@@ -64,6 +64,23 @@ production: ## Set DEPLOY_ENV to production
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 	$(if $(CONFIRM_PRODUCTION), , $(error Production can only run with CONFIRM_PRODUCTION))
 
+install-fetch-config:
+	[[ ! -f bin/fetch_config.rb ]] \
+		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
+		&& chmod +x bin/fetch_config.rb \
+		|| true
+
+set-azure-account:
+	az account set -s ${AZ_SUBSCRIPTION} && az account show
+
+edit-app-secrets: install-fetch-config set-azure-account
+	. terraform/workspace_variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
+		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} -f yaml
+
+edit-infra-secrets: install-fetch-config set-azure-account
+	. terraform/workspace_variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
+		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} -f yaml
+
 deploy-init:
 	$(eval export TF_DATA_DIR=./terraform/.terraform)
 	$(if $(IMAGE_TAG), , $(error Missing environment variable "IMAGE_TAG"))
@@ -75,10 +92,13 @@ deploy-init:
 	echo "🚀 DEPLOY_ENV is $(DEPLOY_ENV)"
 
 deploy-plan: deploy-init
-	terraform plan -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
+	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
+		&& terraform plan -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
 
 deploy: deploy-init
-	terraform apply -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars -auto-approve terraform
+	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
+		&& terraform apply -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars -auto-approve terraform
 
 destroy: deploy-init
-	terraform destroy -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
+	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
+		&& terraform destroy -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
