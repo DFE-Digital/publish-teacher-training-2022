@@ -108,6 +108,32 @@
           <li>how placement schools are selected</li>
         </ul>
 
+        <p class="govuk-body">We show guidance in this section. It tells candidates:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>what qualifications they need to teach in England</li>
+          <li>where to go to find out about international qualifications</li>
+          <li>why they might need to do a subject knowledge enhancement course</li>
+        </ul>
+
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              See the guidance
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <h3 class="govuk-heading-m">Where you will train</h3>
+            <% if @provider.provider_type == 'HEI' %>
+              <p class="govuk-body">You’ll be placed in schools for most of your course. This university is based in [show provider location(s)], and your school placements will be within commuting distance.</p>
+              <p class="govuk-body">You can’t pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
+              <p class="govuk-body">Universities can work with over 100 potential placement schools. Most will be within 10 miles of the university, but sometimes they can cover a wider area, especially outside of cities.</p>
+            <% else %>
+              <p class="govuk-body">This course has placement schools in [show provider location(s)]. Most of your time will be spent in the classroom with experienced teachers</p>
+              <p class="govuk-body">You'll be placed in different schools during your training. You can't pick which schools you want to be in, but your course will try to place you in schools you can commute to.</p>
+            <% end %>
+          </div>
+        </details>
+
         <%= f.govuk_text_area :how_school_placements_work, label: { text: course.placements_heading, size:'s' }, max_words: 350, rows: 15 %>
 
         <%= f.govuk_submit "Save" %>
