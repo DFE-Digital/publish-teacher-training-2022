@@ -9,7 +9,7 @@ class HeartbeatController < ActionController::API
 
   def healthcheck
     checks = {
-      teacher_training_api: api_alive?,
+      teacher_training_api: api_ping?,
     }
 
     status = checks.values.all? ? :ok : :service_unavailable
@@ -22,8 +22,12 @@ class HeartbeatController < ActionController::API
 
 private
 
-  def api_alive?
-    response = Faraday.get("#{Settings.teacher_training_api.base_url}/healthcheck")
+  def api_ping?
+    api_alive?("/ping")
+  end
+
+  def api_alive?(path)
+    response = Faraday.get("#{Settings.teacher_training_api.base_url}#{path}")
     response.success?
   rescue StandardError
     false
