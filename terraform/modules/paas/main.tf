@@ -8,6 +8,7 @@ resource cloudfoundry_app web_app {
   timeout                    = 180
   strategy                   = "blue-green-v2"
   environment                = var.app_environment_variables
+  instances                  = var.web_app_instances
 
   dynamic "routes" {
     for_each = local.web_app_routes
