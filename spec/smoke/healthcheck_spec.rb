@@ -28,4 +28,20 @@ describe "Publish Teacher Training Smoke Tests", :aggregate_failures, smoke: tru
       )
     end
   end
+
+  describe "GET #{Settings.publish_url}/ping" do
+    let(:url) { "#{base_url}/ping" }
+
+    it "returns HTTP success" do
+      expect(response.code).to eq(200)
+    end
+
+    it "returns HTML" do
+      expect(response.content_type).to eq("text/html")
+    end
+
+    it "returns the expected response report" do
+      expect(response.body).to eq("PONG")
+    end
+  end
 end
