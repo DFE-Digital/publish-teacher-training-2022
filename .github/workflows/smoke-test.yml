@@ -19,7 +19,11 @@ jobs:
           ruby-version: 2.7.2
 
       - name: install bundler and gems
-        run: gem install bundler httparty rspec
+        run: |
+          gem install bundler
+          echo 'gem "httparty"' >> Gemfile
+          echo 'gem "rspec"' >> Gemfile
+          bundle
 
       - uses: softprops/turnstyle@v1
         name: Wait for other runs
@@ -27,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_API_ACCESS_TOKEN }}
 
       - name: Smoke Tests ${{ github.event.inputs.environment }}
-        run: RAILS_ENV=${{ github.event.inputs.environment }} bundle exec rspec spec/smoke --options ./.rspec_smoke 
+        run: RAILS_ENV=${{ github.event.inputs.environment }} ./bin/bundle exec rspec spec/smoke --options ./.rspec_smoke
 
       - name: 'Notify #twd_publish_register_tech on failure'
         if: failure()
