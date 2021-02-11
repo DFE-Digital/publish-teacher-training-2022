@@ -10,7 +10,7 @@ describe "heartbeat checks requests" do
   end
 
   describe "GET /healthcheck" do
-    let(:healthcheck_endpoint) { "http://localhost:3001/healthcheck" }
+    let(:healthcheck_endpoint) { "http://localhost:3001/ping" }
 
     context "when everything is ok" do
       before do

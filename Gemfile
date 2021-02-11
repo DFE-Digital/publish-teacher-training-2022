@@ -98,6 +98,12 @@ group :development, :test do
   # Testing framework
   gem "rspec-its"
   gem "rspec-rails", "~> 4.0.2"
+
+  # Make HTTP requests fun again
+  gem "httparty"
+
+  # Smoketest, parallel spec
+  gem "rspec"
 end
 
 group :development do
