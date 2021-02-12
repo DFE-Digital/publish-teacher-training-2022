@@ -153,4 +153,45 @@ describe Course do
       end
     end
   end
+
+  describe "#travel_to_work_areas" do
+    context "when there is a single travel to work area" do
+      let(:site1) { build(:site, travel_to_work_area: "Brighton") }
+      let(:course) { build(:course, sites: [site1]) }
+
+      it "returns that site" do
+        expect(course.travel_to_work_areas).to eq "Brighton"
+      end
+    end
+
+    context "when there is a london borough and travel to work area" do
+      let(:site1) { build(:site, london_borough: "Westminster", travel_to_work_area: "Test") }
+      let(:course) { build(:course, sites: [site1]) }
+
+      it "returns just the london borough" do
+        expect(course.travel_to_work_areas).to eq "Westminster"
+      end
+    end
+
+    context "when there are two  different travel sites" do
+      let(:site1) { build(:site, london_borough: "Westminster") }
+      let(:site2) { build(:site, travel_to_work_area: "Brighton") }
+      let(:course) { build(:course, sites: [site1, site2]) }
+
+      it "returns both sites with the correct format" do
+        expect(course.travel_to_work_areas).to eq "Westminster and Brighton"
+      end
+    end
+
+    context "when there is a mixture of more than two travel sites" do
+      let(:site1) { build(:site, london_borough: "Westminster") }
+      let(:site2) { build(:site, london_borough: "Southwark") }
+      let(:site3) { build(:site, travel_to_work_area: "Brighton") }
+      let(:course) { build(:course, sites: [site1, site2, site3]) }
+
+      it "returns all sites in the correct format" do
+        expect(course.travel_to_work_areas).to eq "Westminster, Southwark and Brighton"
+      end
+    end
+  end
 end

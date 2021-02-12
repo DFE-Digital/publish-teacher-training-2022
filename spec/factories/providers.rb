@@ -10,6 +10,7 @@ FactoryBot.define do
     sequence(:id, &:to_s)
     sequence(:provider_code) { |n| "A#{n}" }
     provider_name { "ACME SCITT #{provider_code}" }
+    provider_type { "lead_school" }
     accredited_body? { false }
     can_add_more_sites? { true }
     courses { [] }

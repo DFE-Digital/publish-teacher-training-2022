@@ -7,6 +7,7 @@ feature "About course", type: :feature do
       :provider,
       accredited_body?: false,
       provider_code: "A0",
+      provider_type: "lead_school",
     )
   end
 
@@ -19,8 +20,12 @@ feature "About course", type: :feature do
       interview_process: "Interview process",
       how_school_placements_work: "How teaching placements work",
       recruitment_cycle: current_recruitment_cycle,
+      sites: [site1, site2],
     )
   end
+
+  let(:site1) { build(:site, london_borough: "Westminster") }
+  let(:site2) { build(:site, travel_to_work_area: "Brighton") }
 
   let(:course_response) do
     course.to_jsonapi(
@@ -39,39 +44,84 @@ feature "About course", type: :feature do
 
   let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
 
-  scenario "viewing the about courses page" do
-    stub_api_v2_resource(course, method: :patch)
+  context "provider is not a university" do
+    scenario "viewing the about courses page" do
+      stub_api_v2_resource(course, method: :patch)
 
-    visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
-    click_on "About this course"
+      visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
+      click_on "About this course"
 
-    expect(current_path).to eq about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
+      expect(current_path).to eq about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
 
-    expect(about_course_page.caption).to have_content(
-      "#{course.name} (#{course.course_code})",
-    )
-    expect(about_course_page.title).to have_content(
-      "About this course",
-    )
-    expect(about_course_page).to have_enrichment_form
-    expect(about_course_page.about_textarea.value).to eq(
-      course.about_course,
-    )
-    expect(about_course_page.interview_process_textarea.value).to eq(
-      course.interview_process,
-    )
-    expect(about_course_page.how_school_placements_work_textarea.value).to eq(
-      course.how_school_placements_work,
-    )
+      expect(about_course_page.caption).to have_content(
+        "#{course.name} (#{course.course_code})",
+      )
+      expect(about_course_page.title).to have_content(
+        "About this course",
+      )
+      expect(about_course_page).to have_enrichment_form
+      expect(about_course_page.about_textarea.value).to eq(
+        course.about_course,
+      )
+      expect(about_course_page.interview_process_textarea.value).to eq(
+        course.interview_process,
+      )
+      expect(about_course_page.how_school_placements_work_textarea.value).to eq(
+        course.how_school_placements_work,
+      )
+      expect(page).to have_content("This course has placement schools in Westminster and Brighton.")
 
-    fill_in "About this course", with: "Something interesting about this course"
-    fill_in "How school placements work", with: "Something about how teaching placements work"
-    click_on "Save"
+      fill_in "About this course", with: "Something interesting about this course"
+      fill_in "How school placements work", with: "Something about how teaching placements work"
+      click_on "Save"
 
-    expect(about_course_page.flash).to have_content(
-      "Your changes have been saved",
-    )
-    expect(current_path).to eq provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
+      expect(about_course_page.flash).to have_content(
+        "Your changes have been saved",
+      )
+      expect(current_path).to eq provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
+    end
+  end
+
+  context "provider is a university" do
+    let(:provider2) do
+      build(
+        :provider,
+        accredited_body?: false,
+        provider_code: "A0",
+        provider_type: "university",
+      )
+    end
+
+    let(:course2) do
+      build(
+        :course,
+        name: "English",
+        provider: provider2,
+        about_course: "About course",
+        interview_process: "Interview process",
+        how_school_placements_work: "How teaching placements work",
+        recruitment_cycle: current_recruitment_cycle,
+        sites: [site1, site2],
+      )
+    end
+
+    before do
+      signed_in_user
+      stub_api_v2_resource(current_recruitment_cycle)
+      stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,courses.accrediting_provider")
+      stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(provider2, include: "courses.accrediting_provider")
+      stub_api_v2_resource(provider2)
+    end
+
+    scenario "viewing the about courses page" do
+      stub_api_v2_resource(course, method: :patch)
+
+      visit provider_recruitment_cycle_course_path(provider2.provider_code, course2.recruitment_cycle_year, course2.course_code)
+      click_on "About this course"
+
+      expect(page).to have_content("This university is based in Westminster and Brighton,")
+    end
   end
 
   scenario "submitting with validation errors" do
