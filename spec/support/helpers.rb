@@ -136,7 +136,7 @@ module Helpers
   end
 
   def stub_api_v2_build_course(params = {})
-    jsonapi_response = course.to_jsonapi(include: [:subjects, :sites, :provider, :accrediting_provider, provider: [:sites]])
+    jsonapi_response = course.to_jsonapi(include: [:subjects, :sites, :provider, :accrediting_provider, provider: %i[sites provider_type]])
     jsonapi_response[:data][:meta] = course.meta
     jsonapi_response[:data][:errors] = course_errors_to_json_api(course)
     stub_api_v2_request(

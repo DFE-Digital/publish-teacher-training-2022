@@ -118,6 +118,12 @@ class Course < Base
     level == "further_education"
   end
 
+  def travel_to_work_areas
+    travel_to_work_areas = sites.map { |site| site.london_borough || site.travel_to_work_area }.uniq
+
+    travel_to_work_areas.to_sentence(last_word_connector: " and ")
+  end
+
 private
 
   def post_base_url

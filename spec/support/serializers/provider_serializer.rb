@@ -16,5 +16,6 @@ class ProviderSerializer < JSONAPI::Serializable::Resource
              %i[courses sites users])
 
   attribute :recruitment_cycle
+  attribute :provider_type
   attribute :recruitment_cycle_year
 end
