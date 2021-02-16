@@ -12,6 +12,8 @@ class Course < Base
   property :science, type: :string
   property :name, type: :string
 
+  delegate :provider_type, to: :provider
+
   custom_endpoint :send_vacancies_updated_notification, on: :member, request_method: :post
 
   self.primary_key = :course_code

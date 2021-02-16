@@ -194,4 +194,10 @@ describe Course do
       end
     end
   end
+
+  describe "#provider_type" do
+    it "returns the provider type" do
+      expect(course.provider_type).to eq("lead_school")
+    end
+  end
 end

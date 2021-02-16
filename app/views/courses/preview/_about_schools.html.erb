@@ -2,6 +2,16 @@
   <h2 class="govuk-heading-l" id="section-schools"><%= course.placements_heading %></h2>
   <div data-qa="course__about_schools">
     <% if course.how_school_placements_work.present? %>
+      <aside class="app-advice">
+        <h3 class="app-advice__title">Where will you train</h3>
+        <div class="app-advice__body">
+          <% if course.provider_type == "university" %>
+            <%= render partial: 'courses/preview/placement/hei', locals: { course: course } %>
+          <% else %>
+            <%= render partial: 'courses/preview/placement/scitt', locals: { course: course } %>
+          <% end %>
+        </div>
+      </aside>
       <%= markdown(course.how_school_placements_work) %>
     <% else %>
       <p class="app-missing-section">Please add details for this section.</p>

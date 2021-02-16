@@ -1,9 +1,8 @@
 <div class="govuk-!-margin-bottom-8">
-  <h2 class="govuk-heading-l" id="section-fees">Fees</h2>
   <% if course.fee_uk_eu.present? %>
     <% if course.fee_international.present? %>
       <table class="govuk-table app-table--vertical-align-middle">
-        <caption class="govuk-table__caption govuk-!-font-weight-regular govuk-!-margin-bottom-4">The course fees for <%= @recruitment_cycle.year_range %> are as follows:</caption>
+        <caption class="govuk-table__caption govuk-!-font-weight-regular govuk-!-margin-bottom-4">The course fees for <%= course.cycle_range %> are as follows:</caption>
         <thead class="govuk-table__head">
           <tr class="govuk-visually-hidden govuk-table__row">
             <th scope="col" class="govuk-table__header">Student type</th>
