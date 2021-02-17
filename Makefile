@@ -76,7 +76,7 @@ install-fetch-config:
 		|| true
 
 set-azure-account:
-	az account set -s ${AZ_SUBSCRIPTION} && az account show
+	az account set -s ${AZ_SUBSCRIPTION}
 
 edit-app-secrets: install-fetch-config set-azure-account
 	. terraform/workspace_variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
@@ -85,6 +85,10 @@ edit-app-secrets: install-fetch-config set-azure-account
 edit-infra-secrets: install-fetch-config set-azure-account
 	. terraform/workspace_variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
 		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} -f yaml
+
+print-app-secrets: install-fetch-config set-azure-account
+	. terraform/workspace_variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
+		-f yaml
 
 deploy-init:
 	$(eval export TF_DATA_DIR=./terraform/.terraform)
