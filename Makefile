@@ -43,6 +43,11 @@ review:
 	$(eval export TF_VAR_paas_web_app_host_name-$(APP_NAME))
 	echo https://publish-teacher-training-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
 
+.PHONY: local
+local: ## Configure local dev environment
+	$(eval DEPLOY_ENV=local)
+	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+
 .PHONY: qa
 qa: ## Set DEPLOY_ENV to qa
 	$(eval DEPLOY_ENV=qa)
