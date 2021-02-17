@@ -43,6 +43,11 @@ review:
 	$(eval export TF_VAR_paas_web_app_host_name-$(APP_NAME))
 	echo https://publish-teacher-training-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
 
+.PHONY: local
+local: ## Configure local dev environment
+	$(eval DEPLOY_ENV=local)
+	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+
 .PHONY: qa
 qa: ## Set DEPLOY_ENV to qa
 	$(eval DEPLOY_ENV=qa)
@@ -71,7 +76,7 @@ install-fetch-config:
 		|| true
 
 set-azure-account:
-	az account set -s ${AZ_SUBSCRIPTION} && az account show
+	az account set -s ${AZ_SUBSCRIPTION}
 
 edit-app-secrets: install-fetch-config set-azure-account
 	. terraform/workspace_variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
@@ -80,6 +85,10 @@ edit-app-secrets: install-fetch-config set-azure-account
 edit-infra-secrets: install-fetch-config set-azure-account
 	. terraform/workspace_variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
 		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} -f yaml
+
+print-app-secrets: install-fetch-config set-azure-account
+	. terraform/workspace_variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
+		-f yaml
 
 deploy-init:
 	$(eval export TF_DATA_DIR=./terraform/.terraform)
