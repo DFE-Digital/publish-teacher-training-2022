@@ -9,7 +9,7 @@ describe "Rendering financial support information" do
   end
 
   subject do
-    render "courses/preview/financial_support", course: course.decorate
+    render "courses/preview/fees_and_financial_support", course: course.decorate
 
     preview_course_page = PageObjects::Page::Organisations::CoursePreview.new
     preview_course_page.load(rendered)
@@ -256,6 +256,31 @@ describe "Rendering financial support information" do
       it "does not renders the 'placeholder' partial" do
         expect(subject).to_not render_template(partial: placeholder_partial_path)
       end
+    end
+  end
+
+  context "course has fees" do
+    let(:course) { build(:course, :with_fees) }
+
+    let(:financial_support_placeholder_cycle) do
+      course.recruitment_cycle_year.to_i
+    end
+
+    it "renders the 'fees' partial" do
+      expect(subject).to have_uk_fees
+      expect(subject).to have_international_fees
+    end
+  end
+
+  context "course has no fees" do
+    let(:course) { build(:course) }
+
+    let(:financial_support_placeholder_cycle) do
+      course.recruitment_cycle_year.to_i
+    end
+
+    it "does not render the 'fees' partial" do
+      expect(subject).to_not render_template(partial: "courses/preview/fees")
     end
   end
 end

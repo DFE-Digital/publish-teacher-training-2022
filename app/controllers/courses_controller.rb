@@ -245,6 +245,7 @@ private
 
     @course = Course
       .includes(:subjects)
+      .includes(:sites)
       .includes(site_statuses: [:site])
       .includes(provider: [:sites])
       .includes(:accrediting_provider)
