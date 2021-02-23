@@ -30,8 +30,6 @@ gem "omniauth", "~> 1.9"
 gem "omniauth_openid_connect", "~> 0.3"
 gem "omniauth-rails_csrf_protection"
 
-# App Insights for Azure
-gem "application_insights"
 gem "pkg-config", "~> 1.4.5"
 
 # Parsing JSON from an API
