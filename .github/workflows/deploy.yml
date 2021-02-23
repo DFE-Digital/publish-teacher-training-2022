@@ -48,7 +48,7 @@ jobs:
       matrix: ${{ fromJson(needs.prepare-matrix.outputs.environments) }}
     steps:
       - name: Start ${{ matrix.environment }} Deployment
-        uses: bobheadxi/deployments@master
+        uses: bobheadxi/deployments@v0.4.3
         id: deployment
         with:
           env:   ${{ matrix.environment }}
@@ -122,7 +122,7 @@ jobs:
 
       - name: Update ${{ matrix.environment }} status
         if: ${{ always() }}
-        uses: bobheadxi/deployments@master
+        uses: bobheadxi/deployments@v0.4.3
         with:
           env:  ${{ matrix.environment }}
           ref:  ${{ github.event.inputs.sha }}
