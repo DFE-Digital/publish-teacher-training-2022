@@ -69,7 +69,6 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     aes_key_wrap (1.0.1)
-    application_insights (0.5.6)
     ast (2.4.1)
     attr_extras (6.2.4)
     attr_required (1.0.1)
@@ -500,7 +499,6 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
-  application_insights
   better_errors
   binding_of_caller
   bootsnap (>= 1.1.0)
