@@ -4,12 +4,11 @@ dfe_signin:
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
   base_url: https://qa.publish-teacher-training-courses.service.gov.uk
 teacher_training_api:
-  base_url: https://api.qa.publish-teacher-training-courses.service.gov.uk
+  base_url: https://qa.api.publish-teacher-training-courses.service.gov.uk
 search_ui:
-  base_url: https://www.qa.find-postgraduate-teacher-training.service.gov.uk
+  base_url: https://qa.find-postgraduate-teacher-training.service.gov.uk
 environment:
   label: "QA"
   selector_name: "qa"
 authentication:
   mode: persona   # none critical systems, ie localhost
-  
