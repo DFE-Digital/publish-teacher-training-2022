@@ -124,11 +124,9 @@
           <div class="govuk-details__text">
             <h3 class="govuk-heading-m">Where you will train</h3>
             <% if @provider.provider_type == 'university' %>
-              <p class="govuk-body">You’ll be placed in schools for most of your course. This university is based in <%= @course.travel_to_work_areas %>, and your school placements will be within commuting distance.</p>
               <p class="govuk-body">You can’t pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
               <p class="govuk-body">Universities can work with over 100 potential placement schools. Most will be within 10 miles of the university, but sometimes they can cover a wider area, especially outside of cities.</p>
             <% else %>
-              <p class="govuk-body">This course has placement schools in <%= @course.travel_to_work_areas %>. Most of your time will be spent in the classroom with experienced teachers.</p>
               <p class="govuk-body">You'll be placed in different schools during your training. You can't pick which schools you want to be in, but your course will try to place you in schools you can commute to.</p>
             <% end %>
           </div>
