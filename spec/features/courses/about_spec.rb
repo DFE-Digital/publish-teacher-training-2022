@@ -69,7 +69,7 @@ feature "About course", type: :feature do
       expect(about_course_page.how_school_placements_work_textarea.value).to eq(
         course.how_school_placements_work,
       )
-      expect(page).to have_content("This course has placement schools in Westminster and Brighton.")
+      expect(page).to have_content("You'll be placed in different schools during your training.")
 
       fill_in "About this course", with: "Something interesting about this course"
       fill_in "How school placements work", with: "Something about how teaching placements work"
@@ -120,7 +120,7 @@ feature "About course", type: :feature do
       visit provider_recruitment_cycle_course_path(provider2.provider_code, course2.recruitment_cycle_year, course2.course_code)
       click_on "About this course"
 
-      expect(page).to have_content("This university is based in Westminster and Brighton,")
+      expect(page).to have_content("Universities can work with over 100 potential placement schools.")
     end
   end
 
