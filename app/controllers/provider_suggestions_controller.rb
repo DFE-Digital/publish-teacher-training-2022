@@ -1,4 +1,6 @@
 class ProviderSuggestionsController < ApplicationController
+  rescue_from JsonApiClient::Errors::ClientError, with: :handle_error_request
+
   def suggest
     return render(json: { error: "Bad request" }, status: :bad_request) if params_invalid?
 
@@ -30,5 +32,9 @@ private
 
   def params_invalid?
     params[:query].nil? || params[:query].length < 3
+  end
+
+  def handle_error_request
+    render json: []
   end
 end
