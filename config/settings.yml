@@ -83,6 +83,9 @@ features:
     # actually starting when it would be set to false
     has_current_cycle_started?: true
     show_next_cycle_allocation_recruitment_page: false
+  maintenance_mode:
+    enabled: false
+    message: "Closed for maintenance"
 
 authentication:
   mode: dfe_signin    # default authentication mode
