@@ -16,6 +16,7 @@ describe "/providers/suggest", type: :request do
       expect(JSON.parse(response.body)).to eq("error" => "Bad request")
     end
   end
+
   context "when provider suggestion is less than three characters" do
     it "returns bad request (400)" do
       get "/providers/suggest?query=St"
@@ -24,6 +25,20 @@ describe "/providers/suggest", type: :request do
       expect(JSON.parse(response.body)).to eq("error" => "Bad request")
     end
   end
+
+  context "when the request raises an JsonApiClient::Errors::ClientError" do
+    let(:query) { "(Reach Academy Feltham" }
+
+    before do
+      stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/providers/suggest?query=#{query}").and_raise(JsonApiClient::Errors::ClientError)
+      get "/providers/suggest?query=#{query}"
+    end
+
+    it "returns an empty result set" do
+      expect(JSON.parse(response.body)).to eq([])
+    end
+  end
+
   context "when provider suggestion query is valid" do
     query = "Girls School"
     query_with_unicode_character = "Girls%E2%80%99 School"
