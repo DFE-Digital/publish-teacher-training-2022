@@ -52,22 +52,30 @@ local: ## Configure local dev environment
 qa: ## Set DEPLOY_ENV to qa
 	$(eval DEPLOY_ENV=qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+	$(eval space=bat-qa)
+	$(eval paas_env=qa)
 
 .PHONY: staging
 staging: ## Set DEPLOY_ENV to staging
 	$(eval DEPLOY_ENV=staging)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
+	$(eval space=bat-staging)
+	$(eval paas_env=staging)
 
 .PHONY: sandbox
 sandbox: ## Set DEPLOY_ENV to sandbox
 	$(eval DEPLOY_ENV=sandbox)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
+	$(eval space=bat-prod)
+	$(eval paas_env=sandbox)
 
 .PHONY: production
 production: ## Set DEPLOY_ENV to production
 	$(eval DEPLOY_ENV=production)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 	$(if $(CONFIRM_PRODUCTION), , $(error Production can only run with CONFIRM_PRODUCTION))
+	$(eval space=bat-prod)
+	$(eval paas_env=prod)
 
 install-fetch-config:
 	[ ! -f bin/fetch_config.rb ] \
@@ -111,3 +119,7 @@ deploy: deploy-init
 destroy: deploy-init
 	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
 		&& terraform destroy -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
+
+console:
+	cf target -s ${space}
+	cf ssh teacher-training-api-${paas_env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
