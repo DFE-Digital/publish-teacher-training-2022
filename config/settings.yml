@@ -85,7 +85,7 @@ features:
     show_next_cycle_allocation_recruitment_page: false
   maintenance_mode:
     enabled: false
-    message: "Closed for maintenance"
+    message: "This service will be unavailable from Thursday 4 March at 17:00 to Friday 5 March at 09:00, while we carry out maintenance.\n\nFind teacher training courses will still be available during this time. If you have any questions, contact us at becomingateacher@digital.education.gov.uk"
 
 authentication:
   mode: dfe_signin    # default authentication mode
