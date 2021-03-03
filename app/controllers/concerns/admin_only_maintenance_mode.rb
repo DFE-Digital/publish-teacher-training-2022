@@ -12,6 +12,10 @@ private
     return unless Settings.features.maintenance_mode.enabled
     return if %w[sign_in sessions].include?(controller_name)
 
+    redirect_if_non_admin
+  end
+
+  def redirect_if_non_admin
     unless current_user && current_user["admin"]
       redirect_to sign_in_path
     end
