@@ -235,7 +235,8 @@ feature "Sign in", type: :feature do
     describe "maintenance mode" do
       before do
         allow(Settings.features.maintenance_mode).to receive(:enabled).and_return(true)
-        allow(Settings.features.maintenance_mode).to receive(:message).and_return("Maintenance message")
+        allow(Settings.features.maintenance_mode).to receive(:title).and_return("Maintenance message title")
+        allow(Settings.features.maintenance_mode).to receive(:body).and_return("Maintenance message body")
       end
 
       describe "not signed in" do
@@ -243,7 +244,8 @@ feature "Sign in", type: :feature do
           visit "/"
           expect(page.current_path).to eq sign_in_path
           expect(page).to have_content("Sign in to Publish teaching training")
-          expect(page).to have_content("Maintenance message")
+          expect(page).to have_content("Maintenance message title")
+          expect(page).to have_content("Maintenance message body")
         end
       end
 
@@ -257,7 +259,8 @@ feature "Sign in", type: :feature do
 
           expect(page.current_path).to eq sign_in_path
           expect(page).to have_content("Sign in to Publish teaching training")
-          expect(page).to have_content("Maintenance message")
+          expect(page).to have_content("Maintenance message title")
+          expect(page).to have_content("Maintenance message body")
           expect(page).to have_content("Sign out (#{user.first_name} #{user.last_name})")
         end
       end
@@ -270,11 +273,11 @@ feature "Sign in", type: :feature do
           stub_api_v2_request("/access_requests", nil, :get)
 
           visit_dfe_sign_in(root_path)
-          # save_and_open_page
 
           expect(page.current_path).to eq root_path
           expect(page).to_not have_content("Sign in to Publish teaching training")
-          expect(page).to have_content("Maintenance message")
+          expect(page).to_not have_content("Maintenance message title")
+          expect(page).to_not have_content("Maintenance message body")
           expect(page).to have_content("Organisations")
           expect(page).to have_content("Sign out (#{user.first_name} #{user.last_name})")
         end
