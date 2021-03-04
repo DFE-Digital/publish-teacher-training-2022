@@ -19,11 +19,13 @@ staging:
   <<: *default
   RAILS_ENV: staging
   RACK_ENV: staging
+  SETTINGS__FEATURES__MAINTENANCE_MODE__ENABLED: true
 
 prod:
   <<: *default
   RAILS_ENV: production
   RACK_ENV: production
+  SETTINGS__FEATURES__MAINTENANCE_MODE__ENABLED: true
 
 sandbox:
   <<: *default
