@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   rescue_from JsonApiClient::Errors::AccessDenied, with: :handle_access_denied
 
   include Pagy::Backend
+  include AdminOnlyMaintenanceMode
 
   before_action :http_basic_auth
   before_action :authenticate

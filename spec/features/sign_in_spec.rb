@@ -232,6 +232,58 @@ feature "Sign in", type: :feature do
       end
     end
 
+    describe "maintenance mode" do
+      before do
+        allow(Settings.features.maintenance_mode).to receive(:enabled).and_return(true)
+        allow(Settings.features.maintenance_mode).to receive(:title).and_return("Maintenance message title")
+        allow(Settings.features.maintenance_mode).to receive(:body).and_return("Maintenance message body")
+      end
+
+      describe "not signed in" do
+        it "redirects to sign in page with maintenance message" do
+          visit "/"
+          expect(page.current_path).to eq sign_in_path
+          expect(page).to have_content("Sign in to Publish teaching training")
+          expect(page).to have_content("Maintenance message title")
+          expect(page).to have_content("Maintenance message body")
+        end
+      end
+
+      describe "non-admin user" do
+        it "after sign in redirects to sign in page with maintenance message" do
+          user = build(:user)
+          stub_omniauth(user: user)
+          stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
+
+          visit_dfe_sign_in(root_path)
+
+          expect(page.current_path).to eq sign_in_path
+          expect(page).to have_content("Sign in to Publish teaching training")
+          expect(page).to have_content("Maintenance message title")
+          expect(page).to have_content("Maintenance message body")
+          expect(page).to have_content("Sign out (#{user.first_name} #{user.last_name})")
+        end
+      end
+
+      describe "admin user" do
+        it "allows sign in without redirecting to sign in page" do
+          user = build(:user, :admin)
+          stub_omniauth(user: user)
+          stub_api_v2_request("/users/#{user.id}", user.to_jsonapi)
+          stub_api_v2_request("/access_requests", nil, :get)
+
+          visit_dfe_sign_in(root_path)
+
+          expect(page.current_path).to eq root_path
+          expect(page).to_not have_content("Sign in to Publish teaching training")
+          expect(page).to_not have_content("Maintenance message title")
+          expect(page).to_not have_content("Maintenance message body")
+          expect(page).to have_content("Organisations")
+          expect(page).to have_content("Sign out (#{user.first_name} #{user.last_name})")
+        end
+      end
+    end
+
     scenario "new inactive user accepts the terms and conditions page with rollover disabled" do
       allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
       user = build(:user, :inactive, :new)
