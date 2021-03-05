@@ -140,5 +140,5 @@ jobs:
           SLACK_ICON_EMOJI: ':github-logo:'
           SLACK_USERNAME: Publish Teacher Training
           SLACK_TITLE: Deployment Failure
-          SLACK_MESSAGE: ':alert: <!channel> Deploy to ${{ github.event.inputs.environment }} failed :fire:'
+          SLACK_MESSAGE: '<!channel> Deploy to ${{ env.DEPLOY_ENV }} failed :fire:'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
