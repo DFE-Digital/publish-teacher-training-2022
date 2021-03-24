@@ -3,11 +3,7 @@ module Courses
     include CourseBasicDetailConcern
 
     def update
-      if params[:course][:study_mode] == "full_time_or_part_time"
-        redirect_to request_change_provider_recruitment_cycle_course_path(params[:provider_code], params[:recruitment_cycle_year], params[:code])
-      else
-        super
-      end
+      super
     end
 
   private
