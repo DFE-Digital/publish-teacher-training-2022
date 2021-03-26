@@ -5,8 +5,7 @@ RUN apk add --update --no-cache tzdata && \
     echo "Europe/London" > /etc/timezone
 
 RUN apk add --update --no-cache --virtual runtime-dependances \
- yarn \
- openssl-dev
+ yarn openssl-dev shared-mime-info
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
