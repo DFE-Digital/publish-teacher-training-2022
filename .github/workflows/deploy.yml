@@ -5,7 +5,7 @@ on:
     inputs:
       qa:
         description: Deploy to qa?
-        default: 'true'
+        default: 'false'
         required: true
       staging:
         description: Deploy to staging?
