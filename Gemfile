@@ -30,7 +30,7 @@ gem "omniauth", "~> 1.9"
 gem "omniauth_openid_connect", "~> 0.3"
 gem "omniauth-rails_csrf_protection"
 
-gem "pkg-config", "~> 1.4.5"
+gem "pkg-config", "~> 1.4.6"
 
 # Parsing JSON from an API
 gem "json_api_client"
