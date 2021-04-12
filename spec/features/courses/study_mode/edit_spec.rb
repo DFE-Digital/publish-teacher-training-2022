@@ -99,9 +99,8 @@ feature "Edit course study mode", type: :feature do
       choose("course_study_mode_full_time_or_part_time")
       click_on "Save"
 
-      expect(course_request_change_page).to be_displayed
-      expect(course_request_change_page.title).to have_content("Request a change to this course")
-      expect(update_course_stub).not_to have_been_requested
+      expect(update_course_stub).to have_been_requested
+      expect(course_details_page.flash).to have_content("Your changes have been saved")
     end
 
     scenario "It displays the correct title" do
