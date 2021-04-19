@@ -14,9 +14,9 @@
 </p>
 
 <%= form_tag("/auth/developer/callback") do %>
-  <%= hidden_field_tag "email", "anonimized-user-10599@example.org" %>
-  <%= hidden_field_tag "first_name", "Course administrator" %>
-  <%= hidden_field_tag "last_name", "Anne" %>
+  <%= hidden_field_tag "email", "anonimized-user-10599@example.org", id: nil %>
+  <%= hidden_field_tag "first_name", "Course administrator", id: nil %>
+  <%= hidden_field_tag "last_name", "Anne", id: nil %>
 
   <%= submit_tag "Login as Anne", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
@@ -31,9 +31,9 @@
 </p>
 
 <%= form_tag("/auth/developer/callback") do %>
-  <%= hidden_field_tag "email", "anonimized-user-8847@example.org" %>
-  <%= hidden_field_tag "first_name", "ITT partnership manager" %>
-  <%= hidden_field_tag "last_name", "Susy" %>
+  <%= hidden_field_tag "email", "anonimized-user-8847@example.org", id: nil %>
+  <%= hidden_field_tag "first_name", "ITT partnership manager", id: nil %>
+  <%= hidden_field_tag "last_name", "Susy", id: nil %>
 
   <%= submit_tag "Login as Susy", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
@@ -56,9 +56,9 @@ Mary is a SCITT Business Support Coordinator who belongs to:
 </p>
 
 <%= form_tag("/auth/developer/callback") do %>
-  <%= hidden_field_tag "email", "anonimized-user-7839@example.org" %>
-  <%= hidden_field_tag "first_name", "Multi-org administrator" %>
-  <%= hidden_field_tag "last_name", "Mary" %>
+  <%= hidden_field_tag "email", "anonimized-user-7839@example.org", id: nil %>
+  <%= hidden_field_tag "first_name", "Multi-org administrator", id: nil %>
+  <%= hidden_field_tag "last_name", "Mary", id: nil %>
 
   <%= submit_tag "Login as Mary", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
@@ -74,9 +74,9 @@ Mary is a SCITT Business Support Coordinator who belongs to:
 </p>
 
 <%= form_tag("/auth/developer/callback") do %>
-  <%= hidden_field_tag "email", "becomingateacher+admin-integration-tests@digital.education.gov.uk" %>
-  <%= hidden_field_tag "first_name", "Support agent" %>
-  <%= hidden_field_tag "last_name", "Colin" %>
+  <%= hidden_field_tag "email", "becomingateacher+admin-integration-tests@digital.education.gov.uk", id: nil %>
+  <%= hidden_field_tag "first_name", "Support agent", id: nil %>
+  <%= hidden_field_tag "last_name", "Colin", id: nil %>
 
   <%= submit_tag "Login as Colin", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
