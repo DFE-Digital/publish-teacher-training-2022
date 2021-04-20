@@ -11,7 +11,7 @@
               builder: GOVUKDesignSystemFormBuilder::FormBuilder,
               url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
               data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
-  <%= f.hidden_field :page, value: :about %>
+  <%= f.hidden_field :page, value: :about, id: nil %>
   <%= f.govuk_error_summary "You’ll need to correct some information." %>
 <% end %>
 
@@ -26,7 +26,7 @@
                     builder: GOVUKDesignSystemFormBuilder::FormBuilder,
                     url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
                     data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
-        <%= f.hidden_field :page, value: :about %>
+        <%= f.hidden_field :page, value: :about, id: nil %>
 
         <p class="govuk-body">You should give a short, factual summary of the course.</p>
 
