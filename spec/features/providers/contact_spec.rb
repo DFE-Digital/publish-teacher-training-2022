@@ -34,6 +34,7 @@ feature "View provider contact", type: :feature do
     expect(org_contact_page.email.value).to eq(provider.email)
     expect(org_contact_page.telephone.value).to eq(provider.telephone)
     expect(org_contact_page.website.value).to eq(provider.website)
+    expect(org_contact_page.ukprn.value).to eq(provider.ukprn)
     expect(org_contact_page.address1.value).to eq(provider.address1)
     expect(org_contact_page.address2.value).to eq(provider.address2)
     expect(org_contact_page.address3.value).to eq(provider.address3)

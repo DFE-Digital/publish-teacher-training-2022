@@ -9,6 +9,7 @@ module PageObjects
         element :email, "[data-qa=email]"
         element :telephone, "[data-qa=telephone]"
         element :website, "[data-qa=website]"
+        element :ukprn, "[data-qa=ukprn]"
         element :address1, "[data-qa=address1]"
         element :address2, "[data-qa=address2]"
         element :address3, "[data-qa=address3]"
