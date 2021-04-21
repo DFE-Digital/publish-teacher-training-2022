@@ -5,6 +5,13 @@
   <%= f.text_field field, options %>
 <% end %>
 
+<%= render "shared/form_field",
+  form: f, field: :urn, label: capture { %>
+    <h2 class="<%= cns("govuk-heading-m", "govuk-!-margin-bottom-0": @errors.present? && @errors[:urn]&.any?) %>">URN</h2>
+  <% } do |field, options| %>
+  <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
+<% end %>
+
 <h2 class="govuk-heading-m govuk-!-margin-top-8">Address</h2>
 
 <%= render "shared/form_field",
@@ -36,4 +43,3 @@
   form: f, field: :postcode do |field, options| %>
   <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
 <% end %>
-

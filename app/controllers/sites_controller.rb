@@ -77,6 +77,7 @@ private
   def site_params
     params.require(:site).permit(
       :location_name,
+      :urn,
       :address1,
       :address2,
       :address3,
