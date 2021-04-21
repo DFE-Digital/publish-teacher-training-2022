@@ -4,6 +4,7 @@ feature "View provider contact", type: :feature do
   let(:org_contact_page) { PageObjects::Page::Organisations::OrganisationContact.new }
   let(:provider) do
     build :provider,
+          :lead_school,
           provider_code: "A0",
           content_status: "published"
   end
@@ -35,6 +36,7 @@ feature "View provider contact", type: :feature do
     expect(org_contact_page.telephone.value).to eq(provider.telephone)
     expect(org_contact_page.website.value).to eq(provider.website)
     expect(org_contact_page.ukprn.value).to eq(provider.ukprn)
+    expect(org_contact_page.urn.value).to eq(provider.urn.to_s)
     expect(org_contact_page.address1.value).to eq(provider.address1)
     expect(org_contact_page.address2.value).to eq(provider.address2)
     expect(org_contact_page.address3.value).to eq(provider.address3)
