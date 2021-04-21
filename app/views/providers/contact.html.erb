@@ -16,12 +16,11 @@
     </h1>
   </div>
 </div>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @provider, url: contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year), method: :put do |f| %>
       <%= f.hidden_field :page, value: :contact %>
-   
+
       <% if current_user["admin"] %>
         <div class="app-admin-only__section">
           <div class="app-admin-only__section-header">
@@ -63,6 +62,11 @@
           website
         </span>
         <%= f.text_field field, options %>
+      <% end %>
+
+      <%= render "shared/form_field",
+        form: f, field: :ukprn, label: "UKPRN (UK Provider Reference Number)" do |field, options| %>
+        <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
       <% end %>
 
       <hr class="govuk-section-break govuk-section-break--l" />

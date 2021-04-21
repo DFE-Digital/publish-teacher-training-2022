@@ -20,6 +20,7 @@ FactoryBot.define do
     website { "https://cat.me" }
     email { "info@acme-scitt.org" }
     telephone { "020 8123 4567" }
+    ukprn { "12345678" }
     address1 { nil }
     address2 { nil }
     address3 { nil }
