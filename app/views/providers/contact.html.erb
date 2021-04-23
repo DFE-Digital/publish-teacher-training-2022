@@ -58,7 +58,7 @@
       <% if @provider.provider_type == "lead_school" %>
         <%= render "shared/form_field",
           form: f, field: :urn, label: "URN (Unique Reference Number)" do |field, options| %>
-          <%= f.text_field field, options %>
+          <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
         <% end %>
       <% end %>
 

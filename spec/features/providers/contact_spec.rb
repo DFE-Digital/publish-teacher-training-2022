@@ -4,7 +4,6 @@ feature "View provider contact", type: :feature do
   let(:org_contact_page) { PageObjects::Page::Organisations::OrganisationContact.new }
   let(:provider) do
     build :provider,
-          :lead_school,
           provider_code: "A0",
           content_status: "published"
   end
