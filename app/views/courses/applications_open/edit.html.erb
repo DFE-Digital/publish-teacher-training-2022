@@ -5,10 +5,6 @@
 
 <%= render 'shared/errors' %>
 
-<h1 class="govuk-heading-xl govuk-!-margin-bottom-2" id="applications_open_from-error">
-  When will applications open?
-</h1>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: course, url: applications_open_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
