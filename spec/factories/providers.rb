@@ -27,6 +27,7 @@ FactoryBot.define do
     address4 { nil }
     postcode { nil }
     latitude { nil }
+    urn { Faker::Number.number(digits: [5, 6].sample) }
     longitude { nil }
     recruitment_cycle_year { "2019" }
     last_published_at { Time.zone.local(2019).utc.iso8601 }
