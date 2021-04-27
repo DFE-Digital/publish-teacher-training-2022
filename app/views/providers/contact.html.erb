@@ -55,13 +55,6 @@
         <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
       <% end %>
 
-      <% if @provider.provider_type == "lead_school" %>
-        <%= render "shared/form_field",
-          form: f, field: :urn, label: "URN (Unique Reference Number)" do |field, options| %>
-          <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
-        <% end %>
-      <% end %>
-
       <%= render "shared/form_field",
         form: f, field: :website, label: "Website" do |field, options| %>
         <span class="govuk-hint">
@@ -74,6 +67,13 @@
       <%= render "shared/form_field",
         form: f, field: :ukprn, label: "UKPRN (UK Provider Reference Number)" do |field, options| %>
         <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
+      <% end %>
+
+      <% if @provider.provider_type == "lead_school" %>
+        <%= render "shared/form_field",
+          form: f, field: :urn, label: "URN (Unique Reference Number)" do |field, options| %>
+          <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
+        <% end %>
       <% end %>
 
       <hr class="govuk-section-break govuk-section-break--l" />
