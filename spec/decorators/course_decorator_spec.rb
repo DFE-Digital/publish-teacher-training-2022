@@ -8,6 +8,12 @@ describe CourseDecorator do
   let(:biology) { build(:subject, :biology) }
   let(:mathematics) { build(:subject, :mathematics) }
   let(:subjects) { [english, mathematics] }
+  let(:has_vacancies) { false }
+  let(:is_withdrawn) { false }
+
+  let(:content_status) do
+    is_withdrawn ? "withdrawn" : ""
+  end
 
   let(:course) do
     build(
@@ -25,6 +31,8 @@ describe CourseDecorator do
       open_for_applications?: true,
       last_published_at: "2019-03-05T14:42:34Z",
       recruitment_cycle: current_recruitment_cycle,
+      has_vacancies?: has_vacancies,
+      content_status: content_status,
     )
   end
   let(:start_date) { Time.zone.local(2019) }
@@ -758,6 +766,43 @@ describe CourseDecorator do
       end
       it "should be true" do
         expect(subject).to be_truthy
+      end
+    end
+  end
+
+  describe "#vacancies" do
+    subject { course.decorate.vacancies }
+    let(:link) do
+      "/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}/courses/#{course.course_code}/vacancies"
+    end
+
+    context "has no vacancies" do
+      it "should have link" do
+        expect(subject).to eq "No (<a class=\"govuk-link\" href=\"#{link}\">Edit<span class=\"govuk-visually-hidden\"> vacancies for Mathematics (A1)</span></a>)"
+      end
+
+      context "has been withdrawn" do
+        let(:is_withdrawn) { true }
+
+        it "should not have link" do
+          expect(subject).to eq "No"
+        end
+      end
+    end
+
+    context "has vacancies" do
+      let(:has_vacancies) { true }
+
+      it "should have link" do
+        expect(subject).to eq "Yes (<a class=\"govuk-link\" href=\"#{link}\">Edit<span class=\"govuk-visually-hidden\"> vacancies for Mathematics (A1)</span></a>)"
+      end
+
+      context "has been withdrawn" do
+        let(:is_withdrawn) { true }
+
+        it "should not have link" do
+          expect(subject).to eq "Yes"
+        end
       end
     end
   end
