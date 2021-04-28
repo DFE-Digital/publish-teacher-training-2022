@@ -22,7 +22,7 @@ describe "authorisation", type: :request do
           let(:headers) do
             {
               "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
-                                        .encode_credentials("admin", "secret"),
+                                        .encode_credentials("publish", "secret"),
             }
           end
 
