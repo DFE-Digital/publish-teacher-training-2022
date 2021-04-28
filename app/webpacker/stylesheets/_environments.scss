@@ -6,6 +6,10 @@
   background: govuk-colour("orange");
 }
 
+.app-tag--review {
+  background: govuk-colour("purple");
+}
+
 .app-tag--staging {
   background: govuk-colour("red");
 }
@@ -20,6 +24,10 @@
 
 .app-header__container--qa {
   border-bottom-color: govuk-colour("orange");
+}
+
+.app-header__container--review {
+  border-bottom-color: govuk-colour("purple");
 }
 
 .app-header__container--staging {

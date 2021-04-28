@@ -1,5 +1,5 @@
 {
-  "name": "rails-dfe-boilerplate",
+  "name": "publish-teacher-training",
   "env": {
     "LANG": {
       "required": true
@@ -15,11 +15,18 @@
     },
     "SECRET_KEY_BASE": {
       "required": true
-    }
+    },
+    "SETTINGS__AUTHENTICATION__BASIC_AUTH__PASSWORD_DIGEST": {
+      "required": true
+    },
+    "SETTINGS__TEACHER_TRAINING_API__SECRET": {
+      "required": true
+    },
   },
   "formation": {
     "web": {
-      "quantity": 1
+      "quantity": 1,
+      "size": "hobby"
     }
   },
   "buildpacks": [
