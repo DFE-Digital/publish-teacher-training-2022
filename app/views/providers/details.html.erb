@@ -35,9 +35,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-summary-list govuk-summary-list--short govuk-!-margin-top-0">
-      <h3 class="govuk-heading-m govuk-!-font-size-27">
+      <h2 class="govuk-heading-m govuk-!-font-size-27">
         <%= govuk_link_to "Contact details", contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
-      </h3>
+      </h2>
       <dl class="govuk-summary-list">
         <%= enrichment_summary_item(:provider, 'Email address', @provider.email, ['email']) %>
         <%= enrichment_summary_item(:provider, 'Telephone number', @provider.telephone, ['telephone']) %>
@@ -47,9 +47,9 @@
     </div>
 
     <div class="govuk-summary-list govuk-summary-list--short">
-      <h3 class="govuk-heading-m govuk-!-font-size-27">
+      <h2 class="govuk-heading-m govuk-!-font-size-27">
         <%= govuk_link_to "About your organisation", about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
-      </h3>
+      </h2>
       <dl class="govuk-summary-list">
         <%= enrichment_summary_item(:provider, 'About your organisation', @provider.train_with_us, ['train_with_us']) %>
         <% if provider.accredited_bodies.present? %>
