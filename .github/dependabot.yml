@@ -1,0 +1,36 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: simplecov
+    versions:
+    - ">= 0.18.a, < 0.19"
+  - dependency-name: simplecov
+    versions:
+    - ">= 0.19.a, < 0.20"
+  - dependency-name: simplecov
+    versions:
+    - ">= 0.20.a, < 0.21"
+  - dependency-name: rails
+    versions:
+    - 6.1.2
+  - dependency-name: parallel_tests
+    versions:
+    - 3.7.0
+  - dependency-name: govuk-components
+    versions:
+    - 1.1.5
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+- package-ecosystem: npm
+  directory: "/end-to-end-tests"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
