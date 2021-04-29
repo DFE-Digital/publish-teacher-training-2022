@@ -9,61 +9,66 @@
 
 <%= render 'shared/errors' %>
 
-<h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-  Who is the accredited body?
-</h1>
+<fieldset class="govuk-fieldset">
+  <legend class="govuk-fieldset__legend">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      Who is the accredited body?
+    </h1>
+  </legend>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <%= form_with model: course,
-      url: accredited_body_provider_recruitment_cycle_course_path(
-        @course.provider_code,
-        @course.recruitment_cycle_year,
-        @course.course_code),
-      method: :put do |form| %>
 
-      <div class="govuk-radios govuk-!-margin-top-2" data-module="govuk-radios" data-qa="course__accredited_body">
-        <% if provider.accredited_bodies.length > 0 %>
-          <%= render partial: "provider_suggestion",
-            collection: provider.accredited_bodies,
-            locals: { form: form }
-          %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <%= form_with model: course,
+        url: accredited_body_provider_recruitment_cycle_course_path(
+          @course.provider_code,
+          @course.recruitment_cycle_year,
+          @course.course_code),
+        method: :put do |form| %>
 
-          <div class="govuk-radios__divider">or</div>
+        <div class="govuk-radios govuk-!-margin-top-2" data-module="govuk-radios" data-qa="course__accredited_body">
+          <% if provider.accredited_bodies.length > 0 %>
+            <%= render partial: "provider_suggestion",
+              collection: provider.accredited_bodies,
+              locals: { form: form }
+            %>
 
-          <div class="govuk-radios__item">
-            <%= form.radio_button :accredited_body_code,
-              'other',
-              class: 'govuk-radios__input',
-              data: { "aria-controls" => "other-container" },
-              checked: @errors && @errors[:accredited_body]&.any?  %>
-            <%= form.label :accredited_body_code,
-              "A new accredited body you’re working with",
-              for: 'course_accredited_body_code_other',
-              value: false,
-              class: 'govuk-label govuk-radios__label' %>
-          </div>
+            <div class="govuk-radios__divider">or</div>
 
-          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="other-container">
+            <div class="govuk-radios__item">
+              <%= form.radio_button :accredited_body_code,
+                'other',
+                class: 'govuk-radios__input',
+                data: { "aria-controls" => "other-container" },
+                checked: @errors && @errors[:accredited_body]&.any?  %>
+              <%= form.label :accredited_body_code,
+                "A new accredited body you’re working with",
+                for: 'course_accredited_body_code_other',
+                value: false,
+                class: 'govuk-label govuk-radios__label' %>
+            </div>
+
+            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="other-container">
+              <%= render "provider_search_field", form: form %>
+            </div>
+          <% else %>
+            <%= form.hidden_field :accredited_body_code, value: :other %>
             <%= render "provider_search_field", form: form %>
-          </div>
-        <% else %>
-          <%= form.hidden_field :accredited_body_code, value: :other %>
-          <%= render "provider_search_field", form: form %>
-        <% end %>
-      </div>
+          <% end %>
+        </div>
 
-      <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
-                      class: "govuk-button govuk-!-margin-top-3", data: { qa: 'course__save' } %>
+        <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
+                        class: "govuk-button govuk-!-margin-top-3", data: { qa: 'course__save' } %>
 
-      <p class="govuk-body">
-        <%= link_to 'Cancel changes',
-          details_provider_recruitment_cycle_course_path(
-            course.provider_code,
-            course.recruitment_cycle_year,
-            course.course_code),
-          class: "govuk-link govuk-link--no-visited-state" %>
-      </p>
-    <% end %>
+        <p class="govuk-body">
+          <%= link_to 'Cancel changes',
+            details_provider_recruitment_cycle_course_path(
+              course.provider_code,
+              course.recruitment_cycle_year,
+              course.course_code),
+            class: "govuk-link govuk-link--no-visited-state" %>
+        </p>
+      <% end %>
+    </div>
   </div>
-</div>
+</fieldset>
