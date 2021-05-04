@@ -64,6 +64,7 @@ Rails.application.configure do
     config.logger = ActiveSupport::Logger.new(STDOUT)
     config.semantic_logger.application = Settings.application_name
     config.rails_semantic_logger.format = :json
+    config.rails_semantic_logger.add_file_appender = false
     SemanticLogger.add_appender(io: STDOUT, level: config.log_level, formatter: config.rails_semantic_logger.format)
     config.logger.info("Application logging to STDOUT")
   end
