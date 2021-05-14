@@ -66,42 +66,6 @@ RSpec.feature "PE allocations" do
       and_i_see_the_corresponding_page_title("Thank you")
     end
 
-    scenario "Accredited body decides to view request PE allocations confirmation" do
-      given_accredited_body_exists
-      given_training_provider_with_pe_fee_funded_course_exists
-      given_the_accredited_body_has_requested_a_repeat_allocation
-      given_i_am_signed_in_as_a_user_from_the_accredited_body
-
-      when_i_visit_my_organisations_page
-      and_i_click_request_pe_courses
-
-      then_i_see_the_pe_allocations_page
-      and_i_see_only_repeat_allocation_statuses
-
-      and_i_click_on_first_view_requested_confirmation
-
-      and_i_see_the_confirmation_page
-      and_i_see_the_corresponding_page_title("Request sent")
-    end
-
-    scenario "Accredited body decides to view request no PE allocations confirmation" do
-      given_accredited_body_exists
-      given_training_provider_with_pe_fee_funded_course_exists
-      given_the_accredited_body_has_declined_an_allocation
-      given_i_am_signed_in_as_a_user_from_the_accredited_body
-
-      when_i_visit_my_organisations_page
-      and_i_click_request_pe_courses
-
-      then_i_see_the_pe_allocations_page
-      and_i_see_only_repeat_allocation_statuses
-
-      and_i_click_on_first_view_not_requested_confirmation
-
-      and_i_see_the_confirmation_page
-      and_i_see_the_corresponding_page_title("Thank you")
-    end
-
     scenario "There is no PE allocations page for non accredited body" do
       given_a_provider_exists
       given_i_am_signed_in_as_a_user_from_the_accredited_body
