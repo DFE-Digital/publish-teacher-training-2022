@@ -43,6 +43,7 @@
         <%= enrichment_summary_item(:provider, 'Telephone number', @provider.telephone, ['telephone']) %>
         <%= enrichment_summary_item(:provider, 'Website', @provider.website, ['website']) %>
         <%= enrichment_summary_item(:provider, 'Contact address', @provider.full_address, ['address1', 'address2', 'address3', 'address4', 'postcode']) %>
+        <%= enrichment_summary_item(:provider, 'UKPRN', @provider.ukprn, ['ukprn']) %>
       </dl>
     </div>
 

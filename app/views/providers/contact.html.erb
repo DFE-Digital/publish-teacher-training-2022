@@ -65,7 +65,10 @@
       <% end %>
 
       <%= render "shared/form_field",
-        form: f, field: :ukprn, label: "UKPRN (UK Provider Reference Number)" do |field, options| %>
+        form: f, field: :ukprn, label: "UKPRN" do |field, options| %>
+        <span class="govuk-hint">
+          Your organisation&rsquo;s UK Provider Reference Number
+        </span>
         <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
       <% end %>
 
