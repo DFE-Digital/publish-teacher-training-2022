@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
 
       if current_user["user_id"].blank?
         set_user_session
-        Raven.user_context(id: current_user["user_id"])
+        Sentry.set_user(id: current_user["user_id"])
         logger.debug { "User session set. " + log_safe_current_user(reload: true).to_s }
       end
     end
@@ -250,9 +250,9 @@ private
   end
 
   def assign_sentry_contexts
-    Raven.user_context(id: current_user["user_id"])
-    Raven.tags_context(sign_in_user_id: current_user.fetch("uid"))
-    Raven.extra_context(request_id: request.uuid)
+    Sentry.set_user(id: current_user["user_id"])
+    Sentry.set_tags(sign_in_user_id: current_user.fetch("uid"))
+    Sentry.set_extras(request_id: request.uuid)
   end
 
   def assign_logstash_contexts

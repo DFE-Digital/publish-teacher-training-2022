@@ -415,8 +415,16 @@ GEM
     semantic_logger (4.7.4)
       concurrent-ruby (~> 1.0)
     semantic_range (3.0.0)
-    sentry-raven (3.1.2)
+    sentry-rails (4.4.0)
+      railties (>= 5.0)
+      sentry-ruby-core (~> 4.4.0.pre.beta)
+    sentry-ruby (4.4.2)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
       faraday (>= 1.0)
+      sentry-ruby-core (= 4.4.2)
+    sentry-ruby-core (4.4.2)
+      concurrent-ruby
+      faraday
     shellany (0.0.1)
     simplecov (0.21.2)
       docile (~> 1.1)
@@ -541,7 +549,8 @@ DEPENDENCIES
   rubocop-govuk
   rubypants
   scss_lint-govuk
-  sentry-raven
+  sentry-rails
+  sentry-ruby
   simplecov (< 0.22)
   site_prism
   spring

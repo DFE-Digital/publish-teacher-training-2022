@@ -42,7 +42,8 @@ gem "jwt"
 gem "config"
 
 # Sentry
-gem "sentry-raven"
+gem "sentry-rails"
+gem "sentry-ruby"
 
 # Decorate logic to keep it of the views and helper methods
 gem "draper"
