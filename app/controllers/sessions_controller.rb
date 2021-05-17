@@ -17,12 +17,12 @@ class SessionsController < ApplicationController
       "provider" => auth_hash.dig("provider"),
     )
 
-    Raven.tags_context(sign_in_user_id: current_user.fetch("uid"))
+    Sentry.set_tags(sign_in_user_id: current_user.fetch("uid"))
     add_token_to_connection
     set_user_session
 
     # current_user['user_id'] won't be set until set_user_session is run
-    Raven.user_context(id: current_user["user_id"])
+    Sentry.set_user(id: current_user["user_id"])
     logger.debug { "User session create " + log_safe_current_user.to_s }
 
     redirect_to root_path
@@ -47,7 +47,7 @@ class SessionsController < ApplicationController
         ),
       )
       set_session_info_for_user(user_session)
-      Raven.user_context(id: current_user["user_id"])
+      Sentry.set_user(id: current_user["user_id"])
       logger.debug { "User session create_by_magic " + log_safe_current_user.to_s }
     end
 

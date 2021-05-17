@@ -87,20 +87,20 @@ describe ApplicationController, type: :controller do
 
         describe "sentry contexts" do
           before do
-            allow(Raven).to receive(:user_context)
-            allow(Raven).to receive(:tags_context)
+            allow(Sentry).to receive(:set_user)
+            allow(Sentry).to receive(:set_tags)
           end
 
           it "sets the id in the user context" do
             controller.authenticate
 
-            expect(Raven).to have_received(:user_context).with(id: user_id)
+            expect(Sentry).to have_received(:set_user).with(id: user_id)
           end
 
           it "sets the DFE sign-in id in the tags context" do
             controller.authenticate
 
-            expect(Raven).to have_received(:tags_context)
+            expect(Sentry).to have_received(:set_tags)
                                .with(sign_in_user_id: sign_in_user_id)
           end
         end
@@ -193,20 +193,20 @@ describe ApplicationController, type: :controller do
 
         describe "sentry contexts" do
           before do
-            allow(Raven).to receive(:user_context)
-            allow(Raven).to receive(:tags_context)
+            allow(Sentry).to receive(:set_user)
+            allow(Sentry).to receive(:set_tags)
           end
 
           it "sets the id in the user context" do
             controller.authenticate
 
-            expect(Raven).to have_received(:user_context).with(id: user_id)
+            expect(Sentry).to have_received(:set_user).with(id: user_id)
           end
 
           it "sets the DFE sign-in id in the tags context" do
             controller.authenticate
 
-            expect(Raven).to have_received(:tags_context)
+            expect(Sentry).to have_received(:set_tags)
                                .with(sign_in_user_id: sign_in_user_id)
           end
         end
