@@ -11,6 +11,7 @@ feature "Preview course", type: :feature do
       course_length: "OneYear",
       applications_open_from: "2019-01-01T00:00:00Z",
       start_date: "2019-09-01T00:00:00Z",
+      age_range_in_years: "11_to_16",
       fee_uk_eu: "9250.0",
       fee_international: "9250.0",
       fee_details: "Optional fee details",
@@ -104,6 +105,10 @@ feature "Preview course", type: :feature do
 
     expect(preview_course_page.qualifications).to have_content(
       "PGCE with QTS",
+    )
+
+    expect(preview_course_page.age_range_in_years).to have_content(
+      "11 to 16",
     )
 
     expect(preview_course_page.funding_option).to have_content(

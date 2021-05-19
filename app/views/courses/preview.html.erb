@@ -27,6 +27,12 @@
   <dd data-qa="course__qualifications">
     <%= render partial: 'courses/preview/qualification' %>
   </dd>
+
+  <% if course.age_range_in_years.present? %>
+    <dt class="govuk-list--description__label">Age range</dt>
+    <dd data-qa="course__age_range_in_years"><%= course.age_range_in_years.humanize %></dd>
+  <% end %>
+
   <% if course.length.present? %>
     <dt class="govuk-list--description__label">Course length</dt>
     <dd data-qa="course__length"><%= course.length %></dd>
