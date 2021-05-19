@@ -18,22 +18,24 @@
   background: govuk-colour("purple");
 }
 
-.app-header__container--development {
-  border-bottom-color: govuk-colour("dark-grey");
-}
+.govuk-header__container {
+  .app-header--development & {
+    border-bottom-color: govuk-colour("dark-grey");
+  }
 
-.app-header__container--qa {
-  border-bottom-color: govuk-colour("orange");
-}
+  .app-header--qa & {
+    border-bottom-color: govuk-colour("orange");
+  }
 
-.app-header__container--review {
-  border-bottom-color: govuk-colour("purple");
-}
+  .app-header--review & {
+    border-bottom-color: govuk-colour("purple");
+  }
 
-.app-header__container--staging {
-  border-bottom-color: govuk-colour("red");
-}
+  .app-header--staging & {
+    border-bottom-color: govuk-colour("red");
+  }
 
-.app-header__container--sandbox {
-  border-bottom-color: govuk-colour("purple");
+  .app-header--sandbox & {
+    border-bottom-color: govuk-colour("purple");
+  }
 }
