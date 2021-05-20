@@ -1,6 +1,7 @@
 <% if provider.accredited_body? %>
   <h2 class="govuk-heading-m">
-    <%= govuk_link_to t("allocations_for_pe.#{Allocation.journey_mode}_state_link_text"),
+    <% period = (Allocation.journey_mode == "confirmed" ? current_recruitment_cycle_period_text : current_allocation_cycle_period_text) %>
+    <%= govuk_link_to t("allocations_for_pe.#{Allocation.journey_mode}_state_link_text", period: period),
                       provider_recruitment_cycle_allocations_path(provider.provider_code, year) %>
   </h2>
 

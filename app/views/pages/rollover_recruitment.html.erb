@@ -1,9 +1,9 @@
-<%= content_for :page_title, "Recruiting for the 2021 to 2022 cycle" %>
+<%= content_for :page_title, "Recruiting for the #{next_recruitment_cycle_period_text} cycle" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      Recruiting for the <br>2021 to 2022 cycle
+      Recruiting for the <br><%= next_recruitment_cycle_period_text %> cycle
     </h1>
 
     <p class="govuk-body">
@@ -15,7 +15,7 @@
     <p class="govuk-body">
       You can publish all other courses without requesting permission. This
       applies to courses copied over from the current cycle and new courses
-      added for 2021 to 2022.
+      added for <%= next_recruitment_cycle_period_text %>.
     </p>
 
     <%= form_for :user, url: accept_rollover_path, method: :patch do |f| %>

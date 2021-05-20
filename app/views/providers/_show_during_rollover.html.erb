@@ -1,5 +1,5 @@
 <h2 class="govuk-heading-m">
-  <%= link_to "Current cycle (#{Settings.current_cycle} to #{Settings.current_cycle + 1})",
+  <%= link_to "Current cycle (#{current_recruitment_cycle_period_text})",
               provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle),
               data: { qa: 'provider__courses__current_cycle' },
               class: "govuk-link" %>
@@ -15,13 +15,13 @@
 </ul>
 
 <h2 class="govuk-heading-m">
-  <%= link_to "Next cycle (#{Settings.current_cycle + 1} to #{Settings.current_cycle + 2})",
+  <%= link_to "Next cycle (#{next_recruitment_cycle_period_text})",
               provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle + 1),
               data: { qa: 'provider__courses__next_cycle' },
               class: "govuk-link" %>
 </h2>
 <p class="govuk-body">
-  Courses for the next cycle will appear on Find postgraduate teacher training from October 2020.
+  Courses for the next cycle will appear on Find postgraduate teacher training from October <%= Settings.current_cycle %>.
   Use this section to:
 </p>
 <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">

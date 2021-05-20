@@ -1,12 +1,12 @@
-<%= content_for :page_title, raw("Request PE courses for 2021 to 2022") %>
+<%= content_for :page_title, raw("Request PE courses for #{current_allocation_cycle_period_text}") %>
 <%= content_for :before_content, render_breadcrumbs("allocations") %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Request PE courses for 2021 to 2022</h1>
+    <h1 class="govuk-heading-xl">Request PE courses for <%= current_allocation_cycle_period_text %></h1>
 
     <p class="govuk-body">
-      You must request any fee-funded PE courses for 2021 to 2022 by
+      You must request any fee-funded PE courses for <%= current_allocation_cycle_period_text %> by
       <%= Settings.allocations_close_date.to_s(:govuk) %>. You do not need to
       request any other courses, including salaried PE.
     </p>
@@ -54,7 +54,7 @@
 
   <% if @allocations_view.initial_allocation_statuses.present? %>
     <div class="govuk-grid-column-full">
-      <h3 class="govuk-heading-m">New PE courses 2021 to 2022</h3>
+      <h3 class="govuk-heading-m">New PE courses <%= current_allocation_cycle_period_text %></h3>
 
       <%= render partial: "providers/allocations/request_status", locals: {
         allocations: @allocations_view.initial_allocation_statuses,
@@ -72,7 +72,7 @@
 
     <p class="govuk-body">
       <% if @training_providers.present? %>
-        Request fee-funded PE for 2021 to 2022 for any organisations not
+        Request fee-funded PE for <%= current_allocation_cycle_period_text %> for any organisations not
         currently offering this course.
       <% else %>
         Select the name of the organisation(s) offering this course.
