@@ -1,6 +1,16 @@
 module BreadcrumbHelper
   def render_breadcrumbs(type)
-    render partial: "shared/breadcrumbs", locals: { items: send("#{type}_breadcrumb") }
+    breadcrumbs = send("#{type}_breadcrumb")
+
+    # Don't link last item in breadcrumb
+    breadcrumbs.last[1] = nil
+
+    if breadcrumbs
+      render GovukComponent::Breadcrumbs.new(
+        breadcrumbs: breadcrumbs,
+        classes: "govuk-!-display-none-print",
+      )
+    end
   end
 
   def organisations_breadcrumb
