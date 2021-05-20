@@ -1,8 +1,12 @@
-.app-header__logo {
-  width: auto;
-}
+.app-header--wide-logo {
+  @include govuk-media-query($from: desktop) {
+    .govuk-header__logo {
+      width: auto;
+    }
 
-.app-header__content {
-  width: auto;
-  float: right;
+    .govuk-header__content {
+      width: auto;
+      float: right;
+    }
+  }
 }

@@ -6,7 +6,7 @@ feature "View pages", type: :feature do
   scenario "Environment label and class are read from settings" do
     visit "/cookies"
     expect(find(".app-tag--#{Settings.environment.selector_name}")).to have_content(Settings.environment.label)
-    expect(page).to have_selector(".app-header__container--#{Settings.environment.selector_name}")
+    expect(page).to have_selector(".app-header--#{Settings.environment.selector_name}")
   end
 
   scenario "Navigate to /cookies" do

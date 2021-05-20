@@ -66,7 +66,7 @@ module ViewHelper
   end
 
   def header_environment_class
-    "app-header__container--#{Settings.environment.selector_name}"
+    "app-header--#{Settings.environment.selector_name}"
   end
 
   def beta_tag_environment_class
