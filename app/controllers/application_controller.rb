@@ -123,23 +123,26 @@ private
       redirect_to accept_terms_path
     elsif user_state_to_redirect_paths[user_from_session.aasm.current_state]
       redirect_to user_state_to_redirect_paths[user_from_session.aasm.current_state]
+    elsif show_rollover_page?
+      redirect_to rollover_path
+    elsif show_rollover_recruitment_page?
+      redirect_to rollover_recruitment_path
     elsif use_redirect_back_to
       redirect_to session[:redirect_back_to] if session[:redirect_back_to].present?
       session.delete(:redirect_back_to)
     end
   end
 
+  def show_rollover_page?
+    FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") && !cookies[:accepted_rollover]
+  end
+
+  def show_rollover_recruitment_page?
+    FeatureService.enabled?("rollover.show_next_cycle_allocation_recruitment_page") && !cookies[:accepted_rollover_recruitment]
+  end
+
   def user_state_to_redirect_paths
-    if Settings.features.rollover.can_edit_current_and_next_cycles
-      {
-        new: transition_info_path,
-        transitioned: rollover_path,
-        rolled_over: rollover_path,
-        notifications_configured: rollover_path, # looping if notification re-configured
-      }
-    else
-      { new: transition_info_path }
-    end
+    { new: transition_info_path }
   end
 
   def authorise_development_mode?(email, password)

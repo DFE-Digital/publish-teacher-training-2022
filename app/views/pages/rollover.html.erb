@@ -20,12 +20,8 @@
       <li>edit titles, outcomes and locations where necessary</li>
     </ul>
 
-    <%if FeatureService.enabled?("rollover.show_next_cycle_allocation_recruitment_page") %>
-      <%= link_to "Continue", rollover_recruitment_path,  class: "govuk-button" %>
-    <% else %>
-      <%= form_for :user, url: accept_rollover_path, method: :patch do |f| %>
-        <%= f.submit "Continue", class: "govuk-button" %>
-      <% end %>
+    <%= form_for :user, url: accept_rollover_path, method: :patch do |f| %>
+      <%= f.submit "Continue", class: "govuk-button" %>
     <% end %>
   </div>
 </div>
