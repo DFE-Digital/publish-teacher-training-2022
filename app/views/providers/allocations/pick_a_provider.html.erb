@@ -32,35 +32,26 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-    <details class="govuk-details" role="group">
-      <summary class="govuk-details__summary" role="button">
-        <span class="govuk-details__summary-text">Try another provider</span>
-      </summary>
+    <%= govuk_details(summary: "Try another provider") do %>
+      <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
+                      @provider.provider_code,
+                      @provider.recruitment_cycle_year,
+                      training_provider_code: params[:training_provider_code]
+                    ),
+                    skip_enforcing_utf8: true,
+                    method: :get,
+                    builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+        <%= form.hidden_field :training_provider_code, value: "-1" %>
 
-      <div class="govuk-details__text">
-        <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
-                        @provider.provider_code,
-                        @provider.recruitment_cycle_year,
-                        training_provider_code: params[:training_provider_code]
-                      ),
-                      skip_enforcing_utf8: true,
-                      method: :get,
-                      builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
-          <%= form.hidden_field :training_provider_code, value: "-1" %>
+        <div class="govuk-form-group">
+          <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } %>
+          <div id="provider-autocomplete" class="govuk-body"></div>
+        </div>
 
-          <div class="govuk-form-group">
-            <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } %>
-            <div id="provider-autocomplete" class="govuk-body"></div>
-          </div>
+        <%= form.govuk_submit "Search again" %>
+      <% end %>
+    <% end %>
 
-          <%= form.govuk_submit "Search again" %>
-        <% end %>
-      </div>
-    </details>
-
-    <p class="govuk-body">
-      To add a new provider to Publish, you should contact
-      <%= bat_contact_mail_to %>
-    </p>
+    <p class="govuk-body">To add a new provider to Publish, you should contact <%= bat_contact_mail_to %></p>
   </div>
 </div>

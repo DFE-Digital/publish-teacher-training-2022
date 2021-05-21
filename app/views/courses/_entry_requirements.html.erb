@@ -1,12 +1,5 @@
-<details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      <%= gcse_subject %> GCSE: <%= t("edit_options.entry_requirements.#{gcse_subject_code}.details_label") %>
-    </span>
-  </summary>
-  <div class="govuk-details__text">
-    <p class="govuk-body">
-      <%= t("edit_options.entry_requirements.#{gcse_subject_code}.help") %>
-    </p>
-  </div>
-</details>
+<%= govuk_details(
+  summary: gcse_subject + " GCSE: " + t("edit_options.entry_requirements.#{gcse_subject_code}.details_label"),
+  description: t("edit_options.entry_requirements.#{gcse_subject_code}.help"),
+  classes: "govuk-!-margin-bottom-2",
+) %>
