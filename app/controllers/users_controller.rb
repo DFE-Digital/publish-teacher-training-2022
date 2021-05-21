@@ -8,17 +8,28 @@ class UsersController < ApplicationController
   end
 
   def accept_rollover
-    user.accept_rollover_screen!
-    session["auth_user"]["attributes"]["state"] = user.state
+    InterruptPageAcknowledgement.create(
+      user_id: user.id,
+      recruitment_cycle_year: Settings.current_cycle.next,
+      page: "rollover"
+    )
+    session["auth_user"]["accepted_rollover"] = true
     redirect_to root_path
   end
 
-  def accept_notifications_info
-    user.accept_notifications_screen!
-    session["auth_user"]["attributes"]["state"] = user.state
+  def accept_rollover_recruitment
+    InterruptPageAcknowledgement.create(
+      user_id: user.id,
+      recruitment_cycle_year: Settings.current_cycle.next,
+      page: "rollover_recruitment"
+    )
+    session["auth_user"]["accepted_rollover_recruitment"] = true
     redirect_to root_path
   end
 
+  # This terms screen is the only existing interrupt screen that doesn't use the state machine
+  # If we want to have data around how many users have accepted the rollover screens we could
+  # add timestamps like this, but it seems less important.
   def accept_terms
     if params.require(:user)[:terms_accepted] == "1"
       result = User.member(current_user["user_id"]).accept_terms

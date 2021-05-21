@@ -13,18 +13,14 @@ class User < Base
   aasm whiny_transitions: false do
     state :new, initial: true
     state :transitioned
+    # TODO:  Remove all these after migrating users all to "transitioned",
+    # we are replacing rolled over states and the notifications state is already gone
     state :rolled_over
     state :accepted_rollover_2021
     state :notifications_configured
 
     event :accept_transition_screen do
       transitions from: :new, to: :transitioned
-    end
-
-    event :accept_rollover_screen do
-      transitions from: %i[notifications_configured transitioned rolled_over], to: :accepted_rollover_2021 do
-        guard { FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") }
-      end
     end
   end
 

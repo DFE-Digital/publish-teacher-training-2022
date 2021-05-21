@@ -30,4 +30,10 @@ RSpec.describe UsersController do
       expect(response).to render_template("pages/accept_terms")
     end
   end
+
+  describe "#accept_rollover_recruitment" do
+  end
+
+  describe "#accept_rollover" do
+  end
 end
