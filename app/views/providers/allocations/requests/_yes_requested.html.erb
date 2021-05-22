@@ -2,12 +2,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7" data-qa="page-heading">
-      <h1 class="govuk-panel__title">Request sent</h1>
-      <p class="govuk-panel__body govuk-!-margin-bottom-0">
-        You’ve confirmed that <%= @training_provider.provider_name %> would like to offer PE in 2021 to 2022.
-      </p>
-    </div>
+    <%= govuk_panel(
+      title: "Request sent",
+      body: "You’ve confirmed that #{@training_provider.provider_name} would like to offer PE in 2021 to 2022.",
+      classes: "govuk-!-margin-bottom-6",
+      html_attributes: {
+        data: {
+          qa: "page-heading",
+        }
+      }
+    ) %>
     <h2 class="govuk-heading-m">What happens now?</h2>
     <p class="govuk-body">
       You have until 10 July to change this request. After this date,  we’ll send an email to your
