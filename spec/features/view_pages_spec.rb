@@ -5,7 +5,7 @@ feature "View pages", type: :feature do
 
   scenario "Environment label and class are read from settings" do
     visit "/cookies"
-    expect(find(".app-tag--#{Settings.environment.selector_name}")).to have_content(Settings.environment.label)
+    expect(find(".govuk-phase-banner__content__tag")).to have_content(Settings.environment.label)
     expect(page).to have_selector(".app-header--#{Settings.environment.selector_name}")
   end
 
