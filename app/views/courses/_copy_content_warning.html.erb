@@ -1,20 +1,21 @@
 <% if copied_fields.any? %>
-  <div class="govuk-warning-summary" aria-labelledby="warning-summary-heading" tabindex="-1" data-module="govuk-error-summary" data-copy-course="warning" role="alert">
-    <h2 class="govuk-heading govuk-warning-summary__title" id="warning-summary-heading">
-      Your changes are not yet saved
-    </h2>
-    <div class="govuk-warning-summary__body">
-      <p class="govuk-body">
-        We’ve copied these fields from <%= @source_course.name %> (<%= @source_course.course_code %>):
-      </p>
-      <ul class="govuk-list">
-        <% copied_fields.each do |name, field| %>
-          <li><%= link_to name, "##{field}_wrapper", class: 'govuk-link' %></li>
-        <% end %>
-      </ul>
-      <p class="govuk-body">
-        Please check them and make your changes before saving.
-      </p>
-    </div>
-  </div>
+  <%= govuk_notification_banner(
+    title: t("notification_banner.warning"),
+    classes: "govuk-notification-banner--warning",
+    html_attributes: {
+      data: {
+        qa: "copy-course-warning",
+      },
+      role: "alert",
+    }
+  ) do |notification_banner| %>
+    <%= notification_banner.add_heading(text: "Your changes are not yet saved") %>
+    <p class="govuk-body">We’ve copied these fields from <%= @source_course.name %> (<%= @source_course.course_code %>):</p>
+    <ul class="govuk-list">
+      <% copied_fields.each do |name, field| %>
+        <li><%= govuk_link_to name, "##{field}_wrapper", class: "govuk-notification-banner__link" %></li>
+      <% end %>
+    </ul>
+    <p class="govuk-body">Please check them and make your changes before saving.</p>
+  <% end %>
 <% end %>

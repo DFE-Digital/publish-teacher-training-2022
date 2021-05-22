@@ -44,6 +44,7 @@ en:
   notification_banner:
     info: "Information"
     success: "Success"
+    warning: "Warning"
   edit_options:
     entry_requirements:
       must_have_qualification_at_application_time:
