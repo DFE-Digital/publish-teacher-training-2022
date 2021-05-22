@@ -1,10 +1,5 @@
 <% if course.is_withdrawn? %>
-  <div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-      This course has been withdrawn
-    </strong>
-  </div>
+  <%= govuk_warning(text: "This course has been withdrawn.") %>
 <% end %>
 
 <h3 class="govuk-heading-m govuk-!-font-size-27">
