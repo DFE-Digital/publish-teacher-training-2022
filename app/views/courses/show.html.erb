@@ -25,16 +25,14 @@
 <% end %>
 
 <% if course.age_range_in_years.nil? && !course.is_further_education? %>
-  <div class="app-notice-summary" role="alert" aria-labelledby="notice-summary-heading" tabindex="-1" data-module="govuk-error-summary">
-    <h3 class="app-notice-summary__title" id="notice-summary-heading">You need to provide some information before publishing this course</h3>
-    <p class="app-notice-summary__body" id="notice-summary-body">
-      <%= link_to age_range_provider_recruitment_cycle_course_path(@provider.provider_code,
-                                                                   course.recruitment_cycle_year,
-                                                                   course.course_code), class: "app-notice-summary__link" do %>
-        Specify an age range
-      <% end %>
-    </p>
-  </div>
+  <%= govuk_notification_banner(title: t("notification_banner.info")) do |notification_banner| %>
+    <%= notification_banner.add_heading(text: "You need to provide some information before publishing this course") %>
+    <%= link_to(
+      "Specify an age range",
+      age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      class: "govuk-notification-banner__link"
+    ) %>
+  <% end %>
 <% end %>
 
 <h1 class="govuk-heading-xl">
