@@ -43,6 +43,7 @@ en:
       short: "%B %Y"
   notification_banner:
     info: "Information"
+    success: "Success"
   edit_options:
     entry_requirements:
       must_have_qualification_at_application_time:

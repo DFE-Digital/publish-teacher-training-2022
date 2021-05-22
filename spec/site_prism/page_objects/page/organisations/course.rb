@@ -23,7 +23,7 @@ module PageObjects
         element :status_tag, "[data-qa=course__content-status]"
         element :preview_link, "[data-qa=course__preview-link]"
         element :publish, "[data-qa=course__publish]"
-        element :success_summary, ".govuk-success-summary"
+        element :success_summary, ".govuk-notification-banner--success"
         element :error_summary, ".govuk-error-summary"
         element :delete_error, "#delete-error"
         element :withdraw_error, "#withdraw-error"

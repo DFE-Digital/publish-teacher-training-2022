@@ -8,11 +8,11 @@ module PageObjects
 
         element :title, ".govuk-heading-xl"
         element :caption, ".govuk-caption-xl"
-        element :flash, ".govuk-success-summary"
+        element :flash, ".govuk-notification-banner--success"
         element :error_flash, ".govuk-error-summary"
         element :warning_message, "[data-copy-course=warning]"
         element :back, '[data-qa="page-back"]'
-        element :success_summary, ".govuk-success-summary"
+        element :success_summary, ".govuk-notification-banner--success"
 
         section :copy_content, PageObjects::Section::CopyContentSection
       end
