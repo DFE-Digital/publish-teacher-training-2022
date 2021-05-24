@@ -17,7 +17,7 @@
         <div class="govuk-grid-column-full">
           <dl class="govuk-summary-list govuk-!-margin-bottom-0" data-qa="course__details">
             <%= render(CourseLevelComponent.new(course: course, changeable: true)) %>
-            
+
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">
                 <abbr class="app-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr>
@@ -297,13 +297,13 @@
       <div data-qa="course__preview">
         <h2 class="govuk-heading-l">Preview</h2>
         <p class="govuk-body">See how this course will appear when it’s published on Find postgraduate teacher training:</p>
-        <div class="govuk-inset-text">
+        <%= govuk_inset_text do %>
           <h3 class="govuk-heading-m" data-qa="course__name">
             <span class="govuk-heading-s govuk-!-margin-bottom-0"><%= @provider.provider_name %></span>
             <%= course.name %>
           </h3>
           <p class="govuk-body" data-qa="course__description">Course: <%= course.description %></p>
-        </div>
+        <% end %>
       </div>
 
       <%= f.submit "Save new course",
