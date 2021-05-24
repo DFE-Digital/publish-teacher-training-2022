@@ -2,16 +2,16 @@
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(
-        get_edit_initial_request_provider_recruitment_cycle_allocation_path(
-          provider.provider_code,
-          recruitment_cycle.year,
-          training_provider.provider_code,
-          number_of_places: params[:number_of_places],
-          request_type: params[:request_type],
-          next_step: "number_of_places",
-          id: allocation.id
-        )
-      ) %>
+    get_edit_initial_request_provider_recruitment_cycle_allocation_path(
+      provider.provider_code,
+      recruitment_cycle.year,
+      training_provider.provider_code,
+      number_of_places: params[:number_of_places],
+      request_type: params[:request_type],
+      next_step: "number_of_places",
+      id: allocation.id,
+    )
+  ) %>
 <% end %>
 
 <div class="govuk-grid-row">

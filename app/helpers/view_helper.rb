@@ -5,9 +5,9 @@ module ViewHelper
     end
   end
 
-  def govuk_back_link_to(url)
+  def govuk_back_link_to(url = :back, body = "Back")
     render GovukComponent::BackLink.new(
-      text: "Back",
+      text: body,
       href: url,
       classes: "govuk-!-display-none-print",
       html_attributes: {

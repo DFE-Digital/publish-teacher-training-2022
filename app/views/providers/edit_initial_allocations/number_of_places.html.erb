@@ -2,13 +2,13 @@
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(
-        get_edit_initial_request_provider_recruitment_cycle_allocation_path(
-          provider.provider_code,
-          recruitment_cycle.year,
-          training_provider.provider_code,
-          id: allocation.id
-        )
-      ) %>
+    get_edit_initial_request_provider_recruitment_cycle_allocation_path(
+      provider.provider_code,
+      recruitment_cycle.year,
+      training_provider.provider_code,
+      id: allocation.id,
+    )
+  ) %>
 <% end %>
 
 <div class="govuk-grid-row">
