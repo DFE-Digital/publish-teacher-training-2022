@@ -26,6 +26,7 @@ $success-green: #00823b;
 @import "performance-dashboard";
 @import "banner";
 @import "tables";
+@import "link";
 
 .app-text-decoration-underline-dotted {
   text-decoration: underline dotted;
@@ -105,10 +106,6 @@ $success-green: #00823b;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.govuk-link--destructive {
-  color: $govuk-error-colour;
 }
 
 .govuk-list--dash {
