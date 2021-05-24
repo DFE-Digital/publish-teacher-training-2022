@@ -18,14 +18,11 @@
 
     <p class="govuk-body">You can assign locations to a course from the ‘Basic details’ tab on the course page.</p>
 
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        You are limited to 37 locations by UCAS Apply.<br>
-        <span class="govuk-!-font-weight-regular">Each location has a single character code.</span>
-      </strong>
-    </div>
+    <% content_for :warning_text do %>
+      You are limited to 37 locations by UCAS Apply.<br>
+      <span class="govuk-!-font-weight-regular">Each location has a single character code.</span>
+    <% end %>
+    <%= govuk_warning(text: content_for(:warning_text)) %>
 
     <table class="govuk-table app-table--vertical-align-middle">
       <thead class="govuk-table__head">
@@ -41,13 +38,7 @@
     <% if @provider.can_add_more_sites? %>
       <%= link_to "Add a location", new_provider_recruitment_cycle_site_path(@provider.provider_code), class: "govuk-button govuk-!-margin-bottom-2" %>
     <% else %>
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-warning-text__assistive">Warning</span>
-          You can’t add any more locations as you’ve reached the maximum number of locations available
-        </strong>
-      </div>
+      <%= govuk_warning(text: "You can’t add any more locations as you’ve reached the maximum number of locations available.") %>
     <% end %>
   </div>
 </div>
