@@ -26,13 +26,12 @@
         </td>
         <td class="govuk-table__cell">
           <% if allocation[:status] == AllocationsView::Status::YET_TO_REQUEST %>
-            <%= link_to "Confirm choice",
+            <%= govuk_link_to "Confirm choice",
                        new_repeat_request_provider_recruitment_cycle_allocation_path(
                           @provider.provider_code,
                           @provider.recruitment_cycle_year,
                           allocation[:training_provider_code]
-                       ),
-                        class: "govuk-link" %>
+                       ) %>
           <% else %>
             <ul class="govuk-summary-list__actions-list">
               <li class="govuk-summary-list__actions-list-item allocation-report__actions-list-item">

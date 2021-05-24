@@ -303,7 +303,7 @@ private
   end
 
   def edit_vacancy_link
-    h.link_to(h.vacancies_provider_recruitment_cycle_course_path(provider_code: object.provider_code, recruitment_cycle_year: object.recruitment_cycle_year, code: object.course_code), class: "govuk-link") do
+    h.govuk_link_to(h.vacancies_provider_recruitment_cycle_course_path(provider_code: object.provider_code, recruitment_cycle_year: object.recruitment_cycle_year, code: object.course_code)) do
       h.raw("Edit<span class=\"govuk-visually-hidden\"> vacancies for #{name_and_code}</span>")
     end
   end

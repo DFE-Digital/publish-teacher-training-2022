@@ -17,7 +17,7 @@
     </p>
   </dd>
   <dd class="govuk-summary-list__actions">
-    <%= link_to edit_provider_contact_path(@provider.provider_code, contact), class: "govuk-link" do %>
+    <%= govuk_link_to edit_provider_contact_path(@provider.provider_code, contact) do %>
       Change<span class="govuk-visually-hidden"> email alerts for new applications</span>
     <% end %>
   </dd>

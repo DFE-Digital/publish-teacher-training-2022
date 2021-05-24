@@ -41,7 +41,7 @@
             <%= params[:number_of_places] %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to "Change",
+            <%= govuk_link_to "Change",
                         get_edit_initial_request_provider_recruitment_cycle_allocation_path(
                           provider.provider_code,
                           recruitment_cycle.year,
@@ -50,8 +50,7 @@
                           request_type: params[:request_type],
                           next_step: "number_of_places",
                           id: allocation.id
-                        ),
-                        class: "govuk-link" %>
+                        ) %>
           </dd>
         </div>
       </dl>

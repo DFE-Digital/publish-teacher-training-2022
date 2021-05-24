@@ -3,7 +3,7 @@
 <% end %>
 
 <h3 class="govuk-heading-m govuk-!-font-size-27">
-  <%= link_to 'About this course', about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: 'govuk-link' %>
+  <%= govuk_link_to "About this course", about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
   <%= enrichment_summary_item(:course, 'About this course', course.about_course, ['about_course']) %>
@@ -13,9 +13,9 @@
 
 <h3 class="govuk-heading-m govuk-!-font-size-27">
   <% if course.has_fees? %>
-    <%= link_to 'Course length and fees', fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: 'govuk-link' %>
+    <%= govuk_link_to "Course length and fees", fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
   <% else %>
-    <%= link_to 'Course length and salary', salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: 'govuk-link' %>
+    <%= govuk_link_to 'Course length and salary', salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
   <% end %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
@@ -32,7 +32,7 @@
 </dl>
 
 <h3 class="govuk-heading-m govuk-!-font-size-27">
-  <%= link_to 'Requirements and eligibility', requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: 'govuk-link' %>
+  <%= govuk_link_to 'Requirements and eligibility', requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
 </h3>
 <dl class="govuk-summary-list govuk-summary-list--short">
   <%= enrichment_summary_item(:course, 'Qualifications needed', course.required_qualifications, ['required_qualifications']) %>

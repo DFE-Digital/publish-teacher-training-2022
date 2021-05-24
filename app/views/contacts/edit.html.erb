@@ -34,7 +34,11 @@
       <%= form.govuk_submit t("ucas_contacts.#{@contact.type}.submit", default: "Save") %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes', provider_ucas_contacts_path(@provider.provider_code), class: "govuk-link govuk-link--no-visited-state" %>
+        <%= govuk_link_to(
+          "Cancel changes",
+          provider_ucas_contacts_path(@provider.provider_code),
+          class: "govuk-link--no-visited-state",
+        ) %>
       </p>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<%= content_for :page_title, raw("PE courses for #{next_allocation_cycle_period_text}") %>
+<%= content_for :page_title, "PE courses for #{next_allocation_cycle_period_text}" %>
 <%= content_for :before_content, render_breadcrumbs("allocations_closed") %>
 
 <div class="govuk-grid-row">
@@ -54,10 +54,7 @@
       Tell us what you think about this process
     </h2>
     <p class="govuk-body">
-      <%= link_to "Take part in our brief survey to help us improve Publish",
-                  "https://forms.gle/4EuNG8XGm3AqavRU9",
-                  class: "govuk-link govuk-!-font-weight-bold",
-                  target: "_blank" %>
-
+      <%= govuk_link_to "Take part in our brief survey to help us improve Publish", "https://forms.gle/4EuNG8XGm3AqavRU9", class: "govuk-!-font-weight-bold", target: "_blank" %>
+    </p>
   </div>
 </div>

@@ -19,9 +19,11 @@
       %>
 
       <p class="govuk-body">
-        <%= link_to 'Cancel changes',
+        <%= govuk_link_to(
+          "Cancel changes",
           details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
-          class: "govuk-link govuk-link--no-visited-state" %>
+          class: "govuk-link--no-visited-state",
+        ) %>
       </p>
     <% end %>
   </div>
