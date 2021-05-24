@@ -69,7 +69,7 @@ feature "About course", type: :feature do
       expect(about_course_page.how_school_placements_work_textarea.value).to eq(
         course.how_school_placements_work,
       )
-      expect(page).to have_content("You'll be placed in different schools during your training.")
+      expect(page).to have_content("You’ll be placed in different schools during your training.")
 
       fill_in "About this course", with: "Something interesting about this course"
       fill_in "How school placements work", with: "Something about how teaching placements work"

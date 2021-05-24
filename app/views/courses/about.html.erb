@@ -47,27 +47,17 @@
 
         <p class="govuk-body">Remember to:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>make your content specific to this course - don’t repeat the descriptions you’ve used for other courses</li>
+          <li>make your content specific to this course – don’t repeat the descriptions you’ve used for other courses</li>
           <li>use short paragraphs (no more than five sentences each)</li>
-          <li>use bullet points where possible (to check formatting, use the 'preview' function after saving your content)</li>
+          <li>use bullet points where possible (to check formatting, use the ‘preview’ function after saving your content)</li>
           <li>spell out all acronyms the first time you use them, eg ITT, NQT, EAL, ICT (applicants may not be familiar with these terms)
           </li>
         </ul>
 
-        <details class="govuk-details" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              Several courses in the same subject?
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <p class="govuk-body">
-              If you offer more than one course in the same subject - eg two Primary courses - it’s important to say how
-              they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants
-              may be unable to decide between them.
-            </p>
-          </div>
-        </details>
+        <%= govuk_details(
+          summary: "Several courses in the same subject?",
+          description: "If you offer more than one course in the same subject – eg two Primary courses – it’s important to say how they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.",
+        ) %>
 
         <%= f.govuk_text_area :about_course, label: { text: 'About this course', size:'s' }, max_words: 400, rows: 20 %>
 
@@ -115,22 +105,15 @@
           <li>why they might need to do a subject knowledge enhancement course</li>
         </ul>
 
-        <details class="govuk-details" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              See the guidance
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <h3 class="govuk-heading-m">Where you will train</h3>
-            <% if @provider.provider_type == 'university' %>
-              <p class="govuk-body">You can’t pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
-              <p class="govuk-body">Universities can work with over 100 potential placement schools. Most will be within 10 miles of the university, but sometimes they can cover a wider area, especially outside of cities.</p>
-            <% else %>
-              <p class="govuk-body">You'll be placed in different schools during your training. You can't pick which schools you want to be in, but your course will try to place you in schools you can commute to.</p>
-            <% end %>
-          </div>
-        </details>
+        <%= govuk_details(summary: "See the guidance") do %>
+          <h3 class="govuk-heading-m">Where you will train</h3>
+          <% if @provider.provider_type == 'university' %>
+            <p class="govuk-body">You can’t pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
+            <p class="govuk-body">Universities can work with over 100 potential placement schools. Most will be within 10 miles of the university, but sometimes they can cover a wider area, especially outside of cities.</p>
+          <% else %>
+            <p class="govuk-body">You’ll be placed in different schools during your training. You can’t pick which schools you want to be in, but your course will try to place you in schools you can commute to.</p>
+          <% end %>
+        <% end %>
 
         <%= f.govuk_text_area :how_school_placements_work, label: { text: course.placements_heading, size:'s' }, max_words: 350, rows: 15 %>
 
