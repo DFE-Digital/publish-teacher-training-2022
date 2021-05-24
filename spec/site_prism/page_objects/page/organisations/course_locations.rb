@@ -4,7 +4,7 @@ module PageObjects
       class CourseLocations < CourseBase
         set_url "/organisations/{provider_code}/{recruitment_cycle_year}/courses/{course_code}/locations"
 
-        element :success_summary, ".govuk-success-summary"
+        element :success_summary, ".govuk-notification-banner--success"
         element :error_summary, ".govuk-error-summary"
         element :save_button, "[data-qa=course__save]"
       end

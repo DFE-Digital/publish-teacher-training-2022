@@ -13,7 +13,7 @@ module PageObjects
         element :train_with_us, "[data-qa=enrichment__train_with_us]"
         element :train_with_disability, "[data-qa=enrichment__train_with_disability]"
         element :status_panel, "[data-qa=provider__status_panel]"
-        element :flash, ".govuk-success-summary"
+        element :flash, ".govuk-notification-banner--success"
         elements :breadcrumbs, ".govuk-breadcrumbs__link"
       end
     end

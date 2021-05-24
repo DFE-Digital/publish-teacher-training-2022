@@ -23,7 +23,7 @@ module PageObjects
         element :status_tag, "[data-qa=course__content-status]"
         element :preview_link, "[data-qa=course__preview-link]"
         element :publish, "[data-qa=course__publish]"
-        element :success_summary, ".govuk-success-summary"
+        element :success_summary, ".govuk-notification-banner--success"
         element :error_summary, ".govuk-error-summary"
         element :delete_error, "#delete-error"
         element :withdraw_error, "#withdraw-error"
@@ -31,8 +31,8 @@ module PageObjects
         element :withdraw_link, '[data-qa="course__withdraw-link"]'
         element :delete_link, '[data-qa="course__delete-link"]'
 
-        section :notice_summary_banner, ".app-notice-summary" do
-          element :age_range_link, ".app-notice-summary__link"
+        section :notification_banner, ".govuk-notification-banner" do
+          element :age_range_link, ".govuk-notification-banner__link"
         end
       end
     end

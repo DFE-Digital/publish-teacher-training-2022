@@ -8,7 +8,7 @@ module PageObjects
 
         set_url "/organisations/{provider_code}/{recruitment_cycle_year}/courses"
 
-        element :flash, ".govuk-success-summary"
+        element :flash, ".govuk-notification-banner--success"
         element :caption, ".govuk-caption-xl"
 
         element :course_create, ".govuk-button", text: "Add a new course"

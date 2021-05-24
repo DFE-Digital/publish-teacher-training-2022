@@ -9,7 +9,7 @@ module PageObjects
 
         set_url "/organisations/{provider_code}/ucas-contacts"
 
-        element :flash, ".govuk-success-summary"
+        element :flash, ".govuk-notification-banner--success"
         sections :contacts, ContactDetail, ".ucas-contact-list__row"
         section :admin_contact, ContactDetail, ".ucas-contact-list__row__admin"
         section :utt_contact, ContactDetail, ".ucas-contact-list__row__utt"

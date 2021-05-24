@@ -41,6 +41,10 @@ en:
     formats:
       default: "%-d %B %Y"
       short: "%B %Y"
+  notification_banner:
+    info: "Information"
+    success: "Success"
+    warning: "Warning"
   edit_options:
     entry_requirements:
       must_have_qualification_at_application_time:
