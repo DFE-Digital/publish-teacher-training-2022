@@ -78,14 +78,16 @@ module ViewHelper
     return "purple" if sandbox_mode?
 
     case Settings.environment.selector_name
-    when "qa"
-      "orange"
-    when "staging"
-      "red"
     when "development"
       "grey"
+    when "qa"
+      "orange"
     when "review"
       "purple"
+    when "rollover"
+      "turquoise"
+    when "staging"
+      "red"
     when "unknown-environment"
       "yellow"
     end
