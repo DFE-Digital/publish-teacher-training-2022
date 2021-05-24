@@ -203,7 +203,7 @@ feature "Sign in", type: :feature do
             rollover_page.continue_link.click
 
             expect(rollover_recruitment_page).to be_displayed
-            expect(rollover_recruitment_page.title).to have_content("Recruiting for the 2021 to 2022 cycle")
+            expect(rollover_recruitment_page.title).to have_content("Requesting permission to recruit for the 2022 to 2023 cycle")
             rollover_recruitment_page.continue.click
 
             expect(root_page).to be_displayed
