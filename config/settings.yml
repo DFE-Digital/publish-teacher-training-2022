@@ -61,6 +61,7 @@ current_cycle: 2021
 # omitted if placeholder is not required otherwise it should be the
 # new/next cycle.
 financial_support_placeholder_cycle:
+allocations_close_date: 2021-07-02
 application_name: publish-teacher-training
 logstash:
   type: tcp

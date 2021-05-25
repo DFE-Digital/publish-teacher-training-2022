@@ -7,13 +7,15 @@
     </h1>
 
     <p class="govuk-body">
-      You do not need to request permission to recruit for any courses other than
-      fee-funded PE. Accredited bodies should request fee-funded PE by 10 July 2020.
+      You do not need to request permission to recruit for any courses other
+      than fee-funded PE. Accredited bodies should request fee-funded PE by
+      <%= Settings.allocations_close_date.to_s(:govuk) %>.
     </p>
 
     <p class="govuk-body">
-      You can publish all other courses without requesting permission. This applies
-      to courses copied over from the current cycle and new courses added for 2021 to 2022.
+      You can publish all other courses without requesting permission. This
+      applies to courses copied over from the current cycle and new courses
+      added for 2021 to 2022.
     </p>
 
     <%= form_for :user, url: accept_rollover_path, method: :patch do |f| %>

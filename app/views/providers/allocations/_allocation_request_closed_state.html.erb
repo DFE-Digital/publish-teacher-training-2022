@@ -7,16 +7,19 @@
 
     <% if @allocations_view.requested_allocations_statuses.any? || @allocations_view.not_requested_allocations_statuses.any? %>
       <p class="govuk-body">
-        You can no longer request fee-funded PE for 2021 to 2022. The request window closed on 10 July.
+        You can no longer request fee-funded PE for 2021 to 2022. The request
+        window closed on <%= Settings.allocations_close_date.to_s(:govuk_short) %>.
       </p>
 
       <p class="govuk-body">
-        Your requests are set out below. In September, we’ll tell you if they’ve been approved and,
-        if so, how many places have been allocated for each organisation.
+        Your requests are set out below. In September, we’ll tell you if they’ve
+        been approved and, if so, how many places have been allocated for each
+        organisation.
       </p>
 
       <p class="govuk-body">
-        Also included are current courses that were not requested for 2021 to 2022.
+        Also included are current courses that were not requested for 2021 to
+        2022.
       </p>
 
       <p class="govuk-body">
@@ -39,8 +42,9 @@
 
       <p class="govuk-body">
         Your organisation, and any organisations you’re the accredited body for,
-        will not be offering this course - even if it’s being offered in 2020 to 2021.
-        You can not run this course in 2021 to 2022 without permission from the Department for Education.
+        will not be offering this course - even if it’s being offered in 2020 to
+        2021. You can not run this course in 2021 to 2022 without permission
+        from the Department for Education.
       </p>
 
       <p class="govuk-body">
