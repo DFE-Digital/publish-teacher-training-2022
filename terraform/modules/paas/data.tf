@@ -14,3 +14,7 @@ data cloudfoundry_space space {
   name = var.cf_space
   org  = data.cloudfoundry_org.org.id
 }
+
+data cloudfoundry_service redis {
+  name = "redis"
+}

@@ -9,6 +9,9 @@ gem "rails", "~> 6.1"
 # Use Puma as the app server
 gem "puma", "~> 5.3"
 
+# Sidekiq for background worker
+gem 'sidekiq'
+
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker"
 

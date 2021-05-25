@@ -5,6 +5,9 @@ paas_app_environment_config = "rollover"
 paas_web_app_host_name      = "rollover"
 paas_web_app_instances      = 1
 paas_web_app_memory         = 512
+paas_worker_app_instances   = 1
+paas_worker_app_memory      = 512
+paas_redis_service_plan     = "micro-5_x"
 
 #StatusCake
 statuscake_alerts = {
@@ -19,4 +22,4 @@ statuscake_alerts = {
   }
 }
 
-key_vault_resource_group    = "s121t01-shared-rg"
+key_vault_resource_group = "s121t01-shared-rg"
