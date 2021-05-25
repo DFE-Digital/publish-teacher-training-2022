@@ -74,16 +74,31 @@ module ViewHelper
     }[field]
   end
 
-  def header_environment_class
-    "app-header--#{Settings.environment.selector_name}"
+  def environment_colour
+    return "purple" if sandbox_mode?
+
+    case Settings.environment.selector_name
+    when "development"
+      "grey"
+    when "qa"
+      "orange"
+    when "review"
+      "purple"
+    when "rollover"
+      "turquoise"
+    when "staging"
+      "red"
+    when "unknown-environment"
+      "yellow"
+    end
   end
 
-  def beta_tag_environment_class
-    "app-tag--#{Settings.environment.selector_name}"
-  end
-
-  def beta_banner_environment_label
+  def environment_label
     Settings.environment.label
+  end
+
+  def environment_header_class
+    "app-header--#{Settings.environment.selector_name}"
   end
 
   def sandbox_mode?

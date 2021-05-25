@@ -10,3 +10,29 @@
     }
   }
 }
+
+.govuk-header__container {
+  .app-header--development & {
+    border-bottom-color: govuk-colour("dark-grey");
+  }
+
+  .app-header--qa & {
+    border-bottom-color: govuk-colour("orange");
+  }
+
+  .app-header--review & {
+    border-bottom-color: govuk-colour("purple");
+  }
+
+  .app-header--rollover & {
+    border-bottom-color: govuk-colour("turquoise");
+  }
+
+  .app-header--staging & {
+    border-bottom-color: govuk-colour("red");
+  }
+
+  .app-header--sandbox & {
+    border-bottom-color: govuk-colour("purple");
+  }
+}
