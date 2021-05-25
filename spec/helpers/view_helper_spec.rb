@@ -7,6 +7,26 @@ feature "View helpers", type: :helper do
     end
   end
 
+  describe "#bat_contact_mail_to" do
+    context "with no link name" do
+      it "returns BAT contact email address with a word break in the link name" do
+        expect(helper.bat_contact_mail_to).to eq("<a class=\"govuk-link\" href=\"mailto:becomingateacher@digital.education.gov.uk\">becomingateacher<wbr>@digital.education.gov.uk</a>")
+      end
+    end
+
+    context "with a link name" do
+      it "returns BAT contact email address with the link name" do
+        expect(helper.bat_contact_mail_to("Contact us")).to eq("<a class=\"govuk-link\" href=\"mailto:becomingateacher@digital.education.gov.uk\">Contact us</a>")
+      end
+    end
+
+    context "with a subject" do
+      it "returns BAT contact email address with a mailto: subject query" do
+        expect(helper.bat_contact_mail_to(subject: "Feedback")).to eq("<a class=\"govuk-link\" href=\"mailto:becomingateacher@digital.education.gov.uk?subject=Feedback\">becomingateacher<wbr>@digital.education.gov.uk</a>")
+      end
+    end
+  end
+
   describe "#enrichment_error_url" do
     it "returns enrichment error URL" do
       course = Course.new(build(:course).attributes)
