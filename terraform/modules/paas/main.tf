@@ -33,7 +33,7 @@ resource cloudfoundry_app worker_app {
   docker_credentials = var.dockerhub_credentials
   timeout            = 180
   strategy           = "blue-green-v2"
-  command            = ""
+  command            = "bundle exec sidekiq -c 5 -C config/sidekiq.yml"
   environment        = var.app_environment_variables
   instances          = var.worker_app_instances
 
