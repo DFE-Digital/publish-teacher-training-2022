@@ -7,14 +7,15 @@
       Thank you
     </h1>
     <p class="govuk-body">
-      You've confirmed that <%= @training_provider.provider_name %> will not be offering fee-funded
-      PE in 2021 to 2022.
+      You've confirmed that <%= @training_provider.provider_name %> will not be
+      offering fee-funded PE in 2021 to 2022.
     </p>
 
     <h2 class="govuk-heading-m">What happens now?</h2>
     <p class="govuk-body">
       You don't need to do anything else. If you want to change this choice, you
-      have until 10 July to do so.
+      have until <%= Settings.allocations_close_date.to_s(:govuk_short) %> to do
+      so.
     </p>
 
     <p class="govuk-body">

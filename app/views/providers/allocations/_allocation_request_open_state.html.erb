@@ -6,12 +6,14 @@
     <h1 class="govuk-heading-xl">Request PE courses for 2021 to 2022</h1>
 
     <p class="govuk-body">
-      You must request any fee-funded PE courses for 2021 to 2022 by 10 July 2020.
-      You do not need to request any other courses, including salaried PE.
+      You must request any fee-funded PE courses for 2021 to 2022 by
+      <%= Settings.allocations_close_date.to_s(:govuk) %>. You do not need to
+      request any other courses, including salaried PE.
     </p>
 
     <p class="govuk-body">
-      Once you’ve made a request, you can change it before 10 July.
+      Once you’ve made a request, you can change it before
+      <%= Settings.allocations_close_date.to_s(:govuk_short) %>.
     </p>
 
     <% if @training_providers.present? %>

@@ -7,3 +7,7 @@ environment:
   selector_name: "review"
 authentication:
   mode: persona
+allocations_close_date: 2021-07-02
+features:
+  allocations:
+    state: open
