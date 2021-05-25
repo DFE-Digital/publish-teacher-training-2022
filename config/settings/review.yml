@@ -8,6 +8,7 @@ environment:
 authentication:
   mode: persona
 allocations_close_date: 2021-07-02
+allocation_cycle_year: 2021
 features:
   allocations:
     state: open
