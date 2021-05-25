@@ -14,6 +14,12 @@ variable paas_web_app_memory {}
 
 variable paas_web_app_host_name {}
 
+variable paas_worker_app_instances {}
+
+variable paas_worker_app_memory {}
+
+variable paas_redis_service_plan {}
+
 variable paas_docker_image {}
 
 variable paas_app_config_file { default = "workspace_variables/app_config.yml" }
