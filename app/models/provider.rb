@@ -31,6 +31,12 @@ class Provider < Base
     FeatureService.enabled?("rollover.can_edit_current_and_next_cycles")
   end
 
+  def from_previous_recruitment_cycle
+    Provider.where(recruitment_cycle_year: recruitment_cycle.year.to_i.pred)
+      .find(provider_code)
+      .first
+  end
+
 private
 
   def post_base_url
