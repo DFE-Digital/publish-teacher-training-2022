@@ -101,6 +101,7 @@ GEM
     config (3.1.0)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
+    connection_pool (2.2.5)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -341,6 +342,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redcarpet (3.5.1)
+    redis (4.2.5)
     regexp_parser (2.0.3)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -426,6 +428,10 @@ GEM
       concurrent-ruby
       faraday
     shellany (0.0.1)
+    sidekiq (6.2.1)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -551,6 +557,7 @@ DEPENDENCIES
   scss_lint-govuk
   sentry-rails
   sentry-ruby
+  sidekiq
   simplecov (< 0.22)
   site_prism
   spring
