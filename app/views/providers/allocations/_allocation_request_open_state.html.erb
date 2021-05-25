@@ -20,16 +20,23 @@
       </h2>
 
       <p class="govuk-body">
-        These are the organisations currently offering fee-funded PE that you’re the accredited body for.
-        You’ll be included if you offer your own courses.
+        These are the organisations currently offering fee-funded PE that you’re
+        the accredited body for. You’ll be included if you offer your own
+        courses.
       </p>
       <p class="govuk-body">
-        Tell us if these organisations want to run PE again. You won’t need to request a specific number
-        of places - these will be decided by DfE, based on each organisation’s current allocation.
+        Tell us if these organisations want to run PE again. You will not need
+        to request a specific number of places. These will be decided by DfE
+        based on each organisation’s current allocation.
       </p>
 
       <p class="govuk-body">
-        We’ll contact you in September to tell you if the request has been approved and how many places have been allocated.
+        <%= govuk_link_to "View your previous allocations", Settings.allocations.view_previous_link, target: "_blank" %>
+      </p>
+
+      <p class="govuk-body">
+        We’ll contact you in September to tell you if the request has been
+        approved and how many places have been allocated.
       </p>
     <% end %>
   </div>
@@ -63,7 +70,8 @@
 
     <p class="govuk-body">
       <% if @training_providers.present? %>
-        Request fee-funded PE for 2021 to 2022 for any organisations not currently offering this course.
+        Request fee-funded PE for 2021 to 2022 for any organisations not
+        currently offering this course.
       <% else %>
         Select the name of the organisation(s) offering this course.
       <% end %>

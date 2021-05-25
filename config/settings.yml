@@ -71,6 +71,8 @@ log_level: info
 google:
   maps_api_key: replace_me
 use_ssl: true
+allocations:
+  view_previous_link: https://www.gov.uk/government/publications/initial-teacher-training-allocations-academic-year-2021-to-2022
 features:
   allocations:
     # state: open # Users can make requests for allocations
