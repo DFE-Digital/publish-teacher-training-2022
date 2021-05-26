@@ -13,3 +13,11 @@ search_ui:
 environment:
   label: "Rollover"
   selector_name: "rollover"
+features:
+  rollover:
+    # During rollover providers should be able to edit current & next recruitment cycle courses
+    can_edit_current_and_next_cycles: true
+    # Normally a short period of time between rollover and the next cycle
+    # actually starting when it would be set to false
+    has_current_cycle_started?: false
+    show_next_cycle_allocation_recruitment_page: true
