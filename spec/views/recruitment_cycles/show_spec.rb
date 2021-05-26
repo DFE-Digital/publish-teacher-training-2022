@@ -58,6 +58,7 @@ describe "recruitment_cycles/show.html", type: :view do
       view.extend(CurrentUserMethod)
       allow(view).to receive(:params).and_return({ year: next_recruitment_cycle.year })
       assign(:recruitment_cycle, next_recruitment_cycle)
+      allow(Settings.features.allocations).to receive(:state).and_return("open")
     end
 
     describe "when accredited body user is viewing the next cycle" do
@@ -78,7 +79,8 @@ describe "recruitment_cycles/show.html", type: :view do
         expect(recruitment_cycle_page).to have_courses_as_accredited_body_link
         expect(recruitment_cycle_page).to have_request_for_pe_link
         request_for_pe_link = recruitment_cycle_page.request_for_pe_link
-        expect(request_for_pe_link.text).to eq I18n.t("allocations_for_pe.open_state_link_text")
+        period = "#{Settings.allocation_cycle_year + 1} to #{Settings.allocation_cycle_year + 2}"
+        expect(request_for_pe_link.text).to eq I18n.t("allocations_for_pe.open_state_link_text", period: period)
         expect(request_for_pe_link[:href]).to eq(
           provider_recruitment_cycle_allocations_path(
             current_year_provider.provider_code,

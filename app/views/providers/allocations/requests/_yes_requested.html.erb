@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_panel(
       title: "Request sent",
-      body: "You’ve confirmed that #{@training_provider.provider_name} would like to offer PE in 2021 to 2022.",
+      body: "You’ve confirmed that #{@training_provider.provider_name} would like to offer PE in #{next_allocation_cycle_period_text}.",
       classes: "govuk-!-margin-bottom-6",
       html_attributes: {
         data: {
@@ -24,7 +24,7 @@
     <p class="govuk-body">
       In September we'll let you know how many places we've allocated for this course.
       <% unless @allocation.initial_request? %>
-        This will be based on the organisation's allocation for 2020 to 2021.
+        This will be based on the organisation's allocation for <%= previous_allocation_cycle_period_text %>.
       <% end %>
     </p>
 
@@ -33,7 +33,7 @@
     </p>
 
     <p class="govuk-body">
-      <%= link_to raw('Return to Request PE courses for 2021 to 2022'),
+      <%= link_to raw("Return to Request PE courses for #{next_allocation_cycle_period_text}"),
                   provider_recruitment_cycle_allocations_path(@provider.provider_code, Settings.current_cycle),
                   class: "govuk-link govuk-!-font-weight-bold" %>
     </p>

@@ -1,8 +1,8 @@
 <h3 class="govuk-heading-m">
-  PE Requests for 2021 to 2022
+  PE Requests for <%= next_allocation_cycle_period_text %>
 </h3>
 <%= render partial: "pages/performance_dashboard/allocation_content", locals: { recruitment_cycle: "current" }%>
 <h3 class="govuk-heading-m">
-  PE Requests for 2020 to 2021
+  PE Requests for <%= current_allocation_cycle_period_text %>
 </h3>
 <%= render partial: "pages/performance_dashboard/allocation_content", locals: { recruitment_cycle: "previous" }%>

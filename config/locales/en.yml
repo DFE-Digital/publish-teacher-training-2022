@@ -132,9 +132,9 @@ en:
       from_range: "From age must be between %{min} and %{max}"
       to_range: "To age must be between %{min} and %{max}"
   allocations_for_pe:
-    open_state_link_text: "Request PE courses for 2021 to 2022"
-    closed_state_link_text: "Request PE courses for 2021 to 2022"
-    confirmed_state_link_text: "View PE courses for 2021 to 2022"
+    open_state_link_text: "Request PE courses for %{period}"
+    closed_state_link_text: "Request PE courses for %{period}"
+    confirmed_state_link_text: "View PE courses for %{period}"
     open_state_copy: "Only accredited bodies are able to see this section. Use it to request fee-funded PE courses(ones without a salary) for the next recruitment cycle."
     closed_state_copy: "Only accredited bodies are able to see this section. Use it to request fee-funded PE courses (ones without a salary) for the next recruitment cycle."
     confirmed_state_copy: "Use it to view the outcome of requests for fee-funded PE courses (ones without a salary) for the next recruitment cycle."

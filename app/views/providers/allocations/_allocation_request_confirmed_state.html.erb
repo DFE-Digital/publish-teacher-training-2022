@@ -1,14 +1,14 @@
 
-<%= content_for :page_title, "PE courses for 2021 to 2022" %>
+<%= content_for :page_title, "PE courses for #{next_allocation_cycle_period_text}" %>
 <%= content_for :before_content, render_breadcrumbs("allocations_closed") %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"> Fee-funded PE courses for 2021 to 2022</h1>
+    <h1 class="govuk-heading-xl"> Fee-funded PE courses for <%= next_allocation_cycle_period_text %></h1>
 
     <% if @allocations_view.confirmed_allocation_places.any? %>
       <p class="govuk-body">
-        You requested fee-funded PE for the following organisations for 2021 to 2022.
+        You requested fee-funded PE for the following organisations for <%= next_allocation_cycle_period_text %>.
         These requests have been approved. Each organisation’s allocation is also included.
       </p>
 
@@ -21,11 +21,11 @@
                } %>
     <% else %>
       <p class="govuk-body">
-        You did not request fee-funded PE for 2021 to 2022.
+        You did not request fee-funded PE for <%= next_allocation_cycle_period_text %>.
       </p>
 
       <p class="govuk-body">
-        Any current courses that have not been requested will not be running in 2021 to 2022.
+        Any current courses that have not been requested will not be running in <%= next_allocation_cycle_period_text %>.
       </p>
 
       <p class="govuk-body">
