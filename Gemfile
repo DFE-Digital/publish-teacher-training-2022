@@ -10,7 +10,7 @@ gem "rails", "~> 6.1"
 gem "puma", "~> 5.3"
 
 # Sidekiq for background worker
-gem 'sidekiq'
+gem "sidekiq"
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker"
