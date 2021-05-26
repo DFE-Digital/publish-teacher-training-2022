@@ -310,8 +310,12 @@ RSpec.feature "PE allocations" do
     signed_in_user(user: user)
   end
 
+  def next_allocation_cycle_period_text
+    "#{Settings.allocation_cycle_year + 1} to #{Settings.allocation_cycle_year + 2}"
+  end
+
   def and_i_click_request_pe_courses
-    click_on "Request PE courses for #{Settings.allocation_cycle_year} to #{Settings.allocation_cycle_year + 1}"
+    click_on "Request PE courses for #{next_allocation_cycle_period_text}"
   end
 
   def when_i_visit_my_organisations_page
@@ -323,7 +327,7 @@ RSpec.feature "PE allocations" do
   end
 
   def then_i_see_the_pe_allocations_page
-    expect(find("h1")).to have_content("Request PE courses for #{Settings.allocation_cycle_year} to #{Settings.allocation_cycle_year + 1}")
+    expect(find("h1")).to have_content("Request PE courses for #{next_allocation_cycle_period_text}")
   end
 
   def when_i_click_choose_an_organisation_button

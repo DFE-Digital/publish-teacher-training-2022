@@ -8,7 +8,7 @@
     </h1>
     <p class="govuk-body">
       You've confirmed that <%= @training_provider.provider_name %> will not be
-      offering fee-funded PE in <%= current_allocation_cycle_period_text %>.
+      offering fee-funded PE in <%= next_allocation_cycle_period_text %>.
     </p>
 
     <h2 class="govuk-heading-m">What happens now?</h2>
@@ -23,7 +23,7 @@
     </p>
 
     <p class="govuk-body">
-      <%= link_to raw("Return to Request PE courses for #{current_allocation_cycle_period_text}"),
+      <%= link_to raw("Return to Request PE courses for #{next_allocation_cycle_period_text}"),
                   provider_recruitment_cycle_allocations_path(@provider.provider_code, Settings.current_cycle),
                   class: "govuk-link govuk-!-font-weight-bold" %>
     </p>

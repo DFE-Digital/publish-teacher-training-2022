@@ -87,11 +87,11 @@ module BreadcrumbHelper
 
   def allocations_breadcrumb
     path = provider_recruitment_cycle_allocations_path(@provider.provider_code, @provider.recruitment_cycle_year)
-    provider_breadcrumb << ["Request PE courses for #{current_allocation_cycle_period_text}", path]
+    provider_breadcrumb << ["Request PE courses for #{next_allocation_cycle_period_text}", path]
   end
 
   def allocations_closed_breadcrumb
     path = provider_recruitment_cycle_allocations_path(@provider.provider_code, @provider.recruitment_cycle_year)
-    provider_breadcrumb << ["PE courses for #{current_allocation_cycle_period_text}", path]
+    provider_breadcrumb << ["PE courses for #{next_allocation_cycle_period_text}", path]
   end
 end
