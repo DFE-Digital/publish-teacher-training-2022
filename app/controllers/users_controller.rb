@@ -8,24 +8,22 @@ class UsersController < ApplicationController
   end
 
   def accept_rollover
-    # If we really want to make sure that an invididual user has
-    # accepted the screen, we could add a user id in here if there
-    # are multuple accounts using the same machine?
-    #
-    # Users will however, have to endure the great hardship of accepting
-    # this for every different browser they use during the rollover period
-    cookies[:accepted_rollover] = {
-      value: true,
-      expires: 6.months.from_now,
-    }
+    InterruptPageAcknowledgement.create(
+      user_id: user.id,
+      recruitment_cycle_year: Settings.current_cycle.next,
+      page: "rollover"
+    )
+    session["auth_user"]["accepted_rollover"] = true
     redirect_to root_path
   end
 
   def accept_rollover_recruitment
-    cookies[:accepted_rollover_recruitment] = {
-      value: true,
-      expires: 6.months.from_now,
-    }
+    InterruptPageAcknowledgement.create(
+      user_id: user.id,
+      recruitment_cycle_year: Settings.current_cycle.next,
+      page: "rollover_recruitment"
+    )
+    session["auth_user"]["accepted_rollover_recruitment"] = true
     redirect_to root_path
   end
 
