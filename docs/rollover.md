@@ -31,7 +31,7 @@ updates/refactoring work.
 
 1. Create a **Rollover PR** including the following code changes:
     - Set feature flag `can_edit_current_and_next_cycles: true`
-    - Set feature flag `has_current_cycle_started: false`
+    - Set feature flag `has_current_cycle_started?: false`
     - If allocations still ongoing, set feature flag
       `show_next_cycle_allocation_recruitment_page: true`
     - [TBC - this may be refactored] Create a new state for users
@@ -42,7 +42,8 @@ updates/refactoring work.
 
 ## On Rollover launch date
 
-1. Complete the steps on TTAPI
+1. Complete the steps on TTAPI. You will need to have run the Rollover rake
+  tasks before merging the changes to Publish.
 2. Merge the Rollover PR
 
 ## During Rollover
