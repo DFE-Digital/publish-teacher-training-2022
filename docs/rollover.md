@@ -5,10 +5,10 @@ process we call 'Rollover'.
 
 This involves copying existing providers and courses to new records to allow the
 providers to update any details and then switching the API over to a new
-'recruitment cycle' which in turn releases the new courses on Find & Apply. We
-make copies of the providers and courses because during Rollover the current
-cycle is still open for applications. As such, we can't make any changes to
-existing courses.
+'recruitment cycle' which in turn releases the new courses on Find & Apply, when
+the course is 'published'. We make copies of the providers and courses because
+during Rollover the current cycle is still open for applications. As such, we
+can't make any changes to existing courses.
 
 This document lists the changes needed to be made to the Publish codebase and
 the timings for these changes. There is separate documentation for TTAPI
