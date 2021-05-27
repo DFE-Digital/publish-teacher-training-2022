@@ -32,7 +32,7 @@ class Provider < Base
   end
 
   def from_previous_recruitment_cycle
-    Provider.where(recruitment_cycle_year: recruitment_cycle.year.to_i.pred)
+    Provider.where(recruitment_cycle_year: recruitment_cycle_year.to_i.pred)
       .find(provider_code)
       .first
   end
