@@ -131,23 +131,23 @@ describe ApplicationController, type: :controller do
 
       context "user_id is blank" do
         let(:acknowledgements_response) { <<~JSON }
+          {
+            "data":[
                {
-                 "data":[
-                    {
-                       "id":"7",
-                       "type":"interrupt_page_acknowledgements",
-                       "attributes":{
-                          "page": "lovely_page"
-                       }
-                    }
-                 ],
-                 "meta":{
-                    "count":1
-                 },
-                 "jsonapi":{
-                    "version":"1.0"
-                 }
-              }
+                  "id":"7",
+                  "type":"interrupt_page_acknowledgements",
+                  "attributes":{
+                     "page": "lovely_page"
+                  }
+               }
+            ],
+            "meta":{
+               "count":1
+            },
+            "jsonapi":{
+               "version":"1.0"
+            }
+          }
         JSON
 
         let(:user_id) { 999 }
@@ -263,7 +263,7 @@ describe ApplicationController, type: :controller do
 
     describe "redirects" do
       let(:user_id) { 666 }
-      let(:session) {
+      let(:session) do
         {
           auth_user: {
             "info" => user_info,
@@ -280,14 +280,14 @@ describe ApplicationController, type: :controller do
           last_name: user_last_name,
           email: user_email,
         }
-      }
+      end
 
       let(:current_user) do
         {
           user_id: user_id,
           uid: sign_in_user_id,
           info: user_info,
-          attributes: session
+          attributes: session,
         }.with_indifferent_access
       end
 
@@ -306,11 +306,11 @@ describe ApplicationController, type: :controller do
       end
 
       context "user has accepted rollover page", 'feature_rollover.can_edit_current_and_next_cycles': true do
-        let(:session) {
+        let(:session) do
           super().tap do |s|
             s[:auth_user]["accepted_rollover"] = true
           end
-        }
+        end
 
         it "does not redirect" do
           get :index
@@ -334,10 +334,33 @@ describe ApplicationController, type: :controller do
         end
       end
 
-      context "user has accepted rollover_recruitment page" do
+      context "user has accepted rollover_recruitment page", 'feature_rollover.show_next_cycle_allocation_recruitment_page': true do
+        let(:session) do
+          super().tap do |s|
+            s[:auth_user]["accepted_rollover_recruitment"] = true
+          end
+        end
+
+        it "does not redirect" do
+          get :index
+          expect(response.code).to eq "200"
+        end
       end
 
       context "user has not accepted rollover_recruitment page" do
+        context "flag on", 'feature_rollover.show_next_cycle_allocation_recruitment_page': true do
+          it "redirects" do
+            get :index
+            expect(response).to redirect_to "/rollover-recruitment"
+          end
+        end
+
+        context "flag off" do
+          it "does not redirect" do
+            get :index
+            expect(response.code).to eq "200"
+          end
+        end
       end
     end
   end
@@ -390,10 +413,9 @@ describe ApplicationController, type: :controller do
     end
   end
 
-
   def stub_interrupt_page_acknowledgements(body)
-    url =  /http:\/\/localhost:3001\/api\/v2\/recruitment_cycles\/#{Settings.current_cycle.next}\/users\/\d+\/interrupt_page_acknowledgements/
+    url = /http:\/\/localhost:3001\/api\/v2\/recruitment_cycles\/#{Settings.current_cycle.next}\/users\/\d+\/interrupt_page_acknowledgements/
     stub_request(:get, url)
-      .to_return(status: 200, body: body, headers: {'Content-Type'=>'application/vnd.api+json'})
+      .to_return(status: 200, body: body, headers: { "Content-Type" => "application/vnd.api+json" })
   end
 end

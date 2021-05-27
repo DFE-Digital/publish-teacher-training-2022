@@ -9,9 +9,9 @@ class UsersController < ApplicationController
 
   def accept_rollover
     InterruptPageAcknowledgement.create(
-      user_id: user.id,
+      user_id: current_user["user_id"],
       recruitment_cycle_year: Settings.current_cycle.next,
-      page: "rollover"
+      page: "rollover",
     )
     session["auth_user"]["accepted_rollover"] = true
     redirect_to root_path
@@ -19,9 +19,9 @@ class UsersController < ApplicationController
 
   def accept_rollover_recruitment
     InterruptPageAcknowledgement.create(
-      user_id: user.id,
+      user_id: current_user["user_id"],
       recruitment_cycle_year: Settings.current_cycle.next,
-      page: "rollover_recruitment"
+      page: "rollover_recruitment",
     )
     session["auth_user"]["accepted_rollover_recruitment"] = true
     redirect_to root_path
