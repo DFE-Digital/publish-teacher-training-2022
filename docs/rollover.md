@@ -31,12 +31,7 @@ updates/refactoring work.
 
 1. Create a **Rollover PR** including the following code changes:
     - Set feature flag `can_edit_current_and_next_cycles: true`
-    - Set feature flag `has_current_cycle_started?: false`
-    - If allocations still ongoing, set feature flag
-      `show_next_cycle_allocation_recruitment_page: true`
-    - [TBC - this may be refactored] Create a new state for users
-      `:accepted_rollover_#{year}`. Ensure users are transitioned to this new
-      state when they accept Rollover.
+    - Set feature flag `has_current_cycle_started?: false` [TBC]
     - Any hardcoded copy changes
 2. Create **new Google forms** for adding PE courses for the next cycle
 
@@ -57,13 +52,6 @@ updates/refactoring work.
     - Add new Google forms to `google_forms: next_cycle:`
     - Any hardcoded copy changes
 
-## On Allocations end date
-
-Allocations may have ended before Rollover began. In this case, there is nothing
-to do.
-
-Else, set feature flag `show_next_cycle_allocation_recruitment_page: false`
-
 ## On Rollover end date
 
 1. Complete the steps on TTAPI
@@ -71,4 +59,4 @@ Else, set feature flag `show_next_cycle_allocation_recruitment_page: false`
 
 ## On recruitment cycle start date
 
-Set feature flag `has_current_cycle_started: true`
+Set feature flag `has_current_cycle_started?: true`
