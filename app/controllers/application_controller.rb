@@ -227,6 +227,8 @@ private
   end
 
   def add_interrupt_pages(user)
+    return unless FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") || FeatureService.enabled?("rollover.show_next_cycle_allocation_recruitment_page")
+
     InterruptPageAcknowledgement.where(user_id: user.id, recruitment_cycle_year: Settings.current_cycle.next).all.each do |acknowledgement|
       key = "accepted_#{acknowledgement.page}"
       session[:auth_user][key] = true
