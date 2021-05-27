@@ -25,44 +25,6 @@ describe User, type: :model do
     end
   end
 
-  describe "rolled_over state event" do
-    context "rollover is allowed" do
-      let(:transitioned_user) { build(:user, :transitioned) }
-      let(:rolled_over_user) { build(:user, :rolled_over) }
-
-      before do
-        allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
-      end
-
-      it "changes state from 'transitioned' to 'accepted_rollover_2021'" do
-        transitioned_user.accept_rollover_screen!
-
-        expect(transitioned_user.accepted_rollover_2021?).to be true
-        expect(update_request).to have_been_made
-      end
-
-      it "changes state from 'rolled_over' to 'accepted_rollover_2021'" do
-        rolled_over_user.accept_rollover_screen!
-
-        expect(rolled_over_user.accepted_rollover_2021?).to be true
-        expect(update_request).to have_been_made
-      end
-    end
-
-    context "rollover is not allowed" do
-      let(:rolled_over_user) { create(:user, :rolled_over) }
-
-      before do
-        allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
-      end
-
-      it "raises and error when trying to change state from 'transitioned' to 'rolled_over'" do
-        expect { rolled_over_user.accept_rollover_screen! }.to_not raise_error
-        expect(update_request).not_to have_been_made
-      end
-    end
-  end
-
   describe "#next_state" do
     let(:new_user) { create(:user, :new) }
 

@@ -210,7 +210,7 @@ private
     session[:auth_user]["attributes"] = user.attributes
 
     add_provider_count_cookie
-    add_interrupt_pages(user)
+    add_interrupt_pages
   end
 
   def user_from_session
@@ -226,10 +226,10 @@ private
     logger.error "Error setting the provider_count cookie: #{e.class.name}, #{e.message}"
   end
 
-  def add_interrupt_pages(user)
+  def add_interrupt_pages
     return unless FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") || FeatureService.enabled?("rollover.show_next_cycle_allocation_recruitment_page")
 
-    InterruptPageAcknowledgement.where(user_id: user.id, recruitment_cycle_year: Settings.current_cycle.next).all.each do |acknowledgement|
+    InterruptPageAcknowledgement.where(user_id: current_user["user_id"], recruitment_cycle_year: Settings.current_cycle.next).all.each do |acknowledgement|
       key = "accepted_#{acknowledgement.page}"
       session[:auth_user][key] = true
     end
