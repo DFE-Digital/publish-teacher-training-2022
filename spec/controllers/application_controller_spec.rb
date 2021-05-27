@@ -4,7 +4,7 @@ describe ApplicationController, type: :controller do
   let(:acknowledgements_response) { "{}" }
 
   before do
-    stub_interrupt_page_acknowledgements(acknowledgements_response)
+    stub_interrupt_acknowledgements(acknowledgements_response)
     controller.response = response
   end
 
@@ -212,7 +212,7 @@ describe ApplicationController, type: :controller do
             .to eq 2
         end
 
-        it "sets acknowleged pages" do
+        it "sets acknowledges pages", 'feature_rollover.can_edit_current_and_next_cycles': true do
           expect(controller.request.session[:auth_user]["accepted_lovely_page"])
             .to eq true
         end

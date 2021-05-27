@@ -25,6 +25,10 @@ module Helpers
     # TODO: Move this to be returned with the user.
     stub_provider(provider)
 
+    # This is needed because we check to see if the user needs to be shown
+    # an interrupt creen on all pages (if they are enabled)
+    stub_interrupt_acknowledgements
+
     Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:dfe]
 
     stub_session(user)
@@ -42,6 +46,44 @@ module Helpers
       "/recruitment_cycles/#{Settings.current_cycle}/providers?page[page]=1&page[per_page]=#{providers.count}",
       providers.first.to_jsonapi,
     )
+  end
+
+  def stub_interrupt_acknowledgements(body = nil)
+    body ||=
+      <<~JSON
+        {
+          "data":[
+            {
+              "id":"7",
+              "type":"interrupt_page_acknowledgements",
+              "attributes":{
+                "page": "rollover"
+              }
+            },
+            {
+              "id":"8",
+              "type":"interrupt_page_acknowledgements",
+              "attributes":{
+                "page": "rollover_recruitment"
+              }
+            }
+          ],
+          "meta":{
+            "count":2
+          },
+          "jsonapi":{
+            "version":"1.0"
+          }
+        }
+      JSON
+
+    stub_request(:get, /http:\/\/localhost:3001\/api\/v2\/recruitment_cycles\/#{Settings.current_cycle.next}\/users\/\d+\/interrupt_page_acknowledgements/)
+      .to_return(
+        body: body,
+        headers: {
+          "Content-Type" => "application/vnd.api+json",
+        },
+      )
   end
 
   def stub_session(user)
