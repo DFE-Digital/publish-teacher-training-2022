@@ -4,21 +4,10 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
     <% if Settings.features.maintenance_mode.enabled %>
-      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-        <div class="govuk-notification-banner__header">
-          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-            Important
-          </h2>
-        </div>
-        <div class="govuk-notification-banner__content">
-          <h3 class="govuk-notification-banner__heading">
-            <%= Settings.features.maintenance_mode.title %>
-          </h3>
-          <p class="govuk-body">
-            <%= Settings.features.maintenance_mode.body %>
-          </p>
-        </div>
-      </div>
+      <%= govuk_notification_banner(title: t('notification_banner.info')) do |notification_banner| %>
+        <%= notification_banner.slot(:heading, text: Settings.features.maintenance_mode.title) %>
+        <p class="govuk-body"><%= Settings.features.maintenance_mode.body %></p>
+      <% end %>
     <% end %>
 
     <h1 class="govuk-heading-l">Sign in to Publish teaching training</h1>
