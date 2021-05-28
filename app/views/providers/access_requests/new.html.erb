@@ -1,4 +1,5 @@
 <%= content_for :page_title, "#{@errors && @errors.any? ? "Error: " : ""}Request access for someone else" %>
+
 <% content_for :before_content do %>
   <%= govuk_back_link_to(users_provider_path(params[:code])) %>
 <% end %>

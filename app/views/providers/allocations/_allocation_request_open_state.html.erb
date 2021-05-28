@@ -1,4 +1,4 @@
-<%= content_for :page_title, raw("Request PE courses for #{next_allocation_cycle_period_text}") %>
+<%= content_for :page_title, "Request PE courses for #{next_allocation_cycle_period_text}" %>
 <%= content_for :before_content, render_breadcrumbs("allocations") %>
 
 <div class="govuk-grid-row">
@@ -81,19 +81,22 @@
       We’ll need to know how many places each one would like to offer.
     </p>
 
-    <%= link_to "Choose an organisation",
-                initial_request_provider_recruitment_cycle_allocations_path(
-                  @provider.provider_code,
-                  @provider.recruitment_cycle_year),
-                class: "govuk-button govuk-!-margin-bottom-8" %>
+    <%= govuk_link_to(
+      "Choose an organisation",
+      initial_request_provider_recruitment_cycle_allocations_path(
+        @provider.provider_code,
+        @provider.recruitment_cycle_year
+      ),
+      button: true,
+     ) %>
 
     <h2 class="govuk-heading-m">
       Tell us what you think about this process
     </h2>
     <p class="govuk-body">
-      <%= link_to "Take part in our brief survey to help us improve Publish",
+      <%= govuk_link_to "Take part in our brief survey to help us improve Publish",
                   "https://forms.gle/4EuNG8XGm3AqavRU9",
-                  class: "govuk-link govuk-!-font-weight-bold",
+                  class: "govuk-!-font-weight-bold",
                   target: "_blank" %>
   </div>
 </div>

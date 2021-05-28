@@ -1,15 +1,29 @@
 require "rails_helper"
 
 feature "View helpers", type: :helper do
-  describe "#govuk_link_to" do
-    it "returns an anchor tag with the govuk-link class" do
-      expect(helper.govuk_link_to("ACME SCITT", "https://localhost:44364/organisations/A0")).to eq("<a class=\"govuk-link\" href=\"https://localhost:44364/organisations/A0\">ACME SCITT</a>")
-    end
-  end
-
   describe "#govuk_back_link_to" do
     it "returns an anchor tag with the govuk-back-link class" do
       expect(helper.govuk_back_link_to("https://localhost:44364/organisations/A0")).to eq("<a class=\"govuk-back-link govuk-!-display-none-print\" data-qa=\"page-back\" href=\"https://localhost:44364/organisations/A0\">Back</a>\n")
+    end
+  end
+
+  describe "#bat_contact_mail_to" do
+    context "with no link name" do
+      it "returns BAT contact email address with a word break in the link name" do
+        expect(helper.bat_contact_mail_to).to eq("<a class=\"govuk-link\" href=\"mailto:becomingateacher@digital.education.gov.uk\">becomingateacher<wbr>@digital.education.gov.uk</a>")
+      end
+    end
+
+    context "with a link name" do
+      it "returns BAT contact email address with the link name" do
+        expect(helper.bat_contact_mail_to("Contact us")).to eq("<a class=\"govuk-link\" href=\"mailto:becomingateacher@digital.education.gov.uk\">Contact us</a>")
+      end
+    end
+
+    context "with a subject" do
+      it "returns BAT contact email address with a mailto: subject query" do
+        expect(helper.bat_contact_mail_to(subject: "Feedback")).to eq("<a class=\"govuk-link\" href=\"mailto:becomingateacher@digital.education.gov.uk?subject=Feedback\">becomingateacher<wbr>@digital.education.gov.uk</a>")
+      end
     end
   end
 

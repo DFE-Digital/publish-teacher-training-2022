@@ -18,14 +18,16 @@
       <% @training_providers.each do |training_provider| %>
         <li data-qa="training_provider">
           <h3 class="govuk-heading-m">
-            <%= link_to training_provider.provider_name,
-                        training_provider_courses_provider_recruitment_cycle_path(
-                          provider.provider_code,
-                          provider.recruitment_cycle_year,
-                          training_provider.provider_code,
-                        ),
-                        class: "govuk-link govuk-!-font-weight-bold",
-                        data: { qa: "link" } %>
+            <%= govuk_link_to(
+              training_provider.provider_name,
+              training_provider_courses_provider_recruitment_cycle_path(
+                provider.provider_code,
+                provider.recruitment_cycle_year,
+                training_provider.provider_code,
+              ),
+              class: "govuk-!-font-weight-bold",
+              data: { qa: "link" }
+            ) %>
             <span class="govuk-body govuk-!-font-weight-regular govuk-!-display-block" data-qa="course_count">
               <%= pluralize(@course_counts[training_provider.provider_code], "course") %>
             </span>
@@ -39,13 +41,16 @@
       <div class="app-related" data-qa="download-section" >
         <h2 class="govuk-heading-m">Download</h2>
         <p class="govuk-body">Export all the courses you’re the accredited body for.</p>
-        <%= link_to "Download as a CSV file",
-                    download_training_providers_courses_provider_recruitment_cycle_path(
-                      provider.provider_code,
-                      provider.recruitment_cycle_year,
-                      format: :csv
-                    ),
-                    class: "govuk-link govuk-body" %>
+        <p class="govuk-body">
+          <%= govuk_link_to(
+            "Download as a CSV file",
+            download_training_providers_courses_provider_recruitment_cycle_path(
+              provider.provider_code,
+              provider.recruitment_cycle_year,
+              format: :csv
+            )
+          ) %>
+        </p>
       </div>
   </aside>
 </div>

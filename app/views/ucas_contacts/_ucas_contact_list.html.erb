@@ -21,7 +21,7 @@
       </dd>
       <dd class="govuk-summary-list__actions">
         <%- if contact.present? -%>
-          <%= link_to edit_provider_contact_path(ucas_contact_view.provider_code, contact.id), class: "govuk-link" do %>
+          <%= govuk_link_to edit_provider_contact_path(ucas_contact_view.provider_code, contact.id) do %>
             Change<span class="govuk-visually-hidden"> email alerts for new applications</span>
           <% end %>
         <%- end -%>

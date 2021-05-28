@@ -1,17 +1,13 @@
 module ViewHelper
   def course_creation_change_button(display_name, property_name, path)
-    link_to send(path, course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true)), class: "govuk-link", data: { qa: "course__edit_#{property_name}_link" } do
+    govuk_link_to send(path, course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true)), data: { qa: "course__edit_#{property_name}_link" } do
       raw("Change<span class=\"govuk-visually-hidden\"> #{display_name}</span>")
     end
   end
 
-  def govuk_link_to(body, url = body, html_options = { class: "govuk-link" })
-    link_to body, url, html_options
-  end
-
-  def govuk_back_link_to(url)
+  def govuk_back_link_to(url = :back, body = "Back")
     render GovukComponent::BackLink.new(
-      text: "Back",
+      text: body,
       href: url,
       classes: "govuk-!-display-none-print",
       html_attributes: {
@@ -40,8 +36,8 @@ module ViewHelper
     bat_contact_email_address.gsub("@", "<wbr>@").html_safe
   end
 
-  def bat_contact_mail_to(name = nil, subject: nil, link_class: "govuk-link", data: nil)
-    mail_to bat_contact_email_address, name || bat_contact_email_address, subject: subject, class: link_class, data: data
+  def bat_contact_mail_to(name = nil, **kwargs)
+    govuk_mail_to bat_contact_email_address, name || bat_contact_email_address_with_wrap, **kwargs
   end
 
   def enrichment_error_url(provider_code:, course:, field:)

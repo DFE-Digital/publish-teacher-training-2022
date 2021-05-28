@@ -1,4 +1,5 @@
 <%= content_for :page_title, "Email alerts for new applications" %>
+
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_ucas_contacts_path(@provider.provider_code)) %>
 <% end %>
@@ -72,12 +73,14 @@
       <hr class="govuk-section-break govuk-section-break--l">
 
       <%= form.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
-
     <% end %>
 
     <p class="govuk-body">
-      <%= link_to 'Cancel changes', provider_ucas_contacts_path(@provider.provider_code), class: "govuk-link govuk-link--no-visited-state" %>
+      <%= govuk_link_to(
+        "Cancel changes",
+        provider_ucas_contacts_path(@provider.provider_code),
+        class: "govuk-link--no-visited-state",
+      ) %>
     </p>
-
   </div>
 </div>

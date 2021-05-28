@@ -1,10 +1,7 @@
 <%= content_for :page_title, "Who is the accredited body? – #{course.name_and_code}" %>
+
 <% content_for :before_content do %>
-  <%= govuk_back_link_to(
-    details_provider_recruitment_cycle_course_path(
-      course.provider_code,
-      course.recruitment_cycle_year,
-      course.course_code)) %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
 <%= render 'shared/errors' %>
@@ -61,12 +58,11 @@
                         class: "govuk-button govuk-!-margin-top-3", data: { qa: 'course__save' } %>
 
         <p class="govuk-body">
-          <%= link_to 'Cancel changes',
-            details_provider_recruitment_cycle_course_path(
-              course.provider_code,
-              course.recruitment_cycle_year,
-              course.course_code),
-            class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to(
+            "Cancel changes",
+            details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
+            class: "govuk-link--no-visited-state",
+          ) %>
         </p>
       <% end %>
     </div>

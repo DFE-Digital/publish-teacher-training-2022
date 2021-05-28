@@ -118,10 +118,12 @@
       <%= f.submit "Save and publish changes", class: "govuk-button" %>
     <% end %>
 
-    <div class="form-group">
-      <p class="govuk-body">
-        <%= govuk_link_to "Cancel changes", details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
-      </p>
-    </div>
+    <p class="govuk-body">
+      <%= govuk_link_to(
+        "Cancel changes",
+        details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
+        class: "govuk-link--no-visited-state",
+      ) %>
+    </p>
   </div>
 </div>

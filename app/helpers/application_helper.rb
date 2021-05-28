@@ -39,9 +39,7 @@ module ApplicationHelper
                field: field.to_s,
              )
            end
-    tag.a error,
-          class: "govuk-link govuk-!-display-block",
-          href: href
+    govuk_link_to(error, href, class: "govuk-!-display-block")
   end
 
   def enrichment_summary_label(model, key, fields)

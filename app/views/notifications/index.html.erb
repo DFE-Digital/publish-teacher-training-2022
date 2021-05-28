@@ -43,10 +43,14 @@
         } %>
       <% end %>
       <%= form.govuk_submit "Save" %>
+
       <p class="govuk-body">
-        <%= link_to "Cancel changes", @notifications_view.cancel_link_path,
-          class: "govuk-link",
-          id: "cancel-changes-link" %>
+        <%= govuk_link_to(
+          "Cancel changes",
+          @notifications_view.cancel_link_path,
+          class: "govuk-link--no-visited-state",
+          id: "cancel-changes-link",
+        ) %>
       </p>
     <% end %>
   </div>

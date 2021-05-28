@@ -12,7 +12,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% if @course.meta['edit_options']['show_is_send'] %>
-            <%= link_to send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_is_send" } do %>
+            <%= govuk_link_to send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_is_send" } do %>
               Change<span class="govuk-visually-hidden"> SEND</span>
             <% end %>
           <% end %>
@@ -28,7 +28,7 @@
             <%= course.sorted_subjects %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to subjects_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_subjects_link" } do %>
+            <%= govuk_link_to subjects_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_subjects_link" } do %>
               Change<span class="govuk-visually-hidden"> subjects</span>
             <% end %>
           </dd>
@@ -44,7 +44,7 @@
             <%= course.age_range %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_age_range_link" } do %>
+            <%= govuk_link_to age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_age_range_link" } do %>
               Change<span class="govuk-visually-hidden"> age range</span>
             <% end %>
           </dd>
@@ -59,7 +59,7 @@
           <%= course.outcome %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to outcome_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_entry_requirements_link" } do %>
+          <%= govuk_link_to outcome_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_entry_requirements_link" } do %>
             Change<span class="govuk-visually-hidden"> outcome</span>
           <% end %>
         </dd>
@@ -74,7 +74,7 @@
           </dd>
           <dd class="govuk-summary-list__actions">
             <% if !course.is_published? %>
-              <%= link_to apprenticeship_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_apprenticeship_link" } do %>
+              <%= govuk_link_to apprenticeship_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_apprenticeship_link" } do %>
                 Change<span class="govuk-visually-hidden"> apprenticeship</span>
               <% end %>
             <% end %>
@@ -90,7 +90,7 @@
           </dd>
           <dd class="govuk-summary-list__actions">
             <% if !course.is_published? %>
-              <%= link_to fee_or_salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_funding_link" } do %>
+              <%= govuk_link_to fee_or_salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_funding_link" } do %>
                 Change<span class="govuk-visually-hidden"> fee or salary</span>
               <% end %>
             <% end %>
@@ -106,7 +106,7 @@
           <%= course.study_mode&.humanize %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to full_part_time_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_study_mode_link" } do %>
+          <%= govuk_link_to full_part_time_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_study_mode_link" } do %>
             Change<span class="govuk-visually-hidden"> full time of part time</span>
           <% end %>
         </dd>
@@ -132,7 +132,7 @@
           <% end %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_locations_link" } do %>
+          <%= govuk_link_to locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_locations_link" } do %>
             Change<span class="govuk-visually-hidden"> locations</span>
           <% end %>
         </dd>
@@ -148,7 +148,7 @@
           </dd>
           <dd class="govuk-summary-list__actions">
             <% unless course.is_published? %>
-              <%= link_to accredited_body_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link" do %>
+              <%= govuk_link_to accredited_body_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) do %>
                 Change<span class="govuk-visually-hidden"> accredited body</span>
               <% end %>
             <% end %>
@@ -165,7 +165,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% if @course.meta['edit_options']['show_applications_open'] %>
-            <%= link_to applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_open_applications_link" } do %>
+            <%= govuk_link_to applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_open_applications_link" } do %>
               Change<span class="govuk-visually-hidden"> applications open date</span>
             <% end %>
           <% end %>
@@ -181,7 +181,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% if @course.meta['edit_options']['show_start_date'] %>
-            <%= link_to start_date_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_start_date_link" } do %>
+            <%= govuk_link_to start_date_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_start_date_link" } do %>
               Change<span class="govuk-visually-hidden"> start date</span>
             <% end %>
           <% end %>
@@ -206,7 +206,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% if current_user["admin"] %>
-            <%= link_to title_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link" do %>
+            <%= govuk_link_to title_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) do %>
               Change<span class="govuk-visually-hidden"> course title</span>
             <% end %>
           <% end %>
@@ -246,7 +246,7 @@
             <% end %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to entry_requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "govuk-link", data: { qa: "course__edit_entry_requirements_link" } do %>
+            <%= govuk_link_to entry_requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: "course__edit_entry_requirements_link" } do %>
               Change<span class="govuk-visually-hidden"> entry requirements</span>
             <% end %>
           </dd>
@@ -283,12 +283,9 @@
           <% end %>
         </ul>
 
-        <p class="govuk-body">
+        <p class="govuk-body govuk-!-margin-bottom-0">
           To request other changes to your basic details contact the Becoming a Teacher team:<br />
-          <%= bat_contact_mail_to bat_contact_email_address_with_wrap,
-            subject: "Edit #{course.name} (#{@provider.provider_code}/#{course.course_code})",
-            data: { qa: "course__contact_support" }
-          %>
+          <%= bat_contact_mail_to subject: "Edit #{course.name} (#{@provider.provider_code}/#{course.course_code})", data: { qa: "course__contact_support" } %>
         </p>
       </div>
     </aside>

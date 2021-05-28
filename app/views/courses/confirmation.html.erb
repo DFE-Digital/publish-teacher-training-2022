@@ -160,7 +160,7 @@
                     You can’t change this because you only have 1 location
                   </p>
                   <p class="govuk-!-margin-top-1">
-                  <a class="govuk-link" target="_blank" rel="noopener noreferrer" href="<%= provider_locations_path %>">Manage your locations</a>
+                    <%= govuk_link_to "Manage your locations", provider_locations_path, target: "_blank", rel: "noopener noreferrer" %>
                   </p>
                 <% end %>
               </dd>
