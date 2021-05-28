@@ -13,8 +13,6 @@ class User < Base
   aasm whiny_transitions: false do
     state :new, initial: true
     state :transitioned
-    # TODO:  Remove all these after migrating users all to "transitioned",
-    # we are replacing rolled over states and the notifications state is already gone
     state :rolled_over
     state :accepted_rollover_2021
     state :notifications_configured
