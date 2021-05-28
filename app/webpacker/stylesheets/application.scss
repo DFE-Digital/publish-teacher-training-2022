@@ -13,7 +13,6 @@ $success-green: #00823b;
 @import "~govuk-frontend/govuk/all";
 
 @import "advice";
-@import "phase-tag";
 @import "currency-input";
 @import "notification-banner";
 @import "definition-list";
@@ -23,20 +22,12 @@ $success-green: #00823b;
 @import "patterns/pagination";
 @import "tabs";
 @import "performance-dashboard";
+@import "related";
 @import "tables";
 @import "link";
 
 .app-text-decoration-underline-dotted {
   text-decoration: underline dotted;
-}
-
-.app-related {
-  background-color: govuk-colour("light-grey");
-  padding: govuk-spacing(4);
-
-  .govuk-select {
-    background: govuk-colour("white");
-  }
 }
 
 .app-courses-locations-list__help-text {
