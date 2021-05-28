@@ -98,7 +98,7 @@ describe ApplicationController, type: :controller do
             expect(Sentry).to have_received(:set_user).with(id: user_id)
           end
 
-          it "sets the DFE sign-in id in the tags context" do
+          it "sets the DFE Sign-in id in the tags context" do
             controller.authenticate
 
             expect(Sentry).to have_received(:set_tags)
@@ -229,7 +229,7 @@ describe ApplicationController, type: :controller do
             expect(Sentry).to have_received(:set_user).with(id: user_id)
           end
 
-          it "sets the DFE sign-in id in the tags context" do
+          it "sets the DFE Sign-in id in the tags context" do
             controller.authenticate
 
             expect(Sentry).to have_received(:set_tags)

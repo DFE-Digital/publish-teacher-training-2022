@@ -28,7 +28,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 # Canonical meta tag
 gem "canonical-rails"
 
-# DfE Sign-In
+# DfE Sign-in
 gem "omniauth", "~> 1.9"
 gem "omniauth_openid_connect", "~> 0.3"
 gem "omniauth-rails_csrf_protection"

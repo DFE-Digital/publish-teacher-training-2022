@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Sessions", type: :request do
   describe "GET signout" do
-    it "redirects to DfE Sign-In session end" do
+    it "redirects to DfE Sign-in session end" do
       stub_omniauth
       get(auth_dfe_callback_path)
 
