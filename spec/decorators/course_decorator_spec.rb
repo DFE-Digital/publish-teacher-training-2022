@@ -111,8 +111,8 @@ describe CourseDecorator do
     context "A non running course" do
       let(:course) { build(:course, ucas_status: "not_running") }
 
-      it "Returns phase tag withdrawn" do
-        expect(status_tag).to include("phase-tag--withdrawn")
+      it "Returns red tag" do
+        expect(status_tag).to include("govuk-tag--red")
       end
 
       it "Returns text withdrawn" do
@@ -123,8 +123,8 @@ describe CourseDecorator do
     context "An empty course" do
       let(:course) { build(:course, content_status: "empty") }
 
-      it "Returns phase tag published" do
-        expect(status_tag).to include("phase-tag--no-content")
+      it "Returns grey tag" do
+        expect(status_tag).to include("govuk-tag--grey")
       end
 
       it "Returns text empty" do
@@ -135,8 +135,8 @@ describe CourseDecorator do
     context "A draft course" do
       let(:course) { build(:course, content_status: "draft") }
 
-      it "Returns phase tag published" do
-        expect(status_tag).to include("phase-tag--draft")
+      it "Returns yellow tag" do
+        expect(status_tag).to include("govuk-tag--yellow")
       end
 
       it "Returns text draft" do
@@ -147,8 +147,8 @@ describe CourseDecorator do
     context "A published with unpublished changes course" do
       let(:course) { build(:course, content_status: "published_with_unpublished_changes") }
 
-      it "Returns phase tag published" do
-        expect(status_tag).to include("phase-tag--published")
+      it "Returns green tag" do
+        expect(status_tag).to include("govuk-tag--green")
       end
 
       it "Returns text published*" do
@@ -163,8 +163,8 @@ describe CourseDecorator do
     context "A rolled over course" do
       let(:course) { build(:course, content_status: "rolled_over") }
 
-      it "Returns phase tag no content" do
-        expect(status_tag).to include("phase-tag--no-content")
+      it "Returns grey tag" do
+        expect(status_tag).to include("govuk-tag--grey")
       end
 
       it "Returns text rolled over" do
@@ -175,8 +175,8 @@ describe CourseDecorator do
     context "A withdrawn course" do
       let(:course) { build(:course, content_status: "withdrawn") }
 
-      it "Returns phase tag withdrawn" do
-        expect(status_tag).to include("phase-tag--withdrawn")
+      it "Returns red tag" do
+        expect(status_tag).to include("govuk-tag--red")
       end
 
       it "Returns text withdrawn" do

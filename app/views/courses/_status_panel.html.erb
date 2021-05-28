@@ -1,8 +1,8 @@
 <div class="app-related">
   <h3 class="govuk-heading-m">Status</h3>
-  <div class="govuk-!-margin-bottom-6" data-qa="course__content-status">
+  <p class="govuk-body" data-qa="course__content-status">
     <%= course.status_tag %>
-  </div>
+  </p>
   <h3 class="govuk-heading-s govuk-!-margin-bottom-0">
     <% if @recruitment_cycle.current_and_open? %>Is it<% else %>Will it be<% end %> on <abbr class="app-text-decoration-underline-dotted" title="Find postgraduate teacher training">Find</abbr>?
   </h3>

@@ -2,20 +2,20 @@
 // It adds a 1px solid border around the tag with a match colour of the text.
 // TODO Could be removed if we decide not to use grey background sections on pages
 
-.app-related .app-phase-tag {
-  &--no-content {
+.app-related {
+  .govuk-tag--grey {
     border: 1px solid govuk-shade(govuk-colour("dark-grey", $legacy: "grey-1"), 30);
   }
 
-  &--draft {
+  .govuk-tag--yellow {
     border: 1px solid govuk-shade(govuk-colour("yellow"), 65);
   }
 
-  &--withdrawn {
+  .govuk-tag--red {
     border: 1px solid govuk-shade(govuk-colour("red"), 30);
   }
 
-  &--published {
+  .govuk-tag--green {
     border: 1px solid govuk-shade(govuk-colour("green"), 20);
   }
 }
