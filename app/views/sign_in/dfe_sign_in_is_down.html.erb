@@ -2,25 +2,17 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-    <div class="app-banner app-banner--warning govuk-!-margin-bottom-7">
-      <div class="app-banner__message">
-        <h2 class="govuk-heading-m">Temporary sign in</h2>
-        <p>
-          DfE Sign In is currently experiencing problems. You need to use this
-          temporary sign in page to access Publish teacher training courses.
-        </p>
-      </div>
-    </div>
+    <%= govuk_notification_banner(title: t('notification_banner.info')) do |notification_banner| %>
+      <%= notification_banner.slot(:heading, text: 'Temporary login') %>
+      <p class="govuk-body">DfE Sign-in is experiencing problems. You need to sign in using your email address.</p>
+    <% end %>
 
     <h1 class="govuk-heading-xl">
       Sign in
     </h1>
 
-    <p class="govuk-body">
-      Enter the email address linked to your Sign In account.
-      You’ll receive a link that gives you access to Publish teacher training courses.
-    </p>
+    <p class="govuk-body-l">You must sign in to your account to publish teacher training courses.</p>
+
     <%= form_with model: User.new , url:send_magic_link_path , builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
       <%= f.govuk_text_field :email, label: {text: 'Email address', size:'m'} %>
       <%= f.govuk_submit "Continue" %>
@@ -29,6 +21,6 @@
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
     <h2 class="govuk-heading-m">Ask for an account</h2>
-    <p class="govuk-body">Don’t have an account? You can get one by emailing <%= bat_contact_mail_to %>. Please include the full names and email addresses of anyone who needs access.</p>
+    <p class="govuk-body">Do not have an account? You can get one by emailing <%= bat_contact_mail_to %>. Please include the full names and email addresses of anyone who needs access.</p>
   </div>
 </div>
