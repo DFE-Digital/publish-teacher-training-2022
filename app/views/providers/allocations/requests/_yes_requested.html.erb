@@ -24,7 +24,7 @@
     <p class="govuk-body">
       In September we'll let you know how many places we've allocated for this course.
       <% unless @allocation.initial_request? %>
-        This will be based on the organisation's allocation for <%= previous_allocation_cycle_period_text %>.
+        This will be based on the organisation's allocation for <%= current_allocation_cycle_period_text %>.
       <% end %>
     </p>
 
