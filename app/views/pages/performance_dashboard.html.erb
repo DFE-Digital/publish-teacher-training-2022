@@ -6,56 +6,22 @@
 
 <%= render partial: "pages/performance_dashboard/initial_performance_indicators" %>
 
-<div class="govuk-tabs" data-module="govuk-tabs">
-  <h2 class="govuk-tabs__title">
-    Contents
-  </h2>
-  <ul class="govuk-tabs__list app-tabs__list" role="tablist">
-    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
-      <a class="govuk-tabs__tab" href="#providers" id="tab_providers" role="tab" aria-controls="providers" aria-selected="true" tabindex="0">
-        Providers
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item" role="presentation">
-      <a class="govuk-tabs__tab" href="#courses" id="tab_courses" role="tab" aria-controls="courses" aria-selected="false" tabindex="-1">
-        Courses
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item" role="presentation">
-      <a class="govuk-tabs__tab" href="#users" id="tab_users" role="tab" aria-controls="users" aria-selected="false" tabindex="-1">
-        Users
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item" role="presentation">
-      <a class="govuk-tabs__tab" href="#allocations" id="tab_allocations" role="tab" aria-controls="allocations" aria-selected="false" tabindex="-1">
-        Allocations
-      </a>
-    </li>
-    <% if FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") %>
-      <li class="govuk-tabs__list-item" role="presentation">
-        <a class="govuk-tabs__tab" href="#rollover" id="tab_rollover" role="tab" aria-controls="rollover" aria-selected="false" tabindex="-1">
-          Rollover
-        </a>
-      </li>
-    <% end %>
-  </ul>
-  <div class="govuk-tabs__panel" id="providers" role="tabpanel" aria-labelledby="tab_providers">
-    <h2 class="govuk-heading-l">Providers</h2>
+<%= govuk_tabs(title: "Contents", classes: "app-tabs") do |tab| %>
+  <%= tab.slot(:tab, title: "Providers") do %>
     <%= render partial: "pages/performance_dashboard/providers_tab" %>
-  </div>
-  <div class="govuk-tabs__panel" id="courses" role="tabpanel" aria-labelledby="tab_courses">
-    <%= render partial: "pages/performance_dashboard/courses_tab" %>
-  </div>
-  <div class="govuk-tabs__panel" id="users" role="tabpanel" aria-labelledby="tab_users">
-    <%= render partial: "pages/performance_dashboard/users_tab" %>
-  </div>
-  <div class="govuk-tabs__panel" id="allocations" role="tabpanel" aria-labelledby="tab_allocations">
-    <h2 class="govuk-heading-l">Allocations</h2>
-    <%= render partial: "pages/performance_dashboard/allocations_tab" %>
-  </div>
-  <% if FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") %>
-    <div class="govuk-tabs__panel" id="rollover" role="tabpanel" aria-labelledby="tab_rollover">
-      <%= render partial: "pages/performance_dashboard/rollover_tab" %>
-    </div>
   <% end %>
-</div>
+  <%= tab.slot(:tab, title: "Courses") do %>
+    <%= render partial: "pages/performance_dashboard/courses_tab" %>
+  <% end %>
+  <%= tab.slot(:tab, title: "Users") do %>
+    <%= render partial: "pages/performance_dashboard/users_tab" %>
+  <% end %>
+  <%= tab.slot(:tab, title: "Allocations") do %>
+    <%= render partial: "pages/performance_dashboard/allocations_tab" %>
+  <% end %>
+  <% if FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") %>
+    <%= tab.slot(:tab, title: "Rollover") do %>
+      <%= render partial: "pages/performance_dashboard/rollover_tab" %>
+    <% end %>
+  <% end %>
+<% end %>
