@@ -6,8 +6,4 @@ module AllocationCycleHelper
   def next_allocation_cycle_period_text
     "#{Settings.allocation_cycle_year + 1} to #{Settings.allocation_cycle_year + 2}"
   end
-
-  def previous_allocation_cycle_period_text
-    "#{Settings.allocation_cycle_year - 1} to #{Settings.allocation_cycle_year}"
-  end
 end
