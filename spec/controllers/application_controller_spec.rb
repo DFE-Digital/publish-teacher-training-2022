@@ -414,7 +414,7 @@ describe ApplicationController, type: :controller do
   end
 
   def stub_interrupt_page_acknowledgements(body)
-    url = /http:\/\/localhost:3001\/api\/v2\/recruitment_cycles\/#{Settings.current_cycle.next}\/users\/\d+\/interrupt_page_acknowledgements/
+    url = /http:\/\/localhost:3001\/api\/v2\/recruitment_cycles\/#{Settings.current_cycle}\/users\/\d+\/interrupt_page_acknowledgements/
     stub_request(:get, url)
       .to_return(status: 200, body: body, headers: { "Content-Type" => "application/vnd.api+json" })
   end
