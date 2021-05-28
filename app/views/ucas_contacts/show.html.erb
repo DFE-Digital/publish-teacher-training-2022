@@ -32,72 +32,58 @@
 
     <%= render partial: "ucas_contact_list", locals: { ucas_contact_view: @ucas_contact_view } %>
 
-    <hr class="govuk-section-break govuk-section-break--l" />
+    <hr class="govuk-section-break govuk-section-break--xl">
 
     <h2 class="govuk-heading-l">Letters for successful applicants</h2>
+
     <p class="govuk-body">UCAS sends all successful applicants a letter – this is known as a ‘GT12&nbsp;letter’.</p>
 
-    <dl class="govuk-summary-list govuk-!-margin-top-6 govuk-!-margin-bottom-9">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Email address (or URL) printed in the letter
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body" data-qa="provider__gt12_contact">
-            <% if @ucas_contact_view.gt12_contact.present? %>
-              <%= @ucas_contact_view.gt12_contact %>
-            <% else %>
-              Information unknown
-            <% end %>
-          </p>
-          <p class="govuk-body-s">
-            This person or website will receive responses from successful applicants replying to a GT12 letter.
-          </p>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-    </dl>
+    <%= govuk_summary_list do |summary_list| %>
+      <% content_for :row_value, flush: true do %>
+        <p class="govuk-body"><%= @ucas_contact_view.gt12_contact.present? ? @ucas_contact_view.gt12_contact : "Information unknown" %></p>
+        <p class="govuk-body-s">This person or website will receive responses from successful applicants replying to a GT12 letter.</p>
+      <% end %>
+      <% summary_list.slot(
+        :row,
+        key: "Email address (or URL) printed in the letter",
+        value: content_for(:row_value),
+        html_attributes: {
+          data: {
+            qa: "ucas_gt12_contact"
+          }
+        }
+      ) %>
+    <% end %>
 
-    <hr class="govuk-section-break govuk-section-break--l" />
+    <hr class="govuk-section-break govuk-section-break--xl">
 
     <h2 class="govuk-heading-l">Email alerts for new applications</h2>
 
-    <dl class="govuk-summary-list govuk-!-margin-top-6 govuk-!-margin-bottom-9">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Get alerts from UCAS?
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body" data-qa="provider__send_application_alerts">
-            <%= t("edit_options.send_application_alerts.#{@ucas_contact_view.send_application_alerts}.label") %>
-          </p>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code), data: { qa: 'send_application_alerts__change' } do %>
-            Change<span class="govuk-visually-hidden"> email alerts for new applications</span>
-          <% end %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-           Who are the alerts sent to?
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body" data-qa="provider__application_alert_contact">
-            <% if @ucas_contact_view.application_alert_contact.present? %>
-              <%= @ucas_contact_view.application_alert_contact %>
-            <% else %>
-              Information unknown
-            <% end %>
-          </p>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code), data: { qa: 'application_alert_contact__change' } do %>
-            Change<span class="govuk-visually-hidden"> email alerts for new applications</span>
-          <% end %>
-        </dd>
-      </div>
-    </dl>
+    <%= govuk_summary_list do |summary_list| %>
+      <% summary_list.slot(
+        :row,
+        key: "Get alerts from UCAS?",
+        value: t("edit_options.send_application_alerts.#{@ucas_contact_view.send_application_alerts}.label"),
+        action: change_link_to("email alerts for new applications", alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code)),
+        html_attributes: {
+          data: {
+            qa: "ucas_send_application_alerts"
+          }
+        }
+      ) %>
+
+      <% summary_list.slot(
+        :row,
+        key: "Who are the alerts sent to?",
+        value: @ucas_contact_view.application_alert_contact.present? ? @ucas_contact_view.application_alert_contact : "Information unknown",
+        action: change_link_to("email alerts for new applications", alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code)),
+        html_attributes: {
+          data: {
+            qa: "ucas_application_alert_contact"
+          }
+        }
+      ) %>
+    <% end %>
   </div>
 
   <div class="govuk-grid-column-one-third">

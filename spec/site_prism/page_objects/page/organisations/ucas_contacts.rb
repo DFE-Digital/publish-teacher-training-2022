@@ -2,27 +2,23 @@ module PageObjects
   module Page
     module Organisations
       class UcasContacts < PageObjects::Base
-        class ContactDetail < SitePrism::Section
-          element :details, ".govuk-summary-list__value"
-          element :change_link, ".govuk-summary-list__actions a"
+        class SummaryList < SitePrism::Section
+          element :value, ".govuk-summary-list__value"
+          element :change_link, ".govuk-summary-list__actions .govuk-link"
         end
 
         set_url "/organisations/{provider_code}/ucas-contacts"
 
         element :flash, ".govuk-notification-banner--success"
-        sections :contacts, ContactDetail, ".ucas-contact-list__row"
-        section :admin_contact, ContactDetail, ".ucas-contact-list__row__admin"
-        section :utt_contact, ContactDetail, ".ucas-contact-list__row__utt"
-        section :web_link_contact, ContactDetail, ".ucas-contact-list__row__web_link"
-        section :finance_contact, ContactDetail, ".ucas-contact-list__row__finance"
-        section :fraud_contact, ContactDetail, ".ucas-contact-list__row__fraud"
-
-        section :gt12_contact, ContactDetail, "[data-qa='provider__gt12_contact']"
-
-        element :application_alert_contact, "[data-qa='provider__application_alert_contact']"
-        element :send_application_alerts, "[data-qa='provider__send_application_alerts']"
-        element :send_application_alerts_link, "a[data-qa=send_application_alerts__change]", text: "Change"
-        element :application_alert_contact_link, "a[data-qa=application_alert_contact__change]", text: "Change"
+        sections :contacts, SummaryList, "[data-qa~=ucas_contact]"
+        section :admin_contact, SummaryList, "[data-qa~=ucas_admin_contact]"
+        section :utt_contact, SummaryList, "[data-qa~=ucas_utt_contact]"
+        section :web_link_contact, SummaryList, "[data-qa~=ucas_web_link_contact]"
+        section :finance_contact, SummaryList, "[data-qa~=ucas_finance_contact]"
+        section :fraud_contact, SummaryList, "[data-qa~=ucas_fraud_contact]"
+        section :gt12_contact, SummaryList, "[data-qa=ucas_gt12_contact]"
+        section :application_alert_contact, SummaryList, "[data-qa=ucas_application_alert_contact]"
+        section :send_application_alerts, SummaryList, "[data-qa=ucas_send_application_alerts]"
       end
     end
   end

@@ -18,6 +18,12 @@ module ViewHelper
     )
   end
 
+  def change_link_to(hidden_text, url, text = "Change", **kwargs)
+    govuk_link_to url, **kwargs do
+      raw("#{text}<span class=\"govuk-visually-hidden\"> #{hidden_text}</span>")
+    end
+  end
+
   def search_ui_url(relative_path)
     URI.join(Settings.search_ui.base_url, relative_path).to_s
   end
