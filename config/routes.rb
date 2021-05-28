@@ -245,6 +245,7 @@ Rails.application.routes.draw do
   get "/rollover", to: "pages#rollover", as: :rollover
   get "/rollover-recruitment", to: "pages#rollover_recruitment", as: :rollover_recruitment
   patch "/accept-rollover", to: "users#accept_rollover"
+  patch "/accept-rollover-recruitment", to: "users#accept_rollover_recruitment"
   get "/accept-terms", to: "pages#accept_terms"
   patch "/accept-terms", to: "users#accept_terms"
   get "/performance-dashboard", to: "pages#performance_dashboard", as: :performance_dashboard

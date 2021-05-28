@@ -20,12 +20,6 @@ class User < Base
     event :accept_transition_screen do
       transitions from: :new, to: :transitioned
     end
-
-    event :accept_rollover_screen do
-      transitions from: %i[notifications_configured transitioned rolled_over], to: :accepted_rollover_2021 do
-        guard { FeatureService.enabled?("rollover.can_edit_current_and_next_cycles") }
-      end
-    end
   end
 
   def next_state

@@ -37,15 +37,6 @@ describe "Recruitment cycles" do
       get("/organisations/#{provider.provider_code}/#{next_recruitment_cycle.year}")
       expect(response).to redirect_to(provider_path(provider.provider_code))
     end
-
-    context "rollover" do
-      it "renders the recruitment cycle page" do
-        allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
-
-        get("/organisations/#{provider.provider_code}/#{current_recruitment_cycle.year}")
-        expect(response.body).to include("Current cycle")
-      end
-    end
   end
 
   describe "when visiting a cycle year that doesn’t exist" do

@@ -19,10 +19,10 @@ feature "View locations", type: :feature do
   let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
   let(:locations_page) { PageObjects::Page::LocationsPage.new }
   let(:location_page) { PageObjects::Page::LocationPage.new }
+  let(:user) { build(:user) }
 
   before do
     allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(false)
-    user = build(:user)
     signed_in_user(user: user, provider: provider)
 
     stub_api_v2_request(
@@ -47,6 +47,8 @@ feature "View locations", type: :feature do
       "/providers/#{provider_code}?include=sites",
       provider.to_jsonapi(include: :sites),
     )
+
+    stub_interrupt_acknowledgements
 
     root_page.load
 
@@ -81,6 +83,7 @@ feature "View locations", type: :feature do
   context "rollover" do
     it "it shows a list of locations" do
       allow(Settings.features.rollover).to receive(:can_edit_current_and_next_cycles).and_return(true)
+      signed_in_user(user: user, provider: provider)
       root_page.load
       expect(organisation_page).to be_displayed(provider_code: provider_code)
       organisation_page.current_cycle.click

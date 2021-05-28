@@ -1,7 +1,10 @@
 require "rails_helper"
 
 describe ApplicationController, type: :controller do
+  let(:acknowledgements_response) { "{}" }
+
   before do
+    stub_interrupt_acknowledgements(acknowledgements_response)
     controller.response = response
   end
 
@@ -37,8 +40,6 @@ describe ApplicationController, type: :controller do
     end
 
     before do
-      allow(Base).to receive(:connection)
-
       allow(JWT::EncodeService).to receive(:call)
         .with(payload: payload)
         .and_return("anything")
@@ -129,6 +130,26 @@ describe ApplicationController, type: :controller do
       end
 
       context "user_id is blank" do
+        let(:acknowledgements_response) { <<~JSON }
+          {
+            "data":[
+               {
+                  "id":"7",
+                  "type":"interrupt_page_acknowledgements",
+                  "attributes":{
+                     "page": "lovely_page"
+                  }
+               }
+            ],
+            "meta":{
+               "count":1
+            },
+            "jsonapi":{
+               "version":"1.0"
+            }
+          }
+        JSON
+
         let(:user_id) { 999 }
 
         let(:session) do
@@ -191,6 +212,11 @@ describe ApplicationController, type: :controller do
             .to eq 2
         end
 
+        it "sets acknowledges pages", 'feature_rollover.can_edit_current_and_next_cycles': true do
+          expect(controller.request.session[:auth_user]["accepted_lovely_page"])
+            .to eq true
+        end
+
         describe "sentry contexts" do
           before do
             allow(Sentry).to receive(:set_user)
@@ -230,6 +256,109 @@ describe ApplicationController, type: :controller do
           it "has sign_in_user_id" do
             expect(controller.log_safe_current_user[:sign_in_user_id]).to be_eql(sign_in_user_id)
             expect(controller.log_safe_current_user(reload: true)[:sign_in_user_id]).to be_eql(sign_in_user_id)
+          end
+        end
+      end
+    end
+
+    describe "redirects" do
+      let(:user_id) { 666 }
+      let(:session) do
+        {
+          auth_user: {
+            "info" => user_info,
+            "user_id" => user_id,
+            "uid" => sign_in_user_id,
+          },
+          id: user_id,
+          state: "transitioned",
+          admin: true,
+          associated_with_accredited_body: false,
+          accept_terms_date_utc: Time.zone.now,
+          notifications_configured: false,
+          first_name: user_first_name,
+          last_name: user_last_name,
+          email: user_email,
+        }
+      end
+
+      let(:current_user) do
+        {
+          user_id: user_id,
+          uid: sign_in_user_id,
+          info: user_info,
+          attributes: session,
+        }.with_indifferent_access
+      end
+
+      controller do
+        def index
+          render plain: "Hello World"
+        end
+      end
+
+      before do
+        allow(controller).to receive(:current_user).and_return(current_user)
+        allow(Session).to receive(:create)
+
+        controller.request.session = session
+        controller.authenticate
+      end
+
+      context "user has accepted rollover page", 'feature_rollover.can_edit_current_and_next_cycles': true do
+        let(:session) do
+          super().tap do |s|
+            s[:auth_user]["accepted_rollover"] = true
+          end
+        end
+
+        it "does not redirect" do
+          get :index
+          expect(response.code).to eq "200"
+        end
+      end
+
+      context "user has not accepted rollover page" do
+        context "flag on", 'feature_rollover.can_edit_current_and_next_cycles': true do
+          it "redirects" do
+            get :index
+            expect(response).to redirect_to "/rollover"
+          end
+        end
+
+        context "flag off" do
+          it "does not redirect" do
+            get :index
+            expect(response.code).to eq "200"
+          end
+        end
+      end
+
+      context "user has accepted rollover_recruitment page", 'feature_rollover.show_next_cycle_allocation_recruitment_page': true do
+        let(:session) do
+          super().tap do |s|
+            s[:auth_user]["accepted_rollover_recruitment"] = true
+          end
+        end
+
+        it "does not redirect" do
+          get :index
+          expect(response.code).to eq "200"
+        end
+      end
+
+      context "user has not accepted rollover_recruitment page" do
+        context "flag on", 'feature_rollover.show_next_cycle_allocation_recruitment_page': true do
+          it "redirects" do
+            get :index
+            expect(response).to redirect_to "/rollover-recruitment"
+          end
+        end
+
+        context "flag off" do
+          it "does not redirect" do
+            get :index
+            expect(response.code).to eq "200"
           end
         end
       end
@@ -282,5 +411,11 @@ describe ApplicationController, type: :controller do
 
       expect(RequestStore.store).to eq(request_id: request_uuid)
     end
+  end
+
+  def stub_interrupt_page_acknowledgements(body)
+    url = /http:\/\/localhost:3001\/api\/v2\/recruitment_cycles\/#{Settings.current_cycle}\/users\/\d+\/interrupt_page_acknowledgements/
+    stub_request(:get, url)
+      .to_return(status: 200, body: body, headers: { "Content-Type" => "application/vnd.api+json" })
   end
 end

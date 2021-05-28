@@ -30,4 +30,40 @@ RSpec.describe UsersController do
       expect(response).to render_template("pages/accept_terms")
     end
   end
+
+  describe "#accept_rollover_recruitment" do
+    it "creates the acknowledgement and redirects" do
+      stub_request(:post, "http://localhost:3001/api/v2/recruitment_cycles/#{Settings.current_cycle}/users/#{user.id}/interrupt_page_acknowledgements")
+        .with(
+          body: {
+            data: {
+              type: "interrupt_page_acknowledgements",
+              attributes: {
+                page: "rollover_recruitment",
+              },
+            },
+          }.to_json,
+        )
+      put :accept_rollover_recruitment
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
+  describe "#accept_rollover" do
+    it "creates the acknowledgement and redirects" do
+      stub_request(:post, "http://localhost:3001/api/v2/recruitment_cycles/#{Settings.current_cycle}/users/#{user.id}/interrupt_page_acknowledgements")
+        .with(
+          body: {
+            data: {
+              type: "interrupt_page_acknowledgements",
+              attributes: {
+                page: "rollover",
+              },
+            },
+          }.to_json,
+        )
+      put :accept_rollover
+      expect(response).to redirect_to(root_path)
+    end
+  end
 end
