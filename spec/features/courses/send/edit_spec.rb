@@ -31,7 +31,7 @@ feature "Edit course SEND", type: :feature do
 
       scenario "should show the edit link" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to have_edit_is_send_link
+        expect(course_details_page.is_send).to have_change_link
       end
     end
 
@@ -48,7 +48,7 @@ feature "Edit course SEND", type: :feature do
 
       scenario "should not show the edit link" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to_not have_edit_is_send_link
+        expect(course_details_page.is_send).to_not have_change_link
       end
     end
   end

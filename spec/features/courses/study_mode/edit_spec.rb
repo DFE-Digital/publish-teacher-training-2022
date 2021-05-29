@@ -33,7 +33,7 @@ feature "Edit course study mode", type: :feature do
 
     scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
-      click_on "Change full time of part time"
+      click_on "Change if full or part time"
       expect(study_mode_page).to be_displayed
       click_on "Back"
       expect(course_details_page).to be_displayed

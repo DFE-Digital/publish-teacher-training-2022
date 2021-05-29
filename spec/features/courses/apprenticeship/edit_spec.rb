@@ -34,7 +34,7 @@ feature "Edit course apprenticeship status", type: :feature do
 
     scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
-      click_on "Change apprenticeship"
+      click_on "Change if apprenticeship"
       expect(apprenticeship_page).to be_displayed
       click_on "Back"
       expect(course_details_page).to be_displayed

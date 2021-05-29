@@ -254,6 +254,6 @@ feature "Edit course subjects", type: :feature do
 
   scenario "should show the edit link" do
     course_details_page.load_with_course(course)
-    expect(course_details_page).to have_edit_subjects_link
+    expect(course_details_page.subjects).to have_change_link
   end
 end

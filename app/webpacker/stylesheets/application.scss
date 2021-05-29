@@ -25,16 +25,15 @@ $success-green: #00823b;
 @import "related";
 @import "link";
 
+// Override utilities
+@import "overrides";
+
 .app-text-decoration-underline-dotted {
   text-decoration: underline dotted;
 }
 
 .app-courses-locations-list__help-text {
   color: govuk-colour("dark-grey");
-}
-
-.app-courses-locations-list li:last-child {
-  margin-bottom: 0;
 }
 
 .app-course-parts__fields__value--empty {

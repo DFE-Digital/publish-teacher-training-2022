@@ -57,7 +57,7 @@ feature "Course details", type: :feature do
     expect(course_details_page.age_range).to have_content(
       "3 to 7",
     )
-    expect(course_details_page.edit_age_range_link).to have_content(
+    expect(course_details_page.age_range.change_link).to have_content(
       "Change age range",
     )
 
@@ -85,7 +85,7 @@ feature "Course details", type: :feature do
     expect(course_details_page.locations).to have_content(
       site2.location_name,
     )
-    expect(course_details_page.edit_locations_link).to have_content(
+    expect(course_details_page.locations.change_link).to have_content(
       "Change location",
     )
     expect(course_details_page).to have_no_manage_provider_locations_link
@@ -107,7 +107,7 @@ feature "Course details", type: :feature do
 
   scenario "with the correct support email link" do
     visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
-    expect(course_details_page.contact_support.native.attributes["href"].value).to eq("mailto:becomingateacher@digital.education.gov.uk?subject=Edit%20#{course.name}%20%28A0%2F#{course.course_code}%29")
+    expect(course_details_page.contact_support_link.native.attributes["href"].value).to eq("mailto:becomingateacher@digital.education.gov.uk?subject=Edit%20#{course.name}%20%28A0%2F#{course.course_code}%29")
   end
 
   context "When the course has nil fields" do
@@ -116,7 +116,7 @@ feature "Course details", type: :feature do
     scenario "It shows blank for nil fields" do
       visit "/organisations/A0/#{course.recruitment_cycle.year}/courses/#{course.course_code}/details"
 
-      expect(course_details_page.study_mode.text).to be_blank
+      expect(course_details_page.study_mode.value.text).to be_blank
     end
   end
 
@@ -223,7 +223,7 @@ feature "Course details", type: :feature do
 
       scenario "displays no restrictions" do
         course_details_page.load_with_course(course)
-        expect(course_details_page.allocations_info).to have_content(
+        expect(course_details_page.allocations).to have_content(
           "Recruitment is not restricted",
         )
       end
@@ -238,7 +238,7 @@ feature "Course details", type: :feature do
 
         scenario "displays no restrictions" do
           course_details_page.load_with_course(course)
-          expect(course_details_page.allocations_info).to have_content(
+          expect(course_details_page.allocations).to have_content(
             "Recruitment to fee-funded PE courses is limited by the number of places allocated to you by DfE.",
           )
         end
@@ -256,7 +256,7 @@ feature "Course details", type: :feature do
 
       scenario "displays no restrictions" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to_not have_allocations_info
+        expect(course_details_page).to_not have_allocations
       end
     end
   end
@@ -274,7 +274,7 @@ feature "Course details", type: :feature do
 
     scenario "displays no restrictions" do
       course_details_page.load_with_course(course)
-      expect(course_details_page.allocations_info).to have_content(
+      expect(course_details_page.allocations).to have_content(
         "Recruitment is not restricted",
       )
     end
@@ -286,7 +286,7 @@ feature "Course details", type: :feature do
       let(:provider) { build(:provider, accredited_body?: true) }
       scenario "displays a link to edit apprenticeship" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to have_edit_apprenticeship_link
+        expect(course_details_page.apprenticeship).to have_change_link
       end
     end
 
@@ -294,7 +294,7 @@ feature "Course details", type: :feature do
       let(:course) { build(:course, content_status: "draft", provider: provider) }
       scenario "displays a link to edit funding type" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to have_edit_funding_link
+        expect(course_details_page.funding).to have_change_link
       end
     end
   end
