@@ -23,44 +23,36 @@
   </div>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl"><%= @recruitment_cycle.title %></span>
-      About your organisation
-    </h1>
-  </div>
-</div>
+<h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl"><%= @recruitment_cycle.title %></span>
+  About your organisation
+</h1>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-summary-list govuk-summary-list--short govuk-!-margin-top-0">
-      <h2 class="govuk-heading-m govuk-!-font-size-27">
-        <%= govuk_link_to "Contact details", contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
-      </h2>
-      <dl class="govuk-summary-list">
-        <%= enrichment_summary_item(:provider, 'Email address', @provider.email, ['email']) %>
-        <%= enrichment_summary_item(:provider, 'Telephone number', @provider.telephone, ['telephone']) %>
-        <%= enrichment_summary_item(:provider, 'Website', @provider.website, ['website']) %>
-        <%= enrichment_summary_item(:provider, 'Contact address', @provider.full_address, ['address1', 'address2', 'address3', 'address4', 'postcode']) %>
-        <%= enrichment_summary_item(:provider, 'UKPRN', @provider.ukprn, ['ukprn']) %>
-      </dl>
-    </div>
+    <h2 class="govuk-heading-m govuk-!-font-size-27">
+      <%= govuk_link_to "Contact details", contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
+    </h2>
+    <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
+      <% summary_list.slot(:row, enrichment_summary(:provider, "Email address", @provider.email, ["email"])) %>
+      <% summary_list.slot(:row, enrichment_summary(:provider, "Telephone number", @provider.telephone, ["telephone"])) %>
+      <% summary_list.slot(:row, enrichment_summary(:provider, "Website", @provider.website, ["website"])) %>
+      <% summary_list.slot(:row, enrichment_summary(:provider, "Contact address", @provider.full_address, ["address1", "address2", "address3", "address4", "postcode"])) %>
+      <% summary_list.slot(:row, enrichment_summary(:provider, "UKPRN", @provider.ukprn, ["ukprn"])) %>
+    <% end %>
 
-    <div class="govuk-summary-list govuk-summary-list--short">
-      <h2 class="govuk-heading-m govuk-!-font-size-27">
-        <%= govuk_link_to "About your organisation", about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
-      </h2>
-      <dl class="govuk-summary-list">
-        <%= enrichment_summary_item(:provider, 'About your organisation', @provider.train_with_us, ['train_with_us']) %>
-        <% if provider.accredited_bodies.present? %>
-          <% provider.accredited_bodies.each do |provider| %>
-          <%= enrichment_summary_item(:provider, "#{provider['provider_name']} (optional)", provider['description'], ["accrediting_provider_#{provider['provider_code']}"]) %>
-          <% end %>
+    <h2 class="govuk-heading-m govuk-!-font-size-27">
+      <%= govuk_link_to "About your organisation", about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
+    </h2>
+    <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
+      <% summary_list.slot(:row, enrichment_summary(:provider, "About your organisation", @provider.train_with_us, ["train_with_us"])) %>
+      <% if provider.accredited_bodies.present? %>
+        <% provider.accredited_bodies.each do |provider| %>
+          <% summary_list.slot(:row, enrichment_summary(:provider, "#{provider["provider_name"]} (optional)", provider["description"], ["accrediting_provider_#{provider['provider_code']}"])) %>
         <% end %>
-        <%= enrichment_summary_item(:provider, 'Training with disabilities and other needs', @provider.train_with_disability, ['train_with_disability']) %>
-      </dl>
-    </div>
+      <% end %>
+      <% summary_list.slot(:row, enrichment_summary(:provider, "Training with disabilities and other needs", @provider.train_with_disability, ["train_with_disability"])) %>
+    <% end %>
   </div>
 
   <aside class="govuk-grid-column-one-third" data-qa="provider__status_panel">
