@@ -32,28 +32,25 @@
         Check your information before sending your request
       </h1>
 
-      <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Places requested
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= params[:number_of_places] %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= govuk_link_to "Change",
-                        get_edit_initial_request_provider_recruitment_cycle_allocation_path(
-                          provider.provider_code,
-                          recruitment_cycle.year,
-                          training_provider.provider_code,
-                          number_of_places: params[:number_of_places],
-                          request_type: params[:request_type],
-                          next_step: "number_of_places",
-                          id: allocation.id
-                        ) %>
-          </dd>
-        </div>
-      </dl>
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.slot(
+          :row,
+          key: "Places requested",
+          value: params[:number_of_places],
+          action: change_link_to(
+            "places requested",
+            get_edit_initial_request_provider_recruitment_cycle_allocation_path(
+              provider.provider_code,
+              recruitment_cycle.year,
+              training_provider.provider_code,
+              number_of_places: params[:number_of_places],
+              request_type: params[:request_type],
+              next_step: "number_of_places",
+              id: allocation.id
+            )
+          )
+        ) %>
+      <% end %>
 
       <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
       <%= hidden_field_tag "request_type", params[:request_type] %>
