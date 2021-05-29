@@ -208,7 +208,7 @@ class CourseDecorator < ApplicationDecorator
     if object.age_range_in_years.present?
       I18n.t("edit_options.age_range_in_years.#{object.age_range_in_years}.label", default: object.age_range_in_years.humanize)
     else
-      "<span class='app-course-parts__fields__value--empty'>Unknown</span>".html_safe
+      "<span class='app-!-colour-muted'>Unknown</span>".html_safe
     end
   end
 

@@ -1,300 +1,274 @@
 <%= content_for :page_title, "Check your answers before confirming" %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       Check your answers before confirming
     </h1>
-    <%= render 'shared/errors' %>
+
+    <%= render "shared/errors" %>
+
     <%= form_with model: course,
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
                   url: provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year),
                   method: :post do |f| %>
-      <%= render 'shared/course_creation_hidden_fields',
+
+      <%= render "shared/course_creation_hidden_fields",
         form: f,
         course_creation_params: @course_creation_params,
         except_keys: []
       %>
-      <div class="govuk-grid-row govuk-!-margin-bottom-9">
-        <div class="govuk-grid-column-full">
-          <dl class="govuk-summary-list govuk-!-margin-bottom-0" data-qa="course__details">
-            <%= render(CourseLevelComponent.new(course: course, changeable: true)) %>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                <abbr class="app-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr>
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__is_send">
-                <%= course.is_send? %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "SEND",
-                  "is_send",
-                  :new_provider_recruitment_cycle_courses_level_path
-                ) %>
-              </dd>
-            </div>
+      <%= govuk_summary_list(html_attributes: { data: { qa: "course__details" } }) do |summary_list| %>
+        <%= summary_list.slot(
+          :row,
+          key: "Level",
+          value: course.level.humanize,
+          action: change_link_to("level", new_provider_recruitment_cycle_courses_level_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+          html_attributes: {
+            data: {
+              qa: "course__level"
+            }
+          }
+        ) %>
 
-            <% unless course.is_further_education? %>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  <%= 'Subject'.pluralize(course.subjects.count) %>
-                </dt>
-                <dd class="govuk-summary-list__value" data-qa="course__subjects">
-                  <%= course.sorted_subjects %>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                    <%= course_creation_change_button(
-                      "subjects",
-                      "subjects",
-                      :new_provider_recruitment_cycle_courses_subjects_path
-                    ) %>
-                </dd>
-              </div>
-            <% end %>
+        <%= summary_list.slot(
+          :row,
+          key: raw("<abbr class=\"app-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>"),
+          value: course.is_send?,
+          action: change_link_to("SEND", new_provider_recruitment_cycle_courses_level_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+          html_attributes: {
+            data: {
+              qa: "course__is_send"
+            }
+          }
+        ) %>
 
-            <% unless course.is_further_education? %>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Age range
-                </dt>
-                <dd class="govuk-summary-list__value" data-qa="course__age_range">
-                  <%= course.age_range %>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <%= course_creation_change_button(
-                    "age range",
-                    "age_range",
-                    :new_provider_recruitment_cycle_courses_age_range_path
-                  ) %>
-                </dd>
-              </div>
-            <% end %>
+        <% unless course.is_further_education? %>
+          <%= summary_list.slot(
+            :row,
+            key: "Subject".pluralize(course.subjects.count),
+            value: course.sorted_subjects,
+            action: change_link_to("subjects", new_provider_recruitment_cycle_courses_subjects_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+            html_attributes: {
+              data: {
+                qa: "course__subjects"
+              }
+            }
+          ) %>
+        <% end %>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Outcome
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__qualifications">
-                <%= course.outcome %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "outcome",
-                  "qualifications",
-                  :new_provider_recruitment_cycle_courses_outcome_path
-                ) %>
-              </dd>
-            </div>
+        <% unless course.is_further_education? %>
+          <%= summary_list.slot(
+            :row,
+            key: "Age range",
+            value: course.age_range,
+            action: change_link_to("age range", new_provider_recruitment_cycle_courses_age_range_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+            html_attributes: {
+              data: {
+                qa: "course__age_range"
+              }
+            }
+          ) %>
+        <% end %>
 
-            <% if @provider.accredited_body? %>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Apprenticeship
-                </dt>
-                <dd class="govuk-summary-list__value" data-qa="course__apprenticeship">
-                  <%= course.apprenticeship? %>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <%= course_creation_change_button(
-                    "apprenticeship",
-                    "apprenticeship",
-                    :new_provider_recruitment_cycle_courses_apprenticeship_path
-                  ) %>
-                </dd>
-              </div>
-            <% else %>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Fee or Salary
-                </dt>
-                <dd class="govuk-summary-list__value" data-qa="course__fee_or_salary">
-                  <%= course.funding %>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <%= course_creation_change_button(
-                    "fee or salary",
-                    "fee_or_salary",
-                    :new_provider_recruitment_cycle_courses_fee_or_salary_path
-                  ) %>
-                </dd>
-              </div>
-            <% end %>
+        <%= summary_list.slot(
+          :row,
+          key: "Outcome",
+          value: course.outcome,
+          action: change_link_to("outcome", new_provider_recruitment_cycle_courses_outcome_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+          html_attributes: {
+            data: {
+              qa: "course__outcome"
+            }
+          }
+        ) %>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Full or part time
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__study_mode">
-                <%= course.study_mode&.humanize %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "full time or part time",
-                  "study_mode",
-                  :new_provider_recruitment_cycle_courses_study_mode_path
-                ) %>
-              </dd>
-            </div>
+        <% if @provider.accredited_body? %>
+          <%= summary_list.slot(
+            :row,
+            key: "Apprenticeship",
+            value: course.apprenticeship?,
+            action: change_link_to("if apprenticeship", new_provider_recruitment_cycle_courses_apprenticeship_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+            html_attributes: {
+              data: {
+                qa: "course__apprenticeship"
+              }
+            }
+          ) %>
+        <% else %>
+          <%= summary_list.slot(
+            :row,
+            key: "Fee or salary",
+            value: course.funding,
+            action: change_link_to("if fee or salary", new_provider_recruitment_cycle_courses_fee_or_salary_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+            html_attributes: {
+              data: {
+                qa: "course__fee_or_salary"
+              }
+            }
+          ) %>
+        <% end %>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Locations
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__locations">
-                <% if course.sites.nil? || course.sites.empty? %>
-                  <span class="app-course-parts__fields__value--empty">None</span>
-                <% elsif course.sites.size == 1 %>
-                  <%= course.sites.first.location_name %>
-                <% else %>
-                  <ul class="govuk-list app-courses-locations-list">
-                    <% course.alphabetically_sorted_sites.each do |site| %>
-                      <li>
-                        <%= site.location_name %>
-                      </li>
-                    <% end %>
-                  </ul>
-                <% end %>
+        <%= summary_list.slot(
+          :row,
+          key: "Full or part time",
+          value: course.study_mode&.humanize,
+          action: change_link_to("if full or part time", new_provider_recruitment_cycle_courses_study_mode_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+          html_attributes: {
+            data: {
+              qa: "course__study_mode"
+            }
+          }
+        ) %>
 
-                <% if course.provider.sites.count < 2 %>
-                  <p data-qa="course__locations__help" class="govuk-!-margin-top-1 app-courses-locations-list__help-text">
-                    You can’t change this because you only have 1 location
-                  </p>
-                  <p class="govuk-!-margin-top-1">
-                    <%= govuk_link_to "Manage your locations", provider_locations_path, target: "_blank", rel: "noopener noreferrer" %>
-                  </p>
-                <% end %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <% if @course.provider.sites.count > 1 %>
-                  <%= course_creation_change_button(
-                    "locations",
-                    "locations",
-                    :new_provider_recruitment_cycle_courses_locations_path
-                  ) %>
-                <% end %>
-              </dd>
-            </div>
-
-            <% unless @provider.accredited_body? || course.is_further_education? %>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Accredited body
-                </dt>
-                <dd class="govuk-summary-list__value" data-qa="course__accredited_body">
-                  <%= course.accrediting_provider.provider_name %>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <%= course_creation_change_button(
-                    "accredited body",
-                    "accredited_body",
-                    :new_provider_recruitment_cycle_courses_accredited_body_path
-                  ) %>
-                </dd>
-              </div>
-            <% end %>
-
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Applications open
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__application_open_from">
-              <% if course.applications_open_from == @recruitment_cycle.application_start_date %>
-                As soon as the course is on Find (recommended)
-              <% else %>
-                <%= l(course.applications_open_from&.to_date) %>
+        <% content_for :locations do %>
+          <% if course.sites.nil? || course.sites.empty? %>
+            <span class="app-!-colour-muted">None</span>
+          <% elsif course.sites.size == 1 %>
+            <%= course.sites.first.location_name %>
+          <% else %>
+            <ul class="govuk-list">
+              <% course.alphabetically_sorted_sites.each do |site| %>
+                <li><%= site.location_name %></li>
               <% end %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "applications open date",
-                  "application_open_from",
-                  :new_provider_recruitment_cycle_courses_applications_open_path
-                ) %>
-              </dd>
-            </div>
+            </ul>
+          <% end %>
+          <% if course.provider.sites.count < 2 %>
+            <p class="govuk-body" data-qa="course__locations__help">
+              You can’t change this because you only have 1 location.
+            </p>
+            <p class="govuk-body">
+              <%= govuk_link_to "Manage your locations", provider_locations_path, target: "_blank", rel: "noopener noreferrer" %>
+            </p>
+          <% end %>
+        <% end %>
+        <%= summary_list.slot(
+          :row,
+          key: "Locations",
+          value: content_for(:locations),
+          action: @course.provider.sites.count > 1 ? change_link_to("locations", new_provider_recruitment_cycle_courses_locations_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))) : nil,
+          html_attributes: {
+            data: {
+              qa: "course__locations"
+            }
+          }
+        ) %>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Course starts
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__start_date">
-                <% if course.start_date.present? %>
-                  <%= l(course.start_date&.to_date, format: :short) %>
-                <% end %>
-              </dd>
-              <dd class="govuk-summary-list__actions">
-                <%= course_creation_change_button(
-                  "start date",
-                  "start_date",
-                  :new_provider_recruitment_cycle_courses_start_date_path
-                ) %>
-              </dd>
-            </div>
+        <% unless @provider.accredited_body? || course.is_further_education? %>
+          <%= summary_list.slot(
+            :row,
+            key: "Accredited body",
+            value: course.accrediting_provider.provider_name,
+            action: change_link_to("accredited body", new_provider_recruitment_cycle_courses_accredited_body_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+            html_attributes: {
+              data: {
+                qa: "course__accredited_body"
+              }
+            }
+          ) %>
+        <% end %>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Title
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__name">
-                <%= course.name %>
-              </dd>
-              <dd class="govuk-summary-list__actions"></dd>
-            </div>
+        <% content_for :applications_open do %>
+          <% if course.applications_open_from == @recruitment_cycle.application_start_date %>
+            As soon as the course is on Find (recommended)
+          <% else %>
+            <%= l(course.applications_open_from&.to_date) %>
+          <% end %>
+        <% end %>
+        <%= summary_list.slot(
+          :row,
+          key: "Applications open",
+          value: content_for(:applications_open),
+          action: change_link_to("date applications open", new_provider_recruitment_cycle_courses_applications_open_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+          html_attributes: {
+            data: {
+              qa: "course__applications_open"
+            }
+          }
+        ) %>
 
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Description
-              </dt>
-              <dd class="govuk-summary-list__value" data-qa="course__description">
-                <%= course.description %>
-              </dd>
-              <dd class="govuk-summary-list__actions"></dd>
-            </div>
-            <% if course.gcse_subjects_required.any? %>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  UCAS Apply: GCSE requirements for applicants
-                </dt>
-                <dd class="govuk-summary-list__value govuk-!-padding-right-0" data-qa="course__entry_requirements">
-                  <% course.gcse_subjects_required.each do |subject| %>
-                    <%= render partial: 'courses/entry_requirements',
-                      locals: {
-                      gcse_subject: subject.titleize,
-                      gcse_subject_code: course[subject]
-                    } %>
-                  <% end %>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <%= course_creation_change_button(
-                    "entry requirements",
-                    "entry_requirements",
-                    :new_provider_recruitment_cycle_courses_entry_requirements_path
-                  ) %>
-                </dd>
-              </div>
+        <%= summary_list.slot(
+          :row,
+          key: "Course starts",
+          value: course.start_date.present? ? l(course.start_date&.to_date, format: :short) : nil,
+          action: change_link_to("date course starts", new_provider_recruitment_cycle_courses_start_date_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+          html_attributes: {
+            data: {
+              qa: "course__start_date"
+            }
+          }
+        ) %>
+
+        <%= summary_list.slot(
+          :row,
+          key: "Title",
+          value: course.name,
+          html_attributes: {
+            data: {
+              qa: "course__name"
+            }
+          }
+        ) %>
+
+        <%= summary_list.slot(
+          :row,
+          key: "Description",
+          value: course.description,
+          html_attributes: {
+            data: {
+              qa: "course__description"
+            }
+          }
+        ) %>
+
+        <% if course.gcse_subjects_required.any? %>
+          <% content_for :entry_requirements do %>
+            <% course.gcse_subjects_required.each do |subject| %>
+              <%= render partial: 'courses/entry_requirements',
+                locals: {
+                  gcse_subject: subject.titleize,
+                  gcse_subject_code: course[subject]
+                }
+              %>
             <% end %>
-            <% if course.next_cycle? && course.has_fees? %>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                  Allocations
-                </dt>
-                <dd class="govuk-summary-list__value govuk-!-padding-right-0" data-qa="course__allocations">
-                  <% if course.has_physical_education_subject? %>
-                    <p class="govuk-body">Recruitment to fee-funded PE courses is limited by the number of places allocated to you by DfE.</p>
-                    <p class="govuk-body">If you haven't already, you must <%= govuk_link_to "request allocations", "https://docs.google.com/forms/d/e/1FAIpQLScxhMGaYil9KB4XWfVXG7Y_VQ-lmmr_xEkjWetcjIgLgTCIIA/viewform?usp=sf_link" %></p>
-                  <% else %>
-                    Recruitment is not restricted
-                  <% end %>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                </dd>
-              </div>
-            <% end %>
-          </dl>
-        </div>
-      </div>
+          <% end %>
+          <%= summary_list.slot(
+            :row,
+            key: "UCAS Apply: GCSE requirements for applicants",
+            value: content_for(:entry_requirements),
+            action: change_link_to("entry requirements", new_provider_recruitment_cycle_courses_entry_requirements_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
+            html_attributes: {
+              data: {
+                qa: "course__entry_requirements"
+              }
+            }
+          ) %>
+        <% end %>
 
-      <div data-qa="course__preview">
+        <% if course.next_cycle? && course.has_fees? %>
+          <% content_for :allocations do %>
+            <% if course.has_physical_education_subject? %>
+              <p class="govuk-body">Recruitment to fee-funded PE courses is limited by the number of places allocated to you by DfE.</p>
+              <p class="govuk-body">If you haven’t already, you must <%= govuk_link_to "request allocations", "https://docs.google.com/forms/d/e/1FAIpQLScxhMGaYil9KB4XWfVXG7Y_VQ-lmmr_xEkjWetcjIgLgTCIIA/viewform?usp=sf_link" %></p>
+            <% else %>
+              Recruitment is not restricted
+            <% end %>
+          <% end %>
+          <%= summary_list.slot(
+            :row,
+            key: "Allocations",
+            value: content_for(:allocations),
+            html_attributes: {
+              data: {
+                qa: "course__allocations"
+              }
+            }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <div class="govuk-!-margin-top-8" data-qa="course__preview">
         <h2 class="govuk-heading-l">Preview</h2>
         <p class="govuk-body">See how this course will appear when it’s published on Find postgraduate teacher training:</p>
         <%= govuk_inset_text do %>
@@ -306,13 +280,8 @@
         <% end %>
       </div>
 
-      <%= f.submit "Save new course",
-        class: "govuk-button",
-        "data-prevent-double-click" => true,
-        "data-module" => "govuk-button",
-        data: { qa: 'course__save' }
-      %>
-       <p class="govuk-body">Saving this course will not publish it.</p>
+      <%= f.govuk_submit "Save new course", data: { qa: "course__save" } %>
+      <p class="govuk-body">Saving this course will not publish it.</p>
     <% end %>
   </div>
 </div>

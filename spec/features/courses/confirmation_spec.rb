@@ -63,7 +63,7 @@ feature "Course confirmation", type: :feature do
       let(:course) { build(:course, applications_open_from: recruitment_cycle.application_start_date, provider: provider) }
 
       scenario "It displays the 'as soon as its open on find' message" do
-        expect(course_confirmation_page.details.application_open_from.text).to eq("As soon as the course is on Find (recommended)")
+        expect(course_confirmation_page.details.applications_open.value.text).to eq("As soon as the course is on Find (recommended)")
       end
     end
 
@@ -95,7 +95,7 @@ feature "Course confirmation", type: :feature do
       end
 
       scenario "It shows the accrediting body" do
-        expect(course_confirmation_page.details.accredited_body.text).to eq(accredited_body.provider_name)
+        expect(course_confirmation_page.details.accredited_body.value.text).to eq(accredited_body.provider_name)
       end
     end
 
@@ -103,7 +103,7 @@ feature "Course confirmation", type: :feature do
       let(:provider) { build(:provider, accredited_body?: false) }
       let(:level) { "further_education" }
       it "shows further education course details on confirmation page" do
-        expect(course_confirmation_page.details.level.text).to eq("Further education")
+        expect(course_confirmation_page.details.level.value.text).to eq("Further education")
       end
     end
 
@@ -111,29 +111,27 @@ feature "Course confirmation", type: :feature do
       let(:study_mode) { nil }
 
       scenario "It shows blank for nil fields" do
-        expect(course_confirmation_page.details.study_mode.text).to be_blank
+        expect(course_confirmation_page.details.study_mode.value.text).to be_blank
       end
     end
 
     scenario "it displays the correct information" do
       expect(page.title).to start_with("Check your answers before confirming")
 
-      expect(course_confirmation_page.title).to have_content(
-        "Check your answers before confirming",
-      )
-      expect(course_confirmation_page.details.level.text).to eq("Secondary")
-      expect(course_confirmation_page.details.is_send.text).to eq("No")
-      expect(course_confirmation_page.details.subjects.text).to include("English")
-      expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
-      expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
-      expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
-      expect(course_confirmation_page.details.locations.text).to eq("Site one Site two")
-      expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
-      expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
-      expect(course_confirmation_page.details.name.text).to eq("English")
-      expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
-      expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
-      expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
+      expect(course_confirmation_page.title).to have_content("Check your answers before confirming")
+      expect(course_confirmation_page.details.level.value.text).to eq("Secondary")
+      expect(course_confirmation_page.details.is_send.value.text).to eq("No")
+      expect(course_confirmation_page.details.subjects.value.text).to include("English")
+      expect(course_confirmation_page.details.subjects.value.text).to include("Mathematics")
+      expect(course_confirmation_page.details.age_range.value.text).to eq("11 to 16")
+      expect(course_confirmation_page.details.study_mode.value.text).to eq("Full time")
+      expect(course_confirmation_page.details.locations.value.text).to eq("Site one Site two")
+      expect(course_confirmation_page.details.applications_open.value.text).to eq("1 January 2019")
+      expect(course_confirmation_page.details.start_date.value.text).to eq("January 2019")
+      expect(course_confirmation_page.details.name.value.text).to eq("English")
+      expect(course_confirmation_page.details.description.value.text).to eq("PGCE with QTS full time")
+      expect(course_confirmation_page.details.entry_requirements.value.text).to include("Maths GCSE: Taking")
+      expect(course_confirmation_page.details.entry_requirements.value.text).to include("English GCSE: Must have")
       expect(course_confirmation_page.preview.name.text).to include("English")
       expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
     end
@@ -217,7 +215,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewLevelPage.new }
 
       before do
-        course_confirmation_page.details.edit_level.click
+        course_confirmation_page.details.level.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -227,7 +225,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewLevelPage.new }
 
       before do
-        course_confirmation_page.details.edit_is_send.click
+        course_confirmation_page.details.is_send.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -237,7 +235,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewSubjectsPage.new }
 
       before do
-        course_confirmation_page.details.edit_subjects.click
+        course_confirmation_page.details.subjects.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -290,7 +288,7 @@ feature "Course confirmation", type: :feature do
       end
 
       it "keeps languages checked" do
-        course_confirmation_page.details.edit_subjects.click
+        course_confirmation_page.details.subjects.change_link.click
         subjects_page.continue.click
         expect(languages_page.language_checkbox("Russian")).to be_checked
       end
@@ -300,7 +298,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewAgeRangePage.new }
 
       before do
-        course_confirmation_page.details.edit_age_range.click
+        course_confirmation_page.details.age_range.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -324,7 +322,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewStudyModePage.new }
 
       before do
-        course_confirmation_page.details.edit_study_mode.click
+        course_confirmation_page.details.study_mode.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -334,7 +332,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewLocationsPage.new }
 
       before do
-        course_confirmation_page.details.edit_locations.click
+        course_confirmation_page.details.locations.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -344,7 +342,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewApplicationsOpenPage.new }
 
       before do
-        course_confirmation_page.details.edit_application_open_from.click
+        course_confirmation_page.details.applications_open.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -354,7 +352,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewStartDatePage.new }
 
       before do
-        course_confirmation_page.details.edit_start_date.click
+        course_confirmation_page.details.start_date.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -364,7 +362,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
 
       before do
-        course_confirmation_page.details.edit_entry_requirements.click
+        course_confirmation_page.details.entry_requirements.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -374,7 +372,7 @@ feature "Course confirmation", type: :feature do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewCourseOutcome.new }
 
       before do
-        course_confirmation_page.details.edit_qualifications.click
+        course_confirmation_page.details.outcome.change_link.click
       end
 
       include_examples "goes to the edit page"
@@ -384,23 +382,20 @@ feature "Course confirmation", type: :feature do
 private
 
   def expect_course_confirmation_page_to_display_course_information
-    expect(course_confirmation_page.title).to have_content(
-      "Check your answers before confirming",
-    )
-
-    expect(course_confirmation_page.details.level.text).to eq(course.level.to_s.capitalize)
-    expect(course_confirmation_page.details.is_send.text).to eq("No")
-    expect(course_confirmation_page.details.subjects.text).to include("English")
-    expect(course_confirmation_page.details.subjects.text).to include("Mathematics")
-    expect(course_confirmation_page.details.age_range.text).to eq("11 to 16")
-    expect(course_confirmation_page.details.study_mode.text).to eq("Full time")
-    expect(course_confirmation_page.details.locations.text).to eq("Site one Site two")
-    expect(course_confirmation_page.details.application_open_from.text).to eq("1 January 2019")
-    expect(course_confirmation_page.details.start_date.text).to eq("January 2019")
-    expect(course_confirmation_page.details.name.text).to eq("English")
-    expect(course_confirmation_page.details.description.text).to eq("PGCE with QTS full time")
-    expect(course_confirmation_page.details.entry_requirements.text).to include("Maths GCSE: Taking")
-    expect(course_confirmation_page.details.entry_requirements.text).to include("English GCSE: Must have")
+    expect(course_confirmation_page.title).to have_content("Check your answers before confirming")
+    expect(course_confirmation_page.details.level.value.text).to eq(course.level.to_s.capitalize)
+    expect(course_confirmation_page.details.is_send.value.text).to eq("No")
+    expect(course_confirmation_page.details.subjects.value.text).to include("English")
+    expect(course_confirmation_page.details.subjects.value.text).to include("Mathematics")
+    expect(course_confirmation_page.details.age_range.value.text).to eq("11 to 16")
+    expect(course_confirmation_page.details.study_mode.value.text).to eq("Full time")
+    expect(course_confirmation_page.details.locations.value.text).to eq("Site one Site two")
+    expect(course_confirmation_page.details.applications_open.value.text).to eq("1 January 2019")
+    expect(course_confirmation_page.details.start_date.value.text).to eq("January 2019")
+    expect(course_confirmation_page.details.name.value.text).to eq("English")
+    expect(course_confirmation_page.details.description.value.text).to eq("PGCE with QTS full time")
+    expect(course_confirmation_page.details.entry_requirements.value.text).to include("Maths GCSE: Taking")
+    expect(course_confirmation_page.details.entry_requirements.value.text).to include("English GCSE: Must have")
     expect(course_confirmation_page.preview.name.text).to include("English")
     expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
   end

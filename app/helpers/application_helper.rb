@@ -63,7 +63,7 @@ module ApplicationHelper
 
     if value.blank?
       value = "Empty"
-      css_class += " app-course-parts__fields__value--empty"
+      css_class += " app-!-colour-muted"
     end
 
     data_qa = "enrichment__#{fields.first}"

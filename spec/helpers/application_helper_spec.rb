@@ -39,7 +39,7 @@ RSpec.feature "View helpers", type: :helper do
 
     it "returns 'empty' when value is empty" do
       expect(helper.enrichment_summary_value("", %w[about]))
-        .to eq('<dd class="govuk-summary-list__value govuk-summary-list__value--truncate app-course-parts__fields__value--empty" data-qa="enrichment__about">Empty</dd>')
+        .to eq('<dd class="govuk-summary-list__value govuk-summary-list__value--truncate app-!-colour-muted" data-qa="enrichment__about">Empty</dd>')
     end
   end
 

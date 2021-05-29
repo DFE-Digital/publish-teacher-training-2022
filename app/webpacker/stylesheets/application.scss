@@ -32,14 +32,6 @@ $success-green: #00823b;
   text-decoration: underline dotted;
 }
 
-.app-courses-locations-list__help-text {
-  color: govuk-colour("dark-grey");
-}
-
-.app-course-parts__fields__value--empty {
-  color: govuk-colour("dark-grey");
-}
-
 .app-course-parts__fields__label--error {
   border-left: govuk-spacing(1) solid $govuk-error-colour;
   color: $govuk-error-colour;
