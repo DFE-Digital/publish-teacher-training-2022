@@ -1,17 +1,17 @@
 <% if allocations.present? %>
-  <table class="govuk-table ucas-info-table govuk-!-margin-bottom-8" data-qa="<%= request_type %>-allocations-table">
+  <table class="govuk-table" data-qa="<%= request_type %>-allocations-table">
     <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header allocation-report__organisation" scope="col">
-        Organisation
-      </th>
-      <th class="govuk-table__header allocation-report__status" scope="col">
-        Status
-      </th>
-      <th class="govuk-table__header" scope="col">
-        <span class="govuk-visually-hidden">Actions</span>
-      </th>
-    </tr>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header govuk-!-width-two-thirds" scope="col">
+          Organisation
+        </th>
+        <th class="govuk-table__header govuk-!-width-one-quarter" scope="col">
+          Status
+        </th>
+        <th class="govuk-table__header" scope="col">
+          <span class="govuk-visually-hidden">Actions</span>
+        </th>
+      </tr>
     </thead>
     <tbody class="govuk-table__body">
     <% allocations.each do |allocation| %>
