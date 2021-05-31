@@ -2,37 +2,26 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-
     <% if Settings.features.maintenance_mode.enabled %>
-      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-        <div class="govuk-notification-banner__header">
-          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-            Important
-          </h2>
-        </div>
-        <div class="govuk-notification-banner__content">
-          <h3 class="govuk-notification-banner__heading">
-            <%= Settings.features.maintenance_mode.title %>
-          </h3>
-          <p class="govuk-body">
-            <%= Settings.features.maintenance_mode.body %>
-          </p>
-        </div>
-      </div>
+      <%= govuk_notification_banner(title: t('notification_banner.info')) do |notification_banner| %>
+        <%= notification_banner.slot(:heading, text: Settings.features.maintenance_mode.title) %>
+        <p class="govuk-body"><%= Settings.features.maintenance_mode.body %></p>
+      <% end %>
     <% end %>
 
-    <h1 class="govuk-heading-l">Sign in to Publish teaching training</h1>
+    <h1 class="govuk-heading-xl">Sign in</h1>
 
-    <p class="govuk-body-m"> Use DfE Sign-in to access your account.</p>
+    <p class="govuk-body-l">You must sign in to your account to publish teacher training courses.</p>
 
     <% if AuthenticationService.dfe_signin? %>
       <%= govuk_button_to("Sign in using DfE Sign-in", "/auth/dfe") %>
     <% else %>
-      <%= govuk_link_to "Sign in using a Persona", "/personas", { class: "govuk-button" }  %>
+      <%= govuk_link_to "Sign in using a Persona", "/personas", button: true %>
     <% end %>
 
-    <p class="govuk-body-m">If you do not have a DfE Sign-in account but need access to Publish teaching training email
-      <%= bat_contact_mail_to %>.
-    </p>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">Ask for an account</h2>
+    <p class="govuk-body">Do not have an account? You can get one by emailing <%= bat_contact_mail_to %>. Please include the full names and email addresses of anyone who needs access.</p>
   </div>
 </div>

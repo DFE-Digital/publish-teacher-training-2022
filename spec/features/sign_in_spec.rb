@@ -138,7 +138,7 @@ feature "Sign in", type: :feature do
         it "redirects to sign in page with maintenance message" do
           visit "/"
           expect(page.current_path).to eq sign_in_path
-          expect(page).to have_content("Sign in to Publish teaching training")
+          expect(page).to have_content("Sign in")
           expect(page).to have_content("Maintenance message title")
           expect(page).to have_content("Maintenance message body")
         end
@@ -153,7 +153,7 @@ feature "Sign in", type: :feature do
           visit_dfe_sign_in(root_path)
 
           expect(page.current_path).to eq sign_in_path
-          expect(page).to have_content("Sign in to Publish teaching training")
+          expect(page).to have_content("Sign in")
           expect(page).to have_content("Maintenance message title")
           expect(page).to have_content("Maintenance message body")
           expect(page).to have_content("Sign out (#{user.first_name} #{user.last_name})")

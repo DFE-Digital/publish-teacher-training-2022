@@ -148,19 +148,19 @@ There are 3 mutually exclusive ways to login
 Persona login is available in local development and non-production environments. This allows you to log in to existing anonymised accounts or pre-selected accounts identified by personas.
 > Basic auth is enabled by default for this Authentication Mode. The credentials can be found in the Confluence pages.
 
-### DfE Sign-In & magic
+### DfE Sign-in & magic
 
-DfE Sign-In is third party and also the default Authentication Mode.
+DfE Sign-in is third party and also the default Authentication Mode.
 
-When DfE Sign-In is not available, a fallback Authentication Mode called `magic_link` can be used instead.
+When DfE Sign-in is not available, a fallback Authentication Mode called `magic_link` can be used instead.
 
 Additional configuration will be required for either Authentication Modes.
 
 > You likely already have an account for certain environments, but you will need
-to ensure you have an account in the DfE Sign-In test environment to be able to
+to ensure you have an account in the DfE Sign-in test environment to be able to
 login locally. Check with team members on how to do this.
 
-#### Configure DfE Sign-In
+#### Configure DfE Sign-in
 
 Create the following file and ask the team for the secret.
 
