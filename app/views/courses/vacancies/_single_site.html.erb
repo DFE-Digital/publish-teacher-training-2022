@@ -11,7 +11,7 @@
       <% if @course.has_vacancies? %>
         <%= check_box_tag('change_vacancies_confirmation', 'no_vacancies_confirmation', false, class: 'govuk-checkboxes__input') %>
         <%= label_tag('change_vacancies_confirmation', "I confirm there are no vacancies", class: 'govuk-label govuk-label--s govuk-checkboxes__label') %>
-        <span class="govuk-hint govuk-checkboxes__hint">Close this course to new applications.<br />You can reopen a course later.</span>
+        <span class="govuk-hint govuk-checkboxes__hint">Close this course to new applications.<br>You can reopen a course later.</span>
       <% else %>
         <%= check_box_tag('change_vacancies_confirmation', 'has_vacancies_confirmation', false, class: 'govuk-checkboxes__input') %>
         <%= label_tag('change_vacancies_confirmation', "I confirm there are vacancies", class: 'govuk-label govuk-label--s govuk-checkboxes__label') %>
