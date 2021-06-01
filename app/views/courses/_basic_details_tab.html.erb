@@ -215,11 +215,13 @@
       <% if course.gcse_subjects_required.any? %>
         <% content_for :entry_requirements do %>
           <% course.gcse_subjects_required.each do |subject| %>
-            <%= render partial: "courses/entry_requirements",
+            <%= render(
+              partial: "courses/entry_requirements",
               locals: {
                 gcse_subject: subject.titleize,
                 gcse_subject_code: course[subject],
-              } %>
+              },
+            ) %>
           <% end %>
         <% end %>
         <%= summary_list.slot(

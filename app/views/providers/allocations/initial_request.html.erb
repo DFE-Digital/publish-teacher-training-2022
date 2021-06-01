@@ -6,13 +6,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: form_object, scope: "", url: initial_request_provider_recruitment_cycle_allocations_path(
-                      provider.provider_code,
-                      provider.recruitment_cycle_year,
-                    ),
-                     skip_enforcing_utf8: true,
-                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
-
+    <%= form_with(
+      model: form_object,
+      scope: "",
+      url: initial_request_provider_recruitment_cycle_allocations_path(
+        provider.provider_code,
+        provider.recruitment_cycle_year,
+      ),
+      skip_enforcing_utf8: true,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |form| %>
       <%= form.govuk_error_summary %>
 
       <%= form.govuk_radio_buttons_fieldset(:training_provider_code, legend: { size: "xl", text: "Who are you requesting a course for?", tag: "h1" }) do %>

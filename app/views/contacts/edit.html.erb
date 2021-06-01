@@ -4,13 +4,14 @@
   <%= govuk_back_link_to(provider_ucas_contacts_path(@provider.provider_code)) %>
 <% end %>
 
-<%= form_with model: @contact,
+<%= form_with(
+  model: @contact,
   id: "contact_edit_form",
   scope: :contact,
   builder: GOVUKDesignSystemFormBuilder::FormBuilder,
   url: provider_contact_path(@provider.provider_code, @contact.id),
-  method: :put do |form| %>
-
+  method: :put,
+) do |form| %>
   <%= form.govuk_error_summary "You’ll need to correct some information." %>
 
   <div class="govuk-grid-row">

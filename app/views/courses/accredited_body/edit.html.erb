@@ -15,18 +15,19 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <%= form_with model: course,
+      <%= form_with(
+        model: course,
         url: accredited_body_provider_recruitment_cycle_course_path(
           @course.provider_code,
           @course.recruitment_cycle_year,
-          @course.course_code),
-        method: :put do |form| %>
+          @course.course_code,
+        ),
+        method: :put,
+      ) do |form| %>
 
         <div class="govuk-radios govuk-!-margin-top-2" data-module="govuk-radios" data-qa="course__accredited_body">
           <% if provider.accredited_bodies.length > 0 %>
-            <%= render partial: "provider_suggestion",
-              collection: provider.accredited_bodies,
-              locals: { form: form } %>
+            <%= render partial: "provider_suggestion", collection: provider.accredited_bodies, locals: { form: form } %>
 
             <div class="govuk-radios__divider">or</div>
 

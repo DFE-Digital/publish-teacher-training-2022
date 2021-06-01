@@ -7,18 +7,23 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: post_edit_initial_request_provider_recruitment_cycle_allocation_path(
-                         provider.provider_code,
-                         provider.recruitment_cycle_year,
-                         training_provider.provider_code,
-                       ),
-                       method: :post,
-                       model: form_object,
-                       scope: "",
-                       builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+    <%= form_with(
+      url: post_edit_initial_request_provider_recruitment_cycle_allocation_path(
+        provider.provider_code,
+        provider.recruitment_cycle_year,
+        training_provider.provider_code,
+      ),
+      method: :post,
+      model: form_object,
+      scope: "",
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |form| %>
       <%= form.govuk_error_summary %>
-      <%= form.govuk_radio_buttons_fieldset(:request_type, legend: { size: "xl", text: page_title, tag: "h1" },
-                                            caption: { text: "#{training_provider.provider_name} ", size: "xl" }) do %>
+      <%= form.govuk_radio_buttons_fieldset(
+        :request_type,
+        legend: { size: "xl", text: page_title, tag: "h1" },
+        caption: { text: "#{training_provider.provider_name} ", size: "xl" },
+      ) do %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::INITIAL, label: { text: "Yes" }, link_errors: true %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
       <% end %>
