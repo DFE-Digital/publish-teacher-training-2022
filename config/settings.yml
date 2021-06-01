@@ -57,7 +57,7 @@ environment:
   label: "Beta"
   selector_name: "beta"
 current_cycle: 2021
-allocation_cycle_year: 2020
+allocation_cycle_year: 2021
 allocations_close_date: 2021-07-02
 # `financial_support_placeholder_cycle` the cycle year value should be
 # omitted if placeholder is not required otherwise it should be the
@@ -77,16 +77,16 @@ allocations:
   view_previous_link: https://www.gov.uk/government/publications/initial-teacher-training-allocations-academic-year-2021-to-2022
 features:
   allocations:
-    # state: open # Users can make requests for allocations
+    state: open # Users can make requests for allocations
     # state: closed # Readonly - Users can see if they have or have not made request (does not show number of places)
-    state: confirmed # final allocation places are displayed to users in a readonly state
+    # state: confirmed # final allocation places are displayed to users in a readonly state
   rollover:
     # During rollover providers should be able to edit current & next recruitment cycle courses
     can_edit_current_and_next_cycles: false
     # Normally a short period of time between rollover and the next cycle
     # actually starting when it would be set to false
     has_current_cycle_started?: true
-    show_next_cycle_allocation_recruitment_page: false
+    show_next_cycle_allocation_recruitment_page: true
   maintenance_mode:
     enabled: false
     title: "This service will be unavailable from Thursday 4 March at 17:00 to Friday 5 March at 09:00, while we carry out maintenance."
