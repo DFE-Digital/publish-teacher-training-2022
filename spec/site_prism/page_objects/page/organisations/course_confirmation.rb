@@ -2,44 +2,38 @@ module PageObjects
   module Page
     module Organisations
       class CourseConfirmation < CourseBase
+        class SummaryList < SitePrism::Section
+          element :value, ".govuk-summary-list__value"
+          element :change_link, ".govuk-summary-list__actions .govuk-link"
+        end
+
         set_url "/organisations/{provider_code}/{recruitment_cycle_year}/courses/confirmation{?query*}"
 
-        element :save_button, '[data-qa="course__save"]'
-
-        section :details, '[data-qa="course__details"]' do
-          element :edit_level, "a", text: "Change Level"
-          element :level, '[data-qa="course__level"]'
-          element :edit_age_range, '[data-qa="course__edit_age_range_link"]'
-          element :age_range, '[data-qa="course__age_range"]'
-          element :edit_apprenticeship, '[data-qa="course__edit_apprenticeship_link"]'
-          element :apprenticeship, '[data-qa="course__apprenticeship"]'
-          element :fee_or_salary, '[data-qa="course__fee_or_salary"]'
-          element :edit_is_send, '[data-qa="course__edit_is_send_link"]'
-          element :is_send, '[data-qa="course__is_send"]'
-          element :subjects, '[data-qa="course__subjects"]'
-          element :edit_subjects, '[data-qa="course__edit_subjects_link"]'
-          element :edit_study_mode, '[data-qa="course__edit_study_mode_link"]'
-          element :study_mode, '[data-qa="course__study_mode"]'
-          element :edit_locations, '[data-qa="course__edit_locations_link"]'
-          element :locations, '[data-qa="course__locations"]'
-          element :accredited_body, '[data-qa="course__accredited_body"]'
-          element :edit_application_open_from, '[data-qa="course__edit_application_open_from_link"]'
-          element :application_open_from, '[data-qa="course__application_open_from"]'
-          element :edit_start_date, '[data-qa="course__edit_start_date_link"]'
-          element :start_date, '[data-qa="course__start_date"]'
-          element :name, '[data-qa="course__name"]'
-          element :description, '[data-qa="course__description"]'
-          element :edit_entry_requirements, '[data-qa="course__edit_entry_requirements_link"]'
-          element :entry_requirements, '[data-qa="course__entry_requirements"]'
-          element :edit_qualifications, '[data-qa="course__edit_qualifications_link"]'
-          element :qualifications, '[data-qa="course__qualifications"]'
-          element :single_location_help_text, '[data-qa="course__locations__help"]'
+        section :details, "[data-qa=course__details]" do
+          section :level, SummaryList, "[data-qa=course__level]"
+          section :is_send, SummaryList, "[data-qa=course__is_send]"
+          section :subjects, SummaryList, "[data-qa=course__subjects]"
+          section :age_range, SummaryList, "[data-qa=course__age_range]"
+          section :outcome, SummaryList, "[data-qa=course__outcome]"
+          section :apprenticeship, SummaryList, "[data-qa=course__apprenticeship]"
+          section :fee_or_salary, SummaryList, "[data-qa=course__fee_or_salary]"
+          section :study_mode, SummaryList, "[data-qa=course__study_mode]"
+          section :locations, SummaryList, "[data-qa=course__locations]"
+          element :single_location_help_text, "[data-qa=course__locations__help]"
+          section :accredited_body, SummaryList, "[data-qa=course__accredited_body]"
+          section :applications_open, SummaryList, "[data-qa=course__applications_open]"
+          section :start_date, SummaryList, "[data-qa=course__start_date]"
+          section :name, SummaryList, "[data-qa=course__name]"
+          section :description, SummaryList, "[data-qa=course__description]"
+          section :entry_requirements, SummaryList, "[data-qa=course__entry_requirements]"
         end
 
-        section :preview, '[data-qa="course__preview"]' do
-          element :name, '[data-qa="course__name"]'
-          element :description, '[data-qa="course__description"]'
+        section :preview, "[data-qa=course__preview]" do
+          element :name, "[data-qa=course__name]"
+          element :description, "[data-qa=course__description]"
         end
+
+        element :save_button, "[data-qa=course__save]"
       end
     end
   end

@@ -32,7 +32,7 @@ feature "Edit course sites", type: :feature do
     stub_api_v2_resource(provider)
 
     course_details_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
-    course_details_page.edit_locations_link.click
+    course_details_page.locations.change_link.click
     expect(locations_page)
       .to be_displayed(provider_code: provider.provider_code, course_code: course.course_code)
   end

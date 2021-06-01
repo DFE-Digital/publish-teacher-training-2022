@@ -22,11 +22,11 @@ RSpec.describe "courses/_basic_details_tab.html.erb" do
       end
 
       it "is not displayed" do
-        expect(page.title_detail.actions).to_not have_content("Change course title")
+        expect(page.name).to_not have_change_link
       end
 
       it "admin only help panel is not displayed" do
-        expect(page.title_detail.value).to_not have_content("Only admins can make changes")
+        expect(page.name.value).to_not have_content("Only admins can make changes")
       end
     end
 
@@ -36,11 +36,11 @@ RSpec.describe "courses/_basic_details_tab.html.erb" do
       end
 
       it "is displayed" do
-        expect(page.title_detail.actions).to have_content("Change course title")
+        expect(page.name).to have_change_link
       end
 
       it "admin only help panel is displayed" do
-        expect(page.title_detail.value).to have_content("Only admins can make changes")
+        expect(page.name.value).to have_content("Only admins can make changes")
       end
     end
   end

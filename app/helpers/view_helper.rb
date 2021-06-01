@@ -1,10 +1,4 @@
 module ViewHelper
-  def course_creation_change_button(display_name, property_name, path)
-    govuk_link_to send(path, course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true)), data: { qa: "course__edit_#{property_name}_link" } do
-      raw("Change<span class=\"govuk-visually-hidden\"> #{display_name}</span>")
-    end
-  end
-
   def govuk_back_link_to(url = :back, body = "Back")
     render GovukComponent::BackLink.new(
       text: body,
@@ -16,6 +10,12 @@ module ViewHelper
         },
       },
     )
+  end
+
+  def change_link_to(hidden_text, url, text = "Change", **kwargs)
+    govuk_link_to url, **kwargs do
+      raw("#{text}<span class=\"govuk-visually-hidden\"> #{hidden_text}</span>")
+    end
   end
 
   def search_ui_url(relative_path)

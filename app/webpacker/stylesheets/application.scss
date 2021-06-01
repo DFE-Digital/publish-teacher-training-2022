@@ -20,33 +20,17 @@ $success-green: #00823b;
 @import "map";
 @import "admin-only";
 @import "patterns/pagination";
+@import "summary-list";
 @import "tabs";
 @import "performance-dashboard";
 @import "related";
-@import "tables";
 @import "link";
+
+// Override utilities
+@import "overrides";
 
 .app-text-decoration-underline-dotted {
   text-decoration: underline dotted;
-}
-
-.app-courses-locations-list__help-text {
-  color: govuk-colour("dark-grey");
-}
-
-.app-courses-locations-list li:last-child {
-  margin-bottom: 0;
-}
-
-.app-course-parts__fields__value--empty {
-  color: govuk-colour("dark-grey");
-}
-
-.app-course-parts__fields__label--error {
-  border-left: govuk-spacing(1) solid $govuk-error-colour;
-  color: $govuk-error-colour;
-  padding-left: govuk-spacing(2);
-  padding-top: govuk-spacing(1);
 }
 
 .app-preview-banner {
@@ -76,25 +60,8 @@ $success-green: #00823b;
   }
 }
 
-.govuk-summary-list--short {
-  margin-bottom: govuk-spacing(8);
-  margin-top: govuk-spacing(6);
-
-  .govuk-summary-list__key,
-  .govuk-summary-list__value {
-    width: 50%;
-  }
-}
-
 .govuk-list li > .govuk-body:last-child {
   margin-bottom: 0;
-}
-
-.govuk-summary-list__value--truncate {
-  max-width: 295px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .govuk-list--dash {

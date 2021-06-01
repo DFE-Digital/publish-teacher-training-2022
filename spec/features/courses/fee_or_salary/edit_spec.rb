@@ -36,7 +36,7 @@ feature "Edit course fee or salary status", type: :feature do
 
     scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
-      click_on "Change fee or salary"
+      click_on "Change if fee or salary"
       expect(fee_or_salary_page).to be_displayed
       click_on "Back"
       expect(course_details_page).to be_displayed

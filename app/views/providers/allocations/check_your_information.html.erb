@@ -23,31 +23,29 @@
                     skip_enforcing_utf8: true,
                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
 
-        <h1 class="govuk-heading-xl">
-            <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
-            Check your information before sending your request
-        </h1>
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-xl"><%= training_provider.provider_name %></span>
+        Check your information before sending your request
+      </h1>
 
-        <dl class="govuk-summary-list">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Places requested
-            </dt>
-            <dd class="govuk-summary-list__value">
-              <%= params[:number_of_places] %>
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <%= govuk_link_to "Change",
-                initial_request_provider_recruitment_cycle_allocations_path(
-                  @provider.provider_code,
-                  @provider.recruitment_cycle_year,
-                  training_provider_code: params[:training_provider_code],
-                  number_of_places: params[:number_of_places],
-                  change: true,
-                  ) %>
-            </dd>
-          </div>
-        </dl>
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.slot(
+          :row,
+          key: "Places requested",
+          value: params[:number_of_places],
+          action: change_link_to(
+            "places requested",
+            initial_request_provider_recruitment_cycle_allocations_path(
+              @provider.provider_code,
+              @provider.recruitment_cycle_year,
+              training_provider_code: params[:training_provider_code],
+              number_of_places: params[:number_of_places],
+              change: true,
+            )
+          )
+        ) %>
+      <% end %>
+
       <%= hidden_field_tag "request_type", AllocationsView::RequestType::INITIAL %>
       <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
       <%= hidden_field_tag "number_of_places", params[:number_of_places] %>

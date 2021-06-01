@@ -42,38 +42,32 @@ module ApplicationHelper
     govuk_link_to(error, href, class: "govuk-!-display-block")
   end
 
-  def enrichment_summary_label(model, key, fields)
+  def enrichment_summary(model, key, value, fields)
+    classes = "app-summary-list__row--truncate"
+
     if fields.select { |field| @errors&.key? field.to_sym }.any?
       errors = fields.map { |field|
         @errors[field.to_sym]&.map { |error| enrichment_error_link(model, field, error) }
       }.flatten
-      tag.dt class: "govuk-summary-list__key app-course-parts__fields__label--error" do
-        [
-          tag.span(key),
-          *errors,
-        ].reduce(:+)
-      end
-    else
-      tag.dt key, class: "govuk-summary-list__key"
-    end
-  end
 
-  def enrichment_summary_value(value, fields)
-    css_class = "govuk-summary-list__value govuk-summary-list__value--truncate"
+      key = [key, *errors].reduce(:+)
+      classes += " app-summary-list__row--error"
+    end
 
     if value.blank?
-      value = "Empty"
-      css_class += " app-course-parts__fields__value--empty"
+      value = raw("<span class=\"app-!-colour-muted\">Empty</span>")
     end
 
-    data_qa = "enrichment__#{fields.first}"
-    tag.dd value, class: css_class, data: { qa: data_qa }
-  end
-
-  def enrichment_summary_item(model, key, value, fields)
-    tag.div class: "govuk-summary-list__row" do
-      enrichment_summary_label(model, key, fields) + enrichment_summary_value(value, fields)
-    end
+    {
+      key: key.html_safe,
+      value: value,
+      classes: classes,
+      html_attributes: {
+        data: {
+          qa: "enrichment__#{fields.first}",
+        },
+      },
+    }
   end
 
 private

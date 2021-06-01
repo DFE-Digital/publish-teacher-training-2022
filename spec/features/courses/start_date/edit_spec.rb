@@ -31,7 +31,7 @@ feature "Edit course start date", type: :feature do
 
       scenario "should show the edit link" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to have_edit_start_date_link
+        expect(course_details_page.start_date).to have_change_link
       end
     end
 
@@ -49,7 +49,7 @@ feature "Edit course start date", type: :feature do
 
       scenario "should not show the edit link" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to_not have_edit_start_date_link
+        expect(course_details_page.start_date).to_not have_change_link
       end
     end
   end
@@ -75,7 +75,7 @@ feature "Edit course start date", type: :feature do
 
     scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
-      click_on "Change start date"
+      click_on "Change date course starts"
       expect(start_date_page).to be_displayed
       click_on "Back"
       expect(course_details_page).to be_displayed

@@ -31,7 +31,7 @@ feature "Edit course applications open", type: :feature do
 
       scenario "should show the edit link" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to have_edit_open_applications_link
+        expect(course_details_page.applications_open).to have_change_link
       end
     end
 
@@ -48,7 +48,7 @@ feature "Edit course applications open", type: :feature do
 
       scenario "should not show edit link" do
         course_details_page.load_with_course(course)
-        expect(course_details_page).to_not have_edit_open_applications_link
+        expect(course_details_page.applications_open).to_not have_change_link
       end
     end
   end
@@ -74,7 +74,7 @@ feature "Edit course applications open", type: :feature do
 
     scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
-      click_on "Change applications open date"
+      click_on "Change date applications open"
       expect(applications_open_page).to be_displayed
       click_on "Back"
       expect(course_details_page).to be_displayed

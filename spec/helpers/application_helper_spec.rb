@@ -13,40 +13,33 @@ RSpec.feature "View helpers", type: :helper do
     end
   end
 
-  describe "#enrichment_summary_label" do
+  describe "#enrichment_summary" do
     it "returns correct content" do
-      expect(helper.enrichment_summary_label(:course, "About course", %w[about_course])).to eq('<dt class="govuk-summary-list__key">About course</dt>')
+      output = helper.enrichment_summary(:course, "About course", "Something about the course", %w[about])
+      expect(output[:key]).to eq("About course")
+      expect(output[:value]).to eq("Something about the course")
+      expect(output[:classes]).to eq("app-summary-list__row--truncate")
+      expect(output[:html_attributes]).to eq({ data: { qa: "enrichment__about" } })
+    end
+
+    context "with no value" do
+      it "returns 'Empty' when value is empty" do
+        output = helper.enrichment_summary(:course, "About course", "", %w[about])
+        expect(output[:value]).to eq("<span class=\"app-!-colour-muted\">Empty</span>")
+      end
     end
 
     context "with errors" do
       before do
         @provider = Provider.new(build(:provider).attributes)
         @course = Course.new(build(:course).attributes)
-        @errors = { about_course: ["Something about the course"] }
+        @errors = { about_course: ["Enter something about the course"] }
       end
 
       it "returns correct content" do
-        expect(helper.enrichment_summary_label(:course, "About course", [:about_course])).to eq("<dt class=\"govuk-summary-list__key app-course-parts__fields__label--error\"><span>About course</span><a class=\"govuk-link govuk-!-display-block\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Something about the course</a></dt>")
+        output = helper.enrichment_summary(:course, "About course", "", [:about_course])
+        expect(output[:key]).to eq("About course<a class=\"govuk-link govuk-!-display-block\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Enter something about the course</a>")
       end
-    end
-  end
-
-  describe "#enrichment_summary_value" do
-    it "returns the value" do
-      expect(helper.enrichment_summary_value("Something about the course", %w[about]))
-        .to eq('<dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="enrichment__about">Something about the course</dd>')
-    end
-
-    it "returns 'empty' when value is empty" do
-      expect(helper.enrichment_summary_value("", %w[about]))
-        .to eq('<dd class="govuk-summary-list__value govuk-summary-list__value--truncate app-course-parts__fields__value--empty" data-qa="enrichment__about">Empty</dd>')
-    end
-  end
-
-  describe "#enrichment_summary_item" do
-    it "returns correct content" do
-      expect(helper.enrichment_summary_item(:course, "About course", "Something about the course", %w[about]))
-        .to eq('<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">About course</dt><dd class="govuk-summary-list__value govuk-summary-list__value--truncate" data-qa="enrichment__about">Something about the course</dd></div>')
     end
   end
 

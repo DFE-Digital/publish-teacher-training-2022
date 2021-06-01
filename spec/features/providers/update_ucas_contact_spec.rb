@@ -74,9 +74,9 @@ feature "update ucas contact" do
   end
 
   def and_the_updated_details_are_visible
-    expect(contacts_page.admin_contact.details).to have_content("John")
-    expect(contacts_page.admin_contact.details).to have_content("john.cleese@bbc.co.uk")
-    expect(contacts_page.admin_contact.details).to have_content("0790462876")
+    expect(contacts_page.admin_contact.value).to have_content("John")
+    expect(contacts_page.admin_contact.value).to have_content("john.cleese@bbc.co.uk")
+    expect(contacts_page.admin_contact.value).to have_content("0790462876")
   end
 
   def provider

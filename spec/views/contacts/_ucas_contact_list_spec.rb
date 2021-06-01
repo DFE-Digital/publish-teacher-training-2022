@@ -27,7 +27,7 @@ describe "ucas_contact_list" do
     before { load_partial }
 
     it "renders 'Information unknown'" do
-      expect(contacts_page.admin_contact.details).to have_content("Information unknown")
+      expect(contacts_page.admin_contact.value).to have_content("Information unknown")
     end
 
     it "doesn't render a change link" do
@@ -48,7 +48,7 @@ describe "ucas_contact_list" do
     end
 
     it "renders the contact details" do
-      expect(contacts_page.admin_contact.details).to have_content(admin_contact.name)
+      expect(contacts_page.admin_contact.value).to have_content(admin_contact.name)
     end
 
     it "renders a change link" do

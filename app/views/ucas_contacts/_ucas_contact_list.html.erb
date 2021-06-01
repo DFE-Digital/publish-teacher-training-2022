@@ -1,31 +1,28 @@
-<dl class="govuk-summary-list govuk-!-margin-top-6 govuk-!-margin-bottom-9 ucas-contact-list">
+<%= govuk_summary_list do |summary_list| %>
   <% UcasContactView::CONTACT_TYPES.each do |contact_type| %>
-    <%- contact = ucas_contact_view.contact(contact_type) -%>
-    <div class="govuk-summary-list__row ucas-contact-list__row ucas-contact-list__row__<%=contact_type%>">
-      <dt class="govuk-summary-list__key">
-      <%= t("ucas_contacts.#{contact_type}.heading") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <p class="govuk-body">
-          <% if contact.present? %>
-            <%= contact.name %><br/>
-            <%= contact.email %><br/>
-            <%= contact.telephone %>
-          <% else %>
-            Information unknown
-          <% end %>
-        </p>
-        <p class="govuk-body-s">
-          <%= t("ucas_contacts.#{contact_type}.purpose") %>
-        </p>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-        <%- if contact.present? -%>
-          <%= govuk_link_to edit_provider_contact_path(ucas_contact_view.provider_code, contact.id) do %>
-            Change<span class="govuk-visually-hidden"> email alerts for new applications</span>
-          <% end %>
-        <%- end -%>
-      </dd>
-    </div>
+    <% contact = ucas_contact_view.contact(contact_type) %>
+    <% content_for :row_value, flush: true do %>
+      <p class="govuk-body">
+        <% if contact.present? %>
+          <%= contact.name %><br>
+          <%= contact.email %><br>
+          <%= contact.telephone %>
+        <% else %>
+          Information unknown
+        <% end %>
+      </p>
+      <p class="govuk-body-s"><%= t("ucas_contacts.#{contact_type}.purpose") %></p>
+    <% end %>
+    <% summary_list.slot(
+      :row,
+      key: t("ucas_contacts.#{contact_type}.heading"),
+      value: content_for(:row_value),
+      action: contact.present? ? change_link_to("email alerts for new applications", edit_provider_contact_path(ucas_contact_view.provider_code, contact.id)) : nil,
+      html_attributes: {
+        data: {
+          qa: "ucas_contact ucas_#{contact_type}_contact"
+        }
+      }
+    ) %>
   <% end %>
-</dl>
+<% end %>
