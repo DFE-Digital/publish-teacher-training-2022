@@ -29,18 +29,23 @@
         legend: {
           size: "l",
           text: "Would you like to receive email notifications?",
-          tag: "span" }) do %>
-
-        <%= form.govuk_radio_button :explicitly_enabled,
+          tag: "span",
+        },
+      ) do %>
+        <%= form.govuk_radio_button(
+          :explicitly_enabled,
           true,
           label: {
             text: "Yes, send me notifications",
-        } %>
-        <%= form.govuk_radio_button :explicitly_enabled,
+          },
+        ) %>
+        <%= form.govuk_radio_button(
+          :explicitly_enabled,
           false,
           label: {
             text: "No",
-        } %>
+          },
+        ) %>
       <% end %>
       <%= form.govuk_submit "Save" %>
 
