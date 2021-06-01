@@ -4,12 +4,9 @@
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render(
-  partial: "courses/copy_content_warning",
-  locals: {
-    copied_fields: @copied_fields,
-  },
-) if params[:copy_from].present? %>
+<% if params[:copy_from].present? %>
+  <%= render partial: "courses/copy_content_warning", locals: { copied_fields: @copied_fields } %>
+<% end %>
 
 <%= form_with model: course,
               builder: GOVUKDesignSystemFormBuilder::FormBuilder,
