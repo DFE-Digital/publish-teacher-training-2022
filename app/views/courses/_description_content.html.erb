@@ -6,9 +6,9 @@
   <%= govuk_link_to "About this course", about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
 </h3>
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
-  <% summary_list.slot(:row, enrichment_summary(:course, "About this course", course.about_course, ["about_course"])) %>
-  <% summary_list.slot(:row, enrichment_summary(:course, "Interview process (optional)", course.interview_process, ["interview_process"])) %>
-  <% summary_list.slot(:row, enrichment_summary(:course, course.placements_heading, course.how_school_placements_work, ["how_school_placements_work"])) %>
+  <% summary_list.slot(:row, enrichment_summary(:course, "About this course", course.about_course, %w[about_course])) %>
+  <% summary_list.slot(:row, enrichment_summary(:course, "Interview process (optional)", course.interview_process, %w[interview_process])) %>
+  <% summary_list.slot(:row, enrichment_summary(:course, course.placements_heading, course.how_school_placements_work, %w[how_school_placements_work])) %>
 <% end %>
 
 <h3 class="govuk-heading-m govuk-!-font-size-27">
@@ -19,15 +19,15 @@
   <% end %>
 </h3>
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
-  <% summary_list.slot(:row, enrichment_summary(:course, "Course length", course.length, ["course_length"])) %>
+  <% summary_list.slot(:row, enrichment_summary(:course, "Course length", course.length, %w[course_length])) %>
 
   <% if course.has_fees? %>
-    <% summary_list.slot(:row, enrichment_summary(:course, "Fee for UK students", number_to_currency(course.fee_uk_eu), ["fee_uk_eu"])) %>
-    <% summary_list.slot(:row, enrichment_summary(:course, "Fee for international students (optional)", number_to_currency(course.fee_international), ["international_fees"])) %>
-    <% summary_list.slot(:row, enrichment_summary(:course, "Fee details (optional)", course.fee_details, ["fee_details"])) %>
-    <% summary_list.slot(:row, enrichment_summary(:course, "Financial support you offer (optional)", course.financial_support, ["financial_support"])) %>
+    <% summary_list.slot(:row, enrichment_summary(:course, "Fee for UK students", number_to_currency(course.fee_uk_eu), %w[fee_uk_eu])) %>
+    <% summary_list.slot(:row, enrichment_summary(:course, "Fee for international students (optional)", number_to_currency(course.fee_international), %w[international_fees])) %>
+    <% summary_list.slot(:row, enrichment_summary(:course, "Fee details (optional)", course.fee_details, %w[fee_details])) %>
+    <% summary_list.slot(:row, enrichment_summary(:course, "Financial support you offer (optional)", course.financial_support, %w[financial_support])) %>
   <% else %>
-    <% summary_list.slot(:row, enrichment_summary(:course, "Salary", course.salary_details, ["salary_details"])) %>
+    <% summary_list.slot(:row, enrichment_summary(:course, "Salary", course.salary_details, %w[salary_details])) %>
   <% end %>
 <% end %>
 
@@ -35,7 +35,7 @@
   <%= govuk_link_to "Requirements and eligibility", requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
 </h3>
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
-  <% summary_list.slot(:row, enrichment_summary(:course, "Qualifications needed", course.required_qualifications, ["required_qualifications"])) %>
-  <% summary_list.slot(:row, enrichment_summary(:course, "Personal qualities (optional)", course.personal_qualities, ["personal_qualities"])) %>
-  <% summary_list.slot(:row, enrichment_summary(:course, "Other requirements (optional)", course.other_requirements, ["other_requirements"])) %>
+  <% summary_list.slot(:row, enrichment_summary(:course, "Qualifications needed", course.required_qualifications, %w[required_qualifications])) %>
+  <% summary_list.slot(:row, enrichment_summary(:course, "Personal qualities (optional)", course.personal_qualities, %w[personal_qualities])) %>
+  <% summary_list.slot(:row, enrichment_summary(:course, "Other requirements (optional)", course.other_requirements, %w[other_requirements])) %>
 <% end %>
