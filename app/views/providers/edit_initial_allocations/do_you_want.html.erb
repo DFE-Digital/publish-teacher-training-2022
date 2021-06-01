@@ -7,17 +7,15 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with(
-      url: post_edit_initial_request_provider_recruitment_cycle_allocation_path(
-        provider.provider_code,
-        provider.recruitment_cycle_year,
-        training_provider.provider_code,
-      ),
-      method: :post,
-      model: form_object,
-      scope: "",
-      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
-    ) do |form| %>
+    <%= form_with model: form_object,
+                  url: post_edit_initial_request_provider_recruitment_cycle_allocation_path(
+                    provider.provider_code,
+                    provider.recruitment_cycle_year,
+                    training_provider.provider_code,
+                  ),
+                  method: :post,
+                  scope: "",
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
       <%= form.govuk_error_summary %>
       <%= form.govuk_radio_buttons_fieldset(
         :request_type,

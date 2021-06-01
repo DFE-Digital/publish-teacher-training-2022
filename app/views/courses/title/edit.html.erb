@@ -17,11 +17,9 @@
         Change course title
       </h1>
 
-      <%= form_with(
-        model: course,
-        url: title_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
-        method: :put,
-      ) do |form| %>
+      <%= form_with model: course,
+                    url: title_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
+                    method: :put do |form| %>
 
         <%= render "shared/form_field", form: form, field: :name, label: "Course title" do |field, options| %>
           <%= form.text_field field, class: "govuk-input govuk-!-width-two-thirds" %>

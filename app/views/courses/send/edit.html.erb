@@ -12,7 +12,9 @@
       Special educational needs and disability (SEND)
     </h1>
 
-    <%= form_with model: course, url: send_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
+    <%= form_with model: course,
+                  url: send_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+                  method: :put do |form| %>
 
       <%= render "form_fields", form: form %>
 

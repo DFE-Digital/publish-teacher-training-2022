@@ -5,8 +5,7 @@
       <div class="app-admin-only__section-header">
         <%= govuk_tag(text: "Admin feature", colour: "purple") %>
       </div>
-      <%= form_with url: providers_search_path,
-                    method: :get do |form| %>
+      <%= form_with url: providers_search_path, method: :get do |form| %>
         <%= form.label :query, { class: "govuk-label", for: "provider" } do %>
           Search for an organisation
           <span class="govuk-hint">Enter the name or provider code</span>

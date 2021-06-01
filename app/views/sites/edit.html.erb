@@ -7,7 +7,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @site, url: provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id), method: :put do |f| %>
+    <%= form_with model: @site,
+                  url: provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id),
+                  method: :put do |f| %>
       <p class="govuk-body">You can assign locations to a course from the ‘Basic details’ tab on the course page.</p>
       <hr class="govuk-section-break govuk-section-break--l">
       <%= render "form", f: f %>

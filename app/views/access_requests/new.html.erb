@@ -18,7 +18,10 @@
       Use this form to create an access request and approve it immediately.
     </p>
 
-    <%= form_with model: @access_request, url: access_requests_path, method: :post do |f| %>
+    <%= form_with model: @access_request,
+                  url: access_requests_path,
+                  method: :post do |f| %>
+
       <%= render "shared/form_field",
         form: f, field: :first_name do |field, options| %>
         <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-one-half") %>

@@ -9,14 +9,13 @@
 
     <p class="govuk-body">You searched for ‘<%= @query %>’.</p>
 
-    <%= form_with(
-      model: course,
-      url: continue_provider_recruitment_cycle_courses_accredited_body_path(
-        @provider.provider_code,
-        @provider.recruitment_cycle_year,
-      ),
-      method: :get,
-    ) do |form| %>
+    <%= form_with model: course,
+                  url: continue_provider_recruitment_cycle_courses_accredited_body_path(
+                    @provider.provider_code,
+                    @provider.recruitment_cycle_year,
+                  ),
+                  method: :get do |form| %>
+
       <%= render "shared/course_creation_hidden_fields",
         form: form,
         course_creation_params: @course_creation_params,

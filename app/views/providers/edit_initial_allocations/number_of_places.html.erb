@@ -13,14 +13,14 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: post_edit_initial_request_provider_recruitment_cycle_allocation_path(
-      provider.provider_code,
-      recruitment_cycle.year,
-      training_provider.provider_code,
-      id: allocation.id,
-    ),
+    <%= form_with model: form_object,
+                  url: post_edit_initial_request_provider_recruitment_cycle_allocation_path(
+                    provider.provider_code,
+                    recruitment_cycle.year,
+                    training_provider.provider_code,
+                    id: allocation.id,
+                  ),
                   skip_enforcing_utf8: true,
-                  model: form_object,
                   scope: "",
                   method: :post,
                   builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>

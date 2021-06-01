@@ -12,7 +12,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-  <%= form_with model: @provider, url: alerts_provider_ucas_contacts_path(@provider.provider_code), data: { qa: "ucas_contacts__alerts_form" } do |form| %>
+    <%= form_with model: @provider,
+                  url: alerts_provider_ucas_contacts_path(@provider.provider_code),
+                  data: { qa: "ucas_contacts__alerts_form" } do |form| %>
 
       <div data-qa="ucas_contacts__alerts_enabled">
         <div class="govuk-radios__item">

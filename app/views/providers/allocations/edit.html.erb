@@ -7,13 +7,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with(
-      url: provider_recruitment_cycle_allocation_path(id: @allocation.id),
-      model: @allocation,
-      scope: "",
-      method: :patch,
-      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
-    ) do |form| %>
+    <%= form_with model: @allocation,
+                  url: provider_recruitment_cycle_allocation_path(id: @allocation.id),
+                  scope: "",
+                  method: :patch,
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+
       <%= form.govuk_radio_buttons_fieldset(
         :old_department_id,
         legend: { size: "xl", text: page_title, tag: "h1" },

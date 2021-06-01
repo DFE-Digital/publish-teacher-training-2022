@@ -9,9 +9,9 @@
     <%= render "shared/errors" %>
 
     <%= form_with model: course,
-                  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
                   url: provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year),
-                  method: :post do |f| %>
+                  method: :post,
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
 
       <%= render "shared/course_creation_hidden_fields",
         form: f,
