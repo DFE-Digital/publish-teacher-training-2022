@@ -24,7 +24,7 @@
       <% if current_user["admin"] %>
         <div class="app-admin-only__section">
           <div class="app-admin-only__section-header">
-            <strong class="govuk-tag govuk-tag--purple">Admin Feature</strong>
+            <%= govuk_tag(text: "Admin feature", colour: "purple") %>
           </div>
 
           <%= render "shared/form_field",

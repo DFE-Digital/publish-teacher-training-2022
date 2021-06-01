@@ -21,9 +21,7 @@
           <%= allocation[:training_provider_name] %>
         </th>
         <td class="govuk-table__cell">
-            <span class="govuk-tag govuk-tag--<%= allocation[:status_colour] %>">
-              <%= allocation[:status] %>
-            </span>
+          <%= govuk_tag(text: allocation[:status], colour: allocation[:status_colour]) %>
         </td>
       </tr>
     <% end %>

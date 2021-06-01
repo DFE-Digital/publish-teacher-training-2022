@@ -9,9 +9,12 @@
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <h2 class="govuk-heading-l">Anne</h2>
-<strong class="govuk-tag govuk-tag--blue">School Direct</strong>
 
-<p class="govuk-body govuk-!-padding-top-5">
+<p class="govuk-body">
+  <%= govuk_tag(text: "School Direct", colour: "blue") %>
+</p>
+
+<p class="govuk-body">
   Anne is a course administrator who belongs to one school direct.
 </p>
 
@@ -19,16 +22,18 @@
   <%= hidden_field_tag "email", "anonimized-user-10599@example.org", id: nil %>
   <%= hidden_field_tag "first_name", "Course administrator", id: nil %>
   <%= hidden_field_tag "last_name", "Anne", id: nil %>
-
   <%= submit_tag "Login as Anne", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <h2 class="govuk-heading-l">Susy</h2>
-<strong class="govuk-tag govuk-tag--blue">Accredited Body</strong>
 
-<p class="govuk-body govuk-!-padding-top-5">
+<p class="govuk-body">
+  <%= govuk_tag(text: "Accredited body", colour: "blue") %>
+</p>
+
+<p class="govuk-body">
   Susy is a SCITT service manager who belongs to one accredited body.
 </p>
 
@@ -36,7 +41,6 @@
   <%= hidden_field_tag "email", "anonimized-user-8847@example.org", id: nil %>
   <%= hidden_field_tag "first_name", "ITT partnership manager", id: nil %>
   <%= hidden_field_tag "last_name", "Susy", id: nil %>
-
   <%= submit_tag "Login as Susy", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
 
@@ -44,24 +48,26 @@
 
 <h2 class="govuk-heading-l">Mary</h2>
 
-<strong class="govuk-tag govuk-tag--blue">Multi-org</strong>
-<strong class="govuk-tag govuk-tag--blue">Accredited Body</strong>
-<strong class="govuk-tag govuk-tag--blue">School Direct</strong>
-
-<p class="govuk-body govuk-!-padding-top-5">
-Mary is a SCITT Business Support Coordinator who belongs to:
-  <ul class="govuk-list govuk-list--bullet">
-    <li>multiple accredited bodies, <strong>Suffolk and Norfolk Primary SCITT</strong> and <strong>Suffolk and Norfolk Secondary SCITT</strong></li>
-    <li>a school direct <strong>Thorpe St Andrew School and Sixth Form</strong> with courses accredited by <strong>Suffolk and Norfolk Secondary SCITT</strong></li>
-    <li>a school direct <strong>Thorpe St Andrew School and Sixth Form</strong> with courses also accredited by an organisation not associated with Mary</li>
-  </ul>
+<p class="govuk-body">
+  <%= govuk_tag(text: "Multi-org", colour: "blue") %>
+  <%= govuk_tag(text: "Accredited body", colour: "blue") %>
+  <%= govuk_tag(text: "School Direct", colour: "blue") %>
 </p>
+
+<p class="govuk-body">
+  Mary is a SCITT Business Support Coordinator who belongs to:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>multiple accredited bodies, <strong>Suffolk and Norfolk Primary SCITT</strong> and <strong>Suffolk and Norfolk Secondary SCITT</strong></li>
+  <li>a school direct <strong>Thorpe St Andrew School and Sixth Form</strong> with courses accredited by <strong>Suffolk and Norfolk Secondary SCITT</strong></li>
+  <li>a school direct <strong>Thorpe St Andrew School and Sixth Form</strong> with courses also accredited by an organisation not associated with Mary</li>
+</ul>
 
 <%= form_tag("/auth/developer/callback") do %>
   <%= hidden_field_tag "email", "anonimized-user-7839@example.org", id: nil %>
   <%= hidden_field_tag "first_name", "Multi-org administrator", id: nil %>
   <%= hidden_field_tag "last_name", "Mary", id: nil %>
-
   <%= submit_tag "Login as Mary", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
 
@@ -69,9 +75,11 @@ Mary is a SCITT Business Support Coordinator who belongs to:
 
 <h2 class="govuk-heading-l">Colin</h2>
 
-<strong class="govuk-tag govuk-tag--blue">Admin</strong>
+<p class="govuk-body">
+  <%= govuk_tag(text: "Admin", colour: "blue") %>
+</p>
 
-<p class="govuk-body govuk-!-padding-top-5">
+<p class="govuk-body">
   Colin is a DfE support agent who has administrator access to all organisations.
 </p>
 
@@ -79,6 +87,5 @@ Mary is a SCITT Business Support Coordinator who belongs to:
   <%= hidden_field_tag "email", "becomingateacher+admin-integration-tests@digital.education.gov.uk", id: nil %>
   <%= hidden_field_tag "first_name", "Support agent", id: nil %>
   <%= hidden_field_tag "last_name", "Colin", id: nil %>
-
   <%= submit_tag "Login as Colin", class: "govuk-button govuk-!-margin-bottom-2" %>
 <% end %>
