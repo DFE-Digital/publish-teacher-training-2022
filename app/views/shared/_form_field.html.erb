@@ -4,7 +4,7 @@
   label_bold ||= false
   options = {
     class: "govuk-input",
-    aria: { describedby: @errors[field] ? "#{field.to_s}-error" : "" },
+    aria: { describedby: @errors[field] ? "#{field}-error" : "" },
     data: { qa: field.to_s },
   }.merge(defined?(id) ? { id: id } : {})
 %>
