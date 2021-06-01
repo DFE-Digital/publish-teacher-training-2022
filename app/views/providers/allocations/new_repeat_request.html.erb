@@ -18,7 +18,7 @@
       <%= form.govuk_error_summary %>
 
       <%= form.govuk_radio_buttons_fieldset(:request_type, legend: { size: "xl", text: page_title, tag: "h1" },
-                                            caption: { text: "#{@training_provider.provider_name} ", size:"xl"}) do %>
+                                            caption: { text: "#{@training_provider.provider_name} ", size: "xl"}) do %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::REPEAT, label: { text: "Yes" }, link_errors: true %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
       <% end %>
