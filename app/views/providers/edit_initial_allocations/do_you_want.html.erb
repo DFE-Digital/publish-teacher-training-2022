@@ -11,11 +11,11 @@
                          provider.provider_code,
                          provider.recruitment_cycle_year,
                          training_provider.provider_code,
-                  ),
-                  method: :post,
-                  model: form_object,
-                  scope: "",
-                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+                       ),
+                       method: :post,
+                       model: form_object,
+                       scope: "",
+                       builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
       <%= form.govuk_error_summary %>
       <%= form.govuk_radio_buttons_fieldset(:request_type, legend: { size: "xl", text: page_title, tag: "h1" },
                                             caption: { text: "#{training_provider.provider_name} ", size: "xl" }) do %>
