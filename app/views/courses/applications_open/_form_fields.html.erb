@@ -29,9 +29,7 @@
         %>
       </div>
     </fieldset>
-    <div class="govuk-radios__conditional <%=
-      "govuk-radios__conditional--hidden" unless @course.applications_open_from.present? && @course.applications_open_from  != @recruitment_cycle.application_start_date
-    %>" id="other-container">
+    <div class="govuk-radios__conditional <%= "govuk-radios__conditional--hidden" unless @course.applications_open_from.present? && @course.applications_open_from != @recruitment_cycle.application_start_date %>" id="other-container">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend">
