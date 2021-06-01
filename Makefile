@@ -129,4 +129,4 @@ destroy: deploy-init
 
 console:
 	cf target -s ${space}
-	cf ssh teacher-training-api-${paas_env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
+	cf ssh publish-teacher-training-${paas_env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
