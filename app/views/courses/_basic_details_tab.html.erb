@@ -7,9 +7,9 @@
         value: course.level.humanize,
         html_attributes: {
           data: {
-            qa: "course__level"
-          }
-        }
+            qa: "course__level",
+          },
+        },
       ) %>
 
       <%= summary_list.slot(
@@ -19,9 +19,9 @@
         action: @course.meta["edit_options"]["show_is_send"] ? change_link_to("SEND", send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
         html_attributes: {
           data: {
-            qa: "course__is_send"
-          }
-        }
+            qa: "course__is_send",
+          },
+        },
       ) %>
 
       <% unless course.is_further_education? %>
@@ -32,9 +32,9 @@
           action: change_link_to("subjects", subjects_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
           html_attributes: {
             data: {
-              qa: "course__subjects"
-            }
-          }
+              qa: "course__subjects",
+            },
+          },
         ) %>
       <% end %>
 
@@ -46,9 +46,9 @@
           action: change_link_to("age range", age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
           html_attributes: {
             data: {
-              qa: "course__age_range"
-            }
-          }
+              qa: "course__age_range",
+            },
+          },
         ) %>
       <% end %>
 
@@ -59,9 +59,9 @@
         action: change_link_to("outcome", outcome_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
         html_attributes: {
           data: {
-            qa: "course__outcome"
-          }
-        }
+            qa: "course__outcome",
+          },
+        },
       ) %>
 
       <% if @provider.accredited_body? %>
@@ -72,9 +72,9 @@
           action: !course.is_published? ? change_link_to("if apprenticeship", apprenticeship_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
           html_attributes: {
             data: {
-              qa: "course__apprenticeship"
-            }
-          }
+              qa: "course__apprenticeship",
+            },
+          },
         ) %>
       <% else %>
         <%= summary_list.slot(
@@ -84,9 +84,9 @@
           action: !course.is_published? ? change_link_to("if fee or salary", fee_or_salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
           html_attributes: {
             data: {
-              qa: "course__funding"
-            }
-          }
+              qa: "course__funding",
+            },
+          },
         ) %>
       <% end %>
 
@@ -97,9 +97,9 @@
         action: change_link_to("if full or part time", full_part_time_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
         html_attributes: {
           data: {
-            qa: "course__study_mode"
-          }
-        }
+            qa: "course__study_mode",
+          },
+        },
       ) %>
 
       <% content_for :locations do %>
@@ -122,9 +122,9 @@
         action: change_link_to("locations", locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
         html_attributes: {
           data: {
-            qa: "course__locations"
-          }
-        }
+            qa: "course__locations",
+          },
+        },
       ) %>
 
       <% unless @provider.accredited_body? %>
@@ -135,9 +135,9 @@
           action: !course.is_published? ? change_link_to("accredited body", accredited_body_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
           html_attributes: {
             data: {
-              qa: "course__accredited_body"
-            }
-          }
+              qa: "course__accredited_body",
+            },
+          },
         ) %>
       <% end %>
 
@@ -148,9 +148,9 @@
         action: @course.meta["edit_options"]["show_applications_open"] ? change_link_to("date applications open", applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
         html_attributes: {
           data: {
-            qa: "course__applications_open"
-          }
-        }
+            qa: "course__applications_open",
+          },
+        },
       ) %>
 
       <%= summary_list.slot(
@@ -160,9 +160,9 @@
         action: @course.meta["edit_options"]["show_start_date"] ? change_link_to("date course starts", start_date_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
         html_attributes: {
           data: {
-            qa: "course__start_date"
-          }
-        }
+            qa: "course__start_date",
+          },
+        },
       ) %>
 
       <% content_for :course_name do %>
@@ -185,9 +185,9 @@
         action: current_user["admin"] ? change_link_to("course title", title_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
         html_attributes: {
           data: {
-            qa: "course__name"
-          }
-        }
+            qa: "course__name",
+          },
+        },
       ) %>
 
       <%= summary_list.slot(
@@ -196,9 +196,9 @@
         value: course.description,
         html_attributes: {
           data: {
-            qa: "course__description"
-          }
-        }
+            qa: "course__description",
+          },
+        },
       ) %>
 
       <%= summary_list.slot(
@@ -207,9 +207,9 @@
         value: course.course_code,
         html_attributes: {
           data: {
-            qa: "course__course_code"
-          }
-        }
+            qa: "course__course_code",
+          },
+        },
       ) %>
 
       <% if course.gcse_subjects_required.any? %>
@@ -218,7 +218,7 @@
             <%= render partial: 'courses/entry_requirements',
               locals: {
                 gcse_subject: subject.titleize,
-                gcse_subject_code: course[subject]
+                gcse_subject_code: course[subject],
               } %>
           <% end %>
         <% end %>
@@ -229,9 +229,9 @@
           action: change_link_to("entry requirements", entry_requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
           html_attributes: {
             data: {
-              qa: "course__entry_requirements"
-            }
-          }
+              qa: "course__entry_requirements",
+            },
+          },
         ) %>
       <% end %>
 
@@ -250,9 +250,9 @@
           value: content_for(:allocations),
           html_attributes: {
             data: {
-              qa: "course__allocations"
-            }
-          }
+              qa: "course__allocations",
+            },
+          },
         ) %>
       <% end %>
     <% end %>

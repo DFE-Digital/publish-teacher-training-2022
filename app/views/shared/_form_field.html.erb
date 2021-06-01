@@ -4,14 +4,14 @@
   label_bold ||= false
   options = {
     class: "govuk-input",
-    aria: { describedby: @errors[field] ? "#{field.to_s}-error" : '' },
-    data: { qa: field.to_s }
+    aria: { describedby: @errors[field] ? "#{field.to_s}-error" : "" },
+    data: { qa: field.to_s },
   }.merge(defined?(id) ? { id: id } : {})
 %>
 
 <%= render "shared/error_wrapper", error_keys: [field], data_qa: "course__#{field}" do %>
   <%= form.label field, label, {
-      class: cns("govuk-label", "govuk-label--s": label_bold)
+      class: cns("govuk-label", "govuk-label--s": label_bold),
     }.merge(defined?(id) ? { for: id } : {}) %>
 
   <%= render "shared/error_messages", error_keys: [field] %>

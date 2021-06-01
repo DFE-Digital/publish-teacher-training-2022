@@ -10,7 +10,7 @@
     <%= form_with url: provider_recruitment_cycle_allocation_path(
                     @provider.provider_code,
                     @provider.recruitment_cycle_year,
-                    params[:training_provider_code]
+                    params[:training_provider_code],
                   ),
                   model: @allocation,
                   scope: "",

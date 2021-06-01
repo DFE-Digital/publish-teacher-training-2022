@@ -25,7 +25,7 @@
     <p class="govuk-body">
       <%= govuk_link_to(
         "Return to Request PE courses for #{next_allocation_cycle_period_text}",
-        provider_recruitment_cycle_allocations_path(@provider.provider_code, Settings.current_cycle)
+        provider_recruitment_cycle_allocations_path(@provider.provider_code, Settings.current_cycle),
       ) %>
     </p>
   </div>

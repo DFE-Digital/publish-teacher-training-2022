@@ -31,8 +31,8 @@
             <div class="govuk-currency-input__inner">
               <span class="govuk-currency-input__inner__unit">£</span>
               <%= f.text_field field, options.merge(
-                class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
-                value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true)
+                class: "govuk-currency-input__inner__input govuk-input govuk-input--width-10",
+                value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true),
               ) %>
             </div>
           </div>
@@ -47,8 +47,8 @@
             <div class="govuk-currency-input__inner">
               <span class="govuk-currency-input__inner__unit">£</span>
               <%= f.text_field field, options.merge(
-                class: 'govuk-currency-input__inner__input govuk-input govuk-input--width-10',
-                value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true)
+                class: "govuk-currency-input__inner__input govuk-input govuk-input--width-10",
+                value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true),
               ) %>
             </div>
           </div>

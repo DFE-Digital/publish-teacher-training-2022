@@ -8,7 +8,7 @@
       training_provider_code: params[:training_provider_code],
       number_of_places: params[:number_of_places],
       change: true,
-    )
+    ),
   ) %>
 <% end %>
 
@@ -18,7 +18,7 @@
                       @provider.provider_code,
                       @provider.recruitment_cycle_year,
                       training_provider_code: params[:training_provider_code],
-                      number_of_places: params[:number_of_places]
+                      number_of_places: params[:number_of_places],
                     ),
                     skip_enforcing_utf8: true,
                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
@@ -41,8 +41,8 @@
               training_provider_code: params[:training_provider_code],
               number_of_places: params[:number_of_places],
               change: true,
-            )
-          )
+            ),
+          ),
         ) %>
       <% end %>
 

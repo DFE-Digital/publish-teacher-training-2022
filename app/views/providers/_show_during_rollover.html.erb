@@ -3,8 +3,8 @@
     "Current cycle (#{current_recruitment_cycle_period_text})",
     provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle),
     data: {
-      qa: "provider__courses__current_cycle"
-    }
+      qa: "provider__courses__current_cycle",
+    },
    ) %>
 </h2>
 <p class="govuk-body">Use this section to:</p>
@@ -22,8 +22,8 @@
     "Next cycle (#{next_recruitment_cycle_period_text})",
     provider_recruitment_cycle_path(@provider.provider_code, Settings.current_cycle + 1),
     data: {
-      qa: "provider__courses__next_cycle"
-    }
+      qa: "provider__courses__next_cycle",
+    },
   ) %>
 </h2>
 <p class="govuk-body">

@@ -18,7 +18,7 @@
               { checked: course.subject_present?(language),
                 class: 'govuk-checkboxes__input',
                 multiple: true,
-                data: { qa: "checkbox_language_#{language["attributes"]["subject_name"]}" }
+                data: { qa: "checkbox_language_#{language['attributes']['subject_name']}" },
               }, language["id"], nil %>
             <%= form.label "language_ids_#{language["id"]}",
               language["attributes"]["subject_name"],

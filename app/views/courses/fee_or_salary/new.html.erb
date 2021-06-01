@@ -10,7 +10,7 @@
   <div class="govuk-grid-column-full">
     <%= form_with url: continue_provider_recruitment_cycle_courses_fee_or_salary_path(
                       @provider.provider_code,
-                      @provider.recruitment_cycle_year
+                      @provider.recruitment_cycle_year,
                     ),
                     method: :get do |form| %>
       <%= render "courses/new_fields_holder", form: form, except_keys: [] do |fields| %>

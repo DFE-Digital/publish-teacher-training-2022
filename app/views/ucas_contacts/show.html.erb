@@ -49,9 +49,9 @@
         value: content_for(:row_value),
         html_attributes: {
           data: {
-            qa: "ucas_gt12_contact"
-          }
-        }
+            qa: "ucas_gt12_contact",
+          },
+        },
       ) %>
     <% end %>
 
@@ -67,9 +67,9 @@
         action: change_link_to("email alerts for new applications", alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code)),
         html_attributes: {
           data: {
-            qa: "ucas_send_application_alerts"
-          }
-        }
+            qa: "ucas_send_application_alerts",
+          },
+        },
       ) %>
 
       <% summary_list.slot(
@@ -79,9 +79,9 @@
         action: change_link_to("email alerts for new applications", alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code)),
         html_attributes: {
           data: {
-            qa: "ucas_application_alert_contact"
-          }
-        }
+            qa: "ucas_application_alert_contact",
+          },
+        },
       ) %>
     <% end %>
   </div>

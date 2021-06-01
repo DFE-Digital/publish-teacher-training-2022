@@ -14,7 +14,7 @@
               <a href="<%= enrichment_error_url(
                 provider_code: @provider.provider_code,
                 course: @course,
-                field: id
+                field: id,
               ) %>"><%= message %></a>
             </li>
           <% end %>
@@ -30,7 +30,7 @@
     <%= link_to(
       "Specify an age range",
       age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-      class: "govuk-notification-banner__link"
+      class: "govuk-notification-banner__link",
     ) %>
   <% end %>
 <% end %>

@@ -10,7 +10,7 @@
       request_type: params[:request_type],
       next_step: "number_of_places",
       id: allocation.id,
-    )
+    ),
   ) %>
 <% end %>
 
@@ -20,7 +20,7 @@
       provider.provider_code,
       recruitment_cycle.year,
       training_provider.provider_code,
-      id: allocation.id
+      id: allocation.id,
     ),
                   model: form_object,
                   scope: "",
@@ -46,9 +46,9 @@
               number_of_places: params[:number_of_places],
               request_type: params[:request_type],
               next_step: "number_of_places",
-              id: allocation.id
-            )
-          )
+              id: allocation.id,
+            ),
+          ),
         ) %>
       <% end %>
 

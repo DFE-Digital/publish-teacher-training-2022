@@ -36,7 +36,7 @@
       <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
                       @provider.provider_code,
                       @provider.recruitment_cycle_year,
-                      training_provider_code: params[:training_provider_code]
+                      training_provider_code: params[:training_provider_code],
                     ),
                     skip_enforcing_utf8: true,
                     method: :get,

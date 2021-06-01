@@ -47,7 +47,7 @@
     <div class="govuk-grid-column-full">
       <%= render partial: "providers/allocations/request_status", locals: {
         allocations: @allocations_view.repeat_allocation_statuses,
-        request_type: "repeat"
+        request_type: "repeat",
       } %>
     </div>
   <% end %>
@@ -58,7 +58,7 @@
 
       <%= render partial: "providers/allocations/request_status", locals: {
         allocations: @allocations_view.initial_allocation_statuses,
-        request_type: "initial"
+        request_type: "initial",
       } %>
     </div>
   <% end %>
@@ -85,7 +85,7 @@
       "Choose an organisation",
       initial_request_provider_recruitment_cycle_allocations_path(
         @provider.provider_code,
-        @provider.recruitment_cycle_year
+        @provider.recruitment_cycle_year,
       ),
       button: true,
      ) %>
