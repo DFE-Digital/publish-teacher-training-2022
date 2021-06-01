@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}About your organisation" %>
+<%= content_for :page_title, "#{@errors.present? ? 'Error: ' : ''}About your organisation" %>
 <%= content_for :before_content, render_breadcrumbs(:organisation_details) %>
 
 <% if @errors.present? %>
@@ -48,7 +48,7 @@
       <% summary_list.slot(:row, enrichment_summary(:provider, "About your organisation", @provider.train_with_us, ["train_with_us"])) %>
       <% if provider.accredited_bodies.present? %>
         <% provider.accredited_bodies.each do |provider| %>
-          <% summary_list.slot(:row, enrichment_summary(:provider, "#{provider["provider_name"]} (optional)", provider["description"], ["accrediting_provider_#{provider['provider_code']}"])) %>
+          <% summary_list.slot(:row, enrichment_summary(:provider, "#{provider['provider_name']} (optional)", provider["description"], ["accrediting_provider_#{provider['provider_code']}"])) %>
         <% end %>
       <% end %>
       <% summary_list.slot(:row, enrichment_summary(:provider, "Training with disabilities and other needs", @provider.train_with_disability, ["train_with_disability"])) %>

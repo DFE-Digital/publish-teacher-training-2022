@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Edit 'About your organisation'" %>
+<%= content_for :page_title, "#{@errors.present? ? 'Error: ' : ''}Edit 'About your organisation'" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>

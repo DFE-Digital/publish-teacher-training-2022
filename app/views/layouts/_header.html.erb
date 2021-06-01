@@ -9,6 +9,6 @@
   <% end %>
   <% if current_user.present? %>
     <%= component.slot(:item, title: "Sign out", href: sign_out_path) %>
-    <%= component.slot(:item, title: "(#{current_user["info"]["first_name"]} #{current_user["info"]["last_name"]})", href: Settings.dfe_signin.profile) %>
+    <%= component.slot(:item, title: "(#{current_user['info']['first_name']} #{current_user['info']['last_name']})", href: Settings.dfe_signin.profile) %>
   <% end %>
 <% end %>
