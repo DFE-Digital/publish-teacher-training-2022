@@ -67,7 +67,7 @@
         <%= f.fields model: :accredited_bodies do |abf| %>
           <%= abf.hidden_field :provider_name %>
           <%= abf.hidden_field :provider_code %>
-          <%= abf.govuk_text_area :description, label: { text: "#{ abf.object.provider_name} (optional)", size: "s" }, max_words: 100, rows: 10 %>
+          <%= abf.govuk_text_area :description, label: { text: "#{abf.object.provider_name} (optional)", size: "s" }, max_words: 100, rows: 10 %>
         <% end %>
       <% end %>
 
