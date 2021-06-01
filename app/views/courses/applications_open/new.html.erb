@@ -14,7 +14,7 @@
                   ),
                   method: :get do |form| %>
 
-      <%= render "courses/new_fields_holder", form: form, except_keys: [:applications_open_from, :month, :day, :year] do |fields| %>
+      <%= render "courses/new_fields_holder", form: form, except_keys: %i[applications_open_from month day year] do |fields| %>
         <%= render "form_fields", form: fields %>
       <% end %>
     <% end %>

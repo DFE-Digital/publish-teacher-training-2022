@@ -15,7 +15,7 @@
                     @provider.recruitment_cycle_year,
                   ),
                   method: :get do |form| %>
-      <%= render "courses/new_fields_holder", form: form, except_keys: [:maths, :english, :science] do |fields| %>
+      <%= render "courses/new_fields_holder", form: form, except_keys: %i[maths english science] do |fields| %>
         <%= render "form_fields", form: fields, gcse_subjects_required: course.gcse_subjects_required %>
       <% end %>
     <% end %>

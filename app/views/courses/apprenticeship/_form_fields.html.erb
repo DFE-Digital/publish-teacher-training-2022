@@ -1,4 +1,4 @@
-<%= render "shared/error_wrapper", error_keys: [:funding_type, :program_type], data_qa: "course__funding_type" do %>
+<%= render "shared/error_wrapper", error_keys: %i[funding_type program_type], data_qa: "course__funding_type" do %>
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
       <h1 class="govuk-fieldset__heading">
@@ -6,7 +6,7 @@
       </h1>
     </legend>
 
-    <%= render "shared/error_messages", error_keys: [:funding_type, :program_type] %>
+    <%= render "shared/error_messages", error_keys: %i[funding_type program_type] %>
 
     <div class="govuk-radios govuk-!-margin-top-2" data-module="govuk-radios">
       <div class="govuk-radios__item">
