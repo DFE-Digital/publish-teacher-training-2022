@@ -15,3 +15,4 @@ features:
   # should set the rollover setting in that test to true
   rollover:
     can_edit_current_and_next_cycles: false
+    show_next_cycle_allocation_recruitment_page: false
