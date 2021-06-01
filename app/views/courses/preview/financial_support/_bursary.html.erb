@@ -4,7 +4,7 @@
   </p>
 
   <ul class="govuk-list govuk-list--bullet">
-    <%  if course.bursary_requirements.length > 1 %>
+    <% if course.bursary_requirements.length > 1 %>
       <% course.bursary_requirements.each do |requirement| %>
         <li><%= requirement %></li>
       <% end %>
