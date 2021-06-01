@@ -45,20 +45,26 @@
 
   <ul class="govuk-tabs__list" role="tablist">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
-      <%=
-        link_to "#description",
-        class: "govuk-tabs__tab", role: "tab", tabindex: "-1", aria: { selected: true } do
-      %>
+      <%= link_to(
+        "#description",
+        class: "govuk-tabs__tab",
+        role: "tab",
+        tabindex: "-1",
+        aria: { selected: true },
+      ) do %>
         Description<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Content, fees and eligibility</span>
       <% end %>
     </li>
 
     <li class="govuk-tabs__list-item" role="presentation">
-      <%=
-        link_to details_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-        class: "govuk-tabs__tab", role: "tab", tabindex: "1", aria: { selected: false } do
-      %>
+      <%= link_to(
+        details_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+        class: "govuk-tabs__tab",
+        role: "tab",
+        tabindex: "1",
+        aria: { selected: false },
+      ) do %>
         Basic details<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Locations, outcome, subject</span>
       <% end %>

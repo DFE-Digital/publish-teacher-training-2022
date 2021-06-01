@@ -1,13 +1,11 @@
-<%
-  @errors ||= {}
-  label ||= field.to_s.humanize
-  label_bold ||= false
-  options = {
-    class: "govuk-input",
-    aria: { describedby: @errors[field] ? "#{field}-error" : "" },
-    data: { qa: field.to_s },
-  }.merge(defined?(id) ? { id: id } : {})
-%>
+<% @errors ||= {}
+   label ||= field.to_s.humanize
+   label_bold ||= false
+   options = {
+     class: "govuk-input",
+     aria: { describedby: @errors[field] ? "#{field}-error" : "" },
+     data: { qa: field.to_s },
+   }.merge(defined?(id) ? { id: id } : {}) %>
 
 <%= render "shared/error_wrapper", error_keys: [field], data_qa: "course__#{field}" do %>
   <%= form.label field, label, {
