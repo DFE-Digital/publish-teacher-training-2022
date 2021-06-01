@@ -11,17 +11,15 @@
         <% label = t("edit_options.#{key}.#{value}.label") %>
         <div class="govuk-radios__item">
           <%= form.radio_button field,
-                value,
-                class: 'govuk-radios__input',
-                data: {
-                  'aria-describedby': "#{field}-#{value}-help"
-                }
-          %>
+            value,
+            class: 'govuk-radios__input',
+            data: {
+              'aria-describedby': "#{field}-#{value}-help"
+            } %>
           <%= form.label field,
-                label,
-                value: value,
-                class: "govuk-label govuk-radios__label #{"govuk-!-font-weight-bold" if bold_labels}"
-          %>
+            label,
+            value: value,
+            class: "govuk-label govuk-radios__label #{"govuk-!-font-weight-bold" if bold_labels}" %>
           <span id="<%= "#{field}-#{value}-help" %>" class="govuk-hint govuk-radios__hint">
             <%= help %>
           </span>

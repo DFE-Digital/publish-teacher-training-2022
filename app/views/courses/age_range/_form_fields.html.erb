@@ -5,8 +5,7 @@
       <%= form.label :age_range_in_years,
             t("edit_options.age_range_in_years.#{value}.label"),
             value: value,
-            class: 'govuk-label govuk-radios__label'
-      %>
+            class: 'govuk-label govuk-radios__label' %>
     </div>
   <% end %>
   <div class="govuk-radios__divider">or</div>
@@ -26,8 +25,7 @@
           max: 46,
           value: age_range_from_field_value,
           class: 'govuk-input govuk-input--width-2' ,
-          data: { qa: "course__age_range_in_years_other_from_input"}
-      %>
+          data: { qa: "course__age_range_in_years_other_from_input"} %>
     <% end %>
     <%= render "shared/error_messages", error_keys: [:age_range_in_years_to] %>
     <%= render "shared/error_wrapper", error_keys: [:age_range_in_years_to], data_qa: "course__age_range_in_years_to" do %>
@@ -37,8 +35,7 @@
           max: 50,
           value: age_range_to_field_value,
           class: 'govuk-input govuk-input--width-2',
-          data: { qa: "course__age_range_in_years_other_to_input"}
-      %>
+          data: { qa: "course__age_range_in_years_other_to_input"} %>
     <% end %>
   </div>
 </div>

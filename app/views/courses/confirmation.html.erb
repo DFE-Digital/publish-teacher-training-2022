@@ -16,8 +16,7 @@
       <%= render "shared/course_creation_hidden_fields",
         form: f,
         course_creation_params: @course_creation_params,
-        except_keys: []
-      %>
+        except_keys: [] %>
 
       <%= govuk_summary_list(html_attributes: { data: { qa: "course__details" } }) do |summary_list| %>
         <%= summary_list.slot(
@@ -229,8 +228,7 @@
                 locals: {
                   gcse_subject: subject.titleize,
                   gcse_subject_code: course[subject]
-                }
-              %>
+                } %>
             <% end %>
           <% end %>
           <%= summary_list.slot(

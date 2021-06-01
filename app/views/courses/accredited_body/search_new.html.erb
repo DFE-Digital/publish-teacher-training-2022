@@ -18,8 +18,7 @@
       <%= render 'shared/course_creation_hidden_fields',
         form: form,
         course_creation_params: @course_creation_params,
-        except_keys: [:accredited_body_code]
-      %>
+        except_keys: [:accredited_body_code] %>
 
       <% if @provider_suggestions.any? %>
         <p class="govuk-body">We found these providers which matched your search:</p>
