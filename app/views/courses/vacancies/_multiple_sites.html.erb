@@ -22,7 +22,7 @@
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" aria-describedby="has_vacancies_true_hint">
           <div class="govuk-checkboxes">
-            <%= f.fields_for :site_status, @site_statuses.sort_by { |status| status.site.location_name } do |sf| %>
+            <%= f.fields_for :site_status, (@site_statuses.sort_by { |status| status.site.location_name }) do |sf| %>
               <% if @course.full_time_or_part_time? %>
                 <%= render partial: "courses/vacancies/site_status_checkbox", locals: { f: sf, course: @course, study_mode: :part_time, show_study_mode: true } %>
                 <%= render partial: "courses/vacancies/site_status_checkbox", locals: { f: sf, course: @course, study_mode: :full_time, show_study_mode: true } %>
