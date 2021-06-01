@@ -1,4 +1,4 @@
-<% page_title = "Do you want to request PE for this organisation?"%>
+<% page_title = "Do you want to request PE for this organisation?" %>
 <%= content_for :page_title, page_title %>
 
 <% content_for :before_content do %>
@@ -23,7 +23,7 @@
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
       <% end %>
       <%= hidden_field_tag :id, allocation.id %>
-      <%= hidden_field_tag "next_step", "number_of_places"  %>
+      <%= hidden_field_tag "next_step", "number_of_places" %>
       <%= form.govuk_submit %>
     <% end %>
   </div>

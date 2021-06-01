@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Check your information before sending your request"%>
+<%= content_for :page_title, "Check your information before sending your request" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(
@@ -47,7 +47,7 @@
       <% end %>
 
       <%= hidden_field_tag "request_type", AllocationsView::RequestType::INITIAL %>
-      <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
+      <%= hidden_field_tag "training_provider_code", params[:training_provider_code] %>
       <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
 
       <%= form.govuk_submit "Send request" %>

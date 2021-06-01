@@ -50,7 +50,7 @@
         <% end %>
         <%= form.email_field :application_alert_contact,
                              class: 'govuk-input govuk-!-width-two-thirds',
-                             data: { qa: 'ucas_contacts__application_alert_contact' }%>
+                             data: { qa: 'ucas_contacts__application_alert_contact' } %>
       </div>
 
       <%= render "shared/error_wrapper", error_keys: [:share_with_ucas_permission], data_qa: "course__share_with_ucas_permission" do %>

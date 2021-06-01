@@ -36,7 +36,7 @@
                     'other',
                     class: 'govuk-radios__input',
                     data: { "aria-controls" => "other-container" },
-                    checked: @errors && @errors[:accredited_body]&.any?  %>
+                    checked: @errors && @errors[:accredited_body]&.any? %>
                   <%= fields.label :accredited_body_code,
                     "A new accredited body you’re working with",
                     for: 'course_accredited_body_code_other',

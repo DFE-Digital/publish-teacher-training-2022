@@ -30,7 +30,7 @@
       <%= form.govuk_email_field :email, label: { text: "Email address" }, width: "three-quarters" %>
       <%= form.govuk_phone_field :telephone, width: "one-half" %>
       <div class="govuk-form-group">
-        <%= form.govuk_check_box :permission_given,1,0, multiple: false, label: { text: "I give permission to share this email address with UCAS" }%>
+        <%= form.govuk_check_box :permission_given,1,0, multiple: false, label: { text: "I give permission to share this email address with UCAS" } %>
       </div>
       <%= form.govuk_submit t("ucas_contacts.#{@contact.type}.submit", default: "Save") %>
 
