@@ -25,7 +25,7 @@
     <% if @recruitment_cycle.current? %>
       <%= render partial: "recruitment_cycles/allocations", locals: { provider: @provider, year: params[:year] } %>
     <% elsif @recruitment_cycle.next? %>
-      <%= render partial: "recruitment_cycles/allocations", locals: { provider: @provider.from_previous_recruitment_cycle, year: (params[:year].to_i.pred) } %>
+      <%= render partial: "recruitment_cycles/allocations", locals: { provider: @provider.from_previous_recruitment_cycle, year: params[:year].to_i.pred } %>
     <% end %>
   </div>
 </div>
