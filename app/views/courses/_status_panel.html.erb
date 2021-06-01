@@ -11,11 +11,11 @@
   </p>
 
   <% if course.is_published? && course.is_running? %>
-    <%= render partial: 'courses/status_panel/published' %>
+    <%= render partial: "courses/status_panel/published" %>
   <% elsif course.is_withdrawn? %>
-    <%= render partial: 'courses/status_panel/withdrawn' %>
+    <%= render partial: "courses/status_panel/withdrawn" %>
   <% else %>
-    <%= render partial: 'courses/status_panel/unpublished' %>
+    <%= render partial: "courses/status_panel/unpublished" %>
   <% end %>
 
   <% if course.is_running? %>
@@ -29,7 +29,7 @@
     <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--m">
     <h3 class="govuk-heading-m govuk-visually-hidden">Delete</h3>
     <p class="govuk-body govuk-!-margin-bottom-0">
-      <%= govuk_link_to 'Delete this course', delete_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "app-link--destructive", data: { qa: "course__delete-link" } %>
+      <%= govuk_link_to "Delete this course", delete_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), class: "app-link--destructive", data: { qa: "course__delete-link" } %>
     </p>
   <% end %>
 </div>

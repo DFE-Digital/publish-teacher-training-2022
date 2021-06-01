@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -23,7 +23,7 @@
               </h1>
             </legend>
             <%= render "shared/error_messages", error_keys: [:age_range_in_years] %>
-            <%= render 'form_fields', form: fields %>
+            <%= render "form_fields", form: fields %>
           </fieldset>
         <% end %>
       <% end %>

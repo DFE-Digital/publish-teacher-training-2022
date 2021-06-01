@@ -16,13 +16,13 @@
           <div class="govuk-checkboxes__item">
             <%= form.check_box :language_ids,
               { checked: course.subject_present?(language),
-                class: 'govuk-checkboxes__input',
+                class: "govuk-checkboxes__input",
                 multiple: true,
                 data: { qa: "checkbox_language_#{language['attributes']['subject_name']}" },
               }, language["id"], nil %>
             <%= form.label "language_ids_#{language["id"]}",
               language["attributes"]["subject_name"],
-              class: 'govuk-label govuk-checkboxes__label' %>
+              class: "govuk-label govuk-checkboxes__label" %>
           </div>
         <% end %>
       </div>

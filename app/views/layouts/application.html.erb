@@ -11,7 +11,7 @@
     <%= tag :meta, name: "ROBOTS", content: "NOINDEX, NOFOLLOW" %>
     <%= favicon_link_tag asset_pack_path("media/images/favicon.ico") %>
     <%= favicon_link_tag asset_pack_path("media/images/govuk-mask-icon.svg"), rel: "mask-icon", type: "image/svg", color: "#0b0c0c" %>
-    <%= favicon_link_tag asset_pack_path("media/images/govuk-apple-touch-icon.png"), rel: "apple-touch-icon", type: 'image/png' %>
+    <%= favicon_link_tag asset_pack_path("media/images/govuk-apple-touch-icon.png"), rel: "apple-touch-icon", type: "image/png" %>
     <%= favicon_link_tag asset_pack_path("media/images/govuk-apple-touch-icon-152x152.png"), rel: "apple-touch-icon", type: "image/png", size: "152x152" %>
     <%= favicon_link_tag asset_pack_path("media/images/govuk-apple-touch-icon-167x167.png"), rel: "apple-touch-icon", type: "image/png", size: "167x167" %>
     <%= favicon_link_tag asset_pack_path("media/images/govuk-apple-touch-icon-180x180.png"), rel: "apple-touch-icon", type: "image/png", size: "180x180" %>
@@ -20,15 +20,15 @@
 
   <body class="govuk-template__body <%= content_for(:body_classes) %>">
     <script>
-      document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+      document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
     </script>
 
     <%= govuk_skip_link %>
 
-    <%= render partial: 'layouts/header' %>
+    <%= render partial: "layouts/header" %>
 
     <div class="govuk-width-container">
-      <%= render partial: 'layouts/phase-banner' %>
+      <%= render partial: "layouts/phase-banner" %>
       <%= yield(:before_content) %>
 
       <main class="govuk-main-wrapper" id="main-content" role="main">
@@ -37,9 +37,9 @@
       </main>
     </div>
 
-    <%= render partial: 'layouts/footer' %>
+    <%= render partial: "layouts/footer" %>
 
-    <%= javascript_pack_tag 'application' %>
+    <%= javascript_pack_tag "application" %>
     <%= yield(:before_body_close) %>
   </body>
 </html>

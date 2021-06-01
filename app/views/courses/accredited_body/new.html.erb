@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <fieldset class="govuk-fieldset">
   <legend class="govuk-fieldset__legend">
@@ -32,15 +32,15 @@
 
                 <div class="govuk-radios__item">
                   <%= fields.radio_button :accredited_body_code,
-                    'other',
-                    class: 'govuk-radios__input',
+                    "other",
+                    class: "govuk-radios__input",
                     data: { "aria-controls" => "other-container" },
                     checked: @errors && @errors[:accredited_body]&.any? %>
                   <%= fields.label :accredited_body_code,
                     "A new accredited body you’re working with",
-                    for: 'course_accredited_body_code_other',
+                    for: "course_accredited_body_code_other",
                     value: false,
-                    class: 'govuk-label govuk-radios__label' %>
+                    class: "govuk-label govuk-radios__label" %>
                 </div>
 
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="other-container">

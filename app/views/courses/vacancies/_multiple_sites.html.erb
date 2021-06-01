@@ -1,9 +1,9 @@
 <div class="govuk-form-group">
-  <%= hidden_field_tag('change_vacancies_confirmation', true) %>
+  <%= hidden_field_tag("change_vacancies_confirmation", true) %>
   <div class="govuk-radios govuk-!-margin-bottom-7" data-module="govuk-radios">
     <div class="govuk-radios__item">
-      <%= f.radio_button :has_vacancies, 'false', class: 'govuk-radios__input', checked: !@course.has_vacancies? %>
-      <%= f.label :has_vacancies_false, 'There are no vacancies', class: "govuk-label govuk-radios__label govuk-!-font-weight-bold" %>
+      <%= f.radio_button :has_vacancies, "false", class: "govuk-radios__input", checked: !@course.has_vacancies? %>
+      <%= f.label :has_vacancies_false, "There are no vacancies", class: "govuk-label govuk-radios__label govuk-!-font-weight-bold" %>
       <span id="has_vacancies_false" class="govuk-hint govuk-radios__hint">
         Close this course to new applications.
         <br>
@@ -12,22 +12,22 @@
     </div>
     <div class="govuk-radios__divider">or</div>
     <div class="govuk-radios__item">
-      <%= f.radio_button :has_vacancies, 'true', class: 'govuk-radios__input', checked: @course.has_vacancies?, "aria-controls" => "has_vacancies_true_conditional" %>
-      <%= f.label :has_vacancies_true, 'There are some vacancies', class: "govuk-label govuk-radios__label govuk-!-font-weight-bold" %>
+      <%= f.radio_button :has_vacancies, "true", class: "govuk-radios__input", checked: @course.has_vacancies?, "aria-controls" => "has_vacancies_true_conditional" %>
+      <%= f.label :has_vacancies_true, "There are some vacancies", class: "govuk-label govuk-radios__label govuk-!-font-weight-bold" %>
       <span id="has_vacancies_true_hint" class="govuk-hint govuk-radios__hint">
         Pick the locations with vacancies
       </span>
     </div>
-    <div class="govuk-radios__conditional <%= 'govuk-radios__conditional--hidden' if !@course.has_vacancies? %>" id="has_vacancies_true_conditional">
+    <div class="govuk-radios__conditional <%= "govuk-radios__conditional--hidden" if !@course.has_vacancies? %>" id="has_vacancies_true_conditional">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" aria-describedby="has_vacancies_true_hint">
           <div class="govuk-checkboxes">
             <%= f.fields_for :site_status, @site_statuses.sort_by { |status| status.site.location_name } do |sf| %>
               <% if @course.full_time_or_part_time? %>
-                <%= render partial: 'courses/vacancies/site_status_checkbox', locals: { f: sf, course: @course, study_mode: :part_time, show_study_mode: true } %>
-                <%= render partial: 'courses/vacancies/site_status_checkbox', locals: { f: sf, course: @course, study_mode: :full_time, show_study_mode: true } %>
+                <%= render partial: "courses/vacancies/site_status_checkbox", locals: { f: sf, course: @course, study_mode: :part_time, show_study_mode: true } %>
+                <%= render partial: "courses/vacancies/site_status_checkbox", locals: { f: sf, course: @course, study_mode: :full_time, show_study_mode: true } %>
               <% elsif @course.full_time? || @course.part_time? %>
-                <%= render partial: 'courses/vacancies/site_status_checkbox', locals: { f: sf, course: @course, study_mode: @course.study_mode } %>
+                <%= render partial: "courses/vacancies/site_status_checkbox", locals: { f: sf, course: @course, study_mode: @course.study_mode } %>
               <% end %>
             <% end %>
           </div>

@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <fieldset class="govuk-fieldset">
   <legend class="govuk-fieldset__legend">
@@ -32,15 +32,15 @@
 
             <div class="govuk-radios__item">
               <%= form.radio_button :accredited_body_code,
-                'other',
-                class: 'govuk-radios__input',
+                "other",
+                class: "govuk-radios__input",
                 data: { "aria-controls" => "other-container" },
                 checked: @errors && @errors[:accredited_body]&.any? %>
               <%= form.label :accredited_body_code,
                 "A new accredited body you’re working with",
-                for: 'course_accredited_body_code_other',
+                for: "course_accredited_body_code_other",
                 value: false,
-                class: 'govuk-label govuk-radios__label' %>
+                class: "govuk-label govuk-radios__label" %>
             </div>
 
             <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="other-container">
@@ -53,7 +53,7 @@
         </div>
 
         <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
-                        class: "govuk-button govuk-!-margin-top-3", data: { qa: 'course__save' } %>
+                        class: "govuk-button govuk-!-margin-top-3", data: { qa: "course__save" } %>
 
         <p class="govuk-body">
           <%= govuk_link_to(

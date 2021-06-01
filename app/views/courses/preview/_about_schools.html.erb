@@ -6,9 +6,9 @@
         <h3 class="app-advice__title">Where will you train</h3>
         <div class="app-advice__body">
           <% if course.provider_type == "university" %>
-            <%= render partial: 'courses/preview/placement/hei', locals: { course: course } %>
+            <%= render partial: "courses/preview/placement/hei", locals: { course: course } %>
           <% else %>
-            <%= render partial: 'courses/preview/placement/scitt', locals: { course: course } %>
+            <%= render partial: "courses/preview/placement/scitt", locals: { course: course } %>
           <% end %>
         </div>
       </aside>

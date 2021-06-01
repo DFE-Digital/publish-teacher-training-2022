@@ -2,9 +2,9 @@
   <%= form.radio_button :accredited_body_code,
     provider_suggestion["provider_code"],
     checked: provider_suggestion["provider_code"] == @course.accrediting_provider&.provider_code,
-    class: 'govuk-radios__input' %>
+    class: "govuk-radios__input" %>
   <%= form.label :accredited_body_code,
     "#{provider_suggestion["provider_name"]} (#{provider_suggestion["provider_code"]})",
     value: provider_suggestion["provider_code"],
-    class: 'govuk-label govuk-radios__label' %>
+    class: "govuk-label govuk-radios__label" %>
 </div>

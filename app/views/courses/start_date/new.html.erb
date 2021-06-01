@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
   When does the course start?
@@ -20,7 +20,7 @@
                   method: :get do |form| %>
 
       <%= render "courses/new_fields_holder", form: form, except_keys: [:start_date] do |fields| %>
-        <%= render 'form_fields', form: fields %>
+        <%= render "form_fields", form: fields %>
       <% end %>
     <% end %>
   </div>

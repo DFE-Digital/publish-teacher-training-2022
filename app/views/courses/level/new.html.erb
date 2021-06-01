@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <h1 class="govuk-heading-xl">
   What type of course?
@@ -24,7 +24,7 @@
               <h2 class="govuk-fieldset__heading">Level</h2>
             </legend>
             <%= render "shared/error_messages", error_keys: [:level] %>
-            <%= render 'form_fields', form: fields %>
+            <%= render "form_fields", form: fields %>
           </fieldset>
         <% end %>
 
@@ -32,7 +32,7 @@
           Special educational needs and disability (SEND)
         </h2>
 
-        <%= render 'courses/send/form_fields', form: fields %>
+        <%= render "courses/send/form_fields", form: fields %>
       <% end %>
     <% end %>
   </div>

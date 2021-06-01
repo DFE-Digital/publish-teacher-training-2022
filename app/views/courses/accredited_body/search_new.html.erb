@@ -1,5 +1,5 @@
 <%= content_for :page_title, "Organisation search" %>
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -15,7 +15,7 @@
                     @provider.recruitment_cycle_year,
                   ),
       method: :get do |form| %>
-      <%= render 'shared/course_creation_hidden_fields',
+      <%= render "shared/course_creation_hidden_fields",
         form: form,
         course_creation_params: @course_creation_params,
         except_keys: [:accredited_body_code] %>
@@ -29,14 +29,14 @@
 
           <div class="govuk-radios__item">
             <%= form.radio_button :accredited_body_code,
-              'other',
-              class: 'govuk-radios__input',
+              "other",
+              class: "govuk-radios__input",
               data: { "aria-controls" => "other-container" } %>
             <%= form.label :accredited_body_code,
               "Try another accrediting provider",
-              for: 'course_accredited_body_code_other',
+              for: "course_accredited_body_code_other",
               value: false,
-              class: 'govuk-label govuk-radios__label' %>
+              class: "govuk-label govuk-radios__label" %>
           </div>
 
           <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="other-container">
@@ -53,7 +53,7 @@
       <% end %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
-        class: "govuk-button govuk-!-margin-top-3", data: { qa: 'course__save' } %>
+        class: "govuk-button govuk-!-margin-top-3", data: { qa: "course__save" } %>
     <% end %>
   </div>
 </div>

@@ -3,6 +3,6 @@
     <%= govuk_link_to site.location_name, edit_provider_recruitment_cycle_site_path(@provider.provider_code, site.recruitment_cycle_year, site.id), class: "govuk-!-font-weight-bold" %>
   </td>
   <td class="govuk-table__cell">
-    <%= site.code %> <%= site.code == '-' ? '(dash)' : '' %>
+    <%= site.code %> <%= site.code == "-" ? "(dash)" : "" %>
   </td>
 </tr>

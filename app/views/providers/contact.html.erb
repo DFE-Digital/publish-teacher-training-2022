@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -34,7 +34,7 @@
             <span class="govuk-hint">
               The marketing name of the provider
             </span>
-            <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
+            <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
           <% end %>
         </div>
       <% end %>
@@ -44,7 +44,7 @@
         <span class="govuk-hint">
           Give an email address that applicants can use to contact you
         </span>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
       <% end %>
 
       <%= render "shared/form_field",
@@ -52,7 +52,7 @@
         <span class="govuk-hint">
           Give a telephone number that applicants can use to call you
         </span>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
       <% end %>
 
       <%= render "shared/form_field",
@@ -69,13 +69,13 @@
         <span class="govuk-hint">
           Your organisation&rsquo;s UK Provider Reference Number
         </span>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
       <% end %>
 
       <% if @provider.provider_type == "lead_school" %>
         <%= render "shared/form_field",
           form: f, field: :urn, label: "URN (Unique Reference Number)" do |field, options| %>
-          <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
+          <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
         <% end %>
       <% end %>
 
@@ -100,17 +100,17 @@
 
       <%= render "shared/form_field",
         form: f, field: :address3, label: "Town or city" do |field, options| %>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
       <% end %>
 
       <%= render "shared/form_field",
         form: f, field: :address4, label: "County" do |field, options| %>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
       <% end %>
 
       <%= render "shared/form_field",
         form: f, field: :postcode do |field, options| %>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
       <% end %>
 
       <hr class="govuk-section-break govuk-section-break--l">

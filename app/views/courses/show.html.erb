@@ -47,7 +47,7 @@
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
       <%=
         link_to "#description",
-        class: "govuk-tabs__tab", role: 'tab', tabindex: '-1', aria: { selected: true } do
+        class: "govuk-tabs__tab", role: "tab", tabindex: "-1", aria: { selected: true } do
       %>
         Description<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Content, fees and eligibility</span>
@@ -57,7 +57,7 @@
     <li class="govuk-tabs__list-item" role="presentation">
       <%=
         link_to details_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-        class: "govuk-tabs__tab", role: 'tab', tabindex: '1', aria: { selected: false } do
+        class: "govuk-tabs__tab", role: "tab", tabindex: "1", aria: { selected: false } do
       %>
         Basic details<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Locations, outcome, subject</span>
@@ -68,10 +68,10 @@
   <section class="govuk-tabs__panel" id="description">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <%= render partial: 'courses/description_content' %>
+        <%= render partial: "courses/description_content" %>
       </div>
       <div class="govuk-grid-column-one-third" data-qa="course__status_panel">
-        <%= render partial: 'courses/status_panel' %>
+        <%= render partial: "courses/status_panel" %>
       </div>
     </div>
   </section>

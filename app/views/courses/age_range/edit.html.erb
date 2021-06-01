@@ -14,8 +14,8 @@
 
       <%= form.govuk_error_summary "You’ll need to correct some information." %>
 
-      <%= form.govuk_radio_buttons_fieldset(:age_range_in_years, legend: { size: 'xl', text: 'Specify an age range' }, caption: { text: course.name_and_code, size: 'xl' }) do %>
-        <% @course.meta['edit_options']['age_range_in_years'].each do |value| %>
+      <%= form.govuk_radio_buttons_fieldset(:age_range_in_years, legend: { size: "xl", text: "Specify an age range" }, caption: { text: course.name_and_code, size: "xl" }) do %>
+        <% @course.meta["edit_options"]["age_range_in_years"].each do |value| %>
           <%= form.govuk_radio_button :age_range_in_years,
             value,
             label: { text: I18n.t("edit_options.age_range_in_years.#{value}.label") },
@@ -24,17 +24,17 @@
 
         <%= form.govuk_radio_divider %>
 
-        <%= form.govuk_radio_button :age_range_in_years, "other", label: { text: 'Another age range' } do %>
+        <%= form.govuk_radio_button :age_range_in_years, "other", label: { text: "Another age range" } do %>
           <p class="govuk-body">Enter an age range in years, for example: 5 to 11. The course must cover 4 or more school years.</p>
 
-          <%= form.govuk_text_field :course_age_range_in_years_other_from, label: { text: 'From' }, class: 'govuk-input govuk-input--width-2' %>
+          <%= form.govuk_text_field :course_age_range_in_years_other_from, label: { text: "From" }, class: "govuk-input govuk-input--width-2" %>
 
-          <%= form.govuk_text_field :course_age_range_in_years_other_to, label: { text: 'To' }, class: 'govuk-input govuk-input--width-2' %>
+          <%= form.govuk_text_field :course_age_range_in_years_other_to, label: { text: "To" }, class: "govuk-input govuk-input--width-2" %>
         <% end %>
       <% end %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
-        class: "govuk-button", data: { qa: 'course__save' } %>
+        class: "govuk-button", data: { qa: "course__save" } %>
 
       <p class="govuk-body">
         <%= govuk_link_to(

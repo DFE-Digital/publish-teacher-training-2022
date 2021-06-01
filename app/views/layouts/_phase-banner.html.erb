@@ -5,8 +5,8 @@
   },
 ) do %>
   <% if sandbox_mode? %>
-    This is a <%= govuk_link_to 'test version of Publish', root_path %> for providers and software vendors
+    This is a <%= govuk_link_to "test version of Publish", root_path %> for providers and software vendors
   <% else %>
-    This is a new service – your <%= bat_contact_mail_to 'feedback', subject: 'Publish teacher training courses feedback' %> will help us to improve it.
+    This is a new service – your <%= bat_contact_mail_to "feedback", subject: "Publish teacher training courses feedback" %> will help us to improve it.
   <% end %>
 <% end %>

@@ -24,7 +24,7 @@
 
 <% if @self_accredited_courses %>
   <section data-qa="courses__table-section">
-    <%= render partial: 'course_table', locals: { courses: @self_accredited_courses } %>
+    <%= render partial: "course_table", locals: { courses: @self_accredited_courses } %>
   </section>
 <% end %>
 
@@ -35,7 +35,7 @@
       <%= accrediting_provider %>
     </h2>
 
-    <%= render partial: 'course_table', locals: { courses: courses } %>
+    <%= render partial: "course_table", locals: { courses: courses } %>
   </section>
 <% end %>
 

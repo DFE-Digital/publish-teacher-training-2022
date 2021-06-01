@@ -10,7 +10,7 @@
     <span class="<%= cns("govuk-label--m govuk-!-margin-bottom-2", "govuk-!-margin-bottom-0": @errors.present? && @errors[:urn]&.any?) %>">Unique Reference Number (URN)</span>
     <span class="govuk-hint">You can find URNs on the <%= govuk_link_to "Get information about schools (opens in new tab)", "https://www.get-information-schools.service.gov.uk", target: "_blank" %> service</span>
   <% } do |field, options| %>
-  <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
+  <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
 <% end %>
 
 <h2 class="govuk-heading-m govuk-!-margin-top-8">Address</h2>
@@ -32,15 +32,15 @@
 
 <%= render "shared/form_field",
   form: f, field: :address3, label: "Town or city" do |field, options| %>
-  <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
+  <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
 <% end %>
 
 <%= render "shared/form_field",
   form: f, field: :address4, label: "County" do |field, options| %>
-  <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-two-thirds') %>
+  <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
 <% end %>
 
 <%= render "shared/form_field",
   form: f, field: :postcode do |field, options| %>
-  <%= f.text_field field, options.merge(class: 'govuk-input govuk-input--width-10') %>
+  <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
 <% end %>

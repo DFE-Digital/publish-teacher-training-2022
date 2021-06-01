@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(@course.provider_code, @course.recruitment_cycle_year)) %>
 <% end %>
 
-<%= render 'shared/errors', error_summary_title: 'We couldn’t edit the vacancies for this course' %>
+<%= render "shared/errors", error_summary_title: "We couldn’t edit the vacancies for this course" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -20,7 +20,7 @@
         <% if @course.has_multiple_running_sites_or_study_modes? %>
           <%= render partial: "courses/vacancies/multiple_sites", locals: { f: form } %>
         <% else %>
-          <%= render partial: 'courses/vacancies/single_site', locals: { f: form } %>
+          <%= render partial: "courses/vacancies/single_site", locals: { f: form } %>
         <% end %>
       </fieldset>
       <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated within 2 hours.</p>

@@ -34,8 +34,8 @@
           <%= f.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sf| %>
             <% site = sf.object %>
             <div class="govuk-checkboxes__item">
-              <%= sf.check_box 'selected', checked: course.has_site?(site), class: 'govuk-checkboxes__input' %>
-              <%= sf.label 'selected', class: 'govuk-label govuk-checkboxes__label'  do %>
+              <%= sf.check_box "selected", checked: course.has_site?(site), class: "govuk-checkboxes__input" %>
+              <%= sf.label "selected", class: "govuk-label govuk-checkboxes__label"  do %>
                 <strong><%= site.location_name %></strong>
               <% end %>
               <span class="govuk-hint govuk-checkboxes__hint">
@@ -47,7 +47,7 @@
       </div>
 
       <%= f.submit course.is_running? ? "Save and publish changes" : "Save",
-        class: "govuk-button", data: { qa: 'course__save' } %>
+        class: "govuk-button", data: { qa: "course__save" } %>
     <% end %>
 
     <p class="govuk-body">
