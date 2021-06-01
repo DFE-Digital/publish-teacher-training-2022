@@ -1,7 +1,7 @@
 <div class="govuk-radios govuk-!-margin-top-2" data-module="govuk-radios">
   <% @course.meta["edit_options"]["age_range_in_years"].each do |value| %>
     <div class="govuk-radios__item">
-      <%= form.radio_button :age_range_in_years, value, class: "govuk-radios__input", data: {qa: "course__age_range_in_years_#{value}_radio"} %>
+      <%= form.radio_button :age_range_in_years, value, class: "govuk-radios__input", data: { qa: "course__age_range_in_years_#{value}_radio" } %>
       <%= form.label :age_range_in_years,
             t("edit_options.age_range_in_years.#{value}.label"),
             value: value,
@@ -10,7 +10,7 @@
   <% end %>
   <div class="govuk-radios__divider">or</div>
   <div class="govuk-radios__item">
-    <%= form.radio_button :age_range_in_years, "other", class: "govuk-radios__input", data: {"aria-controls" => "other-container", qa: "course__age_range_in_years_other_radio" },
+    <%= form.radio_button :age_range_in_years, "other", class: "govuk-radios__input", data: { "aria-controls" => "other-container", qa: "course__age_range_in_years_other_radio" },
       checked: expand_another_age_range?,
       aria: { describedby: @errors && @errors[:age_range_in_years_other] ? "course_age_range_in_years-error" : "" } %>
     <%= form.label :age_range_in_years, t("edit_options.age_range_in_years.other.label"), value: "other", class: "govuk-label govuk-radios__label" %>
@@ -25,7 +25,7 @@
           max: 46,
           value: age_range_from_field_value,
           class: "govuk-input govuk-input--width-2",
-          data: { qa: "course__age_range_in_years_other_from_input"} %>
+          data: { qa: "course__age_range_in_years_other_from_input" } %>
     <% end %>
     <%= render "shared/error_messages", error_keys: [:age_range_in_years_to] %>
     <%= render "shared/error_wrapper", error_keys: [:age_range_in_years_to], data_qa: "course__age_range_in_years_to" do %>
@@ -35,7 +35,7 @@
           max: 50,
           value: age_range_to_field_value,
           class: "govuk-input govuk-input--width-2",
-          data: { qa: "course__age_range_in_years_other_to_input"} %>
+          data: { qa: "course__age_range_in_years_other_to_input" } %>
     <% end %>
   </div>
 </div>

@@ -7,7 +7,7 @@
       </div>
       <%= form_with url: providers_search_path,
                     method: :get do |form| %>
-        <%= form.label :query, {class: "govuk-label", for: "provider"} do %>
+        <%= form.label :query, { class: "govuk-label", for: "provider" } do %>
           Search for an organisation
           <span class="govuk-hint">Enter the name or provider code</span>
           <% if flash[:error] && flash[:error]["message"] == "Name or provider code" %>
@@ -20,9 +20,9 @@
                             id: "provider",
                             value: params[:query],
                             class: "govuk-input govuk-!-width-two-thirds",
-                            data: {qa: "provider-search"} %>
+                            data: { qa: "provider-search" } %>
         <div id="provider-autocomplete" class="govuk-body govuk-!-width-two-thirds"></div>
-        <%= form.submit "Search", name: nil, class: "govuk-button", data: {qa: "find-providers"} %>
+        <%= form.submit "Search", name: nil, class: "govuk-button", data: { qa: "find-providers" } %>
       <% end %>
     </div>
   </div>

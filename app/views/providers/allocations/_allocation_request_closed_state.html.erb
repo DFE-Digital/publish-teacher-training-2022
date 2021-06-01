@@ -28,12 +28,12 @@
       <%= render partial: "providers/allocations/allocation_report_closed_state", locals: {
                  section_heading: "Courses for #{next_allocation_cycle_period_text}",
                  allocations: @allocations_view.requested_allocations_statuses,
-                 request_type: "repeat"} %>
+                 request_type: "repeat" } %>
 
       <%= render partial: "providers/allocations/allocation_report_closed_state", locals: {
                  section_heading: "Courses not running in #{next_allocation_cycle_period_text}",
                  allocations: @allocations_view.not_requested_allocations_statuses,
-                 request_type: "repeat"} %>
+                 request_type: "repeat" } %>
     <% else %>
       <p class="govuk-body">
         You did not request fee-funded PE for <%= next_allocation_cycle_period_text %>.

@@ -14,7 +14,7 @@
     <p class="govuk-body-l">You must sign in to your account to publish teacher training courses.</p>
 
     <%= form_with model: User.new, url: send_magic_link_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
-      <%= f.govuk_text_field :email, label: {text: "Email address", size: "m"} %>
+      <%= f.govuk_text_field :email, label: { text: "Email address", size: "m" } %>
       <%= f.govuk_submit "Continue" %>
     <% end %>
 
