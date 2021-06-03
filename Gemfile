@@ -47,6 +47,7 @@ gem "config"
 # Sentry
 gem "sentry-rails"
 gem "sentry-ruby"
+gem "sentry-sidekiq"
 
 # Decorate logic to keep it of the views and helper methods
 gem "draper"

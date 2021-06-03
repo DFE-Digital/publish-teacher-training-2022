@@ -445,6 +445,8 @@ GEM
     sentry-ruby-core (4.5.0)
       concurrent-ruby
       faraday
+    sentry-sidekiq (4.5.0)
+      sentry-ruby-core (~> 4.5.0)
     shellany (0.0.1)
     sidekiq (6.2.1)
       connection_pool (>= 2.2.2)
@@ -577,6 +579,7 @@ DEPENDENCIES
   scss_lint-govuk
   sentry-rails
   sentry-ruby
+  sentry-sidekiq
   sidekiq
   simplecov (< 0.22)
   site_prism
