@@ -3,6 +3,12 @@ inherit_gem:
     - config/default.yml
     - config/rails.yml
 
+require:
+- ./lib/rubocop/cop/govuk/govuk_link_to.rb
+- ./lib/rubocop/cop/govuk/govuk_button_to.rb
+# TODO: Enable following cop once all forms are using GOVUKDesignSystemFormBuilder
+# - ./lib/rubocop/cop/govuk/govuk_submit.rb
+
 AllCops:
   Exclude:
     - 'bin/rails'
@@ -37,3 +43,16 @@ Rails/ApplicationController:
 # https://github.com/alphagov/rubocop-govuk/commit/c4a4329d5e44dc98b24f1d344a3532054b1539e0
 Rails/SaveBang:
   Enabled: false
+
+Govuk:
+  Include:
+    - 'app/views/**/*'
+    - 'app/components/**/*'
+
+Govuk/GovukLinkTo:
+  Exclude:
+    # link_to in manual error summaries
+    - 'app/views/shared/_errors.html.erb'
+    - 'app/views/courses/age_range/_errors.html.erb'
+    # link_to in footers
+    - 'app/views/layouts/_footer.html.erb'
