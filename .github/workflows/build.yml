@@ -50,6 +50,15 @@ jobs:
           BUILDKIT_INLINE_CACHE=1
           COMMIT_SHA=paas-${{ github.sha }}
 
+    - name: Trigger Review App Deployment
+      if: ${{ success() && github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: Deploy
+        ref:    ${{ github.head_ref }}
+        token:  ${{ secrets.ACTIONS_API_ACCESS_TOKEN  }}
+        inputs: '{"pr": "${{ github.event.pull_request.number }}", "sha": "${{ github.sha }}"}'
+
   test:
     runs-on: ubuntu-latest
     needs: [build]
@@ -84,15 +93,7 @@ jobs:
         with:
           workflow: Deploy
           token: ${{ secrets.ACTIONS_API_ACCESS_TOKEN  }}
-          inputs: '{"staging": "true", "production": "true", "sandbox": "true", "rollover": "true", "sha": "${{ github.sha }}"}'
-
-      - name: Trigger Deployment to QA
-        if: ${{ success() && github.ref == 'refs/heads/qa' }}
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: Deploy
-          token: ${{ secrets.ACTIONS_API_ACCESS_TOKEN  }}
-          inputs: '{"qa": "true", "sha": "${{ github.sha }}"}'
+          inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "rollover": "true", "sha": "${{ github.sha }}"}'
 
       - name: 'Notify #twd_publish_register_tech on failure'
         if: ${{ failure() && github.ref == 'refs/heads/master' }}
