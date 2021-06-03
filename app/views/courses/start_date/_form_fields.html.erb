@@ -1,4 +1,4 @@
 <%= render "shared/form_field",
   form: form, field: :start_date, label: "Course start date" do |field, options| %>
-  <%= form.select field, options_for_select(@course.meta["edit_options"]["start_dates"], course.return_start_date), { include_blank: true }, data: { qa: 'start_date' }, class: 'govuk-select'%>
+  <%= form.select field, options_for_select(@course.meta["edit_options"]["start_dates"], course.return_start_date), { include_blank: true }, data: { qa: "start_date" }, class: "govuk-select" %>
 <% end %>

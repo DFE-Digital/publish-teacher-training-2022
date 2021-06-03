@@ -79,6 +79,7 @@ group :development, :test do
   gem "faker"
 
   # GOV.UK interpretation of rubocop for linting Ruby
+  gem "erb_lint", require: false
   gem "rubocop-govuk"
   gem "scss_lint-govuk"
 

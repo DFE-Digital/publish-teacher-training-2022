@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <%= form_for course,
   url: continue_provider_recruitment_cycle_courses_locations_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
@@ -23,8 +23,8 @@
             <%= fields.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sfields| %>
               <% site = sfields.object %>
               <div class="govuk-checkboxes__item">
-                <%= sfields.check_box 'selected', checked: course.has_site?(site), class: 'govuk-checkboxes__input' %>
-                <%= sfields.label 'selected', class: 'govuk-label govuk-checkboxes__label'  do %>
+                <%= sfields.check_box "selected", checked: course.has_site?(site), class: "govuk-checkboxes__input" %>
+                <%= sfields.label "selected", class: "govuk-label govuk-checkboxes__label"  do %>
                   <strong data-qa="site__name"><%= site.location_name %></strong>
                 <% end %>
                 <span class="govuk-hint govuk-checkboxes__hint">

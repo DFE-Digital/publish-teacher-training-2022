@@ -1,10 +1,10 @@
-<%= content_for :page_title, "#{@errors && @errors.any? ? "Error: " : ""}Request access for someone else" %>
+<%= content_for :page_title, "#{@errors && @errors.any? ? 'Error: ' : ''}Request access for someone else" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(users_provider_path(params[:code])) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -14,30 +14,33 @@
 
     <h2 class="govuk-heading-m">Request an account for:</h2>
 
-    <%= form_with model: @access_request, url: request_access_provider_path(params[:code]), method: :post do |f| %>
+    <%= form_with model: @access_request,
+                  url: request_access_provider_path(params[:code]),
+                  method: :post do |f| %>
+
       <%= render "shared/form_field",
         form: f, field: :first_name do |field, options| %>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-one-half") %>
       <% end %>
 
       <%= render "shared/form_field",
         form: f, field: :last_name do |field, options| %>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-one-half") %>
       <% end %>
 
       <%= render "shared/form_field",
         form: f, field: :email_address do |field, options| %>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-one-half") %>
       <% end %>
 
       <%= render "shared/form_field",
-        form: f, field: :organisation, label: 'Their organisation' do |field, options| %>
-        <%= f.text_field field, options.merge(class: 'govuk-input govuk-!-width-one-half') %>
+        form: f, field: :organisation, label: "Their organisation" do |field, options| %>
+        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-one-half") %>
       <% end %>
 
       <%= render "shared/form_field",
-        form: f, field: :reason, label: 'Reason they need access' do |field, options| %>
-        <%= f.text_area field, options.merge(class: 'govuk-textarea govuk-!-width-two-thirds') %>
+        form: f, field: :reason, label: "Reason they need access" do |field, options| %>
+        <%= f.text_area field, options.merge(class: "govuk-textarea govuk-!-width-two-thirds") %>
       <% end %>
 
       <%= f.submit "Request access", class: "govuk-button" %>

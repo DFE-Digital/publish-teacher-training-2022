@@ -20,7 +20,7 @@
       <p class="govuk-body">Alternatively you can choose new contacts and we will send them to UCAS to update.</p>
     <% end %>
 
-    <hr class="govuk-section-break govuk-section-break--l" />
+    <hr class="govuk-section-break govuk-section-break--l">
   </div>
 </div>
 
@@ -40,7 +40,7 @@
 
     <%= govuk_summary_list do |summary_list| %>
       <% content_for :row_value, flush: true do %>
-        <p class="govuk-body"><%= @ucas_contact_view.gt12_contact.present? ? @ucas_contact_view.gt12_contact : "Information unknown" %></p>
+        <p class="govuk-body"><%= @ucas_contact_view.gt12_contact.presence ? @ucas_contact_view.gt12_contact : "Information unknown" %></p>
         <p class="govuk-body-s">This person or website will receive responses from successful applicants replying to a GT12 letter.</p>
       <% end %>
       <% summary_list.slot(
@@ -49,9 +49,9 @@
         value: content_for(:row_value),
         html_attributes: {
           data: {
-            qa: "ucas_gt12_contact"
-          }
-        }
+            qa: "ucas_gt12_contact",
+          },
+        },
       ) %>
     <% end %>
 
@@ -67,21 +67,21 @@
         action: change_link_to("email alerts for new applications", alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code)),
         html_attributes: {
           data: {
-            qa: "ucas_send_application_alerts"
-          }
-        }
+            qa: "ucas_send_application_alerts",
+          },
+        },
       ) %>
 
       <% summary_list.slot(
         :row,
         key: "Who are the alerts sent to?",
-        value: @ucas_contact_view.application_alert_contact.present? ? @ucas_contact_view.application_alert_contact : "Information unknown",
+        value: @ucas_contact_view.application_alert_contact.presence ? @ucas_contact_view.application_alert_contact : "Information unknown",
         action: change_link_to("email alerts for new applications", alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code)),
         html_attributes: {
           data: {
-            qa: "ucas_application_alert_contact"
-          }
-        }
+            qa: "ucas_application_alert_contact",
+          },
+        },
       ) %>
     <% end %>
   </div>

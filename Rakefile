@@ -13,6 +13,7 @@ if %w[development test].include?(Rails.env)
     Rake::Task["js_spec"].invoke
     Rake::Task["lint:ruby"].invoke
     Rake::Task["lint:scss"].invoke
+    Rake::Task["lint:erb"].invoke
     Rake::Task["brakeman"].invoke
   end
 end

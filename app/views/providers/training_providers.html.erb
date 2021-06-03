@@ -26,7 +26,7 @@
                 training_provider.provider_code,
               ),
               class: "govuk-!-font-weight-bold",
-              data: { qa: "link" }
+              data: { qa: "link" },
             ) %>
             <span class="govuk-body govuk-!-font-weight-regular govuk-!-display-block" data-qa="course_count">
               <%= pluralize(@course_counts[training_provider.provider_code], "course") %>
@@ -38,7 +38,7 @@
   </div>
 
   <aside class="govuk-grid-column-one-third">
-      <div class="app-related" data-qa="download-section" >
+      <div class="app-related" data-qa="download-section">
         <h2 class="govuk-heading-m">Download</h2>
         <p class="govuk-body">Export all the courses you’re the accredited body for.</p>
         <p class="govuk-body">
@@ -47,8 +47,8 @@
             download_training_providers_courses_provider_recruitment_cycle_path(
               provider.provider_code,
               provider.recruitment_cycle_year,
-              format: :csv
-            )
+              format: :csv,
+            ),
           ) %>
         </p>
       </div>

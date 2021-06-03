@@ -4,17 +4,18 @@
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course, url: full_part_time_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
+    <%= form_with model: course,
+                  url: full_part_time_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+                  method: :put do |form| %>
 
-      <%= render 'form_fields', form: form %>
+      <%= render "form_fields", form: form %>
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
-        class: "govuk-button", data: { qa: 'course__save' }
-      %>
+        class: "govuk-button", data: { qa: "course__save" } %>
 
       <p class="govuk-body">
         <%= govuk_link_to(

@@ -4,18 +4,18 @@
   <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with url: continue_provider_recruitment_cycle_courses_modern_languages_path(
                     @provider.provider_code,
-                    @provider.recruitment_cycle_year
+                    @provider.recruitment_cycle_year,
                   ),
                   method: :get do |form| %>
 
       <%= render "courses/new_fields_holder", form: form, except_keys: [:modern_languages] do |fields| %>
-        <%= render 'form_fields', form: fields %>
+        <%= render "form_fields", form: fields %>
       <% end %>
     <% end %>
   </div>

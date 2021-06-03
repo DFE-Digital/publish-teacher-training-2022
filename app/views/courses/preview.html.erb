@@ -22,7 +22,7 @@
   <dd data-qa="course__funding_option"><%= course.funding_option %></dd>
   <dt class="govuk-list--description__label">Qualification</dt>
   <dd data-qa="course__qualifications">
-    <%= render partial: 'courses/preview/qualification' %>
+    <%= render partial: "courses/preview/qualification" %>
   </dd>
 
   <% if course.age_range_in_years.present? %>
@@ -71,20 +71,20 @@
       <li><%= govuk_link_to "Apply", "#section-apply" %></li>
     </ul>
 
-    <%= render partial: 'courses/preview/about_course' %>
-    <%= render partial: 'courses/preview/about_schools' %>
-    <%= render partial: 'courses/preview/entry_requirements_qualifications' %>
+    <%= render partial: "courses/preview/about_course" %>
+    <%= render partial: "courses/preview/about_schools" %>
+    <%= render partial: "courses/preview/entry_requirements_qualifications" %>
     <% if course.salaried? %>
-      <%= render partial: 'courses/preview/salary' %>
+      <%= render partial: "courses/preview/salary" %>
     <% end %>
-    <%= render partial: 'courses/preview/fees_and_financial_support' %>
-    <%= render partial: 'courses/preview/about_the_provider' %>
+    <%= render partial: "courses/preview/fees_and_financial_support" %>
+    <%= render partial: "courses/preview/about_the_provider" %>
     <% if course.interview_process.present? %>
-      <%= render partial: 'courses/preview/interview_process' %>
+      <%= render partial: "courses/preview/interview_process" %>
     <% end %>
-    <%= render partial: 'courses/preview/train_with_disabilities' %>
-    <%= render partial: 'courses/preview/contact_details' %>
-    <%= render partial: 'courses/preview/advice' %>
-    <%= render partial: 'courses/preview/apply' %>
+    <%= render partial: "courses/preview/train_with_disabilities" %>
+    <%= render partial: "courses/preview/contact_details" %>
+    <%= render partial: "courses/preview/advice" %>
+    <%= render partial: "courses/preview/apply" %>
   </div>
 </div>

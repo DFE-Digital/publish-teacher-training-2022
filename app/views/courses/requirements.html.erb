@@ -4,12 +4,13 @@
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render partial: 'courses/copy_content_warning',
-                    locals: { copied_fields: @copied_fields } if params[:copy_from].present? %>
+<% if params[:copy_from].present? %>
+  <%= render partial: "courses/copy_content_warning", locals: { copied_fields: @copied_fields } %>
+<% end %>
 
 <%= form_with model: course,
-              builder: GOVUKDesignSystemFormBuilder::FormBuilder,
-              url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) do |f| %>
+              url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+              builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
   <%= f.govuk_error_summary "You’ll need to correct some information." %>
 <% end %>
 
@@ -21,10 +22,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: course,
-                  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
                   url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-                  data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
+                  data: { qa: "enrichment-form", module: "form-check-leave" },
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+
       <%= f.hidden_field :page, value: :requirements %>
+
       <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
 
       <p class="govuk-body">
@@ -53,7 +56,7 @@
         <p class="govuk-body">You’ll find out if you need to complete an SKE course after the interview stage.</p>
       <% end %>
 
-      <%= f.govuk_text_area :required_qualifications, label: { text: 'Qualifications needed', size:'s' }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :required_qualifications, label: { text: "Qualifications needed", size: "s" }, max_words: 100, rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
@@ -64,7 +67,7 @@
         (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
       </p>
 
-      <%= f.govuk_text_area :personal_qualities, label: { text: 'Personal qualities (optional)', size:'s' }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :personal_qualities, label: { text: "Personal qualities (optional)", size: "s" }, max_words: 100, rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
@@ -75,7 +78,7 @@
         (eg criminal record checks, or relevant work experience).
       </p>
 
-      <%= f.govuk_text_area :other_requirements, label: { text:  'Other requirements (optional)', size:'s' }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :other_requirements, label: { text: "Other requirements (optional)", size: "s" }, max_words: 100, rows: 10 %>
 
       <%= f.govuk_submit "Save" %>
 
@@ -90,9 +93,12 @@
   </div>
 
   <aside class="govuk-grid-column-one-third">
-    <%= render partial: 'courses/related_sidebar',
-                        locals: {
-                          course: course,
-                          page_path: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) } %>
+    <%= render(
+      partial: "courses/related_sidebar",
+      locals: {
+        course: course,
+        page_path: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      },
+    ) %>
   </aside>
 </div>

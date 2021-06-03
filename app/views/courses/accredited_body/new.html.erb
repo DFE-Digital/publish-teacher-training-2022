@@ -4,7 +4,7 @@
   <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <fieldset class="govuk-fieldset">
   <legend class="govuk-fieldset__legend">
@@ -17,31 +17,28 @@
     <div class="govuk-grid-column-full">
       <%= form_with url: continue_provider_recruitment_cycle_courses_accredited_body_path(
                       @provider.provider_code,
-                      @provider.recruitment_cycle_year
+                      @provider.recruitment_cycle_year,
                     ),
                     method: :get do |form| %>
 
           <%= render "courses/new_fields_holder", form: form, except_keys: [:accredited_body_code] do |fields| %>
             <div class="govuk-radios" data-module="govuk-radios" data-qa="course__accredited_body">
               <% if provider.accredited_bodies.length > 0 %>
-                <%= render partial: "provider_suggestion",
-                  collection: provider.accredited_bodies,
-                  locals: { form: fields }
-                %>
+                <%= render partial: "provider_suggestion", collection: provider.accredited_bodies, locals: { form: fields } %>
 
                 <div class="govuk-radios__divider">or</div>
 
                 <div class="govuk-radios__item">
                   <%= fields.radio_button :accredited_body_code,
-                    'other',
-                    class: 'govuk-radios__input',
+                    "other",
+                    class: "govuk-radios__input",
                     data: { "aria-controls" => "other-container" },
-                    checked: @errors && @errors[:accredited_body]&.any?  %>
+                    checked: @errors && @errors[:accredited_body]&.any? %>
                   <%= fields.label :accredited_body_code,
                     "A new accredited body you’re working with",
-                    for: 'course_accredited_body_code_other',
+                    for: "course_accredited_body_code_other",
                     value: false,
-                    class: 'govuk-label govuk-radios__label' %>
+                    class: "govuk-label govuk-radios__label" %>
                 </div>
 
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="other-container">

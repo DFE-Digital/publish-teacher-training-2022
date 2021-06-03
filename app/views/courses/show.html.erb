@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}#{course.name_and_code} - Courses" %>
+<%= content_for :page_title, "#{@errors.present? ? 'Error: ' : ''}#{course.name_and_code} - Courses" %>
 <%= content_for :before_content, render_breadcrumbs(:course) %>
 
 <% if @errors.present? %>
@@ -14,7 +14,7 @@
               <a href="<%= enrichment_error_url(
                 provider_code: @provider.provider_code,
                 course: @course,
-                field: id
+                field: id,
               ) %>"><%= message %></a>
             </li>
           <% end %>
@@ -30,7 +30,7 @@
     <%= link_to(
       "Specify an age range",
       age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-      class: "govuk-notification-banner__link"
+      class: "govuk-notification-banner__link",
     ) %>
   <% end %>
 <% end %>
@@ -45,20 +45,26 @@
 
   <ul class="govuk-tabs__list" role="tablist">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
-      <%=
-        link_to "#description",
-        class: "govuk-tabs__tab", role: 'tab', tabindex: '-1', aria: { selected: true } do
-      %>
+      <%= link_to(
+        "#description",
+        class: "govuk-tabs__tab",
+        role: "tab",
+        tabindex: "-1",
+        aria: { selected: true },
+      ) do %>
         Description<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Content, fees and eligibility</span>
       <% end %>
     </li>
 
     <li class="govuk-tabs__list-item" role="presentation">
-      <%=
-        link_to details_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-        class: "govuk-tabs__tab", role: 'tab', tabindex: '1', aria: { selected: false } do
-      %>
+      <%= link_to(
+        details_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+        class: "govuk-tabs__tab",
+        role: "tab",
+        tabindex: "1",
+        aria: { selected: false },
+      ) do %>
         Basic details<br>
         <span class="govuk-body-s govuk-!-font-weight-regular pointer-events-none">Locations, outcome, subject</span>
       <% end %>
@@ -68,10 +74,10 @@
   <section class="govuk-tabs__panel" id="description">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <%= render partial: 'courses/description_content' %>
+        <%= render partial: "courses/description_content" %>
       </div>
       <div class="govuk-grid-column-one-third" data-qa="course__status_panel">
-        <%= render partial: 'courses/status_panel' %>
+        <%= render partial: "courses/status_panel" %>
       </div>
     </div>
   </section>

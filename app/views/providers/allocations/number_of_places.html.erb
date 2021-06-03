@@ -1,4 +1,4 @@
-<%= content_for :page_title, "How many places would you like to request?"%>
+<%= content_for :page_title, "How many places would you like to request?" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path) %>
@@ -6,36 +6,33 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: form_object,
+                  url: initial_request_provider_recruitment_cycle_allocations_path(@provider.provider_code, @provider.recruitment_cycle_year),
+                  scope: "",
+                  skip_enforcing_utf8: true,
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
 
-  <%= form_with  model: form_object, scope: "", url: initial_request_provider_recruitment_cycle_allocations_path(
-                    @provider.provider_code,
-                    @provider.recruitment_cycle_year,
-                  ),
-                skip_enforcing_utf8: true,
-                builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
-    <%= form.govuk_error_summary %>
+      <%= form.govuk_error_summary %>
 
-    <%= form.govuk_text_field :number_of_places,
-          label: {
-            text: "How many places would you like to request?",
-            size: "xl",
-            tag: "h1",
-          },
-          caption: { text: "#{training_provider.provider_name} ", size:'xl'},
-          pattern: "[0-9]*",
-          inputmode: "numeric",
-          width: 10 do %>
+      <%= form.govuk_text_field :number_of_places,
+        label: {
+          text: "How many places would you like to request?",
+          size: "xl",
+          tag: "h1",
+        },
+        caption: { text: "#{training_provider.provider_name} ", size: "xl" },
+        pattern: "[0-9]*",
+        inputmode: "numeric",
+        width: 10 do %>
 
-        <p class="govuk-body govuk-!-margin-bottom-4">
-          Tell us how many places the organisation would like to offer for this
-          course. Make sure this number is as accurate as possible.
-        </p>
+      <p class="govuk-body govuk-!-margin-bottom-4">
+        Tell us how many places the organisation would like to offer for this
+        course. Make sure this number is as accurate as possible.
+      </p>
 
     <% end %>
 
-    <%= hidden_field_tag "training_provider_code", params[:training_provider_code]  %>
-
-
+    <%= hidden_field_tag "training_provider_code", params[:training_provider_code] %>
 
     <%= form.govuk_submit %>
   <% end %>

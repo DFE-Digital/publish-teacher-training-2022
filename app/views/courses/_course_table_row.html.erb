@@ -2,10 +2,9 @@
   <td class="govuk-table__cell app-course-table__course-name" data-qa="courses-table__course">
 
     <% if current_page?(provider_recruitment_cycle_courses_path(@provider.provider_code, course.recruitment_cycle_year)) %>
-      <%= govuk_link_to "#{course.name_and_code}",
+      <%= govuk_link_to course.name_and_code,
         provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-        class: "govuk-heading-s govuk-!-margin-bottom-0"
-      %>
+        class: "govuk-heading-s govuk-!-margin-bottom-0" %>
     <% else %>
     <span class="govuk-heading-s govuk-!-margin-0" data-qa="courses-table__course-name">
       <%= course.name_and_code %><br>

@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Pick a provider"%>
+<%= content_for :page_title, "Pick a provider" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path(@provider.provider_code, @recruitment_cycle.year)) %>
@@ -16,15 +16,22 @@
         <li>
           <% allocation = Allocation.for_provider_and_training_provider(recruitment_cycle: @recruitment_cycle, provider: @provider, training_provider: training_provider) %>
           <% if allocation.present? %>
-            <%= govuk_link_to "#{training_provider.provider_name} (#{training_provider.provider_code})",
+            <%= govuk_link_to(
+              "#{training_provider.provider_name} (#{training_provider.provider_code})",
               edit_provider_recruitment_cycle_allocation_path(
                 @provider.provider_code,
                 @provider.recruitment_cycle_year,
                 training_provider.provider_code,
-                id: allocation.id) %>
+                id: allocation.id,
+              ),
+            ) %>
           <% else %>
-            <%= govuk_link_to "#{training_provider.provider_name} (#{training_provider.provider_code})",
-              initial_request_provider_recruitment_cycle_allocations_path(training_provider_code: training_provider.provider_code) %>
+            <%= govuk_link_to(
+              "#{training_provider.provider_name} (#{training_provider.provider_code})",
+              initial_request_provider_recruitment_cycle_allocations_path(
+                training_provider_code: training_provider.provider_code,
+              ),
+            ) %>
           <% end %>
         </li>
       <% end %>
@@ -36,15 +43,16 @@
       <%= form_with url: initial_request_provider_recruitment_cycle_allocations_path(
                       @provider.provider_code,
                       @provider.recruitment_cycle_year,
-                      training_provider_code: params[:training_provider_code]
+                      training_provider_code: params[:training_provider_code],
                     ),
                     skip_enforcing_utf8: true,
                     method: :get,
                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+
         <%= form.hidden_field :training_provider_code, value: "-1" %>
 
         <div class="govuk-form-group">
-          <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } %>
+          <%= form.govuk_text_field :training_provider_query, label: { text: "Organisation name" } %>
           <div id="provider-autocomplete" class="govuk-body"></div>
         </div>
 

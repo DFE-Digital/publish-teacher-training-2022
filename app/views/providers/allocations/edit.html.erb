@@ -1,5 +1,5 @@
-<% page_title = "Do you want to request PE for this organisation?"%>
-<%= content_for :page_title, page_title%>
+<% page_title = "Do you want to request PE for this organisation?" %>
+<%= content_for :page_title, page_title %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_allocations_path) %>
@@ -7,15 +7,17 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: provider_recruitment_cycle_allocation_path(
-                    id: @allocation.id
-                  ),
-                  model: @allocation,
+    <%= form_with model: @allocation,
+                  url: provider_recruitment_cycle_allocation_path(id: @allocation.id),
                   scope: "",
                   method: :patch,
                   builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
-      <%= form.govuk_radio_buttons_fieldset(:old_department_id, legend: { size: 'xl', text: page_title, tag: 'h1' },
-                                            caption: { text: "#{@training_provider.provider_name} ", size:'xl'}) do %>
+
+      <%= form.govuk_radio_buttons_fieldset(
+        :old_department_id,
+        legend: { size: "xl", text: page_title, tag: "h1" },
+        caption: { text: "#{@training_provider.provider_name} ", size: "xl" },
+      ) do %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::REPEAT, label: { text: "Yes" } %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
       <% end %>

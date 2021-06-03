@@ -1,14 +1,14 @@
 <%= govuk_header({
   classes: "govuk-!-display-none-print app-header app-header--wide-logo #{environment_header_class}",
-  product_name: 'Publish teacher training courses',
-  logo_href: '/',
-  navigation_classes: 'govuk-header__navigation--end',
+  product_name: "Publish teacher training courses",
+  logo_href: "/",
+  navigation_classes: "govuk-header__navigation--end",
 }) do | component | %>
-  <% if current_user.present? && current_user['associated_with_accredited_body'] %>
-    <%= component.slot(:item, title: 'Notifications', href: notifications_path, active: current_page?(notifications_path)) %>
+  <% if current_user.present? && current_user["associated_with_accredited_body"] %>
+    <%= component.slot(:item, title: "Notifications", href: notifications_path, active: current_page?(notifications_path)) %>
   <% end %>
   <% if current_user.present? %>
-    <%= component.slot(:item, title: 'Sign out', href: sign_out_path) %>
+    <%= component.slot(:item, title: "Sign out", href: sign_out_path) %>
     <%= component.slot(:item, title: "(#{current_user['info']['first_name']} #{current_user['info']['last_name']})", href: Settings.dfe_signin.profile) %>
   <% end %>
 <% end %>

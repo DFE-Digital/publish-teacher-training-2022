@@ -4,22 +4,22 @@
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= render "courses/entry_requirements/page_intro" %>
 
     <%= form_with model: course,
-          url: entry_requirements_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
-          method: :put do |form| %>
+                  url: entry_requirements_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+                  method: :put do |form| %>
 
-      <%= render 'form_fields', form: form, gcse_subjects_required: course.gcse_subjects_required %>
+      <%= render "form_fields", form: form, gcse_subjects_required: course.gcse_subjects_required %>
 
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
       <p class="govuk-body">Changes will appear on UCAS Apply within 2 hours.</p>
 
-      <%= form.submit "Save changes", class: "govuk-button", data: { qa: 'course__save' } %>
+      <%= form.submit "Save changes", class: "govuk-button", data: { qa: "course__save" } %>
 
       <p class="govuk-body">
         <%= govuk_link_to(

@@ -1,13 +1,14 @@
-<%= content_for :page_title, "#{@errors.present? ? "Error: " : ""}Edit 'About your organisation'" %>
+<%= content_for :page_title, "#{@errors.present? ? 'Error: ' : ''}Edit 'About your organisation'" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
 <% end %>
 
 <%= form_with model: provider,
-              builder: GOVUKDesignSystemFormBuilder::FormBuilder,
               url: about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
-              method: :put do |f| %>
+              method: :put,
+              builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+
   <%= f.hidden_field :page, value: :about %>
   <%= f.govuk_error_summary "You’ll need to correct some information." %>
 
@@ -54,7 +55,7 @@
         </li>
       </ul>
 
-      <%= f.govuk_text_area :train_with_us, label: { text: 'Training with you', size:'s' }, max_words: 250, rows: 15 %>
+      <%= f.govuk_text_area :train_with_us, label: { text: "Training with you", size: "s" }, max_words: 250, rows: 15 %>
 
       <% if provider.accredited_bodies.present? %>
         <h2 class="govuk-heading-l">About your accredited body</h2>
@@ -67,7 +68,7 @@
         <%= f.fields model: :accredited_bodies do |abf| %>
           <%= abf.hidden_field :provider_name %>
           <%= abf.hidden_field :provider_code %>
-          <%= abf.govuk_text_area :description, label: { text: "#{ abf.object.provider_name} (optional)", size:'s' }, max_words: 100, rows: 10 %>
+          <%= abf.govuk_text_area :description, label: { text: "#{abf.object.provider_name} (optional)", size: "s" }, max_words: 100, rows: 10 %>
         <% end %>
       <% end %>
 
@@ -87,7 +88,7 @@
       </p>
 
       <%= f.govuk_text_area :train_with_disability,
-                            label: { text: 'Training with disabilities and other needs', size:'s' },
+                            label: { text: "Training with disabilities and other needs", size: "s" },
                             max_words: 250, rows: 15 %>
 
       <hr class="govuk-section-break govuk-section-break--l">

@@ -10,19 +10,19 @@
       request_type: params[:request_type],
       next_step: "number_of_places",
       id: allocation.id,
-    )
+    ),
   ) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: update_initial_request_provider_recruitment_cycle_allocation_path(
-      provider.provider_code,
-      recruitment_cycle.year,
-      training_provider.provider_code,
-      id: allocation.id
-    ),
-                  model: form_object,
+    <%= form_with model: form_object,
+                  url: update_initial_request_provider_recruitment_cycle_allocation_path(
+                    provider.provider_code,
+                    recruitment_cycle.year,
+                    training_provider.provider_code,
+                    id: allocation.id,
+                  ),
                   scope: "",
                   skip_enforcing_utf8: true,
                   builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
@@ -46,9 +46,9 @@
               number_of_places: params[:number_of_places],
               request_type: params[:request_type],
               next_step: "number_of_places",
-              id: allocation.id
-            )
-          )
+              id: allocation.id,
+            ),
+          ),
         ) %>
       <% end %>
 

@@ -4,10 +4,11 @@
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render partial: 'courses/copy_content_warning',
-                    locals: { copied_fields: @copied_fields } if params[:copy_from].present? %>
+<% if params[:copy_from].present? %>
+  <%= render partial: "courses/copy_content_warning", locals: { copied_fields: @copied_fields } %>
+<% end %>
 
-<%= render 'shared/errors' %>
+<%= render "shared/errors" %>
 
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= course.name_and_code %></span>
@@ -16,9 +17,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course, url: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), data: { qa: 'enrichment-form', module: 'form-check-leave' } do |f| %>
+    <%= form_with model: course,
+                  url: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                  data: { qa: "enrichment-form", module: "form-check-leave" } do |f| %>
       <%= f.hidden_field :page, value: :salary %>
-      <%= render partial: 'courses/course_length', locals: { f: f } %>
+      <%= render partial: "courses/course_length", locals: { f: f } %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
 
@@ -33,12 +36,12 @@
 
       <div id="salary_details_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
         <%= render "shared/form_field",
-          form: f, field: :salary_details, label: 'Salary', label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: 'govuk-textarea govuk-js-character-count') %>
+          form: f, field: :salary_details, label: "Salary", label_bold: true do |field, options| %>
+          <%= f.text_area field, options.merge(rows: 15, class: "govuk-textarea govuk-js-character-count") %>
         <% end %>
       </div>
 
-      <%= f.submit "Save", class: "govuk-button", data: { qa: 'course__save' } %>
+      <%= f.submit "Save", class: "govuk-button", data: { qa: "course__save" } %>
 
       <p class="govuk-body">
         <%= govuk_link_to(
@@ -50,9 +53,12 @@
     <% end %>
   </div>
   <aside class="govuk-grid-column-one-third">
-    <%= render partial: 'courses/related_sidebar',
-                        locals: {
-                          course: course,
-                          page_path: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) } %>
+    <%= render(
+      partial: "courses/related_sidebar",
+      locals: {
+        course: course,
+        page_path: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      },
+    ) %>
   </aside>
 </div>

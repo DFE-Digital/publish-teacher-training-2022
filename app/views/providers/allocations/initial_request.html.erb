@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Who are you requesting a course for?"%>
+<%= content_for :page_title, "Who are you requesting a course for?" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_allocations_path(provider.provider_code, provider.recruitment_cycle_year)) %>
@@ -6,16 +6,15 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: form_object, scope: "", url: initial_request_provider_recruitment_cycle_allocations_path(
-                      provider.provider_code,
-                      provider.recruitment_cycle_year,
-                    ),
-                     skip_enforcing_utf8: true,
-                     builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+    <%= form_with model: form_object,
+                  scope: "",
+                  url: initial_request_provider_recruitment_cycle_allocations_path(provider.provider_code, provider.recruitment_cycle_year),
+                  skip_enforcing_utf8: true,
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
 
       <%= form.govuk_error_summary %>
 
-      <%= form.govuk_radio_buttons_fieldset(:training_provider_code, legend: { size: 'xl', text: 'Who are you requesting a course for?', tag: 'h1' }) do %>
+      <%= form.govuk_radio_buttons_fieldset(:training_provider_code, legend: { size: "xl", text: "Who are you requesting a course for?", tag: "h1" }) do %>
         <p class="govuk-body">
           This should be the name of the organisation offering the course. For
           example, a lead school or your own organisation, if you’re offering it.
@@ -31,14 +30,14 @@
 
           <%= form.govuk_radio_divider %>
 
-          <%= form.govuk_radio_button :training_provider_code, "-1", label: { text: 'Find an organisation not listed above' } do %>
-            <%= form.govuk_text_field :training_provider_query, label: { text: 'Organisation name' } do %>
+          <%= form.govuk_radio_button :training_provider_code, "-1", label: { text: "Find an organisation not listed above" } do %>
+            <%= form.govuk_text_field :training_provider_query, label: { text: "Organisation name" } do %>
               <div id="provider-autocomplete" class="govuk-body"></div>
             <% end %>
           <% end %>
         <% else %>
           <%= hidden_field_tag "training_provider_code", "-1" %>
-          <%= form.govuk_text_field :training_provider_query, label: { text: 'Find an organisation' } %>
+          <%= form.govuk_text_field :training_provider_query, label: { text: "Find an organisation" } %>
           <div id="provider-autocomplete" class="govuk-body"></div>
         <% end %>
       <% end %>

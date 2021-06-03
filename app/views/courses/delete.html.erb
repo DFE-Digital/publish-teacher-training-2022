@@ -23,18 +23,21 @@
 
     <h2 class="govuk-heading-m">Confirm delete</h2>
 
-    <%= form_with model: @course, url: provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :delete do |f| %>
+    <%= form_with model: @course,
+                  url: provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                  method: :delete do |f| %>
+
       <div class="govuk-form-group">
-        <%= f.label 'confirm_course_code', 'Type in the course code to confirm', class: 'govuk-label' %>
+        <%= f.label "confirm_course_code", "Type in the course code to confirm", class: "govuk-label" %>
         <% if flash[:error] && flash[:error]["id"] == "delete-error" %>
           <span class="govuk-error-message" id="delete-error" data-qa="course-delete-error">
             <%= flash[:error]["message"] %>
           </span>
         <% end %>
-        <%= f.text_field 'confirm_course_code', class: 'govuk-input govuk-input--width-5' %>
+        <%= f.text_field "confirm_course_code", class: "govuk-input govuk-input--width-5" %>
       </div>
       <hr class="govuk-section-break govuk-section-break--m">
-      <%= f.submit 'Yes I’m sure – delete this course', class: 'govuk-button govuk-button--warning' %>
+      <%= f.submit "Yes I’m sure – delete this course", class: "govuk-button govuk-button--warning" %>
     <% end %>
 
     <p class="govuk-body govuk-!-margin-top-5">

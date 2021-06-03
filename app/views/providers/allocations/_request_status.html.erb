@@ -29,8 +29,8 @@
               new_repeat_request_provider_recruitment_cycle_allocation_path(
                 @provider.provider_code,
                 @provider.recruitment_cycle_year,
-                allocation[:training_provider_code]
-              )
+                allocation[:training_provider_code],
+              ),
             ) %>
           <% else %>
             <% if allocation[:request_type] == AllocationsView::RequestType::INITIAL %>
@@ -40,8 +40,8 @@
                   @provider.provider_code,
                   @provider.recruitment_cycle_year,
                   allocation[:training_provider_code],
-                  id: allocation[:id]
-                )
+                  id: allocation[:id],
+                ),
               ) %>
             <% else %>
               <%= govuk_link_to(
@@ -50,8 +50,8 @@
                   @provider.provider_code,
                   @provider.recruitment_cycle_year,
                   allocation[:training_provider_code],
-                  id: allocation[:id]
-                )
+                  id: allocation[:id],
+                ),
               ) %>
             <% end %>
           <% end %>
