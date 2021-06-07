@@ -88,6 +88,7 @@ features:
     # actually starting when it would be set to false
     has_current_cycle_started?: true
     show_next_cycle_allocation_recruitment_page: true
+    prepare_for_next_cycle: false
   maintenance_mode:
     enabled: false
     title: "This service will be unavailable from Thursday 4 March at 17:00 to Friday 5 March at 09:00, while we carry out maintenance."
