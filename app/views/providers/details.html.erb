@@ -1,6 +1,16 @@
 <%= content_for :page_title, title_with_error_prefix("About your organisation", @errors.present?) %>
 <%= content_for :before_content, render_breadcrumbs(:organisation_details) %>
 
+<% if Settings.features.rollover.prepare_for_next_cycle %>
+  <%= govuk_notification_banner(title: t('notification_banner.prepare_for_next_cycle.title')) do |notification_banner| %>
+    <%= notification_banner.slot(:heading, text: t('notification_banner.prepare_for_next_cycle.prompt')) %>
+    <p class="govuk-body"><%= govuk_link_to(
+      t('notification_banner.prepare_for_next_cycle.link'),
+      '#',
+    ) %></p>
+  <% end %>
+<% end %>
+
 <% if @errors.present? %>
   <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary" data-ga-event-form="error">
     <h2 class="govuk-error-summary__title" id="error-summary-title">
