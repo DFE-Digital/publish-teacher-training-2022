@@ -10,6 +10,12 @@ the course is 'published'. We make copies of the providers and courses because
 during Rollover the current cycle is still open for applications. As such, we
 can't make any changes to existing courses.
 
+The main purpose of the `has_current_cycle_started?` setting is to stop 
+providers thinking they are altering vacancies when the course isn’t live
+yet, but we don’t think it’s necessary and have decided to skip this step
+this year (rolling over to the 2022-2023 cycle). The flag also causes some
+small content changes as can be seen in `recruitment_cycle_spec.rb`
+
 This document lists the changes needed to be made to the Publish codebase and
 the timings for these changes. There is separate documentation for TTAPI
 [here](https://github.com/DFE-Digital/teacher-training-api/blob/master/docs/rollover.md).
@@ -31,7 +37,6 @@ updates/refactoring work.
 
 1. Create a **Rollover PR** including the following code changes:
     - Set feature flag `can_edit_current_and_next_cycles: true`
-    - Set feature flag `has_current_cycle_started?: false` [TBC]
     - Any hardcoded copy changes
 2. Create **new Google forms** for adding PE courses for the next cycle
 
@@ -56,7 +61,3 @@ updates/refactoring work.
 
 1. Complete the steps on TTAPI
 1. Merge the End Rollover PR
-
-## On recruitment cycle start date
-
-Set feature flag `has_current_cycle_started?: true`
