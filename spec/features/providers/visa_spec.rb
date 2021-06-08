@@ -113,5 +113,11 @@ feature "View and edit provider visa sponsorship", type: :feature do
       end
       click_button "Save"
     end
+
+    it "renders validation errors" do
+      visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
+      click_link "Can you sponsor visas?"
+      click_button "Save"
+    end
   end
 end
