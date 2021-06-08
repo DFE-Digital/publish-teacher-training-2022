@@ -2,30 +2,30 @@
   <h2 class="govuk-heading-l" id="section-contact">Contact details</h2>
 
   <div class="course-basicinfo">
-    <dl class="govuk-list--description">
+    <dl class="app-description-list">
       <% if @provider.email.present? %>
-        <dt class="govuk-list--description__label">Email</dt>
+        <dt class="app-description-list__label">Email</dt>
         <dd data-qa="provider__email">
           <%= govuk_mail_to @provider.email, @provider.email, title: "Send email to course contact", aria: { label: "Send email to course contact" } %>
         </dd>
       <% end %>
 
       <% if @provider.telephone.present? %>
-        <dt class="govuk-list--description__label">Telephone</dt>
+        <dt class="app-description-list__label">Telephone</dt>
         <dd data-qa="provider__telephone">
           <%= @provider.telephone %>
         </dd>
       <% end %>
 
       <% if @provider.website.present? %>
-        <dt class="govuk-list--description__label">Website</dt>
+        <dt class="app-description-list__label">Website</dt>
         <dd data-qa="provider__website">
           <%= govuk_link_to @provider.website, @provider.website %>
         </dd>
       <% end %>
 
       <% if @provider.full_address.present? %>
-        <dt class="govuk-list--description__label">Address</dt>
+        <dt class="app-description-list__label">Address</dt>
         <dd data-qa="provider__address">
           <%= @provider.full_address %>
         </dd>
