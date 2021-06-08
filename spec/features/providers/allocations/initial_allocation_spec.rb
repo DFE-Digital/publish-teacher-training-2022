@@ -297,6 +297,11 @@ RSpec.feature "PE allocations" do
     )
 
     stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year - 1}/providers/" \
+      "#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
+    )
+    stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
       resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
@@ -340,10 +345,23 @@ RSpec.feature "PE allocations" do
 
   def and_i_choose_a_training_provider
     stub_api_v2_request(
-      "/providers/#{@accredited_body.provider_code}/allocations?filter[recruitment_cycle_year]=#{@accredited_body.recruitment_cycle.year}&filter[training_provider_code]=#{@training_provider.provider_code}&page[page]=1&page[per_page]=1",
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+      "#{@accredited_body.provider_code}/allocations?" \
+      "filter[training_provider_code]=#{@training_provider.provider_code}&page[page]=1&page[per_page]=1",
       resource_list_to_jsonapi([]),
     )
-
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year - 1}/providers" \
+      "/#{@accredited_body.provider_code}/allocations?" \
+      "filter[training_provider_code]=#{@training_provider.provider_code}&page[page]=1&page[per_page]=1",
+      resource_list_to_jsonapi([]),
+    )
+    stub_api_v2_request(
+      "/providers/#{@accredited_body.provider_code}/allocations?" \
+      "filter[recruitment_cycle_year]=#{@accredited_body.recruitment_cycle.year}&" \
+      "filter[training_provider_code]=#{@training_provider.provider_code}&page[page]=1&page[per_page]=1",
+      resource_list_to_jsonapi([]),
+    )
     page.choose(@training_provider.provider_name)
   end
 
@@ -358,7 +376,21 @@ RSpec.feature "PE allocations" do
 
     provider_codes.each do |provider_code|
       stub_api_v2_request(
-        "/providers/#{@accredited_body.provider_code}/allocations?filter[recruitment_cycle_year]=#{@accredited_body.recruitment_cycle.year}&filter[training_provider_code]=#{provider_code}&page[page]=1&page[per_page]=1",
+        "/providers/#{@accredited_body.provider_code}/allocations?" \
+        "filter[recruitment_cycle_year]=#{@accredited_body.recruitment_cycle.year}&" \
+        "filter[training_provider_code]=#{provider_code}&page[page]=1&page[per_page]=1",
+        resource_list_to_jsonapi([]),
+      )
+      stub_api_v2_request(
+        "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
+        "#{@accredited_body.provider_code}/allocations?" \
+        "filter[training_provider_code]=#{provider_code}&page[page]=1&page[per_page]=1",
+        resource_list_to_jsonapi([]),
+      )
+      stub_api_v2_request(
+        "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year - 1}/providers/" \
+        "#{@accredited_body.provider_code}/allocations?" \
+        "filter[training_provider_code]=#{provider_code}&page[page]=1&page[per_page]=1",
         resource_list_to_jsonapi([]),
       )
     end

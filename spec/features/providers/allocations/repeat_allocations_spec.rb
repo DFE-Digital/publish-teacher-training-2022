@@ -29,6 +29,7 @@ RSpec.feature "PE allocations" do
     scenario "Accredited body requests PE allocations" do
       given_accredited_body_exists
       given_training_provider_with_pe_fee_funded_course_exists
+      given_the_accredited_body_requested_an_allocation_last_year
       given_the_accredited_body_has_not_requested_an_allocation
       given_i_am_signed_in_as_a_user_from_the_accredited_body
 
@@ -48,6 +49,7 @@ RSpec.feature "PE allocations" do
     scenario "Accredited body decides not to request PE allocations" do
       given_accredited_body_exists
       given_training_provider_with_pe_fee_funded_course_exists
+      given_the_accredited_body_requested_an_allocation_last_year
       given_the_accredited_body_has_not_requested_an_allocation
       given_i_am_signed_in_as_a_user_from_the_accredited_body
 
@@ -90,10 +92,11 @@ RSpec.feature "PE allocations" do
   end
 
   context "Initial allocations" do
-    context "Accredited body has previously requested an initial allocations for a training provider" do
+    context "Accredited body has previously requested an initial allocation for a training provider" do
       scenario "Accredited body views PE allocation page" do
         given_accredited_body_exists
         given_training_provider_with_pe_fee_funded_course_exists
+        given_the_accredited_body_did_not_request_an_allocation_last_year
         given_the_accredited_body_has_requested_an_initial_allocation
         given_i_am_signed_in_as_a_user_from_the_accredited_body
 
@@ -236,6 +239,23 @@ private
     )
   end
 
+  def given_the_accredited_body_requested_an_allocation_last_year
+    allocation = build(:allocation, :repeat, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 10)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year - 1}/providers/" \
+      "#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([allocation], include: "provider,accredited_body"),
+    )
+  end
+
+  def given_the_accredited_body_did_not_request_an_allocation_last_year
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year - 1}/providers/" \
+      "#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([], include: "provider,accredited_body"),
+    )
+  end
+
   def given_the_accredited_body_has_not_requested_an_allocation
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
@@ -245,6 +265,11 @@ private
 
   def given_the_accredited_body_has_declined_an_allocation
     @allocation = build(:allocation, :declined, accredited_body: @accredited_body, provider: @training_provider, number_of_places: 0)
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year - 1}/providers/" \
+      "#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
+    )
     stub_api_v2_request(
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
       resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
@@ -264,7 +289,11 @@ private
       "/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
       resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
     )
-
+    stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year - 1}/providers/" \
+      "#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
+    )
     stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider.provider_code}/show_any" \
@@ -419,7 +448,6 @@ private
       resource_list_to_jsonapi([allocation(request_type: :declined, number_of_places: 0)]),
       :post,
     )
-
     allocations_new_page.no.click
   end
 

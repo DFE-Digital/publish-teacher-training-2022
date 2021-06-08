@@ -15,13 +15,21 @@ module Providers
         funding_type: "fee",
       )
 
+      previous_allocations = Allocation
+                      .includes(:provider, :accredited_body)
+                      .where(provider_code: params[:provider_code])
+                      .where(recruitment_cycle_year: Settings.allocation_cycle_year - 1)
+                      .all
+
       allocations = Allocation
                       .includes(:provider, :accredited_body)
                       .where(provider_code: params[:provider_code])
                       .all
 
       @allocations_view = AllocationsView.new(
-        allocations: allocations, training_providers: @training_providers,
+        previous_allocations: previous_allocations,
+        allocations: allocations,
+        training_providers: @training_providers,
       )
     end
 
