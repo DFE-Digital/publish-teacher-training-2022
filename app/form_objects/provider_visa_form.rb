@@ -7,5 +7,6 @@ class ProviderVisaForm
   validates :can_sponsor_student_visa, inclusion: { in: [true, false],  message: "Select whether provider sponsors student visas" }
 
   def save
+    true
   end
 end

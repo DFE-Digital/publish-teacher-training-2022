@@ -33,5 +33,11 @@ feature "View provider", type: :feature do
       visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
       expect(page).to have_content "You need to provide some information before publishing your courses."
     end
+
+    it "renders validation errors" do
+      visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
+      click_link "Can you sponsor visas?"
+      click_button "Save"
+    end
   end
 end
