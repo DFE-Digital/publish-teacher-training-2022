@@ -20,6 +20,7 @@ $success-green: #00823b;
 @import "header";
 @import "list";
 @import "map";
+@import "missing-section";
 @import "admin-only";
 @import "patterns/pagination";
 @import "summary-list";
@@ -30,12 +31,6 @@ $success-green: #00823b;
 
 // Override utilities
 @import "overrides";
-
-.app-missing-section {
-  @extend %govuk-body-m;
-  border: 5px solid $govuk-border-colour;
-  padding: govuk-spacing(3);
-}
 
 // Fixes <wbr> in IE9
 // https://stackoverflow.com/a/23759279
