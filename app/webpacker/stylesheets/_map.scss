@@ -1,4 +1,15 @@
-.map-marker {
+.app-map {
+  display: none;
+
+  .js-enabled & {
+    display: block;
+    margin-bottom: govuk-spacing(6);
+    padding-bottom: 66.6%;
+    width: 100%;
+  }
+}
+
+.app-map__marker {
   height: 0;
   position: absolute;
   width: 200px;
@@ -69,23 +80,23 @@
   &.open {
     z-index: 2;
 
-    .map-marker__content {
+    .app-map__marker-content {
       max-width: none;
       max-height: none;
       padding: govuk-spacing(2);
     }
 
-    .map-marker__title {
+    .app-map__marker-title {
       @include govuk-font($size: 19, $line-height: 1.5, $weight: bold);
       @include govuk-responsive-margin(2, "bottom");
       padding-right: 20px;
     }
 
-    .map-marker__body {
+    .app-map__marker-body {
       display: block;
     }
 
-    .map-marker__close {
+    .app-map__marker-close {
       display: inline-block;
     }
   }

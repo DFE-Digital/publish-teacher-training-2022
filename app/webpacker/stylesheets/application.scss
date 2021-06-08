@@ -72,14 +72,3 @@ $success-green: #00823b;
 wbr:after {
   content: "\00200B";
 }
-
-.app-google-map {
-  display: none;
-
-  .js-enabled & {
-    display: block;
-    margin-bottom: govuk-spacing(6);
-    padding-bottom: 66.6%;
-    width: 100%;
-  }
-}
