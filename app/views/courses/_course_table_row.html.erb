@@ -1,14 +1,13 @@
 <tr class="govuk-table__row">
-  <td class="govuk-table__cell app-course-table__course-name" data-qa="courses-table__course">
-
+  <td class="govuk-table__cell app-table--courses__course-name" data-qa="courses-table__course-name">
     <% if current_page?(provider_recruitment_cycle_courses_path(@provider.provider_code, course.recruitment_cycle_year)) %>
       <%= govuk_link_to course.name_and_code,
         provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
         class: "govuk-heading-s govuk-!-margin-bottom-0" %>
     <% else %>
-    <span class="govuk-heading-s govuk-!-margin-0" data-qa="courses-table__course-name">
-      <%= course.name_and_code %><br>
-    </span>
+      <span class="govuk-heading-s govuk-!-margin-0">
+        <%= course.name_and_code %><br>
+      </span>
     <% end %>
     <span class="govuk-body-s"><%= course.description %></span>
   </td>

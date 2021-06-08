@@ -21,6 +21,7 @@ $success-green: #00823b;
 @import "admin-only";
 @import "patterns/pagination";
 @import "summary-list";
+@import "table";
 @import "tabs";
 @import "performance-dashboard";
 @import "related";
@@ -54,12 +55,6 @@ $success-green: #00823b;
   }
 }
 
-.app-course-table {
-  &__course-name {
-    width: 33%;
-  }
-}
-
 .govuk-list li > .govuk-body:last-child {
   margin-bottom: 0;
 }
@@ -85,12 +80,6 @@ $success-green: #00823b;
 // https://stackoverflow.com/a/23759279
 wbr:after {
   content: "\00200B";
-}
-
-// Required since govuk-frontend 3.0.0
-.app-table--vertical-align-middle .govuk-table__header,
-.app-table--vertical-align-middle .govuk-table__cell {
-  vertical-align: middle;
 }
 
 .app-google-map {
