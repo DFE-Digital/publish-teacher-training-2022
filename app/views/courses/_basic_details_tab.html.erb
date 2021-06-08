@@ -14,7 +14,7 @@
 
       <%= summary_list.slot(
         :row,
-        key: raw("<abbr class=\"app-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>"),
+        key: raw("<abbr class=\"app-!-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>"),
         value: course.is_send?,
         action: @course.meta["edit_options"]["show_is_send"] ? change_link_to("SEND", send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
         html_attributes: {
@@ -266,7 +266,7 @@
         <h2 class="govuk-heading-m">Changing your basic details</h2>
         <p class="govuk-body">At the moment you can change:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li><abbr class="app-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr> specialism</li>
+          <li><abbr class="app-!-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr> specialism</li>
           <% course.listing_basic_details.each do |details| %>
             <li><%= details %></li>
           <% end %>

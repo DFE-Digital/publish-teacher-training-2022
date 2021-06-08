@@ -30,10 +30,6 @@ $success-green: #00823b;
 // Override utilities
 @import "overrides";
 
-.app-text-decoration-underline-dotted {
-  text-decoration: underline dotted;
-}
-
 .app-preview-banner {
   background: govuk-colour("light-grey");
   margin-top: govuk-spacing(2);
