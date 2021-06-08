@@ -33,6 +33,6 @@
         <%= render @sites %>
       </tbody>
     </table>
-    <%= govuk_link_to "Add a location", new_provider_recruitment_cycle_site_path(@provider.provider_code), button: true %>
+    <%= govuk_button_link_to "Add a location", new_provider_recruitment_cycle_site_path(@provider.provider_code) %>
   </div>
 </div>

@@ -1,6 +1,6 @@
 module ViewHelper
   def govuk_back_link_to(url = :back, body = "Back")
-    render GovukComponent::BackLink.new(
+    render GovukComponent::BackLinkComponent.new(
       text: body,
       href: url,
       classes: "govuk-!-display-none-print",
@@ -10,12 +10,6 @@ module ViewHelper
         },
       },
     )
-  end
-
-  def change_link_to(hidden_text, url, text = "Change", **kwargs)
-    govuk_link_to url, **kwargs do
-      raw("#{text}<span class=\"govuk-visually-hidden\"> #{hidden_text}</span>")
-    end
   end
 
   def search_ui_url(relative_path)
