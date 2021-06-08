@@ -46,15 +46,6 @@ $success-green: #00823b;
   padding: govuk-spacing(3);
 }
 
-.app-warning-text--inline {
-  margin-bottom: 0;
-
-  + .govuk-body {
-    margin-bottom: govuk-spacing(8);
-    padding-left: govuk-spacing(8);
-  }
-}
-
 .govuk-list li > .govuk-body:last-child {
   margin-bottom: 0;
 }
