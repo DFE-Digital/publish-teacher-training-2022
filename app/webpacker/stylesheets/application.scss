@@ -43,10 +43,6 @@ $success-green: #00823b;
   padding: govuk-spacing(3);
 }
 
-.govuk-list li > .govuk-body:last-child {
-  margin-bottom: 0;
-}
-
 // Fixes <wbr> in IE9
 // https://stackoverflow.com/a/23759279
 wbr:after {
