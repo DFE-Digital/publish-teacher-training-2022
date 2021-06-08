@@ -31,11 +31,11 @@
         <%= render "shared/form_field",
           form: f, field: :fee_uk_eu, label: "Fee for UK students",
           label_bold: true do |field, options| %>
-          <div class="govuk-currency-input">
-            <div class="govuk-currency-input__inner">
-              <span class="govuk-currency-input__inner__unit">£</span>
+          <div class="app-currency-input">
+            <div class="app-currency-input__inner">
+              <span class="app-currency-input__inner__unit">£</span>
               <%= f.text_field field, options.merge(
-                class: "govuk-currency-input__inner__input govuk-input govuk-input--width-10",
+                class: "app-currency-input__inner__input govuk-input govuk-input--width-10",
                 value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true),
               ) %>
             </div>
@@ -47,11 +47,11 @@
         <%= render "shared/form_field",
           form: f, field: :fee_international, label: "Fee for international students (optional)",
           label_bold: true do |field, options| %>
-          <div class="govuk-currency-input">
-            <div class="govuk-currency-input__inner">
-              <span class="govuk-currency-input__inner__unit">£</span>
+          <div class="app-currency-input">
+            <div class="app-currency-input__inner">
+              <span class="app-currency-input__inner__unit">£</span>
               <%= f.text_field field, options.merge(
-                class: "govuk-currency-input__inner__input govuk-input govuk-input--width-10",
+                class: "app-currency-input__inner__input govuk-input govuk-input--width-10",
                 value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true),
               ) %>
             </div>
