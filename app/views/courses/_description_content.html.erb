@@ -1,35 +1,35 @@
 <% if course.is_withdrawn? %>
-  <%= govuk_warning(text: "This course has been withdrawn.") %>
+  <%= govuk_warning_text(text: "This course has been withdrawn.") %>
 <% end %>
 
 <h3 class="govuk-heading-m">About this course</h3>
 
 <%= govuk_summary_list do |summary_list| %>
-  <% summary_list.slot(:row, enrichment_summary(
+  <% summary_list.row(enrichment_summary(
     :course,
     "About this course",
     course.about_course,
     %w[about_course],
-    change_link: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-    change_link_visually_hidden: "details about this course",
+    action_path: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+    action_visually_hidden_text: "details about this course",
   )) %>
 
-  <% summary_list.slot(:row, enrichment_summary(
+  <% summary_list.row(enrichment_summary(
     :course,
     "Interview process (optional)",
     course.interview_process,
     %w[interview_process],
-    change_link: "#{about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#interview-process",
-    change_link_visually_hidden: "details about the interview process",
+    action_path: "#{about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#interview-process",
+    action_visually_hidden_text: "details about the interview process",
   )) %>
 
-  <% summary_list.slot(:row, enrichment_summary(
+  <% summary_list.row(enrichment_summary(
     :course,
     course.placements_heading,
     course.how_school_placements_work,
     %w[how_school_placements_work],
-    change_link: "#{about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#how-school-placements-work",
-    change_link_visually_hidden: "details about how school placements work",
+    action_path: "#{about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#how-school-placements-work",
+    action_visually_hidden_text: "details about how school placements work",
   )) %>
 <% end %>
 
@@ -42,67 +42,67 @@
 </h3>
 <%= govuk_summary_list do |summary_list| %>
   <% if course.has_fees? %>
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Course length",
       course.length,
       %w[course_length],
-      change_link: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#course-length",
-      change_link_visually_hidden: "course length",
+      action_path: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#course-length",
+      action_visually_hidden_text: "course length",
     )) %>
 
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Fee for UK students",
       number_to_currency(course.fee_uk_eu),
       %w[fee_uk_eu],
-      change_link: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#fee-uk",
-      change_link_visually_hidden: "fee for UK students",
+      action_path: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#fee-uk",
+      action_visually_hidden_text: "fee for UK students",
     )) %>
 
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Fee for international students (optional)",
       number_to_currency(course.fee_international),
       %w[international_fees],
-      change_link: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#fee-international",
-      change_link_visually_hidden: "fee for international students",
+      action_path: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#fee-international",
+      action_visually_hidden_text: "fee for international students",
     )) %>
 
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Fee details (optional)",
       course.fee_details,
       %w[fee_details],
-      change_link: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#fee-details",
-      change_link_visually_hidden: "fee details",
+      action_path: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#fee-details",
+      action_visually_hidden_text: "fee details",
     )) %>
 
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Financial support you offer (optional)",
       course.financial_support,
       %w[financial_support],
-      change_link: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#financial-support",
-      change_link_visually_hidden: "details of financial support you offer",
+      action_path: "#{fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#financial-support",
+      action_visually_hidden_text: "details of financial support you offer",
     )) %>
   <% else %>
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Course length",
       course.length,
       %w[course_length],
-      change_link: "#{salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#course-length",
-      change_link_visually_hidden: "course length",
+      action_path: "#{salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#course-length",
+      action_visually_hidden_text: "course length",
     )) %>
 
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Salary",
       course.salary_details,
       %w[salary_details],
-      change_link: "#{salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#salary",
-      change_link_visually_hidden: "salary",
+      action_path: "#{salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#salary",
+      action_visually_hidden_text: "salary",
     )) %>
   <% end %>
 <% end %>
@@ -111,51 +111,51 @@
 
 <%= govuk_summary_list do |summary_list| %>
   <% if @provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Degree",
       (render DegreeRowContentComponent.new(course: course, errors: @errors)),
       %w[degree_grade degree_subject_requirements],
       truncate_value: false,
-      change_link: course.degree_section_complete? ? degrees_start_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
-      change_link_visually_hidden: "degree",
+      action_path: course.degree_section_complete? ? degrees_start_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
+      action_visually_hidden_text: "degree",
     )) %>
 
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "GCSEs",
       (render GcseRowContentComponent.new(course: course, errors: @errors)),
       %w[accept_pending_gcse accept_gcse_equivalency accept_english_gcse_equivalency accept_maths_gcse_equivalency accept_science_gcse_equivalency additional_gcse_equivalencies],
       truncate_value: false,
-      change_link: course.gcse_section_complete? ? gcses_pending_or_equivalency_tests_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
-      change_link_visually_hidden: "GCSEs",
+      action_path: course.gcse_section_complete? ? gcses_pending_or_equivalency_tests_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
+      action_visually_hidden_text: "GCSEs",
     )) %>
   <% else %>
-    <% summary_list.slot(:row, enrichment_summary(
+    <% summary_list.row(enrichment_summary(
       :course,
       "Qualifications needed",
       course.required_qualifications,
       %w[required_qualifications],
-      change_link: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-      change_link_visually_hidden: "qualifications needed",
+      action_path: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      action_visually_hidden_text: "qualifications needed",
     )) %>
   <% end %>
 
-  <% summary_list.slot(:row, enrichment_summary(
+  <% summary_list.row(enrichment_summary(
     :course,
     "Personal qualities (optional)",
     course.personal_qualities,
     %w[personal_qualities],
-    change_link: "#{requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#personal-qualities",
-    change_link_visually_hidden: "personal qualities",
+    action_path: "#{requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#personal-qualities",
+    action_visually_hidden_text: "personal qualities",
   )) %>
 
-  <% summary_list.slot(:row, enrichment_summary(
+  <% summary_list.row(enrichment_summary(
     :course,
     "Other requirements (optional)",
     course.other_requirements,
     %w[other_requirements],
-    change_link: "#{requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#other-requirements",
-    change_link_visually_hidden: "other requirements",
+    action_path: "#{requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)}#other-requirements",
+    action_visually_hidden_text: "other requirements",
   )) %>
 <% end %>

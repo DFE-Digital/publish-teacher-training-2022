@@ -34,9 +34,9 @@
       </tbody>
     </table>
     <% if @provider.can_add_more_sites? %>
-      <%= govuk_link_to "Add a location", new_provider_recruitment_cycle_site_path(@provider.provider_code), button: true %>
+      <%= govuk_button_link_to "Add a location", new_provider_recruitment_cycle_site_path(@provider.provider_code) %>
     <% else %>
-      <%= govuk_warning(text: "You can’t add any more locations as you’ve reached the maximum number of locations available.") %>
+      <%= govuk_warning_text(text: "You can’t add any more locations as you’ve reached the maximum number of locations available.") %>
     <% end %>
   </div>
 </div>

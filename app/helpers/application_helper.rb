@@ -40,13 +40,14 @@ module ApplicationHelper
                field: field.to_s,
              )
            end
+
     govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--error") do
       govuk_link_to(error, href)
     end
   end
 
-  def enrichment_summary(model, key, value, fields, truncate_value: true, change_link: nil, change_link_visually_hidden: nil)
-    action = render_change_link(change_link, change_link_visually_hidden)
+  def enrichment_summary(model, key, value, fields, truncate_value: true, action_path: nil, action_visually_hidden_text: nil)
+    action = render_action(action_path, action_visually_hidden_text)
 
     if fields.select { |field| @errors&.key? field.to_sym }.any?
       errors = fields.map { |field|
@@ -67,23 +68,22 @@ module ApplicationHelper
       key: key.html_safe,
       value: value,
       classes: classes,
-      html_attributes: {
-        data: {
-          qa: "enrichment__#{fields.first}",
-        },
-      },
       action: action,
+      html_attributes: {
+        data: { qa: "enrichment__#{fields.first}" },
+      },
     }
   end
 
 private
 
-  def render_change_link(path, visually_hidden)
-    return if path.blank?
+  def render_action(action_path, action_visually_hidden_text)
+    return if action_path.blank?
 
-    govuk_link_to(path) do
-      raw("Change<span class=\"govuk-visually-hidden\"> #{visually_hidden}</span>")
-    end
+    {
+      href: action_path,
+      visually_hidden_text: action_visually_hidden_text,
+    }
   end
 
   # Use characters rather than HTML entities for smart quotes this matches how

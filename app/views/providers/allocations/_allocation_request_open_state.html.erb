@@ -81,13 +81,12 @@
       We’ll need to know how many places each one would like to offer.
     </p>
 
-    <%= govuk_link_to(
+    <%= govuk_button_link_to(
       "Choose an organisation",
       initial_request_provider_recruitment_cycle_allocations_path(
         @provider.provider_code,
         @provider.recruitment_cycle_year,
       ),
-      button: true,
     ) %>
 
     <h2 class="govuk-heading-m">

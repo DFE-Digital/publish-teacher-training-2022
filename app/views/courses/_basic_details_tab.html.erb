@@ -1,104 +1,107 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_summary_list do |summary_list| %>
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Level",
         value: course.level.humanize,
         html_attributes: {
-          data: {
-            qa: "course__level",
-          },
+          data: { qa: "course__level" },
         },
       ) %>
 
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: raw("<abbr class=\"app-!-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>"),
         value: course.is_send?,
-        action: @course.meta["edit_options"]["show_is_send"] ? change_link_to("SEND", send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
+        action: (if @course.meta["edit_options"]["show_is_send"]
+                   {
+                     href: send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                     visually_hidden_text: "SEND",
+                   }
+                 end),
         html_attributes: {
-          data: {
-            qa: "course__is_send",
-          },
+          data: { qa: "course__is_send" },
         },
       ) %>
 
       <% unless course.is_further_education? %>
-        <%= summary_list.slot(
-          :row,
+        <% summary_list.row(
           key: "Subject".pluralize(course.subjects.count),
           value: course.sorted_subjects,
-          action: change_link_to("subjects", subjects_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
+          action: {
+            href: subjects_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+            visually_hidden_text: "subjects",
+          },
           html_attributes: {
-            data: {
-              qa: "course__subjects",
-            },
+            data: { qa: "course__subjects" },
           },
         ) %>
       <% end %>
 
       <% unless course.level == "further_education" %>
-        <%= summary_list.slot(
-          :row,
+        <% summary_list.row(
           key: "Age range",
           value: course.age_range,
-          action: change_link_to("age range", age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
+          action: {
+            href: age_range_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+            visually_hidden_text: "age range",
+          },
           html_attributes: {
-            data: {
-              qa: "course__age_range",
-            },
+            data: { qa: "course__age_range" },
           },
         ) %>
       <% end %>
 
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Outcome",
         value: course.outcome,
-        action: change_link_to("outcome", outcome_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
+        action: {
+          href: outcome_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+          visually_hidden_text: "outcome",
+        },
         html_attributes: {
-          data: {
-            qa: "course__outcome",
-          },
+          data: { qa: "course__outcome" },
         },
       ) %>
 
       <% if @provider.accredited_body? %>
-        <%= summary_list.slot(
-          :row,
+        <% summary_list.row(
           key: "Apprenticeship",
           value: course.apprenticeship?,
-          action: !course.is_published? ? change_link_to("if apprenticeship", apprenticeship_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
+          action: (unless course.is_published?
+                     {
+                       href: apprenticeship_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                       visually_hidden_text: "if apprenticeship",
+                     }
+                   end),
           html_attributes: {
-            data: {
-              qa: "course__apprenticeship",
-            },
+            data: { qa: "course__apprenticeship" },
           },
         ) %>
       <% else %>
-        <%= summary_list.slot(
-          :row,
+        <% summary_list.row(
           key: "Fee or salary",
           value: course.funding,
-          action: !course.is_published? ? change_link_to("if fee or salary", fee_or_salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
+          action: (unless course.is_published?
+                     {
+                       href: fee_or_salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                       visually_hidden_text: "if fee or salary",
+                     }
+                   end),
           html_attributes: {
-            data: {
-              qa: "course__funding",
-            },
+            data: { qa: "course__funding" },
           },
         ) %>
       <% end %>
 
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Full or part time",
         value: course.study_mode&.humanize,
-        action: change_link_to("if full or part time", full_part_time_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
+        action: {
+          href: full_part_time_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+          visually_hidden_text: "if full or part time",
+        },
         html_attributes: {
-          data: {
-            qa: "course__study_mode",
-          },
+          data: { qa: "course__study_mode" },
         },
       ) %>
 
@@ -115,53 +118,59 @@
           </ul>
         <% end %>
       <% end %>
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Locations",
         value: content_for(:locations),
-        action: change_link_to("locations", locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
+        action: {
+          href: locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+          visually_hidden_text: "locations",
+        },
         html_attributes: {
-          data: {
-            qa: "course__locations",
-          },
+          data: { qa: "course__locations" },
         },
       ) %>
 
       <% unless @provider.accredited_body? %>
-        <%= summary_list.slot(
-          :row,
+        <% summary_list.row(
           key: "Accredited body",
           value: course.accrediting_provider&.provider_name,
-          action: !course.is_published? ? change_link_to("accredited body", accredited_body_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
+          action: (unless course.is_published?
+                     {
+                       href: accredited_body_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                       visually_hidden_text: "accredited body",
+                     }
+                   end),
           html_attributes: {
-            data: {
-              qa: "course__accredited_body",
-            },
+            data: { qa: "course__accredited_body" },
           },
         ) %>
       <% end %>
 
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Applications open",
         value: l(course.applications_open_from&.to_date),
-        action: @course.meta["edit_options"]["show_applications_open"] ? change_link_to("date applications open", applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
+        action: (if @course.meta["edit_options"]["show_applications_open"]
+                   {
+                     href: applications_open_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                     visually_hidden_text: "date applications open",
+                   }
+                 end),
         html_attributes: {
-          data: {
-            qa: "course__applications_open",
-          },
+          data: { qa: "course__applications_open" },
         },
       ) %>
 
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Course starts",
         value: l(course.start_date&.to_date, format: :short),
-        action: @course.meta["edit_options"]["show_start_date"] ? change_link_to("date course starts", start_date_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
+        action: (if @course.meta["edit_options"]["show_start_date"]
+                   {
+                     href: start_date_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                     visually_hidden_text: "date course starts",
+                   }
+                 end),
         html_attributes: {
-          data: {
-            qa: "course__start_date",
-          },
+          data: { qa: "course__start_date" },
         },
       ) %>
 
@@ -178,37 +187,33 @@
           <%= course.name %>
         <% end %>
       <% end %>
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Title",
         value: content_for(:course_name),
-        action: current_user["admin"] ? change_link_to("course title", title_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
+        action: (if current_user["admin"]
+                   {
+                     href: title_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+                     visually_hidden_text: "course title",
+                   }
+                 end),
         html_attributes: {
-          data: {
-            qa: "course__name",
-          },
+          data: { qa: "course__name" },
         },
       ) %>
 
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Description",
         value: course.description,
         html_attributes: {
-          data: {
-            qa: "course__description",
-          },
+          data: { qa: "course__description" },
         },
       ) %>
 
-      <%= summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Course code",
         value: course.course_code,
         html_attributes: {
-          data: {
-            qa: "course__course_code",
-          },
+          data: { qa: "course__course_code" },
         },
       ) %>
 
@@ -225,15 +230,15 @@
           <% end %>
         <% end %>
         <% if @provider.recruitment_cycle_year.to_i < Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
-          <%= summary_list.slot(
-            :row,
+          <% summary_list.row(
             key: "UCAS Apply: GCSE requirements for applicants",
             value: content_for(:entry_requirements),
-            action: change_link_to("entry requirements", entry_requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
+            action: {
+              href: entry_requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+              visually_hidden_text: "entry requirements",
+            },
             html_attributes: {
-              data: {
-                qa: "course__entry_requirements",
-              },
+              data: { qa: "course__entry_requirements" },
             },
           ) %>
         <% end %>
@@ -248,14 +253,11 @@
             Recruitment is not restricted
           <% end %>
         <% end %>
-        <%= summary_list.slot(
-          :row,
+        <% summary_list.row(
           key: "Allocations",
           value: content_for(:allocations),
           html_attributes: {
-            data: {
-              qa: "course__allocations",
-            },
+            data: { qa: "course__allocations" },
           },
         ) %>
       <% end %>

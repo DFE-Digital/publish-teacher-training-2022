@@ -43,14 +43,11 @@
         <p class="govuk-body"><%= @ucas_contact_view.gt12_contact.presence ? @ucas_contact_view.gt12_contact : "Information unknown" %></p>
         <p class="govuk-body-s">This person or website will receive responses from successful applicants replying to a GT12 letter.</p>
       <% end %>
-      <% summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Email address (or URL) printed in the letter",
         value: content_for(:row_value),
         html_attributes: {
-          data: {
-            qa: "ucas_gt12_contact",
-          },
+          data: { qa: "ucas_gt12_contact" },
         },
       ) %>
     <% end %>
@@ -60,27 +57,27 @@
     <h2 class="govuk-heading-m">Email alerts for new applications</h2>
 
     <%= govuk_summary_list do |summary_list| %>
-      <% summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Get alerts from UCAS?",
         value: t("edit_options.send_application_alerts.#{@ucas_contact_view.send_application_alerts}.label"),
-        action: change_link_to("email alerts for new applications", alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code)),
+        action: {
+          href: alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code),
+          visually_hidden_text: "email alerts for new applications",
+        },
         html_attributes: {
-          data: {
-            qa: "ucas_send_application_alerts",
-          },
+          data: { qa: "ucas_send_application_alerts" },
         },
       ) %>
 
-      <% summary_list.slot(
-        :row,
+      <% summary_list.row(
         key: "Who are the alerts sent to?",
         value: @ucas_contact_view.application_alert_contact.presence ? @ucas_contact_view.application_alert_contact : "Information unknown",
-        action: change_link_to("email alerts for new applications", alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code)),
+        action: {
+          href: alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code),
+          visually_hidden_text: "email alerts for new applications",
+        },
         html_attributes: {
-          data: {
-            qa: "ucas_application_alert_contact",
-          },
+          data: { qa: "ucas_application_alert_contact" },
         },
       ) %>
     <% end %>

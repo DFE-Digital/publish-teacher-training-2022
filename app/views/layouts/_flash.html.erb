@@ -13,13 +13,13 @@
       </div>
     </div>
   <% elsif key == "success_with_body" %>
-    <%= govuk_notification_banner(title: t("notification_banner.success"), success: true, html_attributes: { role: "alert" }) do |notification_banner| %>
-      <%= notification_banner.add_heading(text: value["title"]) %>
+    <%= govuk_notification_banner(title_text: t("notification_banner.success"), success: true, html_attributes: { role: "alert" }) do |notification_banner| %>
+      <%= notification_banner.heading(text: value["title"]) %>
       <p class="govuk-body" data-qa="flash__success__body"><%= value["body"] %></p>
     <% end %>
   <% else %>
-    <%= govuk_notification_banner(title: t("notification_banner.success"), success: true, html_attributes: { role: "alert" }) do |notification_banner| %>
-      <%= notification_banner.add_heading(text: value) %>
+    <%= govuk_notification_banner(title_text: t("notification_banner.success"), success: true, html_attributes: { role: "alert" }) do |notification_banner| %>
+      <%= notification_banner.heading(text: value) %>
     <% end %>
   <% end %>
 <% end %>

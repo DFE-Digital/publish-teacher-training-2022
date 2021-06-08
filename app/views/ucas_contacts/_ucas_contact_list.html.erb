@@ -13,15 +13,17 @@
       </p>
       <p class="govuk-body-s"><%= t("ucas_contacts.#{contact_type}.purpose") %></p>
     <% end %>
-    <% summary_list.slot(
-      :row,
+    <% summary_list.row(
       key: t("ucas_contacts.#{contact_type}.heading"),
       value: content_for(:row_value),
-      action: contact.present? ? change_link_to("email alerts for new applications", edit_provider_contact_path(ucas_contact_view.provider_code, contact.id)) : nil,
+      action: (if contact.present?
+                 {
+                   href: edit_provider_contact_path(ucas_contact_view.provider_code, contact.id),
+                   visually_hidden_text: "email alerts for new applications",
+                 }
+               end),
       html_attributes: {
-        data: {
-          qa: "ucas_contact ucas_#{contact_type}_contact",
-        },
+        data: { qa: "ucas_contact ucas_#{contact_type}_contact" },
       },
     ) %>
   <% end %>

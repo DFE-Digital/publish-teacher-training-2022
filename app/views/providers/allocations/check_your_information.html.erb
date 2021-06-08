@@ -32,20 +32,19 @@
       </h1>
 
       <%= govuk_summary_list do |summary_list| %>
-        <% summary_list.slot(
-          :row,
+        <% summary_list.row(
           key: "Places requested",
           value: params[:number_of_places],
-          action: change_link_to(
-            "places requested",
-            initial_request_provider_recruitment_cycle_allocations_path(
+          action: {
+            href: initial_request_provider_recruitment_cycle_allocations_path(
               @provider.provider_code,
               @provider.recruitment_cycle_year,
               training_provider_code: params[:training_provider_code],
               number_of_places: params[:number_of_places],
               change: true,
             ),
-          ),
+            visually_hidden_text: "places requested",
+          },
         ) %>
       <% end %>
 
