@@ -13,6 +13,7 @@ $success-green: #00823b;
 @import "~govuk-frontend/govuk/all";
 
 @import "advice";
+@import "card";
 @import "currency-input";
 @import "notification-banner";
 @import "definition-list";
@@ -24,7 +25,6 @@ $success-green: #00823b;
 @import "summary-list";
 @import "table";
 @import "tabs";
-@import "performance-dashboard";
 @import "related";
 @import "link";
 
