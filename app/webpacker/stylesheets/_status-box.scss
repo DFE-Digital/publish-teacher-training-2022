@@ -1,6 +1,10 @@
-.app-related {
+.app-status-box {
   background-color: govuk-colour("light-grey");
   padding: govuk-spacing(4);
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
 
   .govuk-select {
     background: govuk-colour("white");

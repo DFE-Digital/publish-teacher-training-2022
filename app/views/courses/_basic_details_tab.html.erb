@@ -262,7 +262,7 @@
 
   <% if course.is_running? || course.new_and_not_running? %>
     <aside class="govuk-grid-column-one-third">
-      <div class="app-related">
+      <div class="app-status-box">
         <h2 class="govuk-heading-m">Changing your basic details</h2>
         <p class="govuk-body">At the moment you can change:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -272,7 +272,7 @@
           <% end %>
         </ul>
 
-        <p class="govuk-body govuk-!-margin-bottom-0">
+        <p class="govuk-body">
           To request other changes to your basic details contact the Becoming a Teacher team:<br>
           <%= bat_contact_mail_to subject: "Edit #{course.name} (#{@provider.provider_code}/#{course.course_code})", data: { qa: "course__contact_support_link" } %>
         </p>
