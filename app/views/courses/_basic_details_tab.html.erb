@@ -168,10 +168,10 @@
       <% content_for :course_name do %>
         <% if current_user["admin"] %>
           <p class="govuk-body"><%= course.name %></p>
-          <div class="app-admin-only__section">
-            <div class="app-admin-only__section-header">
+          <div class="app-status-box app-status-box--admin">
+            <p class="govuk-body">
               <%= govuk_tag(text: "Admin feature", colour: "purple") %>
-            </div>
+            </p>
             <p class="govuk-body">Only admins can make changes</p>
           </div>
         <% else %>

@@ -1,4 +1,5 @@
 .app-status-box {
+  @include govuk-responsive-margin(6, "bottom");
   background-color: govuk-colour("light-grey");
   padding: govuk-spacing(4);
 
@@ -6,6 +7,8 @@
     margin-bottom: 0;
   }
 
+  .autocomplete__input,
+  .govuk-input,
   .govuk-select {
     background: govuk-colour("white");
   }
@@ -26,4 +29,8 @@
   .govuk-tag--green {
     border: 2px solid govuk-shade(govuk-colour("green"), 20);
   }
+}
+
+.app-status-box--admin {
+  border-left: $govuk-border-width solid govuk-colour("purple");
 }
