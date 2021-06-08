@@ -17,6 +17,7 @@ $success-green: #00823b;
 @import "notification-banner";
 @import "definition-list";
 @import "header";
+@import "list";
 @import "map";
 @import "admin-only";
 @import "patterns/pagination";
@@ -44,23 +45,6 @@ $success-green: #00823b;
 
 .govuk-list li > .govuk-body:last-child {
   margin-bottom: 0;
-}
-
-.govuk-list--dash {
-  margin-bottom: govuk-spacing(8);
-  padding-left: govuk-spacing(3);
-
-  li {
-    position: relative;
-
-    &:before {
-      color: govuk-colour("dark-grey");
-      content: "\2013";
-      left: -16px;
-      position: absolute;
-      top: 0;
-    }
-  }
 }
 
 // Fixes <wbr> in IE9
