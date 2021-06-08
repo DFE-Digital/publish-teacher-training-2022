@@ -3,7 +3,10 @@
   <div data-qa="course__about_schools">
     <% if course.how_school_placements_work.present? %>
       <aside class="app-advice">
-        <h3 class="app-advice__title">Where will you train</h3>
+        <h3 class="app-advice__title">
+          <span class="app-advice__caption">Advice from Get Into Teaching</span>
+          Where you will train
+        </h3>
         <div class="app-advice__body">
           <% if course.provider_type == "university" %>
             <%= render partial: "courses/preview/placement/hei", locals: { course: course } %>

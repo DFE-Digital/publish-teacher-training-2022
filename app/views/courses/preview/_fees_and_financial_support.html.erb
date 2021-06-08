@@ -2,7 +2,10 @@
   <h2 class="govuk-heading-l" id="section-financial-support">Financial support</h2>
 
   <aside class="app-advice">
-    <h3 class="app-advice__title">Financial Support</h3>
+    <h3 class="app-advice__title">
+      <span class="app-advice__caption">Advice from Get Into Teaching</span>
+      Financial support from the government
+    </h3>
     <div class="app-advice__body">
       <% if course.salaried? %>
         <%= render partial: "courses/preview/financial_support/salaried" %>
