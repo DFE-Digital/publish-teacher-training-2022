@@ -1,7 +1,7 @@
 <%= content_for :page_title, title_with_error_prefix("About your organisation", @errors.present?) %>
 <%= content_for :before_content, render_breadcrumbs(:organisation_details) %>
 
-<% if Settings.features.rollover.prepare_for_next_cycle %>
+<% if Settings.features.rollover.prepare_for_next_cycle && !provider.declared_visa_sponsorship? %>
   <%= govuk_notification_banner(title: t('notification_banner.prepare_for_next_cycle.title')) do |notification_banner| %>
     <%= notification_banner.slot(:heading, text: t('notification_banner.prepare_for_next_cycle.prompt')) %>
     <p class="govuk-body"><%= govuk_link_to(
