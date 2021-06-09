@@ -160,26 +160,22 @@ private
   def build_confirmed_allocations(allocation, training_provider)
     return if allocation.nil?
 
-    hash = {
+    {
       training_provider_name: training_provider.provider_name,
       number_of_places: allocation.number_of_places,
       confirmed_number_of_places: allocation.confirmed_number_of_places,
     }
-
-    hash
   end
 
   def build_requested_allocations(allocation, training_provider)
     return if allocation.nil?
 
-    hash = {
+    {
       training_provider_name: training_provider.provider_name,
       training_provider_code: training_provider.provider_code,
       status_colour: Colour::GREEN,
       status: Status::REQUESTED,
     }
-
-    hash
   end
 
   def build_not_requested_allocations(allocation, training_provider)

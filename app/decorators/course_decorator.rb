@@ -201,7 +201,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def cycle_range
-    "#{course.recruitment_cycle_year} to #{(course.recruitment_cycle_year.to_i + 1)}"
+    "#{course.recruitment_cycle_year} to #{course.recruitment_cycle_year.to_i + 1}"
   end
 
   def age_range
