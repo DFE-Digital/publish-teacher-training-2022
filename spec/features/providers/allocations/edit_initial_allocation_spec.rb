@@ -179,6 +179,11 @@ RSpec.feature "PE allocations" do
     )
 
     stub_api_v2_request(
+      "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year - 1}/providers/#{@accredited_body.provider_code}/allocations?include=provider,accredited_body",
+      resource_list_to_jsonapi([@allocation], include: "provider,accredited_body"),
+    )
+
+    stub_api_v2_request(
       "/recruitment_cycles/#{@accredited_body.recruitment_cycle.year}/providers/" \
       "#{@training_provider_with_allocation.provider_code}/show_any" \
       "?recruitment_cycle_year=#{@accredited_body.recruitment_cycle.year}",

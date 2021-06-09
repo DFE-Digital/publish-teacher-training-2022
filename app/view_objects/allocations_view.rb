@@ -25,13 +25,14 @@ class AllocationsView
     DECLINED = "declined".freeze
   end
 
-  def initialize(training_providers:, allocations:)
+  def initialize(training_providers:, allocations:, previous_allocations:)
     @training_providers = training_providers
     @allocations = allocations
+    @previous_allocations = previous_allocations
   end
 
   def repeat_allocation_statuses
-    filtered_training_providers.map do |training_provider|
+    previous_allocated_providers.map do |training_provider|
       matching_allocation = find_matching_allocation(training_provider, repeat_allocations)
       build_repeat_allocations(matching_allocation, training_provider)
     end
@@ -79,6 +80,12 @@ private
     # has made initial allocation requests on their behalf)
     training_provider_ids = initial_allocations.map { |allocation| allocation.provider.id }
     @training_providers.reject { |tp| training_provider_ids.include?(tp.id) }
+  end
+
+  def previous_allocated_providers
+    @training_providers.reject do |tp|
+      @previous_allocations.map { |a| a.provider.provider_code }.exclude?(tp.provider_code)
+    end
   end
 
   def repeat_allocations

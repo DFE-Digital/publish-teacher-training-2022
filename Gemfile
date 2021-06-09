@@ -36,7 +36,7 @@ gem "omniauth-rails_csrf_protection"
 gem "pkg-config", "~> 1.4.6"
 
 # Parsing JSON from an API
-gem "json_api_client"
+gem "json_api_client", git: "https://github.com/DFE-Digital/json_api_client.git"
 
 # For encoding/decoding web token used for authentication
 gem "jwt"
