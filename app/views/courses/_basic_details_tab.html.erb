@@ -14,7 +14,7 @@
 
       <%= summary_list.slot(
         :row,
-        key: raw("<abbr class=\"app-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>"),
+        key: raw("<abbr class=\"app-!-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>"),
         value: course.is_send?,
         action: @course.meta["edit_options"]["show_is_send"] ? change_link_to("SEND", send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) : nil,
         html_attributes: {
@@ -168,10 +168,10 @@
       <% content_for :course_name do %>
         <% if current_user["admin"] %>
           <p class="govuk-body"><%= course.name %></p>
-          <div class="app-admin-only__section">
-            <div class="app-admin-only__section-header">
+          <div class="app-status-box app-status-box--admin">
+            <p class="govuk-body">
               <%= govuk_tag(text: "Admin feature", colour: "purple") %>
-            </div>
+            </p>
             <p class="govuk-body">Only admins can make changes</p>
           </div>
         <% else %>
@@ -262,17 +262,17 @@
 
   <% if course.is_running? || course.new_and_not_running? %>
     <aside class="govuk-grid-column-one-third">
-      <div class="app-related">
+      <div class="app-status-box">
         <h2 class="govuk-heading-m">Changing your basic details</h2>
         <p class="govuk-body">At the moment you can change:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li><abbr class="app-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr> specialism</li>
+          <li><abbr class="app-!-text-decoration-underline-dotted" title="Special educational needs and disability">SEND</abbr> specialism</li>
           <% course.listing_basic_details.each do |details| %>
             <li><%= details %></li>
           <% end %>
         </ul>
 
-        <p class="govuk-body govuk-!-margin-bottom-0">
+        <p class="govuk-body">
           To request other changes to your basic details contact the Becoming a Teacher team:<br>
           <%= bat_contact_mail_to subject: "Edit #{course.name} (#{@provider.provider_code}/#{course.course_code})", data: { qa: "course__contact_support_link" } %>
         </p>

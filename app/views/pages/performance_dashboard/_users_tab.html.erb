@@ -1,38 +1,38 @@
 <h2 class="govuk-heading-l">Users</h2>
 
-<div class="govuk-grid-row govuk-!-margin-bottom-1">
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-full">
-    <div class="app-performance-dashboard app-performance-dashboard--primary">
-      <div class="app-performance-dashboard__title">
+    <div class="app-card app-card--blue" data-qa="performance-dashboard-stat">
+      <span class="app-card__count">
         <%= @performance_data.total_users %>
-      </div>
+      </span>
       registered
     </div>
   </div>
 </div>
 
-<div class="govuk-grid-row">
+<div class="govuk-grid-row govuk-!-margin-bottom-0">
   <div class="govuk-grid-column-one-third">
-    <div class="app-performance-dashboard app-performance-dashboard--green">
-      <div class="app-performance-dashboard__title--small">
+    <div class="app-card app-card--green" data-qa="performance-dashboard-stat">
+      <span class="app-card__secondary-count">
         <%= @performance_data.users_active %>
-      </div>
+      </span>
       active
     </div>
   </div>
   <div class="govuk-grid-column-one-third">
-    <div class="app-performance-dashboard app-performance-dashboard--red">
-      <div class="app-performance-dashboard__title--small">
+    <div class="app-card app-card--red" data-qa="performance-dashboard-stat">
+      <span class="app-card__secondary-count">
         <%= @performance_data.users_not_active %>
-      </div>
+      </span>
       not active
     </div>
   </div>
   <div class="govuk-grid-column-one-third">
-    <div class="app-performance-dashboard app-performance-dashboard--secondary">
-      <div class="app-performance-dashboard__title--small">
+    <div class="app-card" data-qa="performance-dashboard-stat">
+      <span class="app-card__secondary-count">
         <%= @performance_data.users_active_30_days %>
-      </div>
+      </span>
       active in the last 30 days
     </div>
   </div>

@@ -17,23 +17,23 @@ const createPopupClass = () => {
   const Popup = function(position, closedContent, openContent) {
     this.position = position;
     const content = document.createElement("div");
-    content.classList.add("map-marker__content");
+    content.classList.add("app-map__marker-content");
     content.insertAdjacentHTML(
       "beforeend",
-      '<button class="map-marker__close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>'
+      '<button class="app-map__marker-close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>'
     );
-    closedContent.classList.add("map-marker__title");
-    openContent.classList.add("map-marker__body");
+    closedContent.classList.add("app-map__marker-title");
+    openContent.classList.add("app-map__marker-body");
     content.appendChild(closedContent);
     content.appendChild(openContent);
 
     this.anchor = document.createElement("div");
-    this.anchor.classList.add("map-marker");
+    this.anchor.classList.add("app-map__marker");
     this.anchor.appendChild(content);
 
     this.stopEventPropagation();
 
-    const $closeButton = content.querySelector(".map-marker__close");
+    const $closeButton = content.querySelector(".app-map__marker-close");
     $closeButton.addEventListener("click", e => {
       this.closeOpenPopups();
     });
@@ -78,7 +78,7 @@ const createPopupClass = () => {
   };
 
   Popup.prototype.closeOpenPopups = () => {
-    const $anchors = document.querySelectorAll(".map-marker.open");
+    const $anchors = document.querySelectorAll(".app-map__marker.open");
     for (let i = 0; i < $anchors.length; i++) {
       $anchors[i].classList.remove("open");
     }

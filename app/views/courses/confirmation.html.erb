@@ -33,7 +33,7 @@
 
         <%= summary_list.slot(
           :row,
-          key: raw("<abbr class=\"app-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>"),
+          key: raw("<abbr class=\"app-!-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>"),
           value: course.is_send?,
           action: change_link_to("SEND", new_provider_recruitment_cycle_courses_level_path(course.provider.provider_code, course.recruitment_cycle_year, params.to_unsafe_h.merge(goto_confirmation: true))),
           html_attributes: {

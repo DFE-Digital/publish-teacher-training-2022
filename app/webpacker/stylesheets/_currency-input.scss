@@ -1,4 +1,7 @@
-.govuk-currency-input {
+// TODO: Remove these styles once currency inputs are using GOVUKDesignSystemFormBuilder
+// which supports using Prefixes and suffixes
+// See: https://design-system.service.gov.uk/components/text-input/#prefixes-and-suffixes
+.app-currency-input {
   &__inner {
     position: relative;
 

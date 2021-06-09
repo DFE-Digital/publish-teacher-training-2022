@@ -1,0 +1,5 @@
+.app-missing-section {
+  @extend %govuk-body-m;
+  border: $govuk-border-width solid $govuk-border-colour;
+  padding: govuk-spacing(3);
+}

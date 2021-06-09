@@ -2,8 +2,10 @@
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path, "Back to course") %>
+<% end %>
 
-  <p class="govuk-body app-preview-banner">This is a preview of a course: <%= course.name_and_code %>.</p>
+<%= govuk_notification_banner(title: t("notification_banner.info")) do |notification_banner| %>
+  <%= notification_banner.add_heading(text: "This is a preview of the ‘#{course.name_and_code}’ course.") %>
 <% end %>
 
 <h1 class="govuk-heading-xl">
@@ -11,39 +13,39 @@
   <%= course.name_and_code %>
 </h1>
 
-<p class="govuk-body-l" data-qa='course__description'><%= course.description %></p>
+<p class="govuk-body-l" data-qa="course__description"><%= course.description %></p>
 
-<dl class="govuk-list--description govuk-!-margin-bottom-8">
+<dl class="app-description-list govuk-!-margin-bottom-8">
   <% if course.accrediting_provider.present? %>
-    <dt class="govuk-list--description__label">Accredited body</dt>
+    <dt class="app-description-list__label">Accredited body</dt>
     <dd data-qa="course__accredited_body"><%= course.accrediting_provider.provider_name %></dd>
   <% end %>
-  <dt class="govuk-list--description__label">Financial support</dt>
+  <dt class="app-description-list__label">Financial support</dt>
   <dd data-qa="course__funding_option"><%= course.funding_option %></dd>
-  <dt class="govuk-list--description__label">Qualification</dt>
+  <dt class="app-description-list__label">Qualification</dt>
   <dd data-qa="course__qualifications">
     <%= render partial: "courses/preview/qualification" %>
   </dd>
 
   <% if course.age_range_in_years.present? %>
-    <dt class="govuk-list--description__label">Age range</dt>
+    <dt class="app-description-list__label">Age range</dt>
     <dd data-qa="course__age_range_in_years"><%= course.age_range_in_years.humanize %></dd>
   <% end %>
 
   <% if course.length.present? %>
-    <dt class="govuk-list--description__label">Course length</dt>
+    <dt class="app-description-list__label">Course length</dt>
     <dd data-qa="course__length"><%= course.length %></dd>
   <% end %>
   <% if course.applications_open_from.present? %>
-    <dt class="govuk-list--description__label">Date you can apply from</dt>
+    <dt class="app-description-list__label">Date you can apply from</dt>
     <dd data-qa="course__applications_open"><%= l(course.applications_open_from&.to_date) %></dd>
   <% end %>
   <% if course.start_date.present? %>
-    <dt class="govuk-list--description__label">Date course starts</dt>
+    <dt class="app-description-list__label">Date course starts</dt>
     <dd data-qa="course__start_date"><%= l(course.start_date&.to_date, format: :short) %></dd>
   <% end %>
   <% if @provider.website.present? %>
-    <dt class="govuk-list--description__label">Website</dt>
+    <dt class="app-description-list__label">Website</dt>
     <dd data-qa="course__provider_website">
       <%= govuk_link_to @provider.website, @provider.website %>
     </dd>
@@ -53,7 +55,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m">Contents</h2>
-    <ul class="govuk-list govuk-list--dash course-contents govuk-!-margin-bottom-8">
+    <ul class="govuk-list app-list--dash govuk-!-margin-bottom-8">
       <li><%= govuk_link_to "About the course", "#section-about" %></li>
       <li><%= govuk_link_to course.placements_heading, "#section-schools" %></li>
       <li><%= govuk_link_to "Entry requirements", "#section-entry" %></li>
