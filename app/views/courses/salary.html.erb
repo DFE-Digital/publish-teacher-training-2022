@@ -8,19 +8,22 @@
   <%= render partial: "courses/copy_content_warning", locals: { copied_fields: @copied_fields } %>
 <% end %>
 
-<%= render "shared/errors" %>
+<%= form_with model: course,
+              url: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+              builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+              data: { qa: "enrichment-form", module: "form-check-leave" } do |f| %>
 
-<h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl"><%= course.name_and_code %></span>
-  Course length and salary
-</h1>
+  <%= render "shared/errors" %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course,
-                  url: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-                  data: { qa: "enrichment-form", module: "form-check-leave" } do |f| %>
+  <h1 class="govuk-heading-xl">
+    <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+    Course length and salary
+  </h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
       <%= f.hidden_field :page, value: :salary %>
+
       <%= render partial: "courses/course_length", locals: { f: f } %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
@@ -34,14 +37,16 @@
         <li>say whether there are any fees or others costs – if there are no fees for this course, you should also say so</li>
       </ul>
 
-      <div id="salary_details_wrapper" class="govuk-character-count" data-module="govuk-character-count" data-maxwords="250">
-        <%= render "shared/form_field",
-          form: f, field: :salary_details, label: "Salary", label_bold: true do |field, options| %>
-          <%= f.text_area field, options.merge(rows: 15, class: "govuk-textarea govuk-js-character-count") %>
-        <% end %>
-      </div>
+      <%= f.govuk_text_area(:salary_details,
+        label: { text: "Salary", size: "s" },
+        rows: 15,
+        max_words: 250,
+        form_group: {
+          id: @errors.key?(:salary_details) ? "salary_details-error" : "",
+        },
+        data: { qa: "course_salary_details" }) %>
 
-      <%= f.submit "Save", class: "govuk-button", data: { qa: "course__save" } %>
+      <%= f.govuk_submit "Save", data: { qa: "course__save" } %>
 
       <p class="govuk-body">
         <%= govuk_link_to(
@@ -50,15 +55,15 @@
           class: "govuk-link--no-visited-state",
         ) %>
       </p>
-    <% end %>
+    </div>
+    <aside class="govuk-grid-column-one-third">
+      <%= render(
+        partial: "courses/related_sidebar",
+        locals: {
+          course: course,
+          page_path: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+        },
+      ) %>
+    </aside>
   </div>
-  <aside class="govuk-grid-column-one-third">
-    <%= render(
-      partial: "courses/related_sidebar",
-      locals: {
-        course: course,
-        page_path: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-      },
-    ) %>
-  </aside>
-</div>
+<% end %>
