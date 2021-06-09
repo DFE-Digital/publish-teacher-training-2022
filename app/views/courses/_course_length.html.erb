@@ -1,64 +1,26 @@
-<%= render "shared/error_wrapper", error_keys: [:course_length], data_qa: "course__length" do %>
-  <fieldset class="govuk-fieldset">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <h2 class="govuk-fieldset__heading">Course length</h2>
-    </legend>
-
-    <%= render "shared/error_messages", error_keys: [:course_length] %>
-
-    <div class="govuk-radios" data-module="govuk-radios">
-      <div class="govuk-radios__item">
-        <%= f.radio_button(
-          :course_length,
-          "OneYear",
-          class: "govuk-radios__input",
-          checked: course.course_length == "OneYear",
-          aria: {
-            describedby: @errors[:course_length] ? "course_length-error" : "",
-          },
-        ) %>
-        <%= f.label :course_length, "1 year", value: "OneYear", class: "govuk-label govuk-radios__label" %>
-      </div>
-      <div class="govuk-radios__item">
-        <%= f.radio_button(
-          :course_length,
-          "TwoYears",
-          class: "govuk-radios__input",
-          checked: course.course_length == "TwoYears",
-          aria: {
-            describedby: @errors[:course_length] ? "course_length-error" : "",
-          },
-        ) %>
-        <%= f.label :course_length, "Up to 2 years", value: "TwoYears", class: "govuk-label govuk-radios__label" %>
-      </div>
-      <div class="govuk-radios__item">
-        <%= f.radio_button(
-          :course_length,
-          "Other",
-          class: "govuk-radios__input",
-          data: {
-            "aria-controls" => "other-container",
-          },
-          checked: course.other_course_length?,
-          aria: {
-            describedby: @errors[:course_length] ? "course_length-error" : "",
-          },
-        ) %>
-        <%= f.label :course_length, "Other", value: "Other", class: "govuk-label govuk-radios__label" %>
-      </div>
-      <div class="govuk-radios__conditional" id="other-container">
-        <div class="form-group">
-          <%= f.label "course_length_other_length", "Course length", class: "govuk-label govuk-label--s" %>
-          <%= f.text_field(
-            "course_length_other_length",
-            value: course.other_course_length? ? course.course_length : "",
-            class: "govuk-input govuk-input--width-20",
-            aria: {
-              describedby: @errors[:course_length] ? "course_length-error" : "",
-            },
-          ) %>
-        </div>
-      </div>
-    </div>
-  </fieldset>
+<%= f.govuk_radio_buttons_fieldset(:course_length,
+  legend: {
+    text: "Course length",
+    size: "l",
+  },
+  form_group: {
+    id: @errors.key?(:course_length) ? "course_length-error" : "",
+  }) do %>
+    <%= f.govuk_radio_button(:course_length, "OneYear",
+      label: { text: "1 year" },
+      data: { qa: "course_course_length_oneyear" },
+      link_errors: true) %>
+    <%= f.govuk_radio_button(:course_length, "TwoYears",
+      label: { text: "Up to 2 years" },
+      data: { qa: "course_course_length_twoyears" }) %>
+    <%= f.govuk_radio_button(:course_length, "Other",
+      label: { text: "Other" },
+      checked: course.other_course_length?,
+      data: { qa: "course_course_length_other" }) do %>
+      <%= f.govuk_text_field(:course_length_other_length,
+        value: course.other_course_length? ? course.course_length : "",
+        label: { text: "Course length", size: "s" },
+        width: 20,
+        data: { qa: "course_course_length_other_length" }) %>
+    <% end %>
 <% end %>
