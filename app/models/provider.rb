@@ -37,6 +37,10 @@ class Provider < Base
       .first
   end
 
+  def declared_visa_sponsorship?
+    %i[can_sponsor_student_visa can_sponsor_skilled_worker_visa].none? { |attr| send(attr).nil? }
+  end
+
 private
 
   def post_base_url

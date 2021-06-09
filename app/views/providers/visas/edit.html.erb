@@ -23,8 +23,8 @@
         legend: { text: "Can you sponsor Student visas?", tag: "h1" },
         hint: { text: "Applies to fee-paying courses" },
       ) do %>
-        <%= form.govuk_radio_button :can_sponsor_student_visa, AllocationsView::RequestType::INITIAL, label: { text: "Yes" }, link_errors: true %>
-        <%= form.govuk_radio_button :can_sponsor_student_visa, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
+        <%= form.govuk_radio_button :can_sponsor_student_visa, true, label: { text: "Yes" }, link_errors: true %>
+        <%= form.govuk_radio_button :can_sponsor_student_visa, false, label: { text: "No" } %>
       <% end %>
 
       <%= form.govuk_radio_buttons_fieldset(
@@ -32,8 +32,8 @@
         legend: { text: "Can you sponsor Skilled Worker visas?", tag: "h1" },
         hint: { text: "Applies to salaried courses" },
       ) do %>
-        <%= form.govuk_radio_button :can_sponsor_skilled_worker_visa, AllocationsView::RequestType::INITIAL, label: { text: "Yes" }, link_errors: true %>
-        <%= form.govuk_radio_button :can_sponsor_skilled_worker_visa, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
+        <%= form.govuk_radio_button :can_sponsor_skilled_worker_visa, true, label: { text: "Yes" }, link_errors: true %>
+        <%= form.govuk_radio_button :can_sponsor_skilled_worker_visa, false, label: { text: "No" } %>
       <% end %>
 
       <%= form.govuk_submit "Save" %>

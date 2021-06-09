@@ -12,13 +12,12 @@ module Providers
          can_sponsor_skilled_worker_visa: params[:can_sponsor_skilled_worker_visa],
          can_sponsor_student_visa: params[:can_sponsor_student_visa],
       )
-      if @form_object.save
+      if @form_object.save(provider)
         redirect_to details_provider_recruitment_cycle_path(
           provider.provider_code,
           provider.recruitment_cycle_year,
         )
       else
-        provider
         render :edit
       end
     end
