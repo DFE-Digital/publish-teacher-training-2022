@@ -25,14 +25,13 @@ class AllocationsView
     DECLINED = "declined".freeze
   end
 
-  def initialize(training_providers:, allocations:, previous_allocations:)
+  def initialize(training_providers:, allocations:)
     @training_providers = training_providers
     @allocations = allocations
-    @previous_allocations = previous_allocations
   end
 
   def repeat_allocation_statuses
-    previous_allocated_providers.map do |training_provider|
+    filtered_training_providers.map do |training_provider|
       matching_allocation = find_matching_allocation(training_provider, repeat_allocations)
       build_repeat_allocations(matching_allocation, training_provider)
     end
