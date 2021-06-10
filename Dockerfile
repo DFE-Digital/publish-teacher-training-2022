@@ -16,7 +16,7 @@ ADD Gemfile $APP_HOME/Gemfile
 ADD Gemfile.lock $APP_HOME/Gemfile.lock
 
 RUN apk add --update --no-cache --virtual build-dependances \
- git build-base && \
+ build-base  && \
  bundle install --jobs=4 && \
  apk del build-dependances
 
