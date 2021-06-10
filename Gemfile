@@ -22,6 +22,9 @@ gem "aasm"
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 
+# View components are used to encapsulate logic in views
+gem "view_component"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
 
