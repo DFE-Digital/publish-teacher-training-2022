@@ -52,6 +52,9 @@
       <% summary_list.slot(:row, enrichment_summary(:provider, "Website", @provider.website, %w[website])) %>
       <% summary_list.slot(:row, enrichment_summary(:provider, "Contact address", @provider.full_address, %w[address1 address2 address3 address4 postcode])) %>
       <% summary_list.slot(:row, enrichment_summary(:provider, "UKPRN", @provider.ukprn, %w[ukprn])) %>
+      <% if Settings.features.rollover.prepare_for_next_cycle %>
+        <% summary_list.slot(:row, enrichment_summary(:provider, "Visa sponsorship", visa_sponsorship_status(@provider), %w[can_sponsor_student_visa can_sponsor_skilled_worker_visa], truncate_value: false)) %>
+      <% end %>
     <% end %>
 
     <h2 class="govuk-heading-m">
