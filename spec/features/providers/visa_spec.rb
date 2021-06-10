@@ -44,12 +44,30 @@ feature "View provider", type: :feature do
         expect(page).to have_content "You need to provide some information before publishing your courses."
       end
 
-      it "renders validation errors if I submit without selecting whether provider sponsors visas" do
+      it "visa sponsorship form renders validation errors if I submit without selecting whether provider sponsors visas" do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
         click_link "Can you sponsor visas?"
         click_button "Save"
-        expect(page).to have_content('Select whether your provider can sponsor skilled worker visas')
-        expect(page).to have_content('Select whether your provider can sponsor student visas')
+        expect(page).to have_content("Select whether your provider can sponsor skilled worker visas")
+        expect(page).to have_content("Select whether your provider can sponsor student visas")
+      end
+
+      it "visa sponsorship form updates the provider if I submit valid values" do
+        stub_api_v2_resource(provider, method: :patch) do |body|
+          expect(body["data"]["attributes"]).to eq(
+            "can_sponsor_student_visa" => true,
+            "can_sponsor_skilled_worker_visa" => false,
+          )
+        end
+        visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
+        click_link "Can you sponsor visas?"
+        within all(".govuk-radios").first do
+          choose "Yes"
+        end
+        within all(".govuk-radios").last do
+          choose "No"
+        end
+        click_button "Save"
       end
     end
 
@@ -61,6 +79,11 @@ feature "View provider", type: :feature do
           can_sponsor_student_visa: true,
           can_sponsor_skilled_worker_visa: false,
         )
+      end
+
+      it "about organisation page displays the current visa sponsorship status" do
+        visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
+        expect(page).to have_content("You can sponsor Student visas")
       end
 
       it "does not render banner" do
