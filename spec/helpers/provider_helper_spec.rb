@@ -56,6 +56,20 @@ feature "View helpers", type: :helper do
   end
 
   describe "#visa_sponsorship_status" do
+    it "returns correct value when one or more values is nil" do
+      provider = build(
+        :provider,
+        can_sponsor_student_visa: nil,
+        can_sponsor_skilled_worker_visa: true,
+      )
+      expect(helper.visa_sponsorship_status(provider)).to match(
+        "Can you sponsor visas?"
+      )
+      expect(helper.visa_sponsorship_status(provider)).to match(
+        "Select if you can sponsor visas"
+      )
+    end
+
     it "returns correct value when only student visas are sponsored" do
       provider = build(
         :provider,

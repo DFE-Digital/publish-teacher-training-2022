@@ -1,0 +1,29 @@
+.app-inset-text {
+  .govuk-summary-list__value & {
+    border-left-width: $govuk-border-width-narrow;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.app-inset-text--narrow-border {
+  border-left-width: $govuk-border-width-narrow;
+}
+
+.app-inset-text--important {
+  border-color: govuk-colour("blue");
+
+  .app-inset-text__title {
+    color: govuk-colour("blue");
+  }
+}
+
+.app-inset-text--error {
+  border-color: $govuk-error-colour;
+  border-left-width: $govuk-border-width;
+
+  .govuk-heading-s {
+    color: $govuk-error-colour;
+  }
+}
