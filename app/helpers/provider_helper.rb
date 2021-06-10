@@ -10,8 +10,18 @@ module ProviderHelper
   end
 
   def visa_sponsorship_status(provider)
-    # TODO: If either value is nil we should display a call to action here with link as per design
-    if provider.can_sponsor_student_visa && provider.can_sponsor_skilled_worker_visa
+    if provider.can_sponsor_student_visa.nil? || provider.can_sponsor_skilled_worker_visa.nil?
+      govuk_inset_text(classes: %w[app-inset-text app-inset-text--important]) do
+        raw("<p class=\"govuk-heading-s app-inset-text__title\">Can you sponsor visas?</p>") +
+        govuk_link_to(
+          "Select if you can sponsor visas",
+          provider_recruitment_cycle_visas_edit_path(
+            provider.provider_code,
+            provider.recruitment_cycle_year,
+          ),
+        )
+      end
+    elsif provider.can_sponsor_student_visa && provider.can_sponsor_skilled_worker_visa
       "You can sponsor Student and Skilled Worker visas"
     elsif provider.can_sponsor_student_visa && !provider.can_sponsor_skilled_worker_visa
       "You can sponsor Student visas"

@@ -69,6 +69,14 @@ feature "View provider", type: :feature do
         end
         click_button "Save"
       end
+
+      it "shows a call to action in summary card" do
+        visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
+        within find("[data-qa='enrichment__can_sponsor_student_visa']") do
+          click_link "Select if you can sponsor visas"
+        end
+        expect(page).to have_content("#{provider.provider_name} Visa sponsorship")
+      end
     end
 
     context "when the provider has answered both visa sponsorship questions" do
@@ -96,7 +104,7 @@ feature "View provider", type: :feature do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
 
         within find("[data-qa='enrichment__can_sponsor_student_visa']") do
-          click_link 'Change'
+          click_link "Change"
         end
 
         within all(".govuk-radios").first do
