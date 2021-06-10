@@ -42,7 +42,7 @@ module ApplicationHelper
     govuk_link_to(error, href, class: "govuk-!-display-block")
   end
 
-  def enrichment_summary(model, key, value, fields, truncate_value: true)
+  def enrichment_summary(model, key, value, fields, truncate_value: true, change_link: nil)
     classes = truncate_value ? "app-summary-list__row--truncate" : "app-summary-list__row"
 
     if fields.select { |field| @errors&.key? field.to_sym }.any?
@@ -67,6 +67,7 @@ module ApplicationHelper
           qa: "enrichment__#{fields.first}",
         },
       },
+      action: change_link ? link_to("Change", change_link) : nil,
     }
   end
 
