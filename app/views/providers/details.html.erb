@@ -59,10 +59,7 @@
           visa_sponsorship_status(@provider),
           %w[can_sponsor_student_visa can_sponsor_skilled_worker_visa],
           truncate_value: false,
-          change_link: provider_recruitment_cycle_visas_edit_path(
-            @provider.provider_code,
-            @provider.recruitment_cycle_year,
-          ),
+          change_link: provider.declared_visa_sponsorship? ? provider_recruitment_cycle_visas_edit_path(@provider.provider_code, @provider.recruitment_cycle_year) : nil,
         )) %>
       <% end %>
     <% end %>
