@@ -42,8 +42,8 @@ module ApplicationHelper
     govuk_link_to(error, href, class: "govuk-!-display-block")
   end
 
-  def enrichment_summary(model, key, value, fields)
-    classes = "app-summary-list__row--truncate"
+  def enrichment_summary(model, key, value, fields, truncate_value: true)
+    classes = truncate_value ? "app-summary-list__row--truncate" : "app-summary-list__row"
 
     if fields.select { |field| @errors&.key? field.to_sym }.any?
       errors = fields.map { |field|

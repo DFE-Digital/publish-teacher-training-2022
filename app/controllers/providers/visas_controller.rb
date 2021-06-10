@@ -9,8 +9,8 @@ module Providers
 
     def update
       @form_object = ProviderVisaForm.new(
-         can_sponsor_skilled_worker_visa: params[:can_sponsor_skilled_worker_visa],
-         can_sponsor_student_visa: params[:can_sponsor_student_visa],
+        can_sponsor_skilled_worker_visa: params[:can_sponsor_skilled_worker_visa],
+        can_sponsor_student_visa: params[:can_sponsor_student_visa],
       )
       if @form_object.save(provider)
         redirect_to details_provider_recruitment_cycle_path(
