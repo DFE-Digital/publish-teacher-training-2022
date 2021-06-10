@@ -86,6 +86,28 @@ feature "View provider", type: :feature do
         expect(page).to have_content("You can sponsor Student visas")
       end
 
+      it "I can change my answers" do
+        stub_api_v2_resource(provider, method: :patch) do |body|
+          expect(body["data"]["attributes"]).to eq(
+            "can_sponsor_student_visa" => false,
+            "can_sponsor_skilled_worker_visa" => true,
+          )
+        end
+        visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
+
+        within find("[data-qa='enrichment__can_sponsor_student_visa']") do
+          click_link 'Change'
+        end
+
+        within all(".govuk-radios").first do
+          choose "No"
+        end
+        within all(".govuk-radios").last do
+          choose "Yes"
+        end
+        click_button "Save"
+      end
+
       it "does not render banner" do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
         expect(page).not_to have_content "You need to provide some information before publishing your courses."
