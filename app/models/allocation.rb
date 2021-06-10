@@ -13,7 +13,6 @@ class Allocation < Base
     }.fetch(Settings.features.allocations.state, "open")
   end
 
-  belongs_to :recruitment_cycle, param: :recruitment_cycle_year, shallow_path: true
   belongs_to :provider, param: :provider_code, shallow_path: true # accredited_body
 
   property :number_of_places
