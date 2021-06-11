@@ -588,6 +588,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   super_diff
   tzinfo-data
+  view_component
   web-console (>= 3.3.0)
   webdrivers (~> 4.6)
   webmock
