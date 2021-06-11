@@ -1,0 +1,20 @@
+module Providers
+  class VisaSponsorshipService
+    VISA_SPONSORSHIP_INTRODUCED_IN = 2022
+
+    def initialize(provider)
+      @provider = provider
+    end
+
+    def show_visa_sponsorship?
+      visa_sponsorship_enabled? && !@provider.declared_visa_sponsorship?
+    end
+
+  private
+
+    def visa_sponsorship_enabled?
+      @provider.recruitment_cycle_year >= VISA_SPONSORSHIP_INTRODUCED_IN &&
+        Settings.features.rollover.prepare_for_next_cycle
+    end
+  end
+end
