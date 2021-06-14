@@ -25,6 +25,7 @@ module Providers
   private
 
     def provider
+      recruitment_cycle
       @provider ||= Provider
         .where(recruitment_cycle_year: recruitment_cycle.year)
         .find(params[:provider_code])
