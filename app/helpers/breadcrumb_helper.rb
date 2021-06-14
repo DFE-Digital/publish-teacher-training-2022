@@ -61,7 +61,7 @@ module BreadcrumbHelper
   end
 
   def visas_breadcrumb
-    path = details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)
+    path = details_provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year)
     recruitment_cycle_breadcrumb << ["Visas", path]
   end
 
