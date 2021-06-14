@@ -3,11 +3,6 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl"><%= @provider.provider_name %></span>
-      Visa sponsorship
-    </h1>
-
     <%= form_with(
       model: @form_object,
       url: provider_recruitment_cycle_visas_path(@provider.provider_code, @provider.recruitment_cycle_year),
@@ -17,6 +12,11 @@
     ) do |form| %>
 
       <%= form.govuk_error_summary %>
+
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-xl"><%= @provider.provider_name %></span>
+        Visa sponsorship
+      </h1>
 
       <%= form.govuk_radio_buttons_fieldset(
         :request_type,
@@ -41,6 +41,4 @@
 
     <p class="govuk-body"><a href="/about-your-organisation">Cancel changes</a></p>
   </div>
-
 </div>
-
