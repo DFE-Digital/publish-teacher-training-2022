@@ -47,7 +47,7 @@ en:
     warning: "Warning"
     prepare_for_next_cycle:
       title: "Prepare for the next cycle"
-      prompt: "You need to provide some information before publishing your courses."
+      heading: "You need to provide some information before publishing your courses."
       link: "Can you sponsor visas?"
   edit_options:
     entry_requirements:
