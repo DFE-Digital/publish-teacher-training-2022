@@ -20,7 +20,7 @@
 
       <%= form.govuk_radio_buttons_fieldset(
         :request_type,
-        legend: { text: "Can you sponsor Student visas?", tag: "h1" },
+        legend: { text: "Can you sponsor Student visas?" },
         hint: { text: "Applies to fee-paying courses" },
       ) do %>
         <%= form.govuk_radio_button :can_sponsor_student_visa, true, label: { text: "Yes" }, link_errors: true %>
