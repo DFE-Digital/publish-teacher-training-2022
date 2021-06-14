@@ -63,10 +63,10 @@ feature "View helpers", type: :helper do
         can_sponsor_skilled_worker_visa: true,
       )
       expect(helper.visa_sponsorship_status(provider)).to match(
-        "Can you sponsor visas?"
+        "Can you sponsor visas?",
       )
       expect(helper.visa_sponsorship_status(provider)).to match(
-        "Select if you can sponsor visas"
+        "Select if you can sponsor visas",
       )
     end
 
