@@ -60,11 +60,6 @@ module BreadcrumbHelper
     recruitment_cycle_breadcrumb << ["Users", path]
   end
 
-  def visas_breadcrumb
-    path = details_provider_recruitment_cycle_path(@provider.provider_code, @recruitment_cycle.year)
-    recruitment_cycle_breadcrumb << ["Visas", path]
-  end
-
   def edit_site_breadcrumb
     path = edit_provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id)
     sites_breadcrumb << [@site_name_before_update, path]
