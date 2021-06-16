@@ -84,7 +84,7 @@ Rails.application.routes.draw do
       post "/publish", on: :member, to: "providers#publish"
       get "/training-providers", on: :member, to: "providers#training_providers"
       get "/training-providers-courses", on: :member, to: "training_providers_courses#index", as: "download_training_providers_courses"
-      get "/visas/edit", to: "providers/visas#edit"
+      get "/visas", to: "providers/visas#edit"
       post "/visas", to: "providers/visas#update"
 
       resource :training_providers, path: "/training-providers", on: :member, param: :code, only: [], as: "" do
