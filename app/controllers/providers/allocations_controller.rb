@@ -13,7 +13,10 @@ module Providers
                       .all
                       .group_by { |a| a.provider.recruitment_cycle_year }
 
-      @training_providers = (allocations[previous_recruitment_cycle_year] || []).map(&:provider).sort_by(&:provider_name)
+      @training_providers = (allocations[previous_recruitment_cycle_year] || []).filter_map { |a|
+        a.provider if a.request_type != AllocationsView::RequestType::DECLINED
+      }.sort_by(&:provider_name)
+
       @allocations_view = AllocationsView.new(
         allocations: allocations[@recruitment_cycle.year.to_s] || [], training_providers: @training_providers,
       )
