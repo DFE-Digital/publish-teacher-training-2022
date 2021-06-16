@@ -38,7 +38,7 @@ class Provider < Base
   end
 
   def declared_visa_sponsorship?
-    %i[can_sponsor_student_visa can_sponsor_skilled_worker_visa].none? { |attr| send(attr).nil? }
+    !can_sponsor_student_visa.nil? && !can_sponsor_skilled_worker_visa.nil?
   end
 
 private
