@@ -79,10 +79,10 @@ feature "View provider", type: :feature do
         end
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
         click_link "Can you sponsor visas?"
-        within all(".govuk-radios").first do
+        within_fieldset("Can you sponsor Student visas?") do
           choose "Yes"
         end
-        within all(".govuk-radios").last do
+        within_fieldset("Can you sponsor Skilled Worker visas?") do
           choose "No"
         end
         click_button "Save"
