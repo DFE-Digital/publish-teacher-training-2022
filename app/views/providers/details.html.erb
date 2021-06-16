@@ -53,16 +53,6 @@
       <% summary_list.slot(:row, enrichment_summary(:provider, "Website", @provider.website, %w[website])) %>
       <% summary_list.slot(:row, enrichment_summary(:provider, "Contact address", @provider.full_address, %w[address1 address2 address3 address4 postcode])) %>
       <% summary_list.slot(:row, enrichment_summary(:provider, "UKPRN", @provider.ukprn, %w[ukprn])) %>
-      <% if Providers::VisaSponsorshipService.new(provider).visa_sponsorship_enabled? %>
-        <% summary_list.slot(:row, enrichment_summary(
-          :provider,
-          "Visa sponsorship",
-          visa_sponsorship_status(@provider),
-          %w[can_sponsor_student_visa can_sponsor_skilled_worker_visa],
-          truncate_value: false,
-          change_link: provider.declared_visa_sponsorship? ? provider_recruitment_cycle_visas_edit_path(@provider.provider_code, @provider.recruitment_cycle_year) : nil,
-        )) %>
-      <% end %>
     <% end %>
 
     <h2 class="govuk-heading-m govuk-!-font-size-27">
@@ -76,6 +66,17 @@
         <% end %>
       <% end %>
       <% summary_list.slot(:row, enrichment_summary(:provider, "Training with disabilities and other needs", @provider.train_with_disability, %w[train_with_disability])) %>
+      <% if Providers::VisaSponsorshipService.new(provider).visa_sponsorship_enabled? %>
+        <% summary_list.slot(:row, enrichment_summary(
+          :provider,
+          "Visa sponsorship",
+          visa_sponsorship_status(@provider),
+          %w[can_sponsor_student_visa can_sponsor_skilled_worker_visa],
+          truncate_value: false,
+          change_link: provider.declared_visa_sponsorship? ? provider_recruitment_cycle_visas_path(@provider.provider_code, @provider.recruitment_cycle_year) : nil,
+          change_link_visually_hidden: " if you can sponsor visas",
+        )) %>
+      <% end %>
     <% end %>
   </div>
 

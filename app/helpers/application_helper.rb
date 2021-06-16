@@ -42,7 +42,7 @@ module ApplicationHelper
     govuk_link_to(error, href, class: "govuk-!-display-block")
   end
 
-  def enrichment_summary(model, key, value, fields, truncate_value: true, change_link: nil)
+  def enrichment_summary(model, key, value, fields, truncate_value: true, change_link: nil, change_link_visually_hidden: nil)
     classes = truncate_value ? "app-summary-list__row--truncate" : "app-summary-list__row"
 
     if fields.select { |field| @errors&.key? field.to_sym }.any?
@@ -67,11 +67,17 @@ module ApplicationHelper
           qa: "enrichment__#{fields.first}",
         },
       },
-      action: change_link ? link_to("Change", change_link) : nil,
+      action: change_link ? render_change_link(change_link, change_link_visually_hidden) : nil,
     }
   end
 
 private
+
+  def render_change_link(path, visually_hidden)
+    govuk_link_to(path) do
+      raw("Change<span class=\"govuk-visually-hidden\"> #{visually_hidden}</span>")
+    end
+  end
 
   # Use characters rather than HTML entities for smart quotes this matches how
   # we write smart quotes in templates and allows us to use them in <title>
