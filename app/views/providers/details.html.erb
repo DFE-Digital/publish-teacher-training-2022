@@ -6,7 +6,7 @@
     <%= notification_banner.slot(:heading, text: t('notification_banner.prepare_for_next_cycle.heading')) %>
     <p class="govuk-body"><%= govuk_link_to(
       t('notification_banner.prepare_for_next_cycle.link'),
-      provider_recruitment_cycle_visas_edit_path(
+      provider_recruitment_cycle_visas_path(
         @provider.provider_code,
         @provider.recruitment_cycle_year,
       ),

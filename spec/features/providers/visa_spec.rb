@@ -66,8 +66,8 @@ feature "View provider", type: :feature do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
         click_link "Can you sponsor visas?"
         click_button "Save"
-        expect(page).to have_content("Select whether your provider can sponsor skilled worker visas")
-        expect(page).to have_content("Select whether your provider can sponsor student visas")
+        expect(page).to have_content("Select if you can sponsor Skilled Worker visas")
+        expect(page).to have_content("Select if you can sponsor Student visas")
       end
 
       it "visa sponsorship form updates the provider if I submit valid values" do
