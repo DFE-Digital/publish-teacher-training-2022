@@ -67,13 +67,15 @@ module ApplicationHelper
           qa: "enrichment__#{fields.first}",
         },
       },
-      action: change_link ? render_change_link(change_link, change_link_visually_hidden) : nil,
+      action: render_change_link(change_link, change_link_visually_hidden),
     }
   end
 
 private
 
   def render_change_link(path, visually_hidden)
+    return nil unless path
+
     govuk_link_to(path) do
       raw("Change<span class=\"govuk-visually-hidden\"> #{visually_hidden}</span>")
     end
