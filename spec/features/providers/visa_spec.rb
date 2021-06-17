@@ -57,14 +57,9 @@ feature "View provider", type: :feature do
         )
       end
 
-      it "renders banner if provider has not answered the visa sponsorship questions" do
-        visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        expect(page).to have_content "You need to provide some information before publishing your courses."
-      end
-
       it "visa sponsorship form renders validation errors if I submit without selecting whether provider sponsors visas" do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        click_link "Can you sponsor visas?"
+        click_link "Select if you can sponsor visas"
         click_button "Save"
         expect(page).to have_content("Select if you can sponsor Skilled Worker visas")
         expect(page).to have_content("Select if you can sponsor Student visas")
@@ -78,7 +73,7 @@ feature "View provider", type: :feature do
           )
         end
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        click_link "Can you sponsor visas?"
+        click_link "Select if you can sponsor visas"
         within_fieldset("Can you sponsor Student visas?") do
           choose "Yes"
         end
