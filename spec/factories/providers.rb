@@ -29,7 +29,7 @@ FactoryBot.define do
     latitude { nil }
     urn { Faker::Number.number(digits: [5, 6].sample) }
     longitude { nil }
-    recruitment_cycle_year { "2019" }
+    recruitment_cycle_year { recruitment_cycle.year.to_s }
     last_published_at { Time.zone.local(2019).utc.iso8601 }
     content_status { "Published" }
     gt12_contact { "gt12_contact@acme-scitt.org" }
@@ -59,7 +59,7 @@ FactoryBot.define do
       end
 
       provider.recruitment_cycle = evaluator.recruitment_cycle
-      provider.recruitment_cycle_year = evaluator.recruitment_cycle.year
+      provider.recruitment_cycle_year = evaluator.recruitment_cycle.year.to_s
     end
 
     trait :accredited_body do

@@ -77,8 +77,8 @@ private
     # we need to first filter out those training providers
     # who will be allocated places for the first time (i.e. where the accredited provider)
     # has made initial allocation requests on their behalf)
-    training_provider_ids = initial_allocations.map { |allocation| allocation.provider.id }
-    @training_providers.reject { |tp| training_provider_ids.include?(tp.id) }
+    training_provider_provider_codes = initial_allocations.map { |allocation| allocation.provider.provider_code }
+    @training_providers.reject { |tp| training_provider_provider_codes.include?(tp.provider_code) }
   end
 
   def repeat_allocations
@@ -102,7 +102,7 @@ private
   end
 
   def find_matching_allocation(training_provider, allocations)
-    allocations.find { |allocation| allocation.provider.id == training_provider.id }
+    allocations.find { |allocation| allocation.provider.provider_code == training_provider.provider_code }
   end
 
   def build_repeat_allocations(matching_allocation, training_provider)

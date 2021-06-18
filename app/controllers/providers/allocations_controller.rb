@@ -5,23 +5,20 @@ module Providers
     before_action :build_training_provider, except: %i[index initial_request]
     before_action :require_provider_to_be_accredited_body!
 
-    PE_SUBJECT_CODE = "C6".freeze
-
     def index
-      @training_providers = TrainingProvider.where(
-        recruitment_cycle_year: @recruitment_cycle.year,
-        provider_code: @provider.provider_code,
-        subjects: PE_SUBJECT_CODE,
-        funding_type: "fee",
-      )
-
       allocations = Allocation
                       .includes(:provider, :accredited_body)
                       .where(provider_code: params[:provider_code])
+                      .where(recruitment_cycle: { year: [previous_recruitment_cycle_year, @recruitment_cycle.year] })
                       .all
+                      .group_by { |a| a.provider.recruitment_cycle_year }
+
+      @training_providers = (allocations[previous_recruitment_cycle_year] || []).filter_map { |a|
+        a.provider if a.request_type != AllocationsView::RequestType::DECLINED
+      }.sort_by(&:provider_name)
 
       @allocations_view = AllocationsView.new(
-        allocations: allocations, training_providers: @training_providers,
+        allocations: allocations[@recruitment_cycle.year.to_s] || [], training_providers: @training_providers,
       )
     end
 
@@ -76,6 +73,10 @@ module Providers
     end
 
   private
+
+    def previous_recruitment_cycle_year
+      @previous_recruitment_cycle_year ||= (@recruitment_cycle.year.to_i - 1).to_s
+    end
 
     def build_training_provider
       return @training_provider if @training_provider
