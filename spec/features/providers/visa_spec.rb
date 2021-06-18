@@ -15,8 +15,6 @@ feature "View provider", type: :feature do
   before do
     signed_in_user
 
-    provider.recruitment_cycle = recruitment_cycle
-    provider.recruitment_cycle_year = recruitment_cycle_year
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
   end
