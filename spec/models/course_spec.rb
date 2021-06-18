@@ -200,4 +200,24 @@ describe Course do
       expect(course.provider_type).to eq("lead_school")
     end
   end
+
+  describe "degree_section_complete?" do
+    it "returns true when 'degree_grade' is set" do
+      course = build(
+        :course,
+        degree_grade: "two_one",
+      )
+
+      expect(course.degree_section_complete?).to eq true
+    end
+
+    it "return false when 'degree_grade' is nil" do
+      course = build(
+        :course,
+        degree_grade: nil,
+      )
+
+      expect(course.degree_section_complete?).to eq false
+    end
+  end
 end
