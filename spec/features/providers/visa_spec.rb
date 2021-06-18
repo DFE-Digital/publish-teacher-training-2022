@@ -1,14 +1,16 @@
 require "rails_helper"
 
-feature "View provider", type: :feature do
+feature "View and edit provider visa sponsorship", type: :feature do
   let(:recruitment_cycle_year) { 2022 }
   let(:recruitment_cycle) { build(:recruitment_cycle, year: recruitment_cycle_year) }
   let(:provider) do
     build(
       :provider,
       recruitment_cycle: recruitment_cycle,
+      recruitment_cycle_year: recruitment_cycle.year,
     )
   end
+  let(:prepare_for_next_cycle) { false }
 
   before do
     signed_in_user
@@ -19,27 +21,21 @@ feature "View provider", type: :feature do
   end
 
   context "with feature flag off" do
-    before do
-      allow(Settings.features.rollover).to receive(:prepare_for_next_cycle).and_return(false)
-    end
-
-    it "does not render banner" do
+    it "does not render visa sponsorship prompt and link" do
       visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-      expect(page).not_to have_content "You need to provide some information before publishing your courses."
+      expect(page).not_to have_content "Select if you can sponsor visas"
     end
   end
 
   context "with feature flag on" do
-    before do
-      allow(Settings.features.rollover).to receive(:prepare_for_next_cycle).and_return(true)
-    end
+    let(:prepare_for_next_cycle) { true }
 
     context "in recruitment cycle 2021" do
       let(:recruitment_cycle_year) { 2021 }
 
-      it "does not render banner" do
+      it "does not render visa sponsorship prompt and link" do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        expect(page).not_to have_content "You need to provide some information before publishing your courses."
+        expect(page).not_to have_content "Select if you can sponsor visas"
       end
     end
 
@@ -49,6 +45,8 @@ feature "View provider", type: :feature do
         build(
           :provider,
           provider_code: "A0",
+          recruitment_cycle: recruitment_cycle,
+          recruitment_cycle_year: recruitment_cycle.year,
           can_sponsor_student_visa: nil,
           can_sponsor_skilled_worker_visa: nil,
         )
@@ -94,6 +92,8 @@ feature "View provider", type: :feature do
         build(
           :provider,
           provider_code: "A0",
+          recruitment_cycle: recruitment_cycle,
+          recruitment_cycle_year: recruitment_cycle.year,
           can_sponsor_student_visa: true,
           can_sponsor_skilled_worker_visa: false,
         )
@@ -117,18 +117,13 @@ feature "View provider", type: :feature do
           click_link "Change"
         end
 
-        within all(".govuk-radios").first do
+        within_fieldset("Can you sponsor Student visas?") do
           choose "No"
         end
-        within all(".govuk-radios").last do
+        within_fieldset("Can you sponsor Skilled Worker visas?") do
           choose "Yes"
         end
         click_button "Save"
-      end
-
-      it "does not render banner" do
-        visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        expect(page).not_to have_content "You need to provide some information before publishing your courses."
       end
     end
   end
