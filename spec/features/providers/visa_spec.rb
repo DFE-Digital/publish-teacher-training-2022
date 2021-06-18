@@ -7,7 +7,6 @@ feature "View provider", type: :feature do
     build(
       :provider,
       provider_code: "A0",
-      recruitment_cycle_year: recruitment_cycle.year,
       recruitment_cycle: recruitment_cycle,
     )
   end
