@@ -74,7 +74,7 @@ module ApplicationHelper
 private
 
   def render_change_link(path, visually_hidden)
-    return nil unless path
+    return if path.blank?
 
     govuk_link_to(path) do
       raw("Change<span class=\"govuk-visually-hidden\"> #{visually_hidden}</span>")
