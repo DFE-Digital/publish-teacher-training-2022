@@ -12,12 +12,13 @@
     "set-value": "^4.0.0"
   },
   "devDependencies": {
-    "jest": "^26.6.3",
+    "jest": "^27.0.4",
     "webpack-dev-server": "^3.11.2"
   },
   "jest": {
     "roots": [
       "app"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   }
 }
