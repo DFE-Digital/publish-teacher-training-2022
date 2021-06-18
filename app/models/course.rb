@@ -129,6 +129,10 @@ class Course < Base
     travel_to_work_areas.to_sentence(last_word_connector: " and ")
   end
 
+  def degree_section_complete?
+    degree_grade.present?
+  end
+
 private
 
   def post_base_url
