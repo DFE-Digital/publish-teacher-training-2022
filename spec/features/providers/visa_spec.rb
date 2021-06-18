@@ -15,6 +15,7 @@ feature "View provider", type: :feature do
 
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
+    allow(Settings.features.rollover).to receive(:prepare_for_next_cycle).and_return(prepare_for_next_cycle)
   end
 
   context "with feature flag off" do
