@@ -204,6 +204,15 @@ Rails.application.routes.draw do
         put "/full-part-time", on: :member, to: "courses/study_mode#update"
 
         get "/request-change", on: :member, to: "courses#request_change"
+
+        get "/degrees/start", on: :member, to: "courses/degrees/start#edit"
+        put "/degrees/start", on: :member, to: "courses/degrees/start#update"
+
+        get "/degrees/grade", on: :member, to: "courses/degrees/grade#edit"
+        put "/degrees/grade", on: :member, to: "courses/degrees/grade#update"
+
+        get "/degrees/subject-requirements", on: :member, to: "courses/degrees/subject_requirements#edit"
+        put "/degrees/subject-requirements", on: :member, to: "courses/degrees/subject_requirements#update"
       end
 
       resources :sites, path: "locations", on: :member, except: %i[destroy show]
