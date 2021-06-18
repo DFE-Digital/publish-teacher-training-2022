@@ -30,10 +30,6 @@ module PageObjects
         element :status_panel, "[data-qa=course__status_panel]"
         element :withdraw_link, '[data-qa="course__withdraw-link"]'
         element :delete_link, '[data-qa="course__delete-link"]'
-
-        section :notification_banner, ".govuk-notification-banner" do
-          element :age_range_link, ".govuk-notification-banner__link"
-        end
       end
     end
   end
