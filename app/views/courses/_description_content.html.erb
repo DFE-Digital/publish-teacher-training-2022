@@ -36,7 +36,11 @@
 </h3>
 
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
+<<<<<<< HEAD
   <% if @provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
+=======
+  <% if @provider.recruitment_cycle_year.to_i >= 2022 %>
+>>>>>>> 9950d101 (Add the degree section to the basic details page)
      <% summary_list.slot(:row, enrichment_summary(
        :course,
        "Degree",
