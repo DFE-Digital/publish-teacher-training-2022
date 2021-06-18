@@ -1,0 +1,23 @@
+<% if course.degree_section_complete? %>
+  <p class="govuk-summary-list-value govuk-!-margin-top-0">
+    <%= degree_grade_content(course) %>
+  </p>
+
+  <% if course.degree_subject_requirements %>
+    <p class="govuk-summary-list-value">
+      <%= course.degree_subject_requirements %>
+    </p>
+  <% end %>
+<% else %>
+  <%= govuk_inset_text(classes: %w[app-inset-text app-inset-text--important]) do
+        tag.p("Do you require a minimum degree classification?", class: "govuk-heading-s app-inset-text__title") +
+          govuk_link_to(
+            "Enter degree requirements",
+            degrees_start_provider_recruitment_cycle_course_path(
+              course.provider.provider_code,
+              course.recruitment_cycle_year,
+              course.course_code,
+            ),
+          )
+      end %>
+<% end %>

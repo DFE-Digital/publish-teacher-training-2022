@@ -34,7 +34,18 @@
 <h3 class="govuk-heading-m">
   <%= govuk_link_to "Requirements and eligibility", requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
 </h3>
+
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
+  <% if @provider.recruitment_cycle_year.to_i >= 2022 %>
+     <% summary_list.slot(:row, enrichment_summary(
+       :course,
+       "Degree",
+       (render DegreeRowContentComponent.new(course: course)),
+       %w[degree_grade degree_subject_requirements],
+       truncate_value: false,
+       change_link: course.degree_section_complete? ? degrees_start_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
+     )) %>
+  <% end %>
   <% summary_list.slot(:row, enrichment_summary(:course, "Qualifications needed", course.required_qualifications, %w[required_qualifications])) %>
   <% summary_list.slot(:row, enrichment_summary(:course, "Personal qualities (optional)", course.personal_qualities, %w[personal_qualities])) %>
   <% summary_list.slot(:row, enrichment_summary(:course, "Other requirements (optional)", course.other_requirements, %w[other_requirements])) %>
