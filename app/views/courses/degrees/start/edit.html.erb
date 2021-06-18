@@ -1,0 +1,32 @@
+<%= content_for :page_title, "Do you require a minimum degree classification?" %>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to provider_recruitment_cycle_course_path %>
+<% end %>
+
+<%= render "shared/errors" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+      Do you require a minimum degree classification?
+    </h1>
+
+    <%= form_with model: @start_form, url: degrees_start_provider_recruitment_cycle_course_path(
+                    @course.provider.provider_code,
+                    @course.provider.recruitment_cycle_year,
+                    @course.course_code,
+                  ),
+                  method: :put,
+                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+
+      <%= form.govuk_radio_buttons_fieldset :degree_grade_required, legend: { text: "If you specify a minimum (for example, 2:1), candidates will be discouraged but not blocked from applying if they do not meet this level.", size: "m", class: "govuk-hint" } do %>
+        <%= form.govuk_radio_button :degree_grade_required, true, label: { text: "Yes" }, data: { qa: "start__yes_radio" }, link_errors: true %>
+        <%= form.govuk_radio_button :degree_grade_required, false, label: { text: "No" }, data: { qa: "start__no_radio" } %>
+      <% end %>
+
+      <%= form.submit "Save", class: "govuk-button", data: { qa: "start__save" } %>
+    <% end %>
+  </div>
+</div>
