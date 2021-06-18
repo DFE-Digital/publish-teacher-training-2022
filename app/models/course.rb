@@ -11,6 +11,9 @@ class Course < Base
   property :english, type: :string
   property :science, type: :string
   property :name, type: :string
+  property :degree_grade, type: :string
+  property :additional_degree_subject_requirements, type: :boolean
+  property :degree_subject_requirements, type: :string
 
   delegate :provider_type, to: :provider
 

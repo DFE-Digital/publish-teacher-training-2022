@@ -118,6 +118,9 @@ FactoryBot.define do
     meta { nil }
     age_range_in_years { "11_to_16" }
     program_type { "pg_teaching_apprenticeship" }
+    degree_grade { "two_one" }
+    additional_degree_subject_requirements { true }
+    degree_subject_requirements { Faker::Lorem.sentence(word_count: 10) }
 
     after :build do |course, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.
