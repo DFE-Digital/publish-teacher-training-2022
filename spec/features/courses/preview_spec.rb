@@ -228,6 +228,46 @@ feature "Preview course", type: :feature do
     expect(preview_course_page).to have_course_advice
   end
 
+  context "when the provider is in the 2022 recuritment cycle or higher" do
+    let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
+
+    let(:course) do
+      build(
+        :course,
+        provider: provider,
+        degree_grade: "two_one",
+        degree_subject_requirements: "Maths A level",
+        required_qualifications: "You need some qualifications for this course",
+        recruitment_cycle: next_recruitment_cycle,
+      )
+    end
+
+    let(:provider) do
+      build(
+        :provider,
+        recruitment_cycle: next_recruitment_cycle,
+        provider_code: "A0",
+        website: "https://scitt.org",
+        address1: "1 Long Rd",
+        postcode: "E1 ABC",
+      )
+    end
+
+    before do
+      signed_in_user
+      stub_api_v2_resource(next_recruitment_cycle)
+      stub_api_v2_resource(course, include: "subjects,sites,site_statuses.site,provider.sites,accrediting_provider")
+      stub_api_v2_resource(provider)
+    end
+
+    it "shows the new degree requirements attributes" do
+      visit preview_provider_recruitment_cycle_course_path(provider.provider_code, next_recruitment_cycle.year, course.course_code)
+
+      expect(preview_course_page).to have_content "2:1 or above, or equivalent"
+      expect(preview_course_page).to have_content "Maths A level"
+    end
+  end
+
   def jsonapi_site_status(name, study_mode, status)
     build(:site_status, study_mode, site: build(:site, location_name: name), status: status)
   end
