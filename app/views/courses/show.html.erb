@@ -11,12 +11,21 @@
         <% @errors.each do |id, messages| %>
           <% messages.each do |message| %>
             <li data-error-message="<%= message %>">
-              <a href="<%= enrichment_error_url(
-                provider_code: @provider.provider_code,
-                course: @course,
-                field: id,
-                message: message,
-              ) %>"><%= message %></a>
+              <% if message == 'You must say whether you have additional degree requirements' %>
+                <a href="<%= degrees_start_provider_recruitment_cycle_course_path(
+                  provider_code: @provider.provider_code,
+                  recruitment_cycle_year: @provider.recruitment_cycle_year,
+                  course_code: @course.course_code,
+                  field: id,
+                ) %>"><%= message %></a>
+              <% else %>
+                <a href="<%= enrichment_error_url(
+                  provider_code: @provider.provider_code,
+                  course: @course,
+                  field: id,
+                  message: message,
+                ) %>"><%= message %></a>
+              <% end %>
             </li>
           <% end %>
         <% end %>
