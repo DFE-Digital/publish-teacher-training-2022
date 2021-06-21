@@ -20,7 +20,7 @@ module ProviderHelper
   end
 
   def visa_sponsorship_short_status(provider)
-    if provider.can_sponsor_student_visa.nil? || provider.can_sponsor_skilled_worker_visa.nil?
+    if !provider.declared_visa_sponsorship?
       visa_sponsorship_call_to_action(provider)
     elsif provider.can_sponsor_all_visas?
       "sponsor Student and Skilled Worker visas"

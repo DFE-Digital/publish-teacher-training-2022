@@ -34,7 +34,7 @@ feature "View and edit provider visa sponsorship", type: :feature do
         recruitment_cycle_year,
         course.course_code,
       )
-      expect(page).not_to have_content('International students')
+      expect(page).not_to have_content("International students")
     end
   end
 
@@ -64,8 +64,8 @@ feature "View and edit provider visa sponsorship", type: :feature do
         course = build(:course, provider: provider)
         stub_api_v2_resource(course, include: "subjects,sites,site_statuses.site,provider.sites,accrediting_provider")
         visit preview_provider_recruitment_cycle_course_path("A0", "2022", course.course_code)
-        expect(page).to have_content('International students')
-        expect(page).to have_content('Please add details about visa sponsorship')
+        expect(page).to have_content("International students")
+        expect(page).to have_content("Please add details about visa sponsorship")
       end
 
       it "visa sponsorship form renders validation errors if I submit without selecting whether provider sponsors visas" do
@@ -138,8 +138,8 @@ feature "View and edit provider visa sponsorship", type: :feature do
         course = build(:course, provider: provider)
         stub_api_v2_resource(course, include: "subjects,sites,site_statuses.site,provider.sites,accrediting_provider")
         visit preview_provider_recruitment_cycle_course_path("A0", "2022", course.course_code)
-        expect(page).to have_content('International students')
-        expect(page).to have_content('We can sponsor Student visas, but this is not guaranteed.')
+        expect(page).to have_content("International students")
+        expect(page).to have_content("We can sponsor Student visas, but this is not guaranteed.")
       end
     end
   end
