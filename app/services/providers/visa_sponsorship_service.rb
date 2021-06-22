@@ -7,8 +7,7 @@ module Providers
     end
 
     def visa_sponsorship_enabled?
-      @provider.recruitment_cycle_year.to_i >= VISA_SPONSORSHIP_INTRODUCED_IN &&
-        Settings.features.rollover.prepare_for_next_cycle
+      @provider.recruitment_cycle_year.to_i >= VISA_SPONSORSHIP_INTRODUCED_IN
     end
   end
 end
