@@ -105,7 +105,7 @@ feature "Course fees", type: :feature do
     click_on "Save"
 
     expect(course_fees_page.error_flash).to have_content(
-      "You’ll need to correct some information.",
+      "There is a problem",
     )
     expect(current_path).to eq fees_provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
   end

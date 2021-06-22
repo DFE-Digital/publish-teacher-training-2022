@@ -121,7 +121,7 @@ feature "Edit course age range in years", type: :feature do
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
-          "You’ll need to correct some information.",
+          "There is a problem",
         )
         expect(age_range_in_years_page).to have_content(
           "Enter an age in From",
@@ -138,7 +138,7 @@ feature "Edit course age range in years", type: :feature do
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
-          "You’ll need to correct some information.",
+          "There is a problem",
         )
         expect(age_range_in_years_page).to have_content(
           "Enter an age in To",
@@ -152,7 +152,7 @@ feature "Edit course age range in years", type: :feature do
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
-          "You’ll need to correct some information.",
+          "There is a problem",
         )
         expect(age_range_in_years_page).to have_content(
           "Enter an age in From",
@@ -167,7 +167,7 @@ feature "Edit course age range in years", type: :feature do
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
-          "You’ll need to correct some information.",
+          "There is a problem",
         )
         expect(age_range_in_years_page).to have_content(
           "Enter a valid age in From",
@@ -182,7 +182,7 @@ feature "Edit course age range in years", type: :feature do
 
         expect(age_range_in_years_page).to be_displayed
         expect(age_range_in_years_page).to have_content(
-          "You’ll need to correct some information.",
+          "There is a problem",
         )
         expect(age_range_in_years_page).to have_content(
           "Enter a valid age in To",

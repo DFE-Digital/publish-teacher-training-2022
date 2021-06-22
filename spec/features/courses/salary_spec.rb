@@ -82,7 +82,7 @@ feature "Course salary", type: :feature do
     click_on "Save"
 
     expect(course_salary_page.error_flash).to have_content(
-      "You’ll need to correct some information.",
+      "There is a problem",
     )
     expect(current_path).to eq salary_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
   end

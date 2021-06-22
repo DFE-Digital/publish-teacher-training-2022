@@ -90,7 +90,7 @@ feature "Course requirements", type: :feature do
     click_on "Save"
 
     expect(course_requirements_page.error_flash).to have_content(
-      "You’ll need to correct some information.",
+      "There is a problem",
     )
     expect(current_path).to eq requirements_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle.year, course.course_code)
   end

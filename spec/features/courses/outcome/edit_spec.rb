@@ -109,7 +109,7 @@ feature "Edit course outcome", type: :feature do
       expect(outcome_page).to be_displayed
 
       expect(outcome_page.error_flash)
-        .to have_content("You’ll need to correct some information")
+        .to have_content("There is a problem")
 
       expect(outcome_page.error_flash).to have_content("Pick an outcome")
       expect(outcome_page).to have_selector("#qualification-error")
@@ -130,7 +130,7 @@ feature "Edit course outcome", type: :feature do
       expect(outcome_page).to be_displayed
 
       expect(outcome_page.error_flash)
-        .to have_content("You’ll need to correct some information")
+        .to have_content("There is a problem")
 
       expect(outcome_page.error_flash).to have_content("Qualification error")
       expect(outcome_page).to have_selector("#qualification-error")

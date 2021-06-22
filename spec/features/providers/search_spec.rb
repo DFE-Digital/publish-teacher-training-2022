@@ -52,7 +52,7 @@ feature "Search providers", type: :feature do
       root_page.find_providers.click
 
       expect(root_page.error_summary).to have_content(
-        "You’ll need to correct some information.",
+        "There is a problem",
       )
 
       expect(root_page.provider_error).to have_content(
