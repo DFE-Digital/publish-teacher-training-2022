@@ -16,8 +16,8 @@
   <%= f.govuk_error_summary "You’ll need to correct some information." %>
 <% end %>
 
-  <h1 class="govuk-heading-xl">
-    <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l"><%= course.name_and_code %></span>
     About this course
   </h1>
 
@@ -63,9 +63,9 @@
 
         <%= f.govuk_text_area :about_course, label: { text: "About this course", size: "s" }, max_words: 400, rows: 20 %>
 
-        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-        <h3 class="govuk-heading-l remove-top-margin">Interview process</h3>
+        <h3 class="govuk-heading-m">Interview process</h3>
 
         <p class="govuk-body">Tell applicants:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -77,9 +77,9 @@
 
         <%= f.govuk_text_area :interview_process, label: { text: "Interview process (optional)", size: "s" }, max_words: 250, rows: 15 %>
 
-        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-        <h3 class="govuk-heading-l remove-top-margin"><%= course.placements_heading %></h3>
+        <h3 class="govuk-heading-m"><%= course.placements_heading %></h3>
 
         <p class="govuk-body">
           Give applicants more information about the schools they’ll be teaching in. Tell them:

@@ -6,7 +6,7 @@
 
 <%= render "shared/errors" %>
 
-<h1 class="govuk-heading-xl" data-qa="ucas_contacts__alerts__main_heading">
+<h1 class="govuk-heading-l" data-qa="ucas_contacts__alerts__main_heading">
   Email alerts for new applications
 </h1>
 
@@ -16,7 +16,7 @@
                   url: alerts_provider_ucas_contacts_path(@provider.provider_code),
                   data: { qa: "ucas_contacts__alerts_form" } do |form| %>
 
-      <div data-qa="ucas_contacts__alerts_enabled">
+      <div class="govuk-!-margin-bottom-8" data-qa="ucas_contacts__alerts_enabled">
         <div class="govuk-radios__item">
           <%= form.radio_button :send_application_alerts,
                                 "all",
@@ -40,9 +40,7 @@
         </div>
       </div>
 
-      <hr class="govuk-section-break govuk-section-break--l">
-
-      <h2 class="govuk-heading-l">Who are the alerts sent to?</h2>
+      <h2 class="govuk-heading-m">Who are the alerts sent to?</h2>
 
       <div class="govuk-form-group ">
         <%= form.label :application_alert_contact, class: "govuk-label" do %>
@@ -68,8 +66,6 @@
           </div>
         </div>
       <% end %>
-
-      <hr class="govuk-section-break govuk-section-break--l">
 
       <%= form.submit "Save", class: "govuk-button", data: { qa: "course__save" } %>
     <% end %>

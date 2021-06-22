@@ -8,8 +8,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">
         <%= @provider.provider_name %>
       </span>
       Contact details
@@ -82,8 +82,6 @@
         <% end %>
       <% end %>
 
-      <hr class="govuk-section-break govuk-section-break--l">
-
       <h3 class="govuk-heading-m">Contact address</h3>
 
       <%= render "shared/form_field",
@@ -115,8 +113,6 @@
         form: f, field: :postcode do |field, options| %>
         <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
       <% end %>
-
-      <hr class="govuk-section-break govuk-section-break--l">
       <p class="govuk-body">Changes will appear on Find postgraduate teacher training within 2 hours.</p>
       <%= f.submit "Save and publish changes", class: "govuk-button" %>
     <% end %>

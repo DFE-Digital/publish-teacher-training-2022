@@ -180,7 +180,7 @@ private
   end
 
   def and_i_see_training_provider_name
-    expect(find("span.govuk-caption-xl")).to have_content(training_provider.provider_name)
+    expect(find(".govuk-caption-l")).to have_content(training_provider.provider_name)
   end
 
   def then_i_see_the_pe_allocations_request_page

@@ -1,9 +1,9 @@
 <%= render "shared/error_wrapper", error_keys: [:subjects], data_qa: "course__subjects" do %>
   <fieldset class="govuk-fieldset">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
       <h1 class="govuk-fieldset__heading" data-qa="page-heading">
         <% if course.course_code %>
-          <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+          <span class="govuk-caption-l"><%= course.name_and_code %></span>
         <% end %>
 
         <%= course.subject_page_title %>

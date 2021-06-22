@@ -4,8 +4,8 @@ module PageObjects
       class RecruitmentCycle < PageObjects::Base
         set_url "/organisations/{provider_code}/{recruitment_cycle_year}"
 
-        element :title, ".govuk-heading-xl"
-        element :caption, ".govuk-caption-xl"
+        element :title, ".govuk-heading-l"
+        element :caption, ".govuk-caption-l"
 
         element :about_organisation_link, "a", text: "About your organisation"
         element :locations_link, "a", text: "Locations"

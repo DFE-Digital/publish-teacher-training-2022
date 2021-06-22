@@ -6,8 +6,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l"><%= course.name_and_code %></span>
       Are you sure you want to withdraw this course?
     </h1>
 
@@ -33,7 +33,7 @@
         <% end %>
         <%= f.text_field "confirm_course_code", class: "govuk-input govuk-input--width-5" %>
       </div>
-      <hr class="govuk-section-break govuk-section-break--m">
+
       <%= f.submit "Yes I’m sure – withdraw this course", class: "govuk-button govuk-button--warning" %>
     <% end %>
 

@@ -3,7 +3,7 @@
 
 <%= render "shared/errors" %>
 
-<h1 class="govuk-heading-xl"><%= @site_name_before_update %></h1>
+<h1 class="govuk-heading-l"><%= @site_name_before_update %></h1>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -11,7 +11,6 @@
                   url: provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id),
                   method: :put do |f| %>
       <p class="govuk-body">You can assign locations to a course from the ‘Basic details’ tab on the course page.</p>
-      <hr class="govuk-section-break govuk-section-break--l">
       <%= render "form", f: f %>
       <%= f.submit "Save and publish changes", class: "govuk-button", data: { qa: "location__publish-changes" } %>
     <% end %>

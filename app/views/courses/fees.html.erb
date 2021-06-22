@@ -15,8 +15,8 @@
 
   <%= render "shared/errors" %>
 
-  <h1 class="govuk-heading-xl">
-    <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l"><%= course.name_and_code %></span>
     Course length and fees
   </h1>
 
@@ -26,9 +26,9 @@
 
       <%= render partial: "courses/course_length", locals: { f: f } %>
 
-      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h3 class="govuk-heading-l remove-top-margin">Course fees</h3>
+      <h3 class="govuk-heading-m">Course fees</h3>
 
       <%= f.govuk_text_field(:fee_uk_eu,
         value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true),
@@ -47,7 +47,7 @@
         width: 5,
         data: { qa: "course_fee_international" }) %>
 
-      <h4 class="govuk-heading-m">Fee details</h4>
+      <h3 class="govuk-heading-m">Fee details</h3>
       <p class="govuk-body">If applicable, give further details about the fees for this course.</p>
       <p class="govuk-body">This could include:</p>
       <ul class="govuk-list govuk-list--bullet">
@@ -61,9 +61,9 @@
         max_words: 250,
         data: { qa: "course_fee_details" }) %>
 
-      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h2 class="govuk-heading-l">Financial support you offer</h2>
+      <h3 class="govuk-heading-m">Financial support you offer</h3>
       <p class="govuk-body">If applicable, say more about the financial support you offer for this course. For example, any bursaries available.</p>
       <p class="govuk-body">You don’t need to add details of any DfE bursaries and subject scholarships here. These will be published automatically to your course page</p>
 
@@ -83,6 +83,7 @@
         ) %>
       </p>
     </div>
+
     <aside class="govuk-grid-column-one-third">
       <%= render(
         partial: "courses/related_sidebar",

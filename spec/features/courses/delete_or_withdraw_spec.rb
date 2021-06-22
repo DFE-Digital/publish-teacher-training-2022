@@ -27,10 +27,10 @@ feature "Getting rid of a course", type: :feature do
     scenario "withdrawing can be requested via support" do
       course_page.withdraw_link.click
 
-      expect(find(".govuk-caption-xl")).to have_content(
+      expect(find(".govuk-caption-l")).to have_content(
         "#{course.name} (#{course.course_code})",
       )
-      expect(find(".govuk-heading-xl")).to have_content(
+      expect(find(".govuk-heading-l")).to have_content(
         "Are you sure you want to withdraw this course?",
       )
     end
@@ -46,10 +46,10 @@ feature "Getting rid of a course", type: :feature do
     scenario "deletion can be requested via support" do
       course_page.delete_link.click
 
-      expect(find(".govuk-caption-xl")).to have_content(
+      expect(find(".govuk-caption-l")).to have_content(
         "#{course.name} (#{course.course_code})",
       )
-      expect(find(".govuk-heading-xl")).to have_content(
+      expect(find(".govuk-heading-l")).to have_content(
         "Are you sure you want to delete this course?",
       )
     end

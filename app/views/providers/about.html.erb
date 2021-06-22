@@ -14,8 +14,8 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">
-        <span class="govuk-caption-xl">
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">
           <%= @provider.provider_name %>
         </span>
         About your organisation
@@ -58,7 +58,9 @@
       <%= f.govuk_text_area :train_with_us, label: { text: "Training with you", size: "s" }, max_words: 250, rows: 15 %>
 
       <% if provider.accredited_bodies.present? %>
-        <h2 class="govuk-heading-l">About your accredited body</h2>
+        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+
+        <h2 class="govuk-heading-m">About your accredited body</h2>
 
         <p id="about-training-provider-hint" class="govuk-body">
           Tell applicants about your accredited body - you could mention their academic specialities and achievements.
@@ -72,7 +74,9 @@
         <% end %>
       <% end %>
 
-      <h2 class="govuk-heading-l">Training with disabilities and other needs</h2>
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+
+      <h2 class="govuk-heading-m">Training with disabilities and other needs</h2>
 
       <p class="govuk-body">
         Say how you support candidates with disabilities and other needs. This could include candidates with:
@@ -90,8 +94,6 @@
       <%= f.govuk_text_area :train_with_disability,
                             label: { text: "Training with disabilities and other needs", size: "s" },
                             max_words: 250, rows: 15 %>
-
-      <hr class="govuk-section-break govuk-section-break--l">
 
       <%= f.govuk_submit "Save and publish changes" %>
 

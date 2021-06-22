@@ -6,8 +6,9 @@ module PageObjects
           self.load(provider_code: course.provider_code, recruitment_cycle_year: course.recruitment_cycle_year, course_code: course.course_code)
         end
 
-        element :title, ".govuk-heading-xl"
-        element :caption, ".govuk-caption-xl"
+        element :title, ".govuk-heading-l"
+        element :legend, ".govuk-fieldset__legend--l .govuk-fieldset__heading"
+        element :caption, ".govuk-caption-l"
         element :flash, ".govuk-notification-banner--success"
         element :error_flash, ".govuk-error-summary"
         element :warning_message, '[data-qa="copy-course-warning"]'

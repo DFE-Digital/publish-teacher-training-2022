@@ -14,7 +14,7 @@
 
       <%= form.govuk_error_summary "You’ll need to correct some information." %>
 
-      <%= form.govuk_radio_buttons_fieldset(:age_range_in_years, legend: { size: "xl", text: "Specify an age range" }, caption: { text: course.name_and_code, size: "xl" }) do %>
+      <%= form.govuk_radio_buttons_fieldset(:age_range_in_years, legend: { size: "l", text: "Specify an age range" }, caption: { text: course.name_and_code, size: "l" }) do %>
         <% @course.meta["edit_options"]["age_range_in_years"].each do |value| %>
           <%= form.govuk_radio_button :age_range_in_years,
             value,

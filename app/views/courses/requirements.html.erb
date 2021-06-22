@@ -14,8 +14,8 @@
   <%= f.govuk_error_summary "You’ll need to correct some information." %>
 <% end %>
 
-<h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+<h1 class="govuk-heading-l">
+  <span class="govuk-caption-l"><%= course.name_and_code %></span>
   Requirements and eligibility
 </h1>
 
@@ -28,7 +28,7 @@
 
       <%= f.hidden_field :page, value: :requirements %>
 
-      <h3 class="govuk-heading-l remove-top-margin">Qualifications needed</h3>
+      <h2 class="govuk-heading-m">Qualifications needed</h2>
 
       <p class="govuk-body">
         State the minimum academic qualifications needed for this course.
@@ -58,9 +58,9 @@
 
       <%= f.govuk_text_area :required_qualifications, label: { text: "Qualifications needed", size: "s" }, max_words: 100, rows: 10 %>
 
-      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h3 class="govuk-heading-l remove-top-margin">Personal qualities</h3>
+      <h2 class="govuk-heading-m">Personal qualities</h2>
 
       <p class="govuk-body">
         Tell applicants about the skills, motivation and experience you’re looking for
@@ -69,9 +69,9 @@
 
       <%= f.govuk_text_area :personal_qualities, label: { text: "Personal qualities (optional)", size: "s" }, max_words: 100, rows: 10 %>
 
-      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h3 class="govuk-heading-l remove-top-margin">Other requirements</h3>
+      <h2 class="govuk-heading-m">Other requirements</h2>
 
       <p class="govuk-body">
         If applicants need any non-academic qualifications or documents, list them here

@@ -55,7 +55,7 @@ feature "Edit accredited body", type: :feature do
 
     scenario "It displays the correct title" do
       expect(page.title).to start_with("Who is the accredited body?")
-      expect(accredited_body_page.title.text).to eq("Who is the accredited body?")
+      expect(accredited_body_page.legend.text).to eq("Who is the accredited body?")
     end
   end
 
@@ -197,7 +197,7 @@ feature "Edit accredited body", type: :feature do
 
     scenario "It displays the correct title" do
       expect(page.title).to start_with("Who is the accredited body?")
-      expect(accredited_body_page.title.text).to eq("Who is the accredited body?")
+      expect(accredited_body_page.legend.text).to eq("Who is the accredited body?")
     end
   end
 

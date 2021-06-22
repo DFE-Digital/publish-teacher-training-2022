@@ -33,10 +33,10 @@ feature "Withdraw course", type: :feature do
   scenario "confirming course code" do
     course_page.withdraw_link.click
 
-    expect(find(".govuk-caption-xl")).to have_content(
+    expect(find(".govuk-caption-l")).to have_content(
       "#{course.name} (#{course.course_code})",
     )
-    expect(find(".govuk-heading-xl")).to have_content(
+    expect(find(".govuk-heading-l")).to have_content(
       "Are you sure you want to withdraw this course?",
     )
 
@@ -53,10 +53,10 @@ feature "Withdraw course", type: :feature do
     scenario "display validation errors" do
       course_page.withdraw_link.click
 
-      expect(find(".govuk-caption-xl")).to have_content(
+      expect(find(".govuk-caption-l")).to have_content(
         "#{course.name} (#{course.course_code})",
       )
-      expect(find(".govuk-heading-xl")).to have_content(
+      expect(find(".govuk-heading-l")).to have_content(
         "Are you sure you want to withdraw this course?",
       )
 
