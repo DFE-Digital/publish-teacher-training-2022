@@ -9,7 +9,7 @@ module Courses
       def update
         @start_form = StartForm.new(degree_grade_required: grade_required_params)
 
-        if @start_form.save(@course) && @course.level == "primary"
+        if @course.level == "primary" && @start_form.save(@course)
           redirect_to provider_recruitment_cycle_course_path
         elsif @start_form.save(@course)
           redirect_to degrees_subject_requirements_provider_recruitment_cycle_course_path

@@ -36,7 +36,7 @@
 </h3>
 
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
-  <% if @provider.recruitment_cycle_year.to_i >= 2022 %>
+  <% if @provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
      <% summary_list.slot(:row, enrichment_summary(
        :course,
        "Degree",

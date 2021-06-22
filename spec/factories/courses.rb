@@ -118,7 +118,7 @@ FactoryBot.define do
     meta { nil }
     age_range_in_years { "11_to_16" }
     program_type { "pg_teaching_apprenticeship" }
-    degree_grade { "two_one" }
+    degree_grade { %w[two_one two_two third_class not_required].sample }
     additional_degree_subject_requirements { true }
     degree_subject_requirements { Faker::Lorem.sentence(word_count: 10) }
 

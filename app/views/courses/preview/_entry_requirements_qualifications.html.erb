@@ -12,7 +12,7 @@
     </aside>
 
     <h3 class="govuk-heading-m">Qualifications needed</h3>
-    <% if course.provider.recruitment_cycle_year.to_i >= 2022 %>
+    <% if course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
       <%= render DegreePreviewComponent.new(course: course) %>
     <% else %>
       <div data-qa="course__required_qualifications">
