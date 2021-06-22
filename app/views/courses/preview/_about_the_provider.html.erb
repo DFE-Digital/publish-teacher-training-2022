@@ -4,7 +4,9 @@
     <% if @provider.train_with_us.present? %>
       <%= markdown(@provider.train_with_us) %>
     <% else %>
-      <p class="app-missing-section">Please add details <%= govuk_link_to "about your organisation", about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>.</p>
+      <%= govuk_inset_text(classes: "app-inset-text app-inset-text--narrow-border app-inset-text--important") do %>
+        <p class="govuk-body">Please add details <%= govuk_link_to "about your organisation", about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>.</p>
+      <% end %>
     <% end %>
   </div>
 

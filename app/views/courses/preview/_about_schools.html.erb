@@ -17,7 +17,9 @@
       </aside>
       <%= markdown(course.how_school_placements_work) %>
     <% else %>
-      <p class="app-missing-section">Please add details for this section.</p>
+      <%= govuk_inset_text(classes: "app-inset-text app-inset-text--narrow-border app-inset-text--important") do %>
+        <p class="govuk-body">Please add details for this section.</p>
+      <% end %>
     <% end %>
   </div>
 </div>
