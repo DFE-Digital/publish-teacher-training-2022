@@ -30,7 +30,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-m govuk-!-font-size-27">
+    <h2 class="govuk-heading-m">
       <%= govuk_link_to "Contact details", contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
     </h2>
     <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
@@ -41,7 +41,7 @@
       <% summary_list.slot(:row, enrichment_summary(:provider, "UKPRN", @provider.ukprn, %w[ukprn])) %>
     <% end %>
 
-    <h2 class="govuk-heading-m govuk-!-font-size-27">
+    <h2 class="govuk-heading-m">
       <%= govuk_link_to "About your organisation", about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year) %>
     </h2>
     <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>

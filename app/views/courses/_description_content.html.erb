@@ -2,7 +2,7 @@
   <%= govuk_warning(text: "This course has been withdrawn.") %>
 <% end %>
 
-<h3 class="govuk-heading-m govuk-!-font-size-27">
+<h3 class="govuk-heading-m">
   <%= govuk_link_to "About this course", about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
 </h3>
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
@@ -11,7 +11,7 @@
   <% summary_list.slot(:row, enrichment_summary(:course, course.placements_heading, course.how_school_placements_work, %w[how_school_placements_work])) %>
 <% end %>
 
-<h3 class="govuk-heading-m govuk-!-font-size-27">
+<h3 class="govuk-heading-m">
   <% if course.has_fees? %>
     <%= govuk_link_to "Course length and fees", fees_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
   <% else %>
@@ -31,7 +31,7 @@
   <% end %>
 <% end %>
 
-<h3 class="govuk-heading-m govuk-!-font-size-27">
+<h3 class="govuk-heading-m">
   <%= govuk_link_to "Requirements and eligibility", requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
 </h3>
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
