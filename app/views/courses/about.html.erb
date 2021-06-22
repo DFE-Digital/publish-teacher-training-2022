@@ -13,7 +13,7 @@
               data: { qa: "enrichment-form", module: "form-check-leave" },
               builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
   <%= f.hidden_field :page, value: :about, id: nil %>
-  <%= f.govuk_error_summary "You’ll need to correct some information." %>
+  <%= f.govuk_error_summary %>
 <% end %>
 
   <h1 class="govuk-heading-xl">

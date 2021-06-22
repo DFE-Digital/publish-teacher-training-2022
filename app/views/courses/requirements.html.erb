@@ -11,7 +11,7 @@
 <%= form_with model: course,
               url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
               builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
-  <%= f.govuk_error_summary "You’ll need to correct some information." %>
+  <%= f.govuk_error_summary %>
 <% end %>
 
 <h1 class="govuk-heading-xl">

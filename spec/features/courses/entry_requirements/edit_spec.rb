@@ -179,7 +179,7 @@ feature "Edit course entry requirements", type: :feature do
       expect(entry_requirements_page).to be_displayed
 
       expect(entry_requirements_page.error_flash)
-        .to have_content("You’ll need to correct some information")
+        .to have_content("There is a problem")
 
       %w[maths english science].each do |s|
         expect(entry_requirements_page.error_flash).to have_content("Pick an option for #{s.titleize}")

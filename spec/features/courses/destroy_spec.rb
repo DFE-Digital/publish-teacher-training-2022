@@ -64,7 +64,7 @@ feature "Delete course", type: :feature do
       click_on "Yes I’m sure – delete this course"
 
       expect(course_page.error_summary).to have_content(
-        "You’ll need to correct some information.",
+        "There is a problem",
       )
 
       expect(course_page.delete_error).to have_content(

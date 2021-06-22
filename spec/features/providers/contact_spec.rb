@@ -57,7 +57,7 @@ feature "View provider contact", type: :feature do
     click_on "Save"
 
     expect(org_contact_page.error_flash).to have_content(
-      "You’ll need to correct some information.",
+      "There is a problem",
     )
     expect(current_path).to eq contact_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year)
   end
