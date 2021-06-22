@@ -13,6 +13,8 @@ en:
         address3: Town or city
         address4: County
         postcode: Postcode
+        train_with_us: Training with you
+        train_with_disability: Training with disabilities and other needs
     hint:
       provider:
         provider_name: The marketing name of the provider.
