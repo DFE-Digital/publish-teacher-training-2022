@@ -20,14 +20,14 @@ feature "View and edit provider visa sponsorship", type: :feature do
     allow(Settings.features.rollover).to receive(:prepare_for_next_cycle).and_return(prepare_for_next_cycle)
   end
 
-  context "with feature flag off" do
+  context "with feature flag prepare for next cycle off" do
     it "does not render visa sponsorship prompt and link" do
       visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
       expect(page).not_to have_content "Select if you can sponsor visas"
     end
   end
 
-  context "with feature flag on" do
+  context "with feature flag prepare for next cycle on" do
     let(:prepare_for_next_cycle) { true }
 
     context "in recruitment cycle 2021" do
