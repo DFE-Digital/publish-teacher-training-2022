@@ -8,7 +8,7 @@ module Courses
       def update
         @grade_form = GradeForm.new(grade: grade_params)
 
-        if @course.level == "primary" && @grade_form.save(@course)
+        if @course.is_primary? && @grade_form.save(@course)
           redirect_to provider_recruitment_cycle_course_path
         elsif @grade_form.save(@course)
           redirect_to degrees_subject_requirements_provider_recruitment_cycle_course_path

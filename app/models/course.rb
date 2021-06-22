@@ -133,6 +133,10 @@ class Course < Base
     degree_grade.present?
   end
 
+  def is_primary?
+    level == "primary"
+  end
+
 private
 
   def post_base_url

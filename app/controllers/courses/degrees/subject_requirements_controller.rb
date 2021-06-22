@@ -39,7 +39,7 @@ module Courses
       end
 
       def redirect_to_course_details_page_if_course_is_primary
-        redirect_to provider_recruitment_cycle_course_path if @course.level == "primary"
+        redirect_to provider_recruitment_cycle_course_path if @course.is_primary?
       end
     end
   end

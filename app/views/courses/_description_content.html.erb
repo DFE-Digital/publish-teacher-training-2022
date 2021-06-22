@@ -31,12 +31,12 @@
   <% end %>
 <% end %>
 
-<h3 class="govuk-heading-m govuk-!-font-size-27">
+<h3 class="govuk-heading-m">
   <%= govuk_link_to "Requirements and eligibility", requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code) %>
 </h3>
 
 <%= govuk_summary_list(classes: "app-summary-list--short") do |summary_list| %>
-  <% if @provider.recruitment_cycle_year.to_i >= 2022 %>
+  <% if @provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
      <% summary_list.slot(:row, enrichment_summary(
        :course,
        "Degree",

@@ -22,7 +22,7 @@ RSpec.describe Courses::Degrees::GradeForm do
 
   describe "#build_from_course" do
     it "builds a new DegreeGradeForm and sets degree_grade" do
-      course = build(:course, grade: "two_one")
+      course = build(:course, degree_grade: "two_one")
       form = described_class.build_from_course(course)
 
       expect(form.grade).to eq "two_one"

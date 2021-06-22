@@ -3,7 +3,7 @@
     <%= degree_grade_content(course) %>
   </p>
 
-  <% if course.degree_subject_requirements %>
+  <% if course.degree_subject_requirements.present? %>
     <p class="govuk-body">
       <%= course.degree_subject_requirements %>
     </p>
