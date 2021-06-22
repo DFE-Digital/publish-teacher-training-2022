@@ -10,9 +10,9 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @course, url: vacancies_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code), method: :put do |form| %>
       <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-7">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-margin-bottom-7">
           <h1 class="govuk-fieldset__heading">
-            <span class="govuk-caption-xl"><%= @course.name %>
+            <span class="govuk-caption-l"><%= @course.name %>
               (<%= @course.course_code %>)</span>
             Edit vacancies
           </h1>

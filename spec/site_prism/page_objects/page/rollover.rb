@@ -3,7 +3,7 @@ module PageObjects
     class Rollover < PageObjects::Base
       set_url "/rollover"
 
-      element :title, ".govuk-heading-xl"
+      element :title, ".govuk-heading-l"
       element :continue_link, ".govuk-button", text: "Continue"
       element :continue_input_button, ".govuk-button[value=Continue]"
     end

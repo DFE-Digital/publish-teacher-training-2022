@@ -13,7 +13,7 @@
                   method: :put do |form| %>
 
       <% course_name_and_code = capture do %>
-        <span class="govuk-caption-xl"><%= course.name_and_code %></span>
+        <span class="govuk-caption-l"><%= course.name_and_code %></span>
       <% end %>
 
       <%= render "form_fields", form: form, course_name_and_code: course_name_and_code %>

@@ -2,7 +2,7 @@
 
 <%= content_for :before_content, render_breadcrumbs("ucas_contacts") %>
 
-<h1 class="govuk-heading-xl">UCAS contacts</h1>
+<h1 class="govuk-heading-l">UCAS contacts</h1>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -11,7 +11,7 @@
     <p class="govuk-body">You can no longer change these contacts in NetUpdate, as NetUpdate has now been turned off.</p>
 
     <%= govuk_inset_text do %>
-      <h2 class="govuk-heading-m">What does ‘information unknown’ mean?</h2>
+      <h2 class="govuk-heading-s">What does ‘information unknown’ mean?</h2>
 
       <p class="govuk-body">Some of the contacts below are labelled ‘Information unknown’. This is because UCAS doesn’t have permission under the <%= govuk_link_to "General Data Protection Regulation", "https://www.gov.uk/government/publications/guide-to-the-general-data-protection-regulation" %> (GDPR) to share these details with us.</p>
 
@@ -26,15 +26,15 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">Who will UCAS contact?</h2>
+    <h2 class="govuk-heading-m">Who will UCAS contact?</h2>
 
     <p class="govuk-body">UCAS will contact these people at your organisation:</p>
 
     <%= render partial: "ucas_contact_list", locals: { ucas_contact_view: @ucas_contact_view } %>
 
-    <hr class="govuk-section-break govuk-section-break--xl">
+    <hr class="govuk-section-break govuk-section-break--l">
 
-    <h2 class="govuk-heading-l">Letters for successful applicants</h2>
+    <h2 class="govuk-heading-m">Letters for successful applicants</h2>
 
     <p class="govuk-body">UCAS sends all successful applicants a letter – this is known as a ‘GT12&nbsp;letter’.</p>
 
@@ -55,9 +55,9 @@
       ) %>
     <% end %>
 
-    <hr class="govuk-section-break govuk-section-break--xl">
+    <hr class="govuk-section-break govuk-section-break--l">
 
-    <h2 class="govuk-heading-l">Email alerts for new applications</h2>
+    <h2 class="govuk-heading-m">Email alerts for new applications</h2>
 
     <%= govuk_summary_list do |summary_list| %>
       <% summary_list.slot(

@@ -15,14 +15,14 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl" data-qa="ucas_contacts__alerts__main_heading">
+      <h1 class="govuk-heading-l" data-qa="ucas_contacts__alerts__main_heading">
         <%= t("ucas_contacts.#{@contact.type}.heading") %>
       </h1>
 
       <p class="govuk-body"><%= t("ucas_contacts.#{@contact.type}.purpose") %></p>
 
       <% if @contact.admin? %>
-        <h2 class="govuk-heading-l">Request a change to your UCAS administrator</h2>
+        <h2 class="govuk-heading-m">Request a change to your UCAS administrator</h2>
         <p class="govuk-body" id="admin_subtext">Changes can take up to 7 days to process.</p>
       <% end %>
 

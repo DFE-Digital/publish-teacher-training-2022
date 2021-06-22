@@ -1,7 +1,7 @@
 <%= content_for :page_title, @recruitment_cycle.title %>
 <%= content_for :before_content, render_breadcrumbs(:recruitment_cycle) %>
 
-<h1 class="govuk-heading-xl">
+<h1 class="govuk-heading-l">
   <%= @recruitment_cycle.title %>
 </h1>
 
@@ -16,7 +16,6 @@
         Manage courses, locations and vacancies in the current&nbsp;cycle.
       </p>
     <% end %>
-    <hr class="govuk-section-break govuk-section-break--m">
 
     <%= render partial: "recruitment_cycles/about_organisation", locals: { provider: @provider, year: params[:year] } %>
     <%= render partial: "recruitment_cycles/courses_info", locals: { provider: @provider, year: params[:year] } %>

@@ -16,7 +16,8 @@
 
       <%= render "form_fields", form: form, gcse_subjects_required: course.gcse_subjects_required %>
 
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+
       <p class="govuk-body">Changes will appear on UCAS Apply within 2 hours.</p>
 
       <%= form.submit "Save changes", class: "govuk-button", data: { qa: "course__save" } %>

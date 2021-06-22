@@ -4,8 +4,8 @@ module PageObjects
       class OrganisationDetails < PageObjects::Base
         set_url "/organisations/{provider_code}/{recruitment_cycle_year}/details"
 
-        element :title, ".govuk-heading-xl"
-        element :caption, ".govuk-caption-xl"
+        element :title, ".govuk-heading-l"
+        element :caption, ".govuk-caption-l"
         element :email, "[data-qa=enrichment__email]"
         element :telephone, "[data-qa=enrichment__telephone]"
         element :website, "[data-qa=enrichment__website]"

@@ -147,7 +147,7 @@ feature "New accredited body" do
   context "Page title" do
     scenario "It displays the correct title" do
       expect(page.title).to start_with("Who is the accredited body?")
-      expect(new_accredited_body_search_page.title.text).to eq("Who is the accredited body?")
+      expect(new_accredited_body_search_page.legend.text).to eq("Who is the accredited body?")
     end
   end
 

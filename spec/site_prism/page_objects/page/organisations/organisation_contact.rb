@@ -4,8 +4,8 @@ module PageObjects
       class OrganisationContact < PageObjects::Base
         set_url "/organisations/{provider_code}/contact"
 
-        element :title, ".govuk-heading-xl"
-        element :caption, ".govuk-caption-xl"
+        element :title, ".govuk-heading-l"
+        element :caption, ".govuk-caption-l"
         element :email, "[data-qa=email]"
         element :telephone, "[data-qa=telephone]"
         element :website, "[data-qa=website]"
