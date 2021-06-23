@@ -45,6 +45,8 @@ en:
     info: "Information"
     success: "Success"
     warning: "Warning"
+  page_titles:
+    error_prefix: "Error: "
   edit_options:
     entry_requirements:
       must_have_qualification_at_application_time:
