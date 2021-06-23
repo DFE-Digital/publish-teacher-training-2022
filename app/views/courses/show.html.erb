@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors.present? ? 'Error: ' : ''}#{course.name_and_code} - Courses" %>
+<%= content_for :page_title, title_with_error_prefix("#{course.name_and_code} - Courses", @errors.present?) %>
 <%= content_for :before_content, render_breadcrumbs(:course) %>
 
 <% if @errors.present? %>

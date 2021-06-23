@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors && @errors.any? ? 'Error: ' : ''}#{@site_name_before_update}" %>
+<%= content_for :page_title, title_with_error_prefix(@site_name_before_update, @site.errors.any?) %>
 <%= content_for :before_content, render_breadcrumbs(:edit_site) %>
 
 <%= render "shared/errors" %>

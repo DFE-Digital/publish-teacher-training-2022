@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors && @errors.any? ? 'Error: ' : ''}Add a location" %>
+<%= content_for :page_title, title_with_error_prefix("Add a location", @site.errors.any?) %>
 <%= content_for :before_content, render_breadcrumbs(:new_site) %>
 
 <%= render "shared/errors" %>

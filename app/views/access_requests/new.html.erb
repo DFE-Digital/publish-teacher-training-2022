@@ -1,4 +1,4 @@
-<%= content_for :page_title, "#{@errors && @errors.any? ? 'Error: ' : ''}Create an access request" %>
+<%= content_for :page_title, title_with_error_prefix("Create access request", @access_request.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(access_requests_path) %>
