@@ -1,24 +1,32 @@
-<%= content_for :page_title, title_with_error_prefix("Edit SEND – #{course.name_and_code}", course.errors.any?) %>
+<% page_title = t("helpers.legend.course.is_send") %>
+<%= content_for :page_title, title_with_error_prefix("#{page_title} – #{course.name_and_code}", course.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>
 <% end %>
 
-<%= render "shared/errors" %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
-      Special educational needs and disability (SEND)
-    </h1>
+    <%= form_with(
+      model: course,
+      url: send_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
+      method: :put,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
 
-    <%= form_with model: course,
-                  url: send_provider_recruitment_cycle_course_path(@course.provider_code, @course.recruitment_cycle_year, @course.course_code),
-                  method: :put do |form| %>
+      <%= f.govuk_error_summary %>
 
-      <%= render "form_fields", form: form %>
+      <%= f.govuk_check_boxes_fieldset(:is_send,
+        caption: { text: course.name_and_code, size: "l" },
+        legend: { text: page_title, size: "l", tag: "h1" }) do %>
+        <%= f.govuk_check_box(:is_send, 1, 0,
+          link_errors: true,
+          multiple: false,
+          checked: @course.is_send?(course, f.object, :is_send),
+          data: { qa: "is_send" }) %>
+      <% end %>
 
-      <%= form.submit course.is_running? ? "Save and publish changes" : "Save", class: "govuk-button", data: { qa: "course__save" } %>
+      <%= f.govuk_submit course.is_running? ? "Save and publish changes" : "Save", data: { qa: "course__save" } %>
 
       <p class="govuk-body">
         <%= govuk_link_to(

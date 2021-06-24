@@ -1,6 +1,13 @@
 en:
   helpers:
     label:
+      course:
+        level_options:
+          primary: Primary
+          secondary: Secondary
+          further_education: Further education
+        is_send_options:
+          1: This course has an additional SEND specialism
       provider:
         provider_name: Provider name
         email: Email address
@@ -15,6 +22,10 @@ en:
         postcode: Postcode
         train_with_us: Training with you
         train_with_disability: Training with disabilities and other needs
+    legend:
+      course:
+        level: Level
+        is_send: Special educational needs and disability (SEND)
     hint:
       provider:
         provider_name: The marketing name of the provider.

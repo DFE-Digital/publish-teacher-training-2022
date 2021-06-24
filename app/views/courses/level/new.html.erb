@@ -1,38 +1,46 @@
-<%= content_for :page_title, title_with_error_prefix("What type of course?", @errors && @errors.any?) %>
+<% page_title = "What type of course?" %>
+<%= content_for :page_title, title_with_error_prefix(page_title, @errors && @errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(@back_link_path) %>
 <% end %>
 
-<%= render "shared/errors" %>
-
-<h1 class="govuk-heading-l">
-  What type of course?
-</h1>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: continue_provider_recruitment_cycle_courses_level_path(
-                    @provider.provider_code,
-                    @provider.recruitment_cycle_year,
-                  ),
-                  method: :get do |form| %>
+    <%= form_with(
+      model: course,
+      url: continue_provider_recruitment_cycle_courses_level_path(
+        @provider.provider_code,
+        @provider.recruitment_cycle_year,
+      ),
+      method: :get,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
 
-      <%= render "courses/new_fields_holder", form: form, except_keys: [:level] do |fields| %>
-        <%= render "shared/error_wrapper", error_keys: [:level], data_qa: "course__level" do %>
-          <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <h2 class="govuk-fieldset__heading">Level</h2>
-            </legend>
-            <%= render "shared/error_messages", error_keys: [:level] %>
-            <%= render "form_fields", form: fields %>
-          </fieldset>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        <%= page_title %>
+      </h1>
+
+      <%= render "courses/new_fields_holder", form: f, except_keys: [:level] do |fields| %>
+        <%= f.govuk_radio_buttons_fieldset(:level,
+          legend: { size: "m" },
+          form_group: {
+            data: { qa: "course__level" },
+          }) do %>
+          <%= f.govuk_radio_button :level, "primary", data: { qa: "course__primary" } %>
+          <%= f.govuk_radio_button :level, "secondary", data: { qa: "course__secondary" } %>
+          <%= f.govuk_radio_button :level, "further_education", link_errors: true, data: { qa: "course__further_education" } %>
         <% end %>
 
-        <h2 class="govuk-heading-m">
-          Special educational needs and disability (SEND)
-        </h2>
-
-        <%= render "courses/send/form_fields", form: fields %>
+        <%= f.govuk_check_boxes_fieldset(:is_send, legend: { size: "m" }) do %>
+          <%= f.govuk_check_box(:is_send, 1, 0,
+            link_errors: true,
+            multiple: false,
+            checked: @course.is_send?(course, f.object, :is_send),
+            data: { qa: "is_send" }) %>
+        <% end %>
       <% end %>
     <% end %>
   </div>
