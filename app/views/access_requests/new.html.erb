@@ -1,51 +1,42 @@
-<%= content_for :page_title, title_with_error_prefix("Create access request", @access_request.errors.any?) %>
+<% page_title = "Create access request" %>
+<%= content_for :page_title, title_with_error_prefix(page_title, @access_request.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(access_requests_path) %>
 <% end %>
 
-<%= render "shared/errors" %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <h1 class="govuk-fieldset__heading">
-        Create access request
+    <%= form_with(
+      model: @access_request,
+      url: access_requests_path,
+      method: :post,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        <%= page_title %>
       </h1>
-    </legend>
 
-    <p class="govuk-body">
-      Use this form to create an access request and approve it immediately.
-    </p>
+      <p class="govuk-body">
+        Use this form to create an access request and approve it immediately.
+      </p>
 
-    <%= form_with model: @access_request,
-                  url: access_requests_path,
-                  method: :post do |f| %>
+      <%= f.govuk_text_field :first_name, width: "one-half", data: { qa: "first_name" } %>
 
-      <%= render "shared/form_field",
-        form: f, field: :first_name do |field, options| %>
-        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-one-half") %>
-      <% end %>
+      <%= f.govuk_text_field :last_name, width: "one-half", data: { qa: "last_name" } %>
 
-      <%= render "shared/form_field",
-        form: f, field: :last_name do |field, options| %>
-        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-one-half") %>
-      <% end %>
+      <%= f.govuk_email_field :requester_email, data: { qa: "requester_email" } %>
 
-      <%= render "shared/form_field",
-        form: f, field: :requester_email, label: "Email with permissions to copy" do |field, options| %>
-        <%= f.email_field field, options.merge(class: "govuk-input govuk-!-width-one-half") %>
-      <% end %>
+      <%= f.govuk_email_field :email_address, data: { qa: "email_address" } %>
 
-      <%= render "shared/form_field",
-        form: f, field: :email_address, label: "Email that should have these permissions" do |field, options| %>
-        <%= f.email_field field, options.merge(class: "govuk-textarea govuk-!-width-two-thirds") %>
-      <% end %>
-
-      <%= f.hidden_field :reason, value: "Manual creation by user support agent" %>
       <%= f.hidden_field :organisation, value: "Department for Education" %>
 
-      <%= f.submit "Preview", class: "govuk-button", data: { qa: "preview" } %>
+      <%= f.hidden_field :reason, value: "Manual creation by user support agent" %>
+
+      <%= f.govuk_submit "Preview", data: { qa: "preview" } %>
     <% end %>
   </div>
 </div>
