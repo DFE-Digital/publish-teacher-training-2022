@@ -27,6 +27,13 @@
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
+      <% if @provider.rolled_over? %>
+        <h2 class="govuk-heading-s">Prepare for the next cycle</h2>
+        <p class="govuk-body">
+          Courses for the next cycle will be published on <%= Settings.next_cycle_open_date.to_s(:govuk) %>.
+        </p>
+      <% end %>
+
       <h2 class="govuk-heading-s">Support and guidance</h2>
       <p class="govuk-body">If you have a question, or you’ve had a problem using Publish, you can email:</p>
       <p class="govuk-body"><%= bat_contact_mail_to subject: "Support and guidance" %></p>
