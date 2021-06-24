@@ -62,7 +62,7 @@ feature "Edit course vacancies", type: :feature do
       expect(course_vacancies_page).to be_displayed
 
       expect(course_vacancies_page.error_flash)
-        .to have_content("We couldn’t edit the vacancies for this course")
+        .to have_content("There is a problem")
 
       expect(course_vacancies_page.error_flash)
         .to have_content("Please confirm there are no vacancies to close applications")
@@ -106,7 +106,7 @@ feature "Edit course vacancies", type: :feature do
       expect(course_vacancies_page).to be_displayed
 
       expect(course_vacancies_page.error_flash)
-        .to have_content("We couldn’t edit the vacancies for this course")
+        .to have_content("There is a problem")
 
       expect(course_vacancies_page.error_flash)
         .to have_content("Please confirm there are vacancies to reopen applications")
