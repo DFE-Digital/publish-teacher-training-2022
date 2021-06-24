@@ -7,7 +7,7 @@
     </h1>
 
     <p class="govuk-body">
-      Courses for the next cycle (<%= next_recruitment_cycle_period_text %>) will be published on 1 September 2021.
+      Courses for the next cycle (<%= next_recruitment_cycle_period_text %>) will be published on <%= Settings.next_cycle_open_date.to_s(:govuk) %>.
     </p>
     <p class="govuk-body">
       Your courses, locations and organisation details have been copied from the current cycle.
