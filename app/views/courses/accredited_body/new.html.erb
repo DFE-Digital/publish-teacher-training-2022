@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Who is the accredited body?" %>
+<%= content_for :page_title, title_with_error_prefix("Who is the accredited body? – #{course.name_and_code}", @errors && @errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(@back_link_path) %>

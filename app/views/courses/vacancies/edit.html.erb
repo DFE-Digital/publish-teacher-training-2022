@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Edit vacancies for #{@course.name} (#{@course.course_code})" %>
+<%= content_for :page_title, title_with_error_prefix("Edit vacancies – #{@course.name} (#{@course.course_code})", @course.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(@course.provider_code, @course.recruitment_cycle_year)) %>
@@ -12,8 +12,7 @@
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-margin-bottom-7">
           <h1 class="govuk-fieldset__heading">
-            <span class="govuk-caption-l"><%= @course.name %>
-              (<%= @course.course_code %>)</span>
+            <span class="govuk-caption-l"><%= @course.name %> (<%= @course.course_code %>)</span>
             Edit vacancies
           </h1>
         </legend>

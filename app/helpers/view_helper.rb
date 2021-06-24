@@ -40,6 +40,10 @@ module ViewHelper
     govuk_mail_to bat_contact_email_address, name || bat_contact_email_address_with_wrap, **kwargs
   end
 
+  def title_with_error_prefix(title, error)
+    "#{t('page_titles.error_prefix') if error}#{title}"
+  end
+
   def enrichment_error_url(provider_code:, course:, field:)
     base = "/organisations/#{provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}"
 

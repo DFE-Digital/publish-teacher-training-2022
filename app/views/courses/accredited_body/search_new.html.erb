@@ -1,4 +1,5 @@
-<%= content_for :page_title, "Organisation search" %>
+<%= content_for :page_title, title_with_error_prefix("Organisation search", course.errors.any?) %>
+
 <%= render "shared/errors" %>
 
 <div class="govuk-grid-row">

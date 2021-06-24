@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Accept Terms and Conditions" %>
+<%= content_for :page_title, title_with_error_prefix("Accept Terms and Conditions", @errors && @errors.any?) %>
 
 <%= render "shared/errors" %>
 
