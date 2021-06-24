@@ -98,9 +98,7 @@ feature "View provider about", type: :feature do
     fill_in "provider[train_with_us]", with: "foo " * 401
     click_on "Save"
 
-    expect(org_about_page.error_flash).to have_content(
-      "There is a problem",
-    )
+    expect(org_about_page.error_flash).to have_content("There is a problem")
     expect(current_path).to eq about_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle_year)
   end
 end

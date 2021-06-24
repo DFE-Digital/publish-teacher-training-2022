@@ -1,26 +1,25 @@
-<%= content_for :page_title, title_with_error_prefix("Contact details", @errors.present?) %>
+<% page_title = "Contact details" %>
+<%= content_for :page_title, title_with_error_prefix(page_title, @errors.present?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
 <% end %>
 
-<%= render "shared/errors" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with(
+      model: @provider,
+      url: contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
+      method: :put,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">
-      <span class="govuk-caption-l">
-        <%= @provider.provider_name %>
-      </span>
-      Contact details
-    </h1>
-  </div>
-</div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @provider,
-                  url: contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
-                  method: :put do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l"><%= @provider.provider_name %></span>
+        <%= page_title %>
+      </h1>
 
       <%= f.hidden_field :page, value: :contact %>
 
@@ -30,99 +29,77 @@
             <%= govuk_tag(text: "Admin feature", colour: "purple") %>
           </p>
 
-          <%= render "shared/form_field",
-            form: f,
-            field: :provider_name,
-            label: "Provider name" do |field, options| %>
-            <span class="govuk-hint">
-              The marketing name of the provider
-            </span>
-            <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
-          <% end %>
+          <%= f.govuk_text_field(:provider_name,
+            label: { size: "m" },
+            data: { qa: "provider_name" }) %>
         </div>
       <% end %>
 
-      <%= render "shared/form_field",
-        form: f, field: :email, label: "Email address" do |field, options| %>
-        <span class="govuk-hint">
-          Give an email address that applicants can use to contact you
-        </span>
-        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
-      <% end %>
+      <%= f.govuk_text_field(:email,
+        label: { size: "m" },
+        autocomplete: "email",
+        spellcheck: false,
+        data: { qa: "email" }) %>
 
-      <%= render "shared/form_field",
-        form: f, field: :telephone, label: "Telephone number" do |field, options| %>
-        <span class="govuk-hint">
-          Give a telephone number that applicants can use to call you
-        </span>
-        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
-      <% end %>
+      <%= f.govuk_text_field(:telephone,
+        label: { size: "m" },
+        width: 20,
+        autocomplete: "tel",
+        data: { qa: "telephone" }) %>
 
-      <%= render "shared/form_field",
-        form: f, field: :website, label: "Website" do |field, options| %>
-        <span class="govuk-hint">
-          Add a link to the initial teacher training or course pages of your
-          website
-        </span>
-        <%= f.text_field field, options %>
-      <% end %>
+      <%= f.govuk_text_field(:website,
+        label: { size: "m" },
+        data: { qa: "website" }) %>
 
-      <%= render "shared/form_field",
-        form: f, field: :ukprn, label: "UKPRN" do |field, options| %>
-        <span class="govuk-hint">
-          Your organisation&rsquo;s UK Provider Reference Number
-        </span>
-        <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
-      <% end %>
+      <%= f.govuk_text_field(:ukprn,
+        label: { size: "m" },
+        width: 10,
+        data: { qa: "ukprn" }) %>
 
       <% if @provider.provider_type == "lead_school" %>
-        <%= render "shared/form_field",
-          form: f, field: :urn, label: "URN (Unique Reference Number)" do |field, options| %>
-          <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
-        <% end %>
+        <%= f.govuk_text_field(:urn,
+          label: { size: "m" },
+          width: 10, data: { qa: "urn" }) %>
       <% end %>
 
-      <h3 class="govuk-heading-m">Contact address</h3>
+      <%= f.govuk_fieldset legend: { text: "Contact address", size: "m" } do %>
+        <%= f.govuk_text_field(:address1,
+          label: -> { safe_join([t("helpers.label.provider.address1"), " ", tag.span("line 1 of 2", class: "govuk-visually-hidden")]) },
+          autocomplete: "address-line1",
+          data: { qa: "address1" }) %>
 
-      <%= render "shared/form_field",
-        form: f, field: :address1, label: capture { %>
-          Building and street
-          <span class="govuk-visually-hidden">line 1 of 2</span>
-        <% } do |field, options| %>
-        <%= f.text_field field, options %>
+        <%= f.govuk_text_field(:address2,
+          label: { hidden: true },
+          autocomplete: "address-line2",
+          data: { qa: "address2" }) %>
+
+        <%= f.govuk_text_field(:address3,
+          width: "two-thirds",
+          autocomplete: "address-level2",
+          data: { qa: "address3" }) %>
+
+        <%= f.govuk_text_field(:address4,
+          width: "two-thirds",
+          autocomplete: "address-level1",
+          data: { qa: "address4" }) %>
+
+        <%= f.govuk_text_field(:postcode,
+          width: 10,
+          autocomplete: "postal-code",
+          data: { qa: "postcode" }) %>
       <% end %>
 
-      <%= render "shared/form_field",
-        form: f, field: :address2, label: capture { %>
-          <span class="govuk-visually-hidden">line 2 of 2</span>
-        <% } do |field, options| %>
-        <%= f.text_field field, options %>
-      <% end %>
-
-      <%= render "shared/form_field",
-        form: f, field: :address3, label: "Town or city" do |field, options| %>
-        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
-      <% end %>
-
-      <%= render "shared/form_field",
-        form: f, field: :address4, label: "County" do |field, options| %>
-        <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
-      <% end %>
-
-      <%= render "shared/form_field",
-        form: f, field: :postcode do |field, options| %>
-        <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
-      <% end %>
       <p class="govuk-body">Changes will appear on Find postgraduate teacher training within 2 hours.</p>
-      <%= f.submit "Save and publish changes", class: "govuk-button" %>
-    <% end %>
 
-    <p class="govuk-body">
-      <%= govuk_link_to(
-        "Cancel changes",
-        details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
-        class: "govuk-link--no-visited-state",
-      ) %>
-    </p>
+      <%= f.govuk_submit "Save and publish changes" %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(
+          "Cancel changes",
+          details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
+          class: "govuk-link--no-visited-state",
+        ) %>
+      </p>
+    <% end %>
   </div>
 </div>

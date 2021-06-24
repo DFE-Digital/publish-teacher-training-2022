@@ -1,0 +1,23 @@
+en:
+  helpers:
+    label:
+      provider:
+        provider_name: Provider name
+        email: Email address
+        telephone: Telephone number
+        website: Website
+        ukprn: UK provider reference number (UKPRN)
+        urn: Unique reference number (URN)
+        address1: Building and street
+        address2: Building and street line 2 of 2
+        address3: Town or city
+        address4: County
+        postcode: Postcode
+        train_with_us: Training with you
+        train_with_disability: Training with disabilities and other needs
+    hint:
+      provider:
+        provider_name: The marketing name of the provider.
+        email: Give an email address that applicants can use to contact you.
+        telephone: Give a telephone number that applicants can use to call you.
+        website: Add a link to the initial teacher training or course pages of your website.
