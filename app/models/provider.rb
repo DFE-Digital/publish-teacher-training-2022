@@ -37,6 +37,22 @@ class Provider < Base
       .first
   end
 
+  def declared_visa_sponsorship?
+    !can_sponsor_student_visa.nil? && !can_sponsor_skilled_worker_visa.nil?
+  end
+
+  def can_sponsor_all_visas?
+    can_sponsor_student_visa && can_sponsor_skilled_worker_visa
+  end
+
+  def can_only_sponsor_student_visa?
+    can_sponsor_student_visa && !can_sponsor_skilled_worker_visa
+  end
+
+  def can_only_sponsor_skilled_worker_visa?
+    !can_sponsor_student_visa && can_sponsor_skilled_worker_visa
+  end
+
 private
 
   def post_base_url

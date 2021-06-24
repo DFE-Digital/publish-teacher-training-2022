@@ -32,6 +32,11 @@ feature "View helpers", type: :helper do
       course = Course.new(build(:course).attributes)
       expect(helper.enrichment_error_url(provider_code: "A1", course: course, field: "about_course")).to eq("/organisations/A1/#{course.recruitment_cycle_year}/courses/#{course.course_code}/about?display_errors=true#about_course_wrapper")
     end
+
+    it "returns enrichment error URL for base error" do
+      course = Course.new(build(:course).attributes.merge(recruitment_cycle_year: "2022"))
+      expect(helper.enrichment_error_url(provider_code: "A1", course: course, field: "base", message: "You must say whether you can sponsor visas")).to eq("/organisations/A1/2022/visas")
+    end
   end
 
   describe "#provider_enrichment_error_url" do

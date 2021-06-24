@@ -54,4 +54,64 @@ feature "View helpers", type: :helper do
       end
     end
   end
+
+  describe "#visa_sponsorship_status" do
+    it "returns correct value when one or more values is nil" do
+      provider = build(
+        :provider,
+        can_sponsor_student_visa: nil,
+        can_sponsor_skilled_worker_visa: true,
+      )
+      expect(helper.visa_sponsorship_status(provider)).to match(
+        "Can you sponsor visas?",
+      )
+      expect(helper.visa_sponsorship_status(provider)).to match(
+        "Select if you can sponsor visas",
+      )
+    end
+
+    it "returns correct value when only student visas are sponsored" do
+      provider = build(
+        :provider,
+        can_sponsor_student_visa: true,
+        can_sponsor_skilled_worker_visa: false,
+      )
+      expect(helper.visa_sponsorship_status(provider)).to eq(
+        "You can sponsor Student visas",
+      )
+    end
+
+    it "returns correct value when only skilled worker visas are sponsored" do
+      provider = build(
+        :provider,
+        can_sponsor_student_visa: false,
+        can_sponsor_skilled_worker_visa: true,
+      )
+      expect(helper.visa_sponsorship_status(provider)).to eq(
+        "You can sponsor Skilled Worker visas",
+      )
+    end
+
+    it "returns correct value when both kinds of visa are sponsored" do
+      provider = build(
+        :provider,
+        can_sponsor_student_visa: true,
+        can_sponsor_skilled_worker_visa: true,
+      )
+      expect(helper.visa_sponsorship_status(provider)).to eq(
+        "You can sponsor Student and Skilled Worker visas",
+      )
+    end
+
+    it "returns correct value when neither kind of visa is sponsored" do
+      provider = build(
+        :provider,
+        can_sponsor_student_visa: false,
+        can_sponsor_skilled_worker_visa: false,
+      )
+      expect(helper.visa_sponsorship_status(provider)).to eq(
+        "You cannot sponsor visas",
+      )
+    end
+  end
 end
