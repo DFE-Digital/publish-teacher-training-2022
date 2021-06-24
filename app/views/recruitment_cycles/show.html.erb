@@ -9,7 +9,7 @@
   <div class="govuk-grid-column-two-thirds">
     <% if @recruitment_cycle.next? %>
       <p class="govuk-body-l">
-        Prepare your courses and locations for the next cycle. All your courses, locations and details have been copied from the current&nbsp;cycle.
+        Prepare your courses and locations for the next cycle. Your records have been copied from the current cycle.
       </p>
     <% else %>
       <p class="govuk-body-l">
@@ -18,8 +18,8 @@
     <% end %>
 
     <%= render partial: "recruitment_cycles/about_organisation", locals: { provider: @provider, year: params[:year] } %>
-    <%= render partial: "recruitment_cycles/courses_info", locals: { provider: @provider, year: params[:year] } %>
     <%= render partial: "recruitment_cycles/locations_info", locals: { provider: @provider, year: params[:year] } %>
+    <%= render partial: "recruitment_cycles/courses_info", locals: { provider: @provider, year: params[:year] } %>
     <%= render partial: "recruitment_cycles/courses_accredited_body", locals: { provider: @provider, year: params[:year] } %>
     <% if @recruitment_cycle.current? %>
       <%= render partial: "recruitment_cycles/allocations", locals: { provider: @provider, year: params[:year] } %>
