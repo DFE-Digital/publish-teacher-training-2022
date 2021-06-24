@@ -38,7 +38,8 @@ updates/refactoring work.
 1. Create a **Rollover PR** including the following code changes:
     - Set feature flag `can_edit_current_and_next_cycles: true`
     - Any hardcoded copy changes
-2. Create **new Google forms** for adding PE courses for the next cycle
+2. Create **new Google forms** for adding PE courses for the next cycle and
+  update the links in the settings `google_forms: next_cycle`.
 
 ## On Rollover launch date
 
@@ -54,7 +55,6 @@ updates/refactoring work.
     - Set feature flag `can_edit_current_and_next_cycles: false`
     - Replace `google_forms: current_cycle:` settings with those in
       `google_forms: next_cycle:`
-    - Add new Google forms to `google_forms: next_cycle:`
     - Any hardcoded copy changes
 
 ## On Rollover end date

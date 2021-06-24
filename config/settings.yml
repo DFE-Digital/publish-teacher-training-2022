@@ -41,14 +41,14 @@ google_forms:
       url: https://docs.google.com/forms/d/e/1FAIpQLSdmuYIBDGuESZJBKGVTIdEFntdcjX86J5u6yXTSFNpk18oJeA/viewform?usp=pp_url
       email_entry: entry.1033530353
       provider_code_entry: entry.158771972
-  # NOTE: not in use, url is for 2021
+  # NOTE: these forms are only in use / visible during Rollover i.e. when both cycles are visible.
   next_cycle:
     new_course_for_accredited_bodies:
-      url: https://docs.google.com/forms/d/e/1FAIpQLSexQtIhIDiHM6vyy23OrJmeSoLTmLlw4y_2S3TI7FDQV2VcsQ/viewform?usp=pp_url
+      url: https://docs.google.com/forms/d/e/1FAIpQLSerPrTvuQNNkpMH_yfgJ8_o5ajthtq5XhOP9x-zG8JL4o5n-Q/viewform?usp=pp_url
       email_entry: entry.957076544
       provider_code_entry: entry.1735563938
     new_course_for_unaccredited_bodies:
-      url: https://docs.google.com/forms/d/e/1FAIpQLSexQtIhIDiHM6vyy23OrJmeSoLTmLlw4y_2S3TI7FDQV2VcsQ/viewform?usp=pp_url
+      url: https://docs.google.com/forms/d/e/1FAIpQLSeZK6wGdvDy40QFiFcI8_JRgG-kPWUPBjLfY_EffebCkL0goQ/viewform?usp=pp_url
       email_entry: entry.1033530353
       provider_code_entry: entry.158771972
 service_support:
