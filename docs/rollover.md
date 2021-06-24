@@ -51,6 +51,7 @@ updates/refactoring work.
 
 1. Create an **End Rollover PR** including the following code changes:
     - Increment setting `current_cycle`
+    - Increment year in setting `next_cycle_open_date`
     - Increment the route constraint in `resources :recruitment_cycles`
     - Set feature flag `can_edit_current_and_next_cycles: false`
     - Replace `google_forms: current_cycle:` settings with those in
