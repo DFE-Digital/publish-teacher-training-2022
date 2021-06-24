@@ -57,6 +57,7 @@ environment:
   label: "Beta"
   selector_name: "beta"
 current_cycle: 2021
+next_cycle_open_date: 2021-10-5
 allocation_cycle_year: 2021
 allocations_close_date: 2021-07-02
 # `financial_support_placeholder_cycle` the cycle year value should be

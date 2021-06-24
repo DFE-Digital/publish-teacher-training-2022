@@ -7,18 +7,27 @@
     </h1>
 
     <p class="govuk-body">
-      All your courses, locations and details have been copied over
-      from the current recruitment cycle (<%= current_recruitment_cycle_period_text %>). You can now
-      update them for <%= next_recruitment_cycle_period_text %>.
+      Courses for the next cycle (<%= next_recruitment_cycle_period_text %>) will be published on <%= Settings.next_cycle_open_date.to_s(:govuk) %>.
+    </p>
+    <p class="govuk-body">
+      Your courses, locations and organisation details have been copied from the current cycle.
     </p>
 
-    <p class="govuk-body">You should:</p>
+    <h2 class="govuk-heading-m">What you need to do</h2>
 
-    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-      <li>add any new courses</li>
-      <li>delete courses you're no longer running</li>
-      <li>edit titles, outcomes and locations where necessary</li>
+    <p class="govuk-body">
+      Before you can publish courses for the next cycle, you'll need to confirm:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-4">
+      <li>degree requirements</li>
+      <li>GCSE requirements</li>
+      <li>if you can sponsor visas</li>
     </ul>
+
+    <p class="govuk-body">
+      You can also add, edit or delete courses and locations.
+    </p>
 
     <%= form_for :user, url: accept_rollover_path, method: :patch do |f| %>
       <%= f.submit "Continue", class: "govuk-button" %>
