@@ -10,6 +10,7 @@ module EmitRequestEvents
     if FeatureService.enabled?(:send_request_data_to_bigquery)
       request_event = RequestEvent.new
         .with_request_details(request)
+        .with_response_details(response)
         .with_user(current_user)
 
       SendRequestEventsToBigquery.perform_later(request_event.as_json)
