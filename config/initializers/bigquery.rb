@@ -1,11 +1,9 @@
 require 'google/cloud/bigquery'
 
-BIG_QUERY_API_JSON_KEY = Settings.google.bigquery.api_json_key
-
-if BIG_QUERY_API_JSON_KEY.present?
+if FeatureService.enabled?(:send_request_data_to_bigquery)
   Google::Cloud::Bigquery.configure do |config|
     config.project_id  = Settings.google.bigquery.project_id
-    config.credentials = JSON.parse(BIG_QUERY_API_JSON_KEY)
+    config.credentials = JSON.parse(Settings.google.bigquery_api_json_key)
   end
 
   Google::Cloud::Bigquery.new

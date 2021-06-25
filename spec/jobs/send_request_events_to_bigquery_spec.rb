@@ -24,10 +24,20 @@ RSpec.describe SendRequestEventsToBigquery do
       allow(Settings.google.bigquery).to receive(:dataset).and_return("publish-test-events")
     end
 
-    it "sends request event JSON to Bigquery" do
-      described_class.perform_now(request_event.as_json)
+    context "feature is enabled", feature_send_request_data_to_bigquery: true do
+      it "sends request event JSON to Bigquery" do
+        described_class.perform_now(request_event.as_json)
 
-      expect(table).to have_received(:insert).with([request_event.as_json])
+        expect(table).to have_received(:insert).with([request_event.as_json])
+      end
+    end
+
+    context "feature is not enabled", feature_send_request_data_to_bigquery: false do
+      it "doesn't send request event JSON to Bigquery" do
+        described_class.perform_now(request_event.as_json)
+
+        expect(table).to_not have_received(:insert)
+      end
     end
   end
 end
