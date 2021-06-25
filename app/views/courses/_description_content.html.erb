@@ -45,8 +45,17 @@
        truncate_value: false,
        change_link: course.degree_section_complete? ? degrees_start_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
      )) %>
+     <% summary_list.slot(:row, enrichment_summary(
+       :course,
+       "GCSEs", 
+       (render GcseRowContentComponent.new(course: course)),
+       %w[degree_grade degree_subject_requirements],
+       truncate_value: false,
+       change_link: course.gcse_section_complete? ? gcses_pending_or_equivalency_tests_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
+     )) %>
+  <% else %>
+    <% summary_list.slot(:row, enrichment_summary(:course, "Qualifications needed", course.required_qualifications, %w[required_qualifications])) %>
   <% end %>
-  <% summary_list.slot(:row, enrichment_summary(:course, "Qualifications needed", course.required_qualifications, %w[required_qualifications])) %>
   <% summary_list.slot(:row, enrichment_summary(:course, "Personal qualities (optional)", course.personal_qualities, %w[personal_qualities])) %>
   <% summary_list.slot(:row, enrichment_summary(:course, "Other requirements (optional)", course.other_requirements, %w[other_requirements])) %>
 <% end %>

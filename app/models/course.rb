@@ -14,6 +14,12 @@ class Course < Base
   property :degree_grade, type: :string
   property :additional_degree_subject_requirements, type: :boolean
   property :degree_subject_requirements, type: :string
+  property :accept_pending_gcse, type: :boolean
+  property :accept_gcse_equivalency, type: :boolean
+  property :accept_english_gcse_equivalency, type: :boolean
+  property :accept_maths_gcse_equivalency, type: :boolean
+  property :accept_science_gcse_equivalency, type: :boolean
+  property :additional_gcse_equivalencies, type: :string
 
   delegate :provider_type, to: :provider
 
@@ -135,6 +141,10 @@ class Course < Base
 
   def is_primary?
     level == "primary"
+  end
+
+  def gcse_section_complete?
+    !accept_pending_gcse.nil? && !accept_gcse_equivalency.nil?
   end
 
 private
