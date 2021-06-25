@@ -220,4 +220,37 @@ describe Course do
       expect(course.degree_section_complete?).to eq false
     end
   end
+
+  describe "gcse_section_complete?" do
+    # validations on form object should ensure that both attributes are populated
+    it "returns true when 'accept_pending_gcse' is set" do
+      course = build(
+        :course,
+        accept_pending_gcse: true,
+        accept_gcse_equivalency: false,
+      )
+
+      expect(course.gcse_section_complete?).to eq true
+    end
+
+    it "returns true when 'accept_gcse_equivalency' is set to true" do
+      course = build(
+        :course,
+        accept_pending_gcse: false,
+        accept_gcse_equivalency: true,
+      )
+
+      expect(course.gcse_section_complete?).to eq true
+    end
+
+    it "return false when 'accept_pending_gcse' and 'accept_gcse_equivalency' is are" do
+      course = build(
+        :course,
+        accept_pending_gcse: nil,
+        accept_gcse_equivalency: nil,
+      )
+
+      expect(course.gcse_section_complete?).to eq false
+    end
+  end
 end

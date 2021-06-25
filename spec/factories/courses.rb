@@ -121,6 +121,12 @@ FactoryBot.define do
     degree_grade { %w[two_one two_two third_class not_required].sample }
     additional_degree_subject_requirements { true }
     degree_subject_requirements { Faker::Lorem.sentence(word_count: 10) }
+    accept_pending_gcse { nil }
+    accept_gcse_equivalency { nil }
+    accept_english_gcse_equivalency { nil }
+    accept_maths_gcse_equivalency { nil }
+    accept_science_gcse_equivalency { nil }
+    additional_gcse_equivalencies { Faker::Lorem.sentence(word_count: 10) }
 
     after :build do |course, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.
