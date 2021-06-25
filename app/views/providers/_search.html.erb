@@ -7,22 +7,23 @@
       </p>
 
       <%= form_with url: providers_search_path, method: :get do |form| %>
-        <div class="govuk-form-group">
+        <% error = flash[:error] && flash[:error]["message"] == "Name or provider code" %>
+        <div class="govuk-form-group<% if error %> govuk-form-group--error<% end %>">
           <%= form.label :query, { class: "govuk-label", for: "provider" } do %>
             Search for an organisation
             <span class="govuk-hint">Enter the name or provider code</span>
-            <% if flash[:error] && flash[:error]["message"] == "Name or provider code" %>
+            <% if error %>
               <span class="govuk-error-message" id="provider-error" data-qa="provider-error">
-                <%= "Please enter the name or provider code" %>
+                Please enter the name or provider code
               </span>
             <% end %>
           <% end %>
           <%= form.text_field :query,
                               id: "provider",
                               value: params[:query],
-                              class: "govuk-input govuk-!-width-two-thirds",
+                              class: "govuk-input",
                               data: { qa: "provider-search" } %>
-          <div id="provider-autocomplete" class="govuk-!-width-two-thirds"></div>
+          <div id="provider-autocomplete"></div>
         </div>
         <%= form.submit "Search", name: nil, class: "govuk-button govuk-!-margin-bottom-0", data: { qa: "find-providers" } %>
       <% end %>
