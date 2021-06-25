@@ -11,6 +11,8 @@ class Provider < Base
 
   custom_endpoint :show_any, on: :member, request_method: :get
 
+  CHANGES_INTRODUCED_IN_2022_CYCLE = 2022
+
   def publish
     post_request("/publish")
   end

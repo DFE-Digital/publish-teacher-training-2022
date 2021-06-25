@@ -1,6 +1,5 @@
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-entry">Requirements</h2>
-
   <% if course.required_qualifications.present? %>
     <aside class="app-advice">
       <h3 class="app-advice__title">
@@ -13,9 +12,13 @@
     </aside>
 
     <h3 class="govuk-heading-m">Qualifications needed</h3>
-    <div data-qa="course__required_qualifications">
-      <%= markdown(course.required_qualifications) %>
-    </div>
+    <% if course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
+      <%= render DegreePreviewComponent.new(course: course) %>
+    <% else %>
+      <div data-qa="course__required_qualifications">
+        <%= markdown(course.required_qualifications) %>
+      </div>
+    <% end %>
   <% else %>
     <%= govuk_inset_text(classes: "app-inset-text app-inset-text--narrow-border app-inset-text--important") do %>
       <p class="govuk-body">Please add details for this section.</p>

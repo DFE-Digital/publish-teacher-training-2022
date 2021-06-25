@@ -1,0 +1,22 @@
+<% if course.degree_section_complete? %>
+  <p class="govuk-body">
+    <%= degree_grade_content(course) %>
+  </p>
+
+  <% if course.degree_subject_requirements.present? %>
+    <p class="govuk-body">
+      <%= course.degree_subject_requirements %>
+    </p>
+  <% end %>
+<% else %>
+  <div class="govuk-inset-text app-inset-text app-inset-text--important">
+    <p class="govuk-body">
+      Please add details <%= govuk_link_to "about degree requirements",
+        degrees_start_provider_recruitment_cycle_course_path(
+          course.provider.provider_code,
+          course.provider.recruitment_cycle_year,
+          course.course_code,
+        ) %>.
+    </p>
+  </div>
+<% end %>

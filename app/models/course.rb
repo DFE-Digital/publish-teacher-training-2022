@@ -11,6 +11,9 @@ class Course < Base
   property :english, type: :string
   property :science, type: :string
   property :name, type: :string
+  property :degree_grade, type: :string
+  property :additional_degree_subject_requirements, type: :boolean
+  property :degree_subject_requirements, type: :string
 
   delegate :provider_type, to: :provider
 
@@ -124,6 +127,14 @@ class Course < Base
     travel_to_work_areas = sites.map { |site| site.london_borough || site.travel_to_work_area }.uniq
 
     travel_to_work_areas.to_sentence(last_word_connector: " and ")
+  end
+
+  def degree_section_complete?
+    degree_grade.present?
+  end
+
+  def is_primary?
+    level == "primary"
   end
 
 private
