@@ -59,7 +59,8 @@
       <% if @provider.provider_type == "lead_school" %>
         <%= f.govuk_text_field(:urn,
           label: { size: "m" },
-          width: 10, data: { qa: "urn" }) %>
+          width: 10,
+          data: { qa: "urn" }) %>
       <% end %>
 
       <%= f.govuk_fieldset legend: { text: "Contact address", size: "m" } do %>
