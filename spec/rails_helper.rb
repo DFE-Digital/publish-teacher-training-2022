@@ -29,6 +29,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 ActiveSupport::Dependencies.autoload_paths +=
   [Rails.root.join("spec/site_prism")]
 
+ActiveJob::Base.queue_adapter = :test
+
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   # RSpec Rails can automatically mix in different behaviours to your tests
