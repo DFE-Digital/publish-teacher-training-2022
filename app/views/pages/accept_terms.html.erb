@@ -16,16 +16,16 @@
 
     <hr class="govuk-footer__section-break">
 
-    <%= form_for :user, url: accept_terms_path, method: :patch do |f| %>
+    <%= form_for :user, url: accept_terms_path, method: :patch do |form| %>
       <div class="govuk-form-group">
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item" id="user_terms_accepted-error">
-            <%= f.check_box :terms_accepted, class: "govuk-checkboxes__input" %>
-            <%= f.label :terms_accepted, "I agree to the terms and conditions", class: "govuk-label govuk-checkboxes__label" %>
+            <%= form.check_box :terms_accepted, class: "govuk-checkboxes__input" %>
+            <%= form.label :terms_accepted, "I agree to the terms and conditions", class: "govuk-label govuk-checkboxes__label" %>
           </div>
         </div>
       </div>
-      <%= f.submit "Continue", class: "govuk-button", data: { qa: "terms__continue" } %>
+      <%= form.submit "Continue", class: "govuk-button", data: { qa: "terms__continue" } %>
     <% end %>
   </div>
 </div>

@@ -28,10 +28,10 @@
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body govuk-body govuk-!-margin-bottom-6"><%= govuk_link_to "Manage all your locations", provider_recruitment_cycle_sites_path(@provider.provider_code), data: { qa: "course__manage_provider_locations_link" } %> to add to or edit this list.</p>
 
-    <%= form_for course, url: locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :put do |f| %>
+    <%= form_for course, url: locations_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code), method: :put do |form| %>
       <div class="govuk-form-group">
         <div class="govuk-checkboxes">
-          <%= f.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sf| %>
+          <%= form.fields_for :site_statuses, @provider.sites.sort_by(&:location_name) do |sf| %>
             <% site = sf.object %>
             <div class="govuk-checkboxes__item">
               <%= sf.check_box "selected", checked: course.has_site?(site), class: "govuk-checkboxes__input" %>
@@ -46,7 +46,7 @@
         </div>
       </div>
 
-      <%= f.submit course.is_running? ? "Save and publish changes" : "Save",
+      <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
         class: "govuk-button", data: { qa: "course__save" } %>
     <% end %>
   </div>
