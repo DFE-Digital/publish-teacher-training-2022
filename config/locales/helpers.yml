@@ -8,6 +8,21 @@ en:
         email_address: Email that should have these permissions
         organisation: Their organisation
         reason: Reason they need access
+      course:
+        about_course: About this course
+        course_length_options:
+          OneYear: 1 year
+          TwoYears: Up to 2 years
+          Other: Other
+        course_length_other_length: Course length
+        fee_details: Fee details (optional)
+        fee_international: Fee for international students (optional)
+        fee_uk_eu: Fee for UK students
+        financial_support: Financial support you offer (optional)
+        interview_process: Interview process (optional)
+        other_requirements: Other requirements (optional)
+        personal_qualities: Personal qualities (optional)
+        required_qualifications: Qualifications needed
       provider:
         provider_name: Provider name
         email: Email address
@@ -30,8 +45,15 @@ en:
         address3: Town or city
         address4: County
         postcode: Postcode
+    legend:
+      course:
+        course_length: Course length
     hint:
-      provider:
+      course:
+        required_qualifications: State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met.
+        personal_qualities: Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
+        other_requirements: If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience).
+        provider:
         provider_name: The marketing name of the provider.
         email: Give an email address that applicants can use to contact you.
         telephone: Give a telephone number that applicants can use to call you.

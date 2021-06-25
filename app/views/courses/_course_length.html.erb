@@ -1,25 +1,19 @@
 <%= f.govuk_radio_buttons_fieldset(:course_length,
-  legend: {
-    text: "Course length",
-    size: "m",
-  },
+  legend: { size: "m" },
   form_group: {
     id: @errors.key?(:course_length) ? "course_length-error" : "course-length",
   }) do %>
     <%= f.govuk_radio_button(:course_length, "OneYear",
-      label: { text: "1 year" },
       data: { qa: "course_course_length_oneyear" },
       link_errors: true) %>
     <%= f.govuk_radio_button(:course_length, "TwoYears",
-      label: { text: "Up to 2 years" },
       data: { qa: "course_course_length_twoyears" }) %>
     <%= f.govuk_radio_button(:course_length, "Other",
-      label: { text: "Other" },
       checked: course.other_course_length?,
       data: { qa: "course_course_length_other" }) do %>
       <%= f.govuk_text_field(:course_length_other_length,
         value: course.other_course_length? ? course.course_length : "",
-        label: { text: "Course length", size: "s" },
+        label: { size: "s" },
         width: 20,
         data: { qa: "course_course_length_other_length" }) %>
     <% end %>
