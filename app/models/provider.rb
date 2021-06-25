@@ -39,6 +39,10 @@ class Provider < Base
       .first
   end
 
+  def from_next_recruitment_cycle
+    Provider.where(recruitment_cycle_year: recruitment_cycle_year.to_i.succ).any? { |provider| provider.provider_code == provider_code }
+  end
+
   def declared_visa_sponsorship?
     !can_sponsor_student_visa.nil? && !can_sponsor_skilled_worker_visa.nil?
   end

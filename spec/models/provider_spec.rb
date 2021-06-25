@@ -52,4 +52,68 @@ describe Provider do
       end
     end
   end
+
+  describe "#from_next_recruitment_cycle" do
+    let(:provider) { build(:provider, provider_code: "007") }
+
+    let(:provider_response) { <<~JSON }
+        {
+          "data": [
+            {
+              "id": "2",
+              "type": "providers",
+              "attributes": {
+                "provider_code": "007",
+                "provider_name": "#{provider.provider_name}",
+                "recruitment_cycle_year": "#{provider.recruitment_cycle_year}"
+              },
+              "relationships": {
+                "courses": {
+                  "meta": {
+                    "count": 0
+                  }
+                }
+              }
+            }
+          ],
+          "meta": {
+            "count": 1
+          },
+          "jsonapi": {
+            "version": "1.0"
+          }
+      }
+    JSON
+
+    let(:cycle) { Settings.current_cycle.succ }
+
+    let(:stub) do
+      stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/recruitment_cycles/#{cycle}/providers")
+      .to_return(
+        status: 200,
+        body: provider_response,
+        headers: { "Content-Type": "application/vnd.api+json; charset=utf-8" },
+      )
+    end
+
+    before do
+      stub
+    end
+
+    context "when a provider has been rolled over into the next recruitment cycle" do
+      it "detects that provider" do
+        expect(provider.from_next_recruitment_cycle).to eql(true)
+        expect(stub).to have_been_requested
+      end
+    end
+
+    context "when a provider has not been rolled over into the next recruitment cycle" do
+      let(:provider) { build(:provider, provider_code: "Not 007") }
+
+      it "does not detect that provider" do
+        expect(provider.from_next_recruitment_cycle).to eql(false)
+        expect(stub).to have_been_requested
+      end
+    end
+  end
 end
