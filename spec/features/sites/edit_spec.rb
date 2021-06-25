@@ -101,7 +101,6 @@ feature "Edit locations", type: :feature do
       expect(location_page).to be_displayed(provider_code: provider_code, site_id: site.id)
       expect(location_page.error_summary).to have_content("Name is missing")
       expect(location_page.error_summary).to have_content("Postcode is missing")
-      expect(location_page.error_summary).to have_content("Postcode is invalid")
     end
 
     scenario "displays the old location name when the change fails" do

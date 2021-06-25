@@ -1,46 +1,34 @@
-<%= render "shared/form_field",
-  form: f, field: :location_name, label: capture { %>
-    <span class="<%= cns("govuk-label--m govuk-!-margin-bottom-2", "govuk-!-margin-bottom-0": @errors.present? && @errors.key?(:location_name)) %>">Name</span>
-  <% } do |field, options| %>
-  <%= f.text_field field, options %>
-<% end %>
+<%= f.govuk_text_field(:location_name,
+  label: { size: "m" },
+  data: { qa: "location_name" }) %>
 
-<%= render "shared/form_field",
-  form: f, field: :urn, label: capture { %>
-    <span class="<%= cns("govuk-label--m govuk-!-margin-bottom-2", "govuk-!-margin-bottom-0": @errors.present? && @errors.key?(:urn)) %>">Unique Reference Number (URN)</span>
-    <span class="govuk-hint">You can find URNs on the <%= govuk_link_to "Get information about schools (opens in new tab)", "https://www.get-information-schools.service.gov.uk", target: "_blank" %> service</span>
-  <% } do |field, options| %>
-  <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
-<% end %>
+<%= f.govuk_text_field(:urn,
+  label: { size: "m" },
+  width: 10) %>
 
-<h2 class="govuk-heading-m govuk-!-margin-top-8">Address</h2>
+<%= f.govuk_fieldset legend: { text: "Address", size: "m" } do %>
+  <%= f.govuk_text_field(:address1,
+    label: -> { safe_join([t("helpers.label.site.address1"), " ", tag.span("line 1 of 2", class: "govuk-visually-hidden")]) },
+    autocomplete: "address-line1",
+    data: { qa: "address1" }) %>
 
-<%= render "shared/form_field",
-  form: f, field: :address1, label: capture { %>
-    Building and street
-    <span class="govuk-visually-hidden">line 1 of 2</span>
-  <% } do |field, options| %>
-  <%= f.text_field field, options %>
-<% end %>
+  <%= f.govuk_text_field(:address2,
+    label: { hidden: true },
+    autocomplete: "address-line2",
+    data: { qa: "address2" }) %>
 
-<%= render "shared/form_field",
-  form: f, field: :address2, label: capture { %>
-    <span class="govuk-visually-hidden">line 2 of 2</span>
-  <% } do |field, options| %>
-  <%= f.text_field field, options %>
-<% end %>
+  <%= f.govuk_text_field(:address3,
+    width: "two-thirds",
+    autocomplete: "address-level2",
+    data: { qa: "address3" }) %>
 
-<%= render "shared/form_field",
-  form: f, field: :address3, label: "Town or city" do |field, options| %>
-  <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
-<% end %>
+  <%= f.govuk_text_field(:address4,
+    width: "two-thirds",
+    autocomplete: "address-level1",
+    data: { qa: "address4" }) %>
 
-<%= render "shared/form_field",
-  form: f, field: :address4, label: "County" do |field, options| %>
-  <%= f.text_field field, options.merge(class: "govuk-input govuk-!-width-two-thirds") %>
-<% end %>
-
-<%= render "shared/form_field",
-  form: f, field: :postcode do |field, options| %>
-  <%= f.text_field field, options.merge(class: "govuk-input govuk-input--width-10") %>
+  <%= f.govuk_text_field(:postcode,
+    width: 10,
+    autocomplete: "postal-code",
+    data: { qa: "postcode" }) %>
 <% end %>

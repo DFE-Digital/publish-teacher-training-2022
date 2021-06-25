@@ -1,18 +1,24 @@
 <%= content_for :page_title, title_with_error_prefix(@site_name_before_update, @site.errors.any?) %>
 <%= content_for :before_content, render_breadcrumbs(:edit_site) %>
 
-<%= render "shared/errors" %>
-
-<h1 class="govuk-heading-l"><%= @site_name_before_update %></h1>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @site,
-                  url: provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id),
-                  method: :put do |f| %>
+    <%= form_with(
+      model: @site,
+      url: provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id),
+      method: :put,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        <%= @site_name_before_update %>
+      </h1>
+
       <p class="govuk-body">You can assign locations to a course from the ‘Basic details’ tab on the course page.</p>
       <%= render "form", f: f %>
-      <%= f.submit "Save and publish changes", class: "govuk-button", data: { qa: "location__publish-changes" } %>
+      <%= f.govuk_submit "Save and publish changes", data: { qa: "location__publish-changes" } %>
     <% end %>
 
     <p class="govuk-body">
