@@ -1,21 +1,22 @@
 <div class="govuk-!-margin-bottom-8">
-  <h2 class="govuk-heading-l" id="section-entry">Requirements</h2>
+  <h2 class="govuk-heading-l" id="section-entry">Entry Requirements</h2>
+  <h3 class="govuk-heading-m">Qualifications needed</h3>
   <% if course.required_qualifications.present? %>
-    <aside class="app-advice">
-      <h3 class="app-advice__title">
-        <span class="app-advice__caption">Advice from Get Into Teaching</span>
-        Qualifications
-      </h3>
-      <div class="app-advice__body">
-        <%= render partial: "courses/preview/entry_requirements" %>
-      </div>
-    </aside>
-
-    <h3 class="govuk-heading-m">Qualifications needed</h3>
-    <% if course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
+    <% if course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE%>
       <%= render DegreePreviewComponent.new(course: course) %>
+      <%= render GcsePreviewComponent.new(course: course) %>
     <% else %>
       <div data-qa="course__required_qualifications">
+        <aside class="app-advice">
+          <h3 class="app-advice__title">
+            <span class="app-advice__caption">Advice from Get Into Teaching</span>
+            Qualifications
+          </h3>
+          <div class="app-advice__body">
+            <%= render partial: "courses/preview/entry_requirements" %>
+          </div>
+        </aside>
+
         <%= markdown(course.required_qualifications) %>
       </div>
     <% end %>
