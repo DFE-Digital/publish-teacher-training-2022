@@ -1,6 +1,13 @@
 en:
   helpers:
     label:
+      access_request:
+        first_name: First name
+        last_name: Last name
+        requester_email: Email with permissions to copy
+        email_address: Email that should have these permissions
+        organisation: Their organisation
+        reason: Reason they need access
       provider:
         provider_name: Provider name
         email: Email address
