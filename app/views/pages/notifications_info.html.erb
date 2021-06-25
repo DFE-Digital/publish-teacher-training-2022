@@ -20,8 +20,6 @@
     <p class="govuk-body">
       or
     </p>
-    <%= form_for :user, url: accept_notifications_info_path, method: :patch do |f| %>
-      <%= f.submit "Continue", class: "govuk-button" %>
-    <% end %>
+    <%= govuk_button_to "Continue", accept_notifications_info_path, method: :patch %>
   </div>
 </div>

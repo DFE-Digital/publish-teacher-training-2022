@@ -29,8 +29,6 @@
       You can also add, edit or delete courses and locations.
     </p>
 
-    <%= form_for :user, url: accept_rollover_path, method: :patch do |f| %>
-      <%= f.submit "Continue", class: "govuk-button" %>
-    <% end %>
+    <%= govuk_button_to "Continue", accept_rollover_path, method: :patch %>
   </div>
 </div>
