@@ -13,8 +13,6 @@
       Accredited bodies should request fee-funded PE by <%= Settings.allocations_close_date.to_s(:govuk) %>.
     </p>
 
-    <%= form_for :user, url: accept_rollover_recruitment_path, method: :patch do |f| %>
-      <%= f.submit "Continue", class: "govuk-button" %>
-    <% end %>
+    <%= govuk_button_to "Continue", accept_rollover_recruitment_path, method: :patch %>
   </div>
 </div>

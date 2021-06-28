@@ -18,8 +18,6 @@
 
     <p class="govuk-body">You’ll still need to use UCAS to view and manage course applications. This is because candidates will continue to apply for courses through UCAS.</p>
 
-    <%= form_for :user, url: accept_transition_info_path, method: :patch do |f| %>
-      <%= f.submit "Continue", class: "govuk-button", data: { qa: "transition__continue" } %>
-    <% end %>
+    <%= govuk_button_to "Continue", accept_transition_info_path, method: :patch, data: { qa: "transition__continue" } %>
   </div>
 </div>
