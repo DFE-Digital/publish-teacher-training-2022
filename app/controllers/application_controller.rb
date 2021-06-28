@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   include Pagy::Backend
   include AdminOnlyMaintenanceMode
+  include EmitRequestEvents
 
   before_action :http_basic_auth
   before_action :authenticate

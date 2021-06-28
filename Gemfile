@@ -18,6 +18,9 @@ gem "webpacker"
 # State machine to track users through their onboarding journey
 gem "aasm"
 
+# Data integration with BigQuery
+gem 'google-cloud-bigquery'
+
 # Used to build our forms and style them using govuk-frontend class names
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
@@ -158,6 +161,8 @@ group :test do
 
   # Allows assert_template in request specs
   gem "rails-controller-testing"
+
+  gem "timecop"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
