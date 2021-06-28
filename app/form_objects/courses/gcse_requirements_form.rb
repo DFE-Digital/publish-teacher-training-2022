@@ -15,6 +15,8 @@ module Courses
 
       set_equivalency_values_to_false unless accept_gcse_equivalency
 
+      set_equivalency_values_to_false unless accept_gcse_equivalency
+
       course.update(
         accept_pending_gcse: accept_pending_gcse,
         accept_gcse_equivalency: accept_gcse_equivalency,
@@ -41,6 +43,13 @@ module Courses
     def equivalency_details_not_given
       accept_gcse_equivalency.present? && accept_english_gcse_equivalency.blank? &&
         accept_maths_gcse_equivalency.blank? && accept_science_gcse_equivalency.blank?
+    end
+
+    def set_equivalency_values_to_false
+      self.accept_english_gcse_equivalency = false
+      self.accept_maths_gcse_equivalency = false
+      self.accept_science_gcse_equivalency = false
+      self.additional_gcse_equivalencies = nil
     end
   end
 end
