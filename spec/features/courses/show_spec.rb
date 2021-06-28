@@ -1,12 +1,15 @@
 require "rails_helper"
 
 feature "Course show", type: :feature do
+  let(:recruitment_cycle_year) { "2021" }
+
   let(:provider) do
     build(
       :provider,
       accredited_body?: false,
       provider_name: "ACME SCITT A0",
       provider_code: "A0",
+      recruitment_cycle: current_recruitment_cycle,
     )
   end
 
@@ -20,7 +23,7 @@ feature "Course show", type: :feature do
     )
   end
 
-  let(:current_recruitment_cycle) { build :recruitment_cycle }
+  let(:current_recruitment_cycle) { build :recruitment_cycle, year: recruitment_cycle_year }
   let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
   let(:course) do
     build(
@@ -62,6 +65,7 @@ feature "Course show", type: :feature do
 
   before do
     signed_in_user
+    allow(Settings).to receive(:current_cycle).and_return(recruitment_cycle_year.to_i)
 
     stub_api_v2_resource current_recruitment_cycle
     stub_api_v2_resource next_recruitment_cycle
@@ -179,9 +183,6 @@ feature "Course show", type: :feature do
       expect(course_page.salary).to have_content(
         course.salary_details,
       )
-      expect(course_page.required_qualifications).to have_content(
-        course.required_qualifications,
-      )
       expect(course_page.personal_qualities).to have_content(
         course.personal_qualities,
       )
@@ -189,6 +190,24 @@ feature "Course show", type: :feature do
         course.other_requirements,
       )
       expect(course_page).to_not have_preview_link
+    end
+
+    context "in 2022 recruitment cycle year" do
+      let(:recruitment_cycle_year) { "2022" }
+
+      scenario "it does not show required qualifications" do
+        expect(course_page).not_to have_content(
+          "Qualifications needed #{course.required_qualifications}",
+        )
+      end
+    end
+
+    context "in 2021 recruitment cycle year" do
+      scenario "it shows required qualifications" do
+        expect(course_page).to have_content(
+          "Qualifications needed #{course.required_qualifications}",
+        )
+      end
     end
   end
 
