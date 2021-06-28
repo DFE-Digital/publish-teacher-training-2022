@@ -47,7 +47,7 @@ RSpec.describe EmitRequestEvents, type: :request, feature_send_request_data_to_b
         expect(args[:request_path]).to eq("/test")
         expect(args[:request_method]).to eq("GET")
         expect(args[:request_user_agent]).to eq("Toaster/1.23")
-        expect(args[:request_query]).to eq([{ "key" => "foo", "value" => "bar" }])
+        expect(args[:request_query]).to eq([{ "key" => "foo", "value" => %w[bar] }])
         expect(args[:request_referer]).to eq("https://example.com/")
         expect(args[:response_content_type]).to eq("text/plain; charset=utf-8")
         expect(args[:response_status]).to eq(200)

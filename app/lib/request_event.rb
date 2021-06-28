@@ -44,6 +44,6 @@ private
 
   def query_to_kv_pairs(query_string)
     vars = Rack::Utils.parse_query(query_string)
-    vars.map { |k, v| { "key" => k, "value" => v } }
+    vars.map { |k, v| { "key" => k, "value" => [v].flatten } }
   end
 end
