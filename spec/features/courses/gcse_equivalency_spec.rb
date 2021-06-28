@@ -45,7 +45,7 @@ feature "GCSE equivalency requirements", type: :feature do
   scenario "a provider completes the gcse equivalency requirements section" do
     course_page.load_with_course(course)
     visit_description_page(course)
-    click_link "Enter GCSEs and equivalency test requirements"
+    click_link "Enter GCSE and equivalency test requirements"
 
     gcse_requirements_page.save.click
     expect(page).to have_content("Select if you consider candidates with pending GCSEs")

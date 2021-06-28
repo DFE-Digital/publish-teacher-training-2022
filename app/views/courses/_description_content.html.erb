@@ -47,7 +47,7 @@
      )) %>
      <% summary_list.slot(:row, enrichment_summary(
        :course,
-       "GCSEs", 
+       "GCSEs",
        (render GcseRowContentComponent.new(course: course)),
        %w[degree_grade degree_subject_requirements],
        truncate_value: false,

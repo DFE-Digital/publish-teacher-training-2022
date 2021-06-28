@@ -1,7 +1,7 @@
 module Courses
   class GcseRequirementsController < ApplicationController
     decorates_assigned :course
-    before_action :build_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_22_cycle_or_higher
+    before_action :build_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
 
     def edit
       @gcse_requirements_form = GcseRequirementsForm.build_from_course(@course)
@@ -15,6 +15,8 @@ module Courses
       )
 
       if @gcse_requirements_form.save(@course)
+        flash[:success] = "Your changes have been saved"
+
         redirect_to provider_recruitment_cycle_course_path
       else
         @errors = @gcse_requirements_form.errors.messages
@@ -67,7 +69,7 @@ module Courses
         .first
     end
 
-    def redirect_to_basic_details_page_if_provider_is_not_in_the_22_cycle_or_higher
+    def redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
       redirect_to provider_recruitment_cycle_course_path unless @course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE
     end
   end

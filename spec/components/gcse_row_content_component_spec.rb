@@ -5,6 +5,8 @@ RSpec.describe GcseRowContentComponent, type: :component do
 
   context "when the gcse section is incomplete" do
     it "renders a link to the gcse section" do
+      Rails.application.routes.url_helpers.stub(:provider_recruitment_cycle_course_path).and_return(true)
+
       course = build(
         :course,
         provider: provider,
@@ -19,7 +21,7 @@ RSpec.describe GcseRowContentComponent, type: :component do
       render_inline(described_class.new(course: course))
 
       expect(page).to have_link(
-        "Enter GCSEs and equivalency test requirements",
+        "Enter GCSE and equivalency test requirements",
         href: Rails.application.routes.url_helpers.gcses_pending_or_equivalency_tests_provider_recruitment_cycle_course_path(
           provider.provider_code,
           provider.recruitment_cycle.year,
