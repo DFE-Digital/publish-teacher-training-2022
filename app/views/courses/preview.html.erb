@@ -84,6 +84,9 @@
     <% if course.interview_process.present? %>
       <%= render partial: "courses/preview/interview_process" %>
     <% end %>
+    <% if Providers::VisaSponsorshipService.new(@provider).visa_sponsorship_enabled? %>
+      <%= render partial: "courses/preview/international_students" %>
+    <% end %>
     <%= render partial: "courses/preview/train_with_disabilities" %>
     <%= render partial: "courses/preview/contact_details" %>
     <%= render partial: "courses/preview/advice" %>

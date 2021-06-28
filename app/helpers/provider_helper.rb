@@ -12,14 +12,24 @@ module ProviderHelper
   def visa_sponsorship_status(provider)
     if !provider.declared_visa_sponsorship?
       visa_sponsorship_call_to_action(provider)
-    elsif provider.can_sponsor_all_visas?
-      "You can sponsor Student and Skilled Worker visas"
-    elsif provider.can_only_sponsor_student_visa?
-      "You can sponsor Student visas"
-    elsif provider.can_only_sponsor_skilled_worker_visa?
-      "You can sponsor Skilled Worker visas"
+    elsif provider.can_sponsor_student_visa || provider.can_sponsor_skilled_worker_visa
+      "can #{visa_sponsorship_short_status(provider)}"
     else
-      "You cannot sponsor visas"
+      "cannot sponsor visas"
+    end
+  end
+
+  def visa_sponsorship_short_status(provider)
+    if !provider.declared_visa_sponsorship?
+      visa_sponsorship_call_to_action(provider)
+    elsif provider.can_sponsor_all_visas?
+      "sponsor Student and Skilled Worker visas"
+    elsif provider.can_only_sponsor_student_visa?
+      "sponsor Student visas"
+    elsif provider.can_only_sponsor_skilled_worker_visa?
+      "sponsor Skilled Worker visas"
+    else
+      "sponsor visas"
     end
   end
 

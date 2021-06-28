@@ -55,6 +55,10 @@ class Provider < Base
     !can_sponsor_student_visa && can_sponsor_skilled_worker_visa
   end
 
+  def cannot_sponsor_visas?
+    can_sponsor_student_visa == false && can_sponsor_skilled_worker_visa == false
+  end
+
 private
 
   def post_base_url
