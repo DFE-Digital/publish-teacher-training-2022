@@ -12,11 +12,6 @@ FactoryBot.define do
           detail: "Postcode is missing",
           source: { pointer: "/data/attributes/postcode" },
         },
-        {
-          title: "Invalid postcode",
-          detail: "Postcode is invalid",
-          source: { pointer: "/data/attributes/postcode" },
-        },
       ]
     end
 

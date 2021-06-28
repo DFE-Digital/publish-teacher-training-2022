@@ -46,7 +46,7 @@ feature "Locations", type: :feature do
       click_on "Add a location"
 
       fill_in "Name", with: "New site"
-      fill_in "Building and street", with: "New building and street"
+      fill_in "Building and street line 1 of 2", with: "New building and street"
       fill_in "Town or city", with: "New town"
       fill_in "County", with: "New county"
       fill_in "Postcode", with: "SW1A 1AA"
