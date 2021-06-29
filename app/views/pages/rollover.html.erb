@@ -7,27 +7,40 @@
     </h1>
 
     <p class="govuk-body">
-      Courses for the next cycle (<%= next_recruitment_cycle_period_text %>) will be published on <%= Settings.next_cycle_open_date.to_s(:govuk) %>.
-    </p>
-    <p class="govuk-body">
-      Your courses, locations and organisation details have been copied from the current cycle.
+      Your courses, locations and details have been copied.
     </p>
 
-    <h2 class="govuk-heading-m">What you need to do</h2>
+    <p class="govuk-body">
+      Courses for the next cycle will be published on <%= Settings.next_cycle_open_date.to_s(:govuk) %>.
+    </p>
 
     <p class="govuk-body">
-      Before you can publish courses for the next cycle, you'll need to confirm:
+      Before then, you can:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-4">
+      <li>add new courses</li>
+      <li>delete courses</li>
+      <li>edit the details of your courses</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">New for the <%= next_recruitment_cycle_period_text %> cycle</h2>
+
+    <p class="govuk-body">
+      All applications will be made via Apply for teaching training, not UCAS.
+    </p>
+
+    <p class="govuk-body">
+      You will need to confirm:
     </p>
 
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-4">
       <li>degree requirements</li>
       <li>GCSE requirements</li>
-      <li>if you can sponsor visas</li>
+      <li>whether you can sponsor visas</li>
+      <li>locations of school placements</li>
+      <li>a URN for course locations and a UKPRN for the organisation</li>
     </ul>
-
-    <p class="govuk-body">
-      You can also add, edit or delete courses and locations.
-    </p>
 
     <%= govuk_button_to "Continue", accept_rollover_path, method: :patch %>
   </div>
