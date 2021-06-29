@@ -48,7 +48,7 @@ feature "View locations", type: :feature do
       provider.to_jsonapi(include: :sites),
     )
 
-    stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/recruitment_cycles/#{Settings.current_cycle.succ}/providers")
+    stub_request(:get, "#{Settings.teacher_training_api.base_url}/api/v2/recruitment_cycles/#{Settings.current_cycle.succ}/providers/#{provider_code}")
 
     stub_interrupt_acknowledgements
 
