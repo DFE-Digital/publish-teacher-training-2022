@@ -28,36 +28,27 @@
 
       <%= f.hidden_field :page, value: :requirements %>
 
-      <h2 class="govuk-heading-m">Qualifications needed</h2>
-
-      <p class="govuk-body">
-        State the minimum academic qualifications needed for this course.
-        You could also say what happens if these requirements aren’t met.
-      </p>
-
-      <%= f.govuk_text_area :required_qualifications, label: { text: "Qualifications needed", size: "s" }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :required_qualifications,
+        label: { text: "Qualifications needed", size: "m" },
+        hint: { text: "State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met." },
+        max_words: 100,
+        rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h2 class="govuk-heading-m">Personal qualities</h2>
-
-      <p class="govuk-body">
-        Tell applicants about the skills, motivation and experience you’re looking for
-        (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
-      </p>
-
-      <%= f.govuk_text_area :personal_qualities, label: { text: "Personal qualities (optional)", size: "s" }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :personal_qualities,
+        label: { text: "Personal qualities (optional)", size: "m" },
+        hint: { text: "Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking)." },
+        max_words: 100,
+        rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h2 class="govuk-heading-m">Other requirements</h2>
-
-      <p class="govuk-body">
-        If applicants need any non-academic qualifications or documents, list them here
-        (eg criminal record checks, or relevant work experience).
-      </p>
-
-      <%= f.govuk_text_area :other_requirements, label: { text: "Other requirements (optional)", size: "s" }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :other_requirements,
+        label: { text: "Other requirements (optional)", size: "m" },
+        hint: { text: "If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience)." },
+        max_words: 100,
+        rows: 10 %>
 
       <%= f.govuk_submit "Save" %>
 
