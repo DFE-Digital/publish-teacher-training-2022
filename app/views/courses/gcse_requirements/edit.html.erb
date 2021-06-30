@@ -15,7 +15,7 @@
         @course.course_code,
       ),
       method: :put,
-      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder
     ) do |f| %>
 
     <%= f.govuk_error_summary %>
@@ -33,10 +33,10 @@
       <%= f.govuk_radio_buttons_fieldset :accept_gcse_equivalency, legend: { text: "Will you consider candidates who need to take an equivalency test in English, maths or science?", size: "m" } do %>
         <%= f.govuk_radio_button :accept_gcse_equivalency, true, label: { text: "Yes" }, data: { qa: "gcse_requirements__gcse_equivalency_yes_radio" }, link_errors: true do %>
           <%= f.govuk_check_boxes_fieldset :equivalencies, legend: { text: "Which subjects will you accept equivalency tests in?", size: "s" } do %>
-            <%= f.govuk_check_box :accept_english_gcse_equivalency, "English", label: { text: "English" }, data: { qa: "gcse_requirements__english_equivalency" }  %>
-            <%= f.govuk_check_box :accept_maths_gcse_equivalency, "Maths", label: { text: "Maths" }, data: { qa: "gcse_requirements__maths_equivalency" }  %>
+            <%= f.govuk_check_box :accept_english_gcse_equivalency, "English", label: { text: "English" }, data: { qa: "gcse_requirements__english_equivalency" } %>
+            <%= f.govuk_check_box :accept_maths_gcse_equivalency, "Maths", label: { text: "Maths" }, data: { qa: "gcse_requirements__maths_equivalency" } %>
             <% if @course.is_primary? %>
-              <%= f.govuk_check_box :accept_science_gcse_equivalency, "Science", label: { text: "Science" }, data: { qa: "gcse_requirements__science_equivalency" }  %>
+              <%= f.govuk_check_box :accept_science_gcse_equivalency, "Science", label: { text: "Science" }, data: { qa: "gcse_requirements__science_equivalency" } %>
             <% end %>
             <%= f.govuk_text_area :additional_gcse_equivalencies, label: { text: "Details about equivalency tests you offer or accept", size: "s" }, hint: { text: "For example, if you offer the tests or ask candidates to use a third party, and if there are any costs to pay." }, data: { qa: "gcse_requirements__additional_requirements" } %>
           <% end %>

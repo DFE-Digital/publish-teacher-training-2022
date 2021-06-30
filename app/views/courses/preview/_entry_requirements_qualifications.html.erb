@@ -2,7 +2,7 @@
   <h2 class="govuk-heading-l" id="section-entry">Entry Requirements</h2>
   <h3 class="govuk-heading-m">Qualifications needed</h3>
   <% if course.required_qualifications.present? %>
-    <% if course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE%>
+    <% if course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
       <%= render DegreePreviewComponent.new(course: course) %>
       <%= render GcsePreviewComponent.new(course: course) %>
     <% else %>
