@@ -53,6 +53,10 @@ module ViewHelper
           provider_code,
           course.recruitment_cycle_year,
         ),
+        "You must provide a Unique Reference Number (URN) for all course locations" => provider_recruitment_cycle_sites_path(
+          provider_code,
+          course.recruitment_cycle_year,
+        ),
       }[message]
     else
       {
