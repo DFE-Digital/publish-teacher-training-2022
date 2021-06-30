@@ -5,4 +5,7 @@
   <td class="govuk-table__cell">
     <%= site.code %> <%= site.code == "-" ? "(dash)" : "" %>
   </td>
+  <td class="govuk-table__cell">
+    <%= site.urn.presence || "<strong class='govuk-error-message govuk-\!-display-inline'>(Missing)</strong>".html_safe %>
+  </td>
 </tr>
