@@ -6,6 +6,10 @@
   @return url("~assets/images/" + $filename);
 }
 
+// Enable new link styles (currently opt-in).
+// TODO: remove this when this becomes the default.
+$govuk-new-link-styles: true;
+
 $govuk-font-url-function: frontend-font-url;
 $govuk-image-url-function: frontend-image-url;
 
