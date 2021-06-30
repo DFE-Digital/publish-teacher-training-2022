@@ -7,16 +7,6 @@
       <%= render GcsePreviewComponent.new(course: course) %>
     <% else %>
       <div data-qa="course__required_qualifications">
-        <aside class="app-advice">
-          <h3 class="app-advice__title">
-            <span class="app-advice__caption">Advice from Get Into Teaching</span>
-            Qualifications
-          </h3>
-          <div class="app-advice__body">
-            <%= render partial: "courses/preview/entry_requirements" %>
-          </div>
-        </aside>
-
         <%= markdown(course.required_qualifications) %>
       </div>
     <% end %>
