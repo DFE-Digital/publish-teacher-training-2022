@@ -9,7 +9,7 @@ feature "GCSE equivalency requirements", type: :feature do
   let(:course2) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, level: "primary", accept_pending_gcse: false, accept_gcse_equivalency: false, additional_gcse_equivalencies: nil) }
   let(:course3) do
     build(:course, provider: provider, recruitment_cycle: recruitment_cycle, level: "secondary", accept_pending_gcse: true, accept_gcse_equivalency: true,
-                   accept_english_gcse_equivalency: true, accept_maths_gcse_equivalency: true, accept_science_gcse_equivalency: true, additional_gcse_equivalencies: "Cycling Proficiency")
+                   accept_english_gcse_equivalency: true, accept_maths_gcse_equivalency: true, accept_science_gcse_equivalency: nil, additional_gcse_equivalencies: "Cycling Proficiency")
   end
   let(:recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
 
@@ -58,7 +58,6 @@ feature "GCSE equivalency requirements", type: :feature do
 
     check "English"
     check "Maths"
-    check "Science"
     fill_in "Details about equivalency tests you offer or accept", with: "Cycling Proficiency"
     gcse_requirements_page.save.click
 
@@ -82,7 +81,7 @@ feature "GCSE equivalency requirements", type: :feature do
 
     expect(page).to have_content("Grade 4 (C) or above in English and maths")
     expect(page).to have_content("Candidates with pending GCSEs will be considered")
-    expect(page).to have_content("Equivalency tests will be accepted in English, maths and science")
+    expect(page).to have_content("Equivalency tests will be accepted in English and maths")
     expect(page).to have_content("Cycling Proficiency")
   end
 
@@ -94,8 +93,6 @@ feature "GCSE equivalency requirements", type: :feature do
     expect(gcse_requirements_page.gcse_equivalency_yes_radio).to be_checked
     expect(gcse_requirements_page.english_equivalency).to be_checked
     expect(gcse_requirements_page.maths_equivalency).to be_checked
-    expect(gcse_requirements_page.science_equivalency).to be_checked
-    expect(gcse_requirements_page.science_equivalency).to be_checked
     expect(gcse_requirements_page.additional_requirements).to have_content("Cycling Proficiency")
   end
 

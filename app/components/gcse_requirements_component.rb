@@ -17,7 +17,7 @@ private
   end
 
   def pending_gcse_content(course)
-    if course.accept_pending_gcse.present?
+    if course.accept_pending_gcse
       "Candidates with pending GCSEs will be considered"
     else
       "Candidates with pending GCSEs will not be considered"
@@ -25,11 +25,11 @@ private
   end
 
   def gcse_equivalency_content(course)
-    return if equivalencies.count.zero? && course.additional_gcse_equivalencies
+    return "Equivalency tests will not be accepted" unless course.accept_gcse_equivalency
 
     case equivalencies.count
     when 0
-      "Equivalency tests will not be accepted"
+      ""
     when 1
       "Equivalency tests will be accepted in #{equivalencies[0].capitalize}"
     when 2
