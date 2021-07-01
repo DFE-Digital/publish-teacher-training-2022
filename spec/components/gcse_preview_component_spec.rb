@@ -107,6 +107,23 @@ RSpec.describe GcsePreviewComponent, type: :component do
       end
     end
 
+    context "when course has a grade requirement of 5" do
+      it "renders alternative content" do
+        course = build(
+          :course,
+          provider: provider,
+          gcse_grade_required: 5,
+          accept_pending_gcse: true,
+          accept_gcse_equivalency: true,
+          level: "primary",
+        )
+
+        render_inline(described_class.new(course: course))
+
+        expect(page).to have_content("Grade 5 (C) or above in English, maths and science, or equivalent qualification")
+      end
+    end
+
     context "when no equivalencies are selected" do
       it "renders the correct content" do
         course = build(

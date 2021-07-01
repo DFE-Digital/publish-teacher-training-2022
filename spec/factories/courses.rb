@@ -115,6 +115,7 @@ FactoryBot.define do
     english { "must_have_qualification_at_application_time" }
     science { "not_required" }
     gcse_subjects_required { %w[maths english] }
+    gcse_grade_required { 4 }
     meta { nil }
     age_range_in_years { "11_to_16" }
     program_type { "pg_teaching_apprenticeship" }
