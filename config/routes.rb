@@ -86,6 +86,8 @@ Rails.application.routes.draw do
       get "/training-providers-courses", on: :member, to: "training_providers_courses#index", as: "download_training_providers_courses"
       get "/visas", to: "providers/visas#edit"
       post "/visas", to: "providers/visas#update"
+      get "/references", to: "providers/references#edit"
+      post "/references", to: "providers/references#update"
 
       resource :training_providers, path: "/training-providers", on: :member, param: :code, only: [], as: "" do
         get "/:training_provider_code/courses", to: "providers#training_provider_courses", as: "training_provider_courses"
