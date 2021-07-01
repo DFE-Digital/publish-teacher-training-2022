@@ -30,7 +30,9 @@
         <tr class="govuk-table__row">
           <th class="govuk-table__header" scope="col">Name</th>
           <th class="govuk-table__header" scope="col">UCAS code</th>
-          <th class="govuk-table__header" scope="col">URN</th>
+          <% if urn_required?(@recruitment_cycle.year.to_i) %>
+            <th class="govuk-table__header" scope="col">URN</th> 
+          <% end %>
         </tr>
       </thead>
       <tbody class="govuk-table__body">

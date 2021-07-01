@@ -1,4 +1,6 @@
 class Site < Base
+  URN_2022_REQUIREMENTS_REQUIRED_FROM = 2022
+
   belongs_to :recruitment_cycle, through: :provider, param: :recruitment_cycle_year
   belongs_to :provider, param: :provider_code
   has_one :site_status
