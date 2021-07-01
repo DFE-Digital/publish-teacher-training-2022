@@ -28,57 +28,27 @@
 
       <%= f.hidden_field :page, value: :requirements %>
 
-      <h2 class="govuk-heading-m">Qualifications needed</h2>
-
-      <p class="govuk-body">
-        State the minimum academic qualifications needed for this course.
-        You could also say what happens if these requirements aren’t met.
-      </p>
-
-      <p class="govuk-body">We show guidance in this section. It tells candidates:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>what qualifications they need to teach in England</li>
-        <li>where to go to find out about international qualifications</li>
-        <li>why they might need to do a subject knowledge enhancement course</li>
-      </ul>
-
-      <%= govuk_details(summary: "See the guidance") do %>
-        <h3 class="govuk-heading-m">Qualifications</h3>
-        <p class="govuk-body">To be a teacher in England you need:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>a degree or an equivalent qualification</li>
-          <li>English and Maths GCSEs at grade 4 (C) or above</li>
-          <li>For primary teaching, a science subject GCSE at grade 4 (C) or above</li>
-        </ul>
-        <p class="govuk-body">You can find out more about entry requirements, and how it works if you have studied overseas, at <%= govuk_link_to "Get Into Teaching", "https://getintoteaching.education.gov.uk/steps-to-become-a-teacher" %>.</p>
-        <h4 class="govuk-heading-s">Refreshing your subject knowledge</h4>
-        <p class="govuk-body">If you have the right qualities and qualifications to teach but need to refresh your subject knowledge, you might be asked to complete a <%= govuk_link_to "subject knowledge enhancement (SKE) course", "https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses" %>.</p>
-        <p class="govuk-body">You’ll find out if you need to complete an SKE course after the interview stage.</p>
-      <% end %>
-
-      <%= f.govuk_text_area :required_qualifications, label: { text: "Qualifications needed", size: "s" }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :required_qualifications,
+        label: { text: "Qualifications needed", size: "m" },
+        hint: { text: "State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met." },
+        max_words: 100,
+        rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h2 class="govuk-heading-m">Personal qualities</h2>
-
-      <p class="govuk-body">
-        Tell applicants about the skills, motivation and experience you’re looking for
-        (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
-      </p>
-
-      <%= f.govuk_text_area :personal_qualities, label: { text: "Personal qualities (optional)", size: "s" }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :personal_qualities,
+        label: { text: "Personal qualities (optional)", size: "m" },
+        hint: { text: "Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking)." },
+        max_words: 100,
+        rows: 10 %>
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h2 class="govuk-heading-m">Other requirements</h2>
-
-      <p class="govuk-body">
-        If applicants need any non-academic qualifications or documents, list them here
-        (eg criminal record checks, or relevant work experience).
-      </p>
-
-      <%= f.govuk_text_area :other_requirements, label: { text: "Other requirements (optional)", size: "s" }, max_words: 100, rows: 10 %>
+      <%= f.govuk_text_area :other_requirements,
+        label: { text: "Other requirements (optional)", size: "m" },
+        hint: { text: "If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience)." },
+        max_words: 100,
+        rows: 10 %>
 
       <%= f.govuk_submit "Save" %>
 

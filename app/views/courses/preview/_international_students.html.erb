@@ -2,7 +2,7 @@
   <h2 class="govuk-heading-l" id="section-international">International students</h2>
   <% if @provider.declared_visa_sponsorship? %>
     <p class="govuk-body">
-      We 
+      We
       <%= @provider.cannot_sponsor_visas? ? "cannot" : "can" %>
       <%= govuk_link_to(
         visa_sponsorship_short_status(@provider),

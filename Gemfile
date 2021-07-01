@@ -19,7 +19,7 @@ gem "webpacker"
 gem "aasm"
 
 # Data integration with BigQuery
-gem 'google-cloud-bigquery'
+gem "google-cloud-bigquery"
 
 # Used to build our forms and style them using govuk-frontend class names
 gem "govuk-components"

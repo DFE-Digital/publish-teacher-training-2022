@@ -100,14 +100,7 @@
           <li>how placement schools are selected</li>
         </ul>
 
-        <p class="govuk-body">We show guidance in this section. It tells candidates:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>what qualifications they need to teach in England</li>
-          <li>where to go to find out about international qualifications</li>
-          <li>why they might need to do a subject knowledge enhancement course</li>
-        </ul>
-
-        <%= govuk_details(summary: "See the guidance") do %>
+        <%= govuk_details(summary: "See the guidance we show in this section") do %>
           <h3 class="govuk-heading-m">Where you will train</h3>
           <% if @provider.provider_type == 'university' %>
             <p class="govuk-body">You can’t pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
