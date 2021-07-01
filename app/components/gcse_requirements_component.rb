@@ -8,18 +8,11 @@ class GcseRequirementsComponent < ViewComponent::Base
 private
 
   def required_gcse_content(course)
-    grade_mapping = {
-      5 => "5 (C)",
-      4 => "4 (C)",
-    }
-
-    grade = grade_mapping.fetch(course.gcse_grade_required)
-
     case course.level
     when "primary"
-      "Grade #{grade} or above in English, maths and science, or equivalent qualification"
+      "Grade #{course.gcse_grade_required} (C) or above in English, maths and science, or equivalent qualification"
     when "secondary"
-      "Grade #{grade} or above in English and maths, or equivalent qualification"
+      "Grade #{course.gcse_grade_required} (C) or above in English and maths, or equivalent qualification"
     end
   end
 
