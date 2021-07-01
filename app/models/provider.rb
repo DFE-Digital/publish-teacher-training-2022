@@ -39,6 +39,14 @@ class Provider < Base
       .first
   end
 
+  def from_next_recruitment_cycle
+    Provider.where(recruitment_cycle_year: recruitment_cycle_year.to_i.succ)
+      .find(provider_code)
+      .first
+  rescue JsonApiClient::Errors::NotFound
+    nil
+  end
+
   def declared_visa_sponsorship?
     !can_sponsor_student_visa.nil? && !can_sponsor_skilled_worker_visa.nil?
   end
