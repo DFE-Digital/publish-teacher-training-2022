@@ -37,11 +37,11 @@ review:
 	$(eval DEPLOY_ENV=review)
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a name for your review app))
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
-	$(eval backend_key=-backend-config=key=$(APP_NAME).terraform.tfstate)
+	$(eval backend_key=-backend-config=key=pr-$(APP_NAME).tfstate)
 	$(eval export TF_VAR_paas_app_environment_config=review)
 	$(eval export TF_VAR_paas_app_environment=review-$(APP_NAME))
-	$(eval export TF_VAR_paas_web_app_host_name-$(APP_NAME))
-	echo https://publish-teacher-training-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
+	$(eval export TF_VAR_paas_web_app_host_name=$(APP_NAME))
+	echo Review app: https://publish-teacher-training-pr-$(APP_NAME).london.cloudapps.digital in bat-qa space
 
 .PHONY: local
 local: ## Configure local dev environment
