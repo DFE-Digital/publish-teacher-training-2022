@@ -13,9 +13,9 @@ module ProviderHelper
     if !provider.declared_visa_sponsorship?
       visa_sponsorship_call_to_action(provider)
     elsif provider.can_sponsor_student_visa || provider.can_sponsor_skilled_worker_visa
-      "can #{visa_sponsorship_short_status(provider)}"
+      "You can #{visa_sponsorship_short_status(provider)}"
     else
-      "cannot sponsor visas"
+      "You cannot sponsor visas"
     end
   end
 

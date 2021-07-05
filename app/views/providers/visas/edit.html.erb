@@ -37,7 +37,7 @@
         hint: { text: "Applies to salaried courses" },
       ) do %>
         <%= f.govuk_radio_button :can_sponsor_skilled_worker_visa, true, label: { text: "Yes" }, link_errors: true %>
-        <%= f.govuk_radio_button :can_sponsor_skilled_worker_visa, false, label: { text: "No" } %>
+        <%= f.govuk_radio_button :can_sponsor_skilled_worker_visa, false, label: { text: "No, or not applicable" } %>
       <% end %>
 
       <%= f.govuk_submit "Save and publish changes" %>
