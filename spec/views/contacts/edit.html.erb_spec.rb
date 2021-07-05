@@ -26,7 +26,7 @@ describe "contacts/edit" do
     end
 
     it "renders the submit button with 'Request changes'" do
-      expect(contacts_edit_page.submit_button.value).to eq("Request changes")
+      expect(contacts_edit_page.submit_button.text).to eq("Request changes")
     end
   end
 
@@ -42,7 +42,7 @@ describe "contacts/edit" do
     end
 
     it "renders the submit button with 'Save'" do
-      expect(contacts_edit_page.submit_button.value).to eq("Save")
+      expect(contacts_edit_page.submit_button.text).to eq("Save")
     end
   end
 end

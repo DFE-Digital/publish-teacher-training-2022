@@ -30,14 +30,16 @@
         <%= f.govuk_radio_button(:explicitly_enabled, false, label: { text: "No" }) %>
       <% end %>
 
-      <%= f.govuk_submit "Save" %>
+      <%= f.govuk_submit "Save", data: { qa: "notifications__save" } %>
 
       <p class="govuk-body">
         <%= govuk_link_to(
           "Cancel changes",
           @notifications_view.cancel_link_path,
           class: "govuk-link--no-visited-state",
-          id: "cancel-changes-link",
+          data: {
+            qa: "notifications__cancel",
+          },
         ) %>
       </p>
     <% end %>

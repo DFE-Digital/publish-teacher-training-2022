@@ -56,7 +56,7 @@
       <%= hidden_field_tag "request_type", params[:request_type] %>
       <%= hidden_field_tag "finish_flow", "1" %>
 
-      <%= form.govuk_submit "Send request" %>
+      <%= form.govuk_submit "Send request", data: { qa: "allocations__send_request" } %>
     <% end %>
   </div>
 </div>

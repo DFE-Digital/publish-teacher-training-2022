@@ -9,7 +9,7 @@ module PageObjects
             element :header, "h1"
             element :number_of_places, ".govuk-summary-list__value"
             element :change_link, ".govuk-summary-list__actions .govuk-link"
-            element :send_request_button, "input[value='Send request']"
+            element :send_request_button, '[data-qa="allocations__send_request"]'
           end
         end
       end

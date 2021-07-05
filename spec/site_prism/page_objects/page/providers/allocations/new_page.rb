@@ -8,7 +8,7 @@ module PageObjects
           element :form, "form"
           element :yes, "#request-type-repeat-field"
           element :no, "#request-type-declined-field"
-          element :continue_button, "input[value='Continue']"
+          element :continue_button, '[data-qa="allocations__continue"]'
         end
       end
     end
