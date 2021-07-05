@@ -13,8 +13,8 @@ en:
         email: Email address
         telephone: Telephone number
         website: Website
-        ukprn: UK provider reference number (UKPRN)
-        urn: Unique reference number (URN)
+        ukprn: UK Provider Reference Number (UKPRN)
+        urn: Unique Reference Number (URN)
         address1: Building and street
         address2: Building and street line 2 of 2
         address3: Town or city
@@ -24,7 +24,7 @@ en:
         train_with_disability: Training with disabilities and other needs
       site:
         location_name: Name
-        urn: Unique reference number (URN)
+        urn: Unique Reference Number (URN)
         address1: Building and street
         address2: Building and street line 2 of 2
         address3: Town or city
