@@ -48,16 +48,7 @@ module ViewHelper
     base = "/organisations/#{provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}"
 
     if field.to_sym == :base
-      {
-        "You must say whether you can sponsor visas" =>
-          provider_recruitment_cycle_visas_path(provider_code, course.recruitment_cycle_year),
-        "You must provide a Unique Reference Number (URN) for all course locations" =>
-          provider_recruitment_cycle_sites_path(provider_code, course.recruitment_cycle_year),
-        "You must provide a UK provider reference number (UKPRN)" =>
-          provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
-        "You must provide a UK provider reference number (UKPRN) and URN" =>
-          provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
-      }[message]
+      base_errors_hash(provider_code, course)[message]
     else
       {
         about_course: base + "/about?display_errors=true#about_course_wrapper",
@@ -147,4 +138,23 @@ module ViewHelper
   end
 
   alias_method :cns, :classnames
+
+  private
+
+  def base_errors_hash(provider_code, course)
+    {
+      "You must say whether you can sponsor visas" =>
+        provider_recruitment_cycle_visas_path(provider_code, course.recruitment_cycle_year),
+      "You must provide a Unique Reference Number (URN) for all course locations" =>
+        provider_recruitment_cycle_sites_path(provider_code, course.recruitment_cycle_year),
+      "You must provide a UK provider reference number (UKPRN)" =>
+        provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
+      "You must provide a UK provider reference number (UKPRN) and URN" =>
+        provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
+      "Enter degree requirements" =>
+        degrees_start_provider_recruitment_cycle_course_path(provider_code, course.recruitment_cycle_year, course.course_code),
+      "Enter GCSE requirements" =>
+        gcses_pending_or_equivalency_tests_provider_recruitment_cycle_course_path(provider_code, course.recruitment_cycle_year, course.course_code),
+    }
+  end
 end
