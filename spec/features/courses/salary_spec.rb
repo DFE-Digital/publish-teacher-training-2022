@@ -37,7 +37,9 @@ feature "Course salary", type: :feature do
     )
     visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
 
-    click_on "Course length and salary"
+    within "[data-qa='enrichment__salary_details']" do
+      click_on "Change"
+    end
 
     expect(current_path).to eq salary_provider_recruitment_cycle_course_path("A0", course.recruitment_cycle_year, course.course_code)
 
