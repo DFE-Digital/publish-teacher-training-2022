@@ -49,14 +49,14 @@ module ViewHelper
 
     if field.to_sym == :base
       {
-        "You must say whether you can sponsor visas" => provider_recruitment_cycle_visas_path(
-          provider_code,
-          course.recruitment_cycle_year,
-        ),
-        "You must provide a Unique Reference Number (URN) for all course locations" => provider_recruitment_cycle_sites_path(
-          provider_code,
-          course.recruitment_cycle_year,
-        ),
+        "You must say whether you can sponsor visas" =>
+          provider_recruitment_cycle_visas_path(provider_code, course.recruitment_cycle_year),
+        "You must provide a Unique Reference Number (URN) for all course locations" =>
+          provider_recruitment_cycle_sites_path(provider_code, course.recruitment_cycle_year),
+        "You must provide a UK provider reference number (UKPRN)" =>
+          provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
+        "You must provide a UK provider reference number (UKPRN) and URN" =>
+          provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
       }[message]
     else
       {

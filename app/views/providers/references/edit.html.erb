@@ -1,0 +1,35 @@
+<% page_title = @form_object.lead_school? ? "Organisation reference numbers" : t("helpers.label.provider.ukprn") %>
+<%= content_for :page_title, title_with_error_prefix(page_title, @form_object.errors.present?) %>
+
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with(
+      model: @form_object,
+      url: provider_recruitment_cycle_references_path(@provider.provider_code, @provider.recruitment_cycle_year),
+      method: :post,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <% if @form_object.lead_school? %>
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l"><%= @provider.provider_name %></span>
+          <%= page_title %>
+        </h1>
+
+        <%= f.govuk_text_field(:ukprn, label: { text: t("helpers.label.provider.ukprn"), size: "m" }, width: 10, data: { qa: "ukprn" }) %>
+
+        <%= f.govuk_text_field(:urn, label: { text: t("helpers.label.provider.urn"), size: "m" }, width: 10, data: { qa: "urn" }) %>
+      <% else %>
+        <%= f.govuk_text_field(:ukprn, caption: { text: @provider.provider_name, size: "l" }, label: { text: t("helpers.label.provider.ukprn"), size: "l" }, width: 10, data: { qa: "ukprn" }) %>
+      <% end %>
+
+      <%= f.govuk_submit "Save changes" %>
+    <% end %>
+  </div>
+</div>
