@@ -19,17 +19,11 @@
 
     <p class="govuk-body">You can assign locations to a course from the ‘Basic details’ tab on the course page.</p>
 
-    <% content_for :warning_text do %>
-      You are limited to 37 locations by UCAS Apply.<br>
-      <span class="govuk-!-font-weight-regular">Each location has a single character code.</span>
-    <% end %>
-    <%= govuk_warning(text: content_for(:warning_text)) %>
-
     <table class="govuk-table app-table--vertical-align-middle">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th class="govuk-table__header" scope="col">Name</th>
-          <th class="govuk-table__header" scope="col">UCAS code</th>
+          <th class="govuk-table__header" scope="col">Location code</th>
           <% if urn_required?(@recruitment_cycle.year.to_i) %>
             <th class="govuk-table__header" scope="col">URN</th> 
           <% end %>
