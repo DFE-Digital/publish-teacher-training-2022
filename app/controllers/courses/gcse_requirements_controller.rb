@@ -48,7 +48,7 @@ module Courses
     end
 
     def additional_gcse_equivalencies_required_params
-      params.dig(:courses_gcse_requirements_form, :additional_gcse_equivalencies)
+      raw(params.dig(:courses_gcse_requirements_form, :additional_gcse_equivalencies))
     end
 
     def translate_params(key)
