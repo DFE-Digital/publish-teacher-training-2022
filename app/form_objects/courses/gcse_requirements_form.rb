@@ -43,7 +43,7 @@ module Courses
 
     def primary_or_secondary_equivalency_details_not_given
       if level == "primary"
-        errors.add(:equivalencies, "Select if you accept equivalency tests in English maths or science")
+        errors.add(:equivalencies, "Select if you accept equivalency tests in English, maths or science")
       else
         errors.add(:equivalencies, "Select if you accept equivalency tests in English or maths")
       end
