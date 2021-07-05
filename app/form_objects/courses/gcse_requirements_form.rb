@@ -10,6 +10,7 @@ module Courses
     validates :accept_gcse_equivalency, inclusion: { in: [true, false], message: "Select if you consider candidates with pending equivalency tests" }
     validate :primary_or_secondary_equivalency_details_not_given, if: -> { equivalencies_not_selected? }
     validates :additional_gcse_equivalencies, presence: { message: "Enter details about equivalency tests" }, if: -> { equivalencies_not_selected? }
+    validates :additional_gcse_equivalencies, word_count: { maximum: 200 }
 
     def save(course)
       return false unless valid?
