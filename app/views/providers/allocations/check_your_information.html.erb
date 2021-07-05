@@ -50,7 +50,7 @@
       <%= hidden_field_tag "training_provider_code", params[:training_provider_code] %>
       <%= hidden_field_tag "number_of_places", params[:number_of_places] %>
 
-      <%= form.govuk_submit "Send request" %>
+      <%= form.govuk_submit "Send request", data: { qa: "allocations__send_request" } %>
     <% end %>
   </div>
 </div>

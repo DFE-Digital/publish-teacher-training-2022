@@ -8,7 +8,7 @@ module PageObjects
         element :age_range_other, "#course-age-range-in-years-other-field"
         element :age_range_from_field, "#course-course-age-range-in-years-other-from-field"
         element :age_range_to_field, "#course-course-age-range-in-years-other-to-field"
-        element :save_button, 'input[type="submit"]'
+        element :save_button, '[data-qa="course__save"]'
       end
     end
   end

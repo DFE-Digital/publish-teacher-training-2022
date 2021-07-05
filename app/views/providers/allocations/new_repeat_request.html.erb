@@ -22,7 +22,7 @@
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::REPEAT, label: { text: "Yes" }, link_errors: true %>
         <%= form.govuk_radio_button :request_type, AllocationsView::RequestType::DECLINED, label: { text: "No" } %>
       <% end %>
-      <%= form.govuk_submit %>
+      <%= form.govuk_submit data: { qa: "allocations__continue" } %>
     <% end %>
   </div>
 </div>
