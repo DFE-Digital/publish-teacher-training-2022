@@ -77,7 +77,7 @@ feature "View helpers", type: :helper do
         can_sponsor_skilled_worker_visa: false,
       )
       expect(helper.visa_sponsorship_status(provider)).to eq(
-        "can sponsor Student visas",
+        "You can sponsor Student visas",
       )
     end
 
@@ -88,7 +88,7 @@ feature "View helpers", type: :helper do
         can_sponsor_skilled_worker_visa: true,
       )
       expect(helper.visa_sponsorship_status(provider)).to eq(
-        "can sponsor Skilled Worker visas",
+        "You can sponsor Skilled Worker visas",
       )
     end
 
@@ -99,7 +99,7 @@ feature "View helpers", type: :helper do
         can_sponsor_skilled_worker_visa: true,
       )
       expect(helper.visa_sponsorship_status(provider)).to eq(
-        "can sponsor Student and Skilled Worker visas",
+        "You can sponsor Student and Skilled Worker visas",
       )
     end
 
@@ -110,7 +110,7 @@ feature "View helpers", type: :helper do
         can_sponsor_skilled_worker_visa: false,
       )
       expect(helper.visa_sponsorship_status(provider)).to eq(
-        "cannot sponsor visas",
+        "You cannot sponsor visas",
       )
     end
   end
