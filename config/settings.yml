@@ -34,11 +34,11 @@ notify:
 google_forms:
   current_cycle:
     new_course_for_accredited_bodies:
-      url: https://docs.google.com/forms/d/e/1FAIpQLSexQtIhIDiHM6vyy23OrJmeSoLTmLlw4y_2S3TI7FDQV2VcsQ/viewform?usp=pp_url
+      url: https://docs.google.com/forms/d/e/1FAIpQLSerPrTvuQNNkpMH_yfgJ8_o5ajthtq5XhOP9x-zG8JL4o5n-Q/viewform?usp=pp_url
       email_entry: entry.957076544
       provider_code_entry: entry.1735563938
     new_course_for_unaccredited_bodies:
-      url: https://docs.google.com/forms/d/e/1FAIpQLSdmuYIBDGuESZJBKGVTIdEFntdcjX86J5u6yXTSFNpk18oJeA/viewform?usp=pp_url
+      url: https://docs.google.com/forms/d/e/1FAIpQLSeZK6wGdvDy40QFiFcI8_JRgG-kPWUPBjLfY_EffebCkL0goQ/viewform?usp=pp_url
       email_entry: entry.1033530353
       provider_code_entry: entry.158771972
   # NOTE: these forms are only in use / visible during Rollover i.e. when both cycles are visible.
@@ -56,8 +56,8 @@ service_support:
 environment:
   label: "Beta"
   selector_name: "beta"
-current_cycle: 2021
-next_cycle_open_date: 2021-10-5
+current_cycle: 2022
+next_cycle_open_date: 2022-10-5
 allocation_cycle_year: 2021
 allocations_close_date: 2021-07-02
 # `financial_support_placeholder_cycle` the cycle year value should be
