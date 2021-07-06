@@ -128,19 +128,19 @@ feature "Course show", type: :feature do
 
       within "[data-qa='enrichment__about_course']" do
         expect(course_page).to have_link(
-          "Change",
+          "Change details about this course",
           href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/about",
         )
       end
       within "[data-qa='enrichment__course_length']" do
         expect(course_page).to have_link(
-          "Change",
-          href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/fees",
+          "Change course length",
+          href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/fees#course-length",
         )
       end
       within "[data-qa='enrichment__required_qualifications']" do
         expect(course_page).to have_link(
-          "Change",
+          "Change qualifications needed",
           href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/requirements",
         )
       end

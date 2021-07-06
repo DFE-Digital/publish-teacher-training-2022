@@ -1,12 +1,3 @@
-.app-summary-list--short {
-  margin-bottom: govuk-spacing(8);
-
-  .govuk-summary-list__key,
-  .govuk-summary-list__value {
-    width: 50%;
-  }
-}
-
 .app-summary-list__row--truncate {
   .govuk-summary-list__value {
     max-width: 295px;

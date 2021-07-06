@@ -31,23 +31,22 @@
       <h3 class="govuk-heading-m">Course fees</h3>
 
       <%= f.govuk_text_field(:fee_uk_eu,
+        form_group: { id: @errors.key?(:fee_uk_eu) ? "fee_uk_eu-error" : "fee-uk" },
         value: number_with_precision(course.fee_uk_eu, precision: 2, strip_insignificant_zeros: true),
         label: { text: "Fee for UK students", size: "s" },
         prefix_text: "£",
         width: 5,
-        form_group: {
-          id: @errors.key?(:fee_uk_eu) ? "fee_uk_eu-error" : "",
-        },
         data: { qa: "course_fee_uk_eu" }) %>
 
       <%= f.govuk_text_field(:fee_international,
+        form_group: { id: "fee-international" },
         value: number_with_precision(course.fee_international, precision: 2, strip_insignificant_zeros: true),
         label: { text: "Fee for international students (optional)", size: "s" },
         prefix_text: "£",
         width: 5,
         data: { qa: "course_fee_international" }) %>
 
-      <h3 class="govuk-heading-m">Fee details</h3>
+      <h3 class="govuk-heading-m" id="fee-details">Fee details</h3>
       <p class="govuk-body">If applicable, give further details about the fees for this course.</p>
       <p class="govuk-body">This could include:</p>
       <ul class="govuk-list govuk-list--bullet">
@@ -63,7 +62,7 @@
 
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-      <h3 class="govuk-heading-m">Financial support you offer</h3>
+      <h3 class="govuk-heading-m" id="financial-support">Financial support you offer</h3>
       <p class="govuk-body">If applicable, say more about the financial support you offer for this course. For example, any bursaries available.</p>
       <p class="govuk-body">You don’t need to add details of any DfE bursaries and subject scholarships here. These will be published automatically to your course page</p>
 
