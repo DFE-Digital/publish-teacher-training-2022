@@ -106,26 +106,25 @@ print-app-secrets: install-fetch-config set-azure-account
 		-f yaml
 
 deploy-init:
-	$(eval export TF_DATA_DIR=./terraform/.terraform)
 	$(if $(IMAGE_TAG), , $(error Missing environment variable "IMAGE_TAG"))
 	$(eval export TF_VAR_paas_docker_image=dfedigital/publish-teacher-training:paas-$(IMAGE_TAG))
-	$(eval export TF_VAR_paas_app_config_file=./terraform/workspace_variables/app_config.yml)
-	$(eval export TF_VAR_paas_app_secrets_file=./terraform/workspace_variables/app_secrets.yml)
+	$(eval export TF_VAR_paas_app_config_file=./workspace_variables/app_config.yml)
+	$(eval export TF_VAR_paas_app_secrets_file=./workspace_variables/app_secrets.yml)
 	az account set -s ${AZ_SUBSCRIPTION} && az account show
-	terraform init -reconfigure -backend-config=terraform/workspace_variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key) terraform
+	cd terraform && terraform init -reconfigure -backend-config=workspace_variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 	echo "🚀 DEPLOY_ENV is $(DEPLOY_ENV)"
 
 deploy-plan: deploy-init
-	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
-		&& terraform plan -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
+	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
+		&& terraform plan -var-file=workspace_variables/$(DEPLOY_ENV).tfvars
 
 deploy: deploy-init
-	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
-		&& terraform apply -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars -auto-approve terraform
+	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
+		&& terraform apply -var-file=workspace_variables/$(DEPLOY_ENV).tfvars -auto-approve
 
 destroy: deploy-init
-	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
-		&& terraform destroy -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
+	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
+		&& terraform destroy -var-file=workspace_variables/$(DEPLOY_ENV).tfvars
 
 console:
 	cf target -s ${space}
