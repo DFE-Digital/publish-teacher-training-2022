@@ -47,14 +47,6 @@
         data: { qa: "course_salary_details" }) %>
 
       <%= f.govuk_submit "Save", data: { qa: "course__save" } %>
-
-      <p class="govuk-body">
-        <%= govuk_link_to(
-          "Cancel changes",
-          provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-          class: "govuk-link--no-visited-state",
-        ) %>
-      </p>
     </div>
     <aside class="govuk-grid-column-one-third">
       <%= render(

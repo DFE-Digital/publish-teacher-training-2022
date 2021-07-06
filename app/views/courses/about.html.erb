@@ -113,18 +113,6 @@
         <%= f.govuk_text_area :how_school_placements_work, label: { text: course.placements_heading, size: "s" }, max_words: 350, rows: 15 %>
 
         <%= f.govuk_submit "Save" %>
-
-        <p class="govuk-body">
-          <%= govuk_link_to(
-            "Cancel changes",
-            provider_recruitment_cycle_course_path(
-              @provider.provider_code,
-              course.recruitment_cycle_year,
-              course.course_code,
-            ),
-            class: "govuk-link--no-visited-state",
-          ) %>
-        </p>
       <% end %>
     </div>
 

@@ -93,14 +93,6 @@
       <p class="govuk-body">Changes will appear on Find postgraduate teacher training within 2 hours.</p>
 
       <%= f.govuk_submit "Save and publish changes" %>
-
-      <p class="govuk-body">
-        <%= govuk_link_to(
-          "Cancel changes",
-          details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year),
-          class: "govuk-link--no-visited-state",
-        ) %>
-      </p>
     <% end %>
   </div>
 </div>

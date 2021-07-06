@@ -34,12 +34,6 @@ feature "Edit UCAS email alerts", type: :feature do
     expect(org_ucas_contacts_page.flash).to have_content("Your changes have been saved")
   end
 
-  scenario "can cancel changes" do
-    expect(current_path).to eq alerts_provider_ucas_contacts_path(provider.provider_code)
-    click_on "Cancel changes"
-    expect(org_ucas_contacts_page).to be_displayed
-  end
-
   context "email alerts: none" do
     let(:provider) { build(:provider, send_application_alerts: "none") }
 

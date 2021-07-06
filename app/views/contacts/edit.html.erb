@@ -33,14 +33,6 @@
         <%= form.govuk_check_box :permission_given, 1, 0, multiple: false, label: { text: "I give permission to share this email address with UCAS" } %>
       </div>
       <%= form.govuk_submit t("ucas_contacts.#{@contact.type}.submit", default: "Save") %>
-
-      <p class="govuk-body">
-        <%= govuk_link_to(
-          "Cancel changes",
-          provider_ucas_contacts_path(@provider.provider_code),
-          class: "govuk-link--no-visited-state",
-        ) %>
-      </p>
     </div>
   </div>
 <% end %>

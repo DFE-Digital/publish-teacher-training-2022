@@ -52,14 +52,6 @@
 
       <%= form.submit course.is_running? ? "Save and publish changes" : "Save",
         class: "govuk-button govuk-!-margin-top-3", data: { qa: "course__save" } %>
-
-      <p class="govuk-body">
-        <%= govuk_link_to(
-          "Cancel changes",
-          details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code),
-          class: "govuk-link--no-visited-state",
-        ) %>
-      </p>
     <% end %>
   </div>
 </div>
