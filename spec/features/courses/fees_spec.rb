@@ -24,7 +24,9 @@ feature "Course fees", type: :feature do
   scenario "viewing and updating fees" do
     visit provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
 
-    click_on "Course length and fees"
+    within "[data-qa='enrichment__course_length']" do
+      click_on "Change"
+    end
 
     expect(current_path).to eq fees_provider_recruitment_cycle_course_path("A0", course_1.recruitment_cycle_year, course_1.course_code)
 
@@ -122,7 +124,9 @@ feature "Course fees", type: :feature do
     scenario "passes the value into course_length" do
       visit provider_recruitment_cycle_course_path(provider.provider_code, course_1.recruitment_cycle_year, course_1.course_code)
 
-      click_on "Course length and fees"
+      within "[data-qa='enrichment__course_length']" do
+        click_on "Change"
+      end
 
       expect(current_path).to eq fees_provider_recruitment_cycle_course_path("A0", course_1.recruitment_cycle_year, course_1.course_code)
 

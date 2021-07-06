@@ -126,18 +126,24 @@ feature "Course show", type: :feature do
       )
       expect(course_page).to_not have_preview_link
 
-      expect(course_page).to have_link(
-        "About this course",
-        href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/about",
-      )
-      expect(course_page).to have_link(
-        "Course length and fees",
-        href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/fees",
-      )
-      expect(course_page).to have_link(
-        "Requirements and eligibility",
-        href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/requirements",
-      )
+      within "[data-qa='enrichment__about_course']" do
+        expect(course_page).to have_link(
+          "Change",
+          href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/about",
+        )
+      end
+      within "[data-qa='enrichment__course_length']" do
+        expect(course_page).to have_link(
+          "Change",
+          href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/fees",
+        )
+      end
+      within "[data-qa='enrichment__required_qualifications']" do
+        expect(course_page).to have_link(
+          "Change",
+          href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/requirements",
+        )
+      end
     end
   end
 

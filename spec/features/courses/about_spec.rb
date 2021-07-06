@@ -49,7 +49,9 @@ feature "About course", type: :feature do
       stub_api_v2_resource(course, method: :patch)
 
       visit provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
-      click_on "About this course"
+      within "[data-qa='enrichment__about_course']" do
+        click_on "Change"
+      end
 
       expect(current_path).to eq about_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
 
@@ -118,7 +120,9 @@ feature "About course", type: :feature do
       stub_api_v2_resource(course, method: :patch)
 
       visit provider_recruitment_cycle_course_path(provider2.provider_code, course2.recruitment_cycle_year, course2.course_code)
-      click_on "About this course"
+      within "[data-qa='enrichment__about_course']" do
+        click_on "Change"
+      end
 
       expect(page).to have_content("Universities can work with over 100 potential placement schools.")
     end
