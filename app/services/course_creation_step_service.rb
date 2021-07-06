@@ -19,6 +19,26 @@ class CourseCreationStepService
   end
 
   def get_workflow_steps(course)
+    if course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE
+      workflows_for_2022_cycle_onwards(course)
+    else
+      workflows_for_current_cycle(course)
+    end
+  end
+
+private
+
+  def workflows_for_2022_cycle_onwards(course)
+    if course.is_further_education?
+      new_further_education_workflow_steps
+    elsif course.is_uni_or_scitt?
+      new_uni_or_scitt_workflow_steps
+    elsif course.is_school_direct?
+      new_school_direct_workflow_steps
+    end
+  end
+
+  def workflows_for_current_cycle(course)
     if course.is_further_education?
       further_education_workflow_steps
     elsif course.is_uni_or_scitt?
@@ -76,5 +96,44 @@ class CourseCreationStepService
       start_date
       confirmation
     ]
+  end
+
+  def new_school_direct_workflow_steps
+    %i[
+      courses_list
+      level
+      subjects
+      modern_languages
+      age_range
+      outcome
+      fee_or_salary
+      full_or_part_time
+      location
+      accredited_body
+      applications_open
+      start_date
+      confirmation
+    ]
+  end
+
+  def new_uni_or_scitt_workflow_steps
+    %i[
+      courses_list
+      level
+      subjects
+      modern_languages
+      age_range
+      outcome
+      apprenticeship
+      full_or_part_time
+      location
+      applications_open
+      start_date
+      confirmation
+    ]
+  end
+
+  def new_further_education_workflow_steps
+    further_education_workflow_steps
   end
 end

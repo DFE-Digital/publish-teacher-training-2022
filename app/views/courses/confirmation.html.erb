@@ -221,7 +221,7 @@
           },
         ) %>
 
-        <% if course.gcse_subjects_required.any? %>
+        <% if course.gcse_subjects_required.any? && @provider.recruitment_cycle_year.to_i < Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
           <% content_for :entry_requirements do %>
             <% course.gcse_subjects_required.each do |subject| %>
               <%= render(
