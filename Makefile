@@ -106,7 +106,7 @@ print-app-secrets: install-fetch-config set-azure-account
 		-f yaml
 
 deploy-init:
-	$(if $(IMAGE_TAG), , $(error Missing environment variable "IMAGE_TAG"))
+	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=master))
 	$(if $(PASSCODE), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 	$(eval export TF_VAR_paas_docker_image=dfedigital/publish-teacher-training:paas-$(IMAGE_TAG))
