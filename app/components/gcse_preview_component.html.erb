@@ -12,10 +12,10 @@
   </p>
 
   <% if course.additional_gcse_equivalencies %>
-      <%= simple_format(course.additional_gcse_equivalencies, class: "govuk-body") %>
+    <%= simple_format(course.additional_gcse_equivalencies, class: "govuk-body") %>
   <% end %>
 <% else %>
-  <%= govuk_inset_text(classes: "app-inset-text app-inset-text--important") do %>
+  <%= govuk_inset_text(classes: "app-inset-text--important") do %>
     <p class="govuk-body">
       Please add details <%= govuk_link_to "about GCSE requirements",
         gcses_pending_or_equivalency_tests_provider_recruitment_cycle_course_path(

@@ -8,7 +8,7 @@ RSpec.feature "View helpers", type: :helper do
 
       it "returns correct content" do
         expect(helper.enrichment_error_link(:course, "about_course", "Something about the course"))
-          .to eq("<a class=\"govuk-link govuk-!-display-block\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Something about the course</a>")
+          .to eq("<div class=\"govuk-inset-text app-inset-text--narrow-border app-inset-text--error\"><a class=\"govuk-link\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Something about the course</a></div>")
       end
     end
   end
@@ -38,7 +38,8 @@ RSpec.feature "View helpers", type: :helper do
 
       it "returns correct content" do
         output = helper.enrichment_summary(:course, "About course", "", [:about_course])
-        expect(output[:key]).to eq("About course<a class=\"govuk-link govuk-!-display-block\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Enter something about the course</a>")
+        expect(output[:key]).to eq("About course")
+        expect(output[:value]).to eq("<div class=\"govuk-inset-text app-inset-text--narrow-border app-inset-text--error\"><a class=\"govuk-link\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Enter something about the course</a></div>")
       end
     end
   end

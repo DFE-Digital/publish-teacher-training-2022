@@ -36,7 +36,7 @@ module ProviderHelper
 private
 
   def visa_sponsorship_call_to_action(provider)
-    govuk_inset_text(classes: %w[app-inset-text app-inset-text--important]) do
+    govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--important") do
       raw("<p class=\"govuk-heading-s app-inset-text__title\">Can you sponsor visas?</p>") +
         govuk_link_to(
           "Select if you can sponsor visas",

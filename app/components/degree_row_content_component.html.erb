@@ -9,15 +9,15 @@
     </p>
   <% end %>
 <% else %>
-  <%= govuk_inset_text(classes: %w[app-inset-text app-inset-text--important]) do
-        tag.p("Do you require a minimum degree classification?", class: "govuk-heading-s app-inset-text__title") +
-          govuk_link_to(
-            "Enter degree requirements",
-            degrees_start_provider_recruitment_cycle_course_path(
-              course.provider.provider_code,
-              course.recruitment_cycle_year,
-              course.course_code,
-            ),
-          )
-      end %>
+  <%= govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--important") do %>
+    <p class="govuk-heading-s app-inset-text__title">Do you require a minimum degree classification?</p>
+    <p class="govuk-body">
+      <%= govuk_link_to "Enter degree requirements",
+        degrees_start_provider_recruitment_cycle_course_path(
+          course.provider.provider_code,
+          course.recruitment_cycle_year,
+          course.course_code,
+        ) %>
+    </p>
+  <% end %>
 <% end %>

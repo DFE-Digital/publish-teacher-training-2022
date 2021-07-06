@@ -40,19 +40,23 @@ module ApplicationHelper
                field: field.to_s,
              )
            end
-    govuk_link_to(error, href, class: "govuk-!-display-block")
+    govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--error") do
+      govuk_link_to(error, href)
+    end
   end
 
   def enrichment_summary(model, key, value, fields, truncate_value: true, change_link: nil, change_link_visually_hidden: nil)
-    classes = truncate_value ? "app-summary-list__row--truncate" : "app-summary-list__row"
+    action = render_change_link(change_link, change_link_visually_hidden)
 
     if fields.select { |field| @errors&.key? field.to_sym }.any?
       errors = fields.map { |field|
         @errors[field.to_sym]&.map { |error| enrichment_error_link(model, field, error) }
       }.flatten
 
-      key = [key, *errors].reduce(:+)
-      classes += " app-summary-list__row--error"
+      value = raw(*errors)
+      action = nil
+    elsif truncate_value
+      classes = "app-summary-list__row--truncate"
     end
 
     if value.blank?
@@ -68,7 +72,7 @@ module ApplicationHelper
           qa: "enrichment__#{fields.first}",
         },
       },
-      action: render_change_link(change_link, change_link_visually_hidden),
+      action: action,
     }
   end
 
