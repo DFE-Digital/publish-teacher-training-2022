@@ -50,5 +50,7 @@ terraform.tfstate.d/
 ./*.tfstate
 lock.json
 **/.terraform/
+tokens
+.terraform.lock.hcl
 
 bin/fetch_config.rb

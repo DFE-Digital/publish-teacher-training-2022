@@ -19,10 +19,11 @@ terraform {
 }
 
 provider cloudfoundry {
-  api_url      = local.cf_api_url
-  user         = local.infra_secrets.CF_USER
-  password     = local.infra_secrets.CF_PASSWORD
-  sso_passcode = var.cf_sso_passcode
+  api_url           = local.cf_api_url
+  user              = var.paas_sso_passcode == null ? local.infra_secrets.CF_USER : null
+  password          = var.paas_sso_passcode == null ? local.infra_secrets.CF_PASSWORD : null
+  sso_passcode      = var.paas_sso_passcode
+  store_tokens_path = "tokens"
 }
 
 provider statuscake {

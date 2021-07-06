@@ -1,6 +1,6 @@
 #PaaS
 
-variable cf_sso_passcode { default = null }
+variable paas_sso_passcode { default = null }
 
 variable cf_space {}
 
