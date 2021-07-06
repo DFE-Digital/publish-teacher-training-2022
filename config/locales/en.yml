@@ -157,3 +157,11 @@ en:
     finance:
       heading: Finance contact
       purpose: This person will receive invoices from UCAS for payment of fees.
+  activemodel:
+    errors:
+      models:
+        courses/gcse_requirements_form:
+          too_many_words: Details about equivalency tests you offer or accept must be %{count} words or fewer
+  errors:
+    messages:
+      too_many_words: Must be %{count} words or fewer

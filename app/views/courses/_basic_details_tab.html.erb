@@ -224,17 +224,19 @@
             ) %>
           <% end %>
         <% end %>
-        <%= summary_list.slot(
-          :row,
-          key: "UCAS Apply: GCSE requirements for applicants",
-          value: content_for(:entry_requirements),
-          action: change_link_to("entry requirements", entry_requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
-          html_attributes: {
-            data: {
-              qa: "course__entry_requirements",
+        <% if @provider.recruitment_cycle_year.to_i < Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
+          <%= summary_list.slot(
+            :row,
+            key: "UCAS Apply: GCSE requirements for applicants",
+            value: content_for(:entry_requirements),
+            action: change_link_to("entry requirements", entry_requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)),
+            html_attributes: {
+              data: {
+                qa: "course__entry_requirements",
+              },
             },
-          },
-        ) %>
+          ) %>
+        <% end %>
       <% end %>
 
       <% if course.next_cycle? && course.has_fees? %>

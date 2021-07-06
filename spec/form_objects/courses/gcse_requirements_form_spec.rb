@@ -12,6 +12,26 @@ RSpec.describe Courses::GcseRequirementsForm do
       expect(form.valid?).to be_falsey
     end
 
+    it "is invalid if accept_gcse_equivalency is true but no value is selected for equivalencies for primary course" do
+      form = described_class.new(
+        accept_gcse_equivalency: true, accept_english_gcse_equivalency: nil,
+        accept_maths_gcse_equivalency: nil, accept_science_gcse_equivalency: nil,
+        additional_gcse_equivalencies: nil, level: "primary"
+      )
+      expect(form.valid?).to be_falsey
+      expect(form.errors[:equivalencies]).to be_present
+    end
+
+    it "is invalid if accept_gcse_equivalency is true but no value is selected for equivalencies for non primary course" do
+      form = described_class.new(
+        accept_gcse_equivalency: true, accept_english_gcse_equivalency: nil,
+        accept_maths_gcse_equivalency: nil, accept_science_gcse_equivalency: nil,
+        additional_gcse_equivalencies: nil, level: "secondary"
+      )
+      expect(form.valid?).to be_falsey
+      expect(form.errors[:equivalencies]).to be_present
+    end
+
     it "is invalid if no value is selected for additional_gcse_equivalencies" do
       form = described_class.new(
         accept_gcse_equivalency: true, accept_english_gcse_equivalency: nil,
@@ -19,6 +39,7 @@ RSpec.describe Courses::GcseRequirementsForm do
         additional_gcse_equivalencies: nil
       )
       expect(form.valid?).to be_falsey
+      expect(form.errors[:additional_gcse_equivalencies]).to be_present
     end
   end
 

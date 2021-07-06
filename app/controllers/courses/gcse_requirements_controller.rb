@@ -11,7 +11,8 @@ module Courses
       @gcse_requirements_form = GcseRequirementsForm.new(
         accept_pending_gcse: accept_pending_gcse_required_params, accept_gcse_equivalency: accept_gcse_equivalency_required_params,
         accept_english_gcse_equivalency: accept_english_gcse_equivalency_required_params, accept_maths_gcse_equivalency: accept_maths_gcse_equivalency_required_params,
-        accept_science_gcse_equivalency: accept_science_gcse_equivalency_required_params, additional_gcse_equivalencies: additional_gcse_equivalencies_required_params
+        accept_science_gcse_equivalency: accept_science_gcse_equivalency_required_params, additional_gcse_equivalencies: additional_gcse_equivalencies_required_params,
+        level: @course.level
       )
 
       if @gcse_requirements_form.save(@course)
@@ -47,7 +48,7 @@ module Courses
     end
 
     def additional_gcse_equivalencies_required_params
-      params.dig(:courses_gcse_requirements_form, :additional_gcse_equivalencies)
+      raw(params.dig(:courses_gcse_requirements_form, :additional_gcse_equivalencies))
     end
 
     def translate_params(key)

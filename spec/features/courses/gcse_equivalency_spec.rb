@@ -55,6 +55,7 @@ feature "GCSE equivalency requirements", type: :feature do
     choose "Yes", name: "courses_gcse_requirements_form[accept_gcse_equivalency]"
     gcse_requirements_page.save.click
     expect(page).to have_content("Enter details about equivalency tests")
+    expect(page).to have_content("Select if you accept equivalency tests in English or maths")
 
     check "English"
     check "Maths"
