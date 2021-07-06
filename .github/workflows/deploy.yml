@@ -25,7 +25,7 @@ on:
         required: true
       pr:
         description: PR number for the review app
-        required: false        
+        required: false
       sha:
         description: Commit sha to be deployed
         required: true
@@ -79,19 +79,16 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
-          if [ ! -z "${{ github.event.inputs.pr }}" ]; then
+          if [ -n "${{ github.event.inputs.pr }}" ]; then
             PR_NUMBER=${{ github.event.inputs.pr }}
             echo "DEPLOY_ENV=review" >> $GITHUB_ENV
-            echo "BACKEND_KEY=-backend-config=key=pr-$PR_NUMBER.tfstate" >> $GITHUB_ENV
-            echo "TF_VAR_paas_web_app_host_name=$PR_NUMBER" >> $GITHUB_ENV
+            echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
             echo "DEPLOY_URL=https://publish-teacher-training-pr-$PR_NUMBER.london.cloudapps.digital" >> $GITHUB_ENV
           else
             echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
           fi;
         env:
           DEPLOY_ENV:   ${{ matrix.environment }}
-          DOCKER_IMAGE: ${{ format('dfedigital/publish-teacher-training:paas-{0}', github.event.inputs.sha) }}
 
       - uses: azure/login@v1
         with:
@@ -108,15 +105,11 @@ jobs:
             && echo Data in "${TF_VAR_key_vault_name}/${TF_VAR_key_vault_infra_secret_name}" looks valid
 
       - name: Terraform init, plan & apply
-        working-directory: terraform
-        run: |
-          . "workspace_variables/${DEPLOY_ENV}.sh"
-          terraform init -backend-config workspace_variables/${{ env.DEPLOY_ENV }}_backend.tfvars $BACKEND_KEY
-          terraform plan -var-file workspace_variables/${{ env.DEPLOY_ENV }}.tfvars -out tfplan
-          terraform apply -auto-approve -input=false "tfplan"
+        run: make ${{env.DEPLOY_ENV}} ci deploy
         env:
           ARM_ACCESS_KEY:             ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
-          TF_VAR_paas_docker_image:   ${{ env.DOCKER_IMAGE }}
+          IMAGE_TAG:                  ${{ github.event.inputs.sha }}
+          APP_NAME:                   ${{ env.PR_NUMBER }}
           TF_VAR_azure_credentials:   ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
 
 
