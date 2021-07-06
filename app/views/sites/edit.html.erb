@@ -20,13 +20,5 @@
       <%= render "form", f: f %>
       <%= f.govuk_submit "Save and publish changes", data: { qa: "location__publish-changes" } %>
     <% end %>
-
-    <p class="govuk-body">
-      <%= govuk_link_to(
-        "Cancel changes",
-        provider_recruitment_cycle_sites_path(@provider.provider_code),
-        class: "govuk-link--no-visited-state",
-      ) %>
-    </p>
   </div>
 </div>

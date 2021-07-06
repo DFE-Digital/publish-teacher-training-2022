@@ -36,10 +36,10 @@ describe NotificationsView do
     end
   end
 
-  describe "#cancel_link_path" do
+  describe "#back_link_path" do
     context "referer is organisation page" do
       it "returns the referer path" do
-        expect(subject.cancel_link_path).to eq(referer_path)
+        expect(subject.back_link_path).to eq(referer_path)
       end
     end
 
@@ -47,7 +47,7 @@ describe NotificationsView do
       let(:referer_path) { "/interruption_screen_path" }
 
       it "returns root_path" do
-        expect(subject.cancel_link_path).to eq(Rails.application.routes.url_helpers.root_path)
+        expect(subject.back_link_path).to eq(Rails.application.routes.url_helpers.root_path)
       end
     end
   end

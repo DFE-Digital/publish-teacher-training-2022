@@ -1,5 +1,9 @@
 <%= content_for :page_title, title_with_error_prefix("Manage notifications", flash[:error]) %>
 
+<% content_for :before_content do %>
+  <%= govuk_back_link_to(@notifications_view.back_link_path) %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l" data-qa="page-heading">
@@ -31,17 +35,6 @@
       <% end %>
 
       <%= f.govuk_submit "Save", data: { qa: "notifications__save" } %>
-
-      <p class="govuk-body">
-        <%= govuk_link_to(
-          "Cancel changes",
-          @notifications_view.cancel_link_path,
-          class: "govuk-link--no-visited-state",
-          data: {
-            qa: "notifications__cancel",
-          },
-        ) %>
-      </p>
     <% end %>
   </div>
 </div>

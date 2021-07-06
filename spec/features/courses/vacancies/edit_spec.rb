@@ -136,7 +136,6 @@ feature "Edit course vacancies", type: :feature do
 
     scenario "shows the edit vacancies page" do
       expect(course_vacancies_page).to have_link("Back", href: provider_recruitment_cycle_courses_path(provider.provider_code, course.recruitment_cycle_year))
-      expect(course_vacancies_page).to have_link("Cancel changes", href: provider_recruitment_cycle_courses_path(provider.provider_code, course.recruitment_cycle_year))
       expect(course_vacancies_page.title).to have_content("Edit vacancies")
       expect(course_vacancies_page.caption).to have_content(
         "#{course.name} (#{course.course_code})",

@@ -33,11 +33,6 @@ feature "Edit accredited body", type: :feature do
     let(:provider) { build(:provider) }
     let(:course) { build(:course, provider: provider, content_status: "draft") }
 
-    scenario "can cancel changes" do
-      click_on "Cancel changes"
-      expect(course_details_page).to be_displayed
-    end
-
     scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
       click_on "Change accredited body"

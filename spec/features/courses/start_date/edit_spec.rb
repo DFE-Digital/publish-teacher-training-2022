@@ -68,11 +68,6 @@ feature "Edit course start date", type: :feature do
       )
     end
 
-    scenario "can cancel changes" do
-      click_on "Cancel changes"
-      expect(course_details_page).to be_displayed
-    end
-
     scenario "can navigate to the edit screen and back again" do
       course_details_page.load_with_course(course)
       click_on "Change date course starts"

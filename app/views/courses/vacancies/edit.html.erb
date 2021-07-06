@@ -31,14 +31,6 @@
       <% else %>
         <%= form.submit "Reopen applications", class: "govuk-button" %>
       <% end %>
-
-      <p class="govuk-body">
-        <%= govuk_link_to(
-          "Cancel changes",
-          provider_recruitment_cycle_courses_path(params[:provider_code]),
-          class: "govuk-link--no-visited-state",
-        ) %>
-      </p>
     <% end %>
   </div>
 </div>
