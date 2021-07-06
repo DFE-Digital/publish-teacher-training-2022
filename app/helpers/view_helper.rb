@@ -147,9 +147,15 @@ private
         provider_recruitment_cycle_visas_path(provider_code, course.recruitment_cycle_year),
       "You must provide a Unique Reference Number (URN) for all course locations" =>
         provider_recruitment_cycle_sites_path(provider_code, course.recruitment_cycle_year),
+      "Enter a Unique Reference Number (URN) for all course locations" =>
+        provider_recruitment_cycle_sites_path(provider_code, course.recruitment_cycle_year),
       "You must provide a UK provider reference number (UKPRN)" =>
         provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
       "You must provide a UK provider reference number (UKPRN) and URN" =>
+        provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
+      "Enter a UK Provider Reference Number (UKPRN)" =>
+        provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
+      "Enter a UK Provider Reference Number (UKPRN) and URN" =>
         provider_recruitment_cycle_references_path(provider_code, course.recruitment_cycle_year),
       "Enter degree requirements" =>
         degrees_start_provider_recruitment_cycle_course_path(provider_code, course.recruitment_cycle_year, course.course_code),
