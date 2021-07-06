@@ -21,7 +21,7 @@ class NotificationsView
     current_user["info"]["email"]
   end
 
-  def cancel_link_path
+  def back_link_path
     return Rails.application.routes.url_helpers.root_path if ORGANISATION_URL_PATTERN.match(request.referer).nil?
 
     URI(request.referer).path
