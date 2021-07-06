@@ -40,7 +40,11 @@
         <li>do say “the Times Educational Supplement ranked our students as 4th happiest in the country”</li>
       </ul>
 
-      <%= f.govuk_text_area :train_with_us, label: { size: "m" }, max_words: 250, rows: 15 %>
+      <%= f.govuk_text_area(:train_with_us,
+        form_group: { id: "train-with-us" },
+        label: { size: "m" },
+        max_words: 250,
+        rows: 15) %>
 
       <% if provider.accredited_bodies.present? %>
         <% accredited_body = "accredited body".pluralize(provider.accredited_bodies.count) %>
@@ -56,6 +60,7 @@
           <%= abf.hidden_field :provider_name %>
           <%= abf.hidden_field :provider_code %>
           <%= abf.govuk_text_area(:description,
+            form_group: { id: "accrediting-provider-#{abf.object.provider_code}" },
             label: { text: "#{abf.object.provider_name} (optional)", size: "s" },
             max_words: 100,
             rows: 10) %>
@@ -73,7 +78,11 @@
       </ul>
       <p class="govuk-body">If accessibility varies between locations, give details. It’s also useful for applicants to know how you’ve accommodated others with specific access needs in the past.</p>
 
-      <%= f.govuk_text_area :train_with_disability, label: { size: "s" }, max_words: 250, rows: 15 %>
+      <%= f.govuk_text_area(:train_with_disability,
+        form_group: { id: "train-with-disability" },
+        label: { size: "s" },
+        max_words: 250,
+        rows: 15) %>
 
       <%= f.govuk_submit "Save and publish changes" %>
 
