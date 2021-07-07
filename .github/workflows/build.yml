@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - master
+    types: [opened, reopened, synchronize, labeled]
 
 jobs:
   build:
@@ -51,7 +52,7 @@ jobs:
           COMMIT_SHA=paas-${{ github.sha }}
 
     - name: Trigger Review App Deployment
-      if: ${{ success() && github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
+      if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: Deploy
@@ -71,7 +72,7 @@ jobs:
         name: Wait for other inprogress deployment runs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+
       - name: Ruby Linting
         run:  rubocop app config lib spec --format clang
 
@@ -97,7 +98,7 @@ jobs:
 
       - name: Wait for review app deployment
         id: wait_for_review_app_deployment
-        if: ${{ github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
+        if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
         uses: fountainhead/action-wait-for-check@v1.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
