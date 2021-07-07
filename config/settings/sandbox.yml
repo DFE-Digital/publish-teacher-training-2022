@@ -15,6 +15,3 @@ environment:
   selector_name: "sandbox"
 authentication:
   mode: dfe_signin
-features:
-  rollover:
-    can_edit_current_and_next_cycles: false
