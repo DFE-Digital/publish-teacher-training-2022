@@ -15,7 +15,7 @@
     <%= simple_format(course.additional_gcse_equivalencies, class: "govuk-body") %>
   <% end %>
 <% else %>
-  <%= govuk_inset_text(classes: "app-inset-text app-inset-text--important") do %>
+  <%= govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--important") do %>
     <p class="govuk-heading-s app-inset-text__title">GCSE and equivalency tests</p>
     <p class="govuk-body">
       <%= govuk_link_to "Enter GCSE and equivalency test requirements",

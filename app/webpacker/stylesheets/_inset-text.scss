@@ -1,6 +1,5 @@
-.app-inset-text {
+.govuk-inset-text {
   .govuk-summary-list__value & {
-    border-left-width: $govuk-border-width-narrow;
     margin-top: 0;
     padding-top: 0;
     padding-bottom: 0;
@@ -10,6 +9,7 @@
 .app-inset-text--narrow-border {
   border-left-width: $govuk-border-width-narrow;
 }
+
 
 .app-inset-text--important {
   border-color: govuk-colour("blue");
@@ -24,6 +24,11 @@
   border-left-width: $govuk-border-width;
 
   .govuk-heading-s {
+    color: $govuk-error-colour;
+  }
+
+  .govuk-link {
+    @include govuk-typography-weight-bold($important: true);
     color: $govuk-error-colour;
   }
 }

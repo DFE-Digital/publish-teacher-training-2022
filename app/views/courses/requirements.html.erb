@@ -42,6 +42,7 @@
       <% end %>
 
       <%= f.govuk_text_area :personal_qualities,
+        form_group: { id: "personal-qualities" },
         label: { text: "Personal qualities (optional)", size: "m" },
         hint: { text: "Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking)." },
         max_words: 100,
@@ -50,6 +51,7 @@
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
       <%= f.govuk_text_area :other_requirements,
+        form_group: { id: "other-requirements" },
         label: { text: "Other requirements (optional)", size: "m" },
         hint: { text: "If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience)." },
         max_words: 100,

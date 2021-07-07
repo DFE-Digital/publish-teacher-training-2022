@@ -10,7 +10,7 @@
       ) %><%= @provider.cannot_sponsor_visas? ? "." : ", but this is not guaranteed." %>
     </p>
   <% else %>
-    <%= govuk_inset_text(classes: "app-inset-text app-inset-text--narrow-border app-inset-text--important") do %>
+    <%= govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--important") do %>
       <p class="govuk-heading-s">
         Please add details
         <%= govuk_link_to(

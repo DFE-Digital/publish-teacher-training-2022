@@ -4,7 +4,7 @@
     <% if course.about_course.present? %>
       <%= markdown(course.about_course) %>
     <% else %>
-      <%= govuk_inset_text(classes: "app-inset-text app-inset-text--narrow-border app-inset-text--important") do %>
+      <%= govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--important") do %>
         <p class="govuk-body">Please add details for this section.</p>
       <% end %>
     <% end %>

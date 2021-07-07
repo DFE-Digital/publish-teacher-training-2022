@@ -38,12 +38,10 @@
       </ul>
 
       <%= f.govuk_text_area(:salary_details,
+        form_group: { id: @errors.key?(:salary_details) ? "salary_details-error" : "salary" },
         label: { text: "Salary", size: "s" },
         rows: 15,
         max_words: 250,
-        form_group: {
-          id: @errors.key?(:salary_details) ? "salary_details-error" : "",
-        },
         data: { qa: "course_salary_details" }) %>
 
       <%= f.govuk_submit "Save", data: { qa: "course__save" } %>

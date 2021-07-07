@@ -56,8 +56,8 @@ feature "View provider", type: :feature do
     expect(current_path).to eq details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
 
     expect(org_detail_page).to have_link(
-      "Contact details",
-      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact",
+      "Change contact address",
+      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact#address",
     )
 
     expect(org_detail_page.email).to have_content(provider.email)
@@ -65,8 +65,8 @@ feature "View provider", type: :feature do
     expect(org_detail_page.telephone).to have_content(provider.telephone)
 
     expect(org_detail_page).to have_link(
-      "About your organisation",
-      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/about",
+      "details about training with your organisation",
+      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/about#train-with-us",
     )
     expect(org_detail_page.train_with_us).to have_content(provider.train_with_us)
     expect(org_detail_page.train_with_disability).to have_content(provider.train_with_disability)

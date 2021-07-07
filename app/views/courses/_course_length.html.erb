@@ -4,7 +4,7 @@
     size: "m",
   },
   form_group: {
-    id: @errors.key?(:course_length) ? "course_length-error" : "",
+    id: @errors.key?(:course_length) ? "course_length-error" : "course-length",
   }) do %>
     <%= f.govuk_radio_button(:course_length, "OneYear",
       label: { text: "1 year" },

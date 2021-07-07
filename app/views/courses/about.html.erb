@@ -61,11 +61,14 @@
           description: "If you offer more than one course in the same subject – eg two Primary courses – it’s important to say how they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.",
         ) %>
 
-        <%= f.govuk_text_area :about_course, label: { text: "About this course", size: "s" }, max_words: 400, rows: 20 %>
+        <%= f.govuk_text_area(:about_course,
+          label: { text: "About this course", size: "s" },
+          max_words: 400,
+          rows: 20) %>
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-        <h3 class="govuk-heading-m">Interview process</h3>
+        <h3 class="govuk-heading-m" id="interview-process">Interview process</h3>
 
         <p class="govuk-body">Tell applicants:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -75,11 +78,14 @@
           <li>whether they’ll have to sit any tests - if so, how can they prepare?</li>
         </ul>
 
-        <%= f.govuk_text_area :interview_process, label: { text: "Interview process (optional)", size: "s" }, max_words: 250, rows: 15 %>
+        <%= f.govuk_text_area(:interview_process,
+          label: { text: "Interview process (optional)", size: "s" },
+          max_words: 250,
+          rows: 15) %>
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
-        <h3 class="govuk-heading-m"><%= course.placements_heading %></h3>
+        <h3 class="govuk-heading-m" id="how-school-placements-work"><%= course.placements_heading %></h3>
 
         <p class="govuk-body">
           Give applicants more information about the schools they’ll be teaching in. Tell them:
@@ -110,7 +116,10 @@
           <% end %>
         <% end %>
 
-        <%= f.govuk_text_area :how_school_placements_work, label: { text: course.placements_heading, size: "s" }, max_words: 350, rows: 15 %>
+        <%= f.govuk_text_area(:how_school_placements_work,
+          label: { text: course.placements_heading, size: "s" },
+          max_words: 350,
+          rows: 15) %>
 
         <%= f.govuk_submit "Save" %>
       <% end %>
