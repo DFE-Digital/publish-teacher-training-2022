@@ -145,6 +145,8 @@ private
     {
       "You must say whether you can sponsor visas" =>
         provider_recruitment_cycle_visas_path(provider_code, course.recruitment_cycle_year),
+      "Select if you can sponsor visas" =>
+        provider_recruitment_cycle_visas_path(provider_code, course.recruitment_cycle_year),
       "You must provide a Unique Reference Number (URN) for all course locations" =>
         provider_recruitment_cycle_sites_path(provider_code, course.recruitment_cycle_year),
       "Enter a Unique Reference Number (URN) for all course locations" =>
