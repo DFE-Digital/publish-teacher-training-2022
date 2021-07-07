@@ -12,6 +12,3 @@ environment:
   selector_name: "qa"
 authentication:
   mode: persona   # none critical systems, ie localhost
-features:
-  rollover:
-    can_edit_current_and_next_cycles: false
