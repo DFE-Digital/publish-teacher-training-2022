@@ -84,6 +84,11 @@ production: ## Set DEPLOY_ENV to production
 	$(eval space=bat-prod)
 	$(eval paas_env=prod)
 
+.PHONY: ci
+ci:	## Run in automation
+	$(eval export DISABLE_PASSCODE=true)
+	$(eval export AUTO_APPROVE=-auto-approve)
+
 install-fetch-config:
 	[ ! -f bin/fetch_config.rb ] \
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
@@ -107,7 +112,7 @@ print-app-secrets: install-fetch-config set-azure-account
 
 deploy-init:
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=master))
-	$(if $(PASSCODE), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 	$(eval export TF_VAR_paas_docker_image=dfedigital/publish-teacher-training:paas-$(IMAGE_TAG))
 	$(eval export TF_VAR_paas_app_config_file=./workspace_variables/app_config.yml)
@@ -122,11 +127,11 @@ deploy-plan: deploy-init
 
 deploy: deploy-init
 	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
-		&& terraform apply -var-file=workspace_variables/$(DEPLOY_ENV).tfvars -auto-approve
+		&& terraform apply -var-file=workspace_variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
 
 destroy: deploy-init
 	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
-		&& terraform destroy -var-file=workspace_variables/$(DEPLOY_ENV).tfvars
+		&& echo terraform destroy -var-file=workspace_variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
 
 console:
 	cf target -s ${space}
