@@ -1,6 +1,13 @@
+<% page_title = "Access requests" %>
+<% content_for :page_title, page_title %>
+
 <% content_for :heading do %>
   Open access requests (<%= @access_requests.count %>)
 <% end %>
+
+<h1 class="govuk-heading-l">
+  <%= page_title %>
+</h1>
 
 <p class="govuk-body">
   <%= govuk_link_to "Create and approve an access request manually", new_access_request_path, data: { qa: "create-access-request" } %>
