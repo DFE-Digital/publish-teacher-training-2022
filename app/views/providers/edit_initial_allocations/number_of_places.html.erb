@@ -14,30 +14,29 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: form_object,
-                  url: post_edit_initial_request_provider_recruitment_cycle_allocation_path(
-                    provider.provider_code,
-                    recruitment_cycle.year,
-                    training_provider.provider_code,
-                    id: allocation.id,
-                  ),
-                  skip_enforcing_utf8: true,
-                  scope: "",
-                  method: :post,
-                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+    <%= form_with(
+      model: form_object,
+      url: post_edit_initial_request_provider_recruitment_cycle_allocation_path(
+        provider.provider_code,
+        recruitment_cycle.year,
+        training_provider.provider_code,
+        id: allocation.id,
+      ),
+      skip_enforcing_utf8: true,
+      scope: "",
+      method: :post,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
 
-      <%= form.govuk_error_summary %>
-      <%= form.govuk_text_field :number_of_places,
-                                value: params[:number_of_places] || allocation.number_of_places,
-                                label: {
-                                  text: page_title,
-                                  size: "l",
-                                  tag: "h1",
-                                },
-                                caption: { text: "#{training_provider.provider_name} ", size: "l" },
-                                pattern: "[0-9]*",
-                                inputmode: "numeric",
-                                width: 10 do %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_text_field :number_of_places,
+        value: params[:number_of_places] || allocation.number_of_places,
+        label: { text: page_title, size: "l", tag: "h1" },
+        caption: { text: "#{training_provider.provider_name} ", size: "l" },
+        pattern: "[0-9]*",
+        inputmode: "numeric",
+        width: 10 do %>
 
         <p class="govuk-body govuk-!-margin-bottom-4">
           Tell us how many places the organisation would like to offer for this
@@ -49,7 +48,7 @@
       <%= hidden_field_tag "next_step", "check_answers" %>
       <%= hidden_field_tag "request_type", params[:request_type] %>
 
-      <%= form.govuk_submit %>
+      <%= f.govuk_submit %>
     <% end %>
   </div>
 </div>

@@ -7,20 +7,18 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: form_object,
-                  url: initial_request_provider_recruitment_cycle_allocations_path(@provider.provider_code, @provider.recruitment_cycle_year),
-                  scope: "",
-                  skip_enforcing_utf8: true,
-                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+    <%= form_with(
+      model: form_object,
+      url: initial_request_provider_recruitment_cycle_allocations_path(@provider.provider_code, @provider.recruitment_cycle_year),
+      scope: "",
+      skip_enforcing_utf8: true,
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
 
-      <%= form.govuk_error_summary %>
+      <%= f.govuk_error_summary %>
 
-      <%= form.govuk_text_field :number_of_places,
-        label: {
-          text: page_title,
-          size: "l",
-          tag: "h1",
-        },
+      <%= f.govuk_text_field :number_of_places,
+        label: { text: page_title, size: "l", tag: "h1" },
         caption: { text: "#{training_provider.provider_name} ", size: "l" },
         pattern: "[0-9]*",
         inputmode: "numeric",
@@ -35,7 +33,7 @@
 
     <%= hidden_field_tag "training_provider_code", params[:training_provider_code] %>
 
-    <%= form.govuk_submit %>
+    <%= f.govuk_submit %>
   <% end %>
   </div>
 </div>

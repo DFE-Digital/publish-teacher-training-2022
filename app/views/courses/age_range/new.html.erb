@@ -1,4 +1,5 @@
-<%= content_for :page_title, title_with_error_prefix("Specify an age range", @errors && @errors.any?) %>
+<% page_title = "Specify an age range" %>
+<%= content_for :page_title, title_with_error_prefix(page_title, @errors && @errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(@back_link_path) %>
@@ -19,7 +20,7 @@
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
               <h1 class="govuk-fieldset__heading">
-                Specify an age range
+                <%= page_title %>
               </h1>
             </legend>
             <%= render "shared/error_messages", error_keys: [:age_range_in_years] %>

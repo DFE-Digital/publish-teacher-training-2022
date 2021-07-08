@@ -1,4 +1,5 @@
-<%= content_for :page_title, "Course length and salary - #{course.name_and_code}" %>
+<% page_title = "Course length and salary" %>
+<%= content_for :page_title, "#{page_title} - #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
@@ -8,20 +9,22 @@
   <%= render partial: "courses/copy_content_warning", locals: { copied_fields: @copied_fields } %>
 <% end %>
 
-<%= form_with model: course,
-              url: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-              builder: GOVUKDesignSystemFormBuilder::FormBuilder,
-              data: { qa: "enrichment-form", module: "form-check-leave" } do |f| %>
+<%= render "shared/errors" %>
 
-  <%= render "shared/errors" %>
+<h1 class="govuk-heading-l">
+  <span class="govuk-caption-l"><%= course.name_and_code %></span>
+  <%= page_title %>
+</h1>
 
-  <h1 class="govuk-heading-l">
-    <span class="govuk-caption-l"><%= course.name_and_code %></span>
-    Course length and salary
-  </h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with(
+      model: course,
+      url: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+      data: { qa: "enrichment-form", module: "form-check-leave" },
+    ) do |f| %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
       <%= f.hidden_field :page, value: :salary %>
 
       <%= render partial: "courses/course_length", locals: { f: f } %>
@@ -45,15 +48,16 @@
         data: { qa: "course_salary_details" }) %>
 
       <%= f.govuk_submit "Save", data: { qa: "course__save" } %>
-    </div>
-    <aside class="govuk-grid-column-one-third">
-      <%= render(
-        partial: "courses/related_sidebar",
-        locals: {
-          course: course,
-          page_path: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-        },
-      ) %>
-    </aside>
+    <% end %>
   </div>
-<% end %>
+
+  <aside class="govuk-grid-column-one-third">
+    <%= render(
+      partial: "courses/related_sidebar",
+      locals: {
+        course: course,
+        page_path: salary_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      },
+    ) %>
+  </aside>
+</div>

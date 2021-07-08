@@ -1,4 +1,6 @@
-<%= content_for :page_title, title_with_error_prefix("About this course – #{course.name_and_code}", course.errors.any?) %>
+
+<% page_title = "About this course" %>
+<%= content_for :page_title, title_with_error_prefix("#{page_title} – #{course.name_and_code}", course.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
@@ -8,130 +10,134 @@
   <%= render partial: "courses/copy_content_warning", locals: { copied_fields: @copied_fields } %>
 <% end %>
 
-<%= form_with model: course,
-              url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-              data: { qa: "enrichment-form", module: "form-check-leave" },
-              builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+<%= form_with(
+  model: course,
+  url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+  data: { qa: "enrichment-form", module: "form-check-leave" },
+  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+) do |f| %>
   <%= f.hidden_field :page, value: :about, id: nil %>
   <%= f.govuk_error_summary %>
 <% end %>
 
-  <h1 class="govuk-heading-l">
-    <span class="govuk-caption-l"><%= course.name_and_code %></span>
-    About this course
-  </h1>
+<h1 class="govuk-heading-l">
+  <span class="govuk-caption-l"><%= course.name_and_code %></span>
+  <%= page_title %>
+</h1>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <%= form_with model: course,
-                    url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-                    data: { qa: "enrichment-form", module: "form-check-leave" },
-                    builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with(
+      model: course,
+      url: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      data: { qa: "enrichment-form", module: "form-check-leave" },
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
 
-        <%= f.hidden_field :page, value: :about, id: nil %>
+      <%= f.hidden_field :page, value: :about, id: nil %>
 
-        <p class="govuk-body">You should give a short, factual summary of the course.</p>
+      <p class="govuk-body">You should give a short, factual summary of the course.</p>
 
-        <p class="govuk-body">Tell applicants:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>what they’ll learn (eg what units are taught)</li>
-          <li>how the course is structured</li>
-          <li>whether it has any distinctive features</li>
-        </ul>
+      <p class="govuk-body">Tell applicants:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>what they’ll learn (eg what units are taught)</li>
+        <li>how the course is structured</li>
+        <li>whether it has any distinctive features</li>
+      </ul>
 
-        <p class="govuk-body">You could include details such as:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>how candidates are assessed</li>
-          <li>the size of the workload (eg how many essays per term)</li>
-          <li>league-table rankings and student employability ratings</li>
-          <li>quotes from past students</li>
-        </ul>
+      <p class="govuk-body">You could include details such as:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>how candidates are assessed</li>
+        <li>the size of the workload (eg how many essays per term)</li>
+        <li>league-table rankings and student employability ratings</li>
+        <li>quotes from past students</li>
+      </ul>
 
-        <p class="govuk-body">Remember to:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>make your content specific to this course – don’t repeat the descriptions you’ve used for other courses</li>
-          <li>use short paragraphs (no more than five sentences each)</li>
-          <li>use bullet points where possible (to check formatting, use the ‘preview’ function after saving your content)</li>
-          <li>spell out all acronyms the first time you use them, eg ITT, NQT, EAL, ICT (applicants may not be familiar with these terms)
-          </li>
-        </ul>
+      <p class="govuk-body">Remember to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>make your content specific to this course – don’t repeat the descriptions you’ve used for other courses</li>
+        <li>use short paragraphs (no more than five sentences each)</li>
+        <li>use bullet points where possible (to check formatting, use the ‘preview’ function after saving your content)</li>
+        <li>spell out all acronyms the first time you use them, eg ITT, NQT, EAL, ICT (applicants may not be familiar with these terms)
+        </li>
+      </ul>
 
-        <%= govuk_details(
-          summary: "Several courses in the same subject?",
-          description: "If you offer more than one course in the same subject – eg two Primary courses – it’s important to say how they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.",
-        ) %>
-
-        <%= f.govuk_text_area(:about_course,
-          label: { text: "About this course", size: "s" },
-          max_words: 400,
-          rows: 20) %>
-
-        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
-
-        <h3 class="govuk-heading-m" id="interview-process">Interview process</h3>
-
-        <p class="govuk-body">Tell applicants:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>how many interviews they’ll have</li>
-          <li>how long each interview will be</li>
-          <li>who’ll be interviewing them - will it be one-on-one or a group interview?</li>
-          <li>whether they’ll have to sit any tests - if so, how can they prepare?</li>
-        </ul>
-
-        <%= f.govuk_text_area(:interview_process,
-          label: { text: "Interview process (optional)", size: "s" },
-          max_words: 250,
-          rows: 15) %>
-
-        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
-
-        <h3 class="govuk-heading-m" id="how-school-placements-work"><%= course.placements_heading %></h3>
-
-        <p class="govuk-body">
-          Give applicants more information about the schools they’ll be teaching in. Tell them:
-        </p>
-
-        <ul class="govuk-list govuk-list--bullet">
-          <li>how many placements a candidate will have</li>
-          <li>how much time they’ll spend in each school</li>
-          <li>if mentors are available within the schools</li>
-          <li>the average distance candidates have to travel from home to school</li>
-        </ul>
-
-        <p class="govuk-body">You could also mention:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>the age ranges taught (eg 11 to 16 or 11 to 18)</li>
-          <li>how many schools you partner with in total</li>
-          <li>whether candidates are able to change schools</li>
-          <li>how placement schools are selected</li>
-        </ul>
-
-        <%= govuk_details(summary: "See the guidance we show in this section") do %>
-          <h3 class="govuk-heading-m">Where you will train</h3>
-          <% if @provider.provider_type == 'university' %>
-            <p class="govuk-body">You can’t pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
-            <p class="govuk-body">Universities can work with over 100 potential placement schools. Most will be within 10 miles of the university, but sometimes they can cover a wider area, especially outside of cities.</p>
-          <% else %>
-            <p class="govuk-body">You’ll be placed in different schools during your training. You can’t pick which schools you want to be in, but your course will try to place you in schools you can commute to.</p>
-          <% end %>
-        <% end %>
-
-        <%= f.govuk_text_area(:how_school_placements_work,
-          label: { text: course.placements_heading, size: "s" },
-          max_words: 350,
-          rows: 15) %>
-
-        <%= f.govuk_submit "Save" %>
-      <% end %>
-    </div>
-
-    <aside class="govuk-grid-column-one-third">
-      <%= render(
-        partial: "courses/related_sidebar",
-        locals: {
-          course: course,
-          page_path: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-        },
+      <%= govuk_details(
+        summary: "Several courses in the same subject?",
+        description: "If you offer more than one course in the same subject – eg two Primary courses – it’s important to say how they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.",
       ) %>
-    </aside>
+
+      <%= f.govuk_text_area(:about_course,
+        label: { size: "s" },
+        max_words: 400,
+        rows: 20) %>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+
+      <h3 class="govuk-heading-m" id="interview-process">Interview process</h3>
+
+      <p class="govuk-body">Tell applicants:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>how many interviews they’ll have</li>
+        <li>how long each interview will be</li>
+        <li>who’ll be interviewing them - will it be one-on-one or a group interview?</li>
+        <li>whether they’ll have to sit any tests - if so, how can they prepare?</li>
+      </ul>
+
+      <%= f.govuk_text_area(:interview_process,
+        label: { size: "s" },
+        max_words: 250,
+        rows: 15) %>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+
+      <h3 class="govuk-heading-m" id="how-school-placements-work"><%= course.placements_heading %></h3>
+
+      <p class="govuk-body">
+        Give applicants more information about the schools they’ll be teaching in. Tell them:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>how many placements a candidate will have</li>
+        <li>how much time they’ll spend in each school</li>
+        <li>if mentors are available within the schools</li>
+        <li>the average distance candidates have to travel from home to school</li>
+      </ul>
+
+      <p class="govuk-body">You could also mention:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the age ranges taught (eg 11 to 16 or 11 to 18)</li>
+        <li>how many schools you partner with in total</li>
+        <li>whether candidates are able to change schools</li>
+        <li>how placement schools are selected</li>
+      </ul>
+
+      <%= govuk_details(summary: "See the guidance we show in this section") do %>
+        <h3 class="govuk-heading-m">Where you will train</h3>
+        <% if @provider.provider_type == 'university' %>
+          <p class="govuk-body">You can’t pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
+          <p class="govuk-body">Universities can work with over 100 potential placement schools. Most will be within 10 miles of the university, but sometimes they can cover a wider area, especially outside of cities.</p>
+        <% else %>
+          <p class="govuk-body">You’ll be placed in different schools during your training. You can’t pick which schools you want to be in, but your course will try to place you in schools you can commute to.</p>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_text_area(:how_school_placements_work,
+        label: { text: course.placements_heading, size: "s" },
+        max_words: 350,
+        rows: 15) %>
+
+      <%= f.govuk_submit "Save" %>
+    <% end %>
   </div>
+
+  <aside class="govuk-grid-column-one-third">
+    <%= render(
+      partial: "courses/related_sidebar",
+      locals: {
+        course: course,
+        page_path: about_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      },
+    ) %>
+  </aside>
+</div>

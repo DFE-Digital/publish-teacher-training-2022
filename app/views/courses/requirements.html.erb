@@ -1,8 +1,10 @@
 <% if @provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
-  <%= content_for :page_title, title_with_error_prefix("Personal qualities and other requirements – #{course.name_and_code}", course.errors.any?) %>
+  <% page_title = "Personal qualities and other requirements" %>
 <% else %>
-  <%= content_for :page_title, title_with_error_prefix("Requirements and eligibility – #{course.name_and_code}", course.errors.any?) %>
+  <% page_title = "Requirements and eligibility" %>
 <% end %>
+
+<%= content_for :page_title, title_with_error_prefix("#{page_title} – #{course.name_and_code}", course.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>
@@ -12,29 +14,33 @@
   <%= render partial: "courses/copy_content_warning", locals: { copied_fields: @copied_fields } %>
 <% end %>
 
+<%= form_with(
+  model: course,
+  url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+) do |f| %>
+  <%= f.govuk_error_summary %>
+<% end %>
+
+<h1 class="govuk-heading-l">
+  <span class="govuk-caption-l"><%= course.name_and_code %></span>
+  <%= page_title %>
+</h1>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: course,
-                  url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-                  data: { qa: "enrichment-form", module: "form-check-leave" },
-                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
-      <%= f.govuk_error_summary %>
-
-      <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l"><%= course.name_and_code %></span>
-        <% if @provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
-          Personal qualities and other requirements
-        <% else %>
-          Requirements and eligibility
-        <% end %>
-      </h1>
+    <%= form_with(
+      model: course,
+      url: requirements_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      data: { qa: "enrichment-form", module: "form-check-leave" },
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    ) do |f| %>
 
       <%= f.hidden_field :page, value: :requirements %>
 
       <% if @provider.recruitment_cycle_year.to_i < Provider::CHANGES_INTRODUCED_IN_2022_CYCLE %>
         <%= f.govuk_text_area :required_qualifications,
-          label: { text: "Qualifications needed", size: "m" },
-          hint: { text: "State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met." },
+          label: { size: "m" },
           max_words: 100,
           rows: 10 %>
 
@@ -43,8 +49,7 @@
 
       <%= f.govuk_text_area :personal_qualities,
         form_group: { id: "personal-qualities" },
-        label: { text: "Personal qualities (optional)", size: "m" },
-        hint: { text: "Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking)." },
+        label: { size: "m" },
         max_words: 100,
         rows: 10 %>
 
@@ -52,8 +57,7 @@
 
       <%= f.govuk_text_area :other_requirements,
         form_group: { id: "other-requirements" },
-        label: { text: "Other requirements (optional)", size: "m" },
-        hint: { text: "If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience)." },
+        label: { size: "m" },
         max_words: 100,
         rows: 10 %>
 

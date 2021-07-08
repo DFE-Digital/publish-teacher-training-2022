@@ -23,18 +23,18 @@
 
     <%= form_with model: @course,
                   url: withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-                  method: :post do |f| %>
+                  method: :post do |form| %>
       <div class="govuk-form-group">
-        <%= f.label "confirm_course_code", "Type in the course code to confirm", class: "govuk-label" %>
+        <%= form.label "confirm_course_code", "Type in the course code to confirm", class: "govuk-label" %>
         <% if flash[:error] && flash[:error]["id"] == "withdraw-error" %>
           <span class="govuk-error-message" id="withdraw-error" data-qa="course-withdraw-error">
             <%= flash[:error]["message"] %>
           </span>
         <% end %>
-        <%= f.text_field "confirm_course_code", class: "govuk-input govuk-input--width-5" %>
+        <%= form.text_field "confirm_course_code", class: "govuk-input govuk-input--width-5" %>
       </div>
 
-      <%= f.submit "Yes I’m sure – withdraw this course", class: "govuk-button govuk-button--warning" %>
+      <%= form.submit "Yes I’m sure – withdraw this course", class: "govuk-button govuk-button--warning" %>
     <% end %>
 
     <p class="govuk-body govuk-!-margin-top-5">
