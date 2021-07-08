@@ -37,11 +37,11 @@ review:
 	$(eval DEPLOY_ENV=review)
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a name for your review app))
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
-	$(eval backend_key=-backend-config=key=$(APP_NAME).terraform.tfstate)
+	$(eval backend_key=-backend-config=key=pr-$(APP_NAME).tfstate)
 	$(eval export TF_VAR_paas_app_environment_config=review)
 	$(eval export TF_VAR_paas_app_environment=review-$(APP_NAME))
-	$(eval export TF_VAR_paas_web_app_host_name-$(APP_NAME))
-	echo https://publish-teacher-training-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
+	$(eval export TF_VAR_paas_web_app_host_name=$(APP_NAME))
+	echo Review app: https://publish-teacher-training-pr-$(APP_NAME).london.cloudapps.digital in bat-qa space
 
 .PHONY: local
 local: ## Configure local dev environment
@@ -84,6 +84,11 @@ production: ## Set DEPLOY_ENV to production
 	$(eval space=bat-prod)
 	$(eval paas_env=prod)
 
+.PHONY: ci
+ci:	## Run in automation
+	$(eval export DISABLE_PASSCODE=true)
+	$(eval export AUTO_APPROVE=-auto-approve)
+
 install-fetch-config:
 	[ ! -f bin/fetch_config.rb ] \
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
@@ -106,26 +111,27 @@ print-app-secrets: install-fetch-config set-azure-account
 		-f yaml
 
 deploy-init:
-	$(eval export TF_DATA_DIR=./terraform/.terraform)
-	$(if $(IMAGE_TAG), , $(error Missing environment variable "IMAGE_TAG"))
+	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=master))
+	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 	$(eval export TF_VAR_paas_docker_image=dfedigital/publish-teacher-training:paas-$(IMAGE_TAG))
-	$(eval export TF_VAR_paas_app_config_file=./terraform/workspace_variables/app_config.yml)
-	$(eval export TF_VAR_paas_app_secrets_file=./terraform/workspace_variables/app_secrets.yml)
+	$(eval export TF_VAR_paas_app_config_file=./workspace_variables/app_config.yml)
+	$(eval export TF_VAR_paas_app_secrets_file=./workspace_variables/app_secrets.yml)
 	az account set -s ${AZ_SUBSCRIPTION} && az account show
-	terraform init -reconfigure -backend-config=terraform/workspace_variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key) terraform
+	cd terraform && terraform init -reconfigure -backend-config=workspace_variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 	echo "🚀 DEPLOY_ENV is $(DEPLOY_ENV)"
 
 deploy-plan: deploy-init
-	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
-		&& terraform plan -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
+	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
+		&& terraform plan -var-file=workspace_variables/$(DEPLOY_ENV).tfvars
 
 deploy: deploy-init
-	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
-		&& terraform apply -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars -auto-approve terraform
+	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
+		&& terraform apply -var-file=workspace_variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
 
 destroy: deploy-init
-	. terraform/workspace_variables/$(DEPLOY_ENV).sh \
-		&& terraform destroy -var-file=terraform/workspace_variables/$(DEPLOY_ENV).tfvars terraform
+	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
+		&& echo terraform destroy -var-file=workspace_variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
 
 console:
 	cf target -s ${space}
