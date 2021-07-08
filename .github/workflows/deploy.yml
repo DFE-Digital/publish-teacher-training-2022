@@ -111,6 +111,7 @@ jobs:
           IMAGE_TAG:                  ${{ github.event.inputs.sha }}
           APP_NAME:                   ${{ env.PR_NUMBER }}
           TF_VAR_azure_credentials:   ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
+          CONFIRM_PRODUCTION:         "yes"
 
 
       - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
