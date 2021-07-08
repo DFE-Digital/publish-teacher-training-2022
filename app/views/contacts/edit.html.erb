@@ -1,5 +1,5 @@
 <% page_title = t("ucas_contacts.#{@contact.type}.heading") %>
-<%= content_for :page_title, title_with_error_prefix(page_title, @contact.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(page_title, @contact.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_ucas_contacts_path(@provider.provider_code)) %>

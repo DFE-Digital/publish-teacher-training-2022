@@ -1,4 +1,4 @@
-<%= content_for :page_title, title_with_error_prefix("Manage notifications", flash[:error]) %>
+<% content_for :page_title, title_with_error_prefix("Manage notifications", flash[:error]) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(@notifications_view.back_link_path) %>

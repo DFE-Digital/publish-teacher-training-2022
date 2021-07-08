@@ -1,4 +1,4 @@
-<%= content_for :page_title, title_with_error_prefix("Edit vacancies – #{@course.name} (#{@course.course_code})", @course.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix("Edit vacancies – #{@course.name} (#{@course.course_code})", @course.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_courses_path(@course.provider_code, @course.recruitment_cycle_year)) %>

@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Preview: #{course.name_and_code} with #{@provider.provider_name}" %>
+<% content_for :page_title, "Preview: #{course.name_and_code} with #{@provider.provider_name}" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path, "Back to course") %>
@@ -8,8 +8,8 @@
   <%= notification_banner.add_heading(text: "This is a preview of the ‘#{course.name_and_code}’ course.") %>
 <% end %>
 
-<h1 class="govuk-heading-l">
-  <span class="govuk-!-font-size-36" data-qa="course__provider_name"><%= course.provider.provider_name %></span><br>
+<h1 class="govuk-heading-xl">
+  <span class="govuk-heading-l govuk-!-margin-bottom-0" data-qa="course__provider_name"><%= course.provider.provider_name %></span>
   <%= course.name_and_code %>
 </h1>
 

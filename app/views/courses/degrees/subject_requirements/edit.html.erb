@@ -1,5 +1,5 @@
 <% page_title = "Degree subject" %>
-<%= content_for :page_title, title_with_error_prefix(page_title, @subject_requirements_form.errors.present?) %>
+<% content_for :page_title, title_with_error_prefix(page_title, @subject_requirements_form.errors.present?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to @backlink %>
