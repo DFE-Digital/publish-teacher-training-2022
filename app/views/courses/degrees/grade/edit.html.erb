@@ -1,5 +1,5 @@
 <% page_title = "What is the minimum degree classification you require?" %>
-<%= content_for :page_title, title_with_error_prefix(page_title, @grade_form.errors.present?) %>
+<% content_for :page_title, title_with_error_prefix(page_title, @grade_form.errors.present?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to degrees_start_provider_recruitment_cycle_course_path %>

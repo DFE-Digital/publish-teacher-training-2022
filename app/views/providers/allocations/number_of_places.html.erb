@@ -1,5 +1,5 @@
 <% page_title = "How many places would you like to request?" %>
-<%= content_for :page_title, title_with_error_prefix(page_title, form_object.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(page_title, form_object.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(initial_request_provider_recruitment_cycle_allocations_path) %>

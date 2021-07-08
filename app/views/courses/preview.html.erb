@@ -1,4 +1,4 @@
-<%= content_for :page_title, "Preview: #{course.name_and_code} with #{@provider.provider_name}" %>
+<% content_for :page_title, "Preview: #{course.name_and_code} with #{@provider.provider_name}" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path, "Back to course") %>

@@ -1,5 +1,5 @@
 <% page_title = "Course length and salary" %>
-<%= content_for :page_title, "#{page_title} - #{course.name_and_code}" %>
+<% content_for :page_title, "#{page_title} - #{course.name_and_code}" %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code)) %>

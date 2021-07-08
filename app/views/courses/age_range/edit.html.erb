@@ -1,5 +1,5 @@
 <% page_title = "Specify an age range" %>
-<%= content_for :page_title, title_with_error_prefix("#{page_title} – #{course.name_and_code}", form_object.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix("#{page_title} – #{course.name_and_code}", form_object.errors.any?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_course_path(course.provider_code, course.recruitment_cycle_year, course.course_code)) %>

@@ -1,5 +1,5 @@
 <% page_title = "Add a location" %>
-<%= content_for :page_title, title_with_error_prefix(page_title, @site.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(page_title, @site.errors.any?) %>
 <%= content_for :before_content, render_breadcrumbs(:new_site) %>
 
 <div class="govuk-grid-row">

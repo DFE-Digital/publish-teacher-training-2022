@@ -1,5 +1,5 @@
 <% page_title = @form_object.lead_school? ? "Organisation reference numbers" : t("helpers.label.provider.ukprn") %>
-<%= content_for :page_title, title_with_error_prefix(page_title, @form_object.errors.present?) %>
+<% content_for :page_title, title_with_error_prefix(page_title, @form_object.errors.present?) %>
 
 <% content_for :before_content do %>
   <%= govuk_back_link_to(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)) %>

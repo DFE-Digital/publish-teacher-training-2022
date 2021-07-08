@@ -1,4 +1,4 @@
-<%= content_for :page_title, title_with_error_prefix("About your organisation", @errors.present?) %>
+<% content_for :page_title, title_with_error_prefix("About your organisation", @errors.present?) %>
 <%= content_for :before_content, render_breadcrumbs(:organisation_details) %>
 
 <% if @errors.present? %>
