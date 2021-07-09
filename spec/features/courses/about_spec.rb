@@ -24,8 +24,8 @@ feature "About course", type: :feature do
     )
   end
 
-  let(:site1) { build(:site, london_borough: "Westminster") }
-  let(:site2) { build(:site, travel_to_work_area: "Brighton") }
+  let(:site1) { build(:site) }
+  let(:site2) { build(:site) }
 
   let(:course_response) do
     course.to_jsonapi(

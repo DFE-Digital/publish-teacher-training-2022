@@ -6,7 +6,7 @@ class Site < Base
   has_one :site_status
 
   properties :code, :location_name, :address1, :address2, :address3, :urn
-  properties :address4, :postcode, :latitude, :longitude, :travel_to_work_area, :london_borough
+  properties :address4, :postcode, :latitude, :longitude
 
   REGIONS = [
     ["London", :london],
