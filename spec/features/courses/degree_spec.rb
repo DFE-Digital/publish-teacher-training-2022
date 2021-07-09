@@ -11,6 +11,8 @@ feature "degree requirements", type: :feature do
   let(:course2) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, degree_grade: "not_required") }
   let(:course3) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, degree_grade: "two_one") }
   let(:course4) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, additional_degree_subject_requirements: true, degree_subject_requirements: "Maths A level") }
+  let(:course5) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, degree_grade: "two_two") }
+  let(:course6) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, degree_grade: "third_class") }
   let(:primary_course) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, degree_grade: nil, level: "primary") }
   let(:recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
 
@@ -27,6 +29,10 @@ feature "degree requirements", type: :feature do
     stub_api_v2_resource(course3, include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(course4, include: "provider")
     stub_api_v2_resource(course4, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(course5, include: "provider")
+    stub_api_v2_resource(course5, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(course6, include: "provider")
+    stub_api_v2_resource(course6, include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(primary_course, include: "provider")
     stub_api_v2_resource(primary_course, include: "provider")
     stub_api_v2_resource(primary_course, include: "subjects,sites,provider.sites,accrediting_provider")
@@ -133,11 +139,25 @@ feature "degree requirements", type: :feature do
     expect(start_page.no_radio).to be_checked
   end
 
-  scenario "a provider has completed the degree section and sees their answer pre-populated on the degree grade page" do
+  scenario "a provider has completed the degree section and sees their two_one answer pre-populated on the degree grade page" do
     course_page.load_with_course(course3)
-    visit_grade_page
+    visit_grade_page(course3)
 
     expect(grade_page.two_one).to be_checked
+  end
+
+  scenario "a provider has completed the degree section and sees their two_two answer pre-populated on the degree grade page" do
+    course_page.load_with_course(course5)
+    visit_grade_page(course5)
+
+    expect(grade_page.two_two).to be_checked
+  end
+
+  scenario "a provider has completed the degree section and sees their third_class answer pre-populated on the degree grade page" do
+    course_page.load_with_course(course6)
+    visit_grade_page(course6)
+
+    expect(grade_page.third_class).to be_checked
   end
 
   scenario "a provider has completed the degree section and sees their answer pre-populated on the degree subject requirements page" do
@@ -164,11 +184,11 @@ feature "degree requirements", type: :feature do
     )
   end
 
-  def visit_grade_page
+  def visit_grade_page(course)
     visit degrees_grade_provider_recruitment_cycle_course_path(
       provider.provider_code,
-      course3.recruitment_cycle.year,
-      course3.course_code,
+      course.recruitment_cycle.year,
+      course.course_code,
     )
   end
 
