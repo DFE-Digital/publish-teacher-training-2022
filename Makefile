@@ -69,13 +69,6 @@ sandbox: ## Set DEPLOY_ENV to sandbox
 	$(eval space=bat-prod)
 	$(eval paas_env=sandbox)
 
-.PHONY: rollover
-rollover: ## Set DEPLOY_ENV to sandbox
-	$(eval DEPLOY_ENV=rollover)
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
-	$(eval space=bat-staging)
-	$(eval paas_env=rollover)
-
 .PHONY: production
 production: ## Set DEPLOY_ENV to production
 	$(eval DEPLOY_ENV=production)
