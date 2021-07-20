@@ -20,6 +20,7 @@ class Course < Base
   property :accept_maths_gcse_equivalency, type: :boolean
   property :accept_science_gcse_equivalency, type: :boolean
   property :additional_gcse_equivalencies, type: :string
+  property :program_type, type: :string
 
   delegate :provider_type, to: :provider
 
