@@ -44,7 +44,7 @@ feature "About course", type: :feature do
 
   let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
 
-  context "provider is not a university" do
+  context "provider is a lead school" do
     scenario "viewing the about courses page" do
       stub_api_v2_resource(course, method: :patch)
 
@@ -71,7 +71,7 @@ feature "About course", type: :feature do
       expect(about_course_page.how_school_placements_work_textarea.value).to eq(
         course.how_school_placements_work,
       )
-      expect(page).to have_content("You’ll be placed in different schools during your training.")
+      expect(page).not_to have_content("You’ll be placed in different schools during your training.")
 
       fill_in "About this course", with: "Something interesting about this course"
       fill_in "How school placements work", with: "Something about how teaching placements work"
@@ -89,10 +89,12 @@ feature "About course", type: :feature do
       build(
         :provider,
         accredited_body?: false,
-        provider_code: "A0",
+        provider_code: provider_code,
         provider_type: "university",
       )
     end
+
+    let(:provider_code) { "A0" }
 
     let(:course2) do
       build(
@@ -125,6 +127,83 @@ feature "About course", type: :feature do
       end
 
       expect(page).to have_content("Universities can work with over 100 potential placement schools.")
+    end
+
+    context "the Provider is `The Bedfordshire Schools Training Partnership (B31)`" do
+      let(:provider_code) { "B31" }
+
+      scenario "viewing the about courses page" do
+        stub_api_v2_resource(course, method: :patch)
+
+        visit provider_recruitment_cycle_course_path(provider2.provider_code, course2.recruitment_cycle_year, course2.course_code)
+        within "[data-qa='enrichment__about_course']" do
+          click_on "Change"
+        end
+
+        expect(page).not_to have_content("Universities can work with over 100 potential placement schools.")
+      end
+    end
+  end
+
+  context "course is a scitt_programme" do
+    let(:provider2) do
+      build(
+        :provider,
+        accredited_body?: false,
+        provider_code: provider_code,
+        provider_type: "scitt",
+      )
+    end
+
+    let(:provider_code) { "A0" }
+
+    let(:course2) do
+      build(
+        :course,
+        name: "English",
+        provider: provider2,
+        about_course: "About course",
+        interview_process: "Interview process",
+        how_school_placements_work: "How teaching placements work",
+        program_type: "scitt_programme",
+        recruitment_cycle: current_recruitment_cycle,
+        sites: [site1, site2],
+      )
+    end
+
+    before do
+      signed_in_user
+      stub_api_v2_resource(current_recruitment_cycle)
+      stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,courses.accrediting_provider")
+      stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,accrediting_provider")
+      stub_api_v2_resource(provider2, include: "courses.accrediting_provider")
+      stub_api_v2_resource(provider2)
+    end
+
+    scenario "viewing the about courses page" do
+      stub_api_v2_resource(course, method: :patch)
+
+      visit provider_recruitment_cycle_course_path(provider2.provider_code, course2.recruitment_cycle_year, course2.course_code)
+      within "[data-qa='enrichment__about_course']" do
+        click_on "Change"
+      end
+
+      expect(page).to have_content("You’ll be placed in different schools during your training. You can’t pick which schools you want to be in")
+    end
+
+    context "the Provider is `Educate Teacher Training (E65)`" do
+      let(:provider_code) { "E65" }
+
+      scenario "viewing the about courses page" do
+        stub_api_v2_resource(course, method: :patch)
+
+        visit provider_recruitment_cycle_course_path(provider2.provider_code, course2.recruitment_cycle_year, course2.course_code)
+        within "[data-qa='enrichment__about_course']" do
+          click_on "Change"
+        end
+
+        expect(page).not_to have_content("You’ll be placed in different schools during your training. You can’t pick which schools you want to be in")
+      end
     end
   end
 
