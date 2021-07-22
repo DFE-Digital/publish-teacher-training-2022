@@ -78,4 +78,19 @@ feature "get training_providers", type: :feature do
       expect(organisation_training_providers_page.training_providers_list).to_not have_content(accrediting_body1.provider_name)
     end
   end
+
+  context "when the provider has no training providers" do
+    before do
+      stub_api_v2_request(
+        "/recruitment_cycles/#{accrediting_body1.recruitment_cycle.year}/providers/" \
+        "#{accrediting_body1.provider_code}/training_providers",
+        resource_list_to_jsonapi([]),
+      )
+      visit training_providers_provider_recruitment_cycle_path(accrediting_body1.provider_code, accrediting_body1.recruitment_cycle.year)
+    end
+
+    it "should not show the csv export" do
+      expect(organisation_training_providers_page).not_to have_link("Download as a CSV file")
+    end
+  end
 end
