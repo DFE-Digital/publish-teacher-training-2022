@@ -192,4 +192,19 @@ RSpec.describe GcseRowContentComponent, type: :component do
       end
     end
   end
+
+  describe "#inset_text_css_classes" do
+    context "no relevant error exists" do
+      it "does not return an css class" do
+        expect(described_class.new(course: nil, errors: nil).inset_text_css_classes).to eq("app-inset-text--narrow-border app-inset-text--important")
+      end
+    end
+
+    context "a relevant error exists" do
+      it "returns an error css class" do
+        errors = double("errors", { values: ["Enter GCSE requirements"] })
+        expect(described_class.new(course: nil, errors: errors).inset_text_css_classes).to eq("app-inset-text--narrow-border app-inset-text--error")
+      end
+    end
+  end
 end

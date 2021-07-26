@@ -9,7 +9,7 @@
     </p>
   <% end %>
 <% else %>
-  <%= govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--important") do %>
+  <%= govuk_inset_text(classes: inset_text_css_classes) do %>
     <p class="govuk-heading-s app-inset-text__title">Do you require a minimum degree classification?</p>
     <p class="govuk-body">
       <%= govuk_link_to "Enter degree requirements",
