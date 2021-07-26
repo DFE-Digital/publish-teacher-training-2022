@@ -107,7 +107,7 @@ deploy-init:
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=master))
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
-	$(eval export TF_VAR_paas_docker_image=dfedigital/publish-teacher-training:paas-$(IMAGE_TAG))
+	$(eval export TF_VAR_paas_docker_image=dfedigital/publish-teacher-training:$(IMAGE_TAG))
 	$(eval export TF_VAR_paas_app_config_file=./workspace_variables/app_config.yml)
 	$(eval export TF_VAR_paas_app_secrets_file=./workspace_variables/app_secrets.yml)
 	az account set -s ${AZ_SUBSCRIPTION} && az account show
@@ -124,7 +124,7 @@ deploy: deploy-init
 
 destroy: deploy-init
 	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
-		&& echo terraform destroy -var-file=workspace_variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
+		&& terraform destroy -var-file=workspace_variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
 
 console:
 	cf target -s ${space}
