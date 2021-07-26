@@ -124,7 +124,7 @@ deploy: deploy-init
 
 destroy: deploy-init
 	cd terraform && . workspace_variables/$(DEPLOY_ENV).sh \
-		&& echo terraform destroy -var-file=workspace_variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
+		&& terraform destroy -var-file=workspace_variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
 
 console:
 	cf target -s ${space}
