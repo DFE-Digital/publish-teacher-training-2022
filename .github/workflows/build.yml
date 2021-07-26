@@ -55,7 +55,6 @@ jobs:
         tags: |
           ${{ env.DOCKER_IMAGE}}:${{ env.DOCKER_IMAGE_TAG }}
           ${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
-        pull: true
         push: true
         cache-from: |
           ${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
