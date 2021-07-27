@@ -394,7 +394,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redcarpet (3.5.1)
-    redis (4.2.5)
+    redis (4.3.1)
     regexp_parser (2.0.3)
     representable (3.1.1)
       declarative (< 0.1.0)
@@ -484,7 +484,7 @@ GEM
     sentry-ruby-core (4.6.3)
       concurrent-ruby
       faraday
-    sentry-sidekiq (4.6.2)
+    sentry-sidekiq (4.6.3)
       sentry-ruby-core (~> 4.6.0)
       sidekiq (>= 3.0)
     shellany (0.0.1)
