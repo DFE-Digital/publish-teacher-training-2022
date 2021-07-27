@@ -1,8 +1,21 @@
 class GcseRequirementsComponent < ViewComponent::Base
-  attr_reader :course
+  attr_reader :course, :errors
 
-  def initialize(course:)
+  def initialize(course:, errors: nil)
     @course = course
+    @errors = errors
+  end
+
+  def inset_text_css_classes
+    messages = if errors
+                 errors.values.flatten
+               end
+
+    if messages&.include?("Enter GCSE requirements")
+      "app-inset-text--narrow-border app-inset-text--error"
+    else
+      "app-inset-text--narrow-border app-inset-text--important"
+    end
   end
 
 private

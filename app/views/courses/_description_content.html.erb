@@ -114,7 +114,7 @@
     <% summary_list.slot(:row, enrichment_summary(
       :course,
       "Degree",
-      (render DegreeRowContentComponent.new(course: course)),
+      (render DegreeRowContentComponent.new(course: course, errors: @errors)),
       %w[degree_grade degree_subject_requirements],
       truncate_value: false,
       change_link: course.degree_section_complete? ? degrees_start_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
@@ -124,7 +124,7 @@
     <% summary_list.slot(:row, enrichment_summary(
       :course,
       "GCSEs",
-      (render GcseRowContentComponent.new(course: course)),
+      (render GcseRowContentComponent.new(course: course, errors: @errors)),
       %w[accept_pending_gcse accept_gcse_equivalency accept_english_gcse_equivalency accept_maths_gcse_equivalency accept_science_gcse_equivalency additional_gcse_equivalencies],
       truncate_value: false,
       change_link: course.gcse_section_complete? ? gcses_pending_or_equivalency_tests_provider_recruitment_cycle_course_path(@provider.provider_code, @provider.recruitment_cycle_year, course.course_code) : nil,
