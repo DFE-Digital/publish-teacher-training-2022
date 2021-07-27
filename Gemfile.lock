@@ -69,7 +69,7 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     aes_key_wrap (1.0.1)
-    ast (2.4.1)
+    ast (2.4.2)
     attr_extras (6.2.4)
     attr_required (1.0.1)
     better_errors (2.9.1)
@@ -159,7 +159,7 @@ GEM
       dry-equalizer (~> 0.2)
       dry-initializer (~> 3.0)
       dry-schema (~> 1.5, >= 1.5.2)
-    erb_lint (0.0.37)
+    erb_lint (0.1.0)
       activesupport
       better_html (~> 1.0.7)
       html_tokenizer
@@ -326,7 +326,7 @@ GEM
     parallel (1.20.1)
     parallel_tests (3.7.0)
       parallel
-    parser (2.7.2.0)
+    parser (3.0.2.0)
       ast (~> 2.4.1)
     patience_diff (1.2.0)
       optimist (~> 3.0)
@@ -395,7 +395,7 @@ GEM
       ffi (~> 1.0)
     redcarpet (3.5.1)
     redis (4.3.1)
-    regexp_parser (2.0.3)
+    regexp_parser (2.1.1)
     representable (3.1.1)
       declarative (< 0.1.0)
       trailblazer-option (>= 0.1.1, < 0.2.0)
@@ -455,7 +455,7 @@ GEM
       rubocop
     rubocop-rspec (1.42.0)
       rubocop (>= 0.87.0)
-    ruby-progressbar (1.10.1)
+    ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubypants (0.7.1)
     rubyzip (2.3.0)
