@@ -2,7 +2,6 @@ default: &default
   ASSETS_PRECOMPILE: true
   RAILS_SERVE_STATIC_FILES: true
   WEBPACKER_DEV_SERVER_HOST: "webpacker"
-  SETTINGS__ROLLOVER: false
   SETTINGS__FEATURES__MAINTENANCE_MODE__ENABLED: false
   SETTINGS__FEATURES__MAINTENANCE_MODE__TITLE: "This service will be unavailable from Thursday 4 March at 17:00 to Friday 5 March at 09:00, while we carry out maintenance."
   SETTINGS__FEATURES__MAINTENANCE_MODE__BODY: "Find teacher training courses will still be available during this time. If you have any questions, contact us at becomingateacher@digital.education.gov.uk"
