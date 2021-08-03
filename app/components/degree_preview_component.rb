@@ -1,4 +1,5 @@
 class DegreePreviewComponent < ViewComponent::Base
+  include ApplicationHelper
   attr_reader :course
 
   def initialize(course:)
