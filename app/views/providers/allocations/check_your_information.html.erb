@@ -32,10 +32,10 @@
       </h1>
 
       <%= govuk_summary_list do |summary_list| %>
-        <% summary_list.row(
-          key: "Places requested",
-          value: params[:number_of_places],
-          action: {
+        <% summary_list.row do |row| %>
+          <% row.key { "Places requested" } %>
+          <% row.value { params[:number_of_places] } %>
+          <% row.action({
             href: initial_request_provider_recruitment_cycle_allocations_path(
               @provider.provider_code,
               @provider.recruitment_cycle_year,
@@ -44,8 +44,8 @@
               change: true,
             ),
             visually_hidden_text: "places requested",
-          },
-        ) %>
+          }) %>
+        <% end %>
       <% end %>
 
       <%= hidden_field_tag "request_type", AllocationsView::RequestType::INITIAL %>

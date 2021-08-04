@@ -31,39 +31,43 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_summary_list do |summary_list| %>
-      <% summary_list.row(enrichment_summary(
+      <% enrichment_summary(
+        summary_list,
         :provider,
         "Training with your organisation",
         @provider.train_with_us,
         %w[train_with_us],
         action_path: "#{about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#train-with-us",
         action_visually_hidden_text: "details about training with your organisation",
-      )) %>
+      ) %>
 
       <% if provider.accredited_bodies.present? %>
         <% provider.accredited_bodies.each do |provider| %>
-          <% summary_list.row(enrichment_summary(
+          <% enrichment_summary(
+            summary_list,
             :provider,
             "#{provider['provider_name']} (optional)",
             provider["description"],
             ["accrediting_provider_#{provider['provider_code']}"],
             action_path: "#{about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#accrediting-provider-#{provider['provider_code']}",
             action_visually_hidden_text: "details about #{provider['provider_name']}",
-          )) %>
+          ) %>
         <% end %>
       <% end %>
 
-      <% summary_list.row(enrichment_summary(
+      <% enrichment_summary(
+        summary_list,
         :provider,
         "Training with disabilities and other needs",
         @provider.train_with_disability,
         %w[train_with_disability],
         action_path: "#{about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#train-with-disability",
         action_visually_hidden_text: "details about training with disabilities and other needs",
-      )) %>
+      ) %>
 
       <% if Providers::VisaSponsorshipService.new(provider).visa_sponsorship_enabled? %>
-        <% summary_list.row(enrichment_summary(
+        <% enrichment_summary(
+          summary_list,
           :provider,
           "Visa sponsorship",
           visa_sponsorship_status(@provider),
@@ -71,67 +75,73 @@
           truncate_value: false,
           action_path: provider.declared_visa_sponsorship? ? provider_recruitment_cycle_visas_path(@provider.provider_code, @provider.recruitment_cycle_year) : nil,
           action_visually_hidden_text: "if you can sponsor visas",
-        )) %>
+        ) %>
       <% end %>
     <% end %>
 
     <h2 class="govuk-heading-m">Contact details</h2>
     <%= govuk_summary_list do |summary_list| %>
-      <% summary_list.row(enrichment_summary(
+      <% enrichment_summary(
+        summary_list,
         :provider,
         "Email address",
         @provider.email,
         %w[email],
         action_path: "#{contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#email",
         action_visually_hidden_text: "email address",
-      )) %>
+      ) %>
 
-      <% summary_list.row(enrichment_summary(
+      <% enrichment_summary(
+        summary_list,
         :provider,
         "Telephone number",
         @provider.telephone,
         %w[telephone],
         action_path: "#{contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#telephone",
         action_visually_hidden_text: "telephone number",
-      )) %>
+      ) %>
 
-      <% summary_list.row(enrichment_summary(
+      <% enrichment_summary(
+        summary_list,
         :provider,
         "Website",
         @provider.website,
         %w[website],
         action_path: "#{contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#website",
         action_visually_hidden_text: "website",
-      )) %>
+      ) %>
 
-      <% summary_list.row(enrichment_summary(
+      <% enrichment_summary(
+        summary_list,
         :provider,
         "UKPRN",
         @provider.ukprn,
         %w[ukprn],
         action_path: "#{contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#ukprn",
         action_visually_hidden_text: "UKPRN",
-      )) %>
+      ) %>
 
       <% if @provider.provider_type == "lead_school" %>
-        <% summary_list.row(enrichment_summary(
+        <% enrichment_summary(
+          summary_list,
           :provider,
           "URN",
           @provider.urn,
           %w[urn],
           action_path: "#{contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#urn",
           action_visually_hidden_text: "URN",
-        )) %>
+        ) %>
       <% end %>
 
-      <% summary_list.row(enrichment_summary(
+      <% enrichment_summary(
+        summary_list,
         :provider,
         "Contact address",
         @provider.full_address,
         %w[address1 address2 address3 address4 postcode],
         action_path: "#{contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)}#address",
         action_visually_hidden_text: "contact address",
-      )) %>
+      ) %>
     <% end %>
   </div>
 

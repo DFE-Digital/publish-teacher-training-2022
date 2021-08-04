@@ -39,17 +39,13 @@
     <p class="govuk-body">UCAS sends all successful applicants a letter – this is known as a ‘GT12&nbsp;letter’.</p>
 
     <%= govuk_summary_list do |summary_list| %>
-      <% content_for :row_value, flush: true do %>
-        <p class="govuk-body"><%= @ucas_contact_view.gt12_contact.presence ? @ucas_contact_view.gt12_contact : "Information unknown" %></p>
-        <p class="govuk-body-s">This person or website will receive responses from successful applicants replying to a GT12 letter.</p>
+      <% summary_list.row(html_attributes: { data: { qa: "ucas_gt12_contact" } }) do |row| %>
+        <% row.key { "Email address (or URL) printed in the letter" } %>
+        <% row.value do %>
+          <p class="govuk-body"><%= @ucas_contact_view.gt12_contact.presence ? @ucas_contact_view.gt12_contact : "Information unknown" %></p>
+          <p class="govuk-body-s">This person or website will receive responses from successful applicants replying to a GT12 letter.</p>
+        <% end %>
       <% end %>
-      <% summary_list.row(
-        key: "Email address (or URL) printed in the letter",
-        value: content_for(:row_value),
-        html_attributes: {
-          data: { qa: "ucas_gt12_contact" },
-        },
-      ) %>
     <% end %>
 
     <hr class="govuk-section-break govuk-section-break--l">
@@ -57,29 +53,23 @@
     <h2 class="govuk-heading-m">Email alerts for new applications</h2>
 
     <%= govuk_summary_list do |summary_list| %>
-      <% summary_list.row(
-        key: "Get alerts from UCAS?",
-        value: t("edit_options.send_application_alerts.#{@ucas_contact_view.send_application_alerts}.label"),
-        action: {
+      <% summary_list.row(html_attributes: { data: { qa: "ucas_send_application_alerts" } }) do |row| %>
+        <% row.key { "Get alerts from UCAS?" } %>
+        <% row.value { t("edit_options.send_application_alerts.#{@ucas_contact_view.send_application_alerts}.label") } %>
+        <% row.action({
           href: alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code),
           visually_hidden_text: "email alerts for new applications",
-        },
-        html_attributes: {
-          data: { qa: "ucas_send_application_alerts" },
-        },
-      ) %>
+        }) %>
+      <% end %>
 
-      <% summary_list.row(
-        key: "Who are the alerts sent to?",
-        value: @ucas_contact_view.application_alert_contact.presence ? @ucas_contact_view.application_alert_contact : "Information unknown",
-        action: {
+      <% summary_list.row(html_attributes: { data: { qa: "ucas_application_alert_contact" } }) do |row| %>
+        <% row.key { "Who are the alerts sent to?" } %>
+        <% row.value { @ucas_contact_view.application_alert_contact.presence ? @ucas_contact_view.application_alert_contact : "Information unknown" } %>
+        <% row.action({
           href: alerts_provider_ucas_contacts_path(@ucas_contact_view.provider_code),
           visually_hidden_text: "email alerts for new applications",
-        },
-        html_attributes: {
-          data: { qa: "ucas_application_alert_contact" },
-        },
-      ) %>
+        }) %>
+      <% end %>
     <% end %>
   </div>
 
