@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.feature "View helpers", type: :helper do
   describe "#enrichment_error_link" do
     context "with a course" do
