@@ -213,9 +213,10 @@ feature "Course show", type: :feature do
 
   context "in 2021 recruitment cycle year" do
     scenario "it shows required qualifications" do
-      expect(course_page).to have_content(
-        "Qualifications needed #{course.required_qualifications}",
-      )
+      within(%(div.govuk-summary-list__row[data-qa="enrichment__required_qualifications"])) do
+        expect(course_page).to have_css("dt", text: "Qualifications needed")
+        expect(course_page).to have_css("dd", text: course.required_qualifications)
+      end
     end
   end
 
