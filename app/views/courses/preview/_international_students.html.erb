@@ -2,12 +2,19 @@
   <h2 class="govuk-heading-l" id="section-international">International students</h2>
   <% if @provider.declared_visa_sponsorship? %>
     <p class="govuk-body">
-      We
-      <%= @provider.cannot_sponsor_visas? ? "cannot" : "can" %>
+      <% if @provider.cannot_sponsor_visas? %>
+       We cannot sponsor visas. You’ll need to
+       <%= govuk_link_to(
+         "get the right visa or status to study in the UK",
+         "https://www.gov.uk/government/publications/train-to-teach-in-england-non-uk-applicants/train-to-teach-in-england-non-uk-applicants#visas-and-immigration",
+       ) %>.
+      <% else %>
+        We can
       <%= govuk_link_to(
         visa_sponsorship_short_status(@provider),
         "https://www.gov.uk/government/publications/train-to-teach-in-england-non-uk-applicants/train-to-teach-in-england-non-uk-applicants#visas-and-immigration",
-      ) %><%= @provider.cannot_sponsor_visas? ? "." : ", but this is not guaranteed." %>
+      ) %>, but this is not guaranteed.
+      <% end %>
     </p>
   <% else %>
     <%= govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--important") do %>
@@ -20,6 +27,6 @@
       </p>
     <% end %>
   <% end %>
-  <p class="govuk-body">You do not need a visa if you already have settled or pre-settled status under the EU Settlement Scheme, or if you are an Irish citizen.</p>
+  <p class="govuk-body">You do not need a visa if you already have settled or pre-settled status under the EU Settlement Scheme, or if you’re an Irish citizen.</p>
   <p class="govuk-body">Candidates with qualifications from non-UK institutions may need to provide evidence of comparability by applying for a <%= govuk_link_to("UK ENIC statement", "https://www.enic.org.uk") %>.</p>
 </div>
