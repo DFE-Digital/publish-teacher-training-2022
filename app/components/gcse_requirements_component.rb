@@ -41,16 +41,16 @@ private
     if course.accept_gcse_equivalency?
       "We’ll consider candidates who need to take a GCSE equivalency test in #{equivalencies}."
     else
-      'We will not consider candidates who need to take GCSE equivalency tests.'
+      "We will not consider candidates who need to take GCSE equivalency tests."
     end
   end
 
   def equivalencies
     subjects = []
-    subjects << 'English' if course.accept_english_gcse_equivalency.present?
-    subjects << 'maths' if course.accept_maths_gcse_equivalency.present?
-    subjects << 'science' if course.accept_science_gcse_equivalency.present?
+    subjects << "English" if course.accept_english_gcse_equivalency.present?
+    subjects << "maths" if course.accept_maths_gcse_equivalency.present?
+    subjects << "science" if course.accept_science_gcse_equivalency.present?
 
-    subjects.to_sentence(last_word_connector: ' and ')
+    subjects.to_sentence(last_word_connector: " and ")
   end
 end
