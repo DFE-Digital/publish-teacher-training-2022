@@ -154,7 +154,7 @@ RSpec.describe GcseRowContentComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Equivalency tests will be accepted in English and science")
+        expect(page).to have_content("Equivalency tests will be accepted in English or science")
       end
     end
 
@@ -172,7 +172,7 @@ RSpec.describe GcseRowContentComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Equivalency tests will be accepted in English, maths and science")
+        expect(page).to have_content("Equivalency tests will be accepted in English, maths or science")
       end
     end
 

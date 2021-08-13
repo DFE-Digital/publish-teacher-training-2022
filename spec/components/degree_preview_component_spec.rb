@@ -3,12 +3,15 @@ require "rails_helper"
 RSpec.describe DegreePreviewComponent, type: :component do
   let(:recruitment_cycle) { build(:recruitment_cycle) }
   let(:provider) { build(:provider, recruitment_cycle: recruitment_cycle) }
+  let(:level) { "secondary" }
+  let(:degree_grade) { "not_required" }
   let(:course) do
     build(
       :course,
       provider: provider,
       degree_grade: degree_grade,
       degree_subject_requirements: "Maths A level.",
+      level: level
     )
   end
 
@@ -61,6 +64,22 @@ RSpec.describe DegreePreviewComponent, type: :component do
 
       it "An undergraduate degree, or equivalent.'" do
         expect(rendered_component).to have_content("An undergraduate degree, or equivalent")
+      end
+    end
+
+    context "when the course is for a Secondary subject" do
+      let(:level) { "secondary" }
+
+      it "renders standard text about degree subject requirement'" do
+        expect(rendered_component).to have_content("Your degree subject should be in English or a similar subject. Otherwise you’ll need to prove your subject knowledge in some other way.")
+      end
+    end
+
+    context "when the course is for a Primary subject" do
+      let(:level) { "primary" }
+
+      it "should not render text about degree subject requirement'" do
+        expect(rendered_component).not_to have_content("Your degree subject should be in")
       end
     end
 

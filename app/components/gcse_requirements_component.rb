@@ -20,12 +20,29 @@ class GcseRequirementsComponent < ViewComponent::Base
 
 private
 
+  def required_gcse_summary_content(course)
+    case course.level
+    when "primary"
+      "Grade #{course.gcse_grade_required} (C) or above in English, maths and science, or equivalent qualification"
+    when "secondary"
+      "Grade #{course.gcse_grade_required} (C) or above in English and maths, or equivalent qualification"
+    end
+  end
+
   def required_gcse_content(course)
     case course.level
     when "primary"
-      "GCSE grade  #{course.gcse_grade_required} (C) or above in English, maths and science, or equivalent qualification"
+      "GCSE grade #{course.gcse_grade_required} (C) or above in English, maths and science, or equivalent qualification."
     when "secondary"
-      "GCSE grade #{course.gcse_grade_required} (C) or above in English and maths, or equivalent qualification"
+      "GCSE grade #{course.gcse_grade_required} (C) or above in English and maths, or equivalent qualification."
+    end
+  end
+
+  def pending_gcse_summary_content(course)
+    if course.accept_pending_gcse
+      "Candidates with pending GCSEs will be considered"
+    else
+      "Candidates with pending GCSEs will not be considered"
     end
   end
 
@@ -37,8 +54,16 @@ private
     end
   end
 
+  def gcse_equivalency_summary_content(course)
+    if course.accept_gcse_equivalency
+      "Equivalency tests will be accepted in #{equivalencies}."
+    else
+      "Equivalency tests will not be accepted"
+    end
+  end
+
   def gcse_equivalency_content(course)
-    if course.accept_gcse_equivalency?
+    if course.accept_gcse_equivalency
       "We’ll consider candidates who need to take a GCSE equivalency test in #{equivalencies}."
     else
       "We will not consider candidates who need to take GCSE equivalency tests."
@@ -51,6 +76,6 @@ private
     subjects << "maths" if course.accept_maths_gcse_equivalency.present?
     subjects << "science" if course.accept_science_gcse_equivalency.present?
 
-    subjects.to_sentence(last_word_connector: " and ")
+    subjects.to_sentence(last_word_connector: " or ", two_words_connector: " or ")
   end
 end
