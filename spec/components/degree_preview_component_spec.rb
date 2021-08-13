@@ -11,7 +11,7 @@ RSpec.describe DegreePreviewComponent, type: :component do
       provider: provider,
       degree_grade: degree_grade,
       degree_subject_requirements: "Maths A level.",
-      level: level
+      level: level,
     )
   end
 
