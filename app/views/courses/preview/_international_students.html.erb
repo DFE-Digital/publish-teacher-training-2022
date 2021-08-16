@@ -3,7 +3,7 @@
   <% if @provider.declared_visa_sponsorship? %>
     <p class="govuk-body">
       <% if @provider.cannot_sponsor_visas? %>
-       We cannot sponsor visas. You’ll need to
+       We’re unable to sponsor visas. You’ll need to
        <%= govuk_link_to(
          "get the right visa or status to study in the UK",
          "https://www.gov.uk/government/publications/train-to-teach-in-england-non-uk-applicants/train-to-teach-in-england-non-uk-applicants#visas-and-immigration",
@@ -13,7 +13,7 @@
       <%= govuk_link_to(
         visa_sponsorship_short_status(@provider),
         "https://www.gov.uk/government/publications/train-to-teach-in-england-non-uk-applicants/train-to-teach-in-england-non-uk-applicants#visas-and-immigration",
-      ) %>, but this is not guaranteed.
+      ) %>.
       <% end %>
     </p>
   <% else %>

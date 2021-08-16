@@ -139,7 +139,7 @@ feature "View and edit provider visa sponsorship", type: :feature do
         stub_api_v2_resource(course, include: "subjects,sites,site_statuses.site,provider.sites,accrediting_provider")
         visit preview_provider_recruitment_cycle_course_path("A0", "2022", course.course_code)
         expect(page).to have_content("International students")
-        expect(page).to have_content("We can sponsor Student visas, but this is not guaranteed.")
+        expect(page).to have_content("We can sponsor Student visas.")
       end
     end
 
@@ -160,7 +160,7 @@ feature "View and edit provider visa sponsorship", type: :feature do
         stub_api_v2_resource(course, include: "subjects,sites,site_statuses.site,provider.sites,accrediting_provider")
         visit preview_provider_recruitment_cycle_course_path("A0", "2022", course.course_code)
         expect(page).to have_content("International students")
-        expect(page).to have_content("We cannot sponsor visas. You’ll need to")
+        expect(page).to have_content("We’re unable to sponsor visas. You’ll need to")
         expect(page).to have_link(
           "get the right visa or status to study in the UK",
           href: "https://www.gov.uk/government/publications/train-to-teach-in-england-non-uk-applicants/train-to-teach-in-england-non-uk-applicants#visas-and-immigration",
