@@ -12,7 +12,6 @@ FactoryBot.define do
     provider_name { "ACME SCITT #{provider_code}" }
     provider_type { "lead_school" }
     accredited_body? { false }
-    can_add_more_sites? { true }
     courses { [] }
     train_with_us { Faker::Lorem.sentence(word_count: 100) }
     accredited_bodies { [] }
