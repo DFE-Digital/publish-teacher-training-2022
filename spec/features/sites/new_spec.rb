@@ -21,16 +21,6 @@ feature "Locations", type: :feature do
     end
   end
 
-  context "with provider with the maximum number of sites" do
-    let(:provider) { build(:provider, can_add_more_sites?: false) }
-
-    scenario "locations page should not have Add a location button" do
-      visit provider_recruitment_cycle_sites_path(provider.provider_code, current_recruitment_cycle.year)
-
-      expect(page).to have_content("you’ve reached the maximum number of locations available")
-    end
-  end
-
   context "without validation errors" do
     before do
       stub_api_v2_request(
