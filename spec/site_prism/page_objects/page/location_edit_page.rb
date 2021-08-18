@@ -1,6 +1,6 @@
 module PageObjects
   module Page
-    class LocationPage < PageObjects::Base
+    class LocationEditPage < PageObjects::Base
       set_url "/organisations/{provider_code}/{recruitment_cycle_year}/locations/{site_id}/edit"
       set_url_matcher(%r{/organisations/.*?/.*?/locations/\d+(/edit)?$})
 

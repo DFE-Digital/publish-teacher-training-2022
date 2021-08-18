@@ -65,6 +65,11 @@ module BreadcrumbHelper
     sites_breadcrumb << [@site_name_before_update, path]
   end
 
+  def delete_site_breadcrumb
+    path = delete_provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id)
+    sites_breadcrumb << [@site_name_before_update, path]
+  end
+
   def new_site_breadcrumb
     path = new_provider_recruitment_cycle_site_path(@provider.provider_code)
     sites_breadcrumb << ["Add a location", path]

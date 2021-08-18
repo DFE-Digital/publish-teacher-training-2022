@@ -10,4 +10,9 @@
       <%= site.urn.presence || "<strong class='govuk-error-message govuk-\!-display-inline'>(Missing)</strong>".html_safe %>
     </td>
   <% end %>
+  <% if @provider.sites.count > 1 %>
+    <td class="govuk-table__cell">
+      <%= govuk_link_to "Delete", delete_provider_recruitment_cycle_site_path(@provider.provider_code, site.recruitment_cycle_year, site.id), class: "app-link--destructive", data: { qa: "location__delete-link" } %>
+    </td>
+  <% end %>
 </tr>

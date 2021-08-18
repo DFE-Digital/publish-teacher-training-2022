@@ -1,6 +1,6 @@
 class SitesController < ApplicationController
   before_action :build_provider, :build_recruitment_cycle
-  before_action :build_site, only: %i[edit update]
+  before_action :build_site, only: %i[edit update destroy delete]
 
   def new
     @site = Site.new
@@ -37,6 +37,18 @@ class SitesController < ApplicationController
       @errors = @site.errors.messages
 
       render :edit
+    end
+  end
+
+  def delete; end
+
+  def destroy
+    @site.provider_code = @provider.provider_code
+    if params[:site][:confirm_location_name] == @site.location_name
+      @site.destroy
+      redirect_to provider_recruitment_cycle_sites_path(@provider.provider_code, @provider.recruitment_cycle_year), flash: { success: "#{@site.location_name} has been deleted" }
+    else
+      redirect_to delete_provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id), flash: { error: { id: "delete-error", message: "Enter the site name (#{@site.location_name}) to delete this site" } }
     end
   end
 

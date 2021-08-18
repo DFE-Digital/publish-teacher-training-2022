@@ -220,7 +220,9 @@ Rails.application.routes.draw do
         put "/gcses-pending-or-equivalency-tests", on: :member, to: "courses/gcse_requirements#update"
       end
 
-      resources :sites, path: "locations", on: :member, except: %i[destroy show]
+      resources :sites, path: "locations", on: :member, except: %i[show] do
+        get :delete, on: :member
+      end
 
       scope module: "providers" do
         resources :allocations, only: %i[index], on: :member, param: :training_provider_code do

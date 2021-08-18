@@ -10,7 +10,7 @@ feature "Edit locations", type: :feature do
 
   let(:provider_code) { provider.provider_code }
   let(:locations_page) { PageObjects::Page::LocationsPage.new }
-  let(:location_page) { PageObjects::Page::LocationPage.new }
+  let(:location_page) { PageObjects::Page::LocationEditPage.new }
 
   describe "when visiting a site that doesn’t exist" do
     before do

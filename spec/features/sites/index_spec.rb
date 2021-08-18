@@ -18,7 +18,7 @@ feature "View locations", type: :feature do
   let(:root_page) { PageObjects::Page::RootPage.new }
   let(:organisation_page) { PageObjects::Page::Organisations::OrganisationPage.new }
   let(:locations_page) { PageObjects::Page::LocationsPage.new }
-  let(:location_page) { PageObjects::Page::LocationPage.new }
+  let(:location_page) { PageObjects::Page::LocationEditPage.new }
   let(:user) { build(:user) }
 
   before do
@@ -64,8 +64,23 @@ feature "View locations", type: :feature do
     expect(locations_page.title).to have_content("Locations")
     expect(locations_page.locations.size).to eq(3)
     expect(locations_page.locations.first).to have_hyperlink
+    expect(locations_page.locations.first).to have_delete_link
     expect(locations_page.locations.first.cell.text).to eq("Main site 1")
     expect(locations_page).to have_add_a_location_link
+  end
+
+  context "with only one location" do
+    let(:sites) do
+      [
+        build(:site, location_name: "Main site 1"),
+      ]
+    end
+
+    scenario "it does not provide a delete link" do
+      expect(locations_page).to be_displayed(provider_code: provider_code)
+      expect(locations_page.locations.size).to eq(1)
+      expect(locations_page.locations.first).not_to have_delete_link
+    end
   end
 
   scenario "it shows one location" do
