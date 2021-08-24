@@ -4,9 +4,9 @@ feature "View locations", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:sites) do
     [
-      build(:site, location_name: "Main site 1"),
-      build(:site, location_name: "Main site 2"),
-      build(:site, location_name: "Main site 3"),
+      build(:site, location_name: "Main site 1", deletable?: true),
+      build(:site, location_name: "Main site 2", deletable?: true),
+      build(:site, location_name: "Main site 3", deletable?: true),
     ]
   end
 
@@ -69,10 +69,10 @@ feature "View locations", type: :feature do
     expect(locations_page).to have_add_a_location_link
   end
 
-  context "with only one location" do
+  context "with non-deletable sites" do
     let(:sites) do
       [
-        build(:site, location_name: "Main site 1"),
+        build(:site, location_name: "Main site 1", deletable?: false),
       ]
     end
 

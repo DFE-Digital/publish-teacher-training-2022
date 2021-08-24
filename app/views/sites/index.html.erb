@@ -27,9 +27,7 @@
           <% if urn_required?(@recruitment_cycle.year.to_i) %>
             <th class="govuk-table__header" scope="col">URN</th>
           <% end %>
-          <% if @provider.sites.count > 1 %>
-            <th class="govuk-table__header" scope="col">Actions</th>
-          <% end %>
+          <th class="govuk-table__header" scope="col">Actions</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
