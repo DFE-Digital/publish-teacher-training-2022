@@ -46,9 +46,21 @@ class SitesController < ApplicationController
     @site.provider_code = @provider.provider_code
     if params[:site][:confirm_location_name] == @site.location_name
       @site.destroy
-      redirect_to provider_recruitment_cycle_sites_path(@provider.provider_code, @provider.recruitment_cycle_year), flash: { success: "#{@site.location_name} has been deleted" }
+      redirect_to provider_recruitment_cycle_sites_path(
+        @provider.provider_code,
+        @provider.recruitment_cycle_year,
+      ), flash: { success: "#{@site.location_name} has been deleted" }
     else
-      redirect_to delete_provider_recruitment_cycle_site_path(@provider.provider_code, @site.recruitment_cycle_year, @site.id), flash: { error: { id: "delete-error", message: "Enter the site name (#{@site.location_name}) to delete this site" } }
+      redirect_to delete_provider_recruitment_cycle_site_path(
+        @provider.provider_code,
+        @site.recruitment_cycle_year,
+        @site.id,
+      ), flash: {
+        error: {
+          id: "delete-error",
+          message: "Enter the site name (#{@site.location_name}) to delete this site",
+        },
+      }
     end
   end
 
