@@ -110,7 +110,7 @@ class CoursesController < ApplicationController
         ["Qualifications needed", "required_qualifications"],
         ["Personal qualities", "personal_qualities"],
         ["Other requirements", "other_requirements"],
-      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      ].reject { |_name, field| field == "required_qualifications" && @course.recruitment_cycle_year.to_i > 2021 }.keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
