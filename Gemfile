@@ -107,7 +107,7 @@ group :development, :test do
 
   # Testing framework
   gem "rspec-its"
-  gem "rspec-rails", "~> 5.0.1"
+  gem "rspec-rails", "~> 5.0.2"
 
   # Make HTTP requests fun again
   gem "httparty"
@@ -121,7 +121,7 @@ group :development do
   gem "brakeman"
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem "listen", ">= 3.0.5", "< 3.7"
+  gem "listen", ">= 3.0.5", "< 3.8"
   gem "web-console", ">= 3.3.0"
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
