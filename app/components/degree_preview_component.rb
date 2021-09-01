@@ -8,6 +8,17 @@ class DegreePreviewComponent < ViewComponent::Base
 
 private
 
+  def subject_name(course)
+    case course.subjects.count
+    when 1
+      course.subjects.first.subject_name
+    when 2
+      course.subjects.first.subject_name + " or " + course.subjects.last.subject_name
+    else
+      course.name
+    end
+  end
+
   def degree_grade_content(course)
     case course.degree_grade
     when "two_one"

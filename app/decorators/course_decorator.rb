@@ -290,6 +290,10 @@ class CourseDecorator < ApplicationDecorator
     end
   end
 
+  def accept_gcse_equivalency?
+    object.accept_gcse_equivalency
+  end
+
 private
 
   def not_on_find

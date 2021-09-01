@@ -1,14 +1,11 @@
 <% if course.gcse_section_complete? %>
   <p class="govuk-body">
-    <%= required_gcse_content(course) %>
+    <%= required_gcse_summary_content(course) %>
   </p>
 
   <p class="govuk-body">
-    <%= pending_gcse_content(course) %>
-  </p>
-
-  <p class="govuk-body">
-    <%= gcse_equivalency_content(course) %>
+    <%= pending_gcse_summary_content(course) %>
+    <%= gcse_equivalency_summary_content(course) %>
   </p>
 
   <% if course.additional_gcse_equivalencies %>

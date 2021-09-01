@@ -82,7 +82,7 @@ feature "GCSE equivalency requirements", type: :feature do
 
     expect(page).to have_content("Grade 4 (C) or above in English and maths")
     expect(page).to have_content("Candidates with pending GCSEs will be considered")
-    expect(page).to have_content("Equivalency tests will be accepted in English and maths")
+    expect(page).to have_content("Equivalency tests will be accepted in English or maths")
     expect(page).to have_content("Cycling Proficiency")
   end
 

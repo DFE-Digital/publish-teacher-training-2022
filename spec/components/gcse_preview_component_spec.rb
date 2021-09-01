@@ -31,7 +31,7 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
   context "when the gcse section is complete" do
     context "when pending gcse's are allowed" do
-      it "renders 'Candidates with pending GCSEs will be considered'" do
+      it "renders 'We’ll consider candidates who are currently taking GCSEs.'" do
         course = build(
           :course,
           provider: provider,
@@ -41,12 +41,12 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Candidates with pending GCSEs will be considered")
+        expect(page).to have_content("We’ll consider candidates who are currently taking GCSEs.")
       end
     end
 
     context "when pending gcse's are allowed" do
-      it "renders 'Candidates with pending GCSEs will not be considered'" do
+      it "renders 'We will not consider candidates with pending GCSEs.'" do
         course = build(
           :course,
           provider: provider,
@@ -56,12 +56,12 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Candidates with pending GCSEs will not be considered")
+        expect(page).to have_content("We will not consider candidates with pending GCSEs.")
       end
     end
 
     context "when course is primary" do
-      it "renders 'Grade 4 (C) or above in English, maths and science, or equivalent qualification'" do
+      it "renders 'GCSE grade 4 (C) or above in English, maths and science, or equivalent qualification'" do
         course = build(
           :course,
           provider: provider,
@@ -72,12 +72,12 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Grade 4 (C) or above in English, maths and science, or equivalent qualification")
+        expect(page).to have_content("GCSE grade 4 (C) or above in English, maths and science, or equivalent qualification.")
       end
     end
 
     context "when course is secondary" do
-      it "renders 'Grade 4 (C) or above in English and maths, or equivalent qualification'" do
+      it "renders 'GCSE grade 4 (C) or above in English and maths, or equivalent qualification'" do
         course = build(
           :course,
           provider: provider,
@@ -88,7 +88,7 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Grade 4 (C) or above in English and maths, or equivalent qualification")
+        expect(page).to have_content("GCSE grade 4 (C) or above in English and maths, or equivalent qualification.")
       end
     end
 
@@ -102,8 +102,8 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).not_to have_content("Grade 4 (C) or above in English and maths")
-        expect(page).not_to have_content("Grade 4 (C) or above in English, maths and science")
+        expect(page).not_to have_content("GCSE grade 4 (C) or above in English and maths")
+        expect(page).not_to have_content("GCSE grade 4 (C) or above in English, maths and science")
       end
     end
 
@@ -120,7 +120,7 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Grade 5 (C) or above in English, maths and science, or equivalent qualification")
+        expect(page).to have_content("GCSE grade 5 (C) or above in English, maths and science, or equivalent qualification.")
       end
     end
 
@@ -136,7 +136,7 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Equivalency tests will not be accepted")
+        expect(page).to have_content("We will not consider candidates who need to take GCSE equivalency tests.")
       end
     end
 
@@ -152,7 +152,7 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Equivalency tests will be accepted in English")
+        expect(page).to have_content("We’ll consider candidates who need to take a GCSE equivalency test in English.")
       end
     end
 
@@ -169,7 +169,7 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Equivalency tests will be accepted in English and science")
+        expect(page).to have_content("We’ll consider candidates who need to take a GCSE equivalency test in English or science.")
       end
     end
 
@@ -187,7 +187,7 @@ RSpec.describe GcsePreviewComponent, type: :component do
 
         render_inline(described_class.new(course: course))
 
-        expect(page).to have_content("Equivalency tests will be accepted in English, maths and science")
+        expect(page).to have_content("We’ll consider candidates who need to take a GCSE equivalency test in English, maths or science.")
       end
     end
 
