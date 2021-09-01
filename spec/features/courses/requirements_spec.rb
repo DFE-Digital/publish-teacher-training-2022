@@ -210,6 +210,53 @@ feature "Course requirements", type: :feature do
       expect(course_requirements_page.other_requirements.value).to eq(course_2.other_requirements)
     end
 
+    context "when recruitment cycle after 2021" do
+      let(:course) do
+        build :course,
+              name: "English",
+              provider: provider,
+              required_qualifications: "Required qualifications",
+              personal_qualities: "Personal qualities",
+              other_requirements: "Other requirements",
+              recruitment_cycle: next_recruitment_cycle
+      end
+
+      let(:provider) do
+        build(:provider, provider_code: "A0", recruitment_cycle: next_recruitment_cycle)
+      end
+
+      before do
+        signed_in_user
+        stub_api_v2_resource(next_recruitment_cycle)
+        stub_api_v2_resource(provider, include: "courses.accrediting_provider")
+        stub_api_v2_resource(provider)
+        stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+        stub_api_v2_resource(next_cycle_course, include: "subjects,sites,provider.sites,accrediting_provider")
+        stub_api_v2_resource(course_2, include: "subjects,sites,provider.sites,accrediting_provider")
+
+        stub_api_v2_request(
+          "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+          "/providers/#{provider.provider_code}" \
+          "?include=courses.accrediting_provider",
+          provider_for_copy_from_list.to_jsonapi(include: %i[courses accrediting_provider]),
+        )
+      end
+
+      scenario "only personal and other requirements copied over" do
+        course_requirements_page.load_with_course(course)
+        course_requirements_page.copy_content.copy(course_2)
+
+        [
+          "Your changes are not yet saved",
+          "Personal qualities",
+          "Other requirements",
+        ].each do |name|
+          expect(course_requirements_page.warning_message).to have_content(name)
+        end
+        expect(course_requirements_page.warning_message).to_not have_content("Qualifications needed")
+      end
+    end
+
     scenario "only fields with values are copied if the source was incomplete" do
       course_requirements_page.load_with_course(course_2)
       course_requirements_page.copy_content.copy(course_3)

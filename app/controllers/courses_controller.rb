@@ -106,11 +106,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[required_qualifications personal_qualities other_requirements])
 
     if params[:copy_from].present?
-      @copied_fields = [
-        ["Qualifications needed", "required_qualifications"],
-        ["Personal qualities", "personal_qualities"],
-        ["Other requirements", "other_requirements"],
-      ].reject { |_name, field| field == "required_qualifications" && @course.recruitment_cycle_year.to_i > 2021 }.keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = get_copied_fields.keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
@@ -372,5 +368,20 @@ private
     # By stripping commas out the backend will not reject such input.
     params[:course][:fee_uk_eu].gsub!(",", "") if params[:course][:fee_uk_eu].present?
     params[:course][:fee_international].gsub!(",", "") if params[:course][:fee_international].present?
+  end
+
+  def get_copied_fields
+    if @course.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE
+      [
+        ["Personal qualities", "personal_qualities"],
+        ["Other requirements", "other_requirements"],
+      ]
+    else
+      [
+        ["Qualifications needed", "required_qualifications"],
+        ["Personal qualities", "personal_qualities"],
+        ["Other requirements", "other_requirements"],
+      ]
+    end
   end
 end
