@@ -29,7 +29,7 @@ module ProviderHelper
     elsif provider.can_only_sponsor_skilled_worker_visa?
       "Skilled Worker visas"
     else
-      "Visas"  # TODO: drop this? Don't think we'd ever reach this condition.
+      "Visas" # TODO: drop this? Don't think we'd ever reach this condition.
     end
   end
 
