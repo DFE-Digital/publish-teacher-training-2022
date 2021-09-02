@@ -23,7 +23,7 @@ feature "View and edit provider visa sponsorship", type: :feature do
 
     it "does not render visa sponsorship prompt and link" do
       visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-      expect(page).not_to have_content "Select if you can sponsor visas"
+      expect(page).not_to have_content "Select if visas can be sponsored"
     end
 
     it "course preview page does not render international students section" do
@@ -55,7 +55,7 @@ feature "View and edit provider visa sponsorship", type: :feature do
       it "shows a call to action in summary card" do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
         within find("[data-qa='enrichment__can_sponsor_student_visa']") do
-          click_link "Select if you can sponsor visas"
+          click_link "Select if visas can be sponsored"
         end
         expect(page).to have_content("#{provider.provider_name} Visa sponsorship")
       end
@@ -70,10 +70,10 @@ feature "View and edit provider visa sponsorship", type: :feature do
 
       it "visa sponsorship form renders validation errors if I submit without selecting whether provider sponsors visas" do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        click_link "Select if you can sponsor visas"
+        click_link "Select if visas can be sponsored"
         click_button "Save"
-        expect(page).to have_content("Select if you can sponsor Skilled Worker visas")
-        expect(page).to have_content("Select if you can sponsor Student visas")
+        expect(page).to have_content("Select if candidates can get a sponsored Skilled Worker visa")
+        expect(page).to have_content("Select if candidates can get a sponsored Student visa")
       end
 
       it "visa sponsorship form updates the provider if I submit valid values" do
@@ -84,11 +84,11 @@ feature "View and edit provider visa sponsorship", type: :feature do
           )
         end
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        click_link "Select if you can sponsor visas"
-        within_fieldset("Can you sponsor Student visas?") do
+        click_link "Select if visas can be sponsored"
+        within_fieldset("Can candidates get a sponsored Student visa for your fee-paying courses?") do
           choose "Yes"
         end
-        within_fieldset("Can you sponsor Skilled Worker visas?") do
+        within_fieldset("Can candidates get a sponsored Skilled Worker visa for your salaried courses?") do
           choose "No"
         end
         click_button "Save and publish changes"
@@ -109,7 +109,7 @@ feature "View and edit provider visa sponsorship", type: :feature do
 
       it "about organisation page displays the current visa sponsorship status" do
         visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        expect(page).to have_content("You can sponsor Student visas")
+        expect(page).to have_content("Student visas can be sponsored")
       end
 
       it "I can change my answers" do
@@ -125,10 +125,10 @@ feature "View and edit provider visa sponsorship", type: :feature do
           click_link "Change"
         end
 
-        within_fieldset("Can you sponsor Student visas?") do
+        within_fieldset("Can candidates get a sponsored Student visa for your fee-paying courses?") do
           choose "No"
         end
-        within_fieldset("Can you sponsor Skilled Worker visas?") do
+        within_fieldset("Can candidates get a sponsored Skilled Worker visa for your salaried courses?") do
           choose "Yes"
         end
         click_button "Save and publish changes"
