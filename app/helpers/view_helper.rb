@@ -143,9 +143,9 @@ private
 
   def base_errors_hash(provider_code, course)
     {
-      "You must say whether you can sponsor visas" =>
+      "You must say whether candidates can get a visa sponsored" =>
         provider_recruitment_cycle_visas_path(provider_code, course.recruitment_cycle_year),
-      "Select if you can sponsor visas" =>
+      "Select if visas can be sponsored" =>
         provider_recruitment_cycle_visas_path(provider_code, course.recruitment_cycle_year),
       "You must provide a Unique Reference Number (URN) for all course locations" =>
         provider_recruitment_cycle_sites_path(provider_code, course.recruitment_cycle_year),
