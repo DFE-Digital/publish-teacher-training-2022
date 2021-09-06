@@ -70,7 +70,7 @@
           %w[can_sponsor_student_visa can_sponsor_skilled_worker_visa],
           truncate_value: false,
           change_link: provider.declared_visa_sponsorship? ? provider_recruitment_cycle_visas_path(@provider.provider_code, @provider.recruitment_cycle_year) : nil,
-          change_link_visually_hidden: "if you can sponsor visas",
+          change_link_visually_hidden: "if candidates can get visa sponsorship",
         )) %>
       <% end %>
     <% end %>

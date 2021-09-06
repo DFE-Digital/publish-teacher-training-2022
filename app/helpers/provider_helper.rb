@@ -13,9 +13,9 @@ module ProviderHelper
     if !provider.declared_visa_sponsorship?
       visa_sponsorship_call_to_action(provider)
     elsif provider.can_sponsor_student_visa || provider.can_sponsor_skilled_worker_visa
-      "You can #{visa_sponsorship_short_status(provider)}"
+      "#{visa_sponsorship_short_status(provider)} can be sponsored"
     else
-      "You cannot sponsor visas"
+      "Visas cannot be sponsored"
     end
   end
 
@@ -23,13 +23,11 @@ module ProviderHelper
     if !provider.declared_visa_sponsorship?
       visa_sponsorship_call_to_action(provider)
     elsif provider.can_sponsor_all_visas?
-      "sponsor Student and Skilled Worker visas"
+      "Student and Skilled Worker visas"
     elsif provider.can_only_sponsor_student_visa?
-      "sponsor Student visas"
+      "Student visas"
     elsif provider.can_only_sponsor_skilled_worker_visa?
-      "sponsor Skilled Worker visas"
-    else
-      "sponsor visas"
+      "Skilled Worker visas"
     end
   end
 
@@ -39,7 +37,7 @@ private
     govuk_inset_text(classes: "app-inset-text--narrow-border app-inset-text--important") do
       raw("<p class=\"govuk-heading-s app-inset-text__title\">Can you sponsor visas?</p>") +
         govuk_link_to(
-          "Select if you can sponsor visas",
+          "Select if visas can be sponsored",
           provider_recruitment_cycle_visas_path(
             provider.provider_code,
             provider.recruitment_cycle_year,
