@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - qa
   pull_request:
     branches:
       - master
@@ -126,11 +125,11 @@ jobs:
         if: ${{ steps.wait_for_review_app_deployment.outputs.conclusion != '' && steps.wait_for_review_app_deployment.outputs.conclusion != 'success' }}
         run: exit 1
 
-      - name: 'Notify #twd_publish_register_tech on failure'
+      - name: 'Notify #twd_publish_tech on failure'
         if: ${{ failure() && github.ref == 'refs/heads/master' }}
         uses: rtCamp/action-slack-notify@master
         env:
-          SLACK_CHANNEL: twd_publish_register_tech
+          SLACK_CHANNEL: twd_publish_tech
           SLACK_COLOR: '#ef5343'
           SLACK_ICON_EMOJI: ':github-logo:'
           SLACK_USERNAME: Publish Teacher Training
