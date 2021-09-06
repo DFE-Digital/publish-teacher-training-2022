@@ -22,9 +22,9 @@
         <%= page_title %>
       </h1>
 
-      <p class="govuk-body">If you’re unsure if your courses can sponsor visas, check the <a href="https://www.gov.uk/government/publications/register-of-licensed-sponsors-students" class="govuk-link">Register of Student sponsors</a> and <a href="https://www.gov.uk/government/publications/register-of-licensed-sponsors-workers" class="govuk-link">Register of Worker and Temporary Worker licensed sponsors</a>.</p>
+      <p class="govuk-body">If you’re unsure if your courses can sponsor visas, check the <%= govuk_link_to("Register of Student sponsors", "https://www.gov.uk/government/publications/register-of-licensed-sponsors-students") %> and <%= govuk_link_to("Register of Worker and Temporary Worker licensed sponsors", "https://www.gov.uk/government/publications/register-of-licensed-sponsors-workers") %>.</p>
 
-      <p class="govuk-body">Find out how to <a href="https://www.gov.uk/guidance/recruit-trainee-teachers-from-overseas-accredited-itt-providers#recruit-by-becoming-a-visa-sponsor" class="govuk-link">become a visa sponsor</a>.</p>
+      <p class="govuk-body">Find out how to <%= govuk_link_to("become a visa sponsor", "https://www.gov.uk/guidance/recruit-trainee-teachers-from-overseas-accredited-itt-providers#recruit-by-becoming-a-visa-sponsor") %>.</p>
 
 
       <%= f.govuk_radio_buttons_fieldset(:can_sponsor_student_visa,
