@@ -8,6 +8,7 @@ module Courses
         @subject_requirements_form = SubjectRequirementsForm.build_from_course(@course)
         if params[:copy_from].present?
           @copied_fields = [
+            ["Additional degree subject requirements", "additional_degree_subject_requirements"],
             ["Degree subject requirements", "degree_subject_requirements"],
           ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
           @subject_requirements_form = SubjectRequirementsForm.build_from_course(course)
