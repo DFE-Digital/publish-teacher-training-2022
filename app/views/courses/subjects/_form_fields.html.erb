@@ -17,7 +17,7 @@
 
     <% if course.level == "secondary" %>
       <%= govuk_details(
-        summary: "Add a second subject (optional)",
+        summary_text: "Add a second subject (optional)",
         classes: "govuk-!-margin-top-6 govuk-!-margin-bottom-0",
         html_attributes: {
           open: course.selected_subject_ids.second,

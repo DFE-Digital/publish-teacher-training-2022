@@ -8,7 +8,7 @@
     &lt;<%= access_request.email_address %>&gt;
   </td>
   <td class="govuk-table__cell">
-    <%= govuk_link_to "Approve", confirm_access_request_path(access_request.id), button: true, class: "govuk-!-margin-bottom-0", data: { qa: "access-request__approve" } %>
+    <%= govuk_button_link_to "Approve", confirm_access_request_path(access_request.id), class: "govuk-!-margin-bottom-0", data: { qa: "access-request__approve" } %>
   </td>
   <td class="govuk-table__cell" data-qa="access-request__organisation"><%= access_request.organisation %></td>
 </tr>

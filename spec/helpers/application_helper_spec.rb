@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.feature "View helpers", type: :helper do
   describe "#enrichment_error_link" do
     context "with a course" do
@@ -14,32 +16,52 @@ RSpec.feature "View helpers", type: :helper do
   end
 
   describe "#enrichment_summary" do
-    it "returns correct content" do
-      output = helper.enrichment_summary(:course, "About course", "Something about the course", %w[about])
-      expect(output[:key]).to eq("About course")
-      expect(output[:value]).to eq("Something about the course")
-      expect(output[:classes]).to eq("app-summary-list__row--truncate")
-      expect(output[:html_attributes]).to eq({ data: { qa: "enrichment__about" } })
+    let(:summary_list) { GovukComponent::SummaryListComponent.new }
+    subject { render(summary_list) }
+
+    context "with a value" do
+      before do
+        helper.enrichment_summary(summary_list, :course, "About course", "Something about the course", %w[about])
+      end
+
+      it "injects the provided content into the provided summary list row" do
+        expect(subject).to have_css(%(.govuk-summary-list__row[data-qa="enrichment__about"]))
+        expect(subject).to have_css(".govuk-summary-list__key", text: "About course")
+        expect(subject).to have_css(".govuk-summary-list__value.app-summary-list__value--truncate", text: "Something about the course")
+      end
     end
 
     context "with no value" do
+      before do
+        helper.enrichment_summary(summary_list, :course, "About course", "", %w[about])
+      end
+
       it "returns 'Empty' when value is empty" do
-        output = helper.enrichment_summary(:course, "About course", "", %w[about])
-        expect(output[:value]).to eq("<span class=\"app-!-colour-muted\">Empty</span>")
+        expect(subject).to have_css(".govuk-summary-list__key", text: "About course")
+
+        expect(subject).to have_css(".govuk-summary-list__value.app-summary-list__value--truncate") do |value_container|
+          expect(value_container).to have_css("span.app-!-colour-muted", text: "Empty")
+        end
       end
     end
 
     context "with errors" do
+      let(:error_message) { "Enter something about the course" }
       before do
         @provider = Provider.new(build(:provider).attributes)
         @course = Course.new(build(:course).attributes)
-        @errors = { about_course: ["Enter something about the course"] }
+        @errors = { about_course: [error_message] }
       end
 
-      it "returns correct content" do
-        output = helper.enrichment_summary(:course, "About course", "", [:about_course])
-        expect(output[:key]).to eq("About course")
-        expect(output[:value]).to eq("<div class=\"govuk-inset-text app-inset-text--narrow-border app-inset-text--error\"><a class=\"govuk-link\" href=\"/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper\">Enter something about the course</a></div>")
+      before do
+        helper.enrichment_summary(summary_list, :course, "About course", "", [:about_course])
+      end
+
+      it "renders a value containing an error link within inset text" do
+        expect(subject).to have_css(".govuk-summary-list__key", text: "About course")
+        expect(subject).to have_css(".govuk-summary-list__value > .app-inset-text--error > a", text: error_message)
+
+        expect(subject).to have_link(error_message, href: "/organisations/#{@provider.provider_code}/#{@course.recruitment_cycle_year}/courses/#{@course.course_code}/about?display_errors=true#about_course_wrapper")
       end
     end
   end
