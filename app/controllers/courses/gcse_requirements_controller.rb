@@ -1,15 +1,15 @@
 module Courses
   class GcseRequirementsController < ApplicationController
-    include CourseFetchConcern
+    include CourseFetcher
 
     decorates_assigned :course
     before_action :fetch_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
-    before_action :fetch_copy_course, if: -> { params[:copy_from].present? }
+    before_action :fetch_course_to_copy_from, if: -> { params[:copy_from].present? }
     before_action :fetch_courses, only: %i[edit]
 
     def edit
       if params[:copy_from].present?
-        @copied_fields = Courses::CloneableFields::GCSE.select { |_name, field| copy_field_if_present_in_source_course(field) }
+        @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::GCSE_FIELDS, @source_course, @course)
       end
 
       @gcse_requirements_form = GcseRequirementsForm.build_from_course(@course)
@@ -71,11 +71,6 @@ module Courses
 
     def redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
       redirect_to provider_recruitment_cycle_course_path unless @course.provider.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE
-    end
-
-    def copy_field_if_present_in_source_course(field)
-      source_value = @source_course[field]
-      course[field] = source_value if source_value.present?
     end
   end
 end

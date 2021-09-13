@@ -7,7 +7,7 @@ module Courses
       def edit
         set_backlink
         if params[:copy_from].present?
-          @copied_fields = Courses::CloneableFields::SUBJECT_REQUIREMENTS.select { |_name, field| copy_field_if_present_in_source_course(field) }
+          @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::SUBJECT_REQUIREMENTS_FIELDS, @source_course, @course)
         end
         @subject_requirements_form = SubjectRequirementsForm.build_from_course(course)
       end

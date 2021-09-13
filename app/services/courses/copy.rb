@@ -1,6 +1,6 @@
 module Courses
-  module CloneableFields
-    GCSE = [
+  class Copy
+    GCSE_FIELDS = [
       ["Accept pending GCSE", "accept_pending_gcse"],
       ["Accept GCSE equivalency", "accept_gcse_equivalency"],
       ["Accept English GCSE equivalency", "accept_english_gcse_equivalency"],
@@ -8,18 +8,18 @@ module Courses
       ["Additional GCSE equivalencies", "additional_gcse_equivalencies"],
     ].freeze
 
-    SUBJECT_REQUIREMENTS = [
+    SUBJECT_REQUIREMENTS_FIELDS = [
       ["Additional degree subject requirements", "additional_degree_subject_requirements"],
       ["Degree subject requirements", "degree_subject_requirements"],
     ].freeze
 
-    ABOUT = [
+    ABOUT_FIELDS = [
       ["About the course", "about_course"],
       ["Interview process", "interview_process"],
       ["How school placements work", "how_school_placements_work"],
     ].freeze
 
-    FEES = [
+    FEES_FIELDS = [
       ["Course length", "course_length"],
       ["Fee for UK students", "fee_uk_eu"],
       ["Fee for international students", "fee_international"],
@@ -27,20 +27,27 @@ module Courses
       ["Financial support", "financial_support"],
     ].freeze
 
-    SALARY = [
+    SALARY_FIELDS = [
       ["Course length", "course_length"],
       ["Salary details", "salary_details"],
     ].freeze
 
-    POST_2022_CYCLE_REQUIREMENTS = [
+    POST_2022_CYCLE_REQUIREMENTS_FIELDS = [
       ["Personal qualities", "personal_qualities"],
       ["Other requirements", "other_requirements"],
     ].freeze
 
-    PRE_2022_CYCLE_REQUIREMENTS = [
+    PRE_2022_CYCLE_REQUIREMENTS_FIELDS = [
       ["Qualifications needed", "required_qualifications"],
       ["Personal qualities", "personal_qualities"],
       ["Other requirements", "other_requirements"],
     ].freeze
+
+    def self.get_present_fields_in_source_course(fields, source_course, course)
+      fields.select do |_name, field|
+        source_value = source_course[field]
+        course[field] = source_value if source_value.present?
+      end
+    end
   end
 end

@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  include CourseFetchConcern
+  include CourseFetcher
 
   decorates_assigned :course
   decorates_assigned :provider
@@ -10,7 +10,7 @@ class CoursesController < ApplicationController
   before_action :fetch_course, except: %i[index preview]
   before_action :build_course_for_preview, only: :preview
   before_action :filter_courses, only: %i[about requirements fees salary]
-  before_action :fetch_copy_course, if: -> { params[:copy_from].present? }
+  before_action :fetch_course_to_copy_from, if: -> { params[:copy_from].present? }
   before_action :build_provider_from_provider_code, except: %i[index]
 
   def index; end
@@ -96,7 +96,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[about_course interview_process how_school_placements_work])
 
     if params[:copy_from].present?
-      @copied_fields = Courses::CloneableFields::ABOUT.select { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::ABOUT_FIELDS, @source_course, @course)
     end
   end
 
@@ -104,7 +104,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[required_qualifications personal_qualities other_requirements])
 
     if params[:copy_from].present?
-      @copied_fields = get_requirement_fields.select { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::Copy.get_present_fields_in_source_course(get_requirement_fields, @source_course, @course)
     end
   end
 
@@ -112,7 +112,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[course_length fee_uk_eu fee_international fee_details financial_support])
 
     if params[:copy_from].present?
-      @copied_fields = Courses::CloneableFields::FEES.select { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::FEES_FIELDS, @source_course, @course)
     end
   end
 
@@ -120,7 +120,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[course_length salary_details])
 
     if params[:copy_from].present?
-      @copied_fields = Courses::CloneableFields::SALARY.select { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::SALARY_FIELDS, @source_course, @course)
     end
   end
 
@@ -247,11 +247,6 @@ private
     @self_accredited_courses = @self_accredited_courses&.reject { |c| c.id == course.id }
   end
 
-  def copy_field_if_present_in_source_course(field)
-    source_value = @source_course[field]
-    course[field] = source_value if source_value.present?
-  end
-
   def initialise_errors
     @errors = {}
   end
@@ -288,9 +283,9 @@ private
 
   def get_requirement_fields
     if @course.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE
-      Courses::CloneableFields::POST_2022_CYCLE_REQUIREMENTS
+      Courses::Copy::POST_2022_CYCLE_REQUIREMENTS_FIELDS
     else
-      Courses::CloneableFields::PRE_2022_CYCLE_REQUIREMENTS
+      Courses::Copy::PRE_2022_CYCLE_REQUIREMENTS_FIELDS
     end
   end
 end
