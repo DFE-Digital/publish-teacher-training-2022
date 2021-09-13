@@ -1,16 +1,16 @@
 class CoursesController < ApplicationController
-  include CourseBuilderConcern
+  include CourseFetchConcern
 
   decorates_assigned :course
   decorates_assigned :provider
 
   before_action :initialise_errors
   before_action :build_recruitment_cycle
-  before_action :build_courses, only: %i[index about requirements fees salary]
-  before_action :build_course, except: %i[index preview]
+  before_action :fetch_courses, only: %i[index about requirements fees salary]
+  before_action :fetch_course, except: %i[index preview]
   before_action :build_course_for_preview, only: :preview
   before_action :filter_courses, only: %i[about requirements fees salary]
-  before_action :build_copy_course, if: -> { params[:copy_from].present? }
+  before_action :fetch_copy_course, if: -> { params[:copy_from].present? }
   before_action :build_provider_from_provider_code, except: %i[index]
 
   def index; end
@@ -96,11 +96,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[about_course interview_process how_school_placements_work])
 
     if params[:copy_from].present?
-      @copied_fields = [
-        ["About the course", "about_course"],
-        ["Interview process", "interview_process"],
-        [@course.decorate.placements_heading, "how_school_placements_work"],
-      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::CloneableFields::ABOUT.select { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
@@ -108,7 +104,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[required_qualifications personal_qualities other_requirements])
 
     if params[:copy_from].present?
-      @copied_fields = get_copied_fields.keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = get_requirement_fields.select { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
@@ -116,13 +112,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[course_length fee_uk_eu fee_international fee_details financial_support])
 
     if params[:copy_from].present?
-      @copied_fields = [
-        ["Course length", "course_length"],
-        ["Fee for UK students", "fee_uk_eu"],
-        ["Fee for international students", "fee_international"],
-        ["Fee details", "fee_details"],
-        ["Financial support", "financial_support"],
-      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::CloneableFields::FEES.select { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
@@ -130,10 +120,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[course_length salary_details])
 
     if params[:copy_from].present?
-      @copied_fields = [
-        ["Course length", "course_length"],
-        ["Salary details", "salary_details"],
-      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::CloneableFields::SALARY.select { |_name, field| copy_field_if_present_in_source_course(field) }
     end
   end
 
@@ -175,7 +162,7 @@ class CoursesController < ApplicationController
       redirect_to provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
     else
       @errors = @course.errors.messages
-      build_course
+      fetch_course
       render :show
     end
   end
@@ -299,18 +286,11 @@ private
     params[:course][:fee_international].gsub!(",", "") if params[:course][:fee_international].present?
   end
 
-  def get_copied_fields
+  def get_requirement_fields
     if @course.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE
-      [
-        ["Personal qualities", "personal_qualities"],
-        ["Other requirements", "other_requirements"],
-      ]
+      Courses::CloneableFields::POST_2022_CYCLE_REQUIREMENTS
     else
-      [
-        ["Qualifications needed", "required_qualifications"],
-        ["Personal qualities", "personal_qualities"],
-        ["Other requirements", "other_requirements"],
-      ]
+      Courses::CloneableFields::PRE_2022_CYCLE_REQUIREMENTS
     end
   end
 end

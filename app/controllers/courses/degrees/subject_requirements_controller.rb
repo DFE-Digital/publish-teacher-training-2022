@@ -2,18 +2,14 @@ module Courses
   module Degrees
     class SubjectRequirementsController < BaseController
       before_action :redirect_to_course_details_page_if_course_is_primary
-      before_action :build_courses, only: %i[edit]
+      before_action :fetch_courses, only: %i[edit]
 
       def edit
         set_backlink
-        @subject_requirements_form = SubjectRequirementsForm.build_from_course(@course)
         if params[:copy_from].present?
-          @copied_fields = [
-            ["Additional degree subject requirements", "additional_degree_subject_requirements"],
-            ["Degree subject requirements", "degree_subject_requirements"],
-          ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
-          @subject_requirements_form = SubjectRequirementsForm.build_from_course(course)
+          @copied_fields = Courses::CloneableFields::SUBJECT_REQUIREMENTS.select { |_name, field| copy_field_if_present_in_source_course(field) }
         end
+        @subject_requirements_form = SubjectRequirementsForm.build_from_course(course)
       end
 
       def update

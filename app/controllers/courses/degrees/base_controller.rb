@@ -1,11 +1,11 @@
 module Courses
   module Degrees
     class BaseController < ApplicationController
-      include CourseBuilderConcern
+      include CourseFetchConcern
 
       decorates_assigned :course
-      before_action :build_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
-      before_action :build_copy_course, if: -> { params[:copy_from].present? }
+      before_action :fetch_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
+      before_action :fetch_copy_course, if: -> { params[:copy_from].present? }
 
     private
 

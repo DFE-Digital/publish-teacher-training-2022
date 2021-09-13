@@ -1,25 +1,18 @@
 module Courses
   class GcseRequirementsController < ApplicationController
-    include CourseBuilderConcern
+    include CourseFetchConcern
 
     decorates_assigned :course
-    before_action :build_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
-    before_action :build_copy_course, if: -> { params[:copy_from].present? }
-    before_action :build_courses, only: %i[edit]
+    before_action :fetch_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
+    before_action :fetch_copy_course, if: -> { params[:copy_from].present? }
+    before_action :fetch_courses, only: %i[edit]
 
     def edit
-      @gcse_requirements_form = GcseRequirementsForm.build_from_course(@course)
-
       if params[:copy_from].present?
-        @copied_fields = [
-          ["Accept pending GCSE", "accept_pending_gcse"],
-          ["Accept GCSE equivalency", "accept_gcse_equivalency"],
-          ["Accept English GCSE equivalency", "accept_english_gcse_equivalency"],
-          ["Accept Maths GCSE equivalency", "accept_maths_gcse_equivalency"],
-          ["Additional GCSE equivalencies", "additional_gcse_equivalencies"],
-        ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
-        @gcse_requirements_form = GcseRequirementsForm.build_from_course(@course)
+        @copied_fields = Courses::CloneableFields::GCSE.select { |_name, field| copy_field_if_present_in_source_course(field) }
       end
+
+      @gcse_requirements_form = GcseRequirementsForm.build_from_course(@course)
     end
 
     def update
