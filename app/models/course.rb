@@ -145,6 +145,6 @@ class Course < Base
 private
 
   def post_base_url
-    sprintf("#{Course.site}#{Course.path}/%<course_code>s", path_attributes)
+    sprintf("#{Course.site}#{Course.path}/%<course_code>s", path_attributes.symbolize_keys)
   end
 end
