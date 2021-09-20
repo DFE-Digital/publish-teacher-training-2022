@@ -15,6 +15,9 @@ feature "degree requirements", type: :feature do
   let(:course6) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, degree_grade: "third_class") }
   let(:primary_course) { build(:course, provider: provider, recruitment_cycle: recruitment_cycle, degree_grade: nil, level: "primary") }
   let(:recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
+  let(:provider_for_copy_from_list) do
+    build(:provider, courses: [course, course2, course3], provider_code: "A0")
+  end
 
   before do
     signed_in_user(provider: provider)
@@ -22,6 +25,7 @@ feature "degree requirements", type: :feature do
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(provider, include: "courses.accrediting_provider")
     stub_api_v2_resource(course, include: "provider")
     stub_api_v2_resource(course2, include: "provider")
     stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,accrediting_provider")
@@ -67,6 +71,12 @@ feature "degree requirements", type: :feature do
       primary_course.to_jsonapi,
       :patch,
       200,
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "?include=courses.accrediting_provider",
+      provider_for_copy_from_list.to_jsonapi(include: %i[courses accrediting_provider]),
     )
   end
 
@@ -166,6 +176,22 @@ feature "degree requirements", type: :feature do
 
     expect(subject_requirements_page.yes_radio).to be_checked
     expect(subject_requirements_page.requirements.text).to eq "Maths A level"
+  end
+
+  scenario "a provider copies degree data from another course" do
+    course_page.load_with_course(course)
+    visit_subject_requirements_page
+    subject_requirements_page.copy_content.copy(course2)
+    [
+      "Your changes are not yet saved",
+      "Additional degree subject requirements",
+      "Degree subject requirements",
+    ].each do |name|
+      expect(subject_requirements_page.warning_message).to have_content(name)
+    end
+
+    expect(subject_requirements_page.yes_radio).to be_checked
+    expect(subject_requirements_page.requirements.text).to eq course2.degree_subject_requirements
   end
 
   def visit_description_page(course)

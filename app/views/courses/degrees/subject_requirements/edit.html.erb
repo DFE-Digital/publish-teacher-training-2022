@@ -5,6 +5,10 @@
   <%= govuk_back_link_to @backlink %>
 <% end %>
 
+<% if params[:copy_from].present? %>
+  <%= render partial: "courses/copy_content_warning", locals: { copied_fields: @copied_fields } %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with(
@@ -29,7 +33,11 @@
       <%= f.govuk_radio_buttons_fieldset :additional_degree_subject_requirements, legend: { text: "Do you have any additional degree subject requirements?" } do %>
         <%= f.govuk_radio_button :additional_degree_subject_requirements, false, label: { text: "No" }, data: { qa: "degree_subject_requirements__no_radio" }, link_errors: true %>
         <%= f.govuk_radio_button :additional_degree_subject_requirements, true, label: { text: "Yes" }, data: { qa: "degree_subject_requirements__yes_radio" } do %>
-          <%= f.govuk_text_area :degree_subject_requirements, label: { text: "Degree subject requirements" }, data: { qa: "degree_subject_requirements__requirements" } %>
+          <%= f.govuk_text_area :degree_subject_requirements,
+            form_group: { id: "degree-subject-requirements" },
+            label: { text: "Degree subject requirements" }, 
+            data: { qa: "degree_subject_requirements__requirements" } 
+          %>
         <% end %>
       <% end %>
 
@@ -37,6 +45,12 @@
     <% end %>
   </div>
   <aside class="govuk-grid-column-one-third">
-    <%= render partial: "courses/markdown_formatting" %>
+    <%= render(
+      partial: "courses/related_sidebar",
+      locals: {
+        course: course,
+        page_path: degrees_subject_requirements_provider_recruitment_cycle_course_path(course.provider.provider_code, course.recruitment_cycle_year, course.course_code),
+      },
+    ) %>
   </aside>
 </div>

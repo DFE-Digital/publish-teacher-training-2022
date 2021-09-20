@@ -1,9 +1,17 @@
 module Courses
   class GcseRequirementsController < ApplicationController
+    include CourseFetcher
+
     decorates_assigned :course
-    before_action :build_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
+    before_action :fetch_course, :redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher
+    before_action :fetch_course_to_copy_from, if: -> { params[:copy_from].present? }
+    before_action :fetch_courses, only: %i[edit]
 
     def edit
+      if params[:copy_from].present?
+        @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::GCSE_FIELDS, @source_course, @course)
+      end
+
       @gcse_requirements_form = GcseRequirementsForm.build_from_course(@course)
     end
 
@@ -59,15 +67,6 @@ module Courses
       when %w[English] then true
       when %w[Science] then true
       end
-    end
-
-    def build_course
-      @course = Course
-        .includes(:provider)
-        .where(recruitment_cycle_year: params[:recruitment_cycle_year])
-        .where(provider_code: params[:provider_code])
-        .find(params[:code])
-        .first
     end
 
     def redirect_to_basic_details_page_if_provider_is_not_in_the_2022_cycle_or_higher

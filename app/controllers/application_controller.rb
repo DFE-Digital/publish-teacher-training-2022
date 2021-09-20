@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, except: :not_found
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_unauthorized
   rescue_from JsonApiClient::Errors::AccessDenied, with: :handle_access_denied
+  rescue_from JsonApiClient::Errors::NotFound, with: :handle_not_found
 
   include Pagy::Backend
   include AdminOnlyMaintenanceMode
@@ -30,6 +31,10 @@ class ApplicationController < ActionController::Base
     else
       respond_with_error(template: "errors/forbidden", status: :forbidden, error_text: "Forbidden request")
     end
+  end
+
+  def handle_not_found
+    render template: "errors/not_found", status: :not_found
   end
 
   helper_method :current_user

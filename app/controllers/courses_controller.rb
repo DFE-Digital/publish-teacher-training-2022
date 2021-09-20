@@ -1,14 +1,16 @@
 class CoursesController < ApplicationController
+  include CourseFetcher
+
   decorates_assigned :course
   decorates_assigned :provider
 
   before_action :initialise_errors
   before_action :build_recruitment_cycle
-  before_action :build_courses, only: %i[index about requirements fees salary]
-  before_action :build_course, except: %i[index preview]
+  before_action :fetch_courses, only: %i[index about requirements fees salary]
+  before_action :fetch_course, except: %i[index preview]
   before_action :build_course_for_preview, only: :preview
   before_action :filter_courses, only: %i[about requirements fees salary]
-  before_action :build_copy_course, if: -> { params[:copy_from].present? }
+  before_action :fetch_course_to_copy_from, if: -> { params[:copy_from].present? }
   before_action :build_provider_from_provider_code, except: %i[index]
 
   def index; end
@@ -94,11 +96,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[about_course interview_process how_school_placements_work])
 
     if params[:copy_from].present?
-      @copied_fields = [
-        ["About the course", "about_course"],
-        ["Interview process", "interview_process"],
-        [@course.decorate.placements_heading, "how_school_placements_work"],
-      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::ABOUT_FIELDS, @source_course, @course)
     end
   end
 
@@ -106,7 +104,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[required_qualifications personal_qualities other_requirements])
 
     if params[:copy_from].present?
-      @copied_fields = get_copied_fields.keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::Copy.get_present_fields_in_source_course(get_requirement_fields, @source_course, @course)
     end
   end
 
@@ -114,13 +112,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[course_length fee_uk_eu fee_international fee_details financial_support])
 
     if params[:copy_from].present?
-      @copied_fields = [
-        ["Course length", "course_length"],
-        ["Fee for UK students", "fee_uk_eu"],
-        ["Fee for international students", "fee_international"],
-        ["Fee details", "fee_details"],
-        ["Financial support", "financial_support"],
-      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::FEES_FIELDS, @source_course, @course)
     end
   end
 
@@ -128,10 +120,7 @@ class CoursesController < ApplicationController
     show_deep_linked_errors(%i[course_length salary_details])
 
     if params[:copy_from].present?
-      @copied_fields = [
-        ["Course length", "course_length"],
-        ["Salary details", "salary_details"],
-      ].keep_if { |_name, field| copy_field_if_present_in_source_course(field) }
+      @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::SALARY_FIELDS, @source_course, @course)
     end
   end
 
@@ -173,7 +162,7 @@ class CoursesController < ApplicationController
       redirect_to provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
     else
       @errors = @course.errors.messages
-      build_course
+      fetch_course
       render :show
     end
   end
@@ -253,87 +242,9 @@ private
     render file: "errors/not_found", status: :not_found
   end
 
-  def build_course
-    cycle_year = params.fetch(
-      :recruitment_cycle_year,
-      Settings.current_cycle,
-    )
-
-    @course = Course
-      .includes(:subjects)
-      .includes(:sites)
-      .includes(provider: [:sites])
-      .includes(:accrediting_provider)
-      .where(recruitment_cycle_year: cycle_year)
-      .where(provider_code: params[:provider_code])
-      .find(params[:code])
-      .first
-  rescue JsonApiClient::Errors::NotFound
-    render template: "errors/not_found", status: :not_found
-  end
-
-  def build_courses
-    cycle_year = params.fetch(
-      :recruitment_cycle_year,
-      Settings.current_cycle,
-    )
-
-    @provider = Provider
-      .includes(courses: [:accrediting_provider])
-      .where(recruitment_cycle_year: cycle_year)
-      .find(params[:provider_code])
-      .first
-
-    # rubocop:disable Style/MultilineBlockChain
-    @courses_by_accrediting_provider = @provider
-      .courses
-      .group_by { |course|
-        # HOTFIX: A courses API response no included hash seems to cause issues with the
-        # .accrediting_provider relationship lookup. To be investigated, for now,
-        # if this throws, it's self-accredited.
-        begin
-          course.accrediting_provider&.provider_name || @provider.provider_name
-        rescue StandardError
-          @provider.provider_name
-        end
-      }
-      .sort_by { |accrediting_provider, _| accrediting_provider.downcase }
-      .map { |provider_name, courses|
-      [provider_name,
-       courses.sort_by { |course| [course.name, course.course_code] }
-                                    .map(&:decorate)]
-    }
-      .to_h
-    # rubocop:enable Style/MultilineBlockChain
-
-    @self_accredited_courses = @courses_by_accrediting_provider.delete(@provider.provider_name)
-  end
-
   def filter_courses
     @courses_by_accrediting_provider = @courses_by_accrediting_provider.reject { |c| c == course.id }
     @self_accredited_courses = @self_accredited_courses&.reject { |c| c.id == course.id }
-  end
-
-  def build_copy_course
-    cycle_year = params.fetch(
-      :recruitment_cycle_year,
-      Settings.current_cycle,
-    )
-
-    @source_course = Course
-      .includes(:subjects)
-      .includes(:sites)
-      .includes(provider: [:sites])
-      .includes(:accrediting_provider)
-      .where(recruitment_cycle_year: cycle_year)
-      .where(provider_code: params[:provider_code])
-      .find(params[:copy_from])
-      .first
-  end
-
-  def copy_field_if_present_in_source_course(field)
-    source_value = @source_course[field]
-    course[field] = source_value if source_value.present?
   end
 
   def initialise_errors
@@ -370,18 +281,11 @@ private
     params[:course][:fee_international].gsub!(",", "") if params[:course][:fee_international].present?
   end
 
-  def get_copied_fields
+  def get_requirement_fields
     if @course.recruitment_cycle_year.to_i >= Provider::CHANGES_INTRODUCED_IN_2022_CYCLE
-      [
-        ["Personal qualities", "personal_qualities"],
-        ["Other requirements", "other_requirements"],
-      ]
+      Courses::Copy::POST_2022_CYCLE_REQUIREMENTS_FIELDS
     else
-      [
-        ["Qualifications needed", "required_qualifications"],
-        ["Personal qualities", "personal_qualities"],
-        ["Other requirements", "other_requirements"],
-      ]
+      Courses::Copy::PRE_2022_CYCLE_REQUIREMENTS_FIELDS
     end
   end
 end

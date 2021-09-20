@@ -2,10 +2,14 @@ module Courses
   module Degrees
     class SubjectRequirementsController < BaseController
       before_action :redirect_to_course_details_page_if_course_is_primary
+      before_action :fetch_courses, only: %i[edit]
 
       def edit
         set_backlink
-        @subject_requirements_form = SubjectRequirementsForm.build_from_course(@course)
+        if params[:copy_from].present?
+          @copied_fields = Courses::Copy.get_present_fields_in_source_course(Courses::Copy::SUBJECT_REQUIREMENTS_FIELDS, @source_course, @course)
+        end
+        @subject_requirements_form = SubjectRequirementsForm.build_from_course(course)
       end
 
       def update

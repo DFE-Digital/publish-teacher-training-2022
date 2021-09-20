@@ -12,6 +12,9 @@ feature "GCSE equivalency requirements", type: :feature do
                    accept_english_gcse_equivalency: true, accept_maths_gcse_equivalency: true, accept_science_gcse_equivalency: nil, additional_gcse_equivalencies: "Cycling Proficiency")
   end
   let(:recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
+  let(:provider_for_copy_from_list) do
+    build(:provider, courses: [course, course2, course3], provider_code: "A0")
+  end
 
   before do
     signed_in_user(provider: provider)
@@ -19,6 +22,7 @@ feature "GCSE equivalency requirements", type: :feature do
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
+    stub_api_v2_resource(provider, include: "courses.accrediting_provider")
     stub_api_v2_resource(course, include: "provider")
     stub_api_v2_resource(course2, include: "provider")
     stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,accrediting_provider")
@@ -39,6 +43,12 @@ feature "GCSE equivalency requirements", type: :feature do
       course2.to_jsonapi,
       :get,
       200,
+    )
+    stub_api_v2_request(
+      "/recruitment_cycles/#{course.recruitment_cycle.year}" \
+      "/providers/#{provider.provider_code}" \
+      "?include=courses.accrediting_provider",
+      provider_for_copy_from_list.to_jsonapi(include: %i[courses accrediting_provider]),
     )
   end
 
@@ -95,6 +105,30 @@ feature "GCSE equivalency requirements", type: :feature do
     expect(gcse_requirements_page.english_equivalency).to be_checked
     expect(gcse_requirements_page.maths_equivalency).to be_checked
     expect(gcse_requirements_page.additional_requirements).to have_content("Cycling Proficiency")
+  end
+
+  scenario "a provider copies gcse data from another course" do
+    course_page.load_with_course(course)
+    visit_gcse_requirements_page
+    gcse_requirements_page.copy_content.copy(course3)
+
+    [
+      "Your changes are not yet saved",
+      "Accept pending GCSE",
+      "Accept GCSE equivalency",
+      "Accept English GCSE equivalency",
+      "Accept Maths GCSE equivalency",
+      "Additional GCSE equivalencies",
+    ].each do |name|
+      expect(gcse_requirements_page.warning_message).to have_content(name)
+    end
+
+    expect(gcse_requirements_page.pending_gcse_yes_radio).to be_checked
+
+    expect(gcse_requirements_page.gcse_equivalency_yes_radio).to be_checked
+    expect(gcse_requirements_page.english_equivalency).to be_checked
+    expect(gcse_requirements_page.maths_equivalency).to be_checked
+    expect(gcse_requirements_page.additional_requirements.text).to eq course3.additional_gcse_equivalencies
   end
 
   def visit_description_page(course)
