@@ -7,7 +7,7 @@ ruby "2.7.4"
 gem "rails", "~> 6.1"
 
 # Use Puma as the app server
-gem "puma", "~> 5.4"
+gem "puma", "~> 5.5"
 
 # Sidekiq for background worker
 gem "sidekiq"
