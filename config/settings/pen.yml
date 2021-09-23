@@ -1,0 +1,15 @@
+publish_url: https://pen.publish-teacher-training-courses.service.gov.uk
+
+dfe_signin:
+  issuer: https://pp-oidc.signin.education.gov.uk
+  profile: https://pp-profile.signin.education.gov.uk
+  secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
+  base_url: https://staging.publish-teacher-training-courses.service.gov.uk
+  user_search_url: https://pp-support.signin.education.gov.uk/users
+teacher_training_api:
+  base_url: https://staging.api.publish-teacher-training-courses.service.gov.uk
+search_ui:
+  base_url: https://pen.find-postgraduate-teacher-training.service.gov.uk
+environment:
+  label: "PenTest"
+  selector_name: "pen"
