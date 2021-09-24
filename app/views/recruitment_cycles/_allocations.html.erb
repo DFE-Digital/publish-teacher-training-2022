@@ -10,7 +10,12 @@
 
   <p class="govuk-body">This includes:</p>
   <ul class="govuk-list govuk-list--bullet">
-    <li>your own courses</li>
-    <li>courses you’re the accredited body for (you must request these on behalf of training partners)</li>
+    <% if Allocation.journey_mode == "confirmed" %>
+      <li><%= next_allocation_cycle_period_text %> allocations for your own fee-funded PE courses</li>
+      <li><%= next_allocation_cycle_period_text %> allocations for fee-funded PE courses you’re the accredited body for</li>
+    <% else %>
+      <li>your own courses</li>
+      <li>courses you’re the accredited body for (you must request these on behalf of training partners)</li>
+    <% end %>
   </ul>
 <% end %>
