@@ -4,11 +4,7 @@
                       provider_recruitment_cycle_allocations_path(provider.provider_code, year) %>
   </h2>
 
-  <p class="govuk-body">
-    <%= t("allocations_for_pe.#{Allocation.journey_mode}_state_copy") %>
-  </p>
-
-  <p class="govuk-body">This includes:</p>
+  <p class="govuk-body">In this section, you can view:</p>
   <ul class="govuk-list govuk-list--bullet">
     <% if Allocation.journey_mode == "confirmed" %>
       <li><%= next_allocation_cycle_period_text %> allocations for your own fee-funded PE courses</li>
