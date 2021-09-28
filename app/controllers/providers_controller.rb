@@ -40,7 +40,7 @@ class ProvidersController < ApplicationController
 
   def update
     if @provider.update(provider_params)
-      flash[:success] = "Your changes have been published"
+      flash[:success] = I18n.t("success.published")
       redirect_to(
         details_provider_recruitment_cycle_path(
           @provider.provider_code,
@@ -56,7 +56,7 @@ class ProvidersController < ApplicationController
 
   def publish
     if @provider.publish
-      flash[:success] = "Your changes have been published."
+      flash[:success] = I18n.t("success.published")
     else
       flash[:error_summary] = @provider.errors.messages
     end

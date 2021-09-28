@@ -95,8 +95,7 @@
           data: { qa: "postcode" }) %>
       <% end %>
 
-      <p class="govuk-body">Changes will appear on Find postgraduate teacher training within 2 hours.</p>
-
+      <%= render GovukComponent::InsetTextComponent.new(text: I18n.t("success.changes_ttl")) %>
       <%= f.govuk_submit "Save and publish changes" %>
     <% end %>
   </div>

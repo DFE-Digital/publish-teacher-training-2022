@@ -78,7 +78,7 @@ feature "About course", type: :feature do
       click_on "Save"
 
       expect(about_course_page.flash).to have_content(
-        "Your changes have been saved",
+        I18n.t("success.saved"),
       )
       expect(current_path).to eq provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code)
     end

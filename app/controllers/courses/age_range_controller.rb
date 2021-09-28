@@ -14,7 +14,7 @@ module Courses
 
     def update
       if form_object.valid?
-        flash[:success] = "Your changes have been saved"
+        flash[:success] = I18n.t("success.saved")
 
         update_age_range_param
 

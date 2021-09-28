@@ -72,7 +72,7 @@ class CoursesController < ApplicationController
     massage_update_course_params
 
     if @course.update(course_params)
-      flash[:success] = "Your changes have been saved"
+      flash[:success] = I18n.t("success.saved")
       redirect_to(
         provider_recruitment_cycle_course_path(
           @course.provider_code,

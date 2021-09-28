@@ -16,7 +16,7 @@ module Courses
         @subject_requirements_form = SubjectRequirementsForm.new(subject_requirements_params)
 
         if @subject_requirements_form.save(@course)
-          flash[:success] = "Your changes have been saved"
+          flash[:success] = I18n.t("success.saved")
 
           redirect_to provider_recruitment_cycle_course_path
         else

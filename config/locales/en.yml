@@ -165,3 +165,8 @@ en:
   errors:
     messages:
       too_many_words: Must be %{count} words or fewer
+  success:
+    published: "Your changes have been published."
+    saved: "Your changes have been saved."
+    changes_ttl: "Changes will appear on Find postgraduate teacher training within 15 minutes."
+
