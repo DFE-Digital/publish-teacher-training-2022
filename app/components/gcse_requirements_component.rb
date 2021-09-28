@@ -2,6 +2,7 @@ class GcseRequirementsComponent < ViewComponent::Base
   attr_reader :course, :errors
 
   def initialize(course:, errors: nil)
+    super
     @course = course
     @errors = errors
   end

@@ -16,13 +16,11 @@ private
   def provider
     raise "missing provider code" unless params[:provider_code]
 
-    @provider ||= begin
-                    Provider
+    @provider ||= Provider
                       .includes(:contacts)
                       .where(recruitment_cycle_year: Settings.current_cycle)
                       .find(params[:provider_code])
                       .first
-                  end
   end
 
   def contact

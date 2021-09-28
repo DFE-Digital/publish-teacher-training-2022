@@ -727,7 +727,7 @@ describe CourseDecorator do
 
   describe "#cycle_range" do
     let(:expected_cycle_range) do
-      "#{current_recruitment_cycle.year} to #{(current_recruitment_cycle.year.to_i + 1)}"
+      "#{current_recruitment_cycle.year} to #{current_recruitment_cycle.year.to_i + 1}"
     end
 
     subject { course.decorate.cycle_range }

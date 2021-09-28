@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     session[:auth_user] = HashWithIndifferentAccess.new(
-      "uid" => auth_hash.dig("uid"),
+      "uid" => auth_hash["uid"],
       "info" => HashWithIndifferentAccess.new(
         email: auth_hash.dig("info", "email"),
         first_name: auth_hash.dig("info", "first_name"),
@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       "credentials" => HashWithIndifferentAccess.new(
         "id_token" => auth_hash.dig("credentials", :id_token),
       ),
-      "provider" => auth_hash.dig("provider"),
+      "provider" => auth_hash["provider"],
     )
 
     Sentry.set_tags(sign_in_user_id: current_user.fetch("uid"))
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
 
     # current_user['user_id'] won't be set until set_user_session is run
     Sentry.set_user(id: current_user["user_id"])
-    logger.debug { "User session create " + log_safe_current_user.to_s }
+    logger.debug { "User session create #{log_safe_current_user}" }
 
     redirect_to root_path
   end
@@ -48,7 +48,7 @@ class SessionsController < ApplicationController
       )
       set_session_info_for_user(user_session)
       Sentry.set_user(id: current_user["user_id"])
-      logger.debug { "User session create_by_magic " + log_safe_current_user.to_s }
+      logger.debug { "User session create_by_magic #{log_safe_current_user}" }
     end
 
     redirect_to root_path

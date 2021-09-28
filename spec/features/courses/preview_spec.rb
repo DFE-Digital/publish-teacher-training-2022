@@ -67,7 +67,7 @@ feature "Preview course", type: :feature do
         :accrediting_provider,
         :recruitment_cycle,
         :subjects,
-        site_statuses: :site,
+        { site_statuses: :site },
       ],
     )
   end

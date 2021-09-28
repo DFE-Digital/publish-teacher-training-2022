@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if current_user.present?
-      logger.info { "Authenticated user session found " + log_safe_current_user.to_s }
+      logger.info { "Authenticated user session found #{log_safe_current_user}" }
 
       assign_sentry_contexts
       assign_logstash_contexts
@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
       if current_user["user_id"].blank?
         set_user_session
         Sentry.set_user(id: current_user["user_id"])
-        logger.debug { "User session set. " + log_safe_current_user(reload: true).to_s }
+        logger.debug { "User session set. #{log_safe_current_user(reload: true)}" }
       end
     end
   end
@@ -90,9 +90,7 @@ class ApplicationController < ActionController::Base
   def request_login
     return if current_user.present?
 
-    logger.info("Authenticated user session not found " + {
-      redirect_back_to: request.path,
-    }.to_s)
+    logger.info("Authenticated user session not found #{{ redirect_back_to: request.path }}")
     session[:redirect_back_to] = request.path
     redirect_to sign_in_path
   end
@@ -190,10 +188,10 @@ private
 
   def set_user_session
     logger.debug do
-      "Creating new session for user " + {
-        email_md5: log_safe_current_user["email_md5"],
+      "Creating new session for user #{{
+        email_md5: log_safe_current_user['email_md5'],
         signin_id: current_user_dfe_signin_id,
-      }.to_s
+      }}"
     end
 
     # TODO: we should return a session object here with a 'user' attached to id.

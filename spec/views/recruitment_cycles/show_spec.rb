@@ -1,14 +1,14 @@
 require "rails_helper"
 
+module CurrentUserMethod
+  def current_user; end
+end
+
 describe "recruitment_cycles/show.html", type: :view do
   let(:recruitment_cycle_page) { PageObjects::Page::Organisations::RecruitmentCycle.new }
   let(:accredited_body) { build(:provider, :accredited_body) }
   let(:current_recruitment_cycle) { build :recruitment_cycle }
   let(:next_recruitment_cycle) { build :recruitment_cycle, :next_cycle }
-
-  module CurrentUserMethod
-    def current_user; end
-  end
 
   describe "current cycle" do
     before do

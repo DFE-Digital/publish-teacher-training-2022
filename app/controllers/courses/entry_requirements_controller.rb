@@ -3,9 +3,11 @@ module Courses
     include CourseBasicDetailConcern
     before_action :not_found_if_no_gcse_subjects_required, except: :continue
 
+    # rubocop:disable Lint/UselessMethodDefinition
     def continue
       super
     end
+  # rubocop:enable Lint/UselessMethodDefinition
 
   private
 

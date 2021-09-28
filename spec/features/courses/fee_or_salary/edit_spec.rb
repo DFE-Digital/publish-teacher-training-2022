@@ -82,7 +82,7 @@ feature "Edit course fee or salary status", type: :feature do
       "/providers/#{provider.provider_code}" \
       "/courses/#{course.course_code}" \
       "?include=subjects,sites,provider.sites,accrediting_provider",
-      course.to_jsonapi(include: [:subjects, :sites, :accrediting_provider, :recruitment_cycle, provider: :sites]),
+      course.to_jsonapi(include: [:subjects, :sites, :accrediting_provider, :recruitment_cycle, { provider: :sites }]),
     )
   end
 end
