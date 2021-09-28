@@ -18,6 +18,7 @@
 
       <p class="govuk-body">You can assign locations to a course from the ‘Basic details’ tab on the course page.</p>
       <%= render "form", f: f %>
+      <%= render GovukComponent::InsetTextComponent.new(text: I18n.t("success.changes_ttl")) %>
       <%= f.govuk_submit "Save and publish changes", data: { qa: "location__publish-changes" } %>
     <% end %>
   </div>

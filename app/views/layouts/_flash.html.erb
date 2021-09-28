@@ -20,7 +20,6 @@
   <% else %>
     <%= govuk_notification_banner(title_text: t("notification_banner.success"), success: true, html_attributes: { role: "alert" }) do |notification_banner| %>
       <% notification_banner.heading(text: value) %>
-      <p class="govuk-body"><%= t("success.changes_ttl") %></p>
     <% end %>
   <% end %>
 <% end %>
