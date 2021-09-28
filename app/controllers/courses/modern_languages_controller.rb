@@ -32,7 +32,7 @@ module Courses
       updated_subject_list += selected_non_language_subjects
 
       if @course.update(subjects: updated_subject_list)
-        flash[:success] = "Your changes have been saved"
+        flash[:success] = I18n.t("success.saved")
         redirect_to(
           details_provider_recruitment_cycle_course_path(
             @course.provider_code,

@@ -8,7 +8,7 @@ module Courses
 
     def update
       if course.update(course_params)
-        flash[:success] = "Your changes have been saved"
+        flash[:success] = I18n.t("success.saved")
 
         redirect_to(
           details_provider_recruitment_cycle_course_path(

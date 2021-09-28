@@ -113,7 +113,7 @@ feature "Edit course applications open", type: :feature do
 
       click_on "Save"
       expect(course_details_page).to be_displayed
-      expect(course_details_page.flash).to have_content("Your changes have been saved")
+      expect(course_details_page.flash).to have_content(I18n.t("success.saved"))
       expect(update_course_stub).to have_been_requested
     end
 

@@ -62,7 +62,7 @@ feature "Course salary", type: :feature do
     click_on "Save"
 
     expect(course_salary_page.flash).to have_content(
-      "Your changes have been saved",
+      I18n.t("success.saved"),
     )
 
     expect(current_path).to eq provider_recruitment_cycle_course_path("A0", course.recruitment_cycle_year, course.course_code)

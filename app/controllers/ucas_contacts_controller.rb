@@ -36,7 +36,7 @@ class UcasContactsController < ApplicationController
         application_alert_contact: email,
       )
       redirect_to provider_ucas_contacts_path(@provider.provider_code),
-                  flash: { success: "Your changes have been saved" }
+                  flash: { success: I18n.t("success.saved") }
     end
   end
 

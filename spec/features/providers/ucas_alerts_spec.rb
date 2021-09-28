@@ -31,7 +31,7 @@ feature "Edit UCAS email alerts", type: :feature do
     page.alerts_enabled_fields.all.click
     click_on "Save"
     expect(org_ucas_contacts_page).to be_displayed
-    expect(org_ucas_contacts_page.flash).to have_content("Your changes have been saved")
+    expect(org_ucas_contacts_page.flash).to have_content(I18n.t("success.saved"))
   end
 
   context "email alerts: none" do
@@ -86,7 +86,7 @@ feature "Edit UCAS email alerts", type: :feature do
       end
       click_on "Save"
       expect(org_ucas_contacts_page).to be_displayed
-      expect(org_ucas_contacts_page.flash).to have_content("Your changes have been saved")
+      expect(org_ucas_contacts_page.flash).to have_content(I18n.t("success.saved"))
     end
 
     scenario "not ticking permissions box for sharing with ucas" do

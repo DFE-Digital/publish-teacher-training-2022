@@ -67,7 +67,7 @@ feature "Edit locations", type: :feature do
       location_page.publish_changes.click
 
       expect(locations_page).to be_displayed
-      expect(locations_page.success_summary).to have_content("Your changes have been published")
+      expect(locations_page.success_summary).to have_content(I18n.t("success.published"))
     end
   end
 

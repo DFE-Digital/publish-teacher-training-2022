@@ -74,7 +74,7 @@ feature "Course fees", type: :feature do
     click_on "Save"
 
     expect(course_fees_page.flash).to have_content(
-      "Your changes have been saved",
+      I18n.t("success.saved"),
     )
     expect(current_path).to eq provider_recruitment_cycle_course_path("A0", course_1.recruitment_cycle_year, course_1.course_code)
   end
@@ -87,7 +87,7 @@ feature "Course fees", type: :feature do
       expect(request_attributes["course_length"]).to eq("4 years")
     end
     click_on "Save"
-    expect(course_fees_page.flash).to have_content("Your changes have been saved")
+    expect(course_fees_page.flash).to have_content(I18n.t("success.saved"))
     expect(current_path).to eq provider_recruitment_cycle_course_path("A0", course_1.recruitment_cycle_year, course_1.course_code)
   end
 
