@@ -4,7 +4,6 @@ module Courses
     before_action :build_course_params, only: %i[update continue]
     include CourseBasicDetailConcern
 
-    # rubocop:disable Lint/UselessMethodDefinition
     def update
       super
     end
@@ -12,7 +11,6 @@ module Courses
     def continue
       super
     end
-  # rubocop:enable Lint/UselessMethodDefinition
 
   private
 

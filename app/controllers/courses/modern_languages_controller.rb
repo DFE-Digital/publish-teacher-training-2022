@@ -11,11 +11,9 @@ module Courses
       redirect_to next_step
     end
 
-    # rubocop:disable Lint/UselessMethodDefinition
     def continue
       super
     end
-    # rubocop:enable Lint/UselessMethodDefinition
 
     def edit
       return unless @course.meta[:edit_options][:modern_languages].nil?

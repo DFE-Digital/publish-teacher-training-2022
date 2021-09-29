@@ -7,11 +7,9 @@ module Courses
     before_action :build_course, only: %i[edit update]
     before_action :build_provider_with_sites
 
-    # rubocop:disable Lint/UselessMethodDefinition
     def continue
       super
     end
-    # rubocop:enable Lint/UselessMethodDefinition
 
     def new
       if @provider.sites.count == 1

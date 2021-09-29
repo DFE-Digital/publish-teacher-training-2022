@@ -7,11 +7,9 @@ module Courses
 
     def edit; end
 
-    # rubocop:disable Lint/UselessMethodDefinition
     def continue
       super
     end
-    # rubocop:enable Lint/UselessMethodDefinition
 
     def update
       if has_modern_languages_subject?

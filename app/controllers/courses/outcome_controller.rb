@@ -3,7 +3,6 @@ module Courses
     include CourseBasicDetailConcern
     before_action :order_edit_options, only: %i[edit new]
 
-    # rubocop:disable Lint/UselessMethodDefinition
     def edit
       super
     end
@@ -11,7 +10,6 @@ module Courses
     def new
       super
     end
-  # rubocop:enable Lint/UselessMethodDefinition
 
   private
 
