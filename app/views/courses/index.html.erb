@@ -1,6 +1,12 @@
 <% content_for :page_title, @provider.rolled_over? ? "Courses – #{@recruitment_cycle.title}" : "Courses" %>
 <%= content_for :before_content, render_breadcrumbs(:courses) %>
 
+<%= render GovukComponent::NotificationBannerComponent.new(title_text: 'Important') do |notification_banner| %>
+  <span class="govuk-body"><strong>Publish your courses so that candidates can view them on Find from the 5 October.</strong></span><br><br>
+
+  <span class="govuk-body">Do this by selecting your courses for the <%= next_allocation_cycle_period_text %> cycle, check and edit the details, then select the “Publish” button.</span>
+<% end %>
+
 <h1 class="govuk-heading-l">
   <span class="govuk-caption-l"><%= @recruitment_cycle.title %></span>
   Courses
