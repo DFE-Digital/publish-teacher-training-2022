@@ -11,4 +11,4 @@ allocation_cycle_year: 2021
 allocations_close_date: 2021-07-02
 features:
   allocations:
-    state: open
+    state: confirmed
