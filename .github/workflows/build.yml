@@ -134,5 +134,5 @@ jobs:
           SLACK_ICON_EMOJI: ':github-logo:'
           SLACK_USERNAME: Publish Teacher Training
           SLACK_TITLE: Build Failure
-          SLACK_MESSAGE: ':alert: <!channel> Build failure'
+          SLACK_MESSAGE: 'Build failure'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
