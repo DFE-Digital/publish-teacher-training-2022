@@ -27,6 +27,12 @@ feature "View helpers", type: :helper do
     end
   end
 
+  describe "#feedback_link_to" do
+    it "returns the correct feedback link" do
+      expect(helper.feedback_link_to).to eq(I18n.t("feedback.link"))
+    end
+  end
+
   describe "#enrichment_error_url" do
     it "returns enrichment error URL" do
       course = Course.new(build(:course).attributes)
