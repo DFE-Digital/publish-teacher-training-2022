@@ -169,4 +169,6 @@ en:
     published: "Your changes have been published."
     saved: "Your changes have been saved."
     changes_ttl: "Changes will appear on Find postgraduate teacher training within 15 minutes."
+  feedback:
+    link: https://docs.google.com/forms/d/e/1FAIpQLSfZNWa6zx30SkF_1EAwqNPZHOgK8qYcVQ7uDyhi0P6oPm71zg/viewform
 
