@@ -39,6 +39,10 @@ describe CourseCreationStepService do
         include_examples "next step", :modern_languages, :age_range
       end
 
+      context "Current step: Age Range" do
+        include_examples "next step", :age_range, :outcome
+      end
+
       context "Current step: Outcome" do
         include_examples "next step", :outcome, :fee_or_salary
       end
@@ -56,7 +60,7 @@ describe CourseCreationStepService do
       end
 
       context "Current step: Accredited body" do
-        include_examples "next step", :accredited_body, :entry_requirements
+        include_examples "next step", :accredited_body, :applications_open
       end
 
       context "Current step: Applications open" do
@@ -81,10 +85,6 @@ describe CourseCreationStepService do
         include_examples "next step", :modern_languages, :age_range
       end
 
-      context "Current step: Level" do
-        include_examples "next step", :level, :subjects
-      end
-
       context "Current step: Age range" do
         include_examples "next step", :age_range, :outcome
       end
@@ -101,12 +101,8 @@ describe CourseCreationStepService do
         include_examples "next step", :full_or_part_time, :location
       end
 
-      context "Current step: Locations" do
-        include_examples "next step", :location, :entry_requirements
-      end
-
-      context "Current step: Entry requirements" do
-        include_examples "next step", :entry_requirements, :applications_open
+      context "Current step: Location" do
+        include_examples "next step", :location, :applications_open
       end
 
       context "Current step: Applications open" do
@@ -179,7 +175,7 @@ describe CourseCreationStepService do
       end
 
       context "Current step: Entry requirements" do
-        include_examples "previous step", :entry_requirements, :accredited_body
+        include_examples "previous step", :applications_open, :accredited_body
       end
 
       context "Current step: Start date" do
@@ -228,11 +224,7 @@ describe CourseCreationStepService do
       end
 
       context "Current step: Entry requirements" do
-        include_examples "previous step", :entry_requirements, :location
-      end
-
-      context "Current step: Applications open" do
-        include_examples "previous step", :applications_open, :entry_requirements
+        include_examples "previous step", :applications_open, :location
       end
 
       context "Current step: Start date" do

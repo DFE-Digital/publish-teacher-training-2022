@@ -20,7 +20,7 @@ describe Settings do
     its(%w[subject]) { should_not be_blank }
   end
 
-  its(%w[current_cycle]) { should eq 2021 }
+  its(%w[current_cycle]) { should eq 2022 }
 
   describe "settings.authentication" do
     subject do

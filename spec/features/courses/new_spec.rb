@@ -138,8 +138,7 @@ feature "new course", type: :feature do
         course_creation_params = select_outcome(course_creation_params, qualification: "qts", qualification_selection: new_outcome_page.qualification_fields.qts, next_page: new_apprenticeship_page)
         course_creation_params = select_apprenticeship(course_creation_params, next_page: new_study_mode_page)
         course_creation_params = select_study_mode(course_creation_params, next_page: new_locations_page)
-        course_creation_params = select_location(course_creation_params, next_page: new_entry_requirements_page)
-        course_creation_params = select_entry_requirements(course_creation_params, next_page: new_applications_open_page)
+        course_creation_params = select_location(course_creation_params, next_page: new_applications_open_page)
         course_creation_params = select_applications_open_from(course_creation_params, next_page: new_start_date_page)
 
         select_start_date(course_creation_params)
@@ -282,8 +281,6 @@ feature "new course", type: :feature do
         new_start_date_page.back.click
         expect(new_applications_open_page).to be_displayed
         new_start_date_page.back.click
-        expect(new_entry_requirements_page).to be_displayed
-        new_entry_requirements_page.back.click
         expect(new_study_mode_page).to be_displayed
         new_study_mode_page.back.click
         expect(new_apprenticeship_page).to be_displayed
@@ -345,8 +342,6 @@ feature "new course", type: :feature do
         new_start_date_page.back.click
         expect(new_applications_open_page).to be_displayed
         new_start_date_page.back.click
-        expect(new_entry_requirements_page).to be_displayed
-        new_entry_requirements_page.back.click
         expect(new_locations_page).to be_displayed
         new_locations_page.back.click
         expect(new_study_mode_page).to be_displayed

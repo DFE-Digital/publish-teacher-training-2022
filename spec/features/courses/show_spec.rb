@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Course show", type: :feature do
-  let(:recruitment_cycle_year) { "2021" }
+  let(:recruitment_cycle_year) { Settings.current_cycle }
   let(:provider) do
     build(
       :provider,
@@ -41,7 +41,6 @@ feature "Course show", type: :feature do
       about_course: "Foo",
       interview_process: "Foo",
       how_school_placements_work: "Foo",
-      required_qualifications: "Foo",
       personal_qualities: "Foo",
       other_requirements: "Foo",
       sites: [site],
@@ -112,9 +111,6 @@ feature "Course show", type: :feature do
       expect(course_page.fee_details).to have_content(
         course.fee_details,
       )
-      expect(course_page.required_qualifications).to have_content(
-        course.required_qualifications,
-      )
       expect(course_page.personal_qualities).to have_content(
         course.personal_qualities,
       )
@@ -138,12 +134,6 @@ feature "Course show", type: :feature do
           href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/fees#course-length",
         )
       end
-      within "[data-qa='enrichment__required_qualifications']" do
-        expect(course_page).to have_link(
-          "Change qualifications needed",
-          href: "/organisations/#{provider.provider_code}/#{course.recruitment_cycle_year}/courses/#{course.course_code}/requirements",
-        )
-      end
     end
   end
 
@@ -159,7 +149,6 @@ feature "Course show", type: :feature do
         about_course: "Foo",
         interview_process: "Foo",
         how_school_placements_work: "Foo",
-        required_qualifications: "Foo",
         personal_qualities: "Foo",
         salary_details: "Foo",
         other_requirements: "Foo",
@@ -188,9 +177,6 @@ feature "Course show", type: :feature do
       expect(course_page.salary).to have_content(
         course.salary_details,
       )
-      expect(course_page.required_qualifications).to have_content(
-        course.required_qualifications,
-      )
       expect(course_page.personal_qualities).to have_content(
         course.personal_qualities,
       )
@@ -208,15 +194,6 @@ feature "Course show", type: :feature do
       expect(course_page).not_to have_content(
         "Qualifications needed #{course.required_qualifications}",
       )
-    end
-  end
-
-  context "in 2021 recruitment cycle year" do
-    scenario "it shows required qualifications" do
-      within(%(div.govuk-summary-list__row[data-qa="enrichment__required_qualifications"])) do
-        expect(course_page).to have_css("dt", text: "Qualifications needed")
-        expect(course_page).to have_css("dd", text: course.required_qualifications)
-      end
     end
   end
 

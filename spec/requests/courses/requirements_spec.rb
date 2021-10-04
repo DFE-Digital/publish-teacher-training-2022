@@ -45,24 +45,6 @@ describe "Courses", type: :request do
       end
     end
 
-    it "renders the course requirements" do
-      get(requirements_provider_recruitment_cycle_course_path(
-            provider.provider_code,
-            course.recruitment_cycle_year,
-            course.course_code,
-          ))
-
-      expect(response.body).to include(
-        "#{course.name} (#{course.course_code})",
-      )
-      expect(response.body).to include(
-        "Requirements and eligibility",
-      )
-      expect(response.body).to_not include(
-        "Your changes are not yet saved",
-      )
-    end
-
     context "with copy_from parameter" do
       it "renders the course requirements with data from chosen" do
         get(requirements_provider_recruitment_cycle_course_path(

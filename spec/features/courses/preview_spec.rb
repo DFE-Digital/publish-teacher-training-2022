@@ -165,10 +165,6 @@ feature "Preview course", type: :feature do
 
     expect(preview_course_page.financial_support_details).to have_content("Financial support from the training provider")
 
-    expect(preview_course_page.required_qualifications).to have_content(
-      course.required_qualifications,
-    )
-
     expect(preview_course_page.personal_qualities).to have_content(
       course.personal_qualities,
     )

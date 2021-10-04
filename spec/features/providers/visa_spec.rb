@@ -18,26 +18,6 @@ feature "View and edit provider visa sponsorship", type: :feature do
     stub_api_v2_resource(provider)
   end
 
-  context "in recruitment cycle 2021" do
-    let(:recruitment_cycle_year) { 2021 }
-
-    it "does not render visa sponsorship prompt and link" do
-      visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-      expect(page).not_to have_content "Select if visas can be sponsored"
-    end
-
-    it "course preview page does not render international students section" do
-      course = build(:course, provider: provider)
-      stub_api_v2_resource(course, include: "subjects,sites,site_statuses.site,provider.sites,accrediting_provider")
-      visit preview_provider_recruitment_cycle_course_path(
-        provider.provider_code,
-        recruitment_cycle_year,
-        course.course_code,
-      )
-      expect(page).not_to have_content("International students")
-    end
-  end
-
   context "in recruitment cycle 2022" do
     context "when the provider has not answered the visa sponsorship questions" do
       let(:recruitment_cycle_year) { 2022 }
