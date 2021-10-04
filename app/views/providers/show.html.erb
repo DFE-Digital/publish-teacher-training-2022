@@ -31,9 +31,9 @@
       <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
 
       <% if @provider.rolled_over? %>
-        <h2 class="govuk-heading-s">Prepare for the next cycle</h2>
+        <h2 class="govuk-heading-s">Your courses for the <%= "#{Settings.current_cycle} to #{Settings.current_cycle + 1}" %> cycle.</h2>
         <p class="govuk-body">
-          Courses for the next cycle will be published on <%= Settings.next_cycle_open_date.to_s(:govuk) %>.
+          Courses you publish for the <%= "#{Settings.current_cycle} to #{Settings.current_cycle + 1}" %> cycle will be made available on Find postgraduate teacher training for candidates to view.
         </p>
       <% end %>
 
