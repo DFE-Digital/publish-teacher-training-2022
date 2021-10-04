@@ -21,3 +21,10 @@ authentication:
 # # Uncomment if and only if dfe_signin is down
 # authentication:
 #   mode: magic_link
+
+current_cycle: 2021
+
+features:
+  rollover:
+    # During rollover providers should be able to edit current & next recruitment cycle courses
+    can_edit_current_and_next_cycles: true

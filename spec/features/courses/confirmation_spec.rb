@@ -130,8 +130,6 @@ feature "Course confirmation", type: :feature do
       expect(course_confirmation_page.details.start_date.value.text).to eq("January 2019")
       expect(course_confirmation_page.details.name.value.text).to eq("English")
       expect(course_confirmation_page.details.description.value.text).to eq("PGCE with QTS full time")
-      expect(course_confirmation_page.details.entry_requirements.value.text).to include("Maths GCSE: Taking")
-      expect(course_confirmation_page.details.entry_requirements.value.text).to include("English GCSE: Must have")
       expect(course_confirmation_page.preview.name.text).to include("English")
       expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
     end
@@ -358,16 +356,6 @@ feature "Course confirmation", type: :feature do
       include_examples "goes to the edit page"
     end
 
-    context "entry requirements page" do
-      let(:destination_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
-
-      before do
-        course_confirmation_page.details.entry_requirements.change_link.click
-      end
-
-      include_examples "goes to the edit page"
-    end
-
     context "course outcome page" do
       let(:destination_page) { PageObjects::Page::Organisations::Courses::NewCourseOutcome.new }
 
@@ -394,8 +382,6 @@ private
     expect(course_confirmation_page.details.start_date.value.text).to eq("January 2019")
     expect(course_confirmation_page.details.name.value.text).to eq("English")
     expect(course_confirmation_page.details.description.value.text).to eq("PGCE with QTS full time")
-    expect(course_confirmation_page.details.entry_requirements.value.text).to include("Maths GCSE: Taking")
-    expect(course_confirmation_page.details.entry_requirements.value.text).to include("English GCSE: Must have")
     expect(course_confirmation_page.preview.name.text).to include("English")
     expect(course_confirmation_page.preview.description.text).to include("PGCE with QTS full time")
   end

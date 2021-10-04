@@ -48,7 +48,7 @@ feature "New accredited body" do
     end
 
     context "when selecting an accredited body" do
-      let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
+      let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewApplicationsOpenPage.new }
       let(:selected_fields) { { level: "primary", accredited_body_code: accrediting_provider_1.provider_code } }
       let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
@@ -97,7 +97,7 @@ feature "New accredited body" do
         end
 
         context "When selecting an accredited body" do
-          let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
+          let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewApplicationsOpenPage.new }
           let(:selected_fields) { { level: "primary", accredited_body_code: "A01" } }
           let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
@@ -111,7 +111,7 @@ feature "New accredited body" do
         end
 
         context "When not selecting an accredited body" do
-          let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
+          let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewApplicationsOpenPage.new }
           let(:selected_fields) { { level: "primary", accredited_body_code: "A01" } }
           let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 
@@ -126,7 +126,7 @@ feature "New accredited body" do
         end
 
         context "When searching for an accredited body with fewer than two characters" do
-          let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewEntryRequirementsPage.new }
+          let(:next_step_page) { PageObjects::Page::Organisations::Courses::NewApplicationsOpenPage.new }
           let(:selected_fields) { { level: "primary", accredited_body_code: "A01" } }
           let(:build_course_with_selected_value_request) { stub_api_v2_build_course(selected_fields) }
 

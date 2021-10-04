@@ -69,13 +69,6 @@ feature "New course sites" do
       expect(build_course_with_two_sites_request).to have_been_made.at_least_once
     end
 
-    scenario "It transitions to the entry requirements page" do
-      new_locations_page.check(site2.location_name)
-      new_locations_page.continue.click
-
-      expect(new_entry_requirements_page).to be_displayed
-    end
-
     context "with site ids already selected" do
       let(:course) { build(:course, provider: provider, sites: [site3]) }
 

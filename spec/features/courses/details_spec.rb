@@ -102,7 +102,6 @@ feature "Course details", type: :feature do
     expect(course_details_page.level).to have_content(
       "Secondary",
     )
-    expect(course_details_page).to have_entry_requirements
   end
 
   scenario "with the correct support email link" do
@@ -132,28 +131,6 @@ feature "Course details", type: :feature do
     scenario "has no entry requirements" do
       course_details_page.load_with_course(course)
       expect(course_details_page).not_to have_entry_requirements
-    end
-  end
-
-  context "a course with required GCSE subjects" do
-    let(:course) do
-      build(
-        :course,
-        provider: provider,
-        gcse_subjects_required: %w[maths science],
-        english: "expect_to_achieve_before_training_begins",
-        science: "equivalence_test",
-        age_range_in_years: nil,
-      )
-    end
-
-    scenario "shows entry requirements" do
-      course_details_page.load_with_course(course)
-      expect(course_details_page).to have_entry_requirements
-      expect(course_details_page.entry_requirements).to have_content("Maths GCSE: Taking")
-      expect(course_details_page.entry_requirements).to have_content("Science GCSE: Equivalency test")
-      expect(course_details_page.entry_requirements).not_to have_content("English GCSE")
-      expect(course_details_page.age_range).to have_content("Unknown")
     end
   end
 

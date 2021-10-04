@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "courses/_basic_details_tab.html.erb" do
-  let(:recruitment_cycle_year) { "2021" }
+  let(:recruitment_cycle_year) { "2022" }
   let(:current_recruitment_cycle) { build :recruitment_cycle, year: recruitment_cycle_year }
   let(:provider) { build(:provider, recruitment_cycle: current_recruitment_cycle) }
   let(:course) { build(:course, provider: provider, recruitment_cycle: current_recruitment_cycle).decorate }
@@ -47,23 +47,12 @@ RSpec.describe "courses/_basic_details_tab.html.erb" do
     end
 
     context "when course for 2022 cycle" do
-      let(:recruitment_cycle_year) { "2022" }
       let(:current_user) do
         { "admin" => true }
       end
 
       it "does not render the UCAS Apply: GCSE requirements for applicants row" do
         expect(page).to_not have_content("UCAS Apply: GCSE requirements for applicants")
-      end
-    end
-
-    context "when course for 2021 cycle" do
-      let(:current_user) do
-        { "admin" => true }
-      end
-
-      it "renders the UCAS Apply: GCSE requirements for applicants row" do
-        expect(page).to have_content("UCAS Apply: GCSE requirements for applicants")
       end
     end
   end
