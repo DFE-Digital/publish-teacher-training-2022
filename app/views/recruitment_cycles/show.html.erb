@@ -33,4 +33,6 @@
       <%= render partial: "recruitment_cycles/allocations", locals: { provider: @provider.from_previous_recruitment_cycle, year: params[:year].to_i.pred } %>
     <% end %>
   </div>
+
+  <%= render partial: "shared/aside_information_box" %>
 </div>
