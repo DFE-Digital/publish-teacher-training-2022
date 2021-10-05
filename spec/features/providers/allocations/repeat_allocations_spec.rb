@@ -7,6 +7,7 @@ RSpec.feature "PE allocations" do
 
   before do
     allow(Settings.features.allocations).to receive(:state).and_return("open")
+    allow(Settings).to receive(:allocation_cycle_year).and_return(2022)
   end
 
   context "Repeat allocations" do

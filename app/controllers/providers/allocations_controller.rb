@@ -18,7 +18,7 @@ module Providers
       }.sort_by(&:provider_name)
 
       @allocations_view = AllocationsView.new(
-        allocations: allocations[@recruitment_cycle.year.to_s] || [], training_providers: @training_providers,
+        allocations: allocations[Settings.allocation_cycle_year.to_s] || [], training_providers: @training_providers,
       )
     end
 
