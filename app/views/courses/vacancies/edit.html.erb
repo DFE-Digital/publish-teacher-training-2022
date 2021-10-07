@@ -22,7 +22,6 @@
           <%= render partial: "courses/vacancies/single_site", locals: { f: form } %>
         <% end %>
       </fieldset>
-      <p class="govuk-body">Changes will appear on Find straight away. UCAS Apply will be updated within 2 hours.</p>
 
       <% if @course.has_multiple_running_sites_or_study_modes? %>
         <%= form.submit "Publish changes", class: "govuk-button" %>

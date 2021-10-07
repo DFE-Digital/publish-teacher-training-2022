@@ -347,7 +347,7 @@ feature "Edit course vacancies", type: :feature do
   def publish_changes(button_text = "Publish changes")
     click_on button_text
     expect(courses_page).to be_displayed
-    expect(courses_page.flash).to have_content("Course vacancies published")
+    expect(courses_page.flash).to have_content(I18n.t("success.published"))
   end
 
   def jsonapi_site_status(name, study_mode, status)
