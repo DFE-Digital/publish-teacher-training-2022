@@ -19,7 +19,7 @@ module Courses
         update_vacancies_for_a_single_site
       end
 
-      flash[:success] = "Course vacancies published"
+      flash[:success] = I18n.t("success.published")
       redirect_to provider_recruitment_cycle_courses_path(params[:provider_code], params[:recruitment_cycle_year])
     end
 
