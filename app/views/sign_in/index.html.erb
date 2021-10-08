@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <% if Settings.features.maintenance_mode.enabled %>
       <%= govuk_notification_banner(title_text: t("notification_banner.info")) do |notification_banner| %>
-        <%= notification_banner.heading(text: Settings.features.maintenance_mode.title) %>
+        <% notification_banner.heading(text: Settings.features.maintenance_mode.title) %>
         <p class="govuk-body"><%= Settings.features.maintenance_mode.body %></p>
       <% end %>
     <% end %>
