@@ -96,7 +96,7 @@ features:
     show_next_cycle_allocation_recruitment_page: false
   maintenance_mode:
     enabled: false
-    title: "This service will be unavailable on Thursday 23 September from 7:00 AM to 08:00 AM, while we carry out maintenance."
+    title: "This service will be unavailable on Thursday 11 October from 8pm to 9pm, while we carry out maintenance."
     body: "If you have any questions, contact us at becomingateacher@digital.education.gov.uk"
   send_request_data_to_bigquery: false
 
