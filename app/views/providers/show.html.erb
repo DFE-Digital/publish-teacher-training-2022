@@ -4,6 +4,12 @@
 <% end %>
 
 <%= render GovukComponent::NotificationBannerComponent.new(title_text: 'Important') do |notification_banner| %>
+  <span class="govuk-body"><strong>This service will be unavailable on Monday 11 October for a short period between 8pm and 9pm, while we carry out maintenance</strong></span><br><br>
+
+  <span class="govuk-body">If you have any questions, contact us at <%= bat_contact_mail_to %></span>
+<% end %>
+
+<%= render GovukComponent::NotificationBannerComponent.new(title_text: 'Important') do |notification_banner| %>
   <span class="govuk-body"><strong>Publish your courses so that candidates can view them on Find.</strong></span><br><br>
 
   <span class="govuk-body">Do this by selecting your course, check and edit the details, then click the “Publish” button.</span>
