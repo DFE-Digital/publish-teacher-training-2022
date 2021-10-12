@@ -1,12 +1,6 @@
 <% content_for :page_title, @recruitment_cycle.title %>
 <%= content_for :before_content, render_breadcrumbs(:recruitment_cycle) %>
 
-<%= render GovukComponent::NotificationBannerComponent.new(title_text: 'Important') do |notification_banner| %>
-  <span class="govuk-body"><strong>Publish your courses so that candidates can view them on Find.</strong></span><br><br>
-
-  <span class="govuk-body">Do this by selecting your course, check and edit the details, then click the “Publish” button.</span>
-<% end %>
-
 <h1 class="govuk-heading-l">
   <%= @recruitment_cycle.title %>
 </h1>

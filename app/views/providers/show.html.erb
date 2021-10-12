@@ -3,12 +3,6 @@
   <%= content_for :before_content, render_breadcrumbs(:provider) %>
 <% end %>
 
-<%= render GovukComponent::NotificationBannerComponent.new(title_text: 'Important') do |notification_banner| %>
-  <span class="govuk-body"><strong>Publish your courses so that candidates can view them on Find.</strong></span><br><br>
-
-  <span class="govuk-body">Do this by selecting your course, check and edit the details, then click the “Publish” button.</span>
-<% end %>
-
 <h1 class="govuk-heading-l"><%= @provider.provider_name %></h1>
 
 <div class="govuk-grid-row">
