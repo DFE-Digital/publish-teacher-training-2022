@@ -135,14 +135,14 @@ enable-maintenance: ## make qa enable-maintenance / make prod enable-maintenance
 	$(if $(HOSTNAME), $(eval REAL_HOSTNAME=${HOSTNAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
 	cf target -s ${space}
 	cd service_unavailable_page && cf push
-	cf map-route publish-unavailable publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
+	cf map-route publish-teacher-training-unavailable publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
 	echo Waiting 5s for route to be registered... && sleep 5
-	cf unmap-route apply-${APP_ENV} publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
+	cf unmap-route publish-teacher-training-${APP_ENV} publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
 
 disable-maintenance: ## make qa disable-maintenance / make prod disable-maintenance CONFIRM_PRODUCTION=y
 	$(if $(HOSTNAME), $(eval REAL_HOSTNAME=${HOSTNAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
 	cf target -s ${space}
-	cf map-route publish-qa publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
+	cf map-route publish-teacher-training-qa publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
 	echo Waiting 5s for route to be registered... && sleep 5
-	cf unmap-route publish-unavailable publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
-	cf delete -rf publish-unavailable
+	cf unmap-route publish-teacher-training-unavailable publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
+	cf delete -rf publish-teacher-training-unavailable
