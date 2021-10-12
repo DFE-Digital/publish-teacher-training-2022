@@ -1,0 +1,7 @@
+---
+applications:
+- name: publish-unavailable
+  path: web
+  buildpacks:
+  - nginx_buildpack
+  instances: 2
