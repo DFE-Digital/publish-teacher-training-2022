@@ -72,4 +72,25 @@ feature "Withdraw course", type: :feature do
       )
     end
   end
+
+  context "the course is already withdrawn" do
+    let(:course) do
+      build :course,
+            ucas_status: "running",
+            provider: provider,
+            recruitment_cycle: current_recruitment_cycle,
+            content_status: "withdrawn"
+    end
+
+    scenario "display validation errors" do
+      course_page.withdraw_link.click
+
+      fill_in "Type in the course code to confirm", with: "Z"
+      click_on "Yes I’m sure – withdraw this course"
+
+      expect(course_page.error_summary).to have_content(
+        "#{course.course_code} has already been withdrawn",
+      )
+    end
+  end
 end

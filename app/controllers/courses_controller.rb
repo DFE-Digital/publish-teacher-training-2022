@@ -128,9 +128,10 @@ class CoursesController < ApplicationController
 
   def withdraw_course
     if request.post?
-      return redirect_to_relative_path if course_withdrawn?
-
-      if params[:course][:confirm_course_code] == @course.course_code
+      if course_withdrawn?
+        flash[:error] = { id: "withdraw-error", message: "#{@course.course_code} has already been withdrawn" }
+        redirect_to withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
+      elsif params[:course][:confirm_course_code] == @course.course_code
         @course.withdraw
         redirect_to provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)
         flash[:success] = "#{@course.name} (#{@course.course_code}) has been withdrawn"
@@ -170,11 +171,6 @@ class CoursesController < ApplicationController
   end
 
 private
-
-  def redirect_to_relative_path
-    render template: "courses/withdraw"
-    flash[:error] = { id: "delete-error", message: "#{@course.name} (#{@course.course_code}) has already been withdrawn" }
-  end
 
   def course_withdrawn?
     @course.content_status == "withdrawn"
