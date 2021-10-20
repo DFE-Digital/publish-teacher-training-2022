@@ -76,6 +76,7 @@ production: ## Set DEPLOY_ENV to production
 	$(if $(CONFIRM_PRODUCTION), , $(error Production can only run with CONFIRM_PRODUCTION))
 	$(eval space=bat-prod)
 	$(eval paas_env=prod)
+	$(eval HOSTNAME=www)
 
 .PHONY: ci
 ci:	## Run in automation
@@ -129,3 +130,19 @@ destroy: deploy-init
 console:
 	cf target -s ${space}
 	cf ssh publish-teacher-training-${paas_env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
+
+enable-maintenance: ## make qa enable-maintenance / make prod enable-maintenance CONFIRM_PRODUCTION=y
+	$(if $(HOSTNAME), $(eval REAL_HOSTNAME=${HOSTNAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
+	cf target -s ${space}
+	cd service_unavailable_page && cf push
+	cf map-route publish-unavailable publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
+	echo Waiting 5s for route to be registered... && sleep 5
+	cf unmap-route publish-teacher-training-${DEPLOY_ENV} publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
+
+disable-maintenance: ## make qa disable-maintenance / make prod disable-maintenance CONFIRM_PRODUCTION=y
+	$(if $(HOSTNAME), $(eval REAL_HOSTNAME=${HOSTNAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
+	cf target -s ${space}
+	cf map-route publish-teacher-training-qa publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
+	echo Waiting 5s for route to be registered... && sleep 5
+	cf unmap-route publish-unavailable publish-teacher-training-courses.service.gov.uk --hostname ${REAL_HOSTNAME}
+	cf delete -rf publish-unavailable
