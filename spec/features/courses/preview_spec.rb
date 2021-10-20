@@ -78,6 +78,7 @@ feature "Preview course", type: :feature do
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(course, include: "subjects,sites,site_statuses.site,provider.sites,accrediting_provider")
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
   end
 
   let(:preview_course_page) { PageObjects::Page::Organisations::CoursePreview.new }

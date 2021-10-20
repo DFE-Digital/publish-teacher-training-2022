@@ -11,7 +11,7 @@ describe "Courses" do
       get(auth_dfe_callback_path)
       stub_api_v2_resource(current_recruitment_cycle)
       stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
-      stub_api_v2_resource(provider)
+      stub_api_v2_resource(provider, include: "sites")
     end
 
     describe "GET search" do

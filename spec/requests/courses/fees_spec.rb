@@ -44,7 +44,7 @@ describe "Courses", type: :request do
       stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
       stub_api_v2_resource(course_2, include: "subjects,sites,provider.sites,accrediting_provider")
       stub_api_v2_resource(course_3, include: "subjects,sites,provider.sites,accrediting_provider")
-      stub_api_v2_resource(provider)
+      stub_api_v2_resource(provider, include: "sites")
       stub_api_v2_resource(provider2, include: "courses.accrediting_provider")
     end
 

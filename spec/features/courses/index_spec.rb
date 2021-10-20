@@ -4,8 +4,9 @@ feature "courses page", type: :feature do
   let(:current_recruitment_cycle) { build(:recruitment_cycle) }
   let(:courses_page) { PageObjects::Page::Organisations::CoursesPage.new }
   let(:new_level_page) { PageObjects::Page::Organisations::Courses::NewLevelPage.new }
+  let(:site) { build(:site) }
   let(:course) { build(:course, provider: provider) }
-  let(:provider) { build(:provider) }
+  let(:provider) { build(:provider, sites: [site]) }
 
   scenario "links to the course creation page" do
     signed_in_user
@@ -13,6 +14,7 @@ feature "courses page", type: :feature do
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
 
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course
 

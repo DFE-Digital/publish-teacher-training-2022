@@ -70,7 +70,8 @@ feature "Course show", type: :feature do
     stub_api_v2_resource course,
                          include: "subjects,sites,provider.sites,accrediting_provider"
     stub_api_v2_resource(provider)
-    stub_api_v2_resource(rolled_over_provider)
+    stub_api_v2_resource(provider, include: "sites")
+    stub_api_v2_resource(rolled_over_provider, include: "sites")
 
     visit provider_recruitment_cycle_course_path(
       course.provider.provider_code,

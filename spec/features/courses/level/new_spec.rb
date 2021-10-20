@@ -27,6 +27,7 @@ feature "New course level", type: :feature do
     stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_new_resource(course)
     stub_api_v2_build_course
   end

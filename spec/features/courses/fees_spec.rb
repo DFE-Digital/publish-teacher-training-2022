@@ -17,6 +17,7 @@ feature "Course fees", type: :feature do
     stub_api_v2_resource(course_1, include: "sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
   end
 
   let(:course_fees_page) { PageObjects::Page::Organisations::CourseFees.new }
