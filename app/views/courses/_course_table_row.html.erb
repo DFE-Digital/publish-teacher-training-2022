@@ -11,11 +11,6 @@
     <% end %>
     <span class="govuk-body-s"><%= course.description %></span>
   </td>
-  <% if show_legacy_courses_table? %>
-    <td class="govuk-table__cell" data-qa="courses-table__ucas-status">
-      <%= course.ucas_status %>
-    </td>
-  <% end %>
   <td class="govuk-table__cell" data-qa="courses-table__status">
     <%= course.status_tag %>
   </td>

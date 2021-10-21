@@ -2,12 +2,7 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header">Course</th>
-      <% if show_legacy_courses_table? %>
-        <th class="govuk-table__header">UCAS Status</th>
-        <th class="govuk-table__header">Content</th>
-      <% else %>
-        <th class="govuk-table__header">Status</th>
-      <% end %>
+      <th class="govuk-table__header">Status</th>
       <th class="govuk-table__header">
         <% if @recruitment_cycle.current_and_open? %>Is it<% else %>Will it be<% end %> on <abbr class="app-!-text-decoration-underline-dotted" title="Find postgraduate teacher training">Find</abbr>?
       </th>
