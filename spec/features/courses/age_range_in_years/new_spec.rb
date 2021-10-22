@@ -29,7 +29,7 @@ feature "new course age range", type: :feature do
       "/recruitment_cycles/#{provider.recruitment_cycle.year}/providers?page[page]=1",
       resource_list_to_jsonapi([provider], meta: { count: 1 }),
     )
-    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(build(:provider, provider_code: "A2"))
     stub_api_v2_resource(build(:provider, provider_code: "A4"))
     new_course = build(

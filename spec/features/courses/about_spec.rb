@@ -39,7 +39,7 @@ feature "About course", type: :feature do
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,courses.accrediting_provider")
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
-    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
   end
 
   let(:about_course_page) { PageObjects::Page::Organisations::CourseAbout.new }
@@ -115,7 +115,7 @@ feature "About course", type: :feature do
       stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,courses.accrediting_provider")
       stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,accrediting_provider")
       stub_api_v2_resource(provider2, include: "courses.accrediting_provider")
-      stub_api_v2_resource(provider2)
+      stub_api_v2_resource(provider2, include: "sites")
     end
 
     scenario "viewing the about courses page" do
@@ -177,7 +177,7 @@ feature "About course", type: :feature do
       stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,courses.accrediting_provider")
       stub_api_v2_resource(course2, include: "subjects,sites,provider.sites,accrediting_provider")
       stub_api_v2_resource(provider2, include: "courses.accrediting_provider")
-      stub_api_v2_resource(provider2)
+      stub_api_v2_resource(provider2, include: "sites")
     end
 
     scenario "viewing the about courses page" do

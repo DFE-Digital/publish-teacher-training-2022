@@ -16,7 +16,7 @@ feature "Withdraw course", type: :feature do
     signed_in_user
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
-    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_request(
       "/recruitment_cycles/#{course.recruitment_cycle.year}/" \

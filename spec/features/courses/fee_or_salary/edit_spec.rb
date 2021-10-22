@@ -9,7 +9,7 @@ feature "Edit course fee or salary status", type: :feature do
   before do
     signed_in_user
     stub_api_v2_resource(current_recruitment_cycle)
-    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(provider, include: "subjects,courses.accrediting_provider")
 
     stub_api_v2_resource(course)

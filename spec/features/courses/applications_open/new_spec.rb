@@ -22,7 +22,7 @@ feature "new course applications open", type: :feature do
 
   before do
     signed_in_user(provider: provider)
-    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(build(:provider, provider_code: "A2"))
     stub_api_v2_resource(build(:provider, provider_code: "A4"))
     stub_api_v2_resource(recruitment_cycle)

@@ -65,6 +65,8 @@ class CoursesController < ApplicationController
   end
 
   def new
+    return render_locations_messages unless @provider.sites&.any?
+
     redirect_to new_provider_recruitment_cycle_courses_level_path(params[:provider_code], @recruitment_cycle.year)
   end
 
@@ -178,6 +180,7 @@ private
 
   def build_provider_from_provider_code
     @provider = Provider
+      .includes(:sites)
       .where(recruitment_cycle_year: @recruitment_cycle.year)
       .find(params[:provider_code])
       .first
@@ -294,5 +297,11 @@ private
     else
       Courses::Copy::PRE_2022_CYCLE_REQUIREMENTS_FIELDS
     end
+  end
+
+  def render_locations_messages
+    flash[:error] = { id: "locations-error", message: "You need to create at least one location before creating a course" }
+
+    redirect_to new_provider_recruitment_cycle_site_path(@provider.provider_code, @provider.recruitment_cycle_year)
   end
 end

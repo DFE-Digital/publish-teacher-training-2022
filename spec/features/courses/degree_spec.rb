@@ -21,7 +21,7 @@ feature "degree requirements", type: :feature do
 
   before do
     signed_in_user(provider: provider)
-    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_resource(course, include: "subjects,sites,provider.sites,accrediting_provider")

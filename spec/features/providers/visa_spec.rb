@@ -16,6 +16,7 @@ feature "View and edit provider visa sponsorship", type: :feature do
 
     stub_api_v2_resource(recruitment_cycle)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
   end
 
   context "in recruitment cycle 2022" do

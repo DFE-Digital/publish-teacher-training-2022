@@ -12,6 +12,7 @@ feature "new course outcome", type: :feature do
     signed_in_user
     stub_api_v2_resource(provider.recruitment_cycle)
     stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_resource_collection([course], include: "subjects,sites,provider.sites,accrediting_provider")
     stub_api_v2_build_course(qualification: "qts")
     new_course = build(:course, :new, provider: provider, gcse_subjects_required_using_level: true)

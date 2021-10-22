@@ -13,7 +13,7 @@ feature "new course fee or salary", type: :feature do
 
   before do
     signed_in_user(provider: provider)
-    stub_api_v2_resource(provider)
+    stub_api_v2_resource(provider, include: "sites")
     stub_api_v2_build_course
     stub_api_v2_build_course(funding_type: "fee")
     stub_api_v2_resource(recruitment_cycle)
