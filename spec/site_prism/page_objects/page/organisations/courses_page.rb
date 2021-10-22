@@ -10,6 +10,7 @@ module PageObjects
 
         element :flash, ".govuk-notification-banner--success"
         element :caption, ".govuk-caption-l"
+        element :error_summary, ".govuk-error-summary"
 
         element :course_create, ".govuk-button", text: "Add a new course"
         element :course_create_additional, '[data-qa="course-create-additional"]'
