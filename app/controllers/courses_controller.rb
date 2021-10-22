@@ -130,7 +130,7 @@ class CoursesController < ApplicationController
     if request.post?
       if course_withdrawn?
         flash[:error] = { id: "withdraw-error", message: "#{@course.course_code} has already been withdrawn" }
-        redirect_to withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
+        redirect_to provider_recruitment_cycle_courses_path(@provider.provider_code, @course.recruitment_cycle_year, @course.course_code)
       elsif params[:course][:confirm_course_code] == @course.course_code
         @course.withdraw
         redirect_to provider_recruitment_cycle_courses_path(@provider.provider_code, @provider.recruitment_cycle_year)

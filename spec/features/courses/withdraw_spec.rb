@@ -11,6 +11,7 @@ feature "Withdraw course", type: :feature do
   end
 
   let(:course_page) { PageObjects::Page::Organisations::Course.new }
+  let(:courses_page) { PageObjects::Page::Organisations::CoursesPage.new }
 
   before do
     signed_in_user
@@ -27,6 +28,7 @@ feature "Withdraw course", type: :feature do
       200,
     )
 
+    courses_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle.year)
     course_page.load(provider_code: provider.provider_code, recruitment_cycle_year: course.recruitment_cycle.year, course_code: course.course_code)
   end
 
@@ -88,7 +90,7 @@ feature "Withdraw course", type: :feature do
       fill_in "Type in the course code to confirm", with: "Z"
       click_on "Yes I’m sure – withdraw this course"
 
-      expect(course_page.error_summary).to have_content(
+      expect(courses_page.error_summary).to have_content(
         "#{course.course_code} has already been withdrawn",
       )
     end
