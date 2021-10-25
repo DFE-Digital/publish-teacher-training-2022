@@ -16,6 +16,7 @@ class TrainingProvidersCoursesController < ApplicationController
         "Course code" => c.course_code,
         "Course" => c.name,
         "Study mode" => c.study_mode&.humanize,
+        "Programme type" => c.program_type&.humanize,
         "Qualification" => c.outcome,
         "Status" => c.content_status&.humanize,
         "View on Find" => c.find_url,
