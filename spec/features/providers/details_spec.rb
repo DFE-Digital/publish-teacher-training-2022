@@ -2,6 +2,7 @@ require "rails_helper"
 
 feature "View provider", type: :feature do
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
+  let(:org_contact_page) { PageObjects::Page::Organisations::OrganisationContact.new }
 
   before do
     allow(Settings.features.rollover).to receive(:has_current_cycle_started?).and_return(true)
@@ -82,6 +83,15 @@ feature "View provider", type: :feature do
     if FeatureService.enabled?("rollover.can_edit_current_and_next_cycles")
       expect(breadcrumbs[1].text).to eq(provider.recruitment_cycle.title)
       expect(breadcrumbs[1]["href"]).to eq("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}")
+    end
+  end
+
+  context "when a provider doesnt have a UKPRN" do
+    let(:provider) { build(:provider, ukprn: nil) }
+
+    it "redirects the provider to their contact's page with a validation message" do
+      expect(current_path).to eq contact_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
+      expect(org_contact_page.error_flash).to have_content("Please enter a UKPRN before continuing")
     end
   end
 end
