@@ -193,7 +193,7 @@ RSpec.feature "PE allocations" do
 
   def given_the_accredited_body_has_an_initial_allocation
     stub_api_v2_request(
-      "/providers/#{accredited_body.provider_code}/allocations?filter[recruitment_cycle][year][0]=#{previous_recruitment_cycle.year}&filter[recruitment_cycle][year][1]=#{current_recruitment_cycle.year}&include=provider,accredited_body",
+      "/providers/#{accredited_body.provider_code}/allocations?filter[recruitment_cycle][year][0]=#{previous_recruitment_cycle.year}&filter[recruitment_cycle][year][1]=#{current_recruitment_cycle.year}&include=provider,accredited_body,allocation_uplift",
       resource_list_to_jsonapi([initial_allocation], include: "provider,accredited_body"),
     )
 

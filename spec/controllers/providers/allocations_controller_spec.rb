@@ -24,7 +24,7 @@ RSpec.describe Providers::AllocationsController, type: :controller do
     stub_api_v2_resource(accredited_body)
     allow(Settings.features.allocations).to receive(:state).and_return(allocations_state)
     stub_api_v2_request(
-      "/providers/#{accredited_body.provider_code}/allocations?filter[recruitment_cycle][year][0]=#{previous_recruitment_cycle.year}&filter[recruitment_cycle][year][1]=#{current_recruitment_cycle.year}&include=provider,accredited_body",
+      "/providers/#{accredited_body.provider_code}/allocations?filter[recruitment_cycle][year][0]=#{previous_recruitment_cycle.year}&filter[recruitment_cycle][year][1]=#{current_recruitment_cycle.year}&include=provider,accredited_body,allocation_uplift",
       resource_list_to_jsonapi([*previous_allocations, *current_allocations].compact, include: "provider,accredited_body"),
     )
   end
@@ -73,13 +73,13 @@ RSpec.describe Providers::AllocationsController, type: :controller do
 
       let(:previous_allocations) do
         training_provider_and_allocations_request_types_matrix.filter_map do |provider, request_type|
-          build(:allocation, request_type, accredited_body: accredited_body, provider: provider) if provider.recruitment_cycle == previous_recruitment_cycle
+          build(:allocation, :with_allocation_uplift, request_type, accredited_body: accredited_body, provider: provider) if provider.recruitment_cycle == previous_recruitment_cycle
         end
       end
 
       let(:current_allocations) do
         training_provider_and_allocations_request_types_matrix.filter_map do |provider, request_type|
-          build(:allocation, request_type, accredited_body: accredited_body, provider: provider) if provider.recruitment_cycle == current_recruitment_cycle
+          build(:allocation, :with_allocation_uplift, request_type, accredited_body: accredited_body, provider: provider) if provider.recruitment_cycle == current_recruitment_cycle
         end
       end
 

@@ -164,8 +164,8 @@ private
       training_provider_name: training_provider.provider_name,
       number_of_places: allocation.number_of_places,
       confirmed_number_of_places: allocation.confirmed_number_of_places,
-      uplift: allocation.allocation_uplift,
-      total: allocation.confirmed_number_of_places + (allocation.allocation_uplift || 0),
+      uplifts: allocation.allocation_uplift&.uplifts,
+      total: allocation.confirmed_number_of_places + (allocation.allocation_uplift&.uplifts || 0),
     }
 
     hash
