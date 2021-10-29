@@ -73,13 +73,13 @@ RSpec.describe Providers::AllocationsController, type: :controller do
 
       let(:previous_allocations) do
         training_provider_and_allocations_request_types_matrix.filter_map do |provider, request_type|
-          build(:allocation, :with_allocation_uplift, request_type, accredited_body: accredited_body, provider: provider) if provider.recruitment_cycle == previous_recruitment_cycle
+          build(:allocation, :with_allocation_uplift, request_type, accredited_body: accredited_body, provider: provider, confirmed_number_of_places: 5) if provider.recruitment_cycle == previous_recruitment_cycle
         end
       end
 
       let(:current_allocations) do
         training_provider_and_allocations_request_types_matrix.filter_map do |provider, request_type|
-          build(:allocation, :with_allocation_uplift, request_type, accredited_body: accredited_body, provider: provider) if provider.recruitment_cycle == current_recruitment_cycle
+          build(:allocation, :with_allocation_uplift, request_type, accredited_body: accredited_body, provider: provider, confirmed_number_of_places: 5) if provider.recruitment_cycle == current_recruitment_cycle
         end
       end
 

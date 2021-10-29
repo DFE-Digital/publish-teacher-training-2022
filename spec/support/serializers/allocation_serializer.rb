@@ -3,6 +3,7 @@ class AllocationSerializer < JSONAPI::Serializable::Resource
 
   belongs_to :accredited_body
   belongs_to :provider
+  has_one :allocation_uplift
 
   attributes(*FactoryBot.attributes_for("allocation").keys)
 

@@ -3,8 +3,9 @@ FactoryBot.define do
     sequence(:id)
     association :provider
     association :accredited_body, factory: %i[provider accredited_body]
-    number_of_places { nil }
 
+    number_of_places { nil }
+    confirmed_number_of_places { nil }
     trait :repeat do
       request_type { "repeat" }
     end
@@ -18,7 +19,13 @@ FactoryBot.define do
     end
 
     trait :with_allocation_uplift do
-      association :allocation_uplift, uplifts: 5
+      association :allocation_uplift
+    end
+
+    after :build do |allocation|
+      # Neccessary hack to get attributes to persist through JSONAPI build
+
+      allocation.allocation_uplift&.uplifts = 5
     end
   end
 end
