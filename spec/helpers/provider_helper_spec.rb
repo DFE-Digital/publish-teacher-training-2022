@@ -13,7 +13,7 @@ feature "View helpers", type: :helper do
         let(:recruitment_cycle) { build(:recruitment_cycle) }
 
         it "returns correct google form for the current cycle" do
-          expect(helper.add_course_url(email, provider)).to start_with(Settings.google_forms.current_cycle.new_course_for_accredited_bodies.url)
+          expect(helper.add_course_url(email, provider)).to start_with(Settings.google_forms.current_cycle.new_pe_course_for_accredited_bodies.url)
           expect(helper.add_course_url(email, provider)).to include(html_escaped_version_of_email)
           expect(helper.add_course_url(email, provider)).to include(provider.attributes[:provider_code])
         end
@@ -23,7 +23,7 @@ feature "View helpers", type: :helper do
         let(:recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
 
         it "returns correct google form for the next cycle" do
-          expect(helper.add_course_url(email, provider)).to start_with(Settings.google_forms.next_cycle.new_course_for_accredited_bodies.url)
+          expect(helper.add_course_url(email, provider)).to start_with(Settings.google_forms.next_cycle.new_pe_course_for_accredited_bodies.url)
           expect(helper.add_course_url(email, provider)).to include(html_escaped_version_of_email)
           expect(helper.add_course_url(email, provider)).to include(provider.attributes[:provider_code])
         end
@@ -37,7 +37,7 @@ feature "View helpers", type: :helper do
         let(:recruitment_cycle) { build(:recruitment_cycle) }
 
         it "returns correct google form for the current cycle" do
-          expect(helper.add_course_url(email, provider)).to start_with(Settings.google_forms.current_cycle.new_course_for_unaccredited_bodies.url)
+          expect(helper.add_course_url(email, provider)).to start_with(Settings.google_forms.current_cycle.new_pe_course_for_unaccredited_bodies.url)
           expect(helper.add_course_url(email, provider)).to include(html_escaped_version_of_email)
           expect(helper.add_course_url(email, provider)).to include(provider.attributes[:provider_code])
         end
@@ -47,7 +47,7 @@ feature "View helpers", type: :helper do
         let(:recruitment_cycle) { build(:recruitment_cycle, :next_cycle) }
 
         it "returns correct google form for the next cycle" do
-          expect(helper.add_course_url(email, provider)).to start_with(Settings.google_forms.next_cycle.new_course_for_unaccredited_bodies.url)
+          expect(helper.add_course_url(email, provider)).to start_with(Settings.google_forms.next_cycle.new_pe_course_for_unaccredited_bodies.url)
           expect(helper.add_course_url(email, provider)).to include(html_escaped_version_of_email)
           expect(helper.add_course_url(email, provider)).to include(provider.attributes[:provider_code])
         end
