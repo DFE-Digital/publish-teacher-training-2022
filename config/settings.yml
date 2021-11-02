@@ -33,21 +33,21 @@ notify:
   registered_user_template_url: https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/templates/4da327dd-907a-4619-abe6-45f348bb2fa3
 google_forms:
   current_cycle:
-    new_course_for_accredited_bodies:
-      url: https://docs.google.com/forms/d/e/1FAIpQLSexQtIhIDiHM6vyy23OrJmeSoLTmLlw4y_2S3TI7FDQV2VcsQ/viewform?usp=pp_url
+    new_pe_course_for_accredited_bodies:
+      url: https://docs.google.com/forms/d/e/1FAIpQLSerPrTvuQNNkpMH_yfgJ8_o5ajthtq5XhOP9x-zG8JL4o5n-Q/viewform?usp=pp_url
       email_entry: entry.957076544
       provider_code_entry: entry.1735563938
-    new_course_for_unaccredited_bodies:
-      url: https://docs.google.com/forms/d/e/1FAIpQLSdmuYIBDGuESZJBKGVTIdEFntdcjX86J5u6yXTSFNpk18oJeA/viewform?usp=pp_url
+    new_pe_course_for_unaccredited_bodies:
+      url: https://docs.google.com/forms/d/e/1FAIpQLSeZK6wGdvDy40QFiFcI8_JRgG-kPWUPBjLfY_EffebCkL0goQ/viewform?usp=pp_url
       email_entry: entry.1033530353
       provider_code_entry: entry.158771972
   # NOTE: these forms are only in use / visible during Rollover i.e. when both cycles are visible.
   next_cycle:
-    new_course_for_accredited_bodies:
+    new_pe_course_for_accredited_bodies:
       url: https://docs.google.com/forms/d/e/1FAIpQLSerPrTvuQNNkpMH_yfgJ8_o5ajthtq5XhOP9x-zG8JL4o5n-Q/viewform?usp=pp_url
       email_entry: entry.957076544
       provider_code_entry: entry.1735563938
-    new_course_for_unaccredited_bodies:
+    new_pe_course_for_unaccredited_bodies:
       url: https://docs.google.com/forms/d/e/1FAIpQLSeZK6wGdvDy40QFiFcI8_JRgG-kPWUPBjLfY_EffebCkL0goQ/viewform?usp=pp_url
       email_entry: entry.1033530353
       provider_code_entry: entry.158771972

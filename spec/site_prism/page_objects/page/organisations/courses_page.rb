@@ -30,19 +30,19 @@ module PageObjects
         end
 
         element :link_to_add_a_course_for_unaccredited_bodies_current_cycle,
-                "a[href^=\"#{Settings.google_forms.current_cycle.new_course_for_unaccredited_bodies.url.gsub('?', '\?')}\"]",
+                "a[href^=\"#{Settings.google_forms.current_cycle.new_pe_course_for_unaccredited_bodies.url.gsub('?', '\?')}\"]",
                 text: "Add a new course"
 
         element :link_to_add_a_course_for_accredited_bodies_current_cycle,
-                "a[href^=\"#{Settings.google_forms.current_cycle.new_course_for_accredited_bodies.url.gsub('?', '\?')}\"]",
+                "a[href^=\"#{Settings.google_forms.current_cycle.new_pe_course_for_accredited_bodies.url.gsub('?', '\?')}\"]",
                 text: "Add a new course"
 
         element :link_to_add_a_course_for_unaccredited_bodies_next_cycle,
-                "a[href^=\"#{Settings.google_forms.next_cycle.new_course_for_unaccredited_bodies.url.gsub('?', '\?')}\"]",
+                "a[href^=\"#{Settings.google_forms.next_cycle.new_pe_course_for_unaccredited_bodies.url.gsub('?', '\?')}\"]",
                 text: "Add a new course"
 
         element :link_to_add_a_course_for_accredited_bodies_next_cycle,
-                "a[href^=\"#{Settings.google_forms.next_cycle.new_course_for_accredited_bodies.url.gsub('?', '\?')}\"]",
+                "a[href^=\"#{Settings.google_forms.next_cycle.new_pe_course_for_accredited_bodies.url.gsub('?', '\?')}\"]",
                 text: "Add a new course"
       end
     end
