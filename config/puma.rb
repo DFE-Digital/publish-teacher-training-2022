@@ -4,7 +4,7 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
 threads threads_count, threads_count
 
 # Specifies the `environment` that Puma will run in.
@@ -46,7 +46,7 @@ if env == "development" && Settings.use_ssl
       root_ca.public_key = root_key.public_key
       root_ca.not_before = Time.zone.now
       root_ca.not_after = root_ca.not_before + 2 * 365 * 24 * 60 * 60 # 2 years validity
-      root_ca.sign(root_key, OpenSSL::Digest::SHA256.new)
+      root_ca.sign(root_key, OpenSSL::Digest.new("SHA256"))
       root_ca
     end
 

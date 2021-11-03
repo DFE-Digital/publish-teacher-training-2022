@@ -49,13 +49,13 @@ module ViewHelper
       base_errors_hash(provider_code, course)[message]
     else
       {
-        about_course: base + "/about?display_errors=true#about_course_wrapper",
-        how_school_placements_work: base + "/about?display_errors=true#how_school_placements_work_wrapper",
-        fee_uk_eu: base + "/fees?display_errors=true#fee_uk_eu-error",
-        course_length: base + (course.has_fees? ? "/fees" : "/salary") + "?display_errors=true#course_length-error",
-        salary_details: base + "/salary?display_errors=true#salary_details-error",
-        required_qualifications: base + "/requirements?display_errors=true#required_qualifications_wrapper",
-        age_range_in_years: base + "/age-range?display_errors=true",
+        about_course: "#{base}/about?display_errors=true#about_course_wrapper",
+        how_school_placements_work: "#{base}/about?display_errors=true#how_school_placements_work_wrapper",
+        fee_uk_eu: "#{base}/fees?display_errors=true#fee_uk_eu-error",
+        course_length: "#{base + (course.has_fees? ? '/fees' : '/salary')}?display_errors=true#course_length-error",
+        salary_details: "#{base}/salary?display_errors=true#salary_details-error",
+        required_qualifications: "#{base}/requirements?display_errors=true#required_qualifications_wrapper",
+        age_range_in_years: "#{base}/age-range?display_errors=true",
       }.with_indifferent_access[field]
     end
   end
@@ -64,35 +64,29 @@ module ViewHelper
     base = "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle_year}"
 
     {
-      "train_with_us" => base + "/about?display_errors=true#provider_train_with_us",
-      "train_with_disability" => base + "/about?display_errors=true#provider_train_with_disability",
-      "email" => base + "/contact?display_errors=true#provider_email",
-      "website" => base + "/contact?display_errors=true#provider_website",
-      "telephone" => base + "/contact?display_errors=true#provider_telephone",
-      "address1" => base + "/contact?display_errors=true#provider_address1",
-      "address3" => base + "/contact?display_errors=true#provider_address3",
-      "address4" => base + "/contact?display_errors=true#provider_address4",
-      "postcode" => base + "/contact?display_errors=true#provider_postcode",
+      "train_with_us" => "#{base}/about?display_errors=true#provider_train_with_us",
+      "train_with_disability" => "#{base}/about?display_errors=true#provider_train_with_disability",
+      "email" => "#{base}/contact?display_errors=true#provider_email",
+      "website" => "#{base}/contact?display_errors=true#provider_website",
+      "telephone" => "#{base}/contact?display_errors=true#provider_telephone",
+      "address1" => "#{base}/contact?display_errors=true#provider_address1",
+      "address3" => "#{base}/contact?display_errors=true#provider_address3",
+      "address4" => "#{base}/contact?display_errors=true#provider_address4",
+      "postcode" => "#{base}/contact?display_errors=true#provider_postcode",
     }[field]
   end
 
   def environment_colour
     return "purple" if sandbox_mode?
 
-    case Settings.environment.selector_name
-    when "development"
-      "grey"
-    when "qa"
-      "orange"
-    when "review"
-      "purple"
-    when "rollover"
-      "turquoise"
-    when "staging"
-      "red"
-    when "unknown-environment"
-      "yellow"
-    end
+    {
+      "development" => "grey",
+      "qa" => "orange",
+      "review" => "purple",
+      "rollover" => "turquoise",
+      "staging" => "red",
+      "unknown-environment" => "yellow",
+    }[Settings.environment.selector_name]
   end
 
   def environment_label
@@ -115,6 +109,7 @@ module ViewHelper
   def classnames(*args)
     args.reduce("") do |str, arg|
       classes =
+        # rubocop:disable Lint/Style/CaseLikeIf
         if arg.is_a? Hash
           arg.reduce([]) { |cs, (classname, condition)| cs + [condition ? classname : nil] }
         elsif arg.is_a? String
@@ -122,6 +117,7 @@ module ViewHelper
         else
           []
         end
+      # rubocop:enable Lint/Style/CaseLikeIf
       ([str] + classes).reject(&:blank?).join(" ")
     end
   end

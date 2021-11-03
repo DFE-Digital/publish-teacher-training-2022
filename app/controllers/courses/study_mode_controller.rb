@@ -2,10 +2,6 @@ module Courses
   class StudyModeController < ApplicationController
     include CourseBasicDetailConcern
 
-    def update
-      super
-    end
-
   private
 
     def current_step

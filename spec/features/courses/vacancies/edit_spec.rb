@@ -360,7 +360,7 @@ feature "Edit course vacancies", type: :feature do
       "/providers/#{provider.provider_code}/courses" \
       "/#{course.course_code}" \
       "?include=site_statuses.site",
-      course.to_jsonapi(include: [:sites, site_statuses: :site]),
+      course.to_jsonapi(include: [:sites, { site_statuses: :site }]),
     )
   end
 end

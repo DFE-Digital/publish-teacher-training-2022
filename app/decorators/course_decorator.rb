@@ -7,7 +7,7 @@ class CourseDecorator < ApplicationDecorator
 
   def vacancies
     content = object.has_vacancies? ? "Yes" : "No"
-    content += " (" + edit_vacancy_link + ")" unless object.is_withdrawn?
+    content += " (#{edit_vacancy_link})" unless object.is_withdrawn?
     content.html_safe
   end
 
@@ -40,14 +40,11 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def funding
-    case object.funding_type
-    when "salary"
-      "Salaried"
-    when "apprenticeship"
-      "Teaching apprenticeship (with salary)"
-    when "fee"
-      "Fee paying (no salary)"
-    end
+    {
+      "salary" => "Salaried",
+      "apprenticeship" => "Teaching apprenticeship (with salary)",
+      "fee" => "Fee paying (no salary)",
+    }[object.funding_type]
   end
 
   def subject_name
@@ -148,14 +145,11 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def ucas_status
-    case object.ucas_status
-    when "running"
-      "Running"
-    when "new"
-      "New – not yet running"
-    when "not_running"
-      "Not running"
-    end
+    {
+      "running" => "Running",
+      "new" => "New – not yet running",
+      "not_running" => "Not running",
+    }[object.ucas_status]
   end
 
   def alphabetically_sorted_sites
@@ -201,7 +195,7 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def cycle_range
-    "#{course.recruitment_cycle_year} to #{(course.recruitment_cycle_year.to_i + 1)}"
+    "#{course.recruitment_cycle_year} to #{course.recruitment_cycle_year.to_i + 1}"
   end
 
   def age_range
@@ -271,9 +265,10 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def subject_page_title
-    if level == "primary"
+    case level
+    when "primary"
       "Pick a primary subject"
-    elsif level == "secondary"
+    when "secondary"
       "Pick a secondary subject"
     else
       "Pick a subject"
@@ -281,9 +276,10 @@ class CourseDecorator < ApplicationDecorator
   end
 
   def subject_input_label
-    if level == "primary"
+    case level
+    when "primary"
       "Primary subject"
-    elsif level == "secondary"
+    when "secondary"
       "Secondary subject"
     else
       "Pick a subject"

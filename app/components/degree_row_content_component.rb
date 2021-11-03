@@ -1,8 +1,15 @@
 class DegreeRowContentComponent < ViewComponent::Base
-  attr_reader :course
-  attr_reader :errors
+  attr_reader :course, :errors
+
+  DEGREE_GRADE_MAPPING = {
+    "two_one" => "2:1 or above, or equivalent",
+    "two_two" => "2:2 or above, or equivalent",
+    "third_class" => "Third class degree or above, or equivalent",
+    "not_required" => "An undergraduate degree, or equivalent",
+  }.freeze
 
   def initialize(course:, errors: nil)
+    super
     @course = course
     @errors = errors
   end
@@ -22,15 +29,6 @@ class DegreeRowContentComponent < ViewComponent::Base
 private
 
   def degree_grade_content(course)
-    case course.degree_grade
-    when "two_one"
-      "2:1 or above, or equivalent"
-    when "two_two"
-      "2:2 or above, or equivalent"
-    when "third_class"
-      "Third class degree or above, or equivalent"
-    when "not_required"
-      "An undergraduate degree, or equivalent"
-    end
+    DEGREE_GRADE_MAPPING[course.degree_grade]
   end
 end

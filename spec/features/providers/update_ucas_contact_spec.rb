@@ -93,11 +93,11 @@ feature "update ucas contact" do
 
   def updated_contacts
     @updated_contacts ||= begin
-                            admin_contact.name = "John"
-                            admin_contact.email = "john.cleese@bbc.co.uk"
-                            admin_contact.telephone = "0790462876"
-                            other_contacts + [admin_contact]
-                          end
+      admin_contact.name = "John"
+      admin_contact.email = "john.cleese@bbc.co.uk"
+      admin_contact.telephone = "0790462876"
+      other_contacts + [admin_contact]
+    end
   end
 
   def other_contacts

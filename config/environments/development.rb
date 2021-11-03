@@ -50,5 +50,5 @@ Rails.application.configure do
   # Logging
   config.log_level = Settings.log_level
 
-  config.logger = ActiveSupport::Logger.new(STDOUT)
+  config.logger = ActiveSupport::Logger.new($stdout)
 end

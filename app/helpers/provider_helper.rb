@@ -47,8 +47,7 @@ private
   end
 
   def google_form_url_for(settings, email, provider)
-    settings.url + "&" +
-      { settings.email_entry => email, settings.provider_code_entry => provider.provider_code }.to_query
+    "#{settings.url}&#{{ settings.email_entry => email, settings.provider_code_entry => provider.provider_code }.to_query}"
   end
 
   def is_current_cycle(cycle_year)

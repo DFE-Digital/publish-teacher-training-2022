@@ -52,12 +52,11 @@ module Courses
     end
 
     def selected_subject_ids
-      params
-        .dig(:course)
-        .slice(:master_subject_id, :subordinate_subject_id)
-        .to_unsafe_h
-        .values
-        .select(&:present?)
+      params[:course]
+      .slice(:master_subject_id, :subordinate_subject_id)
+      .to_unsafe_h
+      .values
+      .select(&:present?)
     end
 
     def selected_subjects

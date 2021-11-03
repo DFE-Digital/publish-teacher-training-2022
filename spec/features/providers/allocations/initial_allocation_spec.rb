@@ -355,7 +355,7 @@ RSpec.feature "PE allocations" do
                   body: File.new("spec/fixtures/api_responses/provider-suggestions.json"),
                 )
 
-    provider_codes = JSON.parse(File.read("spec/fixtures/api_responses/provider-suggestions.json")).dig("data").map { |p| p["attributes"]["provider_code"] }
+    provider_codes = JSON.parse(File.read("spec/fixtures/api_responses/provider-suggestions.json"))["data"].map { |p| p["attributes"]["provider_code"] }
 
     provider_codes.each do |provider_code|
       stub_api_v2_request(

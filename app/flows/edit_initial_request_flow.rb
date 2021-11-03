@@ -2,6 +2,7 @@ class EditInitialRequestFlow
   include Rails.application.routes.url_helpers
 
   attr_reader :params
+
   delegate :valid?, to: :form_object
 
   def initialize(params:)

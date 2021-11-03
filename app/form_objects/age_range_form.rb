@@ -77,18 +77,14 @@ private
   end
 
   def age_range_from_and_to_reversed
-    if age_range_in_years == "other" && course_age_range_in_years_other_from.present? && course_age_range_in_years_other_to.present?
-      if course_age_range_in_years_other_from.to_i > course_age_range_in_years_other_to.to_i
-        errors.add(:course_age_range_in_years_other_from, I18n.t("age_range.errors.from_invalid_error"))
-      end
+    if age_range_in_years == "other" && course_age_range_in_years_other_from.present? && course_age_range_in_years_other_to.present? && (course_age_range_in_years_other_from.to_i > course_age_range_in_years_other_to.to_i)
+      errors.add(:course_age_range_in_years_other_from, I18n.t("age_range.errors.from_invalid_error"))
     end
   end
 
   def age_range_spans_at_least_4_years
-    if age_range_in_years == "other"
-      if (course_age_range_in_years_other_to.to_i - course_age_range_in_years_other_from.to_i).abs < 4
-        errors.add(:course_age_range_in_years_other_to, I18n.t("age_range.errors.to_invalid_error"))
-      end
+    if age_range_in_years == "other" && ((course_age_range_in_years_other_to.to_i - course_age_range_in_years_other_from.to_i).abs < 4)
+      errors.add(:course_age_range_in_years_other_to, I18n.t("age_range.errors.to_invalid_error"))
     end
   end
 end

@@ -1,11 +1,11 @@
 require "rails_helper"
 
+module CurrentUserMethod
+  def current_user; end
+end
+
 describe "providers/show" do
   let(:provider_show_page) { PageObjects::Page::Organisations::OrganisationShow.new }
-
-  module CurrentUserMethod
-    def current_user; end
-  end
 
   before do
     view.extend(CurrentUserMethod)

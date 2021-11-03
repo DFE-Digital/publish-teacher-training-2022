@@ -61,11 +61,11 @@ Rails.application.configure do
   if Settings.logstash.host && Settings.logstash.port
     config.logger = LogStashLogger.new(Settings.logstash.to_h)
   else
-    config.logger = ActiveSupport::Logger.new(STDOUT)
+    config.logger = ActiveSupport::Logger.new($stdout)
     config.semantic_logger.application = Settings.application_name
     config.rails_semantic_logger.format = :json
     config.rails_semantic_logger.add_file_appender = false
-    SemanticLogger.add_appender(io: STDOUT, level: config.log_level, formatter: config.rails_semantic_logger.format)
+    SemanticLogger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
     config.logger.info("Application logging to STDOUT")
   end
 end

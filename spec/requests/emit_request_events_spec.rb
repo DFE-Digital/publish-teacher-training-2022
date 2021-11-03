@@ -1,6 +1,14 @@
 require "rails_helper"
 require "sidekiq/testing"
 
+class TestController < ::ApplicationController
+  skip_before_action :check_interrupt_redirects
+
+  def test
+    render plain: "TEESSSSST"
+  end
+end
+
 RSpec.describe EmitRequestEvents, type: :request, feature_send_request_data_to_bigquery: true do
   let(:user) { create(:user) }
   let(:provider_user) { create(:provider_user, :with_dfe_sign_in) }
@@ -21,14 +29,6 @@ RSpec.describe EmitRequestEvents, type: :request, feature_send_request_data_to_b
 
   after do
     Rails.application.reload_routes!
-  end
-
-  class TestController < ::ApplicationController
-    skip_before_action :check_interrupt_redirects
-
-    def test
-      render plain: "TEESSSSST"
-    end
   end
 
   it "enqueues request event data with job to send to bigquery" do

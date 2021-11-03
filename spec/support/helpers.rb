@@ -178,7 +178,7 @@ module Helpers
   end
 
   def stub_api_v2_build_course(params = {})
-    jsonapi_response = course.to_jsonapi(include: [:subjects, :sites, :provider, :accrediting_provider, provider: %i[sites provider_type]])
+    jsonapi_response = course.to_jsonapi(include: [:subjects, :sites, :provider, :accrediting_provider, { provider: %i[sites provider_type] }])
     jsonapi_response[:data][:meta] = course.meta
     jsonapi_response[:data][:errors] = course_errors_to_json_api(course)
     stub_api_v2_request(
@@ -210,12 +210,13 @@ private
   end
 
   def url_for_resource_collection(resource)
+    # rubocop:disable Lint/Style/CaseLikeIf
     if resource.is_a? RecruitmentCycle
       "/recruitment_cycles"
     elsif resource.is_a? Provider
-      url_for_resource(resource.recruitment_cycle) + "/providers"
+      "#{url_for_resource(resource.recruitment_cycle)}/providers"
     elsif resource.is_a? Course
-      url_for_resource(resource.provider) + "/courses"
+      "#{url_for_resource(resource.provider)}/courses"
     elsif resource.is_a? AccessRequest
       "/access_requests"
     elsif resource.is_a? Organisation
@@ -225,6 +226,7 @@ private
     else
       raise "Resource '#{resource.class}' was not found. Add to 'url_for_resource_collection' helper."
     end
+    # rubocop:enable Lint/Style/CaseLikeIf
   end
 
   def url_for_new_resource(resource)

@@ -63,15 +63,15 @@ module Courses
     end
 
     def age_to_param
-      course_param.dig(:course_age_range_in_years_other_to)
+      course_param[:course_age_range_in_years_other_to]
     end
 
     def age_from_param
-      course_param.dig(:course_age_range_in_years_other_from)
+      course_param[:course_age_range_in_years_other_from]
     end
 
     def age_range_param
-      course_param.dig(:age_range_in_years)
+      course_param[:age_range_in_years]
     end
 
     def age_range_is_other?
@@ -79,7 +79,7 @@ module Courses
     end
 
     def course_param
-      params.dig(:course)
+      params[:course]
     end
 
     def current_step

@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe "providers/contact.html.erb" do
-  module CurrentUserMethod
-    def current_user; end
-  end
+module CurrentUserMethod
+  def current_user; end
+end
 
+RSpec.describe "providers/contact.html.erb" do
   before do
     view.extend(CurrentUserMethod)
     assign(:provider, build(:provider))
