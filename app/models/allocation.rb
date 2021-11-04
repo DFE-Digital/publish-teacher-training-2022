@@ -14,6 +14,7 @@ class Allocation < Base
   end
 
   belongs_to :provider, param: :provider_code, shallow_path: true # accredited_body
+  has_one :allocation_uplift
 
   property :number_of_places
   property :confirmed_number_of_places

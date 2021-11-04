@@ -7,7 +7,7 @@ module Providers
 
     def index
       allocations = Allocation
-                      .includes(:provider, :accredited_body)
+                      .includes(:provider, :accredited_body, :allocation_uplift)
                       .where(provider_code: params[:provider_code])
                       .where(recruitment_cycle: { year: [previous_recruitment_cycle_year, @recruitment_cycle.year] })
                       .all

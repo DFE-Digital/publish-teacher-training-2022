@@ -164,6 +164,8 @@ private
       training_provider_name: training_provider.provider_name,
       number_of_places: allocation.number_of_places,
       confirmed_number_of_places: allocation.confirmed_number_of_places,
+      uplifts: allocation.allocation_uplift&.uplifts,
+      total: allocation.confirmed_number_of_places.to_i + allocation.allocation_uplift&.uplifts.to_i,
     }
   end
 
