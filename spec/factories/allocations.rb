@@ -20,12 +20,13 @@ FactoryBot.define do
 
     trait :with_uplift do
       association :allocation_uplift
-    end
 
-    after :build do |allocation|
-      # Neccessary hack to get attributes to persist through JSONAPI build
+      after :build do |allocation|
+        # Neccessary hack to get attributes to persist through JSONAPI build, specifically the uplifts attribute
+        # Other users have experienced similar issues: https://github.com/JsonApiClient/json_api_client/issues/342
 
-      allocation.allocation_uplift&.uplifts = 5
+        allocation.allocation_uplift.uplifts = 5
+      end
     end
   end
 end

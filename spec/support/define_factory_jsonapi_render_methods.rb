@@ -27,7 +27,6 @@ FactoryBot.define do
           Organisation: OrganisationSerializer,
           OrganisationUser: OrganisationUser,
           Allocation: AllocationSerializer,
-          AllocationUplift: AllocationUpliftSerializer,
           Contact: ContactSerializer,
         },
         include: opts[:include],
