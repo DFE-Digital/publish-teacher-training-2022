@@ -68,13 +68,6 @@ Rails.application.routes.draw do
 
     get "/users", on: :member, to: "providers/users#index"
 
-    resource :ucas_contacts, path: "ucas-contacts", on: :member, only: %i[show] do
-      get "/alerts", on: :member, to: "ucas_contacts#alerts"
-      patch "/alerts", on: :member, to: "ucas_contacts#update_alerts"
-    end
-
-    resources :contacts, only: %i[edit update]
-
     resources :recruitment_cycles, param: :year, constraints: { year: /#{Settings.current_cycle}|#{Settings.current_cycle + 1}/ }, path: "", only: :show do
       get "/details", on: :member, to: "providers#details"
       get "/contact", on: :member, to: "providers#contact"
@@ -270,18 +263,6 @@ Rails.application.routes.draw do
   get "/providers/suggest_any", to: "provider_suggestions#suggest_any"
   get "/providers/suggest_any_accredited_body", to: "provider_suggestions#suggest_any_accredited_body"
   get "/providers/search", to: "providers#search"
-  # redirect URL's from legacy c# app
-  get "/organisation/:provider_code", to: redirect("/organisations/%{provider_code}", status: 301)
-  get "/organisation/:provider_code/details", to: redirect("/organisations/%{provider_code}/details", status: 301)
-  get "/organisation/:provider_code/contact", to: redirect("/organisations/%{provider_code}/contact", status: 301)
-  get "/organisation/:provider_code/request-access", to: redirect("/organisations/%{provider_code}/request-access", status: 301)
-  get "/organisation/:provider_code/course/self/:course_code", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}", status: 301)
-  get "/organisation/:provider_code/course/:accrediting_provider/:course_code", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}", status: 301)
-  get "/organisation/:provider_code/course/self/:course_code/about", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/about", status: 301)
-  get "/organisation/:provider_code/course/:accrediting_provider/:course_code/about", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/about", status: 301)
-  get "/organisation/:provider_code/course/self/:course_code/fees-and-length", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/fees", status: 301)
-  get "/organisation/:provider_code/course/:accrediting_provider/:course_code/fees-and-length", to: redirect("/organisations/%{provider_code}/2019/courses/%{course_code}/fees", status: 301)
-  get "/auth/cb", to: redirect("/", status: 301)
 
   match "/401", to: "errors#unauthorized", via: :all, as: "unauthorized"
   match "/403", to: "errors#forbidden", via: :all

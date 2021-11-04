@@ -66,11 +66,6 @@ module BreadcrumbHelper
     sites_breadcrumb.merge({ "Add a location" => path })
   end
 
-  def ucas_contacts_breadcrumb
-    path = provider_ucas_contacts_path(@provider.provider_code)
-    provider_breadcrumb.merge({ "UCAS contacts" => path })
-  end
-
   def training_providers_breadcrumb
     path = training_providers_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year)
     provider_breadcrumb.merge({ "Courses as an accredited body" => path })
