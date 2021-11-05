@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :request_login
   skip_before_action :check_interrupt_redirects
   skip_before_action :verify_authenticity_token, if: proc { AuthenticationService.persona? }
-  skip_before_action :authenticate, only: :create
+  skip_before_action :authenticate, if: -> { AuthenticationService.persona? && action_name == "create" }
 
   def create
     session[:auth_user] = HashWithIndifferentAccess.new(
