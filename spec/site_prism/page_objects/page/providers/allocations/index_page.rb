@@ -13,6 +13,8 @@ module PageObjects
             element :provider_name, '[data-qa="provider-name"]'
             element :status, "td[:nth-child(1)"
             element :actions, "td[:nth-child(2)"
+            element :allocation_number, '[data-qa="confirmed-places"]'
+            element :uplift_number, '[data-qa="uplifts"]'
           end
 
           elements :view_requested_confirmation_links, '[data-qa="view-yes-confirmation"]'

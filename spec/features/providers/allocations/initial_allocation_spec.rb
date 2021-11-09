@@ -298,7 +298,6 @@ RSpec.feature "PE allocations" do
   end
 
   def given_the_accredited_body_has_an_allocation(current_allocation: nil)
-    # def and_accredited_body_has_previous_allocation(current_allocation: nil)
     stub_api_v2_request(
       "/providers/#{accredited_body.provider_code}/allocations?filter[recruitment_cycle][year][0]=#{previous_recruitment_cycle.year}&filter[recruitment_cycle][year][1]=#{current_recruitment_cycle.year}&include=provider,accredited_body,allocation_uplift",
       resource_list_to_jsonapi([allocation, current_allocation].compact, include: "provider,accredited_body"),
