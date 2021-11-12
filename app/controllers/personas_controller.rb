@@ -14,7 +14,7 @@ if AuthenticationService.persona?
   private
 
     def clear_current_sessions
-      session[:auth_user].clear
+      session[:auth_user]&.clear
     end
   end
 end
