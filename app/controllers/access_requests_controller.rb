@@ -36,6 +36,12 @@ class AccessRequestsController < ApplicationController
     end
   end
 
+  def destroy
+    AccessRequest.new(id: params[:id]).destroy
+    flash[:success] = "Successfully deleted the Access Request"
+    redirect_to access_requests_path
+  end
+
 private
 
   def access_request_params

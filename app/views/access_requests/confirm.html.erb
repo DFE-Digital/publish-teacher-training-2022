@@ -19,4 +19,11 @@
   </div>
 </div>
 
-<%= govuk_button_to "Approve", approve_access_request_path(@access_request.id), data: { qa: "access-request__approve" } %>
+<div class="govuk-button-group">
+  <%= govuk_button_to("Approve", approve_access_request_path(@access_request.id), data: { qa: "access-request__approve" }) %>
+  <%= govuk_button_to("Delete",
+    access_request_path(@access_request.id),
+    method: :delete,
+    class: "govuk-button govuk-button--warning",
+    data: { qa: "access-request__delete" })%>
+</div>

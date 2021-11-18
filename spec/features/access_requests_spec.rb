@@ -12,12 +12,14 @@ feature "Access Requests", type: :feature do
   let(:user) { build(:user, organisations: [organisation]) }
 
   let(:submitted_access_request) { stub_api_v2_request("/access_requests/#{access_request.id}/approve", nil, :post) }
+  let(:deleted_access_request) { stub_api_v2_request("/access_requests/#{access_request.id}", nil, :delete) }
   before do
     signed_in_user
 
     stub_api_v2_resource(access_request, include: "requester,requester.organisations")
     stub_api_v2_resource_collection([access_request], include: "requester")
     submitted_access_request
+    deleted_access_request
   end
 
   describe "page header" do
@@ -134,10 +136,18 @@ feature "Access Requests", type: :feature do
 
     it "can approve a request" do
       visit access_requests_path
-      list_access_requests_page.access_requests.first.approve.click
+      list_access_requests_page.access_requests.first.view_request.click
       expect(confirm_access_requests_page).to be_displayed
       confirm_access_requests_page.approve.click
       expect(submitted_access_request).to have_been_requested
+    end
+
+    it "can decline a request" do
+      visit access_requests_path
+      list_access_requests_page.access_requests.first.view_request.click
+      expect(confirm_access_requests_page).to be_displayed
+      confirm_access_requests_page.delete.click
+      expect(deleted_access_request).to have_been_requested
     end
   end
 
@@ -156,14 +166,14 @@ feature "Access Requests", type: :feature do
 
     it "displays the inform publisher page when a request is approved" do
       visit access_requests_path
-      list_access_requests_page.access_requests.first.approve.click
+      list_access_requests_page.access_requests.first.view_request.click
       confirm_access_requests_page.approve.click
       expect(inform_publisher_page).to be_displayed
     end
 
     it "links to the correct pages" do
       visit access_requests_path
-      list_access_requests_page.access_requests.first.approve.click
+      list_access_requests_page.access_requests.first.view_request.click
       confirm_access_requests_page.approve.click
       expect(inform_publisher_page.dfe_signin_search_link[:href]).to eq("#{Settings.dfe_signin.user_search_url}?criteria=aswartz@mymail.co")
       expect(inform_publisher_page.notify_service_link[:href]).to eq("https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534")

@@ -10,7 +10,7 @@ module PageObjects
           element :request_date, "[data-qa=\"access-request__request_date\"]"
           element :requester, "[data-qa=\"access-request__requester\"]"
           element :recipient, "[data-qa=\"access-request__recipient\"]"
-          element :approve, "[data-qa=\"access-request__approve\"]"
+          element :view_request, "[data-qa=\"access-request__confirm\"]"
           element :organisation, "[data-qa=\"access-request__organisation\"]"
         end
       end
