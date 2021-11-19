@@ -6,8 +6,10 @@ feature "Edit course SEND", type: :feature do
   let(:course_details_page) { PageObjects::Page::Organisations::CourseDetails.new }
   let(:provider) { build(:provider) }
 
+  let(:user) { build(:user) }
+
   before do
-    signed_in_user
+    signed_in_user(user: user)
     stub_api_v2_resource(current_recruitment_cycle)
     stub_api_v2_resource(provider, include: "courses.accrediting_provider")
     stub_api_v2_resource(provider)
@@ -50,6 +52,15 @@ feature "Edit course SEND", type: :feature do
       scenario "should not show the edit link" do
         course_details_page.load_with_course(course)
         expect(course_details_page.is_send).to_not have_change_link
+      end
+
+      context "if the user signed as admin" do
+        let(:user) { build(:user, :admin) }
+
+        scenario "should show the edit link" do
+          course_details_page.load_with_course(course)
+          expect(course_details_page.is_send).to have_change_link
+        end
       end
     end
   end
