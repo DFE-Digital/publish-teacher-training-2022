@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   resources :access_requests, path: "/access-requests", controller: "access_requests", only: %i[new index create] do
     member do
       post :approve
+      delete :destroy
       get :confirm
       get "/inform-publisher", to: "access_requests#inform_publisher"
     end
