@@ -24,11 +24,7 @@ class TrainingProvidersCoursesController < ApplicationController
         "Vacancies" => c.has_vacancies? ? "Yes" : "No",
       }
       if c.sites
-        c.sites.map do |site|
-          {
-            "Campus Code" => site.code,
-          }.merge(base_data)
-        end
+        base_data.merge({ "Campus Codes" => c.sites.pluck(:code).join(" ") })
       else
         base_data
       end

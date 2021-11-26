@@ -102,8 +102,8 @@ describe "Providers", type: :request do
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(
           <<~HEREDOC,
-            Campus Code,Provider code,Provider,Course code,Course,Study mode,Programme type,Qualification,Status,View on Find,Applications open from,Vacancies
-            #{course.sites.first.code},#{course.provider.provider_code},#{course.provider.provider_name},#{course.course_code},#{course.name},#{decorated_course.study_mode.humanize},#{decorated_course.program_type.humanize},#{decorated_course.outcome},#{course.content_status.humanize},#{decorated_course.find_url},#{I18n.l(course.applications_open_from.to_date)},No
+            Provider code,Provider,Course code,Course,Study mode,Programme type,Qualification,Status,View on Find,Applications open from,Vacancies,Campus Codes
+            #{course.provider.provider_code},#{course.provider.provider_name},#{course.course_code},#{course.name},#{decorated_course.study_mode.humanize},#{decorated_course.program_type.humanize},#{decorated_course.outcome},#{course.content_status.humanize},#{decorated_course.find_url},#{I18n.l(course.applications_open_from.to_date)},No,#{course.sites.pluck(:code).join(' ')}
           HEREDOC
         )
       end
