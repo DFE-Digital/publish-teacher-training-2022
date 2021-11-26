@@ -9,7 +9,7 @@ class TrainingProvidersCoursesController < ApplicationController
     course_csv_rows = Course.includes(:provider, :sites)
       .where(recruitment_cycle_year: @recruitment_cycle.year, accredited_body_code: @provider.provider_code)
       .map(&:decorate)
-      .map { |c|
+      .flat_map do |c|
       base_data = {
         "Provider code" => c.provider.provider_code,
         "Provider" => c.provider.provider_name,
@@ -32,7 +32,7 @@ class TrainingProvidersCoursesController < ApplicationController
       else
         base_data
       end
-    }.flatten
+    end
 
     courses_csv_string = CSV.generate(headers: course_csv_rows.first.keys, write_headers: true) do |csv|
       course_csv_rows.each do |course_csv_row|
