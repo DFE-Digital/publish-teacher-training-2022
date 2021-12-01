@@ -79,16 +79,17 @@ describe "Providers", type: :request do
 
     describe "GET courses-as-an-accredited-body csv" do
       it "returns training provider courses" do
+        site = build(:site)
         training_provider = build(:provider)
-        course = build(:course, provider: training_provider)
+        course = build(:course, provider: training_provider, sites: [site])
         accredited_provider = build(:provider, current_accredited_courses: [course])
         decorated_course = course.decorate
         stub_api_v2_request("/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}", accredited_provider.recruitment_cycle.to_jsonapi)
         stub_api_v2_resource(accredited_provider)
         stub_api_v2_request(
           "/recruitment_cycles/#{accredited_provider.recruitment_cycle.year}/courses" \
-          "?filter[accredited_body_code]=#{accredited_provider.provider_code}&include=provider",
-          resource_list_to_jsonapi([course], include: :provider),
+          "?filter[accredited_body_code]=#{accredited_provider.provider_code}&include=provider,sites",
+          resource_list_to_jsonapi([course], include: %i[provider sites]),
         )
 
         path = download_training_providers_courses_provider_recruitment_cycle_path(
@@ -101,8 +102,8 @@ describe "Providers", type: :request do
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(
           <<~HEREDOC,
-            Provider code,Provider,Course code,Course,Study mode,Programme type,Qualification,Status,View on Find,Applications open from,Vacancies
-            #{course.provider.provider_code},#{course.provider.provider_name},#{course.course_code},#{course.name},#{decorated_course.study_mode.humanize},#{decorated_course.program_type.humanize},#{decorated_course.outcome},#{course.content_status.humanize},#{decorated_course.find_url},#{I18n.l(course.applications_open_from.to_date)},No
+            Provider code,Provider,Course code,Course,Study mode,Programme type,Qualification,Status,View on Find,Applications open from,Vacancies,Campus Codes
+            #{course.provider.provider_code},#{course.provider.provider_name},#{course.course_code},#{course.name},#{decorated_course.study_mode.humanize},#{decorated_course.program_type.humanize},#{decorated_course.outcome},#{course.content_status.humanize},#{decorated_course.find_url},#{I18n.l(course.applications_open_from.to_date)},No,#{course.sites.pluck(:code).join(' ')}
           HEREDOC
         )
       end

@@ -6,11 +6,11 @@ class TrainingProvidersCoursesController < ApplicationController
   before_action :build_provider
 
   def index
-    course_csv_rows = Course.includes(:provider)
+    course_csv_rows = Course.includes(:provider, :sites)
       .where(recruitment_cycle_year: @recruitment_cycle.year, accredited_body_code: @provider.provider_code)
       .map(&:decorate)
-      .map do |c|
-      {
+      .flat_map do |c|
+      base_data = {
         "Provider code" => c.provider.provider_code,
         "Provider" => c.provider.provider_name,
         "Course code" => c.course_code,
@@ -23,6 +23,11 @@ class TrainingProvidersCoursesController < ApplicationController
         "Applications open from" => l(c.applications_open_from&.to_date),
         "Vacancies" => c.has_vacancies? ? "Yes" : "No",
       }
+      if c.sites
+        base_data.merge({ "Campus Codes" => c.sites.pluck(:code).join(" ") })
+      else
+        base_data
+      end
     end
 
     courses_csv_string = CSV.generate(headers: course_csv_rows.first.keys, write_headers: true) do |csv|
