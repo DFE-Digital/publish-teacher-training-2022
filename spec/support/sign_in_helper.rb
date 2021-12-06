@@ -30,6 +30,12 @@ private
 
     stub_api_v2_resource(provider)
 
+    if provider.recruitment_cycle.next?
+      previous_recruitment_cycle_provider = build(:provider, provider_code: provider.provider_code, recruitment_cycle: build(:recruitment_cycle))
+
+      stub_api_v2_resource(previous_recruitment_cycle_provider)
+    end
+
     if user.admin
       stub_api_v2_request("/access_requests", nil)
     end
