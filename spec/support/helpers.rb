@@ -142,6 +142,7 @@ module Helpers
     url += "?#{query_params.to_param}" if query_params.any?
 
     jsonapi_response ||= resource.to_jsonapi(include: include)
+
     stub_api_v2_request(url, jsonapi_response, method, &validate_request_body)
   end
 
