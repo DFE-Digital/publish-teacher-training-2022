@@ -23,18 +23,6 @@
 
       <%= f.hidden_field :page, value: :contact %>
 
-      <% if current_user["admin"] %>
-        <div class="app-status-box app-status-box--admin">
-          <p class="govuk-body">
-            <%= govuk_tag(text: "Admin feature", colour: "purple") %>
-          </p>
-
-          <%= f.govuk_text_field(:provider_name,
-            label: { size: "m" },
-            data: { qa: "provider_name" }) %>
-        </div>
-      <% end %>
-
       <%= f.govuk_text_field(:email,
         form_group: { id: "email" },
         label: { size: "m" },
