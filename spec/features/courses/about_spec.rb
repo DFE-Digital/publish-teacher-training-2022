@@ -59,7 +59,7 @@ feature "About course", type: :feature do
         "#{course.name} (#{course.course_code})",
       )
       expect(about_course_page.title).to have_content(
-        "About this course",
+        "Course information",
       )
       expect(about_course_page).to have_enrichment_form
       expect(about_course_page.about_textarea.value).to eq(

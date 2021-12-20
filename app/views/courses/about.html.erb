@@ -1,5 +1,5 @@
 
-<% page_title = "About this course" %>
+<% page_title = "Course information" %>
 <% content_for :page_title, title_with_error_prefix("#{page_title} – #{course.name_and_code}", course.errors.any?) %>
 
 <% content_for :before_content do %>
@@ -36,16 +36,18 @@
 
       <%= f.hidden_field :page, value: :about, id: nil %>
 
-      <p class="govuk-body">You should give a short, factual summary of the course.</p>
+      <p class="govuk-body">Give applicants a short summary of the course to help them decide if it's right for them.</p>
 
-      <p class="govuk-body">Tell applicants:</p>
+      <p class="govuk-body">Provide information like:</p>
+
       <ul class="govuk-list govuk-list--bullet">
-        <li>what they’ll learn (eg what units are taught)</li>
+        <li>what they’ll learn (for example, what units are taught)</li>
         <li>how the course is structured</li>
         <li>whether it has any distinctive features</li>
       </ul>
 
       <p class="govuk-body">You could include details such as:</p>
+
       <ul class="govuk-list govuk-list--bullet">
         <li>how candidates are assessed</li>
         <li>the size of the workload (eg how many essays per term)</li>
@@ -54,6 +56,7 @@
       </ul>
 
       <p class="govuk-body">Remember to:</p>
+
       <ul class="govuk-list govuk-list--bullet">
         <li>make your content specific to this course – don’t repeat the descriptions you’ve used for other courses</li>
         <li>use short paragraphs (no more than five sentences each)</li>
