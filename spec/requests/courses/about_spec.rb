@@ -60,7 +60,7 @@ describe "Courses", type: :request do
         "#{course.name} (#{course.course_code})",
       )
       expect(response.body).to include(
-        "About this course",
+        "Course information",
       )
       expect(response.body).to_not include(
         "Your changes are not yet saved",
