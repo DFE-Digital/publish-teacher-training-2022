@@ -44,8 +44,8 @@ feature "New course sites" do
 
     context "Page title" do
       scenario "It displays the correct title" do
-        expect(page.title).to start_with("Pick the locations for this course")
-        expect(new_locations_page.title.text).to eq("Pick the locations for this course")
+        expect(page.title).to start_with("Select the locations for this course")
+        expect(new_locations_page.title.text).to eq("Select the locations for this course")
       end
     end
 

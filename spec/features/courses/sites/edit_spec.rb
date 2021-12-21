@@ -39,7 +39,7 @@ feature "Edit course sites", type: :feature do
 
   scenario "viewing the edit locations page" do
     expect(page).to have_link("Back", href: details_provider_recruitment_cycle_course_path(provider.provider_code, course.recruitment_cycle_year, course.course_code))
-    expect(locations_page.title).to have_content("Pick the locations for this course")
+    expect(locations_page.title).to have_content("Select the locations for this course")
     expect(locations_page.caption).to have_content(
       "#{course.name} (#{course.course_code})",
     )
@@ -52,8 +52,8 @@ feature "Edit course sites", type: :feature do
 
   context "Page title" do
     scenario "It displays the correct title" do
-      expect(page.title).to start_with("Pick the locations for this course")
-      expect(locations_page.title.text).to have_content("Pick the locations for this course")
+      expect(page.title).to start_with("Select the locations for this course")
+      expect(locations_page.title.text).to have_content("Select the locations for this course")
     end
   end
 
