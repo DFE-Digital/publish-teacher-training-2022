@@ -15,7 +15,7 @@
       <%= f.radio_button :has_vacancies, "true", class: "govuk-radios__input", checked: @course.has_vacancies?, "aria-controls" => "has_vacancies_true_conditional" %>
       <%= f.label :has_vacancies_true, "There are some vacancies", class: "govuk-label govuk-radios__label govuk-!-font-weight-bold" %>
       <span id="has_vacancies_true_hint" class="govuk-hint govuk-radios__hint">
-        Pick the locations with vacancies
+        Select the locations with vacancies
       </span>
     </div>
     <div class="govuk-radios__conditional <%= "govuk-radios__conditional--hidden" unless @course.has_vacancies? %>" id="has_vacancies_true_conditional">
