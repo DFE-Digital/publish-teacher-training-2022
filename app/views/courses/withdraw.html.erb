@@ -17,7 +17,7 @@
       <li>close applications for it</li>
     </ul>
 
-    <p class="govuk-body">Once you’ve withdrawn a course, you can’t publish it again this cycle.</p>
+    <p class="govuk-body">Once you’ve withdrawn a course, you cannot publish it again this cycle.</p>
 
     <h2 class="govuk-heading-m">Confirm withdrawal</h2>
 
@@ -25,7 +25,7 @@
                   url: withdraw_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
                   method: :post do |form| %>
       <div class="govuk-form-group">
-        <%= form.label "confirm_course_code", "Type in the course code to confirm", class: "govuk-label" %>
+        <%= form.label "confirm_course_code", "Enter the course code to confirm", class: "govuk-label" %>
         <% if flash[:error] && flash[:error]["id"] == "withdraw-error" %>
           <span class="govuk-error-message" id="withdraw-error" data-qa="course-withdraw-error">
             <%= flash[:error]["message"] %>

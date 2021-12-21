@@ -40,7 +40,7 @@ feature "Delete course", type: :feature do
       "Are you sure you want to delete this course?",
     )
 
-    fill_in "Type in the course code to confirm", with: course.course_code
+    fill_in "Enter the course code to confirm", with: course.course_code
     click_on "Yes I’m sure – delete this course"
 
     expect(course_page.flash).to have_content(
@@ -60,7 +60,7 @@ feature "Delete course", type: :feature do
         "Are you sure you want to delete this course?",
       )
 
-      fill_in "Type in the course code to confirm", with: "Z"
+      fill_in "Enter the course code to confirm", with: "Z"
       click_on "Yes I’m sure – delete this course"
 
       expect(course_page.error_summary).to have_content(

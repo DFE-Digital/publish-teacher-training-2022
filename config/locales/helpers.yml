@@ -51,8 +51,8 @@ en:
     hint:
       course:
         required_qualifications: State the minimum academic qualifications needed for this course. You could also say what happens if these requirements aren’t met.
-        personal_qualities: Tell applicants about the skills, motivation and experience you’re looking for (eg experience with children, a genuine passion for the subject, or a talent for public speaking).
-        other_requirements: If applicants need any non-academic qualifications or documents, list them here (eg criminal record checks, or relevant work experience).
+        personal_qualities: Tell applicants about the skills, motivation and experience you’re looking for (for example, experience of working with children, a genuine passion for the subject or a talent for public speaking).
+        other_requirements: If applicants need any non-academic qualifications or documents, list them here (such as criminal record checks or relevant work experience).
         provider:
         provider_name: The marketing name of the provider.
         email: Give an email address that applicants can use to contact you.
