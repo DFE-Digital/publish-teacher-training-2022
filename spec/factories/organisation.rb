@@ -9,7 +9,6 @@ FactoryBot.define do
 
     sequence(:id)
     name { "Organisation" }
-    nctl_ids { [] }
 
     after :build do |organisation, evaluator|
       # Necessary gubbins necessary to make JSONAPIClient's associations work.
