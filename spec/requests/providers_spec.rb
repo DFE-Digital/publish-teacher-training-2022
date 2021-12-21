@@ -51,7 +51,7 @@ describe "Providers", type: :request do
           )
           get(path)
           expect(response).to have_http_status(:forbidden)
-          expect(response.body).to include("We don’t know which organisation you’re part of")
+          expect(response.body).to include("Tell us which organisation you’re part of")
         end
       end
     end
