@@ -42,7 +42,7 @@ feature "Withdraw course", type: :feature do
       "Are you sure you want to withdraw this course?",
     )
 
-    fill_in "Type in the course code to confirm", with: course.course_code
+    fill_in "Enter the course code to confirm", with: course.course_code
     click_on "Yes I’m sure – withdraw this course"
 
     expect(course_page.flash).to have_content(
@@ -62,7 +62,7 @@ feature "Withdraw course", type: :feature do
         "Are you sure you want to withdraw this course?",
       )
 
-      fill_in "Type in the course code to confirm", with: "Z"
+      fill_in "Enter the course code to confirm", with: "Z"
       click_on "Yes I’m sure – withdraw this course"
 
       expect(course_page.error_summary).to have_content(
@@ -87,7 +87,7 @@ feature "Withdraw course", type: :feature do
     scenario "display validation errors" do
       course_page.withdraw_link.click
 
-      fill_in "Type in the course code to confirm", with: "Z"
+      fill_in "Enter the course code to confirm", with: "Z"
       click_on "Yes I’m sure – withdraw this course"
 
       expect(courses_page.error_summary).to have_content(
