@@ -1,7 +1,6 @@
 <tr id="organisation<%= organisation.id %>" class="govuk-table__row" data-qa="organisations-table-row">
   <td class="govuk-table__cell" data-qa="organisation-table-row__name">
     <%= organisation.name %><br>
-    <span class="govuk-hint govuk-!-font-size-14">NCTL IDs: <%= organisation.nctl_ids.sort.join(", ") %></span>
   </td>
   <td class="govuk-table__cell" data-qa="organisation-table-row__users">
     <% users = organisation.users %>

@@ -3,5 +3,5 @@ class Organisation < Base
   has_many :users, through: :organisation_users
   has_many :providers
 
-  properties :name, :nctl_ids
+  properties :name
 end
