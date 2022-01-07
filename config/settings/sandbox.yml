@@ -1,4 +1,5 @@
 publish_url: https://sandbox.publish-teacher-training-courses.service.gov.uk
+new_publish_url: https://sandbox2.publish-teacher-training-courses.service.gov.uk
 
 dfe_signin:
   issuer: https://oidc.signin.education.gov.uk

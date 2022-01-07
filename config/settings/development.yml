@@ -1,4 +1,4 @@
-publish_url: https://localhost:3000 
+publish_url: https://localhost:3000
 
 dfe_signin:
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET

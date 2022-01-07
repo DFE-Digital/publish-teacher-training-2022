@@ -1,4 +1,5 @@
 publish_url: https://staging.publish-teacher-training-courses.service.gov.uk
+new_publish_url: https://staging2.publish-teacher-training-courses.service.gov.uk
 
 dfe_signin:
   issuer: https://pp-oidc.signin.education.gov.uk
