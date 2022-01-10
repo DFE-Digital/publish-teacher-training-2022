@@ -64,8 +64,7 @@ feature "View and edit provider visa sponsorship", type: :feature do
             "can_sponsor_skilled_worker_visa" => false,
           )
         end
-        visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
-        click_link "Select if visas can be sponsored"
+        visit provider_recruitment_cycle_visas_path(provider.provider_code, provider.recruitment_cycle.year)
         within_fieldset("Can candidates get a sponsored Student visa for your fee-paying courses?") do
           choose "Yes"
         end
@@ -100,11 +99,8 @@ feature "View and edit provider visa sponsorship", type: :feature do
             "can_sponsor_skilled_worker_visa" => true,
           )
         end
-        visit details_provider_recruitment_cycle_path(provider.provider_code, provider.recruitment_cycle.year)
 
-        within find("[data-qa='enrichment__can_sponsor_student_visa']") do
-          click_link "Change"
-        end
+        visit provider_recruitment_cycle_visas_path(provider.provider_code, provider.recruitment_cycle.year)
 
         within_fieldset("Can candidates get a sponsored Student visa for your fee-paying courses?") do
           choose "No"
