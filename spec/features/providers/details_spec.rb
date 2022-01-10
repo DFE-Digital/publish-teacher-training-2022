@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "View provider", type: :feature do
+  include SiteHelper
+
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
   let(:org_contact_page) { PageObjects::Page::Organisations::OrganisationContact.new }
 
@@ -58,7 +60,7 @@ feature "View provider", type: :feature do
 
     expect(org_detail_page).to have_link(
       "Change contact address",
-      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact#address",
+      href: new_publish_link_for("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/contact#address"),
     )
 
     expect(org_detail_page.email).to have_content(provider.email)
@@ -67,7 +69,7 @@ feature "View provider", type: :feature do
 
     expect(org_detail_page).to have_link(
       "details about training with your organisation",
-      href: "/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/about#train-with-us",
+      href: new_publish_link_for("/organisations/#{provider.provider_code}/#{provider.recruitment_cycle.year}/about#train-with-us"),
     )
     expect(org_detail_page.train_with_us).to have_content(provider.train_with_us)
     expect(org_detail_page.train_with_disability).to have_content(provider.train_with_disability)
