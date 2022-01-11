@@ -1,5 +1,7 @@
 teacher_training_api:
   base_url: https://qa.api.publish-teacher-training-courses.service.gov.uk
+new_publish:
+  base_url: https://qa2.publish-teacher-training-courses.service.gov.uk/publish
 search_ui:
   base_url: https://qa.find-postgraduate-teacher-training.service.gov.uk
 environment:

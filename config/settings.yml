@@ -23,6 +23,8 @@ teacher_training_api:
   issuer: "publish-teacher-training"
   audience: "teacher-training-api"
   subject: "access"
+new_publish:
+  base_url: http://localhost:3001
 
 search_ui:
   # URL of the C# search ui app (search-and-compare-ui)
