@@ -5,7 +5,7 @@ dfe_signin:
 teacher_training_api:
   base_url: http://localhost:3001
 new_publish:
-  base_url: http://localhost:3001/publish
+  base_url: http://localhost:3001
 search_ui:
   base_url: https://localhost:5000
 environment:
