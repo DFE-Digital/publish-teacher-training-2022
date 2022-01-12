@@ -50,7 +50,7 @@
 
       <ul class="govuk-list govuk-list--bullet">
         <li>how candidates are assessed</li>
-        <li>the size of the workload (eg how many essays per term)</li>
+        <li>the size of the workload (for example, how many essays per term)</li>
         <li>league-table rankings and student employability ratings</li>
         <li>quotes from past students</li>
       </ul>
@@ -58,16 +58,15 @@
       <p class="govuk-body">Remember to:</p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>make your content specific to this course – don’t repeat the descriptions you’ve used for other courses</li>
         <li>use short paragraphs (no more than five sentences each)</li>
         <li>use bullet points where possible (to check formatting, use the ‘preview’ function after saving your content)</li>
-        <li>spell out all acronyms the first time you use them, eg ITT, NQT, EAL, ICT (applicants may not be familiar with these terms)
+        <li>spell out all acronyms the first time you use them, for example, ITT, NQT, EAL, ICT (applicants may not be familiar with these terms)
         </li>
       </ul>
 
       <%= govuk_details(
         summary_text: "Several courses in the same subject?",
-        text: "If you offer more than one course in the same subject – eg two Primary courses – it’s important to say how they differ (eg differences in teaching placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.",
+        text: "If you offer more than one course in the same subject, such as two Primary courses, it’s important to say how they differ (for example, differences in teaching placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.",
       ) %>
 
       <%= f.govuk_text_area(:about_course,
@@ -109,7 +108,7 @@
 
       <p class="govuk-body">You could also mention:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>the age ranges taught (eg 11 to 16 or 11 to 18)</li>
+        <li>the age ranges taught (for example, 11 to 16 or 11 to 18)</li>
         <li>how many schools you partner with in total</li>
         <li>whether candidates are able to change schools</li>
         <li>how placement schools are selected</li>
@@ -119,13 +118,13 @@
         <%= govuk_details(summary_text: "See the guidance we show in this section") do %>
           <h3 class="govuk-heading-m">Where you will train</h3>
           <p class="govuk-body">You’ll be placed in schools for most of your course. Your school placements will be within commuting distance.</p>
-          <p class="govuk-body">You can’t pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
+          <p class="govuk-body">You cannot pick which schools you want to be in, but your university will try to take your journey time into consideration.</p>
           <p class="govuk-body">Universities can work with over 100 potential placement schools. Most will be within 10 miles of the university, but sometimes they can cover a wider area, especially outside of cities.</p>
         <% end %>
       <% elsif course.program_type == 'scitt_programme' && @provider.provider_code != 'E65' %>
         <%= govuk_details(summary_text: "See the guidance we show in this section") do %>
           <h3 class="govuk-heading-m">Where you will train</h3>
-          <p class="govuk-body">You’ll be placed in different schools during your training. You can’t pick which schools you want to be in, but your course will try to place you in schools you can commute to.</p>
+          <p class="govuk-body">You’ll be placed in different schools during your training. You cannot pick which schools you want to be in, but your course will try to place you in schools you can commute to.</p>
         <% end %>
       <% end %>
 
