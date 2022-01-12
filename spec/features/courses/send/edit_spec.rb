@@ -53,15 +53,6 @@ feature "Edit course SEND", type: :feature do
         course_details_page.load_with_course(course)
         expect(course_details_page.is_send).to_not have_change_link
       end
-
-      context "if the user signed as admin" do
-        let(:user) { build(:user, :admin) }
-
-        scenario "should show the edit link" do
-          course_details_page.load_with_course(course)
-          expect(course_details_page.is_send).to have_change_link
-        end
-      end
     end
   end
 

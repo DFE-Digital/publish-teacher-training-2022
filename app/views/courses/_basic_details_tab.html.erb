@@ -9,20 +9,8 @@
 
       <% summary_list.row(html_attributes: { data: { qa: "course__is_send" } }) do |row| %>
         <% row.key { raw("<abbr class=\"app-!-text-decoration-underline-dotted\" title=\"Special educational needs and disability\">SEND</abbr>") } %>
-        <% row.value do %>
-          <% if current_user["admin"] && !@course.meta["edit_options"]["show_is_send"]%>
-            <p class="govuk-body"><%= course.is_send? %></p>
-            <div class="app-status-box app-status-box--admin">
-              <p class="govuk-body">
-                <%= govuk_tag(text: "Admin feature", colour: "purple") %>
-              </p>
-              <p class="govuk-body">Only admins can make changes</p>
-            </div>
-          <% else %>
-            <%= course.is_send? %>
-          <% end %>
-        <% end %>
-        <% if @course.meta["edit_options"]["show_is_send"] || current_user["admin"]%>
+        <% row.value { course.is_send?  } %>
+        <% if @course.meta["edit_options"]["show_is_send"] %>
           <% row.action({
             href: send_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
             visually_hidden_text: "SEND",
@@ -164,25 +152,8 @@
 
       <% summary_list.row(html_attributes: { data: { qa: "course__name" } }) do |row| %>
         <% row.key { "Title" } %>
-        <% row.value do %>
-          <% if current_user["admin"] %>
-            <p class="govuk-body"><%= course.name %></p>
-            <div class="app-status-box app-status-box--admin">
-              <p class="govuk-body">
-                <%= govuk_tag(text: "Admin feature", colour: "purple") %>
-              </p>
-              <p class="govuk-body">Only admins can make changes</p>
-            </div>
-          <% else %>
-            <%= course.name %>
-          <% end %>
-        <% end %>
-        <% if current_user["admin"] %>
-          <% row.action({
-            href: title_provider_recruitment_cycle_course_path(@provider.provider_code, course.recruitment_cycle_year, course.course_code),
-            visually_hidden_text: "course title",
-          }) %>
-        <% end %>
+        <% row.value { course.name } %>
+        <% row.action() %>
       <% end %>
 
       <% summary_list.row(html_attributes: { data: { qa: "course__description" } }) do |row| %>
