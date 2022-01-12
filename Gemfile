@@ -22,7 +22,7 @@ gem "aasm"
 gem "google-cloud-bigquery"
 
 # Used to build our forms and style them using govuk-frontend class names
-gem "govuk-components", "~> 3.0.0"
+gem "govuk-components", "~> 3.0.1"
 gem "govuk_design_system_formbuilder"
 
 # View components are used to encapsulate logic in views
