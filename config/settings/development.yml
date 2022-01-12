@@ -1,10 +1,12 @@
-publish_url: https://localhost:3000 
+publish_url: https://localhost:3000
 
 dfe_signin:
   secret: please_change_me # Override with SETTINGS__DFE_SIGNIN__SECRET
   base_url: https://localhost:3000
 teacher_training_api:
   secret: secret
+  base_url: http://localhost:3001
+new_publish:
   base_url: http://localhost:3001
 search_ui:
   base_url: https://localhost:5000
@@ -18,4 +20,7 @@ use_ssl: false
 authentication:
   mode: persona     # none critical systems, ie localhost
   basic_auth:       # mainly to enforce for none critical systems
-    disabled: true 
+    disabled: true
+features:
+   new_publish:
+     about_your_org: true

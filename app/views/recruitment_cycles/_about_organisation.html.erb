@@ -1,5 +1,9 @@
 <h2 class="govuk-heading-m">
-  <%= govuk_link_to "About your organisation", details_provider_recruitment_cycle_path(provider.provider_code, year) %>
+  <% if FeatureService.enabled?('new_publish.about_your_org') %>
+    <%= govuk_link_to "About your organisation", new_publish_url(details_provider_recruitment_cycle_path(provider.provider_code, year)) %>
+  <% else %>
+    <%= govuk_link_to "About your organisation", details_provider_recruitment_cycle_path(provider.provider_code, year) %>
+  <% end %>
 </h2>
 <p class="govuk-body">Use this section to:</p>
 <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">

@@ -5,6 +5,8 @@ dfe_signin:
   base_url: https://qa.publish-teacher-training-courses.service.gov.uk
 teacher_training_api:
   base_url: https://qa.api.publish-teacher-training-courses.service.gov.uk
+new_publish:
+  base_url: https://qa2.publish-teacher-training-courses.service.gov.uk
 search_ui:
   base_url: https://qa.find-postgraduate-teacher-training.service.gov.uk
 environment:
@@ -15,3 +17,5 @@ authentication:
 features:
    rollover:
      can_edit_current_and_next_cycles: true
+   new_publish:
+     about_your_org: true

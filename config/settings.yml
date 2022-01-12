@@ -23,6 +23,8 @@ teacher_training_api:
   issuer: "publish-teacher-training"
   audience: "teacher-training-api"
   subject: "access"
+new_publish:
+  base_url: http://localhost:3001
 
 search_ui:
   # URL of the C# search ui app (search-and-compare-ui)
@@ -99,6 +101,8 @@ features:
     title: "This service will be unavailable on Thursday 11 October from 8pm to 9pm, while we carry out maintenance."
     body: "If you have any questions, contact us at becomingateacher@digital.education.gov.uk"
   send_request_data_to_bigquery: false
+  new_publish:
+    about_your_org: false
 
 authentication:
   mode: dfe_signin # default authentication mode
