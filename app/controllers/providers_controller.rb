@@ -1,4 +1,6 @@
 class ProvidersController < ApplicationController
+  include NewPublishHelper
+
   decorates_assigned :provider
   decorates_assigned :training_provider
   before_action :build_recruitment_cycle
@@ -26,6 +28,8 @@ class ProvidersController < ApplicationController
   end
 
   def details
+    redirect_to_new_publish_url_details_provider_recruitment_cycle_path if FeatureService.enabled?("new_publish.about_your_org")
+
     redirect_to_contact_page_with_ukprn_error if @provider.ukprn.blank?
 
     @errors = flash[:error_summary]
@@ -175,6 +179,10 @@ private
 
   def providers
     @providers ||= Provider.where(recruitment_cycle_year: Settings.current_cycle)
+  end
+
+  def redirect_to_new_publish_url_details_provider_recruitment_cycle_path
+    redirect_to new_publish_url(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year))
   end
 
   def redirect_to_contact_page_with_ukprn_error
