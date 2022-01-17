@@ -1,6 +1,4 @@
 class ProvidersController < ApplicationController
-  include NewPublishHelper
-
   decorates_assigned :provider
   decorates_assigned :training_provider
   before_action :build_recruitment_cycle
@@ -37,10 +35,14 @@ class ProvidersController < ApplicationController
   end
 
   def contact
+    redirect_to_new_publish_url_contact_provider_recruitment_cycle_path if FeatureService.enabled?("new_publish.about_your_org")
+
     show_deep_linked_errors(%i[email telephone website address1 address3 address4 postcode])
   end
 
   def about
+    redirect_to_new_publish_url_about_provider_recruitment_cycle_path if FeatureService.enabled?("new_publish.about_your_org")
+
     show_deep_linked_errors(%i[train_with_us train_with_disability])
   end
 
@@ -181,8 +183,20 @@ private
     @providers ||= Provider.where(recruitment_cycle_year: Settings.current_cycle)
   end
 
+  def redirect_to_new_publish_url_about_provider_recruitment_cycle_path
+    redirect_to new_publish_url(about_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year))
+  end
+
+  def redirect_to_new_publish_url_contact_provider_recruitment_cycle_path
+    redirect_to new_publish_url(contact_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year))
+  end
+
   def redirect_to_new_publish_url_details_provider_recruitment_cycle_path
     redirect_to new_publish_url(details_provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year))
+  end
+
+  def redirect_to_new_publish_url_show_provider_recruitment_cycle_path
+    redirect_to new_publish_url(provider_recruitment_cycle_path(@provider.provider_code, @provider.recruitment_cycle_year))
   end
 
   def redirect_to_contact_page_with_ukprn_error
