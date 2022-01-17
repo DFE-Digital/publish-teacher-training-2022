@@ -330,7 +330,7 @@ GEM
       ast (~> 2.4.1)
     patience_diff (1.2.0)
       optimist (~> 3.0)
-    pkg-config (1.4.6)
+    pkg-config (1.4.7)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -613,7 +613,7 @@ DEPENDENCIES
   omniauth_openid_connect (~> 0.3)
   pagy
   parallel_tests
-  pkg-config (~> 1.4.6)
+  pkg-config (~> 1.4.7)
   pry-byebug
   pry-rails
   puma (~> 5.5)
