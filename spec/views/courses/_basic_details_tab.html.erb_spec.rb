@@ -32,20 +32,6 @@ RSpec.describe "courses/_basic_details_tab.html.erb" do
       end
     end
 
-    context "when an admin" do
-      let(:current_user) do
-        { "admin" => true }
-      end
-
-      it "is displayed" do
-        expect(page.name).to have_change_link
-      end
-
-      it "admin only help panel is displayed" do
-        expect(page.name.value).to have_content("Only admins can make changes")
-      end
-    end
-
     context "when course for 2022 cycle" do
       let(:current_user) do
         { "admin" => true }
