@@ -414,7 +414,7 @@ describe ApplicationController, type: :controller do
   end
 
   describe "#redirect_to_new_publish_equivalent" do
-    it "returns a correct url linking back to the old publish" do
+    it "returns a correct url linking back to the new publish" do
       allow(request).to receive(:path).and_return("/haircut")
 
       expect(controller.redirect_to_new_publish_equivalent).to redirect_to("#{Settings.new_publish.base_url}/publish/haircut")
