@@ -72,6 +72,15 @@ jobs:
         token:  ${{ secrets.ACTIONS_API_ACCESS_TOKEN  }}
         inputs: '{"pr": "${{ github.event.pull_request.number }}", "sha": "${{ env.DOCKER_IMAGE_TAG }}"}'
 
+    - name: Run Snyk to check Docker image for vulnerabilities
+      uses: snyk/actions/docker@master
+      continue-on-error: true
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_ACCESS_TOKEN }}
+      with:
+        image: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }}
+        args: --file=Dockerfile
+
   test:
     runs-on: ubuntu-latest
     needs: [build]
