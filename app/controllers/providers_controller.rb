@@ -26,6 +26,8 @@ class ProvidersController < ApplicationController
   end
 
   def details
+    redirect_to_new_publish_equivalent if FeatureService.enabled?("new_publish.about_your_org")
+
     redirect_to_contact_page_with_ukprn_error if @provider.ukprn.blank?
 
     @errors = flash[:error_summary]
@@ -33,10 +35,14 @@ class ProvidersController < ApplicationController
   end
 
   def contact
+    redirect_to_new_publish_equivalent if FeatureService.enabled?("new_publish.about_your_org")
+
     show_deep_linked_errors(%i[email telephone website address1 address3 address4 postcode])
   end
 
   def about
+    redirect_to_new_publish_equivalent if FeatureService.enabled?("new_publish.about_your_org")
+
     show_deep_linked_errors(%i[train_with_us train_with_disability])
   end
 

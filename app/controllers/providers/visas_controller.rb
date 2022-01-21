@@ -1,6 +1,8 @@
 module Providers
   class VisasController < ApplicationController
     def edit
+      redirect_to_new_publish_equivalent if FeatureService.enabled?("new_publish.about_your_org")
+
       @form_object = ProviderVisaForm.new(
         can_sponsor_skilled_worker_visa: provider.can_sponsor_skilled_worker_visa,
         can_sponsor_student_visa: provider.can_sponsor_student_visa,

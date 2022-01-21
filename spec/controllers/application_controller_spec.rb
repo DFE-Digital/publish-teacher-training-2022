@@ -413,6 +413,14 @@ describe ApplicationController, type: :controller do
     end
   end
 
+  describe "#redirect_to_new_publish_equivalent" do
+    it "returns a correct url linking back to the new publish" do
+      allow(request).to receive(:path).and_return("/haircut")
+
+      expect(controller.redirect_to_new_publish_equivalent).to redirect_to("#{Settings.new_publish.base_url}/publish/haircut")
+    end
+  end
+
   def stub_interrupt_page_acknowledgements(body)
     url = /http:\/\/localhost:3001\/api\/v2\/recruitment_cycles\/#{Settings.current_cycle}\/users\/\d+\/interrupt_page_acknowledgements/
     stub_request(:get, url)

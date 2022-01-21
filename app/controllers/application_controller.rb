@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include NewPublishHelper
+
   protect_from_forgery with: :exception, except: :not_found
   rescue_from JsonApiClient::Errors::NotAuthorized, with: :render_unauthorized
   rescue_from JsonApiClient::Errors::AccessDenied, with: :handle_access_denied
