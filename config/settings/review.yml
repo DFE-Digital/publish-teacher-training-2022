@@ -14,3 +14,5 @@ allocations_close_date: 2021-07-02
 features:
   allocations:
     state: confirmed
+  new_publish:
+     about_your_org: true
