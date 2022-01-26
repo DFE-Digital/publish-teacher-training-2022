@@ -84,9 +84,16 @@ jobs:
             echo "DEPLOY_ENV=review" >> $GITHUB_ENV
             echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
             echo "DEPLOY_URL=https://publish-teacher-training-pr-$PR_NUMBER.london.cloudapps.digital" >> $GITHUB_ENV
+            DEPLOY_ENV=review
           else
             echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
           fi;
+
+          tf_vars_file=terraform/workspace_variables/${DEPLOY_ENV}.tfvars.json
+          echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "cf_space=$(jq -r '.cf_space' ${tf_vars_file})" >> $GITHUB_ENV
         env:
           DEPLOY_ENV:   ${{ matrix.environment }}
 
@@ -95,14 +102,13 @@ jobs:
           creds: ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
 
       - name: Validate Azure key vault secrets
-        run: |
-          wget https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb
-          chmod +x fetch_config.rb
-          . "terraform/workspace_variables/${DEPLOY_ENV}.sh"
-          ./fetch_config.rb -s "azure-key-vault-secret:${TF_VAR_key_vault_name}/${TF_VAR_key_vault_app_secret_name}" -d quiet \
-            && echo Data in "${TF_VAR_key_vault_name}/${TF_VAR_key_vault_app_secret_name}" looks valid
-          ./fetch_config.rb -s "azure-key-vault-secret:${TF_VAR_key_vault_name}/${TF_VAR_key_vault_infra_secret_name}" -d quiet \
-            && echo Data in "${TF_VAR_key_vault_name}/${TF_VAR_key_vault_infra_secret_name}" looks valid
+        uses: DFE-Digital/github-actions/validate-key-vault-secrets@master
+        with:
+         KEY_VAULT: ${{ env.key_vault_name }}
+         SECRETS: |
+          ${{ env.key_vault_app_secret_name }}
+          ${{ env.key_vault_infra_secret_name }}
+
 
       - name: Terraform init, plan & apply
         run: make ${{env.DEPLOY_ENV}} ci deploy
