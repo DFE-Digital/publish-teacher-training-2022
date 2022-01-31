@@ -102,7 +102,7 @@ features:
     body: "If you have any questions, contact us at becomingateacher@digital.education.gov.uk"
   send_request_data_to_bigquery: false
   new_publish:
-    about_your_org: false
+    about_your_org: true
 
 authentication:
   mode: dfe_signin # default authentication mode
