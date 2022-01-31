@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "View provider", type: :feature do
+feature "View provider", type: :feature, skip: true do
   let(:org_detail_page) { PageObjects::Page::Organisations::OrganisationDetails.new }
   let(:org_contact_page) { PageObjects::Page::Organisations::OrganisationContact.new }
 

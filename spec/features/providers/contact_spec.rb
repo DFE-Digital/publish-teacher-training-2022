@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "View provider contact", type: :feature do
+feature "View provider contact", type: :feature, skip: true do
   let(:org_contact_page) { PageObjects::Page::Organisations::OrganisationContact.new }
   let(:provider) do
     build :provider,
