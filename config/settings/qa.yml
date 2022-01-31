@@ -17,5 +17,3 @@ authentication:
 features:
    rollover:
      can_edit_current_and_next_cycles: true
-   new_publish:
-     about_your_org: true

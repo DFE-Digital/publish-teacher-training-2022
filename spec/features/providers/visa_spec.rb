@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "View and edit provider visa sponsorship", type: :feature do
+feature "View and edit provider visa sponsorship", type: :feature, skip: true do
   let(:recruitment_cycle_year) { 2022 }
   let(:recruitment_cycle) { build(:recruitment_cycle, year: recruitment_cycle_year) }
   let(:provider) do
