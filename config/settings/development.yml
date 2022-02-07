@@ -21,3 +21,7 @@ authentication:
   mode: persona     # none critical systems, ie localhost
   basic_auth:       # mainly to enforce for none critical systems
     disabled: true
+
+features:
+  new_publish:
+    locations: true
