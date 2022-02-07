@@ -36,7 +36,7 @@
 
       <%= f.hidden_field :page, value: :about, id: nil %>
 
-      <p class="govuk-body">Give applicants a short summary of the course to help them decide if it's right for them.</p>
+      <p class="govuk-body">Give candidates a short summary of the course to help them decide if it’s right for them.</p>
 
       <p class="govuk-body">Provide information like:</p>
 
@@ -60,13 +60,13 @@
       <ul class="govuk-list govuk-list--bullet">
         <li>use short paragraphs (no more than five sentences each)</li>
         <li>use bullet points where possible (to check formatting, use the ‘preview’ function after saving your content)</li>
-        <li>spell out all acronyms the first time you use them, for example, ITT, NQT, EAL, ICT (applicants may not be familiar with these terms)
+        <li>spell out all acronyms the first time you use them, for example, ITT, NQT, EAL, ICT (candidates may not be familiar with these terms)
         </li>
       </ul>
 
       <%= govuk_details(
         summary_text: "Several courses in the same subject?",
-        text: "If you offer more than one course in the same subject, such as two Primary courses, it’s important to say how they differ (for example, differences in teaching placements or in the focus of the training). Otherwise, applicants may be unable to decide between them.",
+        text: "If you offer more than one course in the same subject, such as two Primary courses, it’s important to say how they differ (for example, differences in teaching placements or in the focus of the training). Otherwise, candidates may be unable to decide between them.",
       ) %>
 
       <%= f.govuk_text_area(:about_course,
@@ -78,7 +78,7 @@
 
       <h3 class="govuk-heading-m" id="interview-process">Interview process</h3>
 
-      <p class="govuk-body">Tell applicants:</p>
+      <p class="govuk-body">Tell candidates:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>how many interviews they’ll have</li>
         <li>how long each interview will be</li>
@@ -96,7 +96,7 @@
       <h3 class="govuk-heading-m" id="how-school-placements-work"><%= course.placements_heading %></h3>
 
       <p class="govuk-body">
-        Give applicants more information about the schools they’ll be teaching in. Tell them:
+        Give candidates more information about the schools they’ll be teaching in. Tell them:
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
