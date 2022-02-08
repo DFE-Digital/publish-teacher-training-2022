@@ -16,6 +16,3 @@ environment:
   label: "Staging"
   selector_name: "staging"
 
-features:
-  new_publish:
-    locations: true

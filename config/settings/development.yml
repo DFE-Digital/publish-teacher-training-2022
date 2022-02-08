@@ -22,6 +22,3 @@ authentication:
   basic_auth:       # mainly to enforce for none critical systems
     disabled: true
 
-features:
-  new_publish:
-    locations: true
