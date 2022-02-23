@@ -14,8 +14,6 @@ variable redis_service_plan {}
 
 variable docker_image {}
 
-variable dockerhub_credentials {}
-
 variable logstash_url {}
 
 variable app_environment {}

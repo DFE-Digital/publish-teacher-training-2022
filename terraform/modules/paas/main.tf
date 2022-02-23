@@ -4,7 +4,6 @@ resource cloudfoundry_app web_app {
   health_check_type          = "http"
   health_check_http_endpoint = "/ping"
   docker_image               = var.docker_image
-  docker_credentials         = var.dockerhub_credentials
   timeout                    = 300
   strategy                   = "blue-green-v2"
   environment                = var.app_environment_variables
@@ -30,7 +29,6 @@ resource cloudfoundry_app worker_app {
   space              = data.cloudfoundry_space.space.id
   health_check_type  = "process"
   docker_image       = var.docker_image
-  docker_credentials = var.dockerhub_credentials
   timeout            = 300
   strategy           = "blue-green-v2"
   command            = "bundle exec sidekiq -c 5 -C config/sidekiq.yml"
