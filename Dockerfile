@@ -1,5 +1,5 @@
 FROM ruby:2.7.5-alpine3.15
-# Remove apk add for libretls when the base image is updated
+
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
@@ -7,9 +7,6 @@ RUN apk add --update --no-cache tzdata && \
 RUN apk add --update --no-cache --virtual runtime-dependances \
  yarn \
  openssl-dev
-
-# Remove once base image ruby:2.7.5-alpine3.15 has been updated with latest libretls
-RUN apk add --no-cache libretls=3.3.4-r3
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
