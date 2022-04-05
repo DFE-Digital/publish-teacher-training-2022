@@ -17,3 +17,6 @@ authentication:
 features:
   rollover:
     can_edit_current_and_next_cycles: true
+  new_publish:
+    courses: true
+    accredited_body_courses: true

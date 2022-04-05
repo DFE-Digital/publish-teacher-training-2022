@@ -1,5 +1,9 @@
 <h2 class="govuk-heading-m">
-  <%= govuk_link_to "Courses", provider_recruitment_cycle_courses_path(provider.provider_code, year) %>
+  <% if FeatureService.enabled?('new_publish.courses') %>
+    <%= govuk_link_to "Courses", new_publish_url(provider_recruitment_cycle_courses_path(provider.provider_code, year)) %>
+  <% else %>
+    <%= govuk_link_to "Courses", provider_recruitment_cycle_courses_path(provider.provider_code, year) %>
+  <% end %>
 </h2>
 
 <%= render partial: "courses/course_abilities_blurb", locals: { classes: "govuk-!-margin-bottom-8" }  %>

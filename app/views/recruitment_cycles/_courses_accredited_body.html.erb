@@ -1,7 +1,10 @@
 <% if @provider.accredited_body? %>
   <h2 class="govuk-heading-m">
-    <%= govuk_link_to "Courses as an accredited body",
-                training_providers_provider_recruitment_cycle_path(@provider.provider_code, year) %>
+    <% if FeatureService.enabled?('new_publish.accredited_body_courses') %>
+      <%= govuk_link_to "Courses as an accredited body", new_publish_url(training_providers_provider_recruitment_cycle_path(@provider.provider_code, year)) %>
+    <% else %>
+      <%= govuk_link_to "Courses as an accredited body", training_providers_provider_recruitment_cycle_path(@provider.provider_code, year) %>
+    <% end %>
   </h2>
 
   <p class="govuk-body">Use this section to:</p>
