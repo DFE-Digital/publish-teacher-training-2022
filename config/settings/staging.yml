@@ -15,4 +15,7 @@ search_ui:
 environment:
   label: "Staging"
   selector_name: "staging"
-
+features:
+  new_publish:
+    courses: true
+    accredited_body_courses: true
