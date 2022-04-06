@@ -106,6 +106,7 @@ features:
     locations: true
     courses: false
     accredited_body_courses: false
+    users: false
 
 authentication:
   mode: dfe_signin # default authentication mode

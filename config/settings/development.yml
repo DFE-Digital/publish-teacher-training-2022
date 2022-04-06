@@ -25,3 +25,5 @@ features:
   new_publish:
     courses: true
     accredited_body_courses: true
+    users: true
+
