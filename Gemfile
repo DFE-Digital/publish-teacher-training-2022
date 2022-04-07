@@ -36,7 +36,7 @@ gem "canonical-rails"
 
 # DfE Sign-in
 gem "omniauth", "~> 1.9"
-gem "omniauth_openid_connect", "~> 0.3"
+gem "omniauth_openid_connect", "~> 0.4"
 gem "omniauth-rails_csrf_protection"
 
 gem "pkg-config", "~> 1.4.7"
