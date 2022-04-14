@@ -14,10 +14,5 @@ environment:
   selector_name: "qa"
 authentication:
   mode: persona   # none critical systems, ie localhost
-features:
-  rollover:
-    can_edit_current_and_next_cycles: true
-  new_publish:
-    courses: true
-    accredited_body_courses: true
-    users: true
+
+

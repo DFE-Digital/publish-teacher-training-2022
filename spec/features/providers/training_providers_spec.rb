@@ -39,7 +39,7 @@ feature "get training_providers", type: :feature do
     stub_api_v2_resource_collection([access_request])
   end
 
-  context "when the provider has training providers" do
+  context "when the provider has training providers", skip: true do
     it "can be reached from the provider show page" do
       visit provider_path(accrediting_body1.provider_code)
       organisation_show_page.courses_as_accredited_body_link.click
