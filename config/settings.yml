@@ -104,9 +104,9 @@ features:
   new_publish:
     about_your_org: true
     locations: true
-    courses: false
-    accredited_body_courses: false
-    users: false
+    courses: true
+    accredited_body_courses: true
+    users: true
 
 authentication:
   mode: dfe_signin # default authentication mode
