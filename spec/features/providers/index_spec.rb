@@ -49,8 +49,8 @@ feature "View providers", type: :feature do
       expect(organisation_page).not_to have_next_cycle
 
       expect(organisation_page).to have_link("Locations", href: new_publish_url("/organisations/A0/#{Settings.current_cycle}/locations"))
-      expect(organisation_page).to have_link("Courses", href: "/organisations/A0/#{Settings.current_cycle}/courses")
-      expect(organisation_page).to have_link("Users", href: "/organisations/A0/users")
+      expect(organisation_page).to have_link("Courses", href: new_publish_url("/organisations/A0/#{Settings.current_cycle}/courses"))
+      expect(organisation_page).to have_link("Users", href: new_publish_url("/organisations/A0/users"))
     end
 
     context "Rollover" do
