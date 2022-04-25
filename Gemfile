@@ -107,7 +107,7 @@ group :development, :test do
 
   # Testing framework
   gem "rspec-its"
-  gem "rspec-rails", "~> 5.1.1"
+  gem "rspec-rails", "~> 5.1.2"
 
   # Make HTTP requests fun again
   gem "httparty"
