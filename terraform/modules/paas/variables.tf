@@ -8,6 +8,8 @@ variable web_app_host_name {}
 
 variable worker_app_instances { default = 1 }
 
+variable enable_service_route {}
+
 variable worker_app_memory {}
 
 variable redis_service_plan {}
@@ -25,6 +27,6 @@ locals {
   web_app_name         = "publish-teacher-training-${local.app_name_suffix}"
   worker_app_name      = "publish-teacher-training-worker-${local.app_name_suffix}"
   redis_service_name   = "publish-teacher-training-redis-${local.app_name_suffix}"
-  web_app_routes       = [cloudfoundry_route.publish_service_gov_uk_route, cloudfoundry_route.web_app_cloudapps_digital_route]
+  web_app_routes       = flatten([cloudfoundry_route.publish_service_gov_uk_route, cloudfoundry_route.web_app_cloudapps_digital_route])
   logging_service_name = "publish-teacher-training-logit-${local.app_name_suffix}"
 }
