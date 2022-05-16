@@ -14,6 +14,8 @@ variable paas_web_app_memory {}
 
 variable paas_web_app_host_name {}
 
+variable enable_service_route { default = 1 }
+
 variable paas_worker_app_instances {}
 
 variable paas_worker_app_memory {}

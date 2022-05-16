@@ -56,6 +56,7 @@ module paas {
   redis_service_plan        = var.paas_redis_service_plan
   app_environment_variables = local.paas_app_environment_variables
   logstash_url              = local.infra_secrets.LOGSTASH_URL
+  enable_service_route      = var.enable_service_route
 }
 
 module statuscake {
