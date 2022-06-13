@@ -1,8 +1,5 @@
-[![Build](https://github.com/DFE-Digital/publish-teacher-training/workflows/Build/badge.svg)](https://github.com/DFE-Digital/publish-teacher-training/actions/workflows/build.yml)
-[![Deploy](https://github.com/DFE-Digital/publish-teacher-training/actions/workflows/deploy.yml/badge.svg)](https://github.com/DFE-Digital/publish-teacher-training/actions/workflows/deploy.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/e743af6a7da51c328a54/maintainability)](https://codeclimate.com/github/DFE-Digital/publish-teacher-training/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/e743af6a7da51c328a54/test_coverage)](https://codeclimate.com/github/DFE-Digital/publish-teacher-training/test_coverage)
 
+# This repository is no longer in use
 # Publish Teacher Training
 
 ## Development setup
